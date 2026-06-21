@@ -1,0 +1,1931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autonomic, Receptor &amp; Neuro Pharmacology — PYQ Notes</title>
+<style>
+  :root{
+    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
+    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
+  header.top{margin-bottom:26px}
+  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
+  .sub{color:var(--muted); font-size:.92rem; margin:0}
+  .tools{
+    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
+    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
+    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  }
+  #search{
+    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
+    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
+    outline:none;
+  }
+  #search:focus{border-color:var(--accent)}
+  .btn{
+    border:1px solid var(--line); background:var(--panel); color:var(--ink);
+    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
+    transition:.15s; white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+
+  .toc{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+  }
+  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
+  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
+  .toc a:hover{color:var(--accent)}
+
+  section.sec{margin:34px 0}
+  .sec > h2{
+    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
+    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+  }
+  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+
+  details.q{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+  }
+  details.q[open]{border-color:#d6e6e0}
+  summary.q-head{
+    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
+    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+  }
+  summary.q-head::-webkit-details-marker{display:none}
+  summary.q-head:hover{background:#fcfdfc}
+  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
+  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  .q-text{flex:1}
+  .answer{
+    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
+    font-size:.93rem; color:#33383d;
+  }
+  .answer h4{
+    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
+    margin:18px 0 7px;
+  }
+  .answer p{margin:9px 0}
+  .answer ul,.answer ol{margin:8px 0; padding-left:20px}
+  .answer li{margin:4px 0}
+  .answer b{font-weight:620}
+  .answer table{
+    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
+  }
+  .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
+  .answer th{background:var(--accent-soft); font-weight:600}
+  .answer .dia{
+    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
+    margin:12px 0; font-size:.85rem; color:#4a5550;
+  }
+  .answer .dia b{color:var(--accent)}
+  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .recent b{color:#9a7000}
+  .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
+  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
+  mark{background:#fff2a8; padding:0 1px}
+  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+
+  /* ---- v2 interactive additions ---- */
+  body{transition:background .25s, color .25s}
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
+  .chip:hover{border-color:var(--accent); color:var(--accent)}
+  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
+  .iconbtn{font-size:1rem; line-height:1}
+  details.q.vignette{border-left:3px solid #c98a3c}
+  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
+  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
+  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
+  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a; --shadow:0 1px 2px rgba(0,0,0,.35)}
+  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
+  [data-theme="dark"] summary.q-head:hover{background:#23272c}
+  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  [data-theme="dark"] .answer{color:#cfd4d8}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:#2a2519}
+  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] mark{background:#7a6212; color:#fff}
+  [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
+
+  /* ---- per-section colour theming ---- */
+  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
+  .sec > h2{border-bottom:2px solid var(--sec)}
+  .sec details.q{border-left:4px solid var(--sec)}
+  .sec details.q[open]{border-left-color:var(--sec)}
+  .sec details.q[open] .chev{color:var(--sec)}
+  .sec .answer h4{color:var(--sec)}
+  .sec .answer th{background:var(--sec-soft)}
+  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
+  .toc a{display:flex; align-items:center}
+  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
+  [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
+  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Autonomic, Receptor &amp; Neuro-Pharmacology — Consolidated PYQ Notes</h1>
+    <p class="sub">Exam-oriented model answers · contextualised to Goodman &amp; Gilman (14th ed., Neuropharmacology Ch. 10–28) · click any question to open the answer</p>
+  </header>
+
+  <div class="tools">
+    <a class="btn" href="index_pyq.html" title="Back to PYQ Library" style="text-decoration:none">← PYQ Library</a>
+    <a class="btn" href="index.html" title="Back to study hub" style="text-decoration:none">← Hub</a>
+    <input id="search" type="text" placeholder="🔍  Search… ( / )" autocomplete="off">
+    <button class="btn" id="shuffle" title="Random question (R)">🎲 Quiz me</button>
+    <button class="btn" id="expandAll" title="Expand visible (E)">Expand</button>
+    <button class="btn" id="collapseAll" title="Collapse all (C)">Collapse</button>
+    <button class="btn iconbtn" id="theme" title="Dark mode (D)">🌙</button>
+    <span class="count" id="counter"></span>
+  </div>
+  <div class="chips" id="chips">
+    <button class="chip active" data-f="all">All</button>
+    <button class="chip" data-f="3">★★★</button>
+    <button class="chip" data-f="2">★★</button>
+    <button class="chip" data-f="1">★</button>
+    <button class="chip" data-f="case">🩺 Cases</button>
+  </div>
+  <p class="hint">Shortcuts: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K</kbd>/<kbd>J</kbd> next/prev · <kbd>Space</kbd> open · <kbd>E</kbd>/<kbd>C</kbd> expand/collapse · <kbd>D</kbd> dark</p>
+
+  <nav class="toc" id="toc">
+    <h2>Sections</h2>
+    <a href="#s1"><span class="dot" style="background:#2f7d6a"></span>1 · Autonomic Nervous System &amp; Neurotransmission</a>
+    <a href="#s2"><span class="dot" style="background:#3f6cb0"></span>2 · Adrenergic System (Receptors, Agonists &amp; Antagonists)</a>
+    <a href="#s3"><span class="dot" style="background:#845bb0"></span>3 · Cholinergic System</a>
+    <a href="#s4"><span class="dot" style="background:#b15068"></span>4 · G-Protein Coupled Receptors &amp; Signaling</a>
+    <a href="#s5"><span class="dot" style="background:#b3852f"></span>5 · Specific Receptor Systems (High-Yield)</a>
+    <a href="#s6"><span class="dot" style="background:#2f8696"></span>6 · Enzyme Inhibitors &amp; Modulators</a>
+    <a href="#s7"><span class="dot" style="background:#548a4f"></span>7 · Vasodilators, Inotropes &amp; Related</a>
+    <a href="#s8"><span class="dot" style="background:#c06a3e"></span>8 · Integrated Therapeutic &amp; Special Topics</a>
+    <a href="#scase"><span class="dot" style="background:#7a5bbd"></span>🩺 Clinical Case Vignettes</a>
+  </nav>
+
+  <p class="nohit" id="nohit">No questions match your search.</p>
+
+  <div id="content">
+<!-- CONTENT START -->
+
+<section class="sec" id="s1" style="--sec:#2f7d6a;--sec-soft:#2f7d6a26">
+  <h2>Section 1 · Autonomic Nervous System &amp; Neurotransmission</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 10: Neurotransmission: The Autonomic &amp; Somatic Motor Nervous Systems.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Discuss adrenergic and cholinergic neurotransmission in detail — co-transmission, steps at cholinergic &amp; adrenergic synapses, co-transmitters/neuromodulators, and clinical relevance.</span></summary>
+  <div class="answer">
+    <p><b>Neurotransmission</b> = the process of chemical signalling across a synapse: synthesis → storage → release → receptor action → termination. G&amp;G (Ch.10) describes the autonomic synapse as the prototype.</p>
+
+    <h4>Steps in cholinergic transmission</h4>
+    <ol>
+      <li><b>Synthesis:</b> Choline (via choline transporter, rate-limiting) + Acetyl-CoA → ACh by <b>choline acetyltransferase (ChAT)</b>.</li>
+      <li><b>Storage:</b> ACh packaged into vesicles by <b>VAChT</b>.</li>
+      <li><b>Release:</b> Nerve action potential → Ca²⁺ influx → exocytosis (SNARE proteins).</li>
+      <li><b>Action:</b> ACh acts on nicotinic (ionotropic) / muscarinic (GPCR) receptors.</li>
+      <li><b>Termination:</b> Rapid hydrolysis by <b>acetylcholinesterase (AChE)</b> → choline (recycled) + acetate.</li>
+    </ol>
+
+    <h4>Steps in adrenergic (noradrenergic) transmission</h4>
+    <ol>
+      <li><b>Synthesis:</b> Tyrosine → DOPA (<b>tyrosine hydroxylase</b>, rate-limiting) → Dopamine → (into vesicle via VMAT) → Noradrenaline (by dopamine-β-hydroxylase); in adrenal medulla → adrenaline (PNMT).</li>
+      <li><b>Storage:</b> NA in vesicles (VMAT-2).</li>
+      <li><b>Release:</b> Ca²⁺-dependent exocytosis.</li>
+      <li><b>Action:</b> α &amp; β adrenoceptors (all GPCRs).</li>
+      <li><b>Termination:</b> mainly <b>reuptake-1 (NET)</b> into neuron (recycled), + extraneuronal uptake-2; metabolism by <b>MAO</b> (mitochondria) &amp; <b>COMT</b> (extraneuronal).</li>
+    </ol>
+
+    <h4>Co-transmission, co-transmitters &amp; neuromodulators</h4>
+    <ul>
+      <li><b>Co-transmission:</b> a single nerve releases more than one transmitter. Classic neurotransmitter + co-transmitter act together.</li>
+      <li><b>Examples:</b> Sympathetic — NA + <b>ATP</b> + <b>Neuropeptide Y (NPY)</b>; Parasympathetic — ACh + <b>VIP</b> + NO; NANC (non-adrenergic non-cholinergic) nerves — NO, ATP, VIP.</li>
+      <li><b>Neuromodulator:</b> substance that modifies (potentiates/attenuates) transmission without itself being the primary transmitter (e.g. adenosine, prostaglandins, presynaptic peptides).</li>
+    </ul>
+
+    <h4>Clinical relevance</h4>
+    <ul>
+      <li>Each step is a drug target: synthesis (α-methyltyrosine), storage (reserpine depletes VMAT), release (botulinum blocks ACh release; guanethidine blocks NA release), reuptake (cocaine, TCAs, SSRIs), metabolism (MAO inhibitors, AChE inhibitors).</li>
+      <li>Explains autonomic drug actions, Parkinson's (dopamine), depression (monoamines), myasthenia (ACh), organophosphate poisoning.</li>
+    </ul>
+    <div class="dia"><b>Diagram:</b> Pre-synaptic terminal → synthesis enzymes → vesicle (VMAT/VAChT) → Ca²⁺-triggered exocytosis → post-synaptic receptor → termination (AChE / NET reuptake + MAO/COMT), with presynaptic autoreceptor feedback loop.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Mechanism of drugs modulating noradrenergic neurotransmission (with diagrams). Discuss vasomotor reversal of Dale &amp; its clinical significance.</span></summary>
+  <div class="answer">
+    <h4>Drugs modulating noradrenergic transmission (by step)</h4>
+    <table>
+      <tr><th>Step</th><th>Drug</th><th>Action</th></tr>
+      <tr><td>Synthesis</td><td>Metyrosine (α-methyltyrosine)</td><td>Inhibits tyrosine hydroxylase → ↓ NA (pheochromocytoma)</td></tr>
+      <tr><td>Storage</td><td>Reserpine</td><td>Blocks VMAT → vesicle depletion</td></tr>
+      <tr><td>Storage (false transmitter)</td><td>Methyldopa</td><td>Forms α-methyl-NA (false transmitter, central α2)</td></tr>
+      <tr><td>Release</td><td>Guanethidine; amphetamine/tyramine (↑ release)</td><td>Block / promote NA release</td></tr>
+      <tr><td>Reuptake (NET)</td><td>Cocaine, TCAs, SNRIs</td><td>Block reuptake → ↑ synaptic NA</td></tr>
+      <tr><td>Metabolism</td><td>MAO inhibitors, entacapone (COMT)</td><td>↓ degradation</td></tr>
+      <tr><td>Receptor</td><td>Agonists/antagonists (α,β)</td><td>Direct effect</td></tr>
+    </table>
+
+    <h4>Vasomotor reversal of Dale</h4>
+    <p>Adrenaline acts on both <b>α1</b> (vasoconstriction) and <b>β2</b> (vasodilation). Normally the α1 (pressor) effect dominates → BP rises. After an <b>α-blocker</b> (e.g. phenoxybenzamine/ergot), the α-mediated constriction is abolished, leaving the unopposed <b>β2 vasodilation</b> → adrenaline now <b>lowers</b> BP. This reversal of the pressor response to a depressor response is <b>"vasomotor reversal of Dale."</b></p>
+    <div class="dia"><b>Graph:</b> BP vs time — Adrenaline alone: sharp rise. After α-blocker + adrenaline: a fall in BP (reversed response). Noradrenaline (pure α) response is only blunted, not reversed.</div>
+    <h4>Clinical significance</h4>
+    <ul>
+      <li>Explains why <b>adrenaline is contraindicated</b> as the pressor agent in a patient on α-blockers (paradoxical hypotension).</li>
+      <li>Differentiates adrenaline (reversed) from noradrenaline (only abolished) — diagnostic concept.</li>
+      <li>Relevant in management of accidental adrenaline overdose / interactions.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Presynaptic receptors — autoreceptors vs heteroreceptors and their therapeutic implications.</span></summary>
+  <div class="answer">
+    <p><b>Presynaptic receptors</b> are located on nerve terminals and regulate neurotransmitter release (feedback control).</p>
+    <table>
+      <tr><th>Feature</th><th>Autoreceptor</th><th>Heteroreceptor</th></tr>
+      <tr><td>Definition</td><td>Responds to the neuron's <b>own</b> transmitter</td><td>Responds to a <b>different</b> transmitter</td></tr>
+      <tr><td>Function</td><td>Usually negative feedback ↓ further release</td><td>Modulates release of the host neuron's transmitter</td></tr>
+      <tr><td>Example</td><td>α2 on noradrenergic terminal (↓NA); 5-HT1A/1B autoreceptors</td><td>α2 on cholinergic terminal; presynaptic muscarinic on adrenergic nerve</td></tr>
+    </table>
+    <h4>Therapeutic implications</h4>
+    <ul>
+      <li><b>α2 agonists</b> (clonidine) stimulate autoreceptors → ↓ central sympathetic outflow → antihypertensive.</li>
+      <li><b>α2 antagonists</b> (mirtazapine, yohimbine) block autoreceptors → ↑ NA/5-HT release → antidepressant.</li>
+      <li>Basis of feedback regulation, tolerance, and fine-tuning of transmission.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section class="sec" id="s2" style="--sec:#3f6cb0;--sec-soft:#3f6cb026">
+  <h2>Section 2 · Adrenergic System (Receptors, Agonists &amp; Antagonists)</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 14: Adrenergic Agonists and Antagonists.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Classification, distribution, signaling mechanisms &amp; clinical importance of adrenergic receptors; drugs acting on α and β receptors (examples).</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Receptor</th><th>G-protein / signaling</th><th>Distribution</th><th>Main effect</th><th>Agonist / Antagonist</th></tr>
+      <tr><td>α1</td><td>Gq → ↑PLC → IP₃/DAG → ↑Ca²⁺</td><td>Vascular smooth muscle, pupil, bladder neck, prostate</td><td>Vasoconstriction, mydriasis, ↑BP</td><td>Phenylephrine / prazosin</td></tr>
+      <tr><td>α2</td><td>Gi → ↓cAMP</td><td>Presynaptic nerve, CNS, platelets, pancreas</td><td>↓NA release, ↓sympathetic outflow, ↓insulin</td><td>Clonidine / yohimbine</td></tr>
+      <tr><td>β1</td><td>Gs → ↑cAMP</td><td>Heart, JG cells</td><td>↑HR, contractility, renin</td><td>Dobutamine / metoprolol</td></tr>
+      <tr><td>β2</td><td>Gs → ↑cAMP</td><td>Bronchi, vessels, uterus, liver, skeletal muscle</td><td>Bronchodilation, vasodilation, glycogenolysis</td><td>Salbutamol / (propranolol)</td></tr>
+      <tr><td>β3</td><td>Gs → ↑cAMP</td><td>Adipose, bladder detrusor</td><td>Lipolysis, bladder relaxation</td><td>Mirabegron / —</td></tr>
+    </table>
+    <h4>Drugs acting on adrenergic receptors</h4>
+    <ul>
+      <li><b>α-agonists:</b> phenylephrine, oxymetazoline (α1 — decongestant), clonidine, dexmedetomidine, methyldopa (α2).</li>
+      <li><b>β-agonists:</b> dobutamine (β1), salbutamol/salmeterol (β2), isoprenaline (β1+β2).</li>
+      <li><b>Mixed/indirect:</b> adrenaline, noradrenaline, dopamine, ephedrine, amphetamine.</li>
+      <li><b>α-blockers:</b> prazosin, phenoxybenzamine, tamsulosin.</li>
+      <li><b>β-blockers:</b> propranolol, metoprolol, carvedilol.</li>
+    </ul>
+    <h4>Clinical importance</h4>
+    <p>Hypertension, heart failure, angina, arrhythmias, shock, anaphylaxis, asthma/COPD, BPH, glaucoma, nasal congestion, premature labour — among the most widely used drug classes.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Classify adrenergic blockers. Pharmacological actions, uses &amp; adverse effects of β-blockers; compare 1st/2nd/3rd generations; non-CV uses &amp; effect on transplanted heart.</span></summary>
+  <div class="answer">
+    <h4>Classification of adrenergic blockers</h4>
+    <ul>
+      <li><b>α-blockers:</b> non-selective (phenoxybenzamine-irreversible, phentolamine-reversible); selective α1 (prazosin, tamsulosin); selective α2 (yohimbine).</li>
+      <li><b>β-blockers:</b> non-selective, β1-selective, with-vasodilatory (3rd gen) — see below.</li>
+      <li><b>α+β blockers:</b> labetalol, carvedilol.</li>
+      <li><b>Adrenergic neuron blockers:</b> reserpine, guanethidine.</li>
+    </ul>
+    <h4>Pharmacological actions of β-blockers</h4>
+    <ul><li>CVS: ↓HR, ↓contractility, ↓CO, ↓renin → ↓BP; antianginal &amp; antiarrhythmic.</li><li>↓Aqueous humour (eye); bronchoconstriction (β2); ↓glycogenolysis (mask hypoglycaemia); ↓tremor.</li></ul>
+    <h4>Uses</h4>
+    <p>Hypertension, angina, post-MI, heart failure (specific agents), arrhythmias, glaucoma (timolol), and non-CV uses below.</p>
+    <h4>Adverse effects</h4>
+    <p>Bradycardia/heart block, fatigue, cold extremities, bronchospasm (asthma — caution), masking hypoglycaemia, dyslipidaemia, ↓exercise tolerance, sexual dysfunction, vivid dreams (lipophilic), <b>rebound</b> on abrupt withdrawal.</p>
+    <h4>Generations of β-blockers</h4>
+    <table>
+      <tr><th>Generation</th><th>Property</th><th>Examples</th></tr>
+      <tr><td>1st</td><td>Non-selective (β1+β2)</td><td>Propranolol, timolol, nadolol, sotalol</td></tr>
+      <tr><td>2nd</td><td>β1-selective (cardioselective)</td><td>Metoprolol, atenolol, bisoprolol, esmolol</td></tr>
+      <tr><td>3rd</td><td>Additional vasodilatory action (α-block or NO)</td><td>Carvedilol, labetalol (α1), nebivolol (NO), celiprolol</td></tr>
+    </table>
+    <p><b>3rd-gen advantages:</b> lower peripheral resistance, neutral/favourable metabolic profile (nebivolol ↑insulin sensitivity), mortality benefit in HF (carvedilol), useful in HTN with metabolic syndrome.</p>
+    <h4>Non-cardiovascular uses</h4>
+    <p>Migraine prophylaxis (propranolol), essential tremor, performance anxiety/stage fright, thyrotoxicosis, portal hypertension (variceal bleed prophylaxis), glaucoma, infantile haemangioma (propranolol), pheochromocytoma (after α-block).</p>
+    <h4>Effect on transplanted (denervated) heart</h4>
+    <p>The transplanted heart lacks autonomic innervation; it relies on <b>circulating catecholamines</b> and intrinsic rate. β-blockers can still act (receptors intact) and blunt the response to circulating catecholamines, impairing exercise heart-rate increase — used cautiously. Drugs acting via nerves (e.g. atropine, digoxin's vagal effect) are ineffective.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Role of α-agonists in glaucoma and α-blockers in BPH; other non-ocular uses of anticholinergics &amp; receptor-subtype-specific anticholinergics.</span></summary>
+  <div class="answer">
+    <h4>α-agonists in glaucoma</h4>
+    <ul>
+      <li><b>α2-agonists (brimonidine, apraclonidine):</b> ↓ aqueous humour production + ↑ uveoscleral outflow → ↓ IOP; also neuroprotective. Used in open-angle glaucoma/ocular hypertension.</li>
+    </ul>
+    <h4>α-blockers in BPH</h4>
+    <ul>
+      <li><b>α1-blockers</b> relax smooth muscle of bladder neck, prostate capsule &amp; prostatic urethra (dynamic component) → improve urine flow.</li>
+      <li><b>Uroselective α1A:</b> tamsulosin, silodosin, alfuzosin (less hypotension). Non-selective: prazosin, terazosin, doxazosin (also treat HTN).</li>
+      <li>ADR: postural hypotension, "first-dose" syncope, retrograde ejaculation, <b>intraoperative floppy iris syndrome</b> (tamsulosin).</li>
+    </ul>
+    <h4>Non-ocular uses of anticholinergics (antimuscarinics)</h4>
+    <table>
+      <tr><th>Use</th><th>Drug</th></tr>
+      <tr><td>COPD/asthma (bronchodilation)</td><td>Ipratropium, tiotropium</td></tr>
+      <tr><td>Overactive bladder</td><td>Oxybutynin, tolterodine, solifenacin (M3)</td></tr>
+      <tr><td>Peptic ulcer/GI spasm</td><td>Pirenzepine (M1), dicyclomine, hyoscine</td></tr>
+      <tr><td>Parkinsonism/EPS</td><td>Benztropine, trihexyphenidyl</td></tr>
+      <tr><td>Motion sickness</td><td>Hyoscine (scopolamine)</td></tr>
+      <tr><td>Pre-anaesthetic (↓secretions), bradycardia, OP poisoning</td><td>Atropine, glycopyrrolate</td></tr>
+    </table>
+    <h4>Receptor-subtype-specific anticholinergics</h4>
+    <p>M1 — pirenzepine (gastric); M2 — (cardiac, few selective); M3 — darifenacin, solifenacin (bladder, ↓ CNS/cardiac effects). Subtype selectivity ↓ off-target ADRs.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">SAR of sympathomimetics and β-adrenergic receptor antagonists; correlation of chemical structure with β1-selectivity, ISA, MSA &amp; lipophilicity of β-blockers.</span></summary>
+  <div class="answer">
+    <h4>SAR of sympathomimetics (phenylethylamine nucleus)</h4>
+    <ul>
+      <li><b>Catechol (3,4-OH) groups:</b> max α/β potency but rapid COMT metabolism &amp; poor oral/CNS entry (adrenaline, NA, isoprenaline).</li>
+      <li><b>Loss of catechol OH:</b> ↑ oral activity &amp; duration, ↑ CNS penetration, ↑ indirect action (ephedrine, amphetamine).</li>
+      <li><b>N-substitution (size):</b> small → α activity; <b>bulky (isopropyl/tert-butyl)</b> → β selectivity (isoprenaline, salbutamol).</li>
+      <li><b>α-carbon methyl:</b> resists MAO, ↑ duration, indirect action (ephedrine, amphetamine).</li>
+      <li><b>β-OH:</b> needed for direct receptor activity &amp; storage.</li>
+    </ul>
+
+    <h4>SAR of β-blockers — from agonist (isoprenaline) to antagonist</h4>
+    <p>β-blockers are congeners of the agonist <b>isoprenaline</b> — a catechol ring linked via an ethanolamine side chain to a bulky N-isopropyl group. Systematic modification of three regions (aromatic ring, side chain, terminal amine) converts the agonist into an antagonist and tunes β1-selectivity, ISA, MSA and lipophilicity. <b>Dichloroisoprenaline</b> (1958, ring-OH→Cl) was the first β-blocker (still a partial agonist); <b>propranolol</b> (1963) was the clinical breakthrough.</p>
+    <ul>
+      <li><b>Loss of the 3,4-catechol –OH groups</b> abolishes intrinsic (agonist) activity while affinity is retained → converts agonist to antagonist.</li>
+      <li><b>Insertion of an –O–CH2– (oxymethylene) bridge</b> between the ring and side chain converts the arylethanolamine into an <b>aryloxypropanolamine</b> (–O–CH2–CHOH–CH2–NH–R) — the scaffold of most modern β-blockers (propranolol, metoprolol, atenolol), greatly increasing antagonist potency.</li>
+    </ul>
+    <table>
+      <tr><th>Structural feature</th><th>Pharmacological consequence</th><th>Representative drugs</th></tr>
+      <tr><td>Bulky N-alkyl group (isopropyl/tert-butyl); small group → α-activity</td><td>Large group mandatory for β-affinity; secondary amine essential</td><td>Propranolol, metoprolol (isopropyl); nadolol, timolol, bisoprolol (tert-butyl)</td></tr>
+      <tr><td>β-hydroxyl on side chain</td><td>H-bonds to receptor; needed for high affinity (chiral centre)</td><td>All β-blockers</td></tr>
+      <tr><td>Aryloxypropanolamine –OCH2– bridge</td><td>Converts agonist → potent antagonist</td><td>Propranolol, atenolol, metoprolol</td></tr>
+      <tr><td>Unsubstituted bulky/naphthalene ring</td><td>Non-selective (β1=β2)</td><td>Propranolol, nadolol, timolol, sotalol, pindolol</td></tr>
+      <tr><td><b>Para- (4-)position substitution</b> on a single benzene ring</td><td><b>β1-selectivity</b> (cardioselectivity) — relative, lost at high dose</td><td>Metoprolol, atenolol, acebutolol, bisoprolol, nebivolol</td></tr>
+      <tr><td>Indole/heterocyclic aromatic groups</td><td>Intrinsic sympathomimetic activity (ISA, partial agonism)</td><td>Pindolol (++), acebutolol, labetalol</td></tr>
+      <tr><td>Lipophilic, planar ring system</td><td>Membrane-stabilising (local-anaesthetic, Na⁺-channel) action (MSA)</td><td>Propranolol, oxprenolol, acebutolol</td></tr>
+      <tr><td>Added bulky/aryl substituent giving α1-block</td><td>"Third-generation" vasodilating β-blocker</td><td>Labetalol, carvedilol</td></tr>
+      <tr><td>Substituent promoting NO release</td><td>Vasodilatation via endothelial NO (β3 agonism)</td><td>Nebivolol</td></tr>
+    </table>
+
+    <h4>β1-selectivity (cardioselectivity)</h4>
+    <p>Conferred by <i>para</i>-substitution on a single benzene ring; absence of a second ring/ortho-meta bulk keeps affinity higher for cardiac β1 than bronchial/vascular β2. Cardioselective agents (metoprolol, atenolol, acebutolol, bisoprolol, nebivolol) cause less bronchoconstriction and less interference with hypoglycaemia recovery — but selectivity is <b>relative</b> and lost at high doses, so caution is still needed in asthma/COPD.</p>
+
+    <h4>ISA and MSA</h4>
+    <ul>
+      <li><b>ISA/partial agonism</b> (pindolol, acebutolol, labetalol): weak agonist tone limits resting bradycardia, may blunt lipid worsening; not preferred for post-MI secondary prevention.</li>
+      <li><b>MSA</b> (quinidine-like Na⁺-channel block) is a property of lipophilic agents (propranolol, oxprenolol, acebutolol); underlies corneal anaesthesia (unsuitable for topical glaucoma use) but clinically insignificant for antiarrhythmic effect at usual plasma levels.</li>
+    </ul>
+
+    <h4>Lipophilicity vs hydrophilicity</h4>
+    <table>
+      <tr><th>Property</th><th>Lipophilic (propranolol, metoprolol)</th><th>Hydrophilic (atenolol, nadolol, sotalol, celiprolol, bisoprolol)</th></tr>
+      <tr><td>BBB penetration</td><td>High → sleep disturbance, nightmares, depression</td><td>Poor → fewer central effects</td></tr>
+      <tr><td>Metabolism</td><td>Hepatic, high first-pass, shorter t½ (3–6 h)</td><td>Incomplete oral absorption but little first-pass</td></tr>
+      <tr><td>Elimination</td><td>Variable bioavailability (metoprolol = CYP2D6 substrate)</td><td>Renal, unchanged; longer-acting (t½ 6–24 h; nadolol longest)</td></tr>
+    </table>
+
+    <h4>Stereochemistry</h4>
+    <p>Antagonist activity resides mainly in the levorotatory <b>S(–) enantiomer</b>; S(–)-metoprolol is marketed as the active single enantiomer (half the racemate dose). Labetalol is a mixture of 4 diastereomers with differing α/β actions; for sotalol, the l-isomer carries β-blockade while both isomers share class III antiarrhythmic action.</p>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>All β-blockers are isoprenaline analogues; loss of catechol –OH + bulky N-substituent = antagonist.</li>
+      <li>Aryloxypropanolamine (–OCH2– bridge) = scaffold of propranolol-type blockers.</li>
+      <li>Bulky amine (isopropyl/tert-butyl) → β-affinity; small amine → α-activity.</li>
+      <li><i>Para</i>-substituted single benzene ring → β1-selectivity; naphthalene/non-substituted bulky ring → non-selective.</li>
+      <li>ISA = pindolol; MSA = propranolol; lipophilic = hepatic + CNS; hydrophilic = renal, longer t½.</li>
+      <li>Third-generation: carvedilol/labetalol (α1-block), nebivolol (NO/β3).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Third-generation vasodilating β-blockers dominate current use — nebivolol's β1-selectivity plus endothelial NO release and carvedilol's α-block give favourable haemodynamic/metabolic profiles (less dyslipidaemia/insulin resistance than propranolol). Single-enantiomer products (S-metoprolol succinate) exploit stereoselective SAR to lower dose/pill burden. Structure-guided pharmacology is now informed by β1-adrenoceptor crystal/cryo-EM structures, confirming the long-held SAR roles of the protonated bulky amine and side-chain β-OH in the orthosteric pocket.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Enumerate and discuss third-generation β-blockers and their role in cardiovascular disorders.</span></summary>
+  <div class="answer">
+    <p><b>3rd-generation = β-blockade + additional vasodilatory mechanism.</b></p>
+    <table>
+      <tr><th>Drug</th><th>Mechanism</th><th>CV role</th></tr>
+      <tr><td>Carvedilol</td><td>Non-selective β + α1 block + antioxidant</td><td>HFrEF (mortality benefit), HTN, post-MI</td></tr>
+      <tr><td>Labetalol</td><td>β + α1 block</td><td>Hypertensive emergencies, pregnancy HTN</td></tr>
+      <tr><td>Nebivolol</td><td>β1-selective + <b>NO-mediated</b> vasodilation</td><td>HTN (esp. metabolic syndrome, elderly), HFrEF</td></tr>
+      <tr><td>Celiprolol</td><td>β1 block + β2 agonist (vasodilation)</td><td>HTN, angina</td></tr>
+      <tr><td>Bucindolol</td><td>Non-selective + vasodilation</td><td>HF (variable benefit)</td></tr>
+    </table>
+    <p><b>Advantages:</b> reduced peripheral resistance, better metabolic/lipid profile, improved endothelial function, fewer classic β-blocker ADRs (cold limbs, fatigue) — preferred when HTN coexists with diabetes/dyslipidaemia or HF.</p>
+  </div></details>
+</section>
+
+<section class="sec" id="s3" style="--sec:#845bb0;--sec-soft:#845bb026">
+  <h2>Section 3 · Cholinergic System</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 11 (Muscarinic agonists/antagonists), Ch. 12 (Anticholinesterases &amp; reactivators), Ch. 13 (NMJ, muscle relaxants).</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Explain cholinergic transmission; pharmacological actions &amp; therapeutic uses of antimuscarinic drugs; note on vasoselective anticholinergics &amp; subtype-specific agents.</span></summary>
+  <div class="answer">
+    <h4>Cholinergic transmission (summary)</h4>
+    <p>ACh synthesised (ChAT) → stored (VAChT) → Ca²⁺-dependent release → acts on <b>nicotinic</b> (Nm at NMJ, Nn at ganglia/CNS — ligand-gated cation channels) and <b>muscarinic</b> (M1–M5 GPCRs) receptors → terminated by AChE.</p>
+    <table>
+      <tr><th>Muscarinic</th><th>G-protein</th><th>Location/effect</th></tr>
+      <tr><td>M1</td><td>Gq</td><td>CNS, gastric glands (acid), ganglia</td></tr>
+      <tr><td>M2</td><td>Gi</td><td>Heart (↓rate, ↓conduction)</td></tr>
+      <tr><td>M3</td><td>Gq</td><td>Smooth muscle, glands (secretion, contraction), eye</td></tr>
+    </table>
+    <h4>Pharmacological actions of antimuscarinics (atropine prototype)</h4>
+    <ul>
+      <li><b>Eye:</b> mydriasis, cycloplegia, ↑IOP (risk in angle-closure).</li>
+      <li><b>CVS:</b> tachycardia (block M2).</li>
+      <li><b>GIT/GU:</b> ↓motility &amp; secretions, antispasmodic, urinary retention.</li>
+      <li><b>Secretions:</b> ↓salivary, sweat, bronchial (dry mouth, hyperthermia).</li>
+      <li><b>Respiratory:</b> bronchodilation.</li>
+      <li><b>CNS:</b> sedation/anti-tremor (tertiary amines), delirium in toxicity.</li>
+    </ul>
+    <h4>Therapeutic uses</h4>
+    <p>Pre-anaesthetic medication, bradyarrhythmia, organophosphate/anticholinesterase &amp; mushroom poisoning, COPD/asthma (ipratropium/tiotropium), overactive bladder, IBS/GI spasm, mydriatic/cycloplegic for fundoscopy, motion sickness (hyoscine), Parkinsonism, peptic ulcer (pirenzepine).</p>
+    <h4>Vasoselective / subtype-specific anticholinergics</h4>
+    <p>Subtype selectivity reduces off-target ADRs: M1 — pirenzepine/telenzepine (gastric, ↓antisecretory ADRs); M3 — darifenacin, solifenacin (bladder-selective, ↓CNS/cardiac effects); inhaled tiotropium (lung-selective via topical delivery). "Vasoselective" antimuscarinic action is minimal as vessels lack cholinergic innervation — but local/organ-selective targeting is the principle.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Cholinesterase inhibitors &amp; enzyme reactivators (oximes); role of oximes in acute anticholinesterase poisoning &amp; treatment of atropine poisoning.</span></summary>
+  <div class="answer">
+    <h4>Cholinesterase inhibitors (anticholinesterases)</h4>
+    <table>
+      <tr><th>Type</th><th>Examples</th><th>Use</th></tr>
+      <tr><td>Reversible (carbamates)</td><td>Neostigmine, pyridostigmine, physostigmine, edrophonium, donepezil/rivastigmine</td><td>Myasthenia gravis, reversal of NM block, glaucoma, Alzheimer's, atropine poisoning (physostigmine)</td></tr>
+      <tr><td>Irreversible (organophosphates)</td><td>Echothiophate (therapeutic); malathion, parathion, nerve agents (toxic)</td><td>Glaucoma (rare); mostly toxicology</td></tr>
+    </table>
+    <h4>Organophosphate (OP) poisoning &amp; oximes</h4>
+    <ul>
+      <li>OPs phosphorylate AChE → ACh accumulation → muscarinic (DUMBELS), nicotinic (fasciculation, weakness) &amp; CNS effects.</li>
+      <li><b>Treatment:</b> ABC + decontamination; <b>Atropine</b> (blocks muscarinic effects, titrate to dry secretions) + <b>Oxime (pralidoxime/PAM, obidoxime)</b>.</li>
+      <li><b>Oxime mechanism:</b> reactivates AChE by removing the phosphate group — must be given <b>before "aging"</b> (irreversible covalent bond) for efficacy; helps nicotinic (muscle) effects that atropine cannot.</li>
+    </ul>
+    <h4>Atropine (anticholinergic) poisoning</h4>
+    <p>"Hot as a hare, dry as a bone, red as a beet, blind as a bat, mad as a hatter." <b>Treatment:</b> supportive cooling, <b>physostigmine</b> (a reversible anticholinesterase that crosses BBB → reverses central + peripheral antimuscarinic effects), benzodiazepines for agitation.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Classify neuromuscular blockers; compare reversal by sugammadex vs neostigmine; discuss centrally acting &amp; non-depolarizing NMBAs and skeletal muscle relaxants.</span></summary>
+  <div class="answer">
+    <h4>Classification of NMBAs</h4>
+    <ul>
+      <li><b>Depolarizing:</b> succinylcholine (Nm agonist → persistent depolarization → Phase I/II block).</li>
+      <li><b>Non-depolarizing (competitive):</b>
+        <ul>
+          <li>Long-acting: pancuronium, d-tubocurarine.</li>
+          <li>Intermediate: vecuronium, rocuronium, atracurium, cisatracurium.</li>
+          <li>Short: mivacurium.</li>
+        </ul>
+      </li>
+    </ul>
+    <h4>Reversal: sugammadex vs neostigmine</h4>
+    <table>
+      <tr><th>Feature</th><th>Neostigmine</th><th>Sugammadex</th></tr>
+      <tr><td>Mechanism</td><td>AChE inhibitor → ↑ACh competes at NMJ</td><td>γ-cyclodextrin that <b>encapsulates</b> rocuronium/vecuronium</td></tr>
+      <tr><td>Works on</td><td>Any non-depolarizer (indirect)</td><td>Aminosteroid agents only (roc/vec)</td></tr>
+      <tr><td>Depth of block</td><td>Only moderate (some twitches needed)</td><td>Even deep/profound block</td></tr>
+      <tr><td>Speed</td><td>Slower</td><td>Rapid (1–3 min)</td></tr>
+      <tr><td>Co-drug needed</td><td>Atropine/glycopyrrolate (block muscarinic ADRs)</td><td>None</td></tr>
+      <tr><td>ADR</td><td>Bradycardia, secretions, bronchospasm</td><td>Hypersensitivity; ↓OC pill efficacy</td></tr>
+    </table>
+    <h4>Centrally acting muscle relaxants &amp; spasmolytics</h4>
+    <ul>
+      <li><b>Centrally acting (for spasticity/spasm):</b> baclofen (GABA-B agonist), tizanidine (α2), diazepam (GABA-A), thiocolchicoside, chlorzoxazone, methocarbamol.</li>
+      <li><b>Directly acting:</b> dantrolene (↓Ca²⁺ release from sarcoplasmic reticulum — malignant hyperthermia, spasticity).</li>
+      <li><b>Botulinum toxin:</b> focal spasticity/dystonia.</li>
+    </ul>
+    <p><b>Current status:</b> intermediate non-depolarizers (rocuronium, cisatracurium — organ-independent Hofmann elimination) dominate anaesthesia; sugammadex has transformed rapid reversal; baclofen (incl. intrathecal) is mainstay for severe spasticity.</p>
+  </div></details>
+</section>
+
+<section class="sec" id="s4" style="--sec:#b15068;--sec-soft:#b1506826">
+  <h2>Section 4 · G-Protein Coupled Receptors &amp; Signaling</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 3 (Pharmacodynamics) &amp; Ch. 10.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">What is a drug receptor? Classify receptor types (location, an agonist &amp; antagonist each). Discuss GPCRs in detail (G-protein types, second messengers, signal transduction). Note on drugs modifying adenylyl cyclase.</span></summary>
+  <div class="answer">
+    <p><b>Drug receptor:</b> a cellular macromolecule (usually protein) with which a drug interacts to produce its characteristic effect; it determines the quantitative dose–response relationship and selectivity of drug action.</p>
+    <h4>Classification (4 superfamilies)</h4>
+    <table>
+      <tr><th>Type</th><th>Location</th><th>Transduction (latency)</th><th>Agonist / Antagonist</th></tr>
+      <tr><td>1. Ligand-gated ion channels</td><td>Membrane</td><td>Ion flux (ms)</td><td>Nicotinic: ACh / tubocurarine; GABA-A: muscimol / bicuculline</td></tr>
+      <tr><td>2. GPCRs (7-TM)</td><td>Membrane</td><td>G-protein → 2nd messenger (sec)</td><td>β-adrenergic: adrenaline / propranolol</td></tr>
+      <tr><td>3. Enzyme-linked (kinase)</td><td>Membrane</td><td>Tyrosine kinase/guanylyl cyclase (min)</td><td>Insulin: insulin / —; ANP: ANP / —</td></tr>
+      <tr><td>4. Nuclear (intracellular)</td><td>Cytoplasm/nucleus</td><td>Gene transcription (hours)</td><td>Glucocorticoid: cortisol / mifepristone</td></tr>
+    </table>
+    <h4>GPCRs in detail</h4>
+    <p>7-transmembrane proteins coupled to heterotrimeric G-proteins (Gα-βγ). Agonist → GDP/GTP exchange on Gα → dissociation → effector modulation → intrinsic GTPase switches off.</p>
+    <table>
+      <tr><th>G-protein</th><th>Effector</th><th>2nd messenger</th><th>Example receptor</th></tr>
+      <tr><td>Gs</td><td>↑ Adenylyl cyclase</td><td>↑cAMP → PKA</td><td>β1/β2, D1, H2, glucagon</td></tr>
+      <tr><td>Gi/Go</td><td>↓ Adenylyl cyclase; ↑K⁺/↓Ca²⁺</td><td>↓cAMP</td><td>α2, M2, D2, µ-opioid</td></tr>
+      <tr><td>Gq</td><td>↑ Phospholipase C</td><td>IP₃ (↑Ca²⁺) + DAG → PKC</td><td>α1, M1/M3, H1, 5-HT2, AT1</td></tr>
+    </table>
+    <div class="dia"><b>Diagram:</b> Agonist → GPCR → Gαβγ → (Gs)↑AC↑cAMP→PKA / (Gq)↑PLC→IP₃+DAG→↑Ca²⁺&amp;PKC → response; GTP hydrolysis terminates signal.</div>
+    <h4>Drugs modifying adenylyl cyclase / cAMP</h4>
+    <p><b>↑cAMP:</b> β-agonists (salbutamol), glucagon, forskolin, <b>PDE inhibitors</b> (theophylline, milrinone). <b>↓cAMP:</b> α2-agonists (clonidine), M2/ACh, µ-opioids (Gi-coupled). ~30–40% of drugs act via GPCRs.</p>
+    <div class="recent"><b>Recent:</b> Biased agonism (oliceridine), allosteric modulators, cryo-EM-resolved GPCR structures.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Enumerate signal-transduction mechanisms of different receptors. Discuss the pharmacological role of GPCRs in therapeutics.</span></summary>
+  <div class="answer">
+    <h4>Signal transduction mechanisms</h4>
+    <ul>
+      <li><b>Ion channel</b> conductance change (nicotinic, GABA-A).</li>
+      <li><b>GPCR → second messengers</b> (Gs↑cAMP, Gi↓cAMP, Gq→IP₃/DAG/Ca²⁺).</li>
+      <li><b>Receptor tyrosine kinase</b> → RAS-MAPK / PI3K-AKT (insulin, EGFR).</li>
+      <li><b>JAK-STAT</b> (cytokine/GH).</li>
+      <li><b>Guanylyl cyclase → cGMP</b> (ANP, NO/nitrates).</li>
+      <li><b>Nuclear receptor → transcription</b> (steroids, thyroid).</li>
+    </ul>
+    <h4>Therapeutic role of GPCRs</h4>
+    <p>Largest druggable family — targets for adrenergic, cholinergic (muscarinic), histamine, serotonin, dopamine, opioid, angiotensin, prostaglandin agents → HTN, asthma, psychosis, pain, allergy, migraine etc. Concepts of partial/biased agonism &amp; allosteric modulation enable safer, more selective therapeutics.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Compare autoreceptors vs heteroreceptors and drug specificity vs drug selectivity.</span></summary>
+  <div class="answer">
+    <h4>Autoreceptor vs heteroreceptor</h4>
+    <table>
+      <tr><th>Autoreceptor</th><th>Heteroreceptor</th></tr>
+      <tr><td>Responds to the neuron's own transmitter; usually negative feedback (e.g. α2 on noradrenergic terminal)</td><td>Responds to a different transmitter; modulates host neuron's release (e.g. presynaptic muscarinic on adrenergic nerve)</td></tr>
+    </table>
+    <h4>Specificity vs selectivity</h4>
+    <table>
+      <tr><th>Drug specificity</th><th>Drug selectivity</th></tr>
+      <tr><td>Acts on a <b>single</b> type of receptor/target only (rare, ideal)</td><td>Acts <b>preferentially</b> on one target at therapeutic dose but on others at higher dose (relative)</td></tr>
+      <tr><td>e.g. very few truly specific drugs</td><td>e.g. metoprolol is β1-<b>selective</b>, loses selectivity at high dose</td></tr>
+    </table>
+    <p>Selectivity is dose-dependent and relative; specificity is absolute. Most clinically useful drugs are selective, not specific.</p>
+  </div></details>
+</section>
+
+<section class="sec" id="s5" style="--sec:#b3852f;--sec-soft:#b3852f26">
+  <h2>Section 5 · Specific Receptor Systems (High-Yield)</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 15 (5-HT/dopamine), Ch. 16, Ch. 22 (hypnotics), Ch. 23 (opioids); supplemented for SERM/endothelin/peptide receptors.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">5-HT (serotonin) receptors — subtypes, distribution, agonists, antagonists, current therapeutic status; clinical uses of agonists/antagonists; drugs altering 5-HT concentration &amp; 5-HT4 agonists.</span></summary>
+  <div class="answer">
+    <p>7 families (5-HT1–7); all GPCRs except <b>5-HT3</b> (ligand-gated cation channel).</p>
+    <table>
+      <tr><th>Receptor</th><th>Coupling</th><th>Location</th><th>Agonist</th><th>Antagonist</th><th>Use</th></tr>
+      <tr><td>5-HT1A</td><td>Gi</td><td>Raphe, hippocampus</td><td>Buspirone</td><td>—</td><td>Anxiety, depression</td></tr>
+      <tr><td>5-HT1B/1D</td><td>Gi</td><td>Cranial vessels</td><td>Triptans (sumatriptan)</td><td>—</td><td>Acute migraine</td></tr>
+      <tr><td>5-HT1F</td><td>Gi</td><td>Trigeminal</td><td>Lasmiditan (ditan)</td><td>—</td><td>Migraine (no vasoconstriction)</td></tr>
+      <tr><td>5-HT2A</td><td>Gq</td><td>Platelets, smooth muscle, cortex</td><td>LSD (partial)</td><td>Ketanserin, atypical antipsychotics</td><td>HTN, psychosis</td></tr>
+      <tr><td>5-HT2C</td><td>Gq</td><td>Hypothalamus</td><td>Lorcaserin</td><td>—</td><td>Obesity</td></tr>
+      <tr><td>5-HT3</td><td>Ion channel</td><td>CTZ, gut</td><td>—</td><td>Ondansetron (-setrons)</td><td>Antiemetic (CINV/PONV)</td></tr>
+      <tr><td>5-HT4</td><td>Gs</td><td>GIT</td><td>Prucalopride, tegaserod, cisapride, mosapride</td><td>—</td><td>Prokinetic, constipation/IBS-C</td></tr>
+    </table>
+    <h4>Drugs acting by altering 5-HT concentration</h4>
+    <ul><li><b>↑5-HT:</b> SSRIs/SNRIs (block reuptake), MAO inhibitors (↓metabolism), tryptophan (precursor).</li><li><b>↓storage:</b> reserpine. Risk of <b>serotonin syndrome</b> with combinations.</li></ul>
+    <h4>5-HT4 agonists (note)</h4>
+    <p>Stimulate enteric neurons → ↑ ACh release → prokinesis. Cisapride/tegaserod withdrawn/restricted (cardiac arrhythmia/ischaemic events); <b>prucalopride</b> (selective 5-HT4) is safer for chronic constipation.</p>
+    <div class="recent"><b>Recent:</b> Psilocybin &amp; esketamine (treatment-resistant depression), lasmiditan &amp; gepants for migraine.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">SERMs &amp; SPRMs — pharmacological profile, therapeutic uses, clinical implications; note on selective estrogen receptor downregulators (SERDs).</span></summary>
+  <div class="answer">
+    <h4>SERMs</h4>
+    <p>Tissue-selective ER agonist/antagonist depending on co-regulator recruitment.</p>
+    <table>
+      <tr><th>Drug</th><th>Breast</th><th>Bone</th><th>Uterus</th><th>Use</th></tr>
+      <tr><td>Tamoxifen</td><td>Antagonist</td><td>Agonist</td><td>Agonist (↑Ca risk)</td><td>ER+ breast cancer</td></tr>
+      <tr><td>Raloxifene</td><td>Antagonist</td><td>Agonist</td><td>Neutral</td><td>Postmenopausal osteoporosis; breast Ca prevention</td></tr>
+      <tr><td>Clomiphene</td><td>—</td><td>—</td><td>Antagonist (hypothalamus)</td><td>Ovulation induction</td></tr>
+      <tr><td>Ospemifene</td><td>—</td><td>—</td><td>Agonist (vaginal)</td><td>Dyspareunia</td></tr>
+    </table>
+    <h4>SPRMs</h4>
+    <ul><li><b>Mifepristone</b> — PR antagonist: medical abortion (+misoprostol), Cushing's.</li><li><b>Ulipristal acetate</b> — emergency contraception &amp; uterine fibroids.</li></ul>
+    <h4>SERDs (downregulators)</h4>
+    <p><b>Fulvestrant</b> — pure ER antagonist that binds &amp; promotes ER <b>degradation</b> (no agonist activity) → used in advanced/endocrine-resistant ER+ breast cancer. New oral SERDs: elacestrant (approved for ESR1-mutant breast cancer).</p>
+    <p><b>Clinical implications:</b> SERMs ↑ VTE &amp; hot flushes; tamoxifen ↑ endometrial cancer; raloxifene uterus-safe; monitor LFTs with ulipristal.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Endothelin receptors, agonists/antagonists &amp; current therapeutic status.</span></summary>
+  <div class="answer">
+    <p>Endothelin-1 = most potent endogenous vasoconstrictor; two GPCRs:</p>
+    <table>
+      <tr><th>Receptor</th><th>Location</th><th>Effect</th></tr>
+      <tr><td>ET<sub>A</sub></td><td>Vascular smooth muscle</td><td>Vasoconstriction, proliferation</td></tr>
+      <tr><td>ET<sub>B</sub></td><td>Endothelium (+VSM)</td><td>NO/prostacyclin release → vasodilation; ET clearance</td></tr>
+    </table>
+    <h4>Antagonists (ERAs)</h4>
+    <ul><li>Non-selective (ETA/ETB): bosentan, macitentan.</li><li>Selective ETA: ambrisentan, (sitaxentan withdrawn — hepatotoxic).</li></ul>
+    <p><b>Status:</b> mainstay for <b>pulmonary arterial hypertension</b>; also digital ulcers (systemic sclerosis). <b>Hepatotoxic &amp; teratogenic</b> → monthly LFT &amp; pregnancy monitoring (REMS).</p>
+    <div class="recent"><b>Recent:</b> Aprocitentan (dual ERA) approved 2024 for resistant hypertension.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Excitatory neurotransmitters in the CNS — glutamate &amp; aspartate; NMDA/AMPA/kainate/metabotropic glutamate receptors; drugs acting on them, excitotoxicity &amp; therapeutic potential.</span></summary>
+  <div class="answer">
+    <p>The principal excitatory neurotransmitters in the mammalian CNS are the acidic amino acids <b>glutamate</b> and <b>aspartate</b>, acting on ionotropic (fast, ligand-gated channel) and metabotropic (slow, GPCR) receptors distributed throughout cortex, hippocampus and spinal cord — mediating normal excitatory synaptic transmission, synaptic plasticity (LTP — learning/memory), and, when in excess, neuronal injury (excitotoxicity).</p>
+
+    <h4>Classification of glutamate receptors</h4>
+    <table>
+      <tr><th>Type</th><th>Subtypes</th><th>Notes</th></tr>
+      <tr><td>Ionotropic</td><td>NMDA, AMPA, Kainate</td><td>NMDA = Ca²⁺-permeable, voltage-dependent Mg²⁺ block (relieved by depolarisation), requires glycine/D-serine co-agonist; AMPA/kainate = fast Na⁺-mediated depolarisation</td></tr>
+      <tr><td>Metabotropic</td><td>mGluR1–8 (groups I, II, III — GPCR)</td><td>Group I (Gq) = mostly excitatory/postsynaptic; groups II/III (Gi) = mostly inhibitory/presynaptic autoreceptors — modulate glutamate release</td></tr>
+    </table>
+
+    <h4>NMDA receptor — structure &amp; key properties</h4>
+    <ul>
+      <li>Heterotetramer (NR1 + NR2 subunits); requires <b>simultaneous</b> glutamate binding + co-agonist (glycine/D-serine) + membrane depolarisation to relieve Mg²⁺ block — acts as a "coincidence detector," central to long-term potentiation (synaptic basis of learning/memory).</li>
+      <li>High Ca²⁺ permeability — physiological Ca²⁺ influx triggers plasticity; pathological excess influx (excitotoxicity) activates proteases/lipases/free-radical generation → neuronal death.</li>
+    </ul>
+
+    <h4>Drugs acting on excitatory glutamatergic transmission</h4>
+    <ul>
+      <li><b>NMDA antagonists:</b> ketamine/esketamine (anaesthesia, treatment-resistant depression), <b>memantine</b> (moderate-severe Alzheimer's — low-affinity, voltage-dependent "open-channel" blocker, allows physiological transmission while blocking pathological tonic activation), amantadine (Parkinson's/antiviral), dextromethorphan (antitussive; antidepressant in combination), nitrous oxide, magnesium sulfate (eclampsia — partly NMDA-related).</li>
+      <li><b>AMPA antagonist:</b> perampanel (adjunctive antiepileptic).</li>
+      <li><b>Glycine-site partial agonists/modulators:</b> investigational cognitive enhancers (D-cycloserine).</li>
+      <li><b>mGluR modulators:</b> investigational for anxiety, schizophrenia, Fragile X syndrome, Parkinson's (basimglurant, mavoglurant — research stage).</li>
+    </ul>
+
+    <h4>Excitotoxicity &amp; therapeutic potential</h4>
+    <p>Excess glutamate release (ischaemia/stroke, traumatic brain injury, status epilepticus, neurodegenerative disease) → sustained NMDA receptor activation → massive Ca²⁺ influx → mitochondrial dysfunction, free-radical generation, protease/lipase activation → neuronal death — implicated in stroke, ALS, Alzheimer's, Huntington's and Parkinson's disease pathogenesis. NMDA blockade (memantine, riluzole in ALS — also blocks glutamate release) is a rational neuroprotective strategy, though clinical translation in acute stroke has been limited by psychotomimetic/dissociative ADRs of potent NMDA blockers.</p>
+
+    <div class="dia"><b>Diagram:</b> Glutamatergic synapse — presynaptic vesicular glutamate release → postsynaptic NMDA receptor (needs glycine co-agonist + depolarisation to relieve voltage-dependent Mg²⁺ plug) and AMPA receptor (fast Na⁺ entry) → Ca²⁺ influx through NMDA channel → normal level activates plasticity (CREB/gene transcription); excess level → excitotoxic cascade (calpain/caspase activation, free radicals, mitochondrial failure) → cell death.</div>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Glutamate/aspartate = principal excitatory CNS neurotransmitters; GABA/glycine = principal inhibitory.</li>
+      <li>NMDA receptor needs glutamate + glycine/D-serine + depolarisation (coincidence detector) — basis of LTP.</li>
+      <li>Memantine = moderate-affinity, voltage-dependent NMDA blocker for Alzheimer's; ketamine = anaesthetic/rapid antidepressant NMDA blocker.</li>
+      <li>Excitotoxicity (Ca²⁺ overload via NMDA) implicated in stroke, ALS, neurodegeneration — riluzole in ALS partly works by ↓ glutamate release.</li>
+      <li>Perampanel = AMPA-receptor antagonist antiepileptic.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Dextromethorphan–bupropion (Auvelity) and esketamine nasal spray exploit NMDA-receptor modulation for rapid-onset antidepressant action in treatment-resistant depression. Research continues into subunit-selective NMDA modulators (NR2B-selective agents) and mGluR-targeted compounds aiming to retain neuroprotective/antidepressant benefit while minimising psychotomimetic ADRs.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacology of opioid receptors &amp; drugs acting on them; opioid dependence — mechanism, tolerance/withdrawal, and treatment (detoxification, maintenance &amp; antagonist therapy); note on non-addictive drugs of abuse &amp; biogenic-amine transporters.</span></summary>
+  <div class="answer">
+    <h4>Opioid receptors (all Gi/Go-coupled GPCRs)</h4>
+    <table>
+      <tr><th>Receptor</th><th>Effects</th><th>Agonist</th></tr>
+      <tr><td>µ (MOP)</td><td>Analgesia (supraspinal), euphoria, respiratory depression, miosis, constipation, dependence</td><td>Morphine, fentanyl</td></tr>
+      <tr><td>κ (KOP)</td><td>Spinal analgesia, dysphoria, sedation, miosis, diuresis</td><td>Pentazocine, nalbuphine, dynorphins</td></tr>
+      <tr><td>δ (DOP)</td><td>Analgesia, mood, reduced GI motility</td><td>Enkephalins</td></tr>
+      <tr><td>NOP (ORL-1)</td><td>Modulates pain, anxiety, reward (non-classical)</td><td>Nociceptin/orphanin FQ</td></tr>
+    </table>
+    <p><b>Mechanism:</b> Gi/Go coupling → ↓ adenylyl cyclase (↓cAMP), open K⁺ channels (hyperpolarisation, post-synaptic) and close N-/P-type Ca²⁺ channels (pre-synaptic) → ↓ neurotransmitter (substance P, glutamate) release → ↓ pain transmission at spinal &amp; supraspinal levels; µ-receptor activation in the ventral tegmental area/nucleus accumbens ↑ dopamine → reward/euphoria, the basis of dependence liability.</p>
+
+    <h4>Drug classes acting on opioid receptors</h4>
+    <ul>
+      <li><b>Full agonists:</b> morphine, fentanyl, methadone, oxycodone, heroin (diacetylmorphine — prodrug, rapidly hydrolysed to 6-MAM/morphine, high abuse potential due to rapid CNS entry).</li>
+      <li><b>Partial/mixed agonist-antagonists:</b> buprenorphine (high-affinity partial µ-agonist, ceiling effect on respiratory depression — safer in overdose), pentazocine, nalbuphine, butorphanol (κ-agonist/µ-antagonist or partial agonist — can precipitate withdrawal in dependent patients).</li>
+      <li><b>Antagonists:</b> naloxone (short-acting, IV/IM/intranasal — overdose reversal), naltrexone (long-acting oral/depot — relapse prevention), methylnaltrexone/naloxegol (peripherally restricted — opioid-induced constipation without reversing analgesia).</li>
+    </ul>
+
+    <h4>Tolerance, physical dependence &amp; withdrawal</h4>
+    <p>Chronic µ-agonist exposure → receptor desensitisation/downregulation and compensatory upregulation of the cAMP pathway (locus coeruleus) → tolerance to analgesia/euphoria/sedation (but less to miosis/constipation) and a withdrawal syndrome on cessation: dysphoria, lacrimation, rhinorrhoea, yawning, piloerection ("cold turkey"), mydriasis, muscle aches, GI cramps/diarrhoea, anxiety, insomnia — autonomic ("noradrenergic storm" via locus coeruleus disinhibition) but not life-threatening (unlike alcohol/BZD withdrawal).</p>
+
+    <h4>Treatment of opioid dependence</h4>
+    <table>
+      <tr><th>Strategy</th><th>Drug(s)</th><th>Rationale</th></tr>
+      <tr><td>Acute withdrawal/detoxification</td><td>Methadone or buprenorphine taper; clonidine/lofexidine (α2-agonist, ↓ noradrenergic withdrawal signs); symptomatic (loperamide, NSAIDs, antiemetics, hydroxyzine)</td><td>Substitution with long-acting agonist allows gradual dose tapering, minimising withdrawal severity</td></tr>
+      <tr><td>Opioid agonist maintenance therapy (OAMT)</td><td><b>Methadone</b> (full µ-agonist, long t½, oral, supervised dosing) or <b>buprenorphine</b> (± naloxone, as Suboxone — partial agonist, ceiling effect, lower overdose risk, sublingual)</td><td>Stabilises receptor occupancy, blunts euphoria from superimposed illicit use, reduces craving, allows social/occupational rehabilitation, reduces injecting-related harm (HIV/HCV)</td></tr>
+      <tr><td>Antagonist (abstinence-based) therapy</td><td><b>Naltrexone</b> (oral daily or monthly depot injection) after detoxification</td><td>Blocks euphoric effect of any opioid use → extinguishes reinforcement; requires full detox first (precipitates withdrawal otherwise) and high motivation/adherence</td></tr>
+      <tr><td>Overdose reversal</td><td><b>Naloxone</b> (IM/IN, including take-home community kits)</td><td>Rapidly displaces agonist from µ-receptor → reverses respiratory depression; short t½, may need repeat dosing for long-acting opioids</td></tr>
+      <tr><td>Adjuncts</td><td>Psychosocial counselling, contingency management, NA/12-step programs</td><td>Behavioural component essential to long-term outcomes</td></tr>
+    </table>
+    <p><b>Key principle:</b> Methadone/buprenorphine maintenance treats opioid use disorder as a chronic relapsing condition (harm reduction), whereas naltrexone aims for abstinence; choice depends on patient motivation, support systems and relapse risk.</p>
+
+    <h4>Non-addictive drugs of abuse</h4>
+    <p>Substances abused without classic physical dependence: hallucinogens (LSD, psilocybin), some inhalants, dextromethorphan, certain "designer" psychedelics — abused for psychoactive/dissociative effect rather than physical dependence.</p>
+
+    <h4>Drugs acting on biogenic-amine transporters</h4>
+    <p>Block reuptake of NA/5-HT/DA: SSRIs (SERT), SNRIs (SERT+NET), TCAs, cocaine &amp; amphetamine (DAT/NET — abuse potential), bupropion (NDRI), atomoxetine (NET — ADHD).</p>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>µ, κ, δ — all Gi-coupled; ↓cAMP, ↑K⁺ conductance, ↓Ca²⁺ entry → ↓transmitter release.</li>
+      <li>Methadone &amp; buprenorphine = maintenance therapy (harm reduction); naltrexone = abstinence-based (must detox first); naloxone = acute overdose reversal.</li>
+      <li>Buprenorphine's ceiling effect on respiratory depression makes it safer for office-based maintenance (e.g. Suboxone with naloxone to deter IV misuse).</li>
+      <li>Opioid withdrawal = unpleasant but not lethal (contrast with BZD/alcohol withdrawal, which can be fatal).</li>
+      <li>Clonidine/lofexidine ↓ autonomic withdrawal symptoms via α2-mediated ↓ locus coeruleus noradrenergic outflow.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Extended-release injectable/depot buprenorphine (monthly) and naltrexone depot formulations improve adherence in opioid use disorder. Take-home naloxone programs and over-the-counter naloxone nasal spray have expanded community overdose-reversal access amid the ongoing opioid/fentanyl epidemic. Biased µ-agonists (oliceridine — G-protein-biased, theoretically less respiratory depression/constipation) represent a structure-based attempt to dissociate analgesia from adverse/abuse-related signalling.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Therapeutic implications of drugs acting on benzodiazepine receptors; enumerate BZD agonists with indications.</span></summary>
+  <div class="answer">
+    <h4>Mechanism</h4>
+    <p>BZDs bind a specific site on the <b>GABA-A receptor</b> (between α &amp; γ subunits) → ↑ <b>frequency</b> of Cl⁻ channel opening (barbiturates ↑ duration) → enhanced GABA inhibition → CNS depression. Require GABA to act (ceiling effect → safer in overdose).</p>
+    <h4>Ligand types</h4>
+    <ul><li>Agonist: diazepam (anxiolysis/sedation). Antagonist: <b>flumazenil</b> (reversal/overdose). Inverse agonist: β-carbolines (anxiogenic — experimental).</li></ul>
+    <h4>BZD agonists &amp; indications</h4>
+    <table>
+      <tr><th>Drug</th><th>Indication</th></tr>
+      <tr><td>Diazepam, lorazepam</td><td>Status epilepticus, anxiety, alcohol withdrawal, muscle spasm</td></tr>
+      <tr><td>Midazolam</td><td>Procedural sedation, induction, status epilepticus (IM/buccal)</td></tr>
+      <tr><td>Alprazolam, clonazepam</td><td>Panic/anxiety; clonazepam — seizures</td></tr>
+      <tr><td>Temazepam, nitrazepam</td><td>Insomnia</td></tr>
+      <tr><td>"Z-drugs" (zolpidem, zopiclone)</td><td>Insomnia (selective ω1, less dependence)</td></tr>
+    </table>
+    <p><b>Caution:</b> tolerance, dependence, withdrawal, falls in elderly, respiratory depression with opioids/alcohol.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Vasopressin, Prostaglandin, Thyroid, Somatostatin &amp; GnRH receptors — agonists/antagonists &amp; clinical applications.</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>System</th><th>Receptor</th><th>Agonist</th><th>Antagonist</th><th>Use</th></tr>
+      <tr><td><b>Vasopressin</b></td><td>V1 (Gq, vessels), V2 (Gs, kidney)</td><td>Desmopressin (V2), terlipressin (V1)</td><td>Tolvaptan, conivaptan ("vaptans")</td><td>Diabetes insipidus, nocturnal enuresis, variceal/oesophageal bleed (V1); hyponatraemia/SIADH, ADPKD (vaptans)</td></tr>
+      <tr><td><b>Prostaglandin</b></td><td>EP, FP, IP, DP, TP</td><td>Misoprostol (EP), latanoprost (FP), epoprostenol (IP), alprostadil</td><td>—</td><td>NSAID-ulcer, abortion/labour, glaucoma, PAH, ED, PDA maintenance</td></tr>
+      <tr><td><b>Thyroid</b></td><td>Nuclear TR-α/β</td><td>Levothyroxine, liothyronine</td><td>(none direct)</td><td>Hypothyroidism</td></tr>
+      <tr><td><b>Somatostatin</b></td><td>SSTR1–5 (Gi)</td><td>Octreotide, lanreotide</td><td>—</td><td>Acromegaly, NET/carcinoid, variceal bleed, secretory diarrhoea</td></tr>
+      <tr><td><b>GnRH</b></td><td>GPCR (pituitary)</td><td>Leuprolide, goserelin (continuous → downregulation)</td><td>Cetrorelix, ganirelix, degarelix</td><td>Prostate/breast Ca, endometriosis, fibroids, precocious puberty, IVF protocols</td></tr>
+    </table>
+    <p><b>Key concept:</b> GnRH <b>agonists</b> initially cause a flare then suppress (downregulation); <b>antagonists</b> suppress immediately without flare.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Ion-channel-linked receptors and nuclear receptors with suitable examples.</span></summary>
+  <div class="answer">
+    <h4>Ion-channel-linked (ionotropic) receptors</h4>
+    <ul>
+      <li>Ligand binding directly opens an ion channel → fastest (ms) response.</li>
+      <li><b>Examples:</b> nicotinic ACh (Na⁺/K⁺ — NMJ/ganglia), GABA-A (Cl⁻ — benzodiazepine/barbiturate target), glycine (Cl⁻), NMDA/AMPA (cation), 5-HT3 (cation).</li>
+      <li>Drugs: NMBAs, benzodiazepines, barbiturates, ondansetron.</li>
+    </ul>
+    <h4>Nuclear (intracellular) receptors</h4>
+    <ul>
+      <li>Lipophilic ligand crosses membrane → binds cytoplasmic/nuclear receptor → binds DNA response element → ↑/↓ gene transcription → slow (hours-days) but sustained.</li>
+      <li><b>Examples:</b> glucocorticoid/mineralocorticoid, estrogen/progesterone/androgen, thyroid (TR), vitamin D, retinoid (RAR/RXR), PPARs (fibrates — α, glitazones — γ).</li>
+    </ul>
+    <table>
+      <tr><th>Feature</th><th>Ion-channel</th><th>Nuclear</th></tr>
+      <tr><td>Location</td><td>Membrane</td><td>Cytoplasm/nucleus</td></tr>
+      <tr><td>Speed</td><td>Milliseconds</td><td>Hours</td></tr>
+      <tr><td>Effect</td><td>Ion flux/excitability</td><td>Protein synthesis</td></tr>
+    </table>
+  </div></details>
+<details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Discuss histamine receptors, their subtypes, and drugs acting on them with clinical uses.</span></summary>
+  <div class="answer">
+<p>Histamine acts on four GPCRs (H1-H4).</p>
+<table><tr><th>Receptor</th><th>G-protein</th><th>Effects</th><th>Drugs</th></tr>
+<tr><td>H1</td><td>Gq</td><td>Allergy, vasodilation, bronchoconstriction, pruritus, CNS wakefulness, emesis</td><td>1st-gen antagonists: chlorpheniramine, diphenhydramine, promethazine (sedating, antimuscarinic, antiemetic); 2nd-gen: cetirizine, loratadine, fexofenadine (non-sedating)</td></tr>
+<tr><td>H2</td><td>Gs</td><td>Gastric acid secretion</td><td>Antagonists: ranitidine, famotidine, cimetidine (CYP inhibitor, antiandrogen)</td></tr>
+<tr><td>H3</td><td>Gi</td><td>Presynaptic autoreceptor (lowers histamine release) in CNS</td><td>Pitolisant (antagonist/inverse agonist) - narcolepsy</td></tr>
+<tr><td>H4</td><td>Gi</td><td>Immune-cell chemotaxis, inflammation, itch</td><td>Investigational antagonists</td></tr></table>
+<h4>Clinical uses</h4>
+<ul><li><b>H1 antagonists:</b> allergic rhinitis, urticaria, anaphylaxis (adjunct), motion sickness and vertigo, sedation, pruritus.</li>
+<li><b>H2 antagonists:</b> peptic ulcer, GERD (largely superseded by PPIs).</li>
+<li><b>Betahistine</b> (H1 agonist / H3 antagonist) - Meniere disease.</li></ul>
+<div class="recent"><b>Recent:</b> pitolisant (H3) for narcolepsy; H4 antagonists under investigation for pruritus and inflammation.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">GABA neurotransmission — synthesis, receptor subtypes (GABA-A/GABA-B/GABA-C), drugs modifying GABAergic transmission &amp; their clinical applications.</span></summary>
+  <div class="answer">
+    <p><b>GABA (γ-aminobutyric acid)</b> is the principal inhibitory neurotransmitter of the mammalian CNS, synthesised from glutamate by <b>glutamic acid decarboxylase (GAD)</b> (requires pyridoxal phosphate/vitamin B6 as cofactor) and inactivated by re-uptake (GAT transporters) into neurons/glia followed by GABA-transaminase (GABA-T) degradation to succinic semialdehyde.</p>
+
+    <h4>GABA receptor subtypes</h4>
+    <table>
+      <tr><th>Receptor</th><th>Type</th><th>Mechanism</th><th>Modulators</th></tr>
+      <tr><td>GABA-A</td><td>Ionotropic (ligand-gated Cl⁻ channel) — pentameric (commonly 2α2βγ)</td><td>Cl⁻ influx → hyperpolarisation → fast inhibitory postsynaptic potential</td><td>Benzodiazepines (↑frequency of opening, need GABA), barbiturates (↑duration, can act without GABA — more dangerous), neurosteroids, ethanol, propofol, etomidate</td></tr>
+      <tr><td>GABA-B</td><td>Metabotropic (Gi/Go-coupled GPCR), pre- &amp; postsynaptic</td><td>↓cAMP; presynaptic ↓Ca²⁺ entry (↓transmitter release); postsynaptic ↑K⁺ conductance (slow IPSP)</td><td>Baclofen (agonist)</td></tr>
+      <tr><td>GABA-C (ρ subunit)</td><td>Ionotropic Cl⁻ channel</td><td>Retina mainly; insensitive to BZDs/barbiturates</td><td>Limited clinical drug targeting</td></tr>
+    </table>
+
+    <h4>GABA-A receptor — site map &amp; drug binding</h4>
+    <p>The GABA-A receptor pentamer has multiple allosteric binding sites distinct from the GABA orthosteric site (α/β interface): the <b>benzodiazepine site</b> (α/γ interface), the <b>barbiturate site</b>, a <b>neurosteroid site</b>, and sites for ethanol/anaesthetics — all converging on the same Cl⁻ channel to enhance inhibitory tone, explaining cross-tolerance and additive CNS depression between these drug classes.</p>
+
+    <h4>Drugs modifying GABAergic transmission</h4>
+    <table>
+      <tr><th>Drug/class</th><th>Site/mechanism</th><th>Clinical use</th></tr>
+      <tr><td>Benzodiazepines (diazepam, lorazepam, midazolam)</td><td>↑ frequency of GABA-A Cl⁻ channel opening (needs GABA — ceiling effect, safer in OD)</td><td>Anxiety, seizures/status epilepticus, sedation, alcohol withdrawal, muscle spasm</td></tr>
+      <tr><td>Barbiturates (phenobarbital, thiopental)</td><td>↑ duration of channel opening; high dose can open channel without GABA (less safety margin)</td><td>Epilepsy (phenobarbital), anaesthesia induction (thiopental) — largely superseded due to narrow safety margin</td></tr>
+      <tr><td>Z-drugs (zolpidem, zopiclone, zaleplon)</td><td>Selective for α1-containing GABA-A (ω1 site)</td><td>Insomnia — less next-day sedation/dependence than BZDs</td></tr>
+      <tr><td>Neurosteroids (allopregnanolone, brexanolone, zuranolone)</td><td>Positive allosteric modulators at a distinct neurosteroid site</td><td>Postpartum depression (brexanolone IV, zuranolone oral)</td></tr>
+      <tr><td>Baclofen</td><td>GABA-B agonist — presynaptic ↓Ca²⁺/transmitter release</td><td>Spasticity (MS, spinal injury), alcohol-use-disorder craving (off-label)</td></tr>
+      <tr><td>Vigabatrin</td><td>Irreversible GABA-transaminase inhibitor → ↑ synaptic GABA</td><td>Refractory epilepsy, infantile spasms</td></tr>
+      <tr><td>Tiagabine</td><td>GABA reuptake inhibitor (GAT-1 blocker) → ↑ synaptic GABA</td><td>Adjunctive epilepsy</td></tr>
+      <tr><td>Gabapentin/pregabalin</td><td>Bind α2δ subunit of voltage-gated Ca²⁺ channels (NOT direct GABA-receptor action despite the name)</td><td>Neuropathic pain, partial seizures, anxiety</td></tr>
+      <tr><td>Valproate</td><td>↑ GABA synthesis/levels (multiple mechanisms incl. GAD activation)</td><td>Epilepsy, bipolar disorder, migraine prophylaxis</td></tr>
+      <tr><td>Flumazenil</td><td>Competitive benzodiazepine-site antagonist</td><td>BZD overdose reversal</td></tr>
+      <tr><td>Bicuculline, picrotoxin</td><td>GABA-A antagonists/channel blockers (convulsants)</td><td>Research tools only (proconvulsant)</td></tr>
+    </table>
+
+    <div class="dia"><b>Diagram:</b> GABA-A receptor pentamer embedded in postsynaptic membrane — central Cl⁻ pore; GABA orthosteric site at α/β interface; benzodiazepine allosteric site at α/γ interface; separate barbiturate &amp; neurosteroid sites on the channel-lining subunits. Drug binding at any site increases Cl⁻ conductance → hyperpolarisation → inhibition.</div>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>GAD (vitamin B6-dependent) makes GABA from glutamate — link to pyridoxine-deficiency/isoniazid-induced seizures (↓GABA synthesis).</li>
+      <li>GABA-A = ionotropic (fast, Cl⁻); GABA-B = metabotropic (slow, Gi, baclofen).</li>
+      <li>BZDs ↑frequency (need GABA, safer); barbiturates ↑duration (can act alone, more dangerous in OD).</li>
+      <li>Vigabatrin = GABA-transaminase inhibitor; tiagabine = reuptake inhibitor — both ↑ synaptic GABA.</li>
+      <li>Gabapentin/pregabalin act on Ca²⁺ channels, not GABA receptors directly (common misconception).</li>
+      <li>Flumazenil reverses BZD overdose only (not barbiturates/alcohol).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Neurosteroid-based GABA-A positive allosteric modulators — <b>brexanolone</b> (IV) and <b>zuranolone</b> (oral, 2023 FDA approval) — represent a new mechanistic class for postpartum depression with rapid onset. Research into α-subunit-selective GABA-A modulators aims to retain anxiolytic/anticonvulsant efficacy while reducing sedation, dependence and cognitive impairment seen with classical benzodiazepines.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacotherapy &amp; drug targets of Alzheimer's disease — cholinergic &amp; amyloid hypotheses, current drugs, disease-modifying monoclonal antibodies, and recent advances.</span></summary>
+  <div class="answer">
+    <p>Alzheimer's disease (AD) is the commonest cause of dementia, characterised pathologically by extracellular <b>amyloid-β (Aβ) plaques</b> and intracellular <b>neurofibrillary tangles</b> (hyperphosphorylated tau), with progressive loss of cholinergic neurons (basal forebrain/nucleus basalis of Meynert) and cortical/hippocampal atrophy. Current drug targets address either symptomatic cholinergic/glutamatergic deficits or the underlying amyloid pathology.</p>
+
+    <h4>Pathogenic hypotheses &amp; drug targets</h4>
+    <table>
+      <tr><th>Hypothesis</th><th>Target</th><th>Drug class/example</th></tr>
+      <tr><td>Cholinergic deficit</td><td>↑ synaptic ACh (basal forebrain cholinergic loss)</td><td>AChE inhibitors — donepezil, rivastigmine, galantamine</td></tr>
+      <tr><td>Glutamate excitotoxicity</td><td>Block pathological tonic NMDA activation</td><td>Memantine</td></tr>
+      <tr><td>Amyloid cascade</td><td>Clear/prevent Aβ plaque accumulation</td><td>Anti-amyloid monoclonal antibodies — lecanemab, donanemab, (aducanumab)</td></tr>
+      <tr><td>Tau pathology</td><td>Prevent tau hyperphosphorylation/aggregation</td><td>Investigational (anti-tau mAbs, kinase inhibitors)</td></tr>
+      <tr><td>Neuroinflammation</td><td>Microglial activation/cytokines</td><td>Investigational (NSAIDs historically disappointing)</td></tr>
+    </table>
+
+    <h4>1. Acetylcholinesterase inhibitors — symptomatic, mild-moderate AD</h4>
+    <ul>
+      <li><b>Donepezil:</b> selective, long t½ (~70 h), once-daily, first-line; reversible.</li>
+      <li><b>Rivastigmine:</b> inhibits both AChE and butyrylcholinesterase; available as transdermal patch (improved tolerability/compliance); also approved for Parkinson's disease dementia.</li>
+      <li><b>Galantamine:</b> AChE inhibitor + nicotinic receptor allosteric modulator.</li>
+      <li><b>ADR:</b> cholinergic excess — nausea, vomiting, diarrhoea, bradycardia/syncope (caution with other bradycardic drugs), muscle cramps, vivid dreams.</li>
+    </ul>
+
+    <h4>2. NMDA receptor antagonist — moderate-severe AD</h4>
+    <p><b>Memantine</b> — low-to-moderate affinity, voltage-dependent, "open-channel" NMDA blocker; blocks pathological tonic glutamate-mediated excitotoxicity while sparing physiological synaptic transmission needed for learning/memory (unlike high-affinity blockers like ketamine). Used alone or combined with an AChE inhibitor in moderate-severe disease. ADR: dizziness, confusion, constipation — better tolerated than AChE inhibitors.</p>
+
+    <h4>3. Disease-modifying anti-amyloid monoclonal antibodies</h4>
+    <ul>
+      <li><b>Lecanemab</b> and <b>donanemab</b> — bind soluble aggregated/fibrillar Aβ → promote microglial clearance → ↓ plaque burden; modestly slow cognitive/functional decline in early symptomatic (MCI/mild) AD confirmed by amyloid-PET/biomarker positivity.</li>
+      <li><b>Aducanumab</b> — earlier-generation anti-amyloid mAb (accelerated approval, clinical benefit debated, largely discontinued commercially).</li>
+      <li><b>ADR:</b> <b>ARIA (amyloid-related imaging abnormalities)</b> — ARIA-E (oedema/effusion) and ARIA-H (microhaemorrhage/siderosis); risk ↑ in APOE ε4 homozygotes — requires baseline/serial MRI monitoring.</li>
+    </ul>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Cholinergic hypothesis → AChE inhibitors (donepezil/rivastigmine/galantamine) for mild-moderate disease.</li>
+      <li>Glutamate excitotoxicity hypothesis → memantine for moderate-severe disease; combinable with AChE inhibitor.</li>
+      <li>Amyloid hypothesis → lecanemab/donanemab = first disease-modifying agents (not purely symptomatic) — require biomarker confirmation &amp; MRI monitoring for ARIA.</li>
+      <li>Rivastigmine = dual AChE + BuChE inhibitor, patch formulation, also used in Parkinson's dementia.</li>
+      <li>APOE ε4 = major genetic risk factor and predicts ARIA risk with anti-amyloid mAbs.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Lecanemab (2023) and donanemab (2024) are the first FDA-approved disease-modifying therapies, directly targeting amyloid pathology rather than only symptoms — a paradigm shift, though benefit is modest and ARIA monitoring burden is significant. Blood-based biomarkers (plasma p-tau217, Aβ42/40 ratio) are emerging as less invasive diagnostic/monitoring tools than CSF analysis or amyloid-PET. Anti-tau therapeutics and combination amyloid+tau approaches remain under active investigation.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Neuromodulation — concept, mechanisms &amp; examples of neuromodulators in the CNS and ANS.</span></summary>
+  <div class="answer">
+    <p><b>Neuromodulation</b> refers to the process by which a substance (a "neuromodulator") alters/fine-tunes the strength or efficacy of synaptic transmission without itself being the primary fast neurotransmitter — typically acting via slower, longer-lasting, often presynaptic or volume-transmission (non-synaptic diffusion) mechanisms, frequently via GPCRs and second messengers, rather than directly gating an ion channel.</p>
+
+    <h4>Neuromodulation vs classical neurotransmission</h4>
+    <table>
+      <tr><th>Feature</th><th>Classical (fast) neurotransmission</th><th>Neuromodulation</th></tr>
+      <tr><td>Speed</td><td>Milliseconds</td><td>Seconds to minutes (or longer)</td></tr>
+      <tr><td>Receptor type</td><td>Ionotropic (ligand-gated channel)</td><td>Usually GPCR (metabotropic) — second messengers</td></tr>
+      <tr><td>Spatial spread</td><td>Discrete synapse (point-to-point)</td><td>Often diffuse/volume transmission (affects wider neuronal population)</td></tr>
+      <tr><td>Effect</td><td>Direct depolarisation/hyperpolarisation</td><td>Modifies excitability/responsiveness/release probability of other transmitters</td></tr>
+      <tr><td>Example</td><td>Glutamate (AMPA), GABA (GABA-A), ACh (nicotinic)</td><td>Dopamine, serotonin, neuropeptides, adenosine, endocannabinoids, NO</td></tr>
+    </table>
+
+    <h4>Mechanisms of neuromodulation</h4>
+    <ul>
+      <li><b>Presynaptic autoreceptors:</b> modulate transmitter release from the same neuron (e.g. α2-adrenergic, D2, 5-HT1A, GABA-B autoreceptors) — negative feedback.</li>
+      <li><b>Heteroreceptors:</b> one neurotransmitter system modulates release of another (e.g. presynaptic opioid receptors on noradrenergic terminals).</li>
+      <li><b>Retrograde signalling:</b> postsynaptic neuron releases a modulator (e.g. endocannabinoids — anandamide, 2-AG) that acts back on presynaptic CB1 receptors to suppress further transmitter release (depolarisation-induced suppression of inhibition/excitation, DSI/DSE).</li>
+      <li><b>Volume transmission:</b> diffuse, non-synaptic release affecting many neurons over a wider area/time course (e.g. monoamine "tone" from locus coeruleus/raphe/VTA projections, NO as a gaseous diffusible modulator).</li>
+      <li><b>Second-messenger cascades:</b> GPCR-coupled neuromodulators alter neuronal excitability via cAMP/PKA, IP3/DAG/PKC, or direct G-protein-gated ion channels (GIRK) — changing the threshold/gain of subsequent fast synaptic inputs rather than directly causing them.</li>
+    </ul>
+
+    <h4>Examples of neuromodulator systems</h4>
+    <table>
+      <tr><th>Neuromodulator</th><th>Source</th><th>Modulatory role</th></tr>
+      <tr><td>Dopamine</td><td>VTA, substantia nigra</td><td>Reward, motor control, modulates cortical/striatal excitability</td></tr>
+      <tr><td>Serotonin (5-HT)</td><td>Raphe nuclei</td><td>Mood, sleep-wake, modulates pain/appetite circuits</td></tr>
+      <tr><td>Noradrenaline</td><td>Locus coeruleus</td><td>Arousal, attention, "fight-or-flight" modulation of cortical networks</td></tr>
+      <tr><td>Adenosine</td><td>Ubiquitous (ATP breakdown)</td><td>↓ neuronal excitability/arousal (caffeine = A1/A2A antagonist → ↓ this modulation → wakefulness)</td></tr>
+      <tr><td>Endocannabinoids</td><td>Postsynaptic, on-demand synthesis</td><td>Retrograde suppression of GABA/glutamate release (CB1)</td></tr>
+      <tr><td>Nitric oxide (NO)</td><td>Diffuse, non-vesicular gas</td><td>Retrograde signalling, vasodilation, synaptic plasticity</td></tr>
+      <tr><td>Neuropeptides (substance P, neuropeptide Y, opioid peptides)</td><td>Co-released with classical transmitters</td><td>Modulate intensity/duration of pain, appetite, mood signalling</td></tr>
+    </table>
+
+    <h4>Clinical relevance</h4>
+    <p>Many CNS drugs act as neuromodulators rather than direct channel agonists/antagonists: SSRIs raise synaptic serotonin tone (modulatory, not a direct fast signal), antipsychotics block D2 modulatory tone, gabapentinoids modulate (not mimic) GABA signalling via Ca²⁺ channels. Understanding neuromodulation explains why many psychotropic drugs take days-weeks for full clinical effect (receptor/gene-expression adaptation) despite immediate receptor occupancy.</p>
+
+    <div class="dia"><b>Diagram:</b> A modulatory (e.g. dopaminergic) terminal synapsing near a classical glutamatergic synapse — modulator released diffusely, binds GPCR on the glutamatergic terminal/postsynaptic neuron, alters (via cAMP/PKA) the probability or amplitude of the fast glutamate-AMPA signal, without itself directly opening the channel.</div>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Neuromodulators act mainly via GPCRs/second messengers; they adjust the gain/probability of fast synaptic transmission rather than directly causing it.</li>
+      <li>Retrograde endocannabinoid signalling (DSI/DSE) is a classic exam example of neuromodulation.</li>
+      <li>Volume transmission (diffuse, non-synaptic) is a defining feature distinguishing modulators from classical point-to-point neurotransmitters.</li>
+      <li>Adenosine/caffeine and NO are commonly tested "non-classical" modulators.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Optogenetic and chemogenetic (DREADD) tools now allow selective experimental activation/silencing of specific neuromodulatory circuits, refining understanding of dopaminergic/serotonergic circuit-specific roles in psychiatric disease and informing next-generation circuit-targeted therapeutics (e.g. for depression, addiction).</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Drugs for migraine prophylaxis — classes, mechanisms &amp; choice of agent.</span></summary>
+  <div class="answer">
+    <p>Migraine prophylaxis is indicated for frequent (≥4 headache days/month), prolonged, or disabling attacks, or when acute therapy is overused/ineffective. Goal: ↓ frequency/severity/duration by ≥50%. Multiple unrelated drug classes are effective, reflecting migraine's complex pathophysiology (cortical hyperexcitability, trigeminovascular activation, CGRP release).</p>
+
+    <h4>Classes used for migraine prophylaxis</h4>
+    <table>
+      <tr><th>Class</th><th>Drug(s)</th><th>Mechanism/notes</th></tr>
+      <tr><td>β-blockers</td><td>Propranolol, metoprolol, timolol</td><td>First-line; mechanism in migraine unclear (central serotonergic/noradrenergic modulation); avoid in asthma/depression</td></tr>
+      <tr><td>Anticonvulsants</td><td>Valproate (↑GABA), topiramate (multiple — Na⁺-channel block, ↑GABA, AMPA/kainate antagonism)</td><td>First-line; topiramate also used for weight loss; teratogenic — avoid in pregnancy (esp. valproate)</td></tr>
+      <tr><td>Tricyclic antidepressants</td><td>Amitriptyline</td><td>Useful when comorbid tension-type headache/depression/insomnia; anticholinergic ADRs</td></tr>
+      <tr><td>Calcium-channel blockers</td><td>Flunarizine, verapamil</td><td>Alternative agents; flunarizine widely used outside US</td></tr>
+      <tr><td>Anti-CGRP monoclonal antibodies</td><td>Erenumab (CGRP-receptor mAb), fremanezumab, galcanezumab, eptinezumab (ligand mAbs)</td><td>Newer, well-tolerated, monthly/quarterly SC or IV; specific to migraine pathophysiology</td></tr>
+      <tr><td>Gepants (oral CGRP-receptor antagonists)</td><td>Rimegepant, atogepant</td><td>Dual-use — atogepant approved specifically for prevention; rimegepant for both acute &amp; prevention</td></tr>
+      <tr><td>OnabotulinumtoxinA</td><td>Botox (chronic migraine ≥15 headache days/month)</td><td>Inhibits peripheral neuropeptide/CGRP release at sensory nerve terminals</td></tr>
+      <tr><td>NSAIDs (short-term/menstrual prophylaxis)</td><td>Naproxen</td><td>Perimenstrual prophylaxis in predictable catamenial migraine</td></tr>
+    </table>
+
+    <h4>Choice of agent</h4>
+    <ul>
+      <li>β-blockers/topiramate/valproate = traditional first-line (efficacy + cost); choice guided by comorbidities (β-blocker if hypertensive, topiramate if obese, amitriptyline if depressed/insomniac, avoid valproate/topiramate in women of childbearing potential due to teratogenicity).</li>
+      <li>Anti-CGRP mAbs/gepants reserved (in many settings) for patients failing ≥2 conventional prophylactics, or used first-line where access allows — better tolerability, no need for slow dose titration.</li>
+      <li>OnabotulinumtoxinA specifically for chronic migraine (≥15 days/month, ≥8 with migrainous features).</li>
+    </ul>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Prophylaxis threshold: generally ≥4 migraine days/month or significant disability.</li>
+      <li>β-blockers, topiramate, valproate, amitriptyline = traditional first-line classes (different mechanisms, common exam list).</li>
+      <li>CGRP pathway = the modern specific target — mAbs (-mab, monthly/quarterly) vs gepants (oral, -gepant).</li>
+      <li>Topiramate/valproate teratogenic — counsel contraception in women of reproductive age.</li>
+      <li>OnabotulinumtoxinA only for chronic (not episodic) migraine.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> CGRP-targeted therapy (mAbs — erenumab/fremanezumab/galcanezumab/eptinezumab; gepants — rimegepant/atogepant) has transformed migraine prevention with mechanism-specific, well-tolerated options. Atogepant is notable as an oral, small-molecule CGRP-receptor antagonist specifically approved for prophylaxis (distinct from acute-use gepants), reducing the unmet need for an oral preventive alternative to injectable mAbs.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s6" style="--sec:#2f8696;--sec-soft:#2f869626">
+  <h2>Section 6 · Enzyme Inhibitors &amp; Modulators</h2>
+  <p class="sec-note">Supplemented from CVS/immunology/antimicrobial pharmacology (Katzung, Rang &amp; Dale).</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Phosphodiesterase (PDE) inhibitors — classification, clinical uses (esp. PDE-5), role in heart failure &amp; other conditions.</span></summary>
+  <div class="answer">
+    <p><b>Mechanism:</b> inhibit PDE → ↓ breakdown of cAMP/cGMP → ↑ second messenger → smooth-muscle relaxation, ↑ cardiac contractility, ↓ inflammation, antiplatelet effect.</p>
+    <table>
+      <tr><th>PDE isoform</th><th>Inhibitor</th><th>Clinical use</th></tr>
+      <tr><td>Non-selective</td><td>Theophylline, pentoxifylline</td><td>Asthma/COPD; peripheral vascular disease</td></tr>
+      <tr><td>PDE3</td><td>Milrinone, inamrinone; cilostazol</td><td>Acute decompensated HF (inodilator); intermittent claudication</td></tr>
+      <tr><td>PDE4</td><td>Roflumilast; apremilast</td><td>Severe COPD; psoriasis/psoriatic arthritis</td></tr>
+      <tr><td>PDE5</td><td>Sildenafil, tadalafil, vardenafil</td><td>Erectile dysfunction, PAH, BPH (tadalafil)</td></tr>
+    </table>
+    <h4>PDE-5 inhibitors</h4>
+    <p>↑cGMP in vascular smooth muscle (potentiate NO pathway) → vasodilation of corpus cavernosum (ED) &amp; pulmonary vasculature (PAH). <b>ADR:</b> headache, flushing, ↓BP, blue-tinged vision (sildenafil-PDE6), priapism. <b>Contraindicated with nitrates</b> (severe hypotension).</p>
+    <h4>Role in heart failure</h4>
+    <p>PDE3 inhibitors (milrinone) are short-term inodilators in acute HF (↑contractility + vasodilation) but ↑ mortality with chronic use (arrhythmia). PDE5 inhibitors studied in HFpEF/PAH-related HF.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Direct thrombin inhibitors, Factor Xa inhibitors, ACE inhibitors, Renin inhibitors &amp; ARNI in HF and CV conditions.</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Mechanism / Use</th></tr>
+      <tr><td>Direct thrombin inhibitors</td><td>Dabigatran (oral), bivalirudin, argatroban (IV)</td><td>Inhibit factor IIa → anticoagulation (AF, VTE, PCI); reversal: idarucizumab</td></tr>
+      <tr><td>Factor Xa inhibitors</td><td>Rivaroxaban, apixaban, edoxaban</td><td>Inhibit Xa (oral DOACs) — AF, VTE; reversal: andexanet alfa</td></tr>
+      <tr><td>ACE inhibitors</td><td>Enalapril, ramipril, lisinopril</td><td>Block ACE → ↓Ang II, ↑bradykinin → ↓BP, anti-remodelling; HTN, HF, post-MI, diabetic nephropathy; ADR: cough, hyperkalaemia, angioedema</td></tr>
+      <tr><td>Renin inhibitors</td><td>Aliskiren</td><td>Direct renin inhibition → blocks RAAS at first step; HTN (limited use)</td></tr>
+      <tr><td>ARNI</td><td>Sacubitril + valsartan</td><td>Neprilysin inhibition (↑natriuretic peptides) + ARB → HFrEF (superior to ACEi — PARADIGM-HF)</td></tr>
+    </table>
+    <p><b>Note:</b> Avoid combining ARNI with ACEi (angioedema risk) — 36-h washout needed.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Calcineurin inhibitors, β-lactamase inhibitors, Protease inhibitors &amp; NNRTIs — current status.</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Mechanism / Use</th></tr>
+      <tr><td>Calcineurin inhibitors</td><td>Cyclosporine, tacrolimus</td><td>Inhibit calcineurin → ↓IL-2 → ↓T-cell activation; transplant rejection prophylaxis, autoimmune disease; ADR: nephrotoxicity, HTN, tremor</td></tr>
+      <tr><td>β-lactamase inhibitors</td><td>Clavulanate, sulbactam, tazobactam, avibactam, vaborbactam</td><td>Protect β-lactams from bacterial β-lactamase; given as combinations (amox-clav, pip-tazo, ceftazidime-avibactam)</td></tr>
+      <tr><td>Protease inhibitors</td><td>Ritonavir, lopinavir, atazanavir, darunavir; (HCV: -previrs); nirmatrelvir (SARS-CoV-2)</td><td>Inhibit viral protease → immature non-infectious virions; HIV (ritonavir-boosted), HCV, COVID-19 (Paxlovid)</td></tr>
+      <tr><td>NNRTIs</td><td>Efavirenz, nevirapine, rilpivirine, doravirine</td><td>Non-competitively bind HIV reverse transcriptase; part of ART; CYP interactions, rash</td></tr>
+    </table>
+    <div class="recent"><b>Recent:</b> Newer β-lactamase inhibitors (avibactam, relebactam) combat carbapenem-resistant gram-negatives; nirmatrelvir/ritonavir for COVID-19.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">TNF-α inhibitors &amp; PCSK9 inhibitors — therapeutic potential.</span></summary>
+  <div class="answer">
+    <h4>TNF-α inhibitors</h4>
+    <ul>
+      <li><b>Drugs:</b> infliximab, adalimumab, golimumab, certolizumab (mAbs); <b>etanercept</b> (soluble receptor fusion).</li>
+      <li><b>Mechanism:</b> neutralise TNF-α → ↓ inflammation.</li>
+      <li><b>Uses:</b> rheumatoid arthritis, ankylosing spondylitis, psoriasis/psoriatic arthritis, IBD (Crohn's, UC).</li>
+      <li><b>ADR/caution:</b> reactivation of latent TB (screen first), serious infections, ↑ lymphoma risk, injection/infusion reactions.</li>
+    </ul>
+    <h4>PCSK9 inhibitors</h4>
+    <ul>
+      <li><b>Drugs:</b> alirocumab, evolocumab (mAbs, SC); <b>inclisiran</b> (siRNA, twice-yearly).</li>
+      <li><b>Mechanism:</b> inhibit PCSK9 → ↑ LDL-receptor recycling → marked ↓ LDL-C (~50–60%).</li>
+      <li><b>Uses:</b> familial hypercholesterolaemia, statin-intolerant, high CV-risk patients not at LDL goal; reduce CV events.</li>
+    </ul>
+    <div class="recent"><b>Recent:</b> Inclisiran (siRNA) offers twice-yearly dosing &amp; better adherence; bempedoic acid as oral adjunct.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Therapeutic uses of anticholinesterase (acetylcholinesterase) inhibitors — classification, individual clinical applications &amp; rationale.</span></summary>
+  <div class="answer">
+    <p>Anticholinesterases inhibit acetylcholinesterase (AChE) → accumulation of ACh at cholinergic synapses (NMJ, autonomic ganglia/effectors, CNS) → enhanced cholinergic transmission. Classified as <b>reversible</b> (carbamate/alcohol-type — short to intermediate acting) and <b>irreversible</b> (organophosphate-type — covalent phosphorylation, prolonged action, ageing phenomenon).</p>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Duration</th></tr>
+      <tr><td>Reversible, simple alcohols</td><td>Edrophonium</td><td>Very short (~10 min) — diagnostic</td></tr>
+      <tr><td>Reversible, carbamates</td><td>Physostigmine, neostigmine, pyridostigmine, rivastigmine</td><td>Intermediate (2–6 h)</td></tr>
+      <tr><td>Reversible, acridine</td><td>Donepezil, tacrine</td><td>Long (donepezil t½ ~70 h)</td></tr>
+      <tr><td>Irreversible, organophosphates</td><td>Echothiophate, malathion, parathion, sarin (nerve agent), isoflurophate</td><td>Very long (de novo enzyme synthesis needed) — pesticides/nerve agents</td></tr>
+    </table>
+
+    <h4>Therapeutic uses</h4>
+    <ul>
+      <li><b>Myasthenia gravis:</b> pyridostigmine (drug of choice, long action, fewer GI effects) and neostigmine improve neuromuscular transmission by prolonging ACh action at the NMJ; edrophonium used for rapid diagnosis (Tensilon test) and to differentiate myasthenic vs cholinergic crisis.</li>
+      <li><b>Reversal of non-depolarising neuromuscular blockade</b> (post-anaesthesia): neostigmine (with glycopyrrolate/atropine to block muscarinic ADRs) restores neuromuscular transmission after vecuronium/rocuronium etc.</li>
+      <li><b>Glaucoma:</b> echothiophate (irreversible, long-acting) and physostigmine — ciliary muscle contraction → ↑ trabecular outflow; now largely superseded by newer agents but historically important and still used in select chronic open-angle/accommodative esotropia cases.</li>
+      <li><b>Alzheimer's disease:</b> donepezil, rivastigmine, galantamine — CNS AChE inhibition → ↑ cortical/hippocampal ACh → modest symptomatic improvement in cognition (mild-moderate disease); rivastigmine also approved for Parkinson's disease dementia.</li>
+      <li><b>Antidote to antimuscarinic (atropine) poisoning:</b> physostigmine — crosses BBB, reverses both peripheral and central anticholinergic toxicity (unlike neostigmine, which is quaternary and does not cross BBB).</li>
+      <li><b>Postoperative paralytic ileus &amp; non-obstructive urinary retention:</b> neostigmine increases GI/bladder smooth-muscle tone and motility.</li>
+      <li><b>Diagnosis of myasthenia gravis</b> and intra-operative confirmation of adequate reversal of neuromuscular block — edrophonium/neostigmine.</li>
+      <li><b>Insecticides/nerve agent context</b> (organophosphates) — not therapeutic but clinically vital to recognise toxicity (SLUDGE/DUMBELS syndrome, miosis, bronchorrhoea, fasciculations) and treat with atropine + pralidoxime (2-PAM, reactivates AChE before "ageing").</li>
+    </ul>
+
+    <h4>Adverse effects (cholinergic excess)</h4>
+    <p>Muscarinic: salivation, lacrimation, urination, diarrhoea, GI cramps, bradycardia, miosis, bronchospasm/bronchorrhoea. Nicotinic (NMJ/ganglia): fasciculations, weakness, cholinergic crisis (paradoxical weakness mimicking myasthenic crisis — distinguished by edrophonium test). Treatment of overdose: atropine (blocks muscarinic effects only) ± pralidoxime for organophosphates.</p>
+
+    <div class="dia"><b>Diagram:</b> Cholinergic synapse — presynaptic ACh vesicle release → AChE in synaptic cleft normally hydrolyses ACh to choline + acetate; anticholinesterase drug occupies/blocks the enzyme's active site (reversible: carbamylation; irreversible: phosphorylation) → ACh accumulates → prolonged receptor (muscarinic/nicotinic) activation.</div>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Pyridostigmine = drug of choice for chronic myasthenia gravis maintenance; edrophonium = diagnostic (short-acting).</li>
+      <li>Physostigmine crosses BBB (tertiary amine) — used for atropine poisoning &amp; has CNS effects; neostigmine does not cross BBB (quaternary).</li>
+      <li>Donepezil/rivastigmine/galantamine = centrally-acting reversible inhibitors for Alzheimer's.</li>
+      <li>Organophosphate poisoning antidotes: atropine (muscarinic block) + pralidoxime (reactivates AChE, must be given before "ageing").</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Rivastigmine transdermal patch improves compliance/tolerability in dementia; donepezil remains first-line for mild-moderate Alzheimer's, often combined with the NMDA antagonist memantine in moderate-severe disease. Research continues into AChE inhibitors with additional anti-amyloid or neuroprotective actions (multi-target-directed ligands).</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s7" style="--sec:#548a4f;--sec-soft:#548a4f26">
+  <h2>Section 7 · Vasodilators, Inotropes &amp; Related</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Classify vasodilators; mechanisms &amp; therapeutic uses with rationale; newer vasodilators &amp; inotropes in advanced HF / role in CCF.</span></summary>
+  <div class="answer">
+    <h4>Classification of vasodilators</h4>
+    <table>
+      <tr><th>Type</th><th>Examples</th><th>Mechanism</th></tr>
+      <tr><td>Arteriolar</td><td>Hydralazine, minoxidil, CCBs (dihydropyridines)</td><td>↓ afterload</td></tr>
+      <tr><td>Venodilators</td><td>Nitrates (GTN, ISDN)</td><td>↑cGMP/NO → ↓ preload</td></tr>
+      <tr><td>Mixed (arterio-venous)</td><td>Sodium nitroprusside, ACEi/ARB, ARNI, prazosin</td><td>↓ pre- &amp; afterload</td></tr>
+      <tr><td>K⁺-channel openers</td><td>Minoxidil, nicorandil, diazoxide</td><td>Hyperpolarization → relaxation</td></tr>
+      <tr><td>PDE inhibitors / others</td><td>Sildenafil, hydralazine</td><td>↑cGMP/cAMP</td></tr>
+    </table>
+    <h4>Uses &amp; rationale</h4>
+    <ul>
+      <li><b>Hypertension</b> (↓ TPR), <b>angina</b> (nitrates ↓ preload, ↓ O₂ demand), <b>heart failure</b> (↓ pre/afterload → ↑ output), <b>hypertensive emergency</b> (nitroprusside), <b>PAH</b> (PDE5/prostacyclin/ERA).</li>
+      <li>Hydralazine + isosorbide dinitrate combination — proven mortality benefit in HFrEF (esp. African-Americans, A-HeFT).</li>
+    </ul>
+    <h4>Newer vasodilators/inotropes in advanced HF / CCF</h4>
+    <ul>
+      <li><b>Vericiguat</b> — soluble guanylate cyclase stimulator.</li>
+      <li><b>Sacubitril/valsartan (ARNI)</b> &amp; <b>SGLT2 inhibitors</b> — disease-modifying.</li>
+      <li><b>Inodilators:</b> milrinone (PDE3), levosimendan (Ca²⁺-sensitizer + K-ATP opener).</li>
+      <li><b>Omecamtiv mecarbil</b> — cardiac myosin activator (selective inotrope, trials).</li>
+      <li>Acute: dobutamine, dopamine.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Biological vasodilators and Nitric oxide donors &amp; inhibitors — potential role &amp; toxicity.</span></summary>
+  <div class="answer">
+    <h4>Biological (endogenous) vasodilators</h4>
+    <ul><li>Nitric oxide (EDRF), prostacyclin (PGI2), bradykinin, natriuretic peptides (ANP/BNP), adenosine, histamine, VIP, CGRP.</li></ul>
+    <h4>Nitric oxide donors</h4>
+    <table>
+      <tr><th>Donor</th><th>Use</th></tr>
+      <tr><td>Glyceryl trinitrate, isosorbide di/mononitrate</td><td>Angina, acute HF</td></tr>
+      <tr><td>Sodium nitroprusside</td><td>Hypertensive emergency (releases NO + cyanide)</td></tr>
+      <tr><td>Inhaled NO</td><td>Persistent pulmonary HTN of newborn, ARDS</td></tr>
+      <tr><td>Molsidomine, nicorandil</td><td>Angina</td></tr>
+    </table>
+    <h4>NO mechanism</h4>
+    <p>NO → activates soluble guanylyl cyclase → ↑cGMP → ↓intracellular Ca²⁺ → smooth-muscle relaxation. (PDE5 inhibitors potentiate; riociguat/vericiguat stimulate sGC.)</p>
+    <h4>NO synthase inhibitors</h4>
+    <p>L-NMMA, methylene blue (also used in refractory vasoplegic/septic shock &amp; methaemoglobinaemia).</p>
+    <h4>Toxicity</h4>
+    <ul><li>Nitrates: headache, postural hypotension, reflex tachycardia, <b>tolerance</b> (need nitrate-free interval), methaemoglobinaemia.</li><li>Nitroprusside: <b>cyanide/thiocyanate toxicity</b> (esp. renal failure/prolonged use) → treat with sodium thiosulfate/hydroxocobalamin.</li></ul>
+  </div></details>
+</section>
+
+<section class="sec" id="s8" style="--sec:#c06a3e;--sec-soft:#c06a3e26">
+  <h2>Section 8 · Integrated Therapeutic &amp; Special Topics</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 17 (BBB), Ch. 18/21 (depression/neurodegeneration), Ch. 28 (addiction); supplemented.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacotherapy of glaucoma in detail — aqueous humour dynamics, classification of antiglaucoma drugs, individual classes with adverse effects, combination therapy, therapeutic approach in POAG &amp; acute angle-closure, drugs precipitating glaucoma, and recent advances.</span></summary>
+  <div class="answer">
+    <p><b>Glaucoma</b> is a group of chronic, progressive optic neuropathies with retinal ganglion-cell/nerve-fibre-layer loss and visual-field defects with optic-disc cupping. Although usually associated with raised IOP (&gt;21 mmHg), damage can progress at statistically normal IOP (normal-/low-tension glaucoma). <b>Elevated IOP is the only modifiable risk factor</b>, so therapy aims entirely at lowering it — by reducing aqueous-humour secretion and/or enhancing its outflow.</p>
+
+    <h4>Aqueous humour dynamics — rational basis of therapy</h4>
+    <ul>
+      <li>Secreted by ciliary processes (carbonic-anhydrase/β-receptor–driven active process) → posterior chamber → pupil → anterior chamber.</li>
+      <li>Drains by two routes: <b>conventional (trabecular) outflow</b> via trabecular meshwork → canal of Schlemm → episcleral veins (~80–95%), and the <b>uveoscleral pathway</b> through the ciliary muscle (~10%).</li>
+      <li>Every antiglaucoma drug acts at one of these nodes — ↓secretion (β-blockers, α2-agonists, CAIs) or ↑outflow (prostaglandins, Rho-kinase inhibitors, miotics, sympathomimetics).</li>
+    </ul>
+    <div class="dia"><b>Diagram:</b> Sagittal section of anterior eye — ciliary process (secretion) → posterior chamber → pupil → anterior chamber → trabecular meshwork → canal of Schlemm (conventional outflow) / uveoscleral pathway. Superimposed drug sites: β-blocker/α2-agonist/CAI = ↓secretion at ciliary body; PG analogue = ↑uveoscleral; Rho-kinase inhibitor/miotic = ↑trabecular.</div>
+
+    <h4>Goal of therapy</h4>
+    <p>Individualised "target IOP" (usually 20–30% reduction from baseline, reviewed at 4–6 weeks); greater reduction sought with high baseline/advanced field loss; lower absolute target in normal-tension glaucoma. Stepwise: monotherapy → switch/add second agent → multidrug topical regimen → oral CAI → laser/surgery.</p>
+
+    <h4>Classification of antiglaucoma drugs</h4>
+    <table>
+      <tr><th>Class</th><th>Prototype drugs</th><th>Mechanism</th><th>Net effect</th></tr>
+      <tr><td>Prostaglandin (FP) analogues</td><td>Latanoprost (1st-line), travoprost, bimatoprost, tafluprost</td><td>↑ Uveoscleral (+minor trabecular) outflow</td><td>↓↓ IOP (once-daily)</td></tr>
+      <tr><td>β-blockers</td><td>Timolol (non-selective), betaxolol (β1), levobunolol, carteolol</td><td>↓ Aqueous secretion (β2 block → ↓cAMP)</td><td>↓↓ IOP</td></tr>
+      <tr><td>α2-agonists</td><td>Brimonidine, apraclonidine</td><td>↓ Secretion + ↑ uveoscleral outflow</td><td>↓ IOP</td></tr>
+      <tr><td>Carbonic anhydrase inhibitors</td><td>Topical dorzolamide, brinzolamide; oral acetazolamide, methazolamide</td><td>↓ Secretion (↓HCO3⁻ generation)</td><td>↓ IOP</td></tr>
+      <tr><td>Rho-kinase (ROCK) inhibitors</td><td>Netarsudil, ripasudil</td><td>↑ Trabecular outflow (↓ actin stress fibres)</td><td>↓ IOP</td></tr>
+      <tr><td>NO-donating PG analogue</td><td>Latanoprostene bunod</td><td>↑ Trabecular + ↑ uveoscleral outflow</td><td>↓↓ IOP</td></tr>
+      <tr><td>Cholinergic miotics</td><td>Pilocarpine, carbachol, echothiophate</td><td>↑ Trabecular outflow (ciliary muscle contraction)</td><td>↓ IOP</td></tr>
+      <tr><td>Sympathomimetic (prodrug)</td><td>Dipivefrine</td><td>↑ Uveoscleral + trabecular outflow</td><td>↓ IOP (add-on)</td></tr>
+      <tr><td>Osmotic agents</td><td>Mannitol (IV), glycerol (oral)</td><td>Withdraw water from vitreous</td><td>Rapid ↓ IOP (emergency)</td></tr>
+    </table>
+
+    <h4>1. Prostaglandin analogues — current first-line</h4>
+    <p>Latanoprost is the most-used glaucoma drug; with travoprost, bimatoprost and tafluprost has largely replaced β-blockers as first-line. Prodrugs hydrolysed to the active acid, binding FP receptors (Gq/11–PLC–IP3–Ca²⁺) → ↑ uveoscleral outflow via remodelling of ciliary-muscle ECM/collagen. IOP reduction ~25–35% (similar to timolol); effective even in normal-pressure glaucoma; once-daily evening dosing. <b>ADR (local only):</b> conjunctival hyperaemia, irritation, <b>permanent</b> iris-pigmentation increase (esp. hazel eyes), eyelash growth/darkening, periorbital fat atrophy, cystoid macular oedema (aphakic/pseudophakic). Bimatoprost = prostamide, equally/more potent; tafluprost = preservative-free. Non-responders to one analogue may respond to another.</p>
+
+    <h4>2. β-adrenergic blockers</h4>
+    <p>Next most common class; ↓ IOP 20–35% by ↓ aqueous secretion (β2-blockade at ciliary epithelium ↓ cAMP–PKA), with secondary ↓ ciliary blood flow. Do not affect pupil size/ciliary tone (no induced myopia/brow ache, unlike miotics). <b>Timolol</b> (non-selective, no MSA/ISA): onset &lt;1 h, lasts ~12 h; effect persists 1–2 weeks after stopping. ~30% fail monotherapy. <b>Betaxolol</b> (β1-selective): less efficacious but safer in airway disease. <b>ADR:</b> ocular — stinging, corneal hypoesthesia, allergic blepharoconjunctivitis; <b>systemic (via nasolacrimal absorption)</b> — bronchospasm (can be fatal in asthma/COPD), bradycardia, heart block, CHF, masked hypoglycaemia, depression, impotence. Nasolacrimal occlusion (~5 min pressure) minimises systemic absorption.</p>
+
+    <h4>3. α2-adrenergic agonists</h4>
+    <p><b>Brimonidine</b> (selective α2, lipophilic): ↓ IOP 20–27% by ↓ production + ↑ uveoscleral outflow (Gi → ↓cAMP); used for short-term IOP-spike prophylaxis and long-term add-on. <b>Apraclonidine</b> (polar, no BBB crossing): ↓ IOP ~25%; restricted to short-term peri-laser control (tachyphylaxis, high allergic conjunctivitis rate). <b>ADR:</b> ocular allergy/hyperaemia, mydriasis, dry mouth, sedation, mild ↓BP; <b>contraindicated in infants/young children</b> (CNS depression, apnoea, hypothermia, coma — brimonidine contraindicated &lt;2 years).</p>
+
+    <h4>4. Carbonic anhydrase inhibitors (CAI)</h4>
+    <p>Inhibit CA-II in ciliary epithelium → ↓HCO3⁻ → ↓ aqueous secretion. <b>Topical</b> (dorzolamide 2%, brinzolamide 1%): ↓ IOP ~15–26%; second-line/add-on; stinging, bitter taste, blurred vision, punctate keratitis. <b>Oral</b> (acetazolamide, methazolamide): short-term use (acute angle-closure, peri-operative) or unmet target; systemic effects — paraesthesiae, anorexia, malaise, depression, hypokalaemia, metabolic acidosis, nephrolithiasis (sulfonamide — caution in sulfa allergy).</p>
+
+    <h4>5. Rho-kinase (ROCK) inhibitors — newest topical class</h4>
+    <p>Netarsudil 0.02% (OD evening), ripasudil 0.4%: inhibit ROCK → ↓ actin stress-fibre density in trabecular meshwork/Schlemm's canal → ↑ conventional outflow only. Efficacy ~ β-blockers. <b>ADR:</b> conjunctival hyperaemia (very common), subconjunctival haemorrhage, blepharitis, <b>cornea verticillata</b> (whorl-like corneal pigment deposition); systemic effects rare.</p>
+
+    <h4>6. NO-donating PG analogue</h4>
+    <p><b>Latanoprostene bunod</b> 0.024% = latanoprost + NO-donating moiety — dual mechanism: latanoprost backbone ↑uveoscleral outflow + liberated NO relaxes trabecular cytoskeleton → ↑conventional outflow; once-daily.</p>
+
+    <h4>7. Cholinergic miotics (last resort in POAG)</h4>
+    <p>Pilocarpine/carbachol (direct muscarinic agonists), echothiophate (irreversible anticholinesterase) → ciliary-muscle contraction → pulls scleral spur → opens trabecular meshwork → ↑outflow facility (do NOT ↓ secretion). In angle-closure, miosis pulls peripheral iris away from meshwork, breaking pupillary block. Reserved for last-line use: miosis (dim vision), induced myopia/ciliary spasm, brow ache, retinal tears/detachment; echothiophate adds cataract/iris-cyst risk.</p>
+
+    <h4>8. Sympathomimetic prodrug &amp; osmotic agents</h4>
+    <p><b>Dipivefrine</b> (adrenaline prodrug, corneal esterase-activated) — add-on only (ocular smarting, hyperaemia). <b>Mannitol</b> (IV 20%, 1.5–2 g/kg)/<b>glycerol</b> (oral 10%) — fastest IOP fall in acute crises; caution in CHF/renal failure.</p>
+
+    <h4>Mode-of-action summary</h4>
+    <table>
+      <tr><th>Drug/class</th><th>Aqueous secretion</th><th>Trabecular outflow</th><th>Uveoscleral outflow</th></tr>
+      <tr><td>β-blockers</td><td>↓</td><td>—</td><td>—</td></tr>
+      <tr><td>Adrenaline/dipivefrine</td><td>↓</td><td>↑</td><td>↑</td></tr>
+      <tr><td>Brimonidine/apraclonidine</td><td>↓</td><td>—</td><td>↑</td></tr>
+      <tr><td>Prostaglandins (latanoprost)</td><td>—</td><td>(↑)</td><td>↑↑</td></tr>
+      <tr><td>Miotics (pilocarpine)</td><td>—</td><td>↑</td><td>—</td></tr>
+      <tr><td>Carbonic anhydrase inhibitors</td><td>↓</td><td>—</td><td>—</td></tr>
+      <tr><td>Rho-kinase inhibitors (netarsudil)</td><td>—</td><td>↑↑</td><td>—</td></tr>
+    </table>
+
+    <h4>Combination &amp; fixed-dose therapy</h4>
+    <ul>
+      <li>Rational combinations pair complementary mechanisms: timolol+dorzolamide, timolol+brimonidine, brinzolamide+brimonidine, latanoprost+timolol, netarsudil+latanoprost (Rocklatan).</li>
+      <li><b>Irrational:</b> combining two drugs of the same class (e.g. two PG analogues) — minimal extra benefit, multiplies ADRs. Separate two different drops by 5–10 min.</li>
+      <li>Topical NSAIDs can theoretically blunt PG-analogue efficacy (caveat, general pharmacology).</li>
+    </ul>
+
+    <h4>Therapeutic approach — POAG</h4>
+    <ol>
+      <li>Start monotherapy with a PG analogue (latanoprost) — once-daily, best 24-h control, no systemic effects; topical β-blocker (timolol) is the main alternative.</li>
+      <li>If target not reached → switch agent/class, or add a second agent of different class.</li>
+      <li>Brimonidine/dorzolamide/netarsudil (occasionally dipivefrine) as add-ons or when PG/β-blockers contraindicated.</li>
+      <li>Miotics and oral acetazolamide = last resort before laser trabeculoplasty/trabeculectomy.</li>
+    </ol>
+
+    <h4>Therapeutic approach — acute angle-closure crisis</h4>
+    <p>IOP rises precipitously to 40–60+ mmHg (often post-mydriasis) with red, congested, painful eye + headache — ophthalmic emergency.</p>
+    <ol>
+      <li>IV mannitol 20% (1.5–2 g/kg) or oral glycerol 10% — fastest decongestion.</li>
+      <li>Acetazolamide 0.5 g IV then oral.</li>
+      <li>Pilocarpine 1–4% once IOP starts falling (iris sphincter unresponsive at very high IOP).</li>
+      <li>Topical timolol 0.5% ± apraclonidine/brimonidine ± PG analogue.</li>
+      <li>Topical corticosteroids (↓inflammation/synechiae); laser/surgical iridotomy = definitive cure.</li>
+    </ol>
+    <p><i>Note:</i> anticholinergics, sympathomimetics and other mydriatics can precipitate angle closure in predisposed eyes — avoided.</p>
+
+    <h4>Contraindications &amp; special situations</h4>
+    <ul>
+      <li><b>β-blockers:</b> avoid in asthma/COPD, sinus bradycardia, heart block, CHF; caution with systemic β-blocker/CCB co-therapy, diabetics (mask hypoglycaemia).</li>
+      <li><b>α2-agonists:</b> contraindicated in neonates/young children; caution with MAOIs, severe CVS disease.</li>
+      <li><b>Oral CAIs:</b> avoid in sulfa hypersensitivity, hepatic/renal impairment, hypokalaemia, acidosis, renal stones.</li>
+      <li><b>PG analogues:</b> caution in active uveitis, aphakic/pseudophakic eyes; counsel re: permanent iris darkening.</li>
+      <li><b>Drugs that can precipitate/worsen glaucoma:</b> systemic/topical anticholinergics and mydriatics (angle-closure in narrow angles); topical/systemic/inhaled <b>corticosteroids</b> (open-angle, "steroid-responder" glaucoma — extracellular trabecular-meshwork material accumulation; ~5% responders without family history, up to ~90% with positive family history). Use lowest potency/dose, monitor IOP.</li>
+    </ul>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Lowering IOP is the only proven modifiable intervention — target ≈20–30% reduction.</li>
+      <li>PG analogues (latanoprost) = current first-line (↑uveoscleral outflow, FP receptor, no systemic effects, but pigmentation/macular oedema).</li>
+      <li>Timolol = ↓secretion; contraindicated in asthma/bradycardia/heart block; betaxolol in airway disease.</li>
+      <li>Brimonidine = ↓secretion+↑uveoscleral outflow; contraindicated in infants.</li>
+      <li>Netarsudil = ↑trabecular outflow only; hallmark ADR = cornea verticillata + hyperaemia.</li>
+      <li>Steroid-induced glaucoma = classic drug-induced open-angle IOP rise.</li>
+      <li>Acute angle-closure = emergency: mannitol/glycerol + IV acetazolamide + pilocarpine + timolol → iridotomy.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> <b>Rho-kinase inhibitors</b> (netarsudil, ripasudil) — newest topical class via the trabecular meshwork/Schlemm's-canal cytoskeleton, efficacy comparable to β-blockers, useful as fixed combination (netarsudil/latanoprost). <b>Latanoprostene bunod</b> exemplifies dual conventional + uveoscleral outflow enhancement. <b>Sustained-release/drop-free delivery:</b> the biodegradable intracameral <b>bimatoprost implant (Durysta)</b> — phase-3 ARTEMIS-1 showed the 10-mcg implant non-inferior to timolol; FDA-approved for single administration per eye. <b>Laser as first-line:</b> LiGHT trial supports selective laser trabeculoplasty (SLT) as an effective first-line alternative to drops — ~74% of SLT-treated eyes drop-free at 3 years. <b>MIGS</b> (iStent, Hydrus, XEN-45, suprachoroidal shunts) increasingly supplement pharmacotherapy, often combined with cataract surgery. Future classes under evaluation: adenosine-A1 agonists, cannabinoids, serotonin/dopamine agonists, NO/CO modulators, 11β-HSD inhibitors, IOP-independent neuroprotective strategies.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Role of long-acting β-agonists &amp; leukotriene modifiers in asthma and allergy.</span></summary>
+  <div class="answer">
+    <h4>Long-acting β2-agonists (LABA)</h4>
+    <ul>
+      <li><b>Drugs:</b> salmeterol, formoterol (12 h); <b>ultra-LABA</b> — vilanterol, indacaterol (24 h).</li>
+      <li><b>Mechanism:</b> β2 → ↑cAMP → bronchodilation + mast-cell stabilisation.</li>
+      <li><b>Key rule:</b> never use LABA <b>alone</b> in asthma (↑ mortality) — always with an <b>inhaled corticosteroid (ICS)</b>. Formoterol's fast onset enables ICS-formoterol as both maintenance &amp; reliever (MART/SMART).</li>
+    </ul>
+    <h4>Leukotriene modifiers</h4>
+    <table>
+      <tr><th>Type</th><th>Drug</th><th>Mechanism</th></tr>
+      <tr><td>LTRA (receptor antagonist)</td><td>Montelukast, zafirlukast</td><td>Block CysLT1 receptor</td></tr>
+      <tr><td>5-LOX inhibitor</td><td>Zileuton</td><td>Inhibit leukotriene synthesis</td></tr>
+    </table>
+    <p><b>Uses:</b> mild persistent asthma (oral alternative/add-on), <b>aspirin-exacerbated respiratory disease</b>, exercise-induced asthma, allergic rhinitis. <b>ADR:</b> montelukast — neuropsychiatric effects (FDA boxed warning).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Current status &amp; issues with COX-2 inhibitors; role in osteoarthritis &amp; other conditions.</span></summary>
+  <div class="answer">
+    <h4>Rationale</h4>
+    <p>Selective <b>COX-2 inhibitors (coxibs)</b> — celecoxib, etoricoxib, parecoxib — inhibit inducible COX-2 (inflammation) while sparing constitutive <b>COX-1</b> (gastric mucosa, platelets) → <b>fewer GI ulcers/bleeds</b> &amp; no antiplatelet effect.</p>
+    <h4>Issues / current status</h4>
+    <ul>
+      <li><b>Cardiovascular risk:</b> ↑ thrombotic events (MI/stroke) due to imbalance (↓ vascular prostacyclin, unopposed thromboxane) → <b>rofecoxib &amp; valdecoxib withdrawn</b>.</li>
+      <li>Celecoxib &amp; etoricoxib remain available with CV/renal cautions; contraindicated in established CV disease.</li>
+      <li>Renal effects &amp; hypertension similar to non-selective NSAIDs.</li>
+    </ul>
+    <h4>Uses</h4>
+    <p><b>Osteoarthritis</b> &amp; rheumatoid arthritis (esp. with high GI-bleed risk), acute pain, ankylosing spondylitis, dysmenorrhoea, familial adenomatous polyposis (celecoxib). Use lowest dose, shortest duration.</p>
+    <div class="recent"><b>Recent (PRECISION trial):</b> celecoxib CV safety comparable to naproxen/ibuprofen at moderate doses, partly rehabilitating the class.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Management of heavy-metal poisoning &amp; role of chelating agents; general &amp; specific principles of poisoning management.</span></summary>
+  <div class="answer">
+    <h4>General principles of poisoning management</h4>
+    <ol>
+      <li><b>Resuscitation (ABCDE)</b> — airway, breathing, circulation.</li>
+      <li><b>Decontamination:</b> activated charcoal (within 1 h), gastric lavage (selected), skin/eye wash, whole-bowel irrigation.</li>
+      <li><b>Enhanced elimination:</b> urine alkalinisation (salicylate/phenobarbitone), haemodialysis (lithium, methanol, salicylate), MDAC.</li>
+      <li><b>Antidotes</b> (specific).</li>
+      <li><b>Supportive care</b> &amp; monitoring.</li>
+    </ol>
+    <h4>Chelating agents for heavy metals</h4>
+    <table>
+      <tr><th>Metal</th><th>Chelator</th></tr>
+      <tr><td>Lead</td><td>CaNa₂-EDTA, DMSA (succimer), dimercaprol (encephalopathy)</td></tr>
+      <tr><td>Arsenic/Mercury/Gold</td><td>Dimercaprol (BAL), DMSA, DMPS</td></tr>
+      <tr><td>Iron</td><td>Deferoxamine (IV), deferasirox/deferiprone (oral)</td></tr>
+      <tr><td>Copper (Wilson's)</td><td>D-penicillamine, trientine</td></tr>
+    </table>
+    <p><b>Chelator mechanism:</b> forms stable, water-soluble, non-toxic complexes excreted in urine. Avoid oral chelator while metal remains in gut (may ↑ absorption); monitor renal function.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Drug dependence, addiction &amp; abuse; pharmacological management of nicotine, alcohol &amp; opioid dependence; note on doping in sports &amp; TUE.</span></summary>
+  <div class="answer">
+    <h4>Definitions</h4>
+    <ul>
+      <li><b>Dependence:</b> physical/psychological need; withdrawal on stopping.</li>
+      <li><b>Addiction:</b> compulsive drug-seeking despite harm (a chronic relapsing brain disorder — dopaminergic reward pathway).</li>
+      <li><b>Abuse/misuse:</b> use in a harmful/non-medical manner. <b>Tolerance:</b> ↓ effect with repeated use.</li>
+    </ul>
+    <h4>Pharmacotherapy</h4>
+    <table>
+      <tr><th>Substance</th><th>Drugs</th></tr>
+      <tr><td>Nicotine</td><td>Nicotine replacement (gum/patch), <b>varenicline</b> (partial α4β2 agonist), bupropion</td></tr>
+      <tr><td>Alcohol</td><td>Acute withdrawal: benzodiazepines + thiamine. Maintenance: <b>naltrexone, acamprosate, disulfiram</b> (aversion), baclofen</td></tr>
+      <tr><td>Opioid</td><td>Substitution: <b>methadone, buprenorphine</b> (±naloxone); maintenance: naltrexone; overdose: naloxone; withdrawal: clonidine/lofexidine</td></tr>
+    </table>
+    <h4>Drug abuse in sports &amp; TUE</h4>
+    <p>WADA prohibits performance-enhancing drugs (anabolic steroids, EPO, stimulants, β-blockers in precision sports, diuretics as masking agents). A <b>Therapeutic Use Exemption (TUE)</b> allows an athlete to use a prohibited substance for a legitimate documented medical condition (e.g. inhaled steroids for asthma, insulin for diabetes) with approval.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Recent advances in pharmacotherapy of depression, Alzheimer's, migraine &amp; neurodegenerative disorders (novel targets, current status).</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Disorder</th><th>Novel targets / recent drugs</th></tr>
+      <tr><td><b>Depression</b></td><td>NMDA — esketamine (nasal); GABA-A neurosteroids — brexanolone, <b>zuranolone</b> (postpartum); dextromethorphan-bupropion (Auvelity); psilocybin (trials)</td></tr>
+      <tr><td><b>Alzheimer's</b></td><td>Anti-amyloid-β mAbs — <b>lecanemab, donanemab</b> (disease-modifying, approved); aducanumab; symptomatic — AChE inhibitors (donepezil, rivastigmine), memantine (NMDA)</td></tr>
+      <tr><td><b>Migraine</b></td><td>CGRP pathway — <b>gepants</b> (rimegepant, ubrogepant — acute + prevention), anti-CGRP mAbs (erenumab, fremanezumab, galcanezumab — prevention); 5-HT1F agonist lasmiditan</td></tr>
+      <tr><td><b>Parkinson's / neurodegeneration</b></td><td>Continuous levodopa delivery, MAO-B (safinamide), adenosine A2A antagonist (istradefylline); ALS — riluzole, edaravone, sodium phenylbutyrate-taurursodiol; SMA — nusinersen, risdiplam, gene therapy</td></tr>
+    </table>
+    <div class="recent"><b>Recent:</b> First disease-modifying Alzheimer's antibodies (lecanemab 2023, donanemab 2024); oral CGRP antagonists transformed migraine care.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Pharmacotherapy of rheumatoid arthritis — DMARDs, biologics &amp; TNF-α inhibitors; note on biosimilars vs biologicals.</span></summary>
+  <div class="answer">
+    <h4>Treatment pyramid</h4>
+    <ul>
+      <li><b>Symptomatic:</b> NSAIDs, low-dose glucocorticoids (bridging).</li>
+      <li><b>Conventional synthetic DMARDs (csDMARDs):</b> <b>methotrexate (anchor)</b>, sulfasalazine, leflunomide, hydroxychloroquine.</li>
+      <li><b>Biologic DMARDs (bDMARDs):</b>
+        <ul>
+          <li>TNF-α inhibitors: infliximab, adalimumab, etanercept, golimumab, certolizumab.</li>
+          <li>Anti-IL-6R: tocilizumab. Anti-CD20: rituximab. T-cell co-stim: abatacept. Anti-IL-1: anakinra.</li>
+        </ul>
+      </li>
+      <li><b>Targeted synthetic DMARDs (tsDMARDs):</b> JAK inhibitors — tofacitinib, baricitinib, upadacitinib.</li>
+    </ul>
+    <p><b>Strategy:</b> "treat-to-target" (remission/low disease activity); start MTX early; add biologic/JAKi if inadequate. Screen for <b>latent TB &amp; hepatitis</b> before biologics.</p>
+    <h4>Biosimilar vs biological (innovator)</h4>
+    <table>
+      <tr><th>Biological (originator)</th><th>Biosimilar</th></tr>
+      <tr><td>Original innovator biologic from living cells</td><td>Highly similar copy of an approved biologic after patent expiry</td></tr>
+      <tr><td>Full clinical development</td><td>Abbreviated pathway — comparability/similarity studies (no identical "generic" due to complexity)</td></tr>
+      <tr><td>Reference product</td><td>No clinically meaningful difference in efficacy/safety; lower cost, ↑ access</td></tr>
+    </table>
+    <p>Unlike small-molecule generics, biosimilars are "similar not identical" (large, complex, cell-derived).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Targeted drug delivery systems, insulin delivery systems (newer insulins &amp; pumps) &amp; advances in delivery devices.</span></summary>
+  <div class="answer">
+    <h4>Targeted drug delivery (brief)</h4>
+    <p>Deliver drug selectively to site of action → ↑ efficacy, ↓ toxicity. Carriers: liposomes (Doxil), nanoparticles (nab-paclitaxel), antibody–drug conjugates, lipid nanoparticles (mRNA/siRNA); passive (EPR effect) &amp; active (ligand-targeted).</p>
+    <h4>Insulins — newer agents</h4>
+    <table>
+      <tr><th>Type</th><th>Examples</th></tr>
+      <tr><td>Rapid-acting analogues</td><td>Lispro, aspart, glulisine; ultra-rapid: faster-aspart</td></tr>
+      <tr><td>Long-acting (basal) analogues</td><td>Glargine (U-100/U-300), detemir, <b>degludec</b> (ultra-long, &gt;42 h)</td></tr>
+      <tr><td>Premixed / co-formulations</td><td>Degludec/aspart</td></tr>
+      <tr><td>Newer routes</td><td>Inhaled insulin (Afrezza); once-weekly insulin icodec (trials/recent)</td></tr>
+    </table>
+    <h4>Insulin delivery devices</h4>
+    <ul>
+      <li>Pens (prefilled/reusable), insulin pumps (CSII), <b>patch pumps</b>.</li>
+      <li><b>Closed-loop / "artificial pancreas"</b> — pump + continuous glucose monitor (CGM) with automated dosing algorithm (hybrid closed-loop).</li>
+      <li>Smart pens, CGM integration.</li>
+    </ul>
+    <div class="recent"><b>Recent:</b> Automated insulin delivery (AID/hybrid closed-loop) systems &amp; once-weekly basal insulin icodec.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Blood-brain barrier &amp; blood-CSF barrier and their relevance in drug delivery.</span></summary>
+  <div class="answer">
+    <p><b>G&amp;G Ch.17</b> covers the BBB and drug transport to the brain.</p>
+    <h4>Structure</h4>
+    <ul>
+      <li><b>BBB:</b> brain capillary endothelial cells with <b>tight junctions</b>, no fenestrae, surrounded by astrocyte foot-processes &amp; pericytes; efflux transporters (<b>P-glycoprotein, BCRP</b>) pump drugs out.</li>
+      <li><b>Blood-CSF barrier:</b> choroid plexus epithelium with tight junctions.</li>
+    </ul>
+    <h4>Determinants of CNS entry</h4>
+    <p>Favoured by: small size, high <b>lipid solubility</b>, non-ionised, low protein binding, not a P-gp substrate, or use of carrier transporters (e.g. L-dopa via LAT1).</p>
+    <h4>Relevance / strategies for drug delivery</h4>
+    <ul>
+      <li>Limits entry of antibiotics, chemotherapy, biologics → CNS infections/tumours hard to treat.</li>
+      <li>Strategies: lipophilic prodrugs, carrier-mediated transport, nanoparticles/liposomes, "Trojan horse" antibody shuttles (transferrin/insulin receptor), <b>intrathecal/intraventricular</b> delivery, transient osmotic BBB disruption (mannitol), focused ultrasound.</li>
+      <li>Inflammation (meningitis) ↑ BBB permeability → better antibiotic penetration.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">CAR-T cell therapy — principle, applications &amp; adverse effects.</span></summary>
+  <div class="answer">
+    <h4>Principle</h4>
+    <ol>
+      <li>Harvest patient's T-cells (leukapheresis).</li>
+      <li>Genetically engineer (viral vector) to express a <b>Chimeric Antigen Receptor</b> — an antibody-derived antigen-recognition domain fused to T-cell activation domains (CD3ζ + costimulatory CD28/4-1BB).</li>
+      <li>Expand ex-vivo → reinfuse → CAR-T recognises tumour antigen (e.g. <b>CD19</b>) MHC-independently → targeted killing.</li>
+    </ol>
+    <h4>Applications</h4>
+    <ul>
+      <li>Anti-CD19: B-cell ALL, DLBCL/lymphoma (tisagenlecleucel, axicabtagene).</li>
+      <li>Anti-BCMA: multiple myeloma (idecabtagene, ciltacabtagene).</li>
+      <li>Trials in solid tumours.</li>
+    </ul>
+    <h4>Adverse effects</h4>
+    <ul>
+      <li><b>Cytokine release syndrome (CRS)</b> — fever, hypotension, hypoxia → treat with <b>tocilizumab</b> (anti-IL-6R) ± steroids.</li>
+      <li><b>ICANS</b> (immune effector cell-associated neurotoxicity) — confusion, seizures.</li>
+      <li>B-cell aplasia/hypogammaglobulinaemia, tumour lysis syndrome, on-target off-tumour toxicity, very high cost.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Role of precision medicine in rational pharmacotherapy &amp; competency-based medical education (CBME) in pharmacology teaching.</span></summary>
+  <div class="answer">
+    <h4>Precision medicine in rational pharmacotherapy</h4>
+    <ul>
+      <li>Tailors drug/dose to individual genetic, biomarker &amp; environmental profile → "right drug, right patient, right dose."</li>
+      <li>Avoids non-responders &amp; ADRs (pharmacogenomics: HLA-B*15:02-carbamazepine, CYP2C9/VKORC1-warfarin, TPMT-azathioprine).</li>
+      <li>Biomarker-guided therapy (HER2-trastuzumab, EGFR/ALK-TKIs); companion diagnostics → improves efficacy &amp; cost-effectiveness, core to RUD.</li>
+    </ul>
+    <h4>CBME in pharmacology teaching (India, NMC)</h4>
+    <ul>
+      <li>Outcome-based: defined <b>competencies</b> (knowledge, skills, attitude, communication) rather than time-served.</li>
+      <li>Emphasis on <b>rational prescribing (P-drug)</b>, prescription writing, communication, AETCOM module, ethics.</li>
+      <li>Methods: integrated/horizontal-vertical teaching, small-group, problem-based learning, early clinical exposure, <b>formative assessment</b> with feedback, skill labs, log-books.</li>
+      <li>Aims to produce an "<b>Indian Medical Graduate</b>" who prescribes safely, rationally &amp; ethically.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Atypical antipsychotic drugs — dopamine/serotonin hypothesis of schizophrenia, classification, mechanism, individual agents, adverse effects &amp; comparison with typical antipsychotics.</span></summary>
+  <div class="answer">
+    <p>Schizophrenia's <b>dopamine hypothesis</b> (mesolimbic D2 hyperactivity → positive symptoms) and the recognition that mesocortical dopaminergic/serotonergic hypofunction underlies negative/cognitive symptoms led to second-generation ("atypical") antipsychotics — agents combining D2 antagonism with significant <b>5-HT2A antagonism</b> (and other receptor actions), giving efficacy against both positive and (modestly) negative symptoms with a lower risk of extrapyramidal symptoms (EPS) than first-generation (typical) agents.</p>
+
+    <h4>Why "atypical"? — key distinguishing mechanism</h4>
+    <ul>
+      <li><b>High 5-HT2A : D2 antagonism ratio</b> — serotonin antagonism in the nigrostriatal pathway disinhibits dopamine release, partially offsetting D2 blockade → fewer EPS/lower prolactin elevation than typical agents.</li>
+      <li>Many atypicals show <b>fast dissociation</b> from D2 receptors ("loose binding" — Kapur's fast-off theory), allowing normal phasic dopamine signalling to proceed, reducing EPS/prolactin while preserving antipsychotic effect.</li>
+      <li>Additional receptor actions (5-HT1A partial agonism, α1/H1/M1 antagonism, D3/D4 affinity) contribute to individual drug profiles (sedation, weight gain, anticholinergic effects).</li>
+    </ul>
+
+    <h4>Classification &amp; receptor profile</h4>
+    <table>
+      <tr><th>Drug</th><th>Key receptor actions</th><th>Notable features</th></tr>
+      <tr><td>Clozapine</td><td>D4&gt;D1&gt;D2 (weak D2), 5-HT2A, α1, H1, M1 antagonist</td><td>Most efficacious — reserved for treatment-resistant schizophrenia; <b>agranulocytosis</b> risk (mandatory blood monitoring); also ↓ suicide risk</td></tr>
+      <tr><td>Olanzapine</td><td>D2, 5-HT2A, H1, M1, α1</td><td>Broad efficacy; marked weight gain/metabolic syndrome</td></tr>
+      <tr><td>Risperidone</td><td>D2, 5-HT2A (high ratio)</td><td>EPS/prolactin elevation more dose-dependent (loses "atypicality" at higher doses)</td></tr>
+      <tr><td>Quetiapine</td><td>D2 (low affinity, fast dissociation), 5-HT2A, H1, α1</td><td>Sedating; low EPS; used in bipolar depression too</td></tr>
+      <tr><td>Aripiprazole</td><td>D2/D3 <b>partial agonist</b>, 5-HT1A partial agonist, 5-HT2A antagonist</td><td>"Dopamine stabiliser" — low EPS/prolactin/metabolic burden; can cause akathisia</td></tr>
+      <tr><td>Ziprasidone</td><td>D2, 5-HT2A, 5-HT1A agonist; SNRI-like component</td><td>Low weight gain; QT prolongation risk</td></tr>
+      <tr><td>Paliperidone</td><td>Active metabolite of risperidone</td><td>Long-acting injectable formulations available</td></tr>
+      <tr><td>Lurasidone, Asenapine, Iloperidone</td><td>D2/5-HT2A antagonists</td><td>Newer agents — favourable metabolic profiles</td></tr>
+    </table>
+
+    <h4>Comparison: typical vs atypical antipsychotics</h4>
+    <table>
+      <tr><th>Feature</th><th>Typical (1st-gen)</th><th>Atypical (2nd-gen)</th></tr>
+      <tr><td>Primary action</td><td>Potent D2 antagonism only</td><td>D2 + 5-HT2A antagonism (± partial agonism)</td></tr>
+      <tr><td>Efficacy</td><td>Positive symptoms only</td><td>Positive + modest negative/cognitive symptom benefit</td></tr>
+      <tr><td>EPS/tardive dyskinesia</td><td>High</td><td>Lower (except risperidone at high dose)</td></tr>
+      <tr><td>Prolactin elevation</td><td>Marked</td><td>Variable — risperidone/paliperidone high; aripiprazole/quetiapine low</td></tr>
+      <tr><td>Metabolic effects (weight gain, dyslipidaemia, diabetes)</td><td>Lower</td><td>Significant, esp. clozapine/olanzapine</td></tr>
+      <tr><td>Examples</td><td>Chlorpromazine, haloperidol, fluphenazine</td><td>Clozapine, olanzapine, risperidone, quetiapine, aripiprazole</td></tr>
+    </table>
+
+    <h4>Adverse effects of atypical antipsychotics</h4>
+    <ul>
+      <li><b>Metabolic syndrome:</b> weight gain, dyslipidaemia, new-onset diabetes — worst with clozapine/olanzapine; monitor weight/lipids/glucose regularly.</li>
+      <li><b>Clozapine-specific:</b> agranulocytosis (mandatory weekly-to-monthly WBC monitoring), myocarditis, seizures (dose-related), sialorrhoea, severe constipation/ileus.</li>
+      <li><b>QT prolongation:</b> ziprasidone, (and typical agents like thioridazine) — ECG monitoring if risk factors present.</li>
+      <li><b>EPS/tardive dyskinesia:</b> lower but not absent, especially with risperidone/paliperidone at higher doses.</li>
+      <li><b>Neuroleptic malignant syndrome:</b> rare but possible with any antipsychotic — hyperthermia, rigidity, autonomic instability, ↑CK; treat with dantrolene/bromocriptine, stop drug, supportive care.</li>
+    </ul>
+
+    <div class="dia"><b>Diagram:</b> Mesolimbic pathway (VTA → nucleus accumbens) — D2 hyperactivity → positive symptoms (blocked by all antipsychotics). Mesocortical pathway (VTA → prefrontal cortex) — relative dopamine hypoactivity → negative/cognitive symptoms (less worsened by atypicals due to 5-HT2A antagonism disinhibiting cortical DA release). Nigrostriatal pathway — D2 blockade here causes EPS (less with atypicals due to 5-HT2A-mediated DA disinhibition). Tuberoinfundibular pathway — D2 blockade → hyperprolactinaemia.</div>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Atypical = significant 5-HT2A antagonism alongside D2 antagonism (± partial agonism) → lower EPS/prolactin than typicals.</li>
+      <li>Clozapine = most effective, reserved for treatment-resistant disease due to agranulocytosis risk — mandatory blood count monitoring.</li>
+      <li>Aripiprazole = D2/D3 partial agonist ("dopamine stabiliser") — distinct mechanism, lowest metabolic burden among widely used atypicals.</li>
+      <li>Metabolic syndrome is the defining long-term ADR concern for atypicals (vs EPS for typicals).</li>
+      <li>Four dopamine pathways: mesolimbic (efficacy), mesocortical (negative symptoms), nigrostriatal (EPS), tuberoinfundibular (prolactin) — classic exam diagram.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> See "Newer antipsychotics" entry below for third-generation D2/D3 partial agonists, muscarinic-targeted agents (KarXT/xanomeline-trospium) and TAAR1 agonists that move beyond the classical D2/5-HT2A paradigm.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Guidelines for management of insomnia — non-pharmacological &amp; pharmacological approach, drug choice &amp; duration.</span></summary>
+  <div class="answer">
+    <p>Insomnia (difficulty initiating/maintaining sleep, or non-restorative sleep with daytime impairment, ≥3 nights/week for ≥3 months = chronic) management follows a stepwise approach — behavioural therapy first, pharmacotherapy reserved for short-term use or when CBT-I is insufficient/unavailable.</p>
+
+    <h4>Step 1 — Non-pharmacological (first-line)</h4>
+    <ul>
+      <li><b>Cognitive behavioural therapy for insomnia (CBT-I):</b> sleep restriction, stimulus control, sleep hygiene education, relaxation training, cognitive restructuring — guideline-endorsed first-line treatment with durable benefit.</li>
+      <li><b>Sleep hygiene:</b> regular sleep-wake schedule, avoid caffeine/alcohol/nicotine before bed, limit screen exposure, comfortable sleep environment, avoid daytime napping.</li>
+    </ul>
+
+    <h4>Step 2 — Pharmacotherapy (short-term/adjunct)</h4>
+    <table>
+      <tr><th>Class</th><th>Drug(s)</th><th>Notes</th></tr>
+      <tr><td>Z-drugs (non-BZD GABA-A agonists)</td><td>Zolpidem, zopiclone, zaleplon, eszopiclone</td><td>Preferred first-line pharmacotherapy — selective α1/ω1 site, less next-day sedation/dependence than BZDs; short courses (2-4 weeks) recommended</td></tr>
+      <tr><td>Benzodiazepines</td><td>Temazepam, triazolam, nitrazepam</td><td>Effective but more tolerance/dependence/rebound insomnia/falls risk (esp. elderly) — short-term use only</td></tr>
+      <tr><td>Melatonin receptor agonists</td><td>Ramelteon, melatonin (OTC)</td><td>Useful for sleep-onset/circadian-related insomnia; minimal abuse potential</td></tr>
+      <tr><td>Dual orexin receptor antagonists (DORA)</td><td>Suvorexant, lemborexant, daridorexant</td><td>Block wake-promoting orexin signalling; good safety profile, useful for sleep-maintenance insomnia</td></tr>
+      <tr><td>Sedating antidepressants (low dose)</td><td>Trazodone, low-dose doxepin, mirtazapine</td><td>Useful especially with comorbid depression/anxiety; off-label for primary insomnia</td></tr>
+      <tr><td>Antihistamines</td><td>Diphenhydramine (OTC)</td><td>Not recommended for chronic use — anticholinergic burden, tolerance, especially avoid in elderly</td></tr>
+    </table>
+
+    <h4>Principles of drug choice &amp; duration</h4>
+    <ul>
+      <li>Use <b>lowest effective dose, shortest duration</b> (ideally &lt;4 weeks) — chronic nightly hypnotic use is discouraged due to tolerance/dependence/rebound insomnia on withdrawal.</li>
+      <li>Match drug to symptom type: <b>sleep-onset difficulty</b> → short-acting agent (zaleplon, ramelteon); <b>sleep-maintenance difficulty</b> → longer-acting/DORA (eszopiclone, suvorexant).</li>
+      <li>Avoid benzodiazepines/Z-drugs in elderly where possible (fall risk, cognitive impairment) — prefer DORA or melatonin agonist.</li>
+      <li>Identify &amp; treat secondary causes (depression, anxiety, OSA, restless-leg syndrome, medication-induced) before/alongside symptomatic therapy.</li>
+    </ul>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>CBT-I = first-line per all major guidelines (AASM, ACP) — superior long-term outcomes vs drugs alone.</li>
+      <li>Z-drugs preferred over classical BZDs for pharmacological short-term treatment (selective ω1, less dependence).</li>
+      <li>DORAs (suvorexant, lemborexant, daridorexant) = orexin antagonism — newer mechanism distinct from GABA-A potentiation.</li>
+      <li>Avoid long-term antihistamine/BZD use, especially in the elderly.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Dual orexin receptor antagonists (daridorexant, 2022) represent the newest mechanistic class for insomnia, targeting the wake-promoting orexin system rather than potentiating GABA — offering effective sleep-maintenance benefit with lower next-day residual sedation and abuse-potential concerns than benzodiazepines/Z-drugs.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Patient-controlled analgesia (PCA) — principle, drugs used, settings/parameters &amp; advantages/limitations.</span></summary>
+  <div class="answer">
+    <p><b>Patient-controlled analgesia (PCA)</b> is a delivery technique allowing patients to self-administer small, pre-set "on-demand" doses of an (usually IV) analgesic via a programmable infusion pump, exploiting the considerable inter-individual variability in opioid requirement and allowing the patient to titrate analgesia to their own pain level within physician-set safety limits.</p>
+
+    <h4>Principle</h4>
+    <ul>
+      <li>Patient presses a demand button when pain is felt → pump delivers a fixed <b>bolus dose</b>.</li>
+      <li>A programmed <b>lockout interval</b> (minimum time between doses, typically 5-10 min) prevents overdose by ensuring the previous dose has had time to act before another can be delivered.</li>
+      <li>Optional <b>background/basal infusion</b> may supplement bolus dosing (used cautiously — increases respiratory depression risk without proportionate analgesic benefit in most settings).</li>
+      <li>A <b>4-hour (or 1-hour) dose limit</b> may be set as an additional safety ceiling.</li>
+    </ul>
+
+    <h4>Drugs commonly used in PCA</h4>
+    <table>
+      <tr><th>Drug</th><th>Typical bolus</th><th>Lockout</th><th>Notes</th></tr>
+      <tr><td>Morphine</td><td>1 mg</td><td>5-10 min</td><td>Most common; active metabolite (M6G) accumulates in renal impairment</td></tr>
+      <tr><td>Fentanyl</td><td>10-20 mcg</td><td>5-10 min</td><td>Faster onset, shorter duration — useful in renal impairment</td></tr>
+      <tr><td>Hydromorphone</td><td>0.2 mg</td><td>5-10 min</td><td>More potent alternative to morphine</td></tr>
+      <tr><td>Tramadol</td><td>10-20 mg</td><td>5-10 min</td><td>Weaker, useful for moderate pain/lower respiratory-depression risk</td></tr>
+    </table>
+
+    <h4>Advantages</h4>
+    <ul>
+      <li>Matches analgesia to individual pharmacokinetic/pharmacodynamic variability — avoids the "peaks and troughs" of intermittent IM/IV bolus dosing by nursing staff.</li>
+      <li>↑ patient satisfaction &amp; sense of control; generally equal or better analgesia with similar/lower total opioid consumption versus PRN nursing-administered dosing.</li>
+      <li>Reduces nursing workload for repeated dose administration.</li>
+      <li>Built-in safety (lockout interval) reduces risk of accidental overdose compared to free access.</li>
+    </ul>
+
+    <h4>Limitations/precautions</h4>
+    <ul>
+      <li>Requires patient who can understand &amp; physically operate the device (unsuitable for cognitively impaired/very young/confused patients).</li>
+      <li>"PCA by proxy" (family/staff pressing the button for the patient) is a recognised safety hazard — bypasses the patient's own sedation-level safety check.</li>
+      <li>Still requires regular monitoring for respiratory depression/sedation (especially with background infusion).</li>
+      <li>Pump programming errors are a recognised source of medication error — double-checking of settings (drug concentration, bolus, lockout) is essential.</li>
+    </ul>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Lockout interval = key safety feature preventing overdose.</li>
+      <li>PCA relies on the patient becoming sedated/unable to press the button before overdose occurs — self-limiting safety principle (lost with "PCA by proxy").</li>
+      <li>Morphine = most commonly used; fentanyl preferred in renal impairment.</li>
+      <li>Background/basal infusion increases respiratory depression risk without proportional analgesic gain in most adult acute-pain settings.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Smart PCA pumps with integrated capnography/pulse-oximetry monitoring and automatic infusion suspension on detecting respiratory depression improve safety. Non-IV PCA routes (intranasal fentanyl PCA, transdermal iontophoretic fentanyl PCA systems) and PCA epidural analgesia (PCEA) for labour/postoperative pain are increasingly used alternatives to IV PCA.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Status of newer antiepileptic drugs (AEDs) — classification by mechanism, individual agents, pharmacological basis of action &amp; recent advances.</span></summary>
+  <div class="answer">
+    <p>"Newer" (second/third-generation) AEDs were developed largely from the 1990s onward, designed for improved tolerability, fewer drug interactions (less hepatic enzyme induction/inhibition than phenytoin/carbamazepine/valproate) and novel mechanisms targeting specific channels, transporters or synaptic-vesicle proteins, rather than purely the classical Na⁺-channel block of older agents.</p>
+
+    <h4>Classification of newer AEDs by primary mechanism</h4>
+    <table>
+      <tr><th>Mechanism</th><th>Drug(s)</th><th>Notes</th></tr>
+      <tr><td>SV2A synaptic vesicle protein binding</td><td>Levetiracetam, brivaracetam</td><td>Novel mechanism — modulates neurotransmitter release; minimal hepatic metabolism (levetiracetam — mostly renal); brivaracetam has higher SV2A affinity, faster brain penetration</td></tr>
+      <tr><td>α2δ subunit of voltage-gated Ca²⁺ channels</td><td>Gabapentin, pregabalin</td><td>↓ Ca²⁺ influx → ↓ excitatory transmitter release; also used for neuropathic pain/anxiety; renal excretion, minimal interactions</td></tr>
+      <tr><td>Na⁺-channel blockade (newer/cleaner)</td><td>Lamotrigine, oxcarbazepine, lacosamide, rufinamide, eslicarbazepine</td><td>Lamotrigine also inhibits glutamate release; broad-spectrum; lacosamide selectively enhances slow inactivation</td></tr>
+      <tr><td>AMPA receptor antagonism</td><td>Perampanel</td><td>First-in-class selective non-competitive AMPA antagonist; once-daily; psychiatric ADRs (irritability/aggression)</td></tr>
+      <tr><td>Multiple mechanisms (Na⁺-channel + GABA-ergic + carbonic anhydrase inhibition)</td><td>Topiramate, zonisamide</td><td>Broad-spectrum; weight loss (topiramate), renal stones (both — CA inhibition), cognitive slowing</td></tr>
+      <tr><td>T-type Ca²⁺ channel block (absence seizures)</td><td>Ethosuximide (older but still "specialised")</td><td>Specific for generalized absence seizures</td></tr>
+      <tr><td>GABA-transaminase inhibition / reuptake inhibition</td><td>Vigabatrin, tiagabine</td><td>↑ synaptic GABA; vigabatrin — visual field defects (irreversible) limit use to refractory epilepsy/infantile spasms</td></tr>
+      <tr><td>Neurosteroid GABA-A modulator</td><td>Ganaxolone (newest)</td><td>Approved for CDKL5 deficiency disorder seizures</td></tr>
+      <tr><td>Selective potassium (KCNQ/Kv7) channel opener</td><td>Retigabine (ezogabine) — largely withdrawn</td><td>Novel mechanism, discontinued due to skin/retinal pigmentation</td></tr>
+      <tr><td>Cannabidiol (CBD)</td><td>Epidiolex</td><td>Multiple proposed mechanisms (TRPV1, adenosine, GPR55); approved for Dravet &amp; Lennox-Gastaut syndromes, tuberous sclerosis</td></tr>
+    </table>
+
+    <h4>Pharmacological basis &amp; advantages over older AEDs</h4>
+    <ul>
+      <li>Reduced hepatic CYP induction/inhibition (vs phenytoin/carbamazepine/phenobarbital) → fewer drug-drug interactions, important in polytherapy &amp; with OCPs/anticoagulants.</li>
+      <li>More predictable pharmacokinetics (linear, less protein-binding displacement) — levetiracetam/gabapentin/pregabalin renally excreted, minimal metabolism.</li>
+      <li>Novel mechanisms (SV2A, AMPA antagonism, KCNQ opening) provide options for AED-resistant/refractory epilepsy by attacking different points in the seizure circuit.</li>
+      <li>Generally better tolerability profiles, though individual ADRs persist (perampanel — psychiatric; topiramate — cognitive; lamotrigine — Stevens-Johnson/DRESS, especially with rapid titration or valproate co-administration).</li>
+    </ul>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Levetiracetam = SV2A binding — distinct novel mechanism, minimal hepatic metabolism, broad-spectrum, favoured for rapid IV loading in status epilepticus alternative regimens.</li>
+      <li>Lacosamide = enhances slow (not fast) Na⁺-channel inactivation — a refinement over classical Na⁺-blockers.</li>
+      <li>Perampanel = first selective AMPA-receptor antagonist AED.</li>
+      <li>Cannabidiol (Epidiolex) = approved specifically for Dravet/Lennox-Gastaut syndromes — landmark cannabinoid-derived AED.</li>
+      <li>Vigabatrin's irreversible visual-field defect is a classic exam ADR.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Cenobamate (2019/2020 approval) — dual mechanism (Na⁺-channel blockade + GABA-A positive allosteric modulation) — shows high efficacy in focal-onset refractory epilepsy, requiring slow titration to avoid DRESS/hypersensitivity. Fenfluramine repurposed (low-dose) for Dravet syndrome (serotonergic mechanism). Soticlestat (cholesterol 24-hydroxylase inhibitor) and other novel-target compounds are in late-stage trials for developmental/epileptic encephalopathies, reflecting a continuing shift toward mechanistically novel, syndrome-specific AEDs.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Designer drugs — definition, classification, examples &amp; clinical/forensic significance.</span></summary>
+  <div class="answer">
+    <p><b>Designer drugs</b> (also "novel psychoactive substances," NPS) are synthetic compounds chemically modified from known illicit/controlled drugs (or designed de novo) specifically to mimic their psychoactive effects while evading existing drug-control legislation and standard toxicology screens — a moving target as new analogues are continually synthesised once older ones are scheduled/banned.</p>
+
+    <h4>Classification &amp; examples</h4>
+    <table>
+      <tr><th>Class</th><th>Examples</th><th>Mimics/mechanism</th></tr>
+      <tr><td>Synthetic cannabinoids</td><td>"Spice," "K2" (JWH-018 and analogues)</td><td>Potent CB1/CB2 full agonists (more potent than THC) — severe psychosis, tachycardia, seizures, death reported</td></tr>
+      <tr><td>Synthetic cathinones ("bath salts")</td><td>Mephedrone, MDPV, methylone</td><td>DAT/NET/SERT inhibition (cocaine/amphetamine-like) — agitation, hyperthermia, psychosis, violent behaviour</td></tr>
+      <tr><td>Phenethylamine/amphetamine analogues</td><td>MDMA ("ecstasy") and ring-substituted analogues (2C-series, NBOMe series)</td><td>5-HT release/reuptake inhibition + some 5-HT2A agonism — serotonin syndrome, hyperthermia, hyponatraemia</td></tr>
+      <tr><td>Synthetic opioids</td><td>Fentanyl analogues (carfentanil, acetylfentanyl), U-47700</td><td>µ-opioid agonists — extremely potent, major driver of overdose deaths, naloxone-resistant at high potency</td></tr>
+      <tr><td>Piperazines</td><td>BZP, TFMPP</td><td>Amphetamine-like stimulant/empathogenic effects</td></tr>
+      <tr><td>Designer benzodiazepines</td><td>Etizolam, flualprazolam, clonazolam</td><td>Potent GABA-A PAMs, often adulterating illicit opioid/counterfeit pill supply</td></tr>
+      <tr><td>Dissociatives</td><td>Methoxetamine, novel ketamine analogues</td><td>NMDA antagonism</td></tr>
+    </table>
+
+    <h4>Why "designer"? — pharmacological/legal rationale</h4>
+    <ul>
+      <li>Minor structural modification of a scheduled drug's molecule retains/enhances receptor activity while creating a chemically distinct (initially unscheduled/"legal") entity — historically marketed as "legal highs," "research chemicals," or "bath salts" to circumvent the law.</li>
+      <li>Rapid proliferation of analogues outpaces conventional drug-scheduling (analogue laws/generic scheduling by core structure have been introduced in response).</li>
+      <li>Often undetected by routine immunoassay drug screens (designed for parent/classical drugs) — complicates clinical recognition &amp; forensic toxicology, requiring specialised LC-MS/MS testing.</li>
+    </ul>
+
+    <h4>Clinical &amp; forensic significance</h4>
+    <ul>
+      <li>Unpredictable potency/purity (no quality control) → high overdose/toxicity risk; effects can be far more severe/prolonged than the parent drug they mimic.</li>
+      <li>Management is largely supportive (sedation with benzodiazepines for agitation/psychosis, cooling for hyperthermia, naloxone trial for suspected synthetic-opioid co-exposure even though efficacy may be reduced against ultra-potent fentanyl analogues).</li>
+      <li>Major public-health/forensic concern: synthetic-opioid (fentanyl-analogue) contamination of the illicit drug supply is a leading driver of the current overdose-death epidemic in several countries.</li>
+    </ul>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Designer drugs = structurally modified analogues of controlled substances, created to evade drug laws and routine toxicology screens.</li>
+      <li>Synthetic cannabinoids = full CB1 agonists (more potent/dangerous than natural cannabis THC, a partial agonist).</li>
+      <li>Synthetic cathinones = "bath salts" — monoamine transporter inhibitors, severe agitation/hyperthermia.</li>
+      <li>Fentanyl analogues = the most lethal current category — extreme potency, major overdose-death driver.</li>
+      <li>Routine immunoassay drug screens often miss NPS — clinical suspicion + specialised testing needed.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> "Analogue"/generic scheduling laws (regulating entire chemical classes rather than single named compounds) have been adopted in several jurisdictions to keep pace with rapidly evolving designer-drug markets. Point-of-care and LC-MS/MS-based expanded toxicology panels are increasingly deployed in emergency/forensic settings to detect emerging NPS, including designer benzodiazepines and novel synthetic opioids contaminating the illicit drug supply.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Management of chronic pain — WHO analgesic ladder, multimodal pharmacotherapy, adjuvant agents &amp; recent advances.</span></summary>
+  <div class="answer">
+    <p>Chronic pain (persisting &gt;3 months, often outlasting the original tissue injury, frequently with a neuropathic/central-sensitisation component) requires a <b>multimodal, individualised</b> approach combining pharmacological classes with different mechanisms, alongside non-pharmacological/interventional measures — rather than simple step-up opioid escalation.</p>
+
+    <h4>WHO analgesic ladder (originally for cancer pain, now general principle)</h4>
+    <table>
+      <tr><th>Step</th><th>Pain severity</th><th>Drugs</th></tr>
+      <tr><td>1</td><td>Mild</td><td>Non-opioid: paracetamol, NSAIDs ± adjuvant</td></tr>
+      <tr><td>2</td><td>Mild-moderate</td><td>Weak opioid (tramadol, codeine) + step-1 drugs ± adjuvant</td></tr>
+      <tr><td>3</td><td>Moderate-severe</td><td>Strong opioid (morphine, oxycodone, fentanyl) + step-1 drugs ± adjuvant</td></tr>
+    </table>
+    <p>Modern practice increasingly favours <b>multimodal analgesia</b> from the outset (combining mechanistically distinct low-dose agents) over rigid ladder escalation, to minimise opioid exposure/ADRs.</p>
+
+    <h4>Adjuvant analgesics (co-analgesics) — especially for neuropathic pain</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Use/mechanism</th></tr>
+      <tr><td>Gabapentinoids</td><td>Gabapentin, pregabalin</td><td>α2δ Ca²⁺-channel subunit — neuropathic pain (diabetic neuropathy, postherpetic neuralgia, fibromyalgia)</td></tr>
+      <tr><td>TCAs</td><td>Amitriptyline, nortriptyline</td><td>NA/5-HT reuptake inhibition — neuropathic pain, fibromyalgia, migraine prophylaxis</td></tr>
+      <tr><td>SNRIs</td><td>Duloxetine, venlafaxine</td><td>Diabetic neuropathy, fibromyalgia, chronic musculoskeletal pain</td></tr>
+      <tr><td>Topical agents</td><td>Lidocaine patch, capsaicin, topical NSAIDs/diclofenac gel</td><td>Localised neuropathic/musculoskeletal pain — minimal systemic ADRs</td></tr>
+      <tr><td>Corticosteroids</td><td>Dexamethasone</td><td>Bone pain, nerve compression/inflammation, raised ICP-related pain</td></tr>
+      <tr><td>Bisphosphonates</td><td>Zoledronic acid</td><td>Bone metastasis pain</td></tr>
+      <tr><td>NMDA antagonists</td><td>Ketamine (low-dose infusion)</td><td>Refractory/opioid-tolerant pain, central sensitisation</td></tr>
+      <tr><td>Muscle relaxants</td><td>Baclofen, tizanidine</td><td>Spasticity-related pain</td></tr>
+    </table>
+
+    <h4>Interventional &amp; non-pharmacological measures</h4>
+    <ul>
+      <li>Nerve blocks, epidural/intrathecal drug delivery, neuromodulation (spinal cord stimulators, peripheral nerve stimulation).</li>
+      <li>Physical therapy, cognitive-behavioural therapy, acupuncture, exercise programs — strong evidence base for chronic musculoskeletal/fibromyalgia pain.</li>
+      <li>Patient education &amp; realistic goal-setting (function-focused rather than complete pain elimination).</li>
+    </ul>
+
+    <h4>Principles of opioid use in chronic non-cancer pain</h4>
+    <ul>
+      <li>Reserve for moderate-severe pain not responding to multimodal non-opioid therapy; use lowest effective dose, regular reassessment of benefit vs harm.</li>
+      <li>Screen for opioid-misuse risk factors before initiation; use prescription drug monitoring programs; avoid co-prescription with benzodiazepines (respiratory depression risk).</li>
+      <li>Consider abuse-deterrent formulations; taper rather than abruptly stop if discontinuing.</li>
+    </ul>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>WHO 3-step ladder: non-opioid → weak opioid → strong opioid, ± adjuvant at every step.</li>
+      <li>Neuropathic pain first-line = gabapentinoids, TCAs, SNRIs (not primarily opioids).</li>
+      <li>Multimodal analgesia (combining classes) reduces total opioid requirement &amp; ADR burden ("opioid-sparing" strategy).</li>
+      <li>Topical agents minimise systemic exposure — useful in elderly/localised pain.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Growing emphasis on opioid-sparing multimodal protocols (especially perioperative) using gabapentinoids, NSAIDs, regional blocks and low-dose ketamine to reduce opioid consumption amid the opioid-crisis context. Novel non-opioid analgesics in development include NaV1.7-selective sodium-channel blockers (aiming for opioid-equivalent analgesia without abuse potential) and anti-NGF monoclonal antibodies (tanezumab) for osteoarthritis pain, though regulatory approval has been complicated by joint-safety signals.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Newer antipsychotics — third-generation dopamine partial agonists, muscarinic-targeted &amp; TAAR1 agents beyond the classical D2/5-HT2A paradigm.</span></summary>
+  <div class="answer">
+    <p>Beyond the established second-generation (atypical) antipsychotics, a "third generation" and several mechanistically novel agents have emerged, moving away from pure D2/5-HT2A receptor blockade toward partial agonism, alternative neurotransmitter targets (muscarinic, TAAR1) and improved metabolic/EPS profiles — addressing unmet needs in treatment-resistant disease and ADR burden.</p>
+
+    <h4>Third-generation D2/D3 partial agonists</h4>
+    <table>
+      <tr><th>Drug</th><th>Mechanism</th><th>Notable features</th></tr>
+      <tr><td>Aripiprazole</td><td>D2/D3 partial agonist, 5-HT1A partial agonist, 5-HT2A antagonist</td><td>Prototype "dopamine stabiliser" — low EPS/prolactin/metabolic effects; akathisia common</td></tr>
+      <tr><td>Brexpiprazole</td><td>D2/D3 partial agonist (lower intrinsic activity than aripiprazole), 5-HT1A partial agonist, 5-HT2A/α1 antagonist</td><td>Better tolerated (less akathisia/activation) than aripiprazole; also approved as MDD adjunct</td></tr>
+      <tr><td>Cariprazine</td><td>D3-preferring D2/D3 partial agonist, 5-HT1A partial agonist, 5-HT2B antagonist</td><td>Unique D3 preference (D3 implicated in negative symptoms/cognition/reward) — efficacy in negative symptoms &amp; bipolar depression</td></tr>
+    </table>
+
+    <h4>Muscarinic receptor-targeted agents — novel non-dopaminergic mechanism</h4>
+    <ul>
+      <li><b>Xanomeline-trospium (KarXT):</b> xanomeline is a M1/M4 muscarinic agonist (the first non-D2/5-HT mechanism antipsychotic to gain approval); trospium (peripherally restricted antimuscarinic) is co-administered to block peripheral muscarinic ADRs (GI upset, salivary changes) without affecting CNS efficacy. Approved for schizophrenia — represents the first genuinely novel antipsychotic mechanism in decades, free of typical EPS/metabolic/prolactin ADRs.</li>
+    </ul>
+
+    <h4>TAAR1 (trace amine-associated receptor 1) agonists</h4>
+    <ul>
+      <li><b>Ulotaront:</b> TAAR1/5-HT1A agonist — modulates dopaminergic/glutamatergic tone indirectly without direct D2 blockade; investigated for schizophrenia with a non-D2 mechanism, though pivotal trial results have been mixed.</li>
+    </ul>
+
+    <h4>Long-acting injectable (LAI) formulations — adherence-focused advance</h4>
+    <p>Paliperidone palmitate (1-, 3-, 6-monthly), aripiprazole lauroxil/monohydrate, risperidone LAI — improve adherence in relapsing schizophrenia, reduce relapse/hospitalisation versus oral therapy in real-world studies.</p>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Aripiprazole/brexpiprazole/cariprazine = D2/D3 partial agonists ("third generation") — lower EPS/prolactin/metabolic burden than full D2 antagonists.</li>
+      <li>Cariprazine's D3 preference is linked to potential negative-symptom/cognitive benefit.</li>
+      <li>KarXT (xanomeline-trospium) = first approved antipsychotic acting via muscarinic (M1/M4) rather than dopaminergic/serotonergic receptors — landmark mechanism shift.</li>
+      <li>TAAR1 agonists (ulotaront) = another non-D2 mechanism under investigation.</li>
+      <li>LAIs improve adherence — key strategy for relapse prevention in chronic schizophrenia.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> KarXT (xanomeline-trospium, approved 2024) is the most significant antipsychotic development in decades — the first drug acting through a muscarinic rather than dopaminergic/serotonergic mechanism, avoiding EPS, weight gain and prolactin elevation. Cariprazine's D3-preferring partial agonism continues to be explored for negative symptoms. Research into TAAR1 agonists and combination strategies (muscarinic + dopaminergic modulation) reflects a broader shift toward diversifying antipsychotic pharmacology beyond the 70-year-old D2-blockade paradigm.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Teratogenicity of antiepileptic drugs — mechanisms, individual drug risk profiles &amp; principles of management in pregnancy.</span></summary>
+  <div class="answer">
+    <p>Most classical AEDs carry teratogenic risk, but the magnitude varies markedly between agents — informing preconception counselling and AED selection in women of childbearing potential. The clinical challenge is balancing teratogenic risk against the risk of uncontrolled maternal seizures (which themselves cause fetal hypoxia, trauma &amp; are an independent risk to pregnancy outcome), so AEDs are <b>not simply stopped</b> in pregnancy.</p>
+
+    <h4>Risk profile by drug</h4>
+    <table>
+      <tr><th>Drug</th><th>Relative teratogenic risk</th><th>Specific malformations</th></tr>
+      <tr><td>Valproate</td><td><b>Highest</b> — dose-dependent, avoid in women of childbearing age if possible</td><td>Neural tube defects (spina bifida), craniofacial defects, cardiac defects, hypospadias; also <b>fetal valproate syndrome</b> &amp; significant ↓IQ/neurodevelopmental impairment (independent of malformation)</td></tr>
+      <tr><td>Phenytoin</td><td>Moderate-high</td><td>"Fetal hydantoin syndrome" — craniofacial dysmorphism, cleft lip/palate, cardiac defects, growth deficiency, intellectual disability</td></tr>
+      <tr><td>Carbamazepine</td><td>Moderate</td><td>Neural tube defects (lower risk than valproate), craniofacial defects</td></tr>
+      <tr><td>Phenobarbital</td><td>Moderate</td><td>Cardiac defects, oral clefts</td></tr>
+      <tr><td>Topiramate</td><td>Moderate</td><td>Cleft lip/palate, ↓ birth weight (dose-dependent)</td></tr>
+      <tr><td>Lamotrigine</td><td><b>Lower</b> (relatively safer)</td><td>Oral clefts (small ↑ risk at high dose) — preferred agent if seizure type allows</td></tr>
+      <tr><td>Levetiracetam</td><td><b>Lower</b> (relatively safer)</td><td>No clearly established major malformation pattern — among the preferred newer agents in pregnancy</td></tr>
+    </table>
+
+    <h4>Mechanisms of AED teratogenicity</h4>
+    <ul>
+      <li><b>Folate antagonism:</b> valproate, phenytoin, carbamazepine, phenobarbital interfere with folate metabolism → neural tube/craniofacial defect risk; high-dose folic acid supplementation (4-5 mg/day, higher than standard) is recommended preconceptionally for women on AEDs, especially valproate.</li>
+      <li><b>Oxidative stress/free-radical intermediates:</b> reactive arene-oxide metabolites of phenytoin/carbamazepine implicated in fetal hydantoin-type syndromes.</li>
+      <li><b>HDAC inhibition (valproate-specific):</b> valproate's histone-deacetylase inhibitory action alters gene expression during critical embryonic developmental windows — proposed mechanism for its especially high malformation/neurodevelopmental risk.</li>
+      <li><b>Dose-dependence:</b> risk for most AEDs (esp. valproate, lamotrigine, topiramate) increases with higher doses and polytherapy compared to monotherapy.</li>
+    </ul>
+
+    <h4>Principles of management in pregnancy</h4>
+    <ul>
+      <li><b>Preconception counselling</b> — switch to lowest-risk effective agent (lamotrigine/levetiracetam preferred) <i>before</i> conception where feasible; avoid valproate in women of childbearing potential unless no suitable alternative.</li>
+      <li><b>Monotherapy at the lowest effective dose</b> preferred over polytherapy — malformation risk roughly additive/synergistic with multiple AEDs.</li>
+      <li><b>High-dose folic acid</b> supplementation from before conception through at least the first trimester.</li>
+      <li><b>Do not abruptly stop AEDs</b> in a pregnant patient with epilepsy — uncontrolled seizures pose direct fetal/maternal risk (hypoxia, trauma, status epilepticus); manage under specialist (neurologist + obstetrician) joint care.</li>
+      <li><b>Antenatal monitoring:</b> detailed anomaly ultrasound, monitor AED levels (pregnancy alters pharmacokinetics — e.g. lamotrigine clearance increases), vitamin K in late pregnancy if enzyme-inducing AEDs used (↓ neonatal haemorrhagic risk).</li>
+      <li><b>Pregnancy/AED registries</b> (e.g. EURAP) continue to refine comparative risk data for newer agents.</li>
+    </ul>
+
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Valproate = highest teratogenic risk (neural tube defects + significant cognitive/IQ impairment) — avoid in women of childbearing age if possible.</li>
+      <li>Lamotrigine and levetiracetam = relatively safer newer agents — preferred where seizure type permits switch.</li>
+      <li>Folate antagonism is the principal proposed mechanism for neural tube defects with older AEDs.</li>
+      <li>Never abruptly discontinue AEDs in pregnancy — seizure risk outweighs in most cases; switch/optimise instead.</li>
+      <li>High-dose folic acid supplementation recommended preconceptionally in all women on AEDs.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Long-term outcome data (e.g. from the NEAD study) have solidified valproate's distinct neurodevelopmental risk (↓IQ in exposed children) independent of structural malformation, driving regulatory restrictions (e.g. EU/UK pregnancy prevention programmes) on valproate use in women of childbearing potential. Pregnancy AED registries (EURAP, North American AED Pregnancy Registry) continue to refine risk estimates for newer agents (lacosamide, perampanel, brivaracetam), most of which still lack mature safety data.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="scase" style="--sec:#7a5bbd;--sec-soft:#7a5bbd26">
+  <h2>🩺 Clinical Case Vignettes</h2>
+  <p class="sec-note">Apply the concepts — read the scenario, decide your answer, then open to check. Filter to just these with the 🩺 Cases chip.</p>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A farmer is brought in drowsy with pinpoint pupils, profuse salivation, lacrimation, sweating, muscle fasciculations and a smell of insecticide. Diagnosis and management?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> DUMBELS toxidrome — which enzyme is inhibited?</div>
+    <p><b>Organophosphate poisoning</b> — inhibits acetylcholinesterase → ACh excess (muscarinic DUMBELS + nicotinic fasciculation/weakness + CNS effects).</p><p><b>Management:</b> ABC + decontamination; <b>atropine</b> (titrate to dry secretions) for muscarinic effects; <b>pralidoxime (oxime)</b> to reactivate AChE before enzyme 'aging' (helps nicotinic/muscle weakness); supportive care.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A 30-year-old woman has fatigable ptosis and diplopia, worse in the evening. Which drugs help, and how do you distinguish a myasthenic from a cholinergic crisis?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> ACh deficiency at the neuromuscular junction.</div>
+    <p><b>Myasthenia gravis</b> — autoantibodies to nicotinic ACh receptors. Symptomatic: <b>pyridostigmine/neostigmine</b> (anticholinesterase raises ACh); plus immunosuppression (steroids, azathioprine), thymectomy; crisis → IVIG/plasmapheresis.</p><p><b>Myasthenic crisis</b> = under-treatment (improves with edrophonium); <b>cholinergic crisis</b> = over-treatment (excess muscarinic features, worsens with edrophonium).</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient with episodic headache, palpitations, sweating and severe hypertension is diagnosed with pheochromocytoma and listed for surgery. Why must alpha-blockade precede beta-blockade?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Unopposed alpha.</div>
+    <p>Give <b>phenoxybenzamine (alpha-blocker) first</b> to control vasoconstriction. Starting a beta-blocker first removes beta-2 vasodilation → <b>unopposed alpha-mediated vasoconstriction → hypertensive crisis</b>. After adequate alpha-blockade, add a beta-blocker for tachyarrhythmia.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient who overdosed on propranolol has severe bradycardia and hypotension unresponsive to atropine. Specific antidote?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Bypass the beta-receptor.</div>
+    <p><b>Glucagon</b> — activates cardiac adenylyl cyclase independently of the beta-receptor (raises cAMP → increases rate and contractility). Add IV fluids, atropine, high-dose insulin-euglycaemia therapy, and pacing if needed.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient develops urticaria, wheeze and hypotension minutes after a bee sting. First-line drug and the underlying principle?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Physiological antagonism.</div>
+    <p><b>Adrenaline IM</b> (0.5 mg of 1:1000) — alpha-1 vasoconstriction (raises BP), beta-1 inotropy, beta-2 bronchodilation + mast-cell stabilisation. It is a <b>physiological (functional) antagonist</b> of histamine (acts via different receptors). Adjuncts: oxygen, IV fluids, antihistamine, steroid.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">An asthmatic using timolol eye drops for glaucoma develops worsening wheeze. Explain.</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Beta-2 blockade.</div>
+    <p>Non-selective beta-blockers (timolol) block bronchial <b>beta-2</b> receptors → bronchoconstriction; even ophthalmic drops are absorbed systemically. Use an alternative in asthma (e.g. brimonidine or a topical carbonic anhydrase inhibitor).</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient on an SSRI is given tramadol and develops agitation, fever, tremor, clonus and hyperreflexia. Diagnosis and management?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Excess serotonin.</div>
+    <p><b>Serotonin syndrome</b> — excess serotonergic activity (SSRI + tramadol/MAOI/triptan). Stop the offending drugs, supportive cooling, benzodiazepines; <b>cyproheptadine</b> (5-HT2 antagonist) for severe cases.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient on a monoamine oxidase inhibitor eats aged cheese and develops a severe throbbing headache and hypertensive crisis. Mechanism?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Tyramine.</div>
+    <p><b>The cheese reaction</b> — MAO normally degrades dietary <b>tyramine</b>; an MAOI lets tyramine enter nerve terminals → massive noradrenaline release → hypertensive crisis. Manage with phentolamine; advise a tyramine-free diet.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A child who ingested Datura is flushed and febrile with dilated pupils, dry skin, urinary retention and delirium. Toxidrome and antidote?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Hot, dry, red, blind, mad.</div>
+    <p><b>Anticholinergic (antimuscarinic) toxidrome.</b> Supportive cooling, benzodiazepines for agitation, and <b>physostigmine</b> (crosses the blood-brain barrier, reversing central and peripheral effects) for severe toxicity.</p>
+  </div></details>
+</section>
+
+<!-- CONTENT END -->
+  </div>
+
+  <footer>
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman 14e (Neuropharmacology, Ch. 10–28), Katzung, Rang &amp; Dale, Indian/clinical guidelines.
+  </footer>
+</div>
+
+<script>
+  const search   = document.getElementById('search');
+  const items    = Array.from(document.querySelectorAll('details.q'));
+  const sections = Array.from(document.querySelectorAll('section.sec'));
+  const counter  = document.getElementById('counter');
+  const nohit    = document.getElementById('nohit');
+  const chips    = Array.from(document.querySelectorAll('.chip'));
+  const themeBtn = document.getElementById('theme');
+  const root     = document.documentElement;
+  let activeFilter = 'all';
+  let kbIndex = -1;
+
+  items.forEach(d=>{
+    const s = d.querySelector('.stars');
+    d.dataset.pri  = s ? (s.textContent.match(/★/g)||[]).length : 0;
+    d.dataset.type = d.classList.contains('vignette') ? 'case' : 'q';
+  });
+
+  const visible = ()=> items.filter(d=> d.style.display!=='none');
+
+  function apply(){
+    const q = search.value.trim().toLowerCase();
+    let hits = 0;
+    items.forEach(d=>{
+      const matchSearch = !q || d.textContent.toLowerCase().includes(q);
+      let matchFilter = true;
+      if(activeFilter==='case')      matchFilter = d.dataset.type==='case';
+      else if(activeFilter!=='all')  matchFilter = d.dataset.pri===activeFilter;
+      const show = matchSearch && matchFilter;
+      d.style.display = show ? '' : 'none';
+      if(show){ hits++; if(q.length>2) d.open = true; }
+    });
+    sections.forEach(s=>{
+      const any = Array.from(s.querySelectorAll('details.q')).some(d=> d.style.display!=='none');
+      s.style.display = any ? '' : 'none';
+    });
+    nohit.style.display = hits===0 ? 'block' : 'none';
+    counter.textContent = (q || activeFilter!=='all') ? hits + ' shown' : items.length + ' questions';
+    clearKb();
+  }
+
+  chips.forEach(c=> c.onclick = ()=>{
+    chips.forEach(x=> x.classList.remove('active'));
+    c.classList.add('active');
+    activeFilter = c.dataset.f;
+    apply();
+  });
+
+  let t;
+  search.addEventListener('input', ()=>{ clearTimeout(t); t = setTimeout(apply, 110); });
+
+  document.getElementById('expandAll').onclick  = ()=> visible().forEach(d=> d.open=true);
+  document.getElementById('collapseAll').onclick = ()=> items.forEach(d=> d.open=false);
+
+  function randomQ(){
+    const vis = visible(); if(!vis.length) return;
+    items.forEach(d=> d.open=false);
+    const pick = vis[Math.floor(Math.random()*vis.length)];
+    pick.open = true;
+    setKb(items.indexOf(pick));
+  }
+  document.getElementById('shuffle').onclick = randomQ;
+
+  function setTheme(mode){
+    if(mode==='dark'){ root.setAttribute('data-theme','dark'); themeBtn.textContent='☀️'; }
+    else { root.removeAttribute('data-theme'); themeBtn.textContent='🌙'; }
+    try{ localStorage.setItem('pharm-theme', mode); }catch(e){}
+  }
+  themeBtn.onclick = ()=> setTheme(root.getAttribute('data-theme')==='dark' ? 'light' : 'dark');
+  try{ if(localStorage.getItem('pharm-theme')==='dark') setTheme('dark'); }catch(e){}
+
+  function clearKb(){ items.forEach(d=> d.classList.remove('kbfocus')); kbIndex=-1; }
+  function setKb(i){
+    items.forEach(d=> d.classList.remove('kbfocus'));
+    kbIndex = i;
+    if(i>=0){ items[i].classList.add('kbfocus'); items[i].scrollIntoView({behavior:'smooth', block:'center'}); }
+  }
+  function moveKb(dir){
+    const vis = visible(); if(!vis.length) return;
+    let cur = kbIndex>=0 ? vis.indexOf(items[kbIndex]) : -1;
+    cur = (cur + dir + vis.length) % vis.length;
+    setKb(items.indexOf(vis[cur]));
+  }
+
+  document.addEventListener('keydown', e=>{
+    if(e.target===search){ if(e.key==='Escape'){ search.value=''; apply(); search.blur(); } return; }
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    switch(e.key){
+      case '/': e.preventDefault(); search.focus(); break;
+      case 'r': case 'R': randomQ(); break;
+      case 'e': case 'E': visible().forEach(d=> d.open=true); break;
+      case 'c': case 'C': items.forEach(d=> d.open=false); break;
+      case 'd': case 'D': themeBtn.click(); break;
+      case 'k': case 'K': case 'ArrowDown': e.preventDefault(); moveKb(1); break;
+      case 'j': case 'J': case 'ArrowUp':   e.preventDefault(); moveKb(-1); break;
+      case ' ': case 'Enter':
+        if(kbIndex>=0){ e.preventDefault(); items[kbIndex].open = !items[kbIndex].open; }
+        break;
+    }
+  });
+
+  apply();
+</script>
+</body>
+</html>

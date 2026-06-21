@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inflammation, Immunity &amp; Hematopoiesis · Accelerated Learning System</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+  /* Gold × Rust × Pine — Inflammation & Immunity */
+  :root {
+    --accent: #b07410;
+    --accent-light: #d4a440;
+    --accent-pale: #faf0d9;
+    --accent-dark: #bf4d2f;
+    --accent-darker: #8c3620;
+    --cool: #15674f;
+    --cool-light: #2e8f70;
+    --cool-pale: #e0eee8;
+    --cream: #f5f4ef;
+    --ink: #15231c;
+    --ink-soft: #3f4a44;
+    --muted: #7a8880;
+    --border: #d7d4c8;
+    --hero-gradient: linear-gradient(135deg,#0f4d3b 0%,#15674f 55%,#bf4d2f 100%);
+    /* Semantic aliases */
+    --bg: var(--cream);
+    --surface: white;
+    --text: var(--ink);
+    --text-soft: var(--ink-soft);
+    --highlight-bg: var(--accent-pale);
+    --cog-bg: var(--cool-pale);
+    --cog-border: var(--cool);
+  }
+
+  /* ── SHARED TOKENS ─────────────────────────────────── */
+  :root {
+    --fs-xs:   0.72rem;  --fs-sm:  0.85rem;  --fs-base: 1rem;
+    --fs-md:   1.125rem; --fs-lg:  1.35rem;  --fs-xl:   1.7rem;
+    --fs-2xl:  2.2rem;   --fs-3xl: 3rem;
+    --radius:    10px;   --radius-sm: 6px;
+    --shadow:    0 2px 12px rgba(26,26,46,.08);
+    --shadow-lg: 0 8px 32px rgba(26,26,46,.14);
+    --shadow-sm: 0 1px 3px rgba(26,26,46,.08);
+  }
+
+  /* ── RESET & BASE ───────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-base);
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ───────────────────────────────────────────── */
+  .hero, header.hero {
+    background: var(--hero-gradient);
+    color: white;
+    padding: 2.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: none;
+  }
+  .hero::before, header.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* decorative SVG elements inside hero – keep but make subtle */
+  header.hero svg { opacity: .08; pointer-events: none; }
+
+  .eyebrow {
+    font-size: var(--fs-sm);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    font-weight: 600;
+    margin-bottom: .8rem;
+    position: relative;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero h1, header.hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2rem, 5vw, var(--fs-3xl));
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: .6rem;
+    position: relative;
+    letter-spacing: -.01em;
+  }
+  .hero h1 em { font-style: italic; font-weight: 500; color: rgba(255,255,255,.82); }
+  .hero-sub, .hero .sub, header.hero .sub {
+    color: rgba(255,255,255,.78);
+    font-size: var(--fs-md);
+    margin-bottom: 1.8rem;
+    position: relative;
+    max-width: 720px;
+    margin-left: auto; margin-right: auto;
+  }
+  .chips, .hero .meta {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    justify-content: center; position: relative;
+    margin-top: .5rem;
+  }
+  .chip {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: .25rem .85rem;
+    font-size: var(--fs-xs);
+    letter-spacing: .05em;
+    font-weight: 500;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .chip.tier1 { background: rgba(255,255,255,.22); border-color: var(--accent-light); }
+  .chip.tier2 { background: rgba(0,0,0,.18); border-color: rgba(255,255,255,.45); }
+  .hero .thesis {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35);
+    border-radius: 9px; padding: 9px 14px; font-size: .86rem;
+    color: rgba(255,255,255,.9); margin-top: 18px; position: relative;
+  }
+
+  /* ── METHOD STRIP ───────────────────────────────────── */
+  .method-strip, .method {
+    background: var(--ink);
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .method-item, .method .m {
+    padding: 1.2rem 1.4rem;
+    border-right: 1px solid rgba(255,255,255,.08);
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
+  .method-item:last-child, .method .m:last-child { border-right: none; }
+  .method-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-light);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+  .method-name, .method .m h4 {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin: .1rem 0;
+    color: white !important;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .method-desc, .method .m p {
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,.55);
+    margin: 0; line-height: 1.5;
+  }
+  @media (max-width: 760px) {
+    .method-strip, .method { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── STICKY NAV ─────────────────────────────────────── */
+  .sticky-nav, nav.toc {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,244,240,.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--accent);
+    padding: .6rem 2rem;
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  }
+  .sticky-nav::-webkit-scrollbar, nav.toc::-webkit-scrollbar { display: none; }
+  nav.toc .wrap {
+    display: flex; gap: 1.5rem; padding: 0;
+    max-width: none; margin: 0;
+  }
+  .nav-link, nav.toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    white-space: nowrap;
+    padding: .2rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    border-radius: 0;
+    background: transparent !important;
+  }
+  .nav-link:hover, nav.toc a:hover {
+    color: var(--accent-dark);
+    border-bottom-color: var(--accent-dark);
+    background: transparent !important;
+  }
+  nav.toc a.thesis-link { color: var(--cool); font-weight: 600; }
+  nav.toc a.key { color: var(--accent-dark); font-weight: 600; }
+
+  /* ── LAYOUT ─────────────────────────────────────────── */
+  .container { max-width: 940px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 1.5rem; }
+  main { padding: 6px 0 60px; }
+  main.container { padding: 2rem 1.5rem 4rem; }
+
+  /* ── MODULE CARD ─────────────────────────────────────── */
+  .module, section.module {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    padding: 0 !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+  }
+  section.module.thesis-mod { border-color: var(--cool); }
+
+  .module-header {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+  }
+  /* mod-head used in other files */
+  .mod-head {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white !important;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+    align-items: initial !important;
+    gap: 0 !important;
+    flex-wrap: initial !important;
+    margin-bottom: 0 !important;
+  }
+  .mod-num { display: none !important; }  /* hide big decorative number */
+  .mod-titleblock { flex: none !important; min-width: 0 !important; }
+
+  .module-tier, .tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent-light) !important;
+    margin-bottom: .3rem;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    font-weight: 600;
+    display: block;
+  }
+  .module-header h2,
+  .mod-titleblock h2,
+  .mod-head h2 {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-size: var(--fs-xl) !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    color: white !important;
+    letter-spacing: -.01em;
+  }
+  .module-header p,
+  .mod-titleblock .mod-sub,
+  .mod-head p {
+    color: rgba(255,255,255,.72) !important;
+    font-size: var(--fs-sm) !important;
+    margin-top: .3rem !important;
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+  }
+
+  /* ── STAGE BLOCKS ────────────────────────────────────── */
+  .stage { padding: 1.6rem 1.8rem; border-bottom: 1px solid var(--border); }
+  .stage:last-child { border-bottom: none; }
+  .stage-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .stage-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* MAP / COG block */
+  .cog {
+    background: var(--cool-pale) !important;
+    border-left: 4px solid var(--cool) !important;
+    border-top: none !important; border-right: none !important; border-bottom: none !important;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+    padding: 1.2rem 1.4rem !important;
+    margin-bottom: 1rem;
+    box-shadow: none !important;
+  }
+  .cog > .tag, .cog .stage-label { color: var(--cool) !important; }
+  /* blurt variant overrides cog */
+  .cog.blurt {
+    background: var(--accent-pale) !important;
+    border-left-color: var(--accent) !important;
+  }
+  .cog.blurt > .tag { color: var(--accent-dark) !important; }
+  /* feyn variant */
+  .cog.feyn {
+    background: white !important;
+    border-left-color: var(--cool) !important;
+  }
+  /* spaced variant */
+  .cog.spaced {
+    background: #F4FAF5 !important;
+    border-left-color: #2E7D52 !important;
+  }
+  .cog.spaced > .tag { color: #2E7D52 !important; }
+
+  .pillar {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--cool);
+    border-bottom: 2px solid var(--cool-light);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+    line-height: 1.34;
+    background: none !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    padding-left: 0 !important;
+    padding-top: 0 !important;
+    padding-right: 0 !important;
+  }
+  .thesis-mod .pillar { color: var(--cool); border-left: none !important; }
+
+  .cog ul, .cog ol { padding-left: 1.4rem; }
+  .cog li { margin-bottom: .4rem; font-size: var(--fs-sm); }
+  .cog li::marker { color: var(--cool); }
+  .cog li strong { color: var(--accent-dark); }
+  .cog h4 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 700; margin: 16px 0 5px; color: var(--ink); }
+
+  /* BLURT STAGE */
+  .blurt-stage {
+    background: var(--accent-pale);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.2rem 1.4rem;
+  }
+  .blurt-stage .stage-label { color: var(--accent-dark); }
+  .blurt-prompt {
+    font-style: italic;
+    background: white;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    font-size: var(--fs-sm);
+    margin-bottom: 1rem;
+    color: var(--ink-soft);
+    font-family: 'Fraunces', Georgia, serif;
+    line-height: 1.4;
+  }
+  /* blurt-prompt in other files (non-italic class) */
+  .blurt-prompt.fraunces { font-style: italic; }
+
+  .primers { list-style: none; padding: 0; counter-reset: p; margin: 0; }
+  .primers li {
+    counter-increment: p;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    padding: .5rem .7rem .5rem 2.4rem;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    color: var(--accent-darker);
+    position: relative;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin: 7px 0;
+  }
+  .primers li::before {
+    content: 'Q' counter(p);
+    position: absolute; left: 10px; top: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    color: white; background: var(--accent-dark);
+    padding: 2px 5px; border-radius: 4px;
+  }
+
+  /* FEYNMAN GATE */
+  details.gate { margin: 12px 0 2px; }
+  details.gate > summary {
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    padding: .85rem 1.3rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    list-style: none;
+    user-select: none;
+    transition: opacity .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    letter-spacing: .04em;
+  }
+  details.gate > summary::-webkit-details-marker { display: none; }
+  details.gate > summary:hover { opacity: .88; }
+  details.gate > summary::before { content: '🔒 '; }
+  details.gate[open] > summary::before { content: '🔓 '; }
+  details.gate > summary::after { content: none !important; }
+  details.gate[open] > summary {
+    background: transparent; color: var(--ink-soft);
+    border: 1.5px solid var(--border); opacity: 1;
+  }
+  details.gate[open] { border-left: 3px solid var(--border); padding-left: 14px; margin-left: 2px; }
+  details.gate > *:not(summary) { animation: gateReveal .25s ease; }
+  @keyframes gateReveal { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+
+  .feynman-content { padding: 1.2rem 0 .4rem; }
+  .feynman-content h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--cool);
+    margin: 1.2rem 0 .5rem;
+  }
+  .feynman-content h4:first-child { margin-top: 0; }
+  .feynman-content p, .feynman-content li { font-size: var(--fs-sm); }
+  .feynman-content ul, .feynman-content ol { padding-left: 1.4rem; margin-bottom: .7rem; }
+  .feynman-content li { margin-bottom: .35rem; }
+
+  .analogy {
+    background: var(--accent-pale);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  .analogy::before { content: '💡 Analogy — '; font-weight: 700; color: var(--accent-dark); }
+  /* analogy in other-file style (has .alabel child) */
+  .analogy:has(.alabel)::before { content: none; }
+  .analogy .alabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cool); font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 7px;
+  }
+  .analogy .alabel::before { content: '💡 '; }
+  .analogy p { margin: 5px 0; }
+  .analogy .key { font-family: 'Fraunces', serif; font-style: italic; color: var(--cool); font-weight: 600; }
+
+  blockquote.warn {
+    background: #FFF3F0;
+    border-left: 4px solid var(--accent-dark);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: .85rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  blockquote.warn::before { content: '⚠️ Exam Trap — '; font-weight: 700; color: var(--accent-dark); }
+  blockquote.warn .wl { font-weight: 700; color: var(--accent-dark); }
+
+  /* SPACED REP STAGE */
+  .sched-stage {
+    background: #F4FAF5;
+    border-left: 4px solid #2E7D52;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.2rem 1.4rem;
+  }
+  .sched-stage .stage-label { color: #2E7D52; }
+  .sched {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: .6rem;
+    margin-bottom: 1rem;
+    flex-wrap: initial !important;
+  }
+  .sched-day, .sched .day {
+    background: white;
+    border: 1px solid #C3E6D0 !important;
+    border-top: 3px solid #2E7D52 !important;
+    border-radius: var(--radius-sm);
+    padding: .7rem .9rem;
+    font-size: var(--fs-xs);
+  }
+  .sched-day strong, .sched .day .d {
+    display: block; color: #2E7D52;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-sm); font-weight: 700; margin-bottom: .2rem; letter-spacing: .05em;
+  }
+  .sched .day .f { font-size: .82rem; color: var(--ink-soft); margin-top: 3px; }
+  .bridge {
+    background: white;
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .8rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--accent-darker);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    line-height: 1.4;
+    margin-top: 12px;
+  }
+  .bridge::before { content: '🌉 Bridge — '; font-weight: 700; font-style: normal; font-family: 'Inter',sans-serif; }
+
+  /* ── TABLES ──────────────────────────────────────────── */
+  .tbl-wrap, .tbl { overflow-x: auto; margin: 1rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: var(--fs-xs); }
+  th {
+    background: var(--cool);
+    color: white; padding: .5rem .7rem;
+    text-align: left; font-weight: 600; font-size: var(--fs-xs);
+  }
+  td { padding: .45rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--cream); }
+  tr:hover td { background: var(--accent-pale); }
+  td strong { color: var(--accent-dark); }
+
+  /* ── DIAGRAMS ─────────────────────────────────────────── */
+  .diagram-wrap {
+    background: white; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: .8rem; margin: 1rem 0;
+    text-align: center; overflow-x: auto;
+  }
+  .diagram-caption { font-size: var(--fs-xs); color: var(--muted); margin-top: .4rem; font-style: italic; }
+
+  /* ── QUIZ — TAP TO REVEAL ────────────────────────────── */
+  /* Supports: .quiz-item/.quiz-q/.quiz-a  AND  .q/.qq/.qa patterns */
+  .quizset-title, .quiz-intro h2, .quizbank > h2, section.quizzes h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--ink);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: .3rem;
+    border-top: none; border-left: none; border-right: none;
+  }
+
+  /* Quiz intro banner */
+  .quiz-intro {
+    background: linear-gradient(135deg, var(--accent-darker), var(--accent-dark));
+    color: white;
+    border-radius: var(--radius);
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .quiz-intro h2 { color: white !important; border: none !important; font-size: 1.4rem; margin-bottom: .5rem; padding: 0; }
+  .quiz-intro p { color: rgba(255,255,255,.82); font-size: var(--fs-sm); margin: 0; }
+  .quiz-intro .qi-sub { color: rgba(255,255,255,.7); font-size: var(--fs-xs); margin-top: 5px; }
+
+  /* Collapsible quiz section headers (details.qsec, details.quizset) */
+  details.qsec, details.quizset {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: white;
+    margin: 16px 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  details.qsec > summary, details.quizset > summary {
+    cursor: pointer; list-style: none;
+    padding: 1rem 1.3rem;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    font-weight: 600; font-size: var(--fs-sm);
+    display: flex; align-items: center; gap: .6rem;
+    user-select: none; transition: opacity .2s;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  details.qsec > summary::-webkit-details-marker,
+  details.quizset > summary::-webkit-details-marker { display: none; }
+  details.qsec > summary:hover, details.quizset > summary:hover { opacity: .88; }
+  .qs-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    background: rgba(255,255,255,.2); border-radius: 4px;
+    padding: 2px 7px; color: white;
+  }
+  .qs-title { flex: 1; }
+  .qs-meta { font-size: var(--fs-xs); color: rgba(255,255,255,.65); font-weight: 400; }
+  .qcaret { transition: transform .25s; color: rgba(255,255,255,.8); font-size: 1.05rem; }
+  details.quizset[open] > summary .qcaret { transform: rotate(90deg); }
+
+  /* Individual Q&A items — BOTH patterns unified */
+  .quiz-item, .q {
+    margin-bottom: .7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  /* Question row */
+  .quiz-q, .qq {
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: .5rem;
+    user-select: none;
+    transition: background .15s;
+  }
+  /* inner layout of .qq (other files wrap in .qbody) */
+  .qq .qbody { flex: 1; display: flex; align-items: flex-start; gap: .6rem; }
+  .qq .qs-num, .qq b { /* question number prefix */
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem; font-weight: 700;
+    background: var(--cool-pale); color: var(--cool);
+    border-radius: 4px; padding: 2px 6px;
+    flex-shrink: 0; margin-top: 1px;
+    display: inline-block;
+  }
+  .qq b { background: var(--cool-pale); color: var(--cool); border-radius: 4px; padding: 2px 6px; }
+  .q-text { flex: 1; }
+
+  .quiz-q:hover, .qq:hover { background: var(--accent-pale); }
+  .quiz-q::after, .qq::after {
+    content: '▼';
+    font-size: .65rem; color: var(--muted); flex-shrink: 0; margin-top: 3px;
+  }
+  .quiz-item.open .quiz-q::after, .q.open .qq::after { content: '▲'; }
+
+  /* Answer panel */
+  .quiz-a, .qa {
+    display: none;
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0;
+    color: var(--ink-soft);
+  }
+  .quiz-item.open .quiz-a, .q.open .qa { display: block; }
+  .quiz-a strong, .qa strong, .ans strong, .ans b { color: #1f7a42; }
+  .ans { font-size: var(--fs-sm); }
+
+  /* GI file: .qa is a <details> — override to always show */
+  details.qa {
+    display: block !important;
+    border: none !important;
+    margin: 0 !important;
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0 !important;
+  }
+  details.qa > summary {
+    display: none !important; /* handled by JS click on .qq */
+  }
+  details.qa > .ans {
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+  }
+  .qq { position: relative; }
+  /* show/hide GI-style answers via open class on parent .qq */
+  .qq details.qa { display: none !important; }
+  .qq.open details.qa { display: block !important; }
+
+  /* quiz section body padding */
+  .qbody-wrap, section.quizzes .wrap { padding-top: 1rem; }
+
+  /* ── BADGES ─────────────────────────────────────────── */
+  .badge {
+    display: inline-block; font-size: var(--fs-xs);
+    font-family: 'JetBrains Mono', monospace;
+    padding: .15rem .5rem; border-radius: 4px;
+    font-weight: 500; vertical-align: middle;
+  }
+  .badge-saffron, .badge-accent {
+    background: var(--accent-pale); color: var(--accent-darker); border: 1px solid var(--accent);
+  }
+  .badge-teal, .badge-cool {
+    background: var(--cool-pale); color: var(--cool); border: 1px solid var(--cool-light);
+  }
+  .badge-rust { background: #FFF0EB; color: var(--accent-darker); border: 1px solid #F4B89A; }
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────── */
+  p { margin-bottom: .7rem; font-size: var(--fs-sm); }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--accent-darker); }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin-bottom: .35rem; font-size: var(--fs-sm); }
+  h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg); font-weight: 700;
+    margin: 1.2rem 0 .6rem; color: var(--ink);
+  }
+  h4 { font-size: var(--fs-md); font-weight: 700; margin: 1rem 0 .4rem; }
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: .85em;
+    background: var(--cream); padding: .1em .3em; border-radius: 3px;
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── FOOTER ─────────────────────────────────────────── */
+  footer, .footer {
+    text-align: center; padding: 2rem 1.5rem;
+    font-size: var(--fs-xs); color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer .wrap, .footer .wrap {
+    max-width: 940px; margin: 0 auto;
+    display: block !important; text-align: center;
+  }
+  footer .src { color: var(--muted); line-height: 1.6; font-size: var(--fs-xs); }
+
+  /* ── SCROLLBAR ──────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── PRINT ──────────────────────────────────────────── */
+  @media print {
+    .sticky-nav, nav.toc, .method-strip, .method { display: none; }
+    details.gate[open] { break-inside: avoid; }
+  }
+
+
+  /* ── FLASHCARDS ─────────────────────────────────────── */
+  #flashcards { margin-top: 3rem; margin-bottom: 2rem; }
+  #flashcards > h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md); color: var(--ink);
+    margin-bottom: .4rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: .3rem;
+  }
+  #flashcards > .fc-lead {
+    font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: 1.5rem;
+  }
+  .flashcards { display: flex; flex-direction: column; gap: .75rem; }
+  .flashcard {
+    border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; background: var(--cream); transition: box-shadow .2s;
+  }
+  .flashcard:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+  .flashcard > summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: flex-start; gap: .9rem;
+    padding: .9rem 1.1rem; background: var(--accent-pale); user-select: none;
+  }
+  .flashcard > summary::-webkit-details-marker { display: none; }
+  .flashcard > summary::after {
+    content: '▶'; color: var(--accent); font-size: .75rem;
+    margin-left: auto; margin-top: .25rem; flex-shrink: 0; transition: transform .2s;
+  }
+  .flashcard[open] > summary::after { transform: rotate(90deg); }
+  .fc-num {
+    font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+    font-weight: 500; color: var(--muted); flex-shrink: 0;
+    margin-top: .2rem; min-width: 2rem;
+  }
+  .fc-q { font-size: var(--fs-sm); color: var(--ink); line-height: 1.55; font-weight: 500; }
+  .fc-back {
+    padding: 1.1rem 1.2rem; border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: .75rem; background: #fff;
+  }
+  .fc-answer {
+    border-left: 3px solid var(--accent); padding: .7rem 1rem;
+    border-radius: 0 8px 8px 0; font-size: var(--fs-sm);
+    color: var(--ink); line-height: 1.65; background: var(--accent-pale);
+  }
+  .fc-answer strong { color: var(--accent-dark, var(--accent)); }
+  .fc-pearl {
+    border-left: 3px solid var(--cool); padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: var(--cool-pale); line-height: 1.5;
+  }
+  .fc-trap {
+    border-left: 3px solid #d97706; padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: #fffbeb; line-height: 1.5;
+  }
+  .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
+
+</style>
+  <link rel="stylesheet" href="learning-interactive.css">
+</head>
+<body>
+
+<header class="hero">
+  <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
+    <a href="learning.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">← Learning Hub</a>
+    <a href="index.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">🏠 Study Hub</a>
+  </div>
+  <svg class="abz" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#8fe0c0" stroke-width="3" fill="none" opacity="0.8">
+      <g transform="translate(140,90)"><path d="M0,60 L0,20 M0,20 L-22,-14 M0,20 L22,-14"/><circle cx="-22" cy="-14" r="6"/><circle cx="22" cy="-14" r="6"/></g>
+      <g transform="translate(420,250) rotate(28)"><path d="M0,60 L0,20 M0,20 L-22,-14 M0,20 L22,-14"/><circle cx="-22" cy="-14" r="6"/><circle cx="22" cy="-14" r="6"/></g>
+      <g transform="translate(760,120) rotate(-18)"><path d="M0,60 L0,20 M0,20 L-22,-14 M0,20 L22,-14"/><circle cx="-22" cy="-14" r="6"/><circle cx="22" cy="-14" r="6"/></g>
+      <g transform="translate(1010,300) rotate(12)"><path d="M0,60 L0,20 M0,20 L-22,-14 M0,20 L22,-14"/><circle cx="-22" cy="-14" r="6"/><circle cx="22" cy="-14" r="6"/></g>
+      <g transform="translate(980,40) rotate(40)"><path d="M0,60 L0,20 M0,20 L-22,-14 M0,20 L22,-14"/><circle cx="-22" cy="-14" r="6"/><circle cx="22" cy="-14" r="6"/></g>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Goodman &amp; Gilman · 14th Ed · Section IV</div>
+    <h1>Inflammation, Immunity<br><em>&amp; Hematopoiesis</em></h1>
+    <p class="sub">Chapters 38–45, built as an study guide in the same four-stage format as your other systems: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies, and a spaced-repetition plan. The eicosanoid cascade, NSAIDs and gout, immunosuppressants, antihistamines, asthma/COPD therapy, and the anti-anaemia agents — the drugs you prescribe and get examined on constantly.</p>
+    <div class="meta">
+      <span class="chip">8 modules · full depth</span>
+      <span class="chip">working blurting gates</span>
+      <span class="chip">5 custom diagrams + tables</span>
+      <span class="chip">8 quiz sets · 120 Q</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#method">The method</a>
+    <a class="key" href="#m41">41 · Eicosanoids</a>
+    <a class="key" href="#m42">42 · NSAIDs &amp; Gout</a>
+    <a class="key" href="#m44">44 · Pulmonary</a>
+    <a class="key" href="#m45">45 · Hematopoietic</a>
+    <a class="key" href="#m39">39 · Immunosuppressants</a>
+    <a href="#m43">43 · Histamine</a>
+    <a href="#m38">38 · Immunity</a>
+    <a href="#m40">40 · Ig &amp; Vaccines</a>
+    <a href="#flashcards">🃏 Flashcards</a>
+    <a href="#quizzes">★ 120 Questions</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="method" style="padding-top:30px">
+  <p class="lead">Same engine as your General Pharmacology, Neuropharmacology and Cardiovascular-Renal systems. Each module runs four evidence-based stages — and the blurting gate matters most: retrieving <em>before</em> you read is what builds durable memory. Chapters are ordered by yield, Tier 1 first.</p>
+  <div class="method">
+    <div class="m m1"><h4>① 80/20 Map</h4><p>The 20% of facts that explain 80% of the pharmacology. The skeleton first.</p></div>
+    <div class="m m2"><h4>② Blurting Gate</h4><p>Dump everything you know <em>before</em> reading the notes. Active recall.</p></div>
+    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The mechanism in plain language, with a simple analogy.</p></div>
+    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>When to re-test, and one question linking this topic to another.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Tier 1 (own cold): <strong>Eicosanoids, NSAIDs &amp; Gout, Pulmonary, Hematopoietic agents, Immunosuppressants</strong>. Tier 2: Histamine/antihistamines, Immunity intro. Tier 3 (framework): Immune globulins &amp; vaccines.</p>
+</section>
+
+<!-- ============ MODULE 41 — EICOSANOIDS ============ -->
+<section class="module" id="m41">
+  <div class="mod-head">
+    <div class="mod-num">41</div>
+    <div class="mod-titleblock">
+      <h2>Lipid-Derived Autacoids — Eicosanoids &amp; PAF</h2>
+      <div class="mod-sub">Arachidonic acid · prostaglandins · leukotrienes</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Foundational</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Master <strong>one branching pathway</strong> and four chapters fall into place: arachidonic acid (freed by phospholipase A₂) splits down the <strong>COX branch</strong> (prostaglandins, prostacyclin, thromboxane) and the <strong>LOX branch</strong> (leukotrienes) — and every anti-inflammatory drug is just a named cut on this map.</div>
+      <figure>
+    <div class="fig-title">Figure 41·1 — The arachidonic acid cascade &amp; where drugs act</div>
+    <svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <defs><marker id="a1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#15674f"/></marker></defs>
+      <rect x="330" y="14" width="200" height="40" rx="8" fill="#0f4d3b"/><text x="430" y="33" fill="#fff" text-anchor="middle" font-weight="600">Membrane phospholipids</text><text x="430" y="48" fill="#8fe0c0" text-anchor="middle" font-size="10">cell injury / stimulus</text>
+      <line x1="430" y1="54" x2="430" y2="84" stroke="#15674f" stroke-width="2" marker-end="url(#a1)"/>
+      <text x="540" y="74" fill="#a8331f" font-size="11" font-weight="600">⊣ Glucocorticoids (↓PLA₂ via lipocortin)</text>
+      <rect x="350" y="86" width="160" height="34" rx="7" fill="#e0eee8" stroke="#15674f"/><text x="430" y="108" text-anchor="middle" fill="#0f4d3b" font-weight="600">Phospholipase A₂</text>
+      <line x1="430" y1="120" x2="430" y2="150" stroke="#15674f" stroke-width="2" marker-end="url(#a1)"/>
+      <rect x="355" y="152" width="150" height="34" rx="7" fill="#fff" stroke="#15674f"/><text x="430" y="174" text-anchor="middle" fill="#0f4d3b" font-weight="700">Arachidonic acid</text>
+      <!-- COX branch -->
+      <line x1="380" y1="186" x2="250" y2="226" stroke="#15674f" stroke-width="2" marker-end="url(#a1)"/>
+      <line x1="480" y1="186" x2="610" y2="226" stroke="#15674f" stroke-width="2" marker-end="url(#a1)"/>
+      <rect x="150" y="228" width="200" height="40" rx="7" fill="#f3e6f0" stroke="#7a3b6b"/><text x="250" y="248" text-anchor="middle" fill="#5e2d52" font-weight="700">Cyclo-oxygenase (COX-1/2)</text><text x="250" y="262" text-anchor="middle" fill="#a8331f" font-size="10">⊣ NSAIDs · ⊣ aspirin (irrev.)</text>
+      <rect x="510" y="228" width="200" height="40" rx="7" fill="#faf0d9" stroke="#b07410"/><text x="610" y="248" text-anchor="middle" fill="#8a5a0c" font-weight="700">5-Lipoxygenase</text><text x="610" y="262" text-anchor="middle" fill="#a8331f" font-size="10">⊣ zileuton</text>
+      <line x1="250" y1="268" x2="250" y2="298" stroke="#7a3b6b" stroke-width="2" marker-end="url(#a1)"/>
+      <line x1="610" y1="268" x2="610" y2="298" stroke="#b07410" stroke-width="2" marker-end="url(#a1)"/>
+      <rect x="70" y="300" width="360" height="62" rx="7" fill="#fff" stroke="#7a3b6b"/>
+      <text x="250" y="320" text-anchor="middle" fill="#5e2d52" font-weight="600" font-size="11">Prostaglandins (PGE₂, PGF₂α) · Prostacyclin (PGI₂)</text>
+      <text x="250" y="338" text-anchor="middle" fill="#3f4a44" font-size="10">Thromboxane A₂ (platelets, via COX-1)</text>
+      <text x="250" y="354" text-anchor="middle" fill="#3f4a44" font-size="10">pain · fever · gastric protection · renal flow · platelet fn</text>
+      <rect x="470" y="300" width="320" height="62" rx="7" fill="#fff" stroke="#b07410"/>
+      <text x="630" y="320" text-anchor="middle" fill="#8a5a0c" font-weight="600" font-size="11">Leukotrienes</text>
+      <text x="630" y="338" text-anchor="middle" fill="#3f4a44" font-size="10">LTB₄ (chemotaxis) · LTC₄/D₄/E₄ = CysLTs</text>
+      <text x="630" y="354" text-anchor="middle" fill="#a8331f" font-size="10">⊣ montelukast (CysLT₁) — bronchospasm</text>
+    </svg>
+    <figcaption>One precursor, two main branches. Glucocorticoids choke the whole cascade at PLA₂; NSAIDs block only the COX branch (leaving leukotrienes intact); leukotriene modifiers act on the LOX branch.</figcaption>
+  </figure>
+    <h4>Where the major drug classes act</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Drug class</th><th>Enzyme / target blocked</th><th>Net effect</th></tr></thead>
+      <tbody>
+        <tr><td>Glucocorticoids</td><td>Phospholipase A₂ (↓ via annexin-1)</td><td>Block <strong>both</strong> branches — broadest</td></tr>
+        <tr><td>NSAIDs (non-selective)</td><td>COX-1 &amp; COX-2 (reversible)</td><td>↓ prostaglandins + thromboxane</td></tr>
+        <tr><td>Aspirin</td><td>COX (irreversible acetylation)</td><td>↓ TXA₂ for platelet lifetime</td></tr>
+        <tr><td>Coxibs</td><td>COX-2 selective</td><td>↓ inflammatory PGs, spare gastric COX-1</td></tr>
+        <tr><td>Zileuton</td><td>5-Lipoxygenase</td><td>↓ all leukotrienes</td></tr>
+        <tr><td>Montelukast/zafirlukast</td><td>CysLT₁ receptor</td><td>Block LTC₄/D₄/E₄ bronchospasm</td></tr>
+      </tbody>
+    </table></div>
+    <h4>Key prostanoid actions to know</h4>
+    <ul>
+      <li><strong>PGE₂:</strong> vasodilation, fever (hypothalamus), gastric mucus/bicarbonate (protective), sensitises nociceptors → pain.</li>
+      <li><strong>PGI₂ (prostacyclin, endothelium):</strong> vasodilator, <em>inhibits</em> platelet aggregation.</li>
+      <li><strong>TXA₂ (platelets, COX-1):</strong> vasoconstrictor, <em>promotes</em> platelet aggregation — the PGI₂/TXA₂ balance is the basis of low-dose aspirin.</li>
+      <li><strong>PGF₂α:</strong> uterine contraction, bronchoconstriction.</li>
+    </ul>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">Draw the arachidonic acid cascade from membrane phospholipid down to the two end-product families — and mark exactly where glucocorticoids, NSAIDs, aspirin, and montelukast each cut it. Why does a glucocorticoid suppress more of the response than an NSAID?</div>
+    <h4 style="color:var(--rust)">Guiding primers — ask "why," not "what"</h4>
+    <ul class="primers">
+      <li>Why does blocking COX sometimes <em>worsen</em> asthma — what happens to arachidonic acid that can no longer go down the COX branch?</li>
+      <li>Why does the same molecule (PGE₂) cause both stomach protection and the pain/fever you take an NSAID to relieve?</li>
+      <li>Why does low-dose aspirin protect the heart while high-dose may not — what's the PGI₂/TXA₂ logic?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>The branch point is everything</h4>
+    <p>Phospholipase A₂ liberates arachidonic acid from the membrane; from there it can go down COX (→ prostanoids) or 5-LOX (→ leukotrienes). Because the two branches share one substrate pool, <strong>blocking one branch can shunt substrate down the other</strong> — the mechanism behind aspirin-exacerbated respiratory disease (more arachidonic acid → more leukotrienes → bronchospasm).</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a river that forks</div>
+      <p>Arachidonic acid is a <span class="key">river fed by one upstream dam</span> (phospholipase A₂). Downstream it forks into two channels: the COX channel (prostaglandins) and the LOX channel (leukotrienes). <strong>Glucocorticoids close the dam</strong> — both channels run dry, the broadest effect. <strong>NSAIDs dam only the COX channel</strong> — but the water still has to go somewhere, so it surges down the leukotriene channel (why NSAIDs can trigger bronchospasm in sensitive asthmatics). <strong>Montelukast</strong> doesn't touch the river at all — it just blocks the leukotriene "outflow valve" (the CysLT₁ receptor) at the destination.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> PAF (platelet-activating factor) is a separate phospholipid mediator, not an eicosanoid, but it amplifies the same inflammatory response (bronchoconstriction, ↑vascular permeability). And remember the protective face of prostaglandins: COX-1-derived PGE₂/PGI₂ guard the gastric mucosa and maintain renal perfusion — which is exactly why blocking them causes the classic NSAID toxicities in the next module.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 42 — NSAIDs & GOUT ============ -->
+<section class="module" id="m42">
+  <div class="mod-head">
+    <div class="mod-num">42</div>
+    <div class="mod-titleblock">
+      <h2>Pharmacotherapy of Inflammation, Fever, Pain &amp; Gout</h2>
+      <div class="mod-sub">NSAIDs · acetaminophen · gout agents</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">NSAIDs block COX → less prostaglandin → the <strong>four therapeutic effects</strong> (analgesic, antipyretic, anti-inflammatory, antiplatelet) come bundled with <strong>four predictable toxicities</strong> (GI, renal, cardiovascular, bleeding) — because you've removed prostaglandins that were also doing useful housekeeping.</p></div>
+    <h4>COX-1 vs COX-2 — the central distinction</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th></th><th>COX-1 (constitutive)</th><th>COX-2 (inducible)</th></tr></thead>
+      <tbody>
+        <tr><td>Where</td><td>Stomach, platelets, kidney — always on</td><td>Induced at inflammation sites (also constitutive in kidney)</td></tr>
+        <tr><td>Housekeeping role</td><td>Gastric mucus, platelet TXA₂, renal flow</td><td>Inflammation, pain, fever</td></tr>
+        <tr><td>Block it →</td><td><strong>Adverse effects</strong> (ulcers, bleeding)</td><td><strong>Benefit</strong> (anti-inflammatory)</td></tr>
+        <tr><td>Selective agent</td><td>—</td><td>Celecoxib (spares stomach, ↑CV risk)</td></tr>
+      </tbody>
+    </table></div>
+    <h4>NSAID effects vs toxicities (two sides of one coin)</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Effect (wanted)</th><th>Toxicity (same mechanism)</th></tr></thead>
+      <tbody>
+        <tr><td>Anti-inflammatory / analgesic</td><td>—</td></tr>
+        <tr><td>Antipyretic (↓ hypothalamic PGE₂)</td><td>—</td></tr>
+        <tr><td>Antiplatelet (↓ TXA₂)</td><td><strong>Bleeding</strong>; aspirin = irreversible</td></tr>
+        <tr><td>— (lost gastric PGE₂)</td><td><strong>Peptic ulcers, GI bleed</strong></td></tr>
+        <tr><td>— (lost renal PGE₂/PGI₂)</td><td><strong>Na⁺/water retention, AKI, ↑BP</strong></td></tr>
+        <tr><td>— (COX-2 selective)</td><td><strong>Thrombosis / MI / stroke</strong></td></tr>
+      </tbody>
+    </table></div>
+    <h4>Special agents</h4>
+    <ul>
+      <li><strong>Aspirin:</strong> irreversibly acetylates COX → platelets (anucleate) can't make new enzyme → effect lasts ~7–10 days. Low dose = cardioprotection.</li>
+      <li><strong>Acetaminophen/paracetamol:</strong> analgesic + antipyretic, <em>weak</em> anti-inflammatory; acts centrally; <strong>no</strong> GI/antiplatelet effects; overdose → hepatotoxic NAPQI.</li>
+    </ul>
+    <h4>Gout — acute vs chronic</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Drug</th><th>Use</th><th>Mechanism</th></tr></thead>
+      <tbody>
+        <tr><td>NSAIDs (e.g. indomethacin)</td><td>Acute flare</td><td>Anti-inflammatory (1st line)</td></tr>
+        <tr><td>Colchicine</td><td>Acute flare</td><td>Binds tubulin → ↓ neutrophil migration</td></tr>
+        <tr><td>Glucocorticoids</td><td>Acute (if NSAID/colchicine contraindicated)</td><td>Anti-inflammatory</td></tr>
+        <tr><td>Allopurinol / febuxostat</td><td>Chronic (urate-lowering)</td><td><strong>Xanthine oxidase inhibitor</strong> ↓ urate synthesis</td></tr>
+        <tr><td>Probenecid</td><td>Chronic (under-excretors)</td><td>Uricosuric — ↓ tubular urate reabsorption</td></tr>
+        <tr><td>Pegloticase / rasburicase</td><td>Refractory / tumour lysis</td><td>Uricase → urate to allantoin</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A patient on an NSAID for arthritis develops a stomach ulcer, ankle swelling, and a rising creatinine. Blurt out the single mechanism that links all three to the drug — then explain why a COX-2-selective drug would fix the stomach but might threaten the heart.</div>
+    <h4 style="color:var(--rust)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does aspirin's antiplatelet effect last over a week when the drug itself is cleared in hours?</li>
+      <li>Why must you never give an NSAID to start treating an <em>acute</em> gout flare with a urate-lowering drug like allopurinol?</li>
+      <li>Why is acetaminophen safe for the stomach and platelets but dangerous for the liver in overdose?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Why one mechanism explains both benefit and harm</h4>
+    <p>Prostaglandins do two jobs: they <em>signal</em> inflammation, pain and fever (bad), and they <em>maintain</em> the gastric mucus barrier, renal perfusion and the platelet/endothelium balance (good). An NSAID can't tell the difference — block COX and you lose all of it at once. That's why the GI, renal and bleeding effects aren't side-effects in the usual sense; they're the <em>same</em> effect in a different tissue.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — firing the whole maintenance crew</div>
+      <p>Prostaglandins are a <span class="key">maintenance crew working all over a building</span>. At the inflamed site they're the ones ringing the fire alarm (pain, fever, swelling). But the same crew also reglazes the stomach lining, keeps the kidney's water pressure steady, and balances the "sticky vs slippery" setting of the blood. An NSAID <strong>fires the entire crew</strong> — the alarm stops (great), but no one is patching the stomach lining (ulcer), managing renal pressure (fluid retention, AKI) or balancing clotting (bleeding). A coxib fires <em>only the alarm-ringers</em> (COX-2), sparing the stomach crew — but it also removes the endothelium's anti-clotting signal (PGI₂) while leaving platelets' pro-clotting TXA₂ intact, tipping toward thrombosis.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — high-yield traps:</span> <strong>Aspirin in children</strong> with viral illness → <strong>Reye syndrome</strong> (avoid). NSAID "<strong>triple whammy</strong>" = NSAID + ACEi/ARB + diuretic → acute kidney injury. <strong>Allopurinol</strong> can precipitate an acute flare if started during one, and causes severe reactions (HLA-B*58:01); it also <strong>blocks metabolism of azathioprine/6-MP</strong> (both xanthine-oxidase substrates) → toxicity. Never give <strong>aspirin in gout</strong> — low doses are urate-retaining.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 44 — PULMONARY ============ -->
+<section class="module" id="m44">
+  <div class="mod-head">
+    <div class="mod-num">44</div>
+    <div class="mod-titleblock">
+      <h2>Pulmonary Pharmacology</h2>
+      <div class="mod-sub">Asthma &amp; COPD · relievers vs controllers</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Asthma is <strong>two problems at once</strong> — acute bronchoconstriction and chronic inflammation — so therapy is two-pronged: <strong>relievers</strong> (bronchodilators) open the airway fast, while <strong>controllers</strong> (above all inhaled corticosteroids) treat the inflammation that drives the disease.</div>
+      <figure>
+    <div class="fig-title">Figure 44·1 — Asthma: two problems, two drug strategies</div>
+    <svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <defs><marker id="ap" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#15674f"/></marker></defs>
+      <rect x="310" y="14" width="200" height="38" rx="8" fill="#0f4d3b"/><text x="410" y="38" fill="#fff" text-anchor="middle" font-weight="600">Asthma trigger</text>
+      <line x1="360" y1="52" x2="230" y2="92" stroke="#15674f" stroke-width="2" marker-end="url(#ap)"/>
+      <line x1="460" y1="52" x2="590" y2="92" stroke="#15674f" stroke-width="2" marker-end="url(#ap)"/>
+      <rect x="90" y="94" width="280" height="44" rx="8" fill="#fbe8e1" stroke="#bf4d2f"/><text x="230" y="114" text-anchor="middle" fill="#bf4d2f" font-weight="700">Bronchoconstriction</text><text x="230" y="130" text-anchor="middle" fill="#3f4a44" font-size="10">smooth muscle spasm — the acute squeeze</text>
+      <rect x="450" y="94" width="280" height="44" rx="8" fill="#f3e6f0" stroke="#7a3b6b"/><text x="590" y="114" text-anchor="middle" fill="#5e2d52" font-weight="700">Airway inflammation</text><text x="590" y="130" text-anchor="middle" fill="#3f4a44" font-size="10">oedema, mucus, remodelling — the slow burn</text>
+      <line x1="230" y1="138" x2="230" y2="170" stroke="#bf4d2f" stroke-width="2" marker-end="url(#ap)"/>
+      <line x1="590" y1="138" x2="590" y2="170" stroke="#7a3b6b" stroke-width="2" marker-end="url(#ap)"/>
+      <rect x="40" y="172" width="380" height="108" rx="9" fill="#fff" stroke="#bf4d2f"/>
+      <text x="230" y="192" text-anchor="middle" fill="#bf4d2f" font-weight="700">RELIEVERS (bronchodilators)</text>
+      <text x="230" y="214" text-anchor="middle" font-size="11" fill="#15231c">SABA: salbutamol · LABA: salmeterol/formoterol</text>
+      <text x="230" y="234" text-anchor="middle" font-size="11" fill="#15231c">LAMA: tiotropium (anticholinergic)</text>
+      <text x="230" y="254" text-anchor="middle" font-size="11" fill="#15231c">Methylxanthines: theophylline</text>
+      <text x="230" y="272" text-anchor="middle" font-size="10" fill="#3f4a44" font-style="italic">open the airway — fast, symptomatic</text>
+      <rect x="430" y="172" width="350" height="108" rx="9" fill="#fff" stroke="#7a3b6b"/>
+      <text x="605" y="192" text-anchor="middle" fill="#5e2d52" font-weight="700">CONTROLLERS (anti-inflammatory)</text>
+      <text x="605" y="214" text-anchor="middle" font-size="11" fill="#15231c">ICS: budesonide/fluticasone — cornerstone</text>
+      <text x="605" y="234" text-anchor="middle" font-size="11" fill="#15231c">LTRA: montelukast · cromones</text>
+      <text x="605" y="254" text-anchor="middle" font-size="11" fill="#15231c">Biologics: anti-IgE (omalizumab), anti-IL5</text>
+      <text x="605" y="272" text-anchor="middle" font-size="10" fill="#3f4a44" font-style="italic">calm inflammation — slow, preventive</text>
+    </svg>
+    <figcaption>The two-pronged logic of asthma therapy: relievers relax the muscle for fast rescue; controllers (above all inhaled corticosteroids) treat the underlying inflammation to prevent attacks.</figcaption>
+  </figure>
+    <h4>The drug classes</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Class</th><th>Example</th><th>Mechanism</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td>SABA</td><td>Salbutamol</td><td>β₂-agonist → ↑cAMP → relax muscle</td><td>Acute rescue</td></tr>
+        <tr><td>LABA</td><td>Salmeterol, formoterol</td><td>Long-acting β₂-agonist</td><td>Maintenance (with ICS)</td></tr>
+        <tr><td>ICS</td><td>Budesonide, fluticasone</td><td>↓ transcription of inflammatory genes</td><td><strong>Controller cornerstone</strong></td></tr>
+        <tr><td>LAMA</td><td>Tiotropium</td><td>Muscarinic (M₃) antagonist</td><td>COPD mainstay; add-on asthma</td></tr>
+        <tr><td>LTRA</td><td>Montelukast</td><td>CysLT₁ receptor blocker</td><td>Add-on, allergic/exercise</td></tr>
+        <tr><td>Methylxanthine</td><td>Theophylline</td><td>PDE inhibition + adenosine antag.</td><td>Narrow TI — rarely 1st line</td></tr>
+        <tr><td>Biologics</td><td>Omalizumab (anti-IgE), anti-IL-5</td><td>Block specific Th2 mediators</td><td>Severe eosinophilic/allergic</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A patient uses their blue salbutamol inhaler more and more often but keeps having night-time attacks. Blurt out which of the two asthma problems their reliever is <em>not</em> treating, and what drug class must be added — and why prescribing a LABA on its own would be dangerous.</div>
+    <h4 style="color:var(--rust)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does a β₂-agonist relax bronchial muscle — what second messenger rises (link to Module 3 GPCRs)?</li>
+      <li>Why is an inhaled corticosteroid, not a bronchodilator, the drug that actually changes the disease course?</li>
+      <li>Why is COPD managed more with anticholinergics (LAMA) than asthma is?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Relievers treat the symptom; controllers treat the disease</h4>
+    <p>A β₂-agonist raises cAMP in airway smooth muscle, relaxing the spasm within minutes — but it does nothing about the inflammation that caused the spasm. Inhaled corticosteroids switch off the inflammatory gene programme over days to weeks, shrinking the underlying problem so attacks become rarer.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — fire alarm vs the fire</div>
+      <p>Think of an asthma attack as a <span class="key">building fire setting off a deafening alarm</span>. A reliever (salbutamol) is <strong>earplugs</strong> — instant relief from the noise, but the fire still burns. The inhaled corticosteroid is the <strong>fire crew putting out the actual flames</strong>. If a patient just keeps reaching for earplugs (overusing their blue inhaler), the fire grows unchecked — which is exactly why escalating reliever use is a red flag, and why a long-acting reliever (LABA) given <em>alone</em>, with no fire crew, can be lethal: it silences the warning while the disease worsens. LABAs must always ride with an ICS.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>LABA monotherapy in asthma increases asthma deaths</strong> — always combine with an inhaled corticosteroid. <strong>Theophylline</strong> has a narrow therapeutic index (nausea, arrhythmia, seizures) and is a CYP1A2 substrate — levels rise with inhibitors and fall in smokers (induction). In COPD, the dominant bronchodilator tone is cholinergic, so <strong>LAMAs/SAMAs</strong> matter more than in asthma.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 45 — HEMATOPOIETIC AGENTS ============ -->
+<section class="module" id="m45">
+  <div class="mod-head">
+    <div class="mod-num">45</div>
+    <div class="mod-titleblock">
+      <h2>Hematopoietic Agents</h2>
+      <div class="mod-sub">Iron · B₁₂ · folate · growth factors</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">This chapter is a <strong>matching exercise</strong>: classify the anaemia by cause, then replace exactly what's missing — iron for microcytic, B₁₂/folate for macrocytic, erythropoietin for the anaemia of chronic kidney disease — plus growth factors (G-CSF) to rebuild white cells.</div>
+      <figure>
+    <div class="fig-title">Figure 45·1 — Match the anaemia to its agent</div>
+    <svg viewBox="0 0 820 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <defs><marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#15674f"/></marker></defs>
+      <rect x="320" y="14" width="180" height="38" rx="8" fill="#0f4d3b"/><text x="410" y="38" fill="#fff" text-anchor="middle" font-weight="600">Anaemia → classify by MCV</text>
+      <line x1="370" y1="52" x2="170" y2="86" stroke="#15674f" stroke-width="2" marker-end="url(#ah)"/>
+      <line x1="410" y1="52" x2="410" y2="86" stroke="#15674f" stroke-width="2" marker-end="url(#ah)"/>
+      <line x1="450" y1="52" x2="650" y2="86" stroke="#15674f" stroke-width="2" marker-end="url(#ah)"/>
+      <rect x="40" y="88" width="250" height="40" rx="7" fill="#fbe8e1" stroke="#bf4d2f"/><text x="165" y="106" text-anchor="middle" fill="#bf4d2f" font-weight="700">Microcytic (low MCV)</text><text x="165" y="121" text-anchor="middle" font-size="10" fill="#3f4a44">iron deficiency</text>
+      <rect x="300" y="88" width="220" height="40" rx="7" fill="#f3e6f0" stroke="#7a3b6b"/><text x="410" y="106" text-anchor="middle" fill="#5e2d52" font-weight="700">Macrocytic (high MCV)</text><text x="410" y="121" text-anchor="middle" font-size="10" fill="#3f4a44">B₁₂ / folate deficiency</text>
+      <rect x="530" y="88" width="250" height="40" rx="7" fill="#faf0d9" stroke="#b07410"/><text x="655" y="106" text-anchor="middle" fill="#8a5a0c" font-weight="700">Normo (chronic kidney dz)</text><text x="655" y="121" text-anchor="middle" font-size="10" fill="#3f4a44">↓ erythropoietin</text>
+      <line x1="165" y1="128" x2="165" y2="158" stroke="#bf4d2f" stroke-width="2" marker-end="url(#ah)"/>
+      <line x1="410" y1="128" x2="410" y2="158" stroke="#7a3b6b" stroke-width="2" marker-end="url(#ah)"/>
+      <line x1="655" y1="128" x2="655" y2="158" stroke="#b07410" stroke-width="2" marker-end="url(#ah)"/>
+      <rect x="60" y="160" width="210" height="36" rx="7" fill="#fff" stroke="#bf4d2f"/><text x="165" y="183" text-anchor="middle" fill="#bf4d2f" font-weight="700">Oral / IV iron</text>
+      <rect x="305" y="160" width="210" height="36" rx="7" fill="#fff" stroke="#7a3b6b"/><text x="410" y="183" text-anchor="middle" fill="#5e2d52" font-weight="700">B₁₂ (IM) and/or folate</text>
+      <rect x="550" y="160" width="210" height="36" rx="7" fill="#fff" stroke="#b07410"/><text x="655" y="183" text-anchor="middle" fill="#8a5a0c" font-weight="700">Erythropoietin (ESA)</text>
+      <text x="410" y="226" text-anchor="middle" font-size="11" fill="#3f4a44" font-style="italic">Plus growth factors: G-CSF (filgrastim) for neutropenia · TPO-agonists for thrombocytopenia</text>
+    </svg>
+    <figcaption>The whole chapter is a matching exercise: classify the anaemia, then give back what is missing. Never give iron for a B₁₂ deficiency.</figcaption>
+  </figure>
+    <h4>The agents</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Agent</th><th>Deficiency / use</th><th>Key point</th></tr></thead>
+      <tbody>
+        <tr><td>Iron (oral ferrous, IV)</td><td>Microcytic anaemia</td><td>Absorbed in duodenum; constipation; IV for malabsorption/intolerance</td></tr>
+        <tr><td>Vitamin B₁₂ (cobalamin)</td><td>Macrocytic + <strong>neurological</strong> signs</td><td>Needs intrinsic factor; pernicious anaemia → give IM</td></tr>
+        <tr><td>Folate</td><td>Macrocytic, no neuro signs</td><td>Periconceptual → prevents neural tube defects</td></tr>
+        <tr><td>Erythropoietin (epoetin, darbepoetin)</td><td>CKD anaemia, chemo</td><td>Needs adequate iron stores; ↑BP, thrombosis risk</td></tr>
+        <tr><td>G-CSF (filgrastim) / GM-CSF</td><td>Neutropenia (chemo)</td><td>Stimulates neutrophil production</td></tr>
+        <tr><td>TPO agonists (romiplostim, eltrombopag)</td><td>Thrombocytopenia (ITP)</td><td>Mimic thrombopoietin</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A patient has a macrocytic anaemia. Before reading on, blurt out the two vitamins that could be responsible, the single clinical feature that distinguishes them, and why giving the <em>wrong</em> one (folate alone) could leave the patient with permanent harm.</div>
+    <h4 style="color:var(--rust)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does a CKD patient become anaemic even with normal iron and B₁₂ — what does the kidney normally make?</li>
+      <li>Why does erythropoietin fail to work if iron stores are low?</li>
+      <li>Why does B₁₂ deficiency, but not folate deficiency, cause neurological damage?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Replace what's missing — but identify it first</h4>
+    <p>Both B₁₂ and folate are needed for DNA synthesis, so deficiency of either gives a <strong>macrocytic</strong> anaemia. But B₁₂ has a second job — maintaining the myelin sheath — so only B₁₂ deficiency causes neurological signs. Erythropoietin is the kidney's "build more red cells" signal; in CKD the factory has raw materials but no foreman.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a factory missing different supplies</div>
+      <p>The bone marrow is a <span class="key">red-cell factory</span>. <strong>Iron</strong> is the raw brick — without it, cells come out small and pale (microcytic). <strong>B₁₂ and folate</strong> are the blueprints for copying DNA — without them, cells can't divide properly and come out large and immature (macrocytic). <strong>Erythropoietin</strong> is the foreman shouting "make more!" — in kidney disease the foreman is gone, so production stalls even though bricks and blueprints are plentiful. And the dangerous twist: B₁₂ also maintains the factory's <em>electrical wiring</em> (myelin). If you hand over only folate, you restock the blueprints and the anaemia improves — masking the fact that the wiring is still corroding, leading to irreversible neurological damage.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>Always check B₁₂ before treating macrocytic anaemia with folate</strong> — folate alone corrects the blood picture but lets subacute combined degeneration of the cord progress. <strong>Erythropoiesis-stimulating agents</strong> raise thrombosis/stroke risk and need adequate iron to work — don't over-correct haemoglobin. Oral iron is poorly tolerated (GI upset, black stools) and absorption is reduced by PPIs and antacids.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 39 — IMMUNOSUPPRESSANTS ============ -->
+<section class="module" id="m39">
+  <div class="mod-head">
+    <div class="mod-num">39</div>
+    <div class="mod-titleblock">
+      <h2>Immunosuppressants, Immunomodulation &amp; Tolerance</h2>
+      <div class="mod-sub">Transplant · autoimmune · biologics</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · High yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Lay the drugs along <strong>one T-cell activation cascade</strong>: block the IL-2 <em>signal</em> (calcineurin inhibitors), block the clone <em>expanding</em> (antiproliferatives/mTOR), neutralise specific <em>mediators</em> (biologics), or hit <em>everything</em> (glucocorticoids).</div>
+      <figure>
+    <div class="fig-title">Figure 39·1 — Immunosuppressants by site of action</div>
+    <svg viewBox="0 0 820 270" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <defs><marker id="ai9" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#15674f"/></marker></defs>
+      <rect x="40" y="110" width="150" height="50" rx="9" fill="#0f4d3b"/><text x="115" y="132" fill="#fff" text-anchor="middle" font-weight="600">Antigen +</text><text x="115" y="150" fill="#8fe0c0" text-anchor="middle" font-size="10">APC signal</text>
+      <line x1="190" y1="135" x2="230" y2="135" stroke="#15674f" stroke-width="2" marker-end="url(#ai9)"/>
+      <rect x="232" y="108" width="160" height="54" rx="9" fill="#e0eee8" stroke="#15674f"/><text x="312" y="130" text-anchor="middle" fill="#0f4d3b" font-weight="700">T-cell activation</text><text x="312" y="148" text-anchor="middle" font-size="10" fill="#3f4a44">calcineurin → IL-2</text>
+      <line x1="392" y1="135" x2="432" y2="135" stroke="#15674f" stroke-width="2" marker-end="url(#ai9)"/>
+      <rect x="434" y="108" width="160" height="54" rx="9" fill="#e0eee8" stroke="#15674f"/><text x="514" y="130" text-anchor="middle" fill="#0f4d3b" font-weight="700">Clonal proliferation</text><text x="514" y="148" text-anchor="middle" font-size="10" fill="#3f4a44">IL-2 drive · DNA synth</text>
+      <line x1="594" y1="135" x2="634" y2="135" stroke="#15674f" stroke-width="2" marker-end="url(#ai9)"/>
+      <rect x="636" y="110" width="150" height="50" rx="9" fill="#0f4d3b"/><text x="711" y="138" fill="#fff" text-anchor="middle" font-weight="600">Effector response</text>
+      <!-- drug labels -->
+      <text x="312" y="56" text-anchor="middle" fill="#a8331f" font-size="11" font-weight="600">⊣ Calcineurin inhibitors</text><text x="312" y="72" text-anchor="middle" font-size="10" fill="#3f4a44">ciclosporin, tacrolimus</text>
+      <line x1="312" y1="78" x2="312" y2="106" stroke="#a8331f" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <text x="514" y="56" text-anchor="middle" fill="#7a3b6b" font-size="11" font-weight="600">⊣ mTOR / antiproliferatives</text><text x="514" y="72" text-anchor="middle" font-size="10" fill="#3f4a44">sirolimus · MMF · azathioprine</text>
+      <line x1="514" y1="78" x2="514" y2="106" stroke="#7a3b6b" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <text x="115" y="200" text-anchor="middle" fill="#b07410" font-size="11" font-weight="600">⊣ Glucocorticoids (broad)</text>
+      <text x="711" y="200" text-anchor="middle" fill="#5e2d52" font-size="11" font-weight="600">⊣ Biologics</text><text x="711" y="216" text-anchor="middle" font-size="10" fill="#3f4a44">anti-TNF, anti-IL, anti-CD20, costim. block</text>
+    </svg>
+    <figcaption>Walk the activation cascade left to right and each drug class slots onto a step: calcineurin inhibitors stop the IL-2 signal, antiproliferatives stop the clone expanding, biologics neutralise specific mediators, steroids hit everything.</figcaption>
+  </figure>
+    <h4>The classes</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Class</th><th>Drugs</th><th>Mechanism</th><th>Signature toxicity</th></tr></thead>
+      <tbody>
+        <tr><td>Calcineurin inhibitors</td><td>Ciclosporin, tacrolimus</td><td>↓ calcineurin → ↓ IL-2 transcription</td><td><strong>Nephrotoxicity</strong>, ↑BP, tremor</td></tr>
+        <tr><td>mTOR inhibitors</td><td>Sirolimus, everolimus</td><td>Block IL-2 signal transduction</td><td>Hyperlipidaemia, impaired healing</td></tr>
+        <tr><td>Antiproliferatives</td><td>Mycophenolate, azathioprine</td><td>↓ purine/DNA synthesis</td><td>Myelosuppression, GI</td></tr>
+        <tr><td>Glucocorticoids</td><td>Prednisolone</td><td>Broad anti-inflammatory/transcriptional</td><td>Cushingoid, osteoporosis, infection</td></tr>
+        <tr><td>Biologics</td><td>Anti-TNF (infliximab), anti-CD20 (rituximab), anti-IL, belatacept</td><td>Neutralise a specific target</td><td>Infection (TB reactivation), infusion reactions</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A kidney-transplant patient is on tacrolimus and their creatinine starts climbing. Blurt out the two opposite explanations this single finding could mean — and why that makes therapeutic drug monitoring essential for this whole class.</div>
+    <h4 style="color:var(--rust)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does blocking calcineurin specifically suppress T-cells rather than the whole body?</li>
+      <li>Why must you screen for latent TB before starting an anti-TNF biologic?</li>
+      <li>Why does allopurinol (Module 42) dangerously potentiate azathioprine?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Specificity is the whole game</h4>
+    <p>Older drugs (steroids, antiproliferatives) suppress immunity bluntly; calcineurin inhibitors were a leap because they target the T-cell IL-2 signal fairly selectively; biologics go further still, neutralising one named molecule. The trade-off across the board is infection and malignancy risk — you are, by design, weakening host defence.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — silencing an army's communications</div>
+      <p>An immune attack is an <span class="key">army mobilising</span>. Glucocorticoids are <strong>carpet jamming</strong> — they shut down every radio, friend and foe alike (effective but with collateral damage everywhere). Calcineurin inhibitors are a <strong>targeted strike on the recruitment office</strong> — they stop the "call to arms" signal (IL-2), so few new soldiers are activated. Antiproliferatives <strong>cut the supply line for building new troops</strong>. Biologics are a <strong>sniper</strong> taking out one specific commander (TNF, CD20). The more precise the weapon, the less collateral — but every one of them leaves the border less defended (infection).</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> calcineurin inhibitors are themselves <strong>nephrotoxic</strong>, so a rising creatinine in a transplant patient is ambiguous — rejection or drug toxicity — hence mandatory drug levels. They are <strong>CYP3A4 substrates</strong> (interactions with azoles, macrolides, grapefruit). <strong>Anti-TNF agents reactivate latent TB and hepatitis B</strong> — screen first. And the allopurinol + azathioprine interaction (xanthine oxidase) can cause fatal myelosuppression.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 43 — HISTAMINE ============ -->
+<section class="module" id="m43">
+  <div class="mod-head">
+    <div class="mod-num">43</div>
+    <div class="mod-titleblock">
+      <h2>Histamine, Bradykinin &amp; Their Antagonists</h2>
+      <div class="mod-sub">H₁–H₄ receptors · antihistamines</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Solid yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Histamine acts through four receptors, but two carry the clinical weight: <strong>H₁</strong> (allergy, the antihistamine target) and <strong>H₂</strong> (gastric acid). The exam payoff is the 1st- vs 2nd-generation antihistamine split.</div>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Receptor</th><th>Main effects</th><th>Blocked by</th></tr></thead>
+      <tbody>
+        <tr><td>H₁</td><td>Allergy: vasodilation, ↑permeability, itch, bronchoconstriction; CNS wakefulness</td><td>Antihistamines</td></tr>
+        <tr><td>H₂</td><td>Gastric acid secretion</td><td>Ranitidine, famotidine (H₂ blockers)</td></tr>
+        <tr><td>H₃</td><td>CNS autoreceptor (↓ release)</td><td>(investigational)</td></tr>
+        <tr><td>H₄</td><td>Immune cell chemotaxis</td><td>(investigational)</td></tr>
+      </tbody>
+    </table></div>
+    <h4>1st vs 2nd generation H₁ antihistamines — the key contrast</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th></th><th>1st generation</th><th>2nd generation</th></tr></thead>
+      <tbody>
+        <tr><td>Examples</td><td>Diphenhydramine, chlorpheniramine, promethazine</td><td>Loratadine, cetirizine, fexofenadine</td></tr>
+        <tr><td>Crosses BBB?</td><td><strong>Yes</strong> → sedation</td><td>No (ionised/P-gp substrate) → non-sedating</td></tr>
+        <tr><td>Other actions</td><td>Antimuscarinic, antiemetic, anti-motion-sickness</td><td>Largely H₁-selective</td></tr>
+        <tr><td>Use</td><td>Allergy + sleep/nausea/vertigo</td><td>Allergy (preferred daytime)</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">Two allergy patients take antihistamines: one is drowsy and dry-mouthed, the other isn't. Blurt out which generation each took and the single pharmacological property — about crossing one barrier — that explains the entire difference.</div>
+    <h4 style="color:var(--rust)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does diphenhydramine cause dry mouth and urinary retention as well as sedation?</li>
+      <li>Why can a 1st-gen antihistamine treat motion sickness when a 2nd-gen one can't (link to Module 12 ANS)?</li>
+      <li>Why does an ACE inhibitor cough involve bradykinin, mentioned in this chapter?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>One property explains the whole split</h4>
+    <p>1st-generation H₁ antagonists are lipophilic and cross the blood-brain barrier, so they cause sedation and also block muscarinic receptors (dry mouth, the anti-motion-sickness/antiemetic uses). 2nd-generation agents are designed <em>not</em> to cross the BBB (more polar, P-gp substrates), giving allergy relief without drowsiness.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a delivery van that can or can't enter the city</div>
+      <p>Think of the brain as a <span class="key">walled city with a strict gate</span> (the blood-brain barrier). A 1st-generation antihistamine is a <strong>van small and greasy enough to slip through the gate</strong> — it does its allergy job in the suburbs but also drives into the city centre and dims the lights (sedation), and it's a clumsy driver that knocks over muscarinic signposts on the way (dry mouth, retention). The 2nd-generation van is <strong>too bulky to pass the gate</strong> — it works the suburbs (allergy) and never disturbs the city, so no drowsiness.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> 1st-gen antihistamines' antimuscarinic load makes them risky in the elderly (confusion, falls, urinary retention, glaucoma). <strong>Bradykinin</strong> (the other autacoid here) mediates the <strong>ACE-inhibitor cough and angio-oedema</strong> — because ACE normally degrades bradykinin, blocking ACE lets it accumulate.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 38 — IMMUNITY & INFLAMMATION ============ -->
+<section class="module" id="m38">
+  <div class="mod-head">
+    <div class="mod-num">38</div>
+    <div class="mod-titleblock">
+      <h2>Introduction to Immunity &amp; Inflammation</h2>
+      <div class="mod-sub">Innate vs adaptive · hypersensitivity · checkpoints</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Framework for the section</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Two layers of defence — fast, non-specific <strong>innate</strong> immunity and slow, specific, <strong>memory-forming adaptive</strong> immunity — and when they misfire you get the <strong>four hypersensitivity types</strong> that every later drug class is built to dampen.</div>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th></th><th>Innate</th><th>Adaptive</th></tr></thead>
+      <tbody>
+        <tr><td>Speed</td><td>Immediate (hours)</td><td>Days (first exposure)</td></tr>
+        <tr><td>Specificity</td><td>Generic patterns (PAMPs)</td><td>Highly specific antigens</td></tr>
+        <tr><td>Memory</td><td>No</td><td><strong>Yes</strong> (basis of vaccines)</td></tr>
+        <tr><td>Players</td><td>Neutrophils, macrophages, NK, complement</td><td>T cells, B cells / antibodies</td></tr>
+      </tbody>
+    </table></div>
+      <figure>
+    <div class="fig-title">Figure 38·1 — The four hypersensitivity types</div>
+    <svg viewBox="0 0 820 220" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <rect x="20" y="40" width="185" height="150" rx="10" fill="#fbe8e1" stroke="#bf4d2f"/>
+      <rect x="215" y="40" width="185" height="150" rx="10" fill="#f3e6f0" stroke="#7a3b6b"/>
+      <rect x="410" y="40" width="185" height="150" rx="10" fill="#e0eee8" stroke="#15674f"/>
+      <rect x="605" y="40" width="195" height="150" rx="10" fill="#faf0d9" stroke="#b07410"/>
+      <text x="112" y="66" text-anchor="middle" font-weight="800" fill="#bf4d2f" font-size="15">Type I</text>
+      <text x="307" y="66" text-anchor="middle" font-weight="800" fill="#5e2d52" font-size="15">Type II</text>
+      <text x="502" y="66" text-anchor="middle" font-weight="800" fill="#0f4d3b" font-size="15">Type III</text>
+      <text x="702" y="66" text-anchor="middle" font-weight="800" fill="#8a5a0c" font-size="15">Type IV</text>
+      <text x="112" y="90" text-anchor="middle" font-size="11" fill="#15231c" font-weight="600">Immediate / IgE</text>
+      <text x="307" y="90" text-anchor="middle" font-size="11" fill="#15231c" font-weight="600">Antibody (IgG/M)</text>
+      <text x="502" y="90" text-anchor="middle" font-size="11" fill="#15231c" font-weight="600">Immune complex</text>
+      <text x="702" y="90" text-anchor="middle" font-size="11" fill="#15231c" font-weight="600">Delayed / T-cell</text>
+      <g font-size="10.5" fill="#3f4a44" text-anchor="middle">
+        <text x="112" y="116">mast cell degranulation</text>
+        <text x="112" y="134">anaphylaxis, atopy,</text>
+        <text x="112" y="150">urticaria, asthma</text>
+        <text x="112" y="174" font-style="italic" fill="#bf4d2f">minutes</text>
+        <text x="307" y="116">Ab vs cell-surface Ag</text>
+        <text x="307" y="134">haemolytic anaemia,</text>
+        <text x="307" y="150">Goodpasture, ITP</text>
+        <text x="307" y="174" font-style="italic" fill="#5e2d52">hours</text>
+        <text x="502" y="116">Ag–Ab complexes deposit</text>
+        <text x="502" y="134">serum sickness, SLE,</text>
+        <text x="502" y="150">post-strep GN</text>
+        <text x="502" y="174" font-style="italic" fill="#0f4d3b">hours–days</text>
+        <text x="702" y="116">sensitised T cells</text>
+        <text x="702" y="134">contact dermatitis, TB</text>
+        <text x="702" y="150">test, transplant reject</text>
+        <text x="702" y="174" font-style="italic" fill="#8a5a0c">2–3 days</text>
+      </g>
+    </svg>
+    <figcaption>"ACID": Type I Anaphylactic, Type II Cytotoxic, Type III Immune-complex, Type IV Delayed. Types I–III are antibody-mediated; Type IV is the only purely T-cell (cellular) one.</figcaption>
+  </figure>
+    <h4>Other high-yield points</h4>
+    <ul>
+      <li><strong>Cytokine storm:</strong> excessive cytokine release → systemic inflammation (a target of anti-IL-6 etc.).</li>
+      <li><strong>Immune checkpoints:</strong> CTLA-4, PD-1/PD-L1 are "brakes" on T cells; <strong>checkpoint inhibitors</strong> release the brakes for cancer immunotherapy (at the cost of autoimmune side-effects).</li>
+    </ul>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">Name the four hypersensitivity reactions and one classic disease for each. Then blurt out which three share a common feature (antibodies) and which one stands apart — and why a TB skin test takes two days to read.</div>
+    <h4 style="color:var(--rust)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does anaphylaxis happen within minutes but contact dermatitis takes days?</li>
+      <li>Why does a vaccine work on the adaptive arm and not the innate one?</li>
+      <li>Why do checkpoint <em>inhibitors</em> for cancer cause autoimmune toxicity?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Two arms, and what happens when they overreact</h4>
+    <p>Innate immunity is the rapid generic responder; adaptive immunity is the specialist that learns and remembers. Hypersensitivity is the immune system attacking when it shouldn't: Types I–III use antibodies (immediate to hours), Type IV uses sensitised T cells (delayed, 2–3 days — hence the slow TB test).</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — security guards vs detectives</div>
+      <p>Innate immunity is the <span class="key">building's security guards</span> — they tackle anyone suspicious instantly, but they don't remember faces. Adaptive immunity is the <strong>detective unit</strong> — slow to build a case the first time, but they keep a permanent file, so the second time the same intruder appears they respond instantly (that file is immunological memory, and it's what a vaccine pre-loads). Hypersensitivity is when this security overreacts: an itchy trigger-finger (Type I allergy), guards attacking the building's own staff (Type II), debris from fights clogging the corridors (Type III immune complexes), or the detectives mounting a slow, heavy raid days later (Type IV). Checkpoint molecules are the <strong>"stand down" orders</strong> that stop friendly fire — cancer hides behind them, and checkpoint inhibitors cancel the stand-down (unleashing the attack, but risking friendly fire = autoimmunity).</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> the "ACID" mnemonic (Anaphylactic, Cytotoxic, Immune-complex, Delayed) is reliable, but don't over-simplify — many real diseases mix types. Checkpoint-inhibitor immunotherapy can cause <strong>immune-related adverse events</strong> in any organ (colitis, hepatitis, thyroiditis), an increasingly examined topic.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 40 — IMMUNE GLOBULINS & VACCINES ============ -->
+<section class="module" id="m40">
+  <div class="mod-head">
+    <div class="mod-num">40</div>
+    <div class="mod-titleblock">
+      <h2>Immune Globulins &amp; Vaccines</h2>
+      <div class="mod-sub">Passive vs active immunisation</div>
+    </div>
+    <span class="tier tier-3">Tier 3 · Framework</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">One distinction carries this chapter: <strong>active</strong> immunisation (a vaccine teaches the body to make its own antibodies — slow but lasting) versus <strong>passive</strong> immunisation (ready-made antibodies given directly — instant but temporary).</div>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th></th><th>Active (vaccine)</th><th>Passive (immune globulin)</th></tr></thead>
+      <tbody>
+        <tr><td>What's given</td><td>Antigen (live-attenuated, inactivated, subunit, mRNA)</td><td>Pre-formed antibodies</td></tr>
+        <tr><td>Onset</td><td>Slow (weeks)</td><td><strong>Immediate</strong></td></tr>
+        <tr><td>Duration</td><td>Long (memory)</td><td>Short (weeks–months)</td></tr>
+        <tr><td>Use</td><td>Prevention</td><td>Post-exposure / immunodeficiency (e.g. rabies, tetanus, anti-D, RSV)</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><strong>Live-attenuated</strong> (MMR, varicella, BCG): strong, lasting immunity but <em>contraindicated in pregnancy &amp; immunocompromised</em>.</li>
+      <li><strong>Inactivated/subunit/mRNA</strong>: safer in those groups, often need boosters.</li>
+      <li><strong>Anti-D (Rho) immune globulin</strong>: classic passive use — prevents Rh sensitisation in pregnancy.</li>
+    </ul>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">Someone is bitten by a potentially rabid animal. Blurt out why they receive BOTH a vaccine and an immune globulin at once — what does each provide, and why would either alone be insufficient?</div>
+    <h4 style="color:var(--rust)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why is a live-attenuated vaccine dangerous in an immunocompromised patient?</li>
+      <li>Why does passive immunity fade while active immunity lasts years?</li>
+      <li>Why does anti-D given to an Rh-negative mother protect a future pregnancy?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Teach vs hand-over</h4>
+    <p>A vaccine <em>teaches</em> the adaptive immune system to recognise an antigen and form memory — protection is delayed but durable. An immune globulin <em>hands over</em> finished antibodies — protection is instant but borrowed, fading as those antibodies are cleared. In a rabies exposure you need both: the globulin covers you <em>now</em> while the vaccine builds lasting defence.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — teaching to fish vs handing over fish</div>
+      <p>Active immunisation is <span class="key">teaching someone to fish</span> — it takes time before they can feed themselves, but then they can do it for life. Passive immunisation is <strong>handing them a cooked fish</strong> — they eat immediately, but when it's gone they're hungry again with no new skill. A rabies exposure is an emergency where you do both: hand over a fish for tonight (immune globulin) <em>and</em> start the fishing lessons (vaccine) for the weeks ahead.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>live-attenuated vaccines are contraindicated in pregnancy and significant immunocompromise</strong> (risk of disease from the vaccine strain). Passive antibody can <em>blunt</em> the response to a simultaneously given live vaccine. Anti-D must be given to Rh-negative mothers at the right windows to prevent haemolytic disease of the newborn.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+
+
+<!-- ============ FLASHCARDS ============ -->
+<section id="flashcards">
+  <div class="wrap">
+    <h2>🃏 Clinical Vignette Flashcards</h2>
+    <p class="fc-lead">Tap a card to reveal the answer, mechanism, clinical pearl, and exam trap. Twenty high-yield scenarios spanning inflammation, immunity, and haematopoiesis pharmacology.</p>
+    <div class="flashcards">
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">01</span>
+          <span class="fc-q">A 28-year-old woman with SLE is found to have anti-dsDNA antibodies, low complement (C3/C4), proteinuria 3.2 g/day, and haematuria. Renal biopsy shows diffuse proliferative lupus nephritis (class IV). Which drug specifically targets the B-cell survival factor implicated in lupus?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Belimumab</strong> — a monoclonal antibody targeting <strong>BLyS (B-lymphocyte stimulator / BAFF)</strong>, a cytokine essential for B-cell survival and maturation. In SLE, excess BLyS promotes survival of autoreactive B cells → anti-dsDNA antibody production → immune complex deposition in glomeruli → complement activation → nephritis. Belimumab reduces B-cell counts, lowers anti-dsDNA titres, and reduces flare rates. It is approved as add-on therapy to standard care (hydroxychloroquine ± immunosuppression) for active, autoantibody-positive SLE.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Class IV lupus nephritis (diffuse proliferative) is the most severe and most common — treat aggressively with mycophenolate mofetil (MMF) or cyclophosphamide + high-dose steroids. MMF is now preferred over cyclophosphamide as induction in non-severe cases (comparable efficacy, better toxicity profile). Voclosporin (calcineurin inhibitor) + MMF is a newer combination with faster proteinuria remission.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Anti-dsDNA and anti-Sm antibodies are specific to SLE. Anti-Sm (anti-Smith) is highly specific (~25–30% sensitive but >99% specific) and does NOT fluctuate with disease activity. Anti-dsDNA titres DO fluctuate with disease activity and correlate with lupus nephritis — use to monitor, not diagnose.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">02</span>
+          <span class="fc-q">Rituximab is given for rheumatoid arthritis. Six months later the patient develops progressive multifocal leukoencephalopathy (PML). Which immune cell did rituximab deplete, and why did this lead to PML?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Rituximab depletes <strong>CD20+ B cells</strong> via complement-dependent cytotoxicity and ADCC. JC virus (John Cunningham polyomavirus) normally causes asymptomatic latent infection in most adults — kept in check by CD4+ T cells AND B cells (which provide immune surveillance and contribute to anti-JCV humoral immunity). Rituximab-induced profound B-cell depletion (lasting 6–12 months) reduces anti-JCV antibody levels and impairs viral immune control → JC virus reactivation in oligodendrocytes → demyelination → PML.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Anti-JCV antibody serology before rituximab does NOT reliably predict PML risk the way it does with natalizumab. For rituximab, duration of therapy and cumulative B-cell depletion are the main risk factors. Screen for JCV antibodies; monitor for neurological symptoms throughout therapy.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Rituximab does NOT deplete <strong>plasma cells</strong> (which are CD20−) — immunoglobulin levels (IgG) fall slowly over months but existing antibodies persist initially. Do NOT give live vaccines after rituximab (B cells are depleted → no antibody response). Minimum 6-month gap before live vaccine; check B-cell reconstitution first.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">03</span>
+          <span class="fc-q">A patient on methotrexate for RA develops a dry cough, dyspnoea, and bilateral interstitial infiltrates on CXR after 8 months of therapy. What is the diagnosis and mechanism?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Methotrexate pneumonitis</strong> — an idiosyncratic, immune-mediated hypersensitivity reaction (NOT dose-dependent, NOT predictable from folate levels). MTX inhibits dihydrofolate reductase → reduced tetrahydrofolate → impaired purine/thymidylate synthesis. In the lung, MTX may trigger a CD4+ T-cell-mediated granulomatous/hypersensitivity reaction → pneumonitis with BAL showing lymphocytosis. Stop methotrexate immediately; give corticosteroids for moderate-severe cases. MTX cannot be restarted after pneumonitis.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Distinguish MTX pneumonitis from infection before stopping immunosuppression. Key features suggesting MTX pneumonitis: onset 8–18 months (can be earlier), fever + peripheral eosinophilia, bilateral ground-glass opacities, NO infective organism on BAL. Exclude PCP (order beta-D-glucan, BAL PCR) before starting steroids.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> MTX <strong>hepatotoxicity</strong> (fibrosis → cirrhosis) is dose- and duration-dependent and prevented by folate supplementation. Pneumonitis is NOT prevented by folate — these are different toxicity mechanisms. High-dose MTX for cancer can cause acute tubular necrosis (crystallisation in renal tubules) — prevented by urine alkalinisation and leucovorin rescue.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">04</span>
+          <span class="fc-q">A patient with Crohn's disease on infliximab for 2 years develops fever, night sweats, and a new cavitating upper lobe lung lesion. TB IGRA is positive. What happened, and when was this risk preventable?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Reactivation of latent tuberculosis (LTBI) due to <strong>TNF-α blockade</strong>. TNF-α is essential for granuloma formation and maintenance — it promotes macrophage activation and containment of mycobacteria within caseating granulomas. Infliximab (anti-TNF-α monoclonal antibody) disrupts this defence → latent TB reactivates, often presenting as extrapulmonary or disseminated disease (pleural, abdominal, miliary). This risk was preventable by LTBI screening before starting infliximab — IGRA or TST + CXR — and treating LTBI with isoniazid for 9 months before beginning biologic therapy.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> All TNF inhibitors (infliximab, adalimumab, etanercept, certolizumab, golimumab) carry TB reactivation risk. Screen ALL patients for LTBI before initiating. Treat LTBI for ≥4 weeks before starting the biologic if possible (some guidelines say 2–4 weeks minimum). Risk is highest with monoclonal antibodies vs etanercept (soluble receptor).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Etanercept (soluble TNF receptor fusion protein) has a lower TB reactivation risk than anti-TNF monoclonal antibodies — it does not neutralise membrane-bound TNF as efficiently. However, LTBI screening is still mandatory before all TNF blockers including etanercept.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">05</span>
+          <span class="fc-q">A child with X-linked agammaglobulinaemia (XLA) presents repeatedly with encapsulated bacterial infections (Streptococcus pneumoniae, H. influenzae). What is missing, at what developmental stage, and what is the treatment?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">XLA is caused by mutations in <strong>Bruton's tyrosine kinase (BTK)</strong> — essential for pre-B cell → B cell maturation in the bone marrow. BTK signalling transduces signals downstream of the pre-B cell receptor. Without BTK: B-cell development is arrested at the <strong>pro-B/pre-B cell stage</strong> → no mature B cells → no plasma cells → near-zero serum IgG/IgA/IgM → profound humoral immunodeficiency. Encapsulated bacteria (with polysaccharide capsules) require opsonising antibodies for phagocytic killing — without IgG, patients cannot clear these organisms. Treatment: lifelong <strong>IVIG (intravenous immunoglobulin)</strong> replacement every 3–4 weeks.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> BTK inhibitors (ibrutinib, acalabrutinib) are used to treat B-cell malignancies (CLL, mantle cell lymphoma) — they intentionally exploit BTK's role in B-cell survival. A side effect is immunosuppression with encapsulated bacterial infections — mirroring XLA pathophysiology.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> XLA presents after ~6 months of age when maternal IgG (transplacental) wanes. Boys are affected (X-linked). Distinguish from common variable immunodeficiency (CVID) — which presents in adulthood with low immunoglobulins but B cells ARE present (B-cell function is defective, not absent). Both treated with IVIG.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">06</span>
+          <span class="fc-q">A 45-year-old patient on long-term prednisolone (15 mg/day for 2 years) for autoimmune hepatitis develops avascular necrosis of the femoral head. What is the mechanism, and what other corticosteroid complications should be monitored?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Corticosteroid-induced avascular necrosis: chronic GC excess → adipocyte hypertrophy in bone marrow → fat emboli occlude terminal end-arteries of the femoral head (and other susceptible sites) → ischaemic bone death. Mechanism also involves GC-induced coagulopathy. The femoral head, humeral head, and femoral condyle are classic sites. Monitoring for corticosteroid complications: <strong>hyperglycaemia/diabetes</strong> (GCs → gluconeogenesis + insulin resistance); <strong>osteoporosis</strong> (inhibit osteoblasts, increase RANKL, reduce calcium absorption → start bisphosphonate + calcium/vit D if &gt;3 months at &gt;5 mg/day); <strong>Cushingoid features, hypertension, hypokalaemia, posterior subcapsular cataracts, skin atrophy, adrenal suppression</strong>.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Adrenal suppression is a serious GC complication — hypothalamic-pituitary-adrenal (HPA) axis suppressed if prednisolone &gt;5 mg/day for &gt;3 weeks. Abrupt withdrawal can precipitate Addisonian crisis. Taper gradually; cover with stress-dose steroids (hydrocortisone 50–100 mg IV 8-hourly) during surgery or severe illness.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> PCP prophylaxis with TMP-SMX is recommended when prednisolone dose exceeds 20 mg/day for &gt;4 weeks (especially with other immunosuppressants). GC-induced immune suppression particularly affects cell-mediated immunity → increased risk of fungal, TB, PCP, herpes zoster, and strongyloides hyperinfection.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">07</span>
+          <span class="fc-q">Cyclosporin is given after renal transplantation. Trough levels are maintained at 150–200 ng/mL. What is its mechanism, and what drug would dangerously elevate cyclosporin levels?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Cyclosporin binds <strong>cyclophilin</strong> → the cyclosporin–cyclophilin complex inhibits <strong>calcineurin</strong> (a serine/threonine phosphatase) → prevents dephosphorylation of NFAT (nuclear factor of activated T cells) → NFAT cannot translocate to the nucleus → <strong>IL-2 gene transcription blocked</strong> → T-cell activation and clonal expansion suppressed. Tacrolimus has the same target (calcineurin) but binds FKBP12 instead of cyclophilin. Drugs that dangerously elevate cyclosporin: <strong>azole antifungals</strong> (fluconazole, voriconazole — CYP3A4 inhibitors), macrolide antibiotics (clarithromycin, erythromycin — CYP3A4 inhibitors), diltiazem, verapamil. All increase cyclosporin AUC → nephrotoxicity, hypertension, neurotoxicity.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Cyclosporin causes <strong>gingival hyperplasia</strong> (also caused by phenytoin and nifedipine — all share this side effect via gingival fibroblast proliferation) and <strong>hirsutism</strong>. Tacrolimus causes neither — instead causes alopecia. Tacrolimus has higher risk of post-transplant diabetes mellitus (PTDM) than cyclosporin.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Rifampin is a potent <strong>CYP3A4 inducer</strong> → dramatically <strong>reduces</strong> cyclosporin levels → acute rejection. St John's Wort (Hypericum perforatum) similarly induces CYP3A4 → major interaction with cyclosporin, tacrolimus, oral contraceptives, and antiretrovirals. Warn transplant patients explicitly about herbal supplements.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">08</span>
+          <span class="fc-q">A patient with Wegener's granulomatosis (GPA) is PR3-ANCA positive with pulmonary haemorrhage and rapidly progressive GN. Which alkylating agent is used for induction, and what is its most feared long-term complication?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Cyclophosphamide</strong> (IV pulse, preferred over oral for ANCA vasculitis induction per CYCLOPS trial — equivalent efficacy, lower cumulative dose). Cyclophosphamide is a prodrug activated by CYP2B6/3A4 to phosphoramide mustard → alkylates DNA → cross-links double strands → inhibits rapidly dividing cells (neutrophils, lymphocytes). Most feared long-term complication: <strong>haemorrhagic cystitis</strong> (acrolein metabolite accumulates in urine → urothelial damage) → prevented with <strong>MESNA</strong> (2-mercaptoethane sulphonate) which reacts with acrolein in the urine, and aggressive IV hydration. Long-term: <strong>transitional cell carcinoma of the bladder</strong> (lifetime monitoring required), gonadal failure (especially in women), secondary malignancies.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Rituximab (anti-CD20) is now equally effective to cyclophosphamide for ANCA vasculitis induction and is preferred in: younger patients, women of childbearing age, those with PR3-ANCA (where rituximab may be superior for preventing relapse), or where cyclophosphamide toxicity is a major concern.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> The ANCA vasculitis maintenance phase uses <strong>rituximab or azathioprine</strong> (NOT cyclophosphamide) — ongoing cyclophosphamide use has unacceptable cumulative toxicity. Switch to maintenance after 3–6 months of induction.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">09</span>
+          <span class="fc-q">A 35-year-old man with psoriatic arthritis fails methotrexate. He is started on adalimumab (anti-TNF). Before the second dose, he phones with a fever of 39°C, rigors, and looks unwell. What complication do you suspect, and how is it managed?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Adalimumab-induced <strong>serious infection</strong> — TNF-α blockade predisposes to bacterial sepsis (especially Staphylococcus aureus, Streptococcus pneumoniae), TB reactivation, invasive fungal infections (histoplasmosis, coccidioidomycosis, aspergillosis), and opportunistic infections. In an acutely unwell patient: <strong>hold adalimumab</strong> immediately, obtain blood cultures, broad-spectrum antibiotics empirically, investigate for source. Evaluate for TB (CXR, IGRA), fungal infection if endemic exposure, and viral infections. TNF blockers should not be restarted until the infection is fully resolved and the causative organism identified.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Before starting any biologic: screen for LTBI (IGRA + CXR), hepatitis B (HBsAg, anti-HBc — TNF blockers can reactivate HBV → fulminant hepatitis), HCV status, varicella immunity, and ensure up-to-date vaccinations (live vaccines must be given ≥4 weeks before, not during, biologic therapy).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Histoplasmosis, coccidioidomycosis, and blastomycosis are endemic fungal infections that may reactivate with TNF blockade — particularly in patients from the Ohio/Mississippi river valley or southwestern US. Serum antigen testing (Histoplasma urine antigen) is the fastest test. These infections can look like miliary TB on CXR — a critical differential.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">10</span>
+          <span class="fc-q">A patient starting hydroxychloroquine (HCQ) for SLE asks about eye complications. Explain the mechanism of retinal toxicity and the monitoring strategy.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">HCQ accumulates in melanin-containing tissues including the retinal pigment epithelium (RPE). Over years, HCQ binds to RPE melanin → lysosomal enzyme inhibition and mitochondrial damage → RPE cell death → <strong>photoreceptor degeneration</strong>. The characteristic lesion is <strong>bull's-eye maculopathy</strong> (ring of RPE loss around the central macula). Risk factors: cumulative dose &gt;5 mg/kg/day ideal body weight (NOT actual weight — use ideal), duration &gt;5 years, CKD (reduced excretion → accumulation), tamoxifen co-administration (independently toxic to retina). Monitoring: <strong>baseline ophthalmological exam within first year</strong>, then annually after 5 years (or earlier if risk factors).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> HCQ is the cornerstone of SLE therapy — it reduces flares, nephritis, and cardiovascular mortality, and is safe in pregnancy (low teratogenicity, actually reduces obstetric complications in SLE/antiphospholipid syndrome). The dose threshold for retinal safety is ≤5 mg/kg/day of <strong>ideal body weight</strong>.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> HCQ can cause <strong>QT prolongation</strong> — relevant with concurrent azithromycin or other QT-prolonging drugs. HCQ also inhibits CYP2D6 → may raise plasma levels of codeine, metoprolol, and other CYP2D6 substrates. Do NOT confuse HCQ (safe) with chloroquine (higher retinal toxicity at equivalent doses).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">11</span>
+          <span class="fc-q">Iron deficiency anaemia is confirmed in a 65-year-old woman with colorectal cancer. Oral iron is poorly tolerated. What is the mechanism of action of IV iron (ferric carboxymaltose), and what acute reaction must be monitored?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">IV iron: ferric carboxymaltose is a colloidal iron complex → taken up by <strong>macrophages in the reticuloendothelial system (liver, spleen, bone marrow)</strong> → iron released from the carbohydrate shell → stored as ferritin → mobilised for erythropoiesis (incorporated into haemoglobin by erythroid precursors in bone marrow). Monitoring: acute <strong>hypophosphataemia</strong> (specific to ferric carboxymaltose — triggers FGF23 release → renal phosphate wasting → severe hypophosphataemia, osteomalacia with repeated dosing). Also monitor for acute hypersensitivity reactions (complement activation by the iron complex → anaphylactoid reaction — NOT IgE-mediated). Pre-medication and slow infusion + resuscitation equipment available.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Intravenous iron is preferred over oral iron for: chemotherapy-induced anaemia, pre-surgical optimisation, IBD patients (poor GI absorption/tolerance), CKD patients on erythropoiesis-stimulating agents (ESA — EPO requires adequate iron for erythropoiesis). Iron sucrose has a lower risk of hypophosphataemia than ferric carboxymaltose.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Oral ferrous sulfate absorption requires an acidic environment — proton pump inhibitors (PPIs) significantly reduce oral iron absorption. Space oral iron and PPI by &gt;2 hours. Oral iron also interacts with antacids, calcium supplements, and fluoroquinolones (chelation). Ascorbic acid (vitamin C) enhances non-haem iron absorption.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">12</span>
+          <span class="fc-q">A patient develops thrombocytopenia 7 days after starting unfractionated heparin (UFH) post-surgery. Platelet count drops from 220 to 55 ×10⁹/L. Explain the mechanism and immediate management.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Heparin-induced thrombocytopenia type II (HIT)</strong> — an immune-mediated thrombotic disorder. Heparin binds <strong>platelet factor 4 (PF4)</strong> → heparin-PF4 complex is immunogenic → IgG antibodies form against the complex → antibody-PF4-heparin complex binds and activates platelets via FcγRIIa → platelet activation → platelet consumption (thrombocytopenia) AND pro-thrombotic state (paradoxical thrombosis despite low platelets). Immediate management: (1) <strong>STOP all heparin immediately</strong> (including heparin flushes, LMWH); (2) Start a <strong>non-heparin anticoagulant</strong> — argatroban (direct thrombin inhibitor, preferred in renal failure), bivalirudin, or fondaparinux; (3) Do NOT start warfarin yet (protein C depletion worsens thrombosis — only start after platelet recovery to &gt;150).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Use the <strong>4T score</strong> to assess HIT probability: Thrombocytopenia (≥50% drop, nadir &gt;20 = 2 pts), Timing (5–10 days = 2 pts), Thrombosis (new = 2 pts), other causes of Thrombocytopenia (none = 2 pts). Score ≥6 = high probability. Confirm with ELISA (PF4 antibody) + functional assay (serotonin release assay — gold standard).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> HIT type I is a benign, non-immune direct effect of heparin on platelets — occurs in first 2 days, mild thrombocytopenia (rarely &lt;100), no thrombosis, platelet count normalises spontaneously with continued heparin. HIT TYPE II is the dangerous immune-mediated version — occurs days 5–10 (or earlier if prior heparin exposure within 100 days).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">13</span>
+          <span class="fc-q">A patient with aplastic anaemia requires immunosuppressive therapy. What is the rationale for combining anti-thymocyte globulin (ATG) with ciclosporin?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Aplastic anaemia is largely immune-mediated: <strong>autoreactive T cells</strong> (particularly CD8+ cytotoxic T cells releasing IFN-γ and TNF-α) destroy haematopoietic stem cells (HSC) → bone marrow failure. Rationale for combination: <strong>ATG</strong> (equine or rabbit-derived polyclonal antibodies against human thymocytes) depletes T cells via complement-mediated cytotoxicity and ADCC, removing the effector cells attacking the HSC niche. <strong>Ciclosporin</strong> inhibits calcineurin → blocks IL-2 → suppresses residual T-cell activation, preventing recurrence after ATG. Adding <strong>eltrombopag</strong> (TPO receptor agonist) to ATG + ciclosporin triples complete response rates (NEJM 2017) by stimulating HSC proliferation.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> ATG (equine) infusion causes serum sickness 7–14 days later (fever, urticaria, arthralgia, lymphadenopathy) — immune complex deposition. Prevent/treat with corticosteroids. Monitor for anaphylaxis during the first infusion — always administer a test dose first.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Aplastic anaemia must be distinguished from hypocellular MDS (myelodysplastic syndrome) and paroxysmal nocturnal haemoglobinuria (PNH) — both can present similarly. PNH clone (GPI-anchor deficiency → susceptibility to complement → haemolysis + thrombosis) can co-exist with aplastic anaemia. Test with flow cytometry for CD55/CD59 deficiency. Eculizumab (anti-C5) treats PNH haemolysis and thrombosis.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">14</span>
+          <span class="fc-q">A patient with polycythaemia vera (PV) is at high risk of thrombosis. Beyond aspirin and phlebotomy, what is the cytoreductive drug of choice, and what is the molecular target therapy for patients failing or intolerant of it?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">First-line cytoreduction for high-risk PV (age &gt;60, or prior thrombosis): <strong>hydroxyurea (hydroxycarbamide)</strong> — inhibits ribonucleotide reductase → reduces dNTP pool → impairs DNA synthesis → selectively reduces rapidly dividing haematopoietic cells (RBCs, platelets, WBCs). Molecular target therapy for HU-resistant/intolerant PV: <strong>ruxolitinib</strong> — a JAK1/JAK2 inhibitor. &gt;95% of PV patients carry the <strong>JAK2 V617F mutation</strong> (point mutation in the pseudokinase domain → constitutive JAK2 activation → cytokine-independent haematopoiesis). Ruxolitinib blocks JAK1/2 → reduces cell proliferation, splenomegaly, and symptom burden.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> JAK2 V617F is present in ~95% of PV, ~50% of ET, and ~50% of PMF. Calreticulin (CALR) mutations are found in ~25% of ET and PMF but NOT in PV. MPL mutations in ~5% of ET/PMF. JAK2 exon 12 mutations are PV-specific. Panel testing for JAK2/CALR/MPL is the molecular workup for MPNs.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Hydroxyurea is teratogenic — contraindicated in pregnancy. For PV in pregnancy, use <strong>interferon-alpha</strong> (preferred — non-teratogenic, reduces JAK2 V617F allele burden). Aspirin 75–100 mg daily is given to all PV patients (reduces thrombosis; at low dose avoids paradoxical bleeding from von Willebrand abnormality seen in extreme thrombocytosis).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">15</span>
+          <span class="fc-q">A 52-year-old man with CLL is started on ibrutinib. Six months later he develops atrial fibrillation and a major gastrointestinal bleed. What is the mechanistic explanation?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Ibrutinib is a covalent inhibitor of <strong>Bruton's tyrosine kinase (BTK)</strong>. BTK is essential for BCR signalling → B-cell survival (tumour) AND platelet activation (via GPVI collagen receptor signalling). Ibrutinib off-target inhibition of <strong>TEC kinase</strong> and platelet BTK impairs: (1) <strong>Platelet aggregation</strong> (collagen-induced platelet function) → bleeding risk (major bleeding ~6% per year); (2) <strong>Atrial fibrillation</strong> — mechanism involves cardiac BTK/TEC kinase effects on atrial electrical remodelling and inflammation, plus autonomic effects. Overall AF risk ~10–15% (significantly higher than standard therapy). BTK inhibition also causes ibrutinib-specific AF — typically managed by switching to acalabrutinib or zanubrutinib (more selective BTK inhibitors with lower AF and bleeding rates).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Ibrutinib + warfarin: concurrent anticoagulation dramatically increases bleeding risk. DOAC + ibrutinib: also increases bleeding but may be preferable to warfarin. For AF requiring anticoagulation in a patient on ibrutinib, consider switching to a next-gen BTK inhibitor + DOAC with careful risk-benefit analysis.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Ibrutinib is a CYP3A4 substrate — rifampin dramatically reduces levels; azole antifungals dramatically increase levels. Given the frequency of fungal prophylaxis in CLL patients on ibrutinib, this interaction is clinically critical.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">16</span>
+          <span class="fc-q">A patient with multiple myeloma undergoes stem cell transplant conditioning with high-dose melphalan. Forty-eight hours later he develops painful oral ulcers, diarrhoea, and neutropaenia. What defines his mucosal recovery, and what drug reduces the duration and severity of mucositis?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">High-dose melphalan → alkylation of rapidly dividing cells → <strong>mucositis</strong> (basal epithelial cell loss in oral mucosa, GI tract) AND <strong>neutropaenia</strong> (bone marrow ablation — cells nadir ~day 10, recover when engraftment occurs). <strong>Palifermin</strong> (recombinant keratinocyte growth factor-1, KGF-1) — given before conditioning → stimulates epithelial cell proliferation and differentiation in the mucosa → thickens mucosal barrier → reduces mucositis severity and duration. Mucosal recovery requires engraftment (WBC recovery) — supported by G-CSF (filgrastim) which stimulates neutrophil production from the transplanted stem cells.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> G-CSF (filgrastim) mechanism: binds G-CSF receptor on neutrophil precursors → JAK2/STAT3 signalling → accelerated granulopoiesis → shorter duration of neutropaenia. Pegfilgrastim is pegylated G-CSF (longer half-life → single dose per chemotherapy cycle). GM-CSF (sargramostim) stimulates both myeloid and monocyte lineages.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Palifermin is contraindicated in solid tumours — KGF receptors on tumour cells (particularly squamous cell cancers) may stimulate tumour growth. Palifermin is approved specifically for haematological malignancies receiving myeloablative conditioning. Do NOT give in head-and-neck cancer or other KGF receptor-expressing malignancies.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">17</span>
+          <span class="fc-q">A 65-year-old with immune thrombocytopenia (ITP) fails corticosteroids and rituximab. What is the mechanism of eltrombopag and romiplostim, and when would splenectomy be considered?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Eltrombopag</strong>: small molecule that binds the <strong>transmembrane domain of the thrombopoietin receptor (c-Mpl/TPO-R)</strong> — activates JAK2/STAT5 signalling → megakaryocyte proliferation and maturation → increased platelet production. Does NOT compete with endogenous TPO. <strong>Romiplostim</strong>: peptibody (Fc-peptide fusion) that mimics TPO → binds extracellular domain of TPO-R → same downstream signalling. Both are TPO receptor agonists — they increase platelet production to compensate for immune-mediated destruction. <strong>Splenectomy</strong> is considered after ≥12 months of ITP (to allow spontaneous remission chance) when 2 lines of therapy fail — the spleen is the primary site of anti-platelet IgG production AND platelet destruction. ~60–70% durable response.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Eltrombopag has an additional off-target effect: chelates non-transferrin-bound iron in hepatocytes and HSCs → stimulates HSC proliferation. This is the basis for its use in aplastic anaemia (iron chelation from HSC niche → promotes HSC self-renewal independent of TPO-R effect).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Eltrombopag must be taken on an empty stomach — polyvalent cation chelation (calcium, aluminium, iron, magnesium) reduces absorption by up to 70%. Take 2 hours before or 4 hours after dairy, antacids, or mineral supplements. This is a commonly missed pharmacokinetic interaction.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">18</span>
+          <span class="fc-q">Mycophenolate mofetil (MMF) is used in transplant immunosuppression. What is its mechanism, and why is it specific to lymphocytes?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">MMF is a prodrug hydrolysed to <strong>mycophenolic acid (MPA)</strong> → inhibits <strong>inosine monophosphate dehydrogenase (IMPDH)</strong> — the rate-limiting enzyme in the <em>de novo</em> purine synthesis pathway (converts IMP → xanthine monophosphate → GMP). Specificity to lymphocytes: most cells (hepatocytes, enterocytes, renal tubular cells) can use the <strong>salvage pathway</strong> (recycle purines from nucleoside breakdown) to meet GMP requirements. <strong>T and B lymphocytes lack an effective salvage pathway</strong> and rely almost entirely on de novo synthesis → MMF preferentially suppresses lymphocyte proliferation with relative sparing of other rapidly dividing cells.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> MMF is used in: renal/cardiac/hepatic transplant rejection prophylaxis, lupus nephritis, IgA nephropathy, ANCA vasculitis maintenance. It is safer than azathioprine (less myelosuppression, no thiopurine methyltransferase issue) and has replaced azathioprine in most transplant protocols.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> MMF is a <strong>teratogen (FDA category D/X)</strong> — causes ear malformations (microtia), cleft palate, and cardiac defects. Requires negative pregnancy test before starting and reliable contraception throughout. The FDA issued a specific black-box warning after reports of MMF embryopathy. Switch to azathioprine if pregnancy is planned.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">19</span>
+          <span class="fc-q">A patient with myelodysplastic syndrome (MDS) with del(5q) is treated with lenalidomide. Explain the mechanism and the unique teratogenicity concern.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Lenalidomide targets <strong>cereblon (CRBN)</strong>, a substrate-recognition component of the CRL4 E3 ubiquitin ligase complex. Lenalidomide binding to CRBN changes its substrate specificity → the complex now ubiquitinates and degrades <strong>IKZF1 (Ikaros) and IKZF3 (Aiolos)</strong> — transcription factors essential for myeloma and certain lymphoma cell survival. In del(5q) MDS: lenalidomide also degrades <strong>CK1α</strong> (encoded on chromosome 5q) — CK1α haploinsufficiency from del(5q) makes MDS cells exquisitely sensitive to further CK1α degradation → selective cytotoxicity against del(5q) clone. Teratogenicity: lenalidomide is a thalidomide analogue → <strong>phocomelia</strong> (limb defects) and other severe fetal malformations. REMS programme required (RevAssist) — monthly pregnancy tests, male contraception, no blood/semen donation.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Thalidomide was originally a morning sickness drug withdrawn in the 1960s after causing phocomelia in thousands of infants. Its mechanism of teratogenicity is now known: cereblon-mediated degradation of SALL4 (transcription factor essential for limb development). The same cereblon mechanism is its anticancer mechanism — thalidomide is now a bedrock of myeloma therapy.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Lenalidomide + dexamethasone in myeloma: high risk of <strong>venous thromboembolism</strong> (DVT/PE) — prophylactic anticoagulation required (aspirin for low-risk; LMWH or DOAC for high-risk). Also causes peripheral neuropathy (less than thalidomide but still significant) and cytopenias (neutropenia requiring G-CSF support).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">20</span>
+          <span class="fc-q">A 22-year-old woman with immune thrombocytopenic purpura (ITP) has a platelet count of 8 ×10⁹/L and intracranial haemorrhage. She needs rapid platelet increase. What three interventions would you give simultaneously?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Life-threatening ITP (ICH) requires rapid multi-modal platelet rescue: (1) <strong>IV methylprednisolone</strong> 1 g/day × 3 days — blocks splenic macrophage FcγR → reduces phagocytosis of opsonised platelets; also reduces anti-platelet antibody synthesis. (2) <strong>IVIG 1 g/kg/day × 2 days</strong> — saturates splenic FcγR (Fc receptor blockade) → reduces platelet destruction; fastest mechanism (platelets rise within 24–48 hours). (3) <strong>Platelet transfusion</strong> — in ITP, transfused platelets are rapidly destroyed (same as native platelets), but in ICH, give anyway: any temporary increase in platelet count buys time for haemostasis. Anti-D immunoglobulin (if Rh-positive, non-splenectomised) is an alternative to IVIG. Consider romiplostim/eltrombopag for sustained response.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> IVIG response is faster than steroids in acute severe ITP. In ICH, the combination of IVIG + steroids achieves higher and faster platelet increments than either alone. Add platelet transfusion despite their rapid destruction — the brief window of platelet activity can slow bleeding.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> IVIG in ITP does NOT block anti-platelet antibody production (that is the role of rituximab, which takes weeks). IVIG works by FcγR blockade — a temporary measure. Platelet counts often fall again after IVIG effect wears off (7–10 days). Plan definitive therapy (rituximab, splenectomy, TPO-RA) simultaneously.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+<!-- ============ QUIZZES ============ -->
+<section class="quizzes" id="quizzes">
+  <div class="quiz-intro">
+    <h2>★ 120 Self-Test Questions</h2>
+    <p>Eight sets of fifteen, one per module, mapped to the spaced-repetition days. Cover the green answer strip, commit out loud, then reveal. Struggling to retrieve is the point — that's what builds durable memory.</p>
+  </div>
+  <details class="quizset" open><summary><span class="qs-num">1</span><span class="qs-title">Eicosanoids</span><span class="qs-meta">Module 41 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Which enzyme liberates arachidonic acid from membrane phospholipids?</div><div class="qa">Phospholipase A₂.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Which drug class inhibits phospholipase A₂ (indirectly, via annexin-1/lipocortin)?</div><div class="qa">Glucocorticoids.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Name the two branches arachidonic acid can take.</div><div class="qa">Cyclo-oxygenase (COX) → prostanoids; 5-lipoxygenase (LOX) → leukotrienes.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Which branch do NSAIDs block, and which is left intact?</div><div class="qa">They block COX; the leukotriene (LOX) branch is left intact.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Why can an NSAID provoke bronchospasm in a susceptible asthmatic?</div><div class="qa">Blocking COX shunts arachidonic acid down the LOX branch → more bronchoconstricting leukotrienes.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Which prostanoid produced by platelets promotes aggregation and vasoconstriction?</div><div class="qa">Thromboxane A₂ (TXA₂), via COX-1.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Which endothelial prostanoid opposes it (vasodilator, inhibits aggregation)?</div><div class="qa">Prostacyclin (PGI₂).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Which prostaglandin mediates fever in the hypothalamus?</div><div class="qa">PGE₂.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Which prostaglandin protects the gastric mucosa?</div><div class="qa">PGE₂ (and PGI₂) — stimulate mucus/bicarbonate.</div></div>
+      <div class="q"><div class="qq"><b>10</b>What does zileuton inhibit?</div><div class="qa">5-Lipoxygenase → ↓ all leukotrienes.</div></div>
+      <div class="q"><div class="qq"><b>11</b>What receptor do montelukast and zafirlukast block?</div><div class="qa">The CysLT₁ (cysteinyl leukotriene) receptor.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Which leukotriene is a potent neutrophil chemoattractant?</div><div class="qa">LTB₄.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Which leukotrienes make up the cysteinyl leukotrienes (CysLTs)?</div><div class="qa">LTC₄, LTD₄, LTE₄.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Is platelet-activating factor (PAF) an eicosanoid?</div><div class="qa">No — it is a separate phospholipid mediator, though it amplifies inflammation.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Why do glucocorticoids suppress more of the inflammatory response than NSAIDs?</div><div class="qa">They act upstream at PLA₂, shutting down BOTH the COX and LOX branches.</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">2</span><span class="qs-title">NSAIDs & Gout</span><span class="qs-meta">Module 42 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What is the shared mechanism of all NSAIDs?</div><div class="qa">Inhibition of cyclo-oxygenase (COX) → ↓ prostaglandin synthesis.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Name the four therapeutic effects of NSAIDs.</div><div class="qa">Analgesic, antipyretic, anti-inflammatory, antiplatelet.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Why does blocking COX-1 cause peptic ulcers?</div><div class="qa">Loss of protective gastric PGE₂ (mucus/bicarbonate).</div></div>
+      <div class="q"><div class="qq"><b>4</b>Why do NSAIDs cause fluid retention and can precipitate AKI?</div><div class="qa">Loss of renal PGE₂/PGI₂ that maintain renal blood flow.</div></div>
+      <div class="q"><div class="qq"><b>5</b>How does aspirin differ mechanistically from other NSAIDs?</div><div class="qa">It IRREVERSIBLY acetylates COX.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Why does aspirin's antiplatelet effect last ~7–10 days?</div><div class="qa">Platelets are anucleate and cannot synthesise new COX — effect lasts the platelet lifespan.</div></div>
+      <div class="q"><div class="qq"><b>7</b>What is the main advantage and the main risk of COX-2-selective agents (coxibs)?</div><div class="qa">Advantage: spare gastric COX-1 (fewer ulcers). Risk: increased thrombosis/cardiovascular events.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Why do coxibs increase cardiovascular risk?</div><div class="qa">They reduce endothelial PGI₂ (anti-clotting) while platelet TXA₂ (pro-clotting) is preserved.</div></div>
+      <div class="q"><div class="qq"><b>9</b>How does acetaminophen differ from NSAIDs?</div><div class="qa">Analgesic + antipyretic but weak anti-inflammatory; acts centrally; no GI/antiplatelet effects.</div></div>
+      <div class="q"><div class="qq"><b>10</b>What causes acetaminophen hepatotoxicity in overdose?</div><div class="qa">Saturation of conjugation → CYP2E1 forms NAPQI → glutathione depletion.</div></div>
+      <div class="q"><div class="qq"><b>11</b>First-line drugs for an ACUTE gout flare?</div><div class="qa">NSAIDs (e.g. indomethacin), colchicine, or glucocorticoids.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Mechanism of allopurinol/febuxostat?</div><div class="qa">Xanthine oxidase inhibition → ↓ uric acid synthesis (chronic urate-lowering).</div></div>
+      <div class="q"><div class="qq"><b>13</b>Mechanism of colchicine?</div><div class="qa">Binds tubulin → inhibits microtubule/neutrophil migration.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Why must aspirin be avoided in children with viral illness?</div><div class="qa">Risk of Reye syndrome.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Why does allopurinol potentiate azathioprine/6-MP toxicity?</div><div class="qa">Both are inactivated by xanthine oxidase; allopurinol blocks it → drug accumulates → myelosuppression.</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">3</span><span class="qs-title">Pulmonary Pharmacology</span><span class="qs-meta">Module 44 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What are the two underlying problems in asthma?</div><div class="qa">Acute bronchoconstriction and chronic airway inflammation.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Reliever vs controller — what does each address?</div><div class="qa">Relievers (bronchodilators) open the airway fast; controllers (anti-inflammatory) treat the underlying inflammation.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Mechanism of salbutamol?</div><div class="qa">Short-acting β₂-agonist → ↑cAMP → smooth muscle relaxation.</div></div>
+      <div class="q"><div class="qq"><b>4</b>What is the controller cornerstone of asthma therapy?</div><div class="qa">Inhaled corticosteroids (ICS).</div></div>
+      <div class="q"><div class="qq"><b>5</b>Why must a LABA never be used as monotherapy in asthma?</div><div class="qa">LABA monotherapy increases asthma deaths — must be combined with an ICS.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Mechanism of tiotropium and where is it most useful?</div><div class="qa">Long-acting muscarinic (M₃) antagonist; mainstay in COPD.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Mechanism and role of montelukast?</div><div class="qa">CysLT₁ receptor antagonist; add-on controller, useful in allergic/exercise-induced asthma.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Why is theophylline rarely first-line?</div><div class="qa">Narrow therapeutic index (nausea, arrhythmia, seizures).</div></div>
+      <div class="q"><div class="qq"><b>9</b>Theophylline is metabolised by which enzyme, and what happens in smokers?</div><div class="qa">CYP1A2; smoking induces it → lower levels (may need higher dose).</div></div>
+      <div class="q"><div class="qq"><b>10</b>Give two biologic options for severe asthma and their targets.</div><div class="qa">Omalizumab (anti-IgE); mepolizumab/benralizumab (anti-IL-5/eosinophils).</div></div>
+      <div class="q"><div class="qq"><b>11</b>Which second messenger rises when a β₂-agonist binds its receptor?</div><div class="qa">cAMP (Gs-coupled GPCR).</div></div>
+      <div class="q"><div class="qq"><b>12</b>Why does escalating reliever (SABA) use signal poor control?</div><div class="qa">It treats only the symptom (spasm), not the inflammation — rising use means the disease is uncontrolled.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Why are anticholinergics relatively more important in COPD than asthma?</div><div class="qa">COPD bronchomotor tone is dominantly cholinergic.</div></div>
+      <div class="q"><div class="qq"><b>14</b>What class is budesonide?</div><div class="qa">Inhaled corticosteroid (ICS).</div></div>
+      <div class="q"><div class="qq"><b>15</b>Formoterol differs from salmeterol how?</div><div class="qa">Formoterol is a LABA with a fast onset (can be used in some maintenance-and-reliever regimens with ICS).</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">4</span><span class="qs-title">Hematopoietic Agents</span><span class="qs-meta">Module 45 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Microcytic anaemia — likely deficiency and treatment?</div><div class="qa">Iron deficiency; oral or IV iron.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Macrocytic anaemia — two possible deficiencies?</div><div class="qa">Vitamin B₁₂ and/or folate.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Single clinical feature distinguishing B₁₂ from folate deficiency?</div><div class="qa">Neurological signs occur with B₁₂ deficiency, not folate.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Why is giving folate alone in B₁₂ deficiency dangerous?</div><div class="qa">It corrects the anaemia but lets neurological damage (subacute combined degeneration) progress.</div></div>
+      <div class="q"><div class="qq"><b>5</b>What causes anaemia in chronic kidney disease?</div><div class="qa">Reduced erythropoietin production by the kidney.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Why does erythropoietin fail if iron stores are inadequate?</div><div class="qa">Red-cell production needs iron as raw material; EPO alone is insufficient.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Name two erythropoiesis-stimulating agents.</div><div class="qa">Epoetin alfa, darbepoetin alfa.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Major risks of ESAs?</div><div class="qa">Hypertension and thrombosis/stroke (especially if Hb over-corrected).</div></div>
+      <div class="q"><div class="qq"><b>9</b>What does G-CSF (filgrastim) do?</div><div class="qa">Stimulates neutrophil production — used for chemotherapy-induced neutropenia.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Where is dietary iron mainly absorbed?</div><div class="qa">Duodenum.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Common side effects of oral iron?</div><div class="qa">GI upset, constipation, black stools.</div></div>
+      <div class="q"><div class="qq"><b>12</b>What reduces oral iron absorption?</div><div class="qa">PPIs/antacids (raised gastric pH); food.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Vitamin B₁₂ absorption requires what factor, and what disease destroys it?</div><div class="qa">Intrinsic factor; pernicious anaemia (give B₁₂ IM).</div></div>
+      <div class="q"><div class="qq"><b>14</b>Why is folate important periconceptually?</div><div class="qa">Prevents neural tube defects.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Name a thrombopoietin-receptor agonist for ITP.</div><div class="qa">Romiplostim or eltrombopag.</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">5</span><span class="qs-title">Immunosuppressants</span><span class="qs-meta">Module 39 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Mechanism of calcineurin inhibitors?</div><div class="qa">↓ calcineurin → ↓ IL-2 transcription → ↓ T-cell activation.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Name two calcineurin inhibitors.</div><div class="qa">Ciclosporin and tacrolimus.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Signature toxicity of calcineurin inhibitors?</div><div class="qa">Nephrotoxicity (also ↑BP, tremor, hyperglycaemia).</div></div>
+      <div class="q"><div class="qq"><b>4</b>Why is a rising creatinine ambiguous in a transplant patient on tacrolimus?</div><div class="qa">It could be graft rejection OR calcineurin-inhibitor nephrotoxicity — hence drug monitoring.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Mechanism of sirolimus?</div><div class="qa">mTOR inhibitor — blocks IL-2 signal transduction/proliferation.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Mechanism of mycophenolate mofetil?</div><div class="qa">Inhibits inosine monophosphate dehydrogenase → ↓ purine (guanosine) synthesis in lymphocytes.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Mechanism of azathioprine?</div><div class="qa">Pro-drug → 6-mercaptopurine → ↓ purine synthesis; antiproliferative.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Which common gout drug dangerously potentiates azathioprine, and why?</div><div class="qa">Allopurinol — it inhibits xanthine oxidase which inactivates the metabolite → toxicity.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Give the target of infliximab.</div><div class="qa">TNF-α.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Give the target of rituximab.</div><div class="qa">CD20 on B cells.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Why screen for latent TB before an anti-TNF biologic?</div><div class="qa">Anti-TNF therapy can reactivate latent tuberculosis (and hepatitis B).</div></div>
+      <div class="q"><div class="qq"><b>12</b>Calcineurin inhibitors are substrates of which enzyme?</div><div class="qa">CYP3A4 (interactions with azoles, macrolides, grapefruit).</div></div>
+      <div class="q"><div class="qq"><b>13</b>Broadest-acting immunosuppressant class?</div><div class="qa">Glucocorticoids.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Universal trade-off of immunosuppression?</div><div class="qa">Increased risk of infection and malignancy.</div></div>
+      <div class="q"><div class="qq"><b>15</b>What does belatacept block?</div><div class="qa">T-cell co-stimulation (CTLA-4–Ig fusion blocking CD80/86).</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">6</span><span class="qs-title">Histamine & Antagonists</span><span class="qs-meta">Module 43 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Which histamine receptor mediates allergic responses and is the antihistamine target?</div><div class="qa">H₁.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Which histamine receptor controls gastric acid secretion?</div><div class="qa">H₂.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Why are 1st-generation antihistamines sedating?</div><div class="qa">They are lipophilic and cross the blood-brain barrier.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Why are 2nd-generation antihistamines non-sedating?</div><div class="qa">They are more polar / P-gp substrates and do not cross the BBB significantly.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Name two 1st-generation antihistamines.</div><div class="qa">Diphenhydramine, chlorpheniramine (or promethazine).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Name two 2nd-generation antihistamines.</div><div class="qa">Loratadine, cetirizine (or fexofenadine).</div></div>
+      <div class="q"><div class="qq"><b>7</b>Besides allergy, give two uses of 1st-gen antihistamines.</div><div class="qa">Motion sickness/vertigo, nausea, insomnia.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Why do 1st-gen antihistamines cause dry mouth and urinary retention?</div><div class="qa">They also block muscarinic (antimuscarinic) receptors.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Why are 1st-gen agents risky in the elderly?</div><div class="qa">Antimuscarinic and sedative effects → confusion, falls, retention, glaucoma.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Name two H₂-receptor antagonists.</div><div class="qa">Famotidine, ranitidine (cimetidine).</div></div>
+      <div class="q"><div class="qq"><b>11</b>Which autacoid causes the ACE-inhibitor cough?</div><div class="qa">Bradykinin (accumulates when ACE is inhibited).</div></div>
+      <div class="q"><div class="qq"><b>12</b>What other ACE-inhibitor adverse effect is bradykinin-mediated?</div><div class="qa">Angio-oedema.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Which generation is preferred for daytime allergy control?</div><div class="qa">2nd generation (non-sedating).</div></div>
+      <div class="q"><div class="qq"><b>14</b>What triggers histamine release from mast cells in Type I hypersensitivity?</div><div class="qa">Allergen cross-linking of IgE on mast cells.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Are H₃/H₄ receptors major current drug targets?</div><div class="qa">No — largely investigational.</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">7</span><span class="qs-title">Immunity & Inflammation</span><span class="qs-meta">Module 38 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Two arms of the immune system?</div><div class="qa">Innate (fast, non-specific, no memory) and adaptive (slow, specific, memory).</div></div>
+      <div class="q"><div class="qq"><b>2</b>Which arm forms immunological memory?</div><div class="qa">Adaptive.</div></div>
+      <div class="q"><div class="qq"><b>3</b>List the four hypersensitivity types (ACID).</div><div class="qa">I Anaphylactic/immediate, II Cytotoxic, III Immune-complex, IV Delayed.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Which hypersensitivity type is IgE-mediated?</div><div class="qa">Type I.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Classic example of Type I?</div><div class="qa">Anaphylaxis, atopy, allergic rhinitis/asthma.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Which type is antibody-against-cell-surface (e.g. haemolytic anaemia)?</div><div class="qa">Type II.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Which type is immune-complex mediated (e.g. SLE, serum sickness)?</div><div class="qa">Type III.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Which type is T-cell mediated and delayed?</div><div class="qa">Type IV.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Why does a TB skin test take ~48–72 h to read?</div><div class="qa">It is a Type IV (delayed, T-cell) reaction.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Which three hypersensitivity types are antibody-mediated?</div><div class="qa">Types I, II, and III.</div></div>
+      <div class="q"><div class="qq"><b>11</b>What is a cytokine storm?</div><div class="qa">Excessive cytokine release causing systemic inflammation.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Name two immune checkpoint molecules.</div><div class="qa">CTLA-4 and PD-1/PD-L1.</div></div>
+      <div class="q"><div class="qq"><b>13</b>What do checkpoint inhibitors do in cancer therapy?</div><div class="qa">Release the brakes on T cells so they attack tumour cells.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Main toxicity class of checkpoint inhibitors?</div><div class="qa">Immune-related adverse events (autoimmune: colitis, hepatitis, thyroiditis, etc.).</div></div>
+      <div class="q"><div class="qq"><b>15</b>Key innate immune players?</div><div class="qa">Neutrophils, macrophages, NK cells, complement.</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">8</span><span class="qs-title">Immune Globulins & Vaccines</span><span class="qs-meta">Module 40 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Active vs passive immunisation — core difference?</div><div class="qa">Active = body makes its own antibodies (vaccine); passive = ready-made antibodies given.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Which has faster onset?</div><div class="qa">Passive (immediate).</div></div>
+      <div class="q"><div class="qq"><b>3</b>Which lasts longer?</div><div class="qa">Active (durable memory).</div></div>
+      <div class="q"><div class="qq"><b>4</b>Why give BOTH vaccine and immune globulin after a rabies exposure?</div><div class="qa">Globulin protects immediately; the vaccine builds lasting immunity over weeks.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Four broad vaccine types?</div><div class="qa">Live-attenuated, inactivated, subunit, mRNA (nucleic acid).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Which vaccine type is contraindicated in pregnancy/immunocompromise?</div><div class="qa">Live-attenuated.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Give two live-attenuated vaccines.</div><div class="qa">MMR, varicella (or BCG).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Why is a live vaccine dangerous in immunocompromise?</div><div class="qa">The attenuated organism may cause disease.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Classic passive-immunisation product in pregnancy?</div><div class="qa">Anti-D (Rho) immune globulin.</div></div>
+      <div class="q"><div class="qq"><b>10</b>What does anti-D prevent?</div><div class="qa">Rh sensitisation → haemolytic disease of the newborn.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Why does passive immunity fade?</div><div class="qa">The transferred antibodies are gradually cleared; no memory is formed.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Which immune arm does a vaccine rely on?</div><div class="qa">Adaptive immunity (memory).</div></div>
+      <div class="q"><div class="qq"><b>13</b>Why can't a transplant patient on tacrolimus get the MMR vaccine?</div><div class="qa">It is live-attenuated and they are immunosuppressed → risk of vaccine-strain disease.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Can passive antibody interfere with a simultaneous live vaccine?</div><div class="qa">Yes — it can blunt the immune response to it.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Example of post-exposure passive immunisation besides rabies?</div><div class="qa">Tetanus immune globulin, hepatitis B immune globulin.</div></div>
+    </div>
+  </details>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong>Inflammation, Immunity &amp; Hematopoiesis · Accelerated Learning System</strong><br>
+      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section IV (Chs 38–45).<br>
+      Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
+      Mnemonics are standard teaching aids. Verify all drug dosing against current local protocols before clinical use.</span>
+    </div>
+    <div class="src" style="text-align:right">
+      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Built around active recall and spaced repetition.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+// ── QUIZ TAP-TO-REVEAL ──────────────────────────────────────────────────────
+// Supports: .quiz-q/.quiz-a  (special_systems)
+//           .qq/.qa          (CV-Renal, Endocrine, General, Infectious, Inflammation, Neoplastic, Neuro)
+//           .qq/details.qa   (GI StudyGuide)
+
+(function() {
+  function initReveal(triggerSel, containerSel) {
+    document.querySelectorAll(triggerSel).forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var container = trigger.closest(containerSel);
+        if (!container) return;
+        var wasOpen = container.classList.contains('open');
+        // close all siblings in same quiz group
+        var parent = container.parentElement;
+        if (parent) {
+          parent.querySelectorAll(containerSel).forEach(function(el) {
+            el.classList.remove('open');
+          });
+        }
+        if (!wasOpen) container.classList.add('open');
+      });
+    });
+  }
+
+  // Pattern 1: special_systems  .quiz-item > .quiz-q
+  initReveal('.quiz-q', '.quiz-item');
+
+  // Pattern 2: others  .q > .qq  (qa may be div or details)
+  initReveal('.qq', '.q');
+
+  // For GI: .qq contains details.qa — open/close it directly too
+  document.querySelectorAll('.qq').forEach(function(qq) {
+    qq.addEventListener('click', function() {
+      var q = qq.closest('.q');
+      if (!q) return;
+      var det = q.querySelector('details.qa');
+      if (det) {
+        if (q.classList.contains('open')) {
+          det.setAttribute('open', '');
+        } else {
+          det.removeAttribute('open');
+        }
+      }
+    });
+  });
+})();
+</script>
+
+<script src="learning-interactive.js"></script>
+</body>
+</html>

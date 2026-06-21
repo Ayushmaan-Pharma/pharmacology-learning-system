@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gastrointestinal Pharmacology · Accelerated Learning System</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+  /* Terracotta × Pine × Ochre — Gastrointestinal */
+  :root {
+    --accent: #c98a2a;
+    --accent-light: #e0aa50;
+    --accent-pale: #f8efd9;
+    --accent-dark: #b6502e;
+    --accent-darker: #8c3c21;
+    --cool: #1f6b46;
+    --cool-light: #3d8f62;
+    --cool-pale: #e3efe6;
+    --cream: #faf5ee;
+    --ink: #2c2520;
+    --ink-soft: #5e5448;
+    --muted: #8a7c6c;
+    --border: #e7ddcd;
+    --hero-gradient: linear-gradient(135deg,#8c3c21 0%,#1f6b46 55%,#b6502e 100%);
+    /* Semantic aliases */
+    --bg: var(--cream);
+    --surface: white;
+    --text: var(--ink);
+    --text-soft: var(--ink-soft);
+    --highlight-bg: var(--accent-pale);
+    --cog-bg: var(--cool-pale);
+    --cog-border: var(--cool);
+  }
+
+  /* ── SHARED TOKENS ─────────────────────────────────── */
+  :root {
+    --fs-xs:   0.72rem;  --fs-sm:  0.85rem;  --fs-base: 1rem;
+    --fs-md:   1.125rem; --fs-lg:  1.35rem;  --fs-xl:   1.7rem;
+    --fs-2xl:  2.2rem;   --fs-3xl: 3rem;
+    --radius:    10px;   --radius-sm: 6px;
+    --shadow:    0 2px 12px rgba(26,26,46,.08);
+    --shadow-lg: 0 8px 32px rgba(26,26,46,.14);
+    --shadow-sm: 0 1px 3px rgba(26,26,46,.08);
+  }
+
+  /* ── RESET & BASE ───────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-base);
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ───────────────────────────────────────────── */
+  .hero, header.hero {
+    background: var(--hero-gradient);
+    color: white;
+    padding: 2.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: none;
+  }
+  .hero::before, header.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  header.hero svg { opacity: .08; pointer-events: none; }
+
+  .eyebrow {
+    font-size: var(--fs-sm);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    font-weight: 600;
+    margin-bottom: .8rem;
+    position: relative;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero h1, header.hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2rem, 5vw, var(--fs-3xl));
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: .6rem;
+    position: relative;
+    letter-spacing: -.01em;
+  }
+  .hero h1 em { font-style: italic; font-weight: 500; color: rgba(255,255,255,.82); }
+  .hero-sub, .hero .sub, header.hero .sub {
+    color: rgba(255,255,255,.78);
+    font-size: var(--fs-md);
+    margin-bottom: 1.8rem;
+    position: relative;
+    max-width: 720px;
+    margin-left: auto; margin-right: auto;
+  }
+  .chips, .hero .meta {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    justify-content: center; position: relative;
+    margin-top: .5rem;
+  }
+  .chip {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: .25rem .85rem;
+    font-size: var(--fs-xs);
+    letter-spacing: .05em;
+    font-weight: 500;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .chip.tier1 { background: rgba(255,255,255,.22); border-color: var(--accent-light); }
+  .chip.tier2 { background: rgba(0,0,0,.18); border-color: rgba(255,255,255,.45); }
+  .hero .thesis {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35);
+    border-radius: 9px; padding: 9px 14px; font-size: .86rem;
+    color: rgba(255,255,255,.9); margin-top: 18px; position: relative;
+  }
+
+  /* ── METHOD STRIP ───────────────────────────────────── */
+  .method-strip, .method {
+    background: var(--ink);
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .method-item, .method .m {
+    padding: 1.2rem 1.4rem;
+    border-right: 1px solid rgba(255,255,255,.08);
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
+  .method-item:last-child, .method .m:last-child { border-right: none; }
+  .method-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-light);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+  .method-name, .method .m h4 {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin: .1rem 0;
+    color: white !important;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .method-desc, .method .m p {
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,.55);
+    margin: 0; line-height: 1.5;
+  }
+  @media (max-width: 760px) {
+    .method-strip, .method { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── STICKY NAV ─────────────────────────────────────── */
+  .sticky-nav, nav.toc {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250,245,238,.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--accent);
+    padding: .6rem 2rem;
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  }
+  .sticky-nav::-webkit-scrollbar, nav.toc::-webkit-scrollbar { display: none; }
+  nav.toc .wrap {
+    display: flex; gap: 1.5rem; padding: 0;
+    max-width: none; margin: 0;
+  }
+  .nav-link, nav.toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    white-space: nowrap;
+    padding: .2rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    border-radius: 0;
+    background: transparent !important;
+  }
+  .nav-link:hover, nav.toc a:hover {
+    color: var(--accent-dark);
+    border-bottom-color: var(--accent-dark);
+    background: transparent !important;
+  }
+  nav.toc a.key { color: var(--accent-dark); font-weight: 600; }
+
+  /* ── LAYOUT ─────────────────────────────────────────── */
+  .container { max-width: 940px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 1.5rem; }
+  main { padding: 6px 0 60px; }
+  main.container { padding: 2rem 1.5rem 4rem; }
+
+  /* ── MODULE CARD ─────────────────────────────────────── */
+  .module, section.module {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    padding: 0 !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+  }
+
+  .module-header {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+  }
+  .mod-head {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white !important;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+    align-items: initial !important;
+    gap: 0 !important;
+    flex-wrap: initial !important;
+    margin-bottom: 0 !important;
+    border-bottom: none !important;
+  }
+  .mod-num { display: none !important; }
+  .mod-titleblock, .mh-body { flex: none !important; min-width: 0 !important; }
+
+  .module-tier, .tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent-light) !important;
+    margin-bottom: .3rem;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    font-weight: 600;
+    display: block;
+  }
+  .module-header h2,
+  .mod-titleblock h2,
+  .mh-body h2,
+  .mod-head h2 {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-size: var(--fs-xl) !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    color: white !important;
+    letter-spacing: -.01em;
+  }
+  .module-header p,
+  .mod-titleblock .mod-sub,
+  .mh-body .mh-meta,
+  .mod-head p {
+    color: rgba(255,255,255,.72) !important;
+    font-size: var(--fs-sm) !important;
+    margin-top: .3rem !important;
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+  }
+
+  /* ── STAGE BLOCKS ────────────────────────────────────── */
+  .stage { padding: 1.6rem 1.8rem; border-bottom: 1px solid var(--border); }
+  .stage:last-child { border-bottom: none; }
+  .stage-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .stage-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* COG / MAP / RECALL BLOCKS */
+  .cog {
+    background: var(--cool-pale) !important;
+    border-left: 4px solid var(--cool) !important;
+    border-top: none !important; border-right: none !important; border-bottom: none !important;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+    padding: 1.4rem 1.6rem !important;
+    margin-bottom: 1rem;
+    box-shadow: none !important;
+  }
+  .cog > .tag, .cog > .cog-label, .cog .stage-label { color: var(--cool) !important; }
+  /* map variant = default cog */
+  .cog.map { background: var(--cool-pale) !important; border-left-color: var(--cool) !important; }
+  .cog.map > .cog-label, .cog.map > .tag { color: var(--cool) !important; }
+  /* blurt / recall variant */
+  .cog.blurt, .cog.recall {
+    background: var(--accent-pale) !important;
+    border-left-color: var(--accent-dark) !important;
+  }
+  .cog.blurt > .tag, .cog.recall > .cog-label, .cog.blurt > .cog-label { color: var(--accent-darker) !important; }
+  /* feyn / feynman variant */
+  .cog.feyn, .cog.feynman {
+    background: white !important;
+    border-left-color: var(--cool) !important;
+  }
+  .cog.feyn > .tag, .cog.feynman > .cog-label { color: var(--cool) !important; }
+  /* spaced variant */
+  .cog.spaced {
+    background: #F4FAF5 !important;
+    border-left-color: #2E7D52 !important;
+  }
+  .cog.spaced > .tag, .cog.spaced > .cog-label { color: #2E7D52 !important; }
+
+  /* COG-LABEL (GI format) — same as .tag */
+  .cog-label, .tag {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: .8rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .cog-label::after, .tag::after { content: ''; flex: 1; height: 1px; background: currentColor; opacity: .2; }
+
+  /* PILLAR */
+  .pillar {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--cool);
+    border-bottom: 2px solid var(--cool-light);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+    line-height: 1.34;
+    background: none !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    padding-left: 0 !important;
+    padding-top: 0 !important;
+    padding-right: 0 !important;
+  }
+  .pillar::before { display: none; }
+
+  .cog ul, .cog ol { padding-left: 1.4rem; }
+  .cog li { margin-bottom: .4rem; font-size: var(--fs-sm); }
+  .cog li::marker { color: var(--cool); }
+  .cog li strong { color: var(--accent-dark); }
+  .cog h3 {
+    font-family: 'Inter', sans-serif; font-size: .98rem; font-weight: 700;
+    margin: 14px 0 5px; color: var(--accent-dark) !important;
+  }
+  .cog h4 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 700; margin: 16px 0 5px; color: var(--ink); }
+
+  /* INLINE TAG WORDS */
+  .tagword {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .8em;
+    background: var(--cool-pale);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 4px;
+    color: var(--cool);
+    white-space: nowrap;
+  }
+
+  /* BLURT STAGE */
+  .blurt-prompt {
+    font-style: italic;
+    background: white;
+    border: 1px solid var(--accent-dark);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    font-size: var(--fs-sm);
+    margin-bottom: 1rem;
+    color: var(--ink-soft);
+    font-family: 'Fraunces', Georgia, serif;
+    line-height: 1.4;
+  }
+  .blurt-prompt b { font-style: normal; color: var(--accent-darker); }
+  .why { color: var(--cool); font-weight: 700; font-style: normal; }
+
+  .primers { list-style: none; padding: 0; counter-reset: p; margin: 0; }
+  .primers li {
+    counter-increment: p;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    padding: .5rem .7rem .5rem 2.4rem;
+    color: var(--accent-darker);
+    position: relative;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin: 7px 0;
+  }
+  .primers li::before {
+    content: 'Q' counter(p);
+    position: absolute; left: 10px; top: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    color: white; background: var(--cool);
+    padding: 2px 5px; border-radius: 4px;
+  }
+
+  /* FEYNMAN GATE */
+  details.gate { margin: 12px 0 2px; }
+  details.gate > summary {
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    padding: .85rem 1.3rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    list-style: none;
+    user-select: none;
+    transition: opacity .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    letter-spacing: .04em;
+  }
+  details.gate > summary::-webkit-details-marker { display: none; }
+  details.gate > summary:hover { opacity: .88; }
+  details.gate > summary .caret,
+  details.gate > summary .lock { display: none; }
+  details.gate > summary::before { content: '🔒 '; }
+  details.gate[open] > summary::before { content: '🔓 '; }
+  details.gate > summary::after { content: none !important; }
+  details.gate[open] > summary {
+    background: transparent; color: var(--ink-soft);
+    border: 1.5px solid var(--border); opacity: 1;
+  }
+  details.gate[open] { border-left: 3px solid var(--border); padding-left: 14px; margin-left: 2px; }
+  details.gate > *:not(summary) { animation: gateReveal .25s ease; }
+  @keyframes gateReveal { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+
+  /* ANALOGY */
+  .analogy {
+    background: var(--accent-pale);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  .analogy::before { content: '💡 Analogy — '; font-weight: 700; color: var(--accent-darker); }
+  .analogy p { margin: 5px 0; font-style: italic; }
+
+  /* WARN BLOCK */
+  blockquote.warn {
+    background: #FFF3F0;
+    border-left: 4px solid var(--accent-dark);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: .85rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  blockquote.warn::before { content: '⚠️ Exam Traps & Classic Pitfalls — '; font-weight: 700; color: var(--accent-dark); display: block; margin-bottom: 6px; }
+  blockquote.warn ul { padding-left: 1.4rem; }
+  blockquote.warn li { margin-bottom: .35rem; list-style: disc; }
+  blockquote.warn li::marker { color: var(--accent-dark); }
+
+  /* MNEMONIC */
+  .mnemonic {
+    background: white;
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .8rem 1rem;
+    font-size: var(--fs-sm);
+    margin: 1rem 0;
+  }
+  .mnemonic::before { content: '🧷 Mnemonic — '; font-weight: 700; color: var(--accent-dark); }
+
+  /* SPACED REP STAGE */
+  .sched-stage {
+    background: #F4FAF5;
+    border-left: 4px solid #2E7D52;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.2rem 1.4rem;
+  }
+  .sched {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: .6rem;
+    margin-bottom: 1rem;
+    flex-wrap: initial !important;
+  }
+  .sched-day, .sched .day {
+    background: white;
+    border: 1px solid #C3E6D0 !important;
+    border-top: 3px solid #2E7D52 !important;
+    border-radius: var(--radius-sm);
+    padding: .7rem .9rem;
+    font-size: var(--fs-xs);
+  }
+  .sched-day strong, .sched .day .d,
+  .sched .day .d-when {
+    display: block; color: #2E7D52;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-sm); font-weight: 700; margin-bottom: .2rem; letter-spacing: .05em;
+  }
+  .sched .day .f, .sched .day .d-task { font-size: .82rem; color: var(--ink-soft); margin-top: 3px; }
+  .bridge {
+    background: white;
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .8rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--accent-darker);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    line-height: 1.4;
+    margin-top: 12px;
+  }
+  .bridge::before { content: '🌉 Bridge — '; font-weight: 700; font-style: normal; font-family: 'Inter',sans-serif; }
+  .bridge .thesis {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .8em; background: var(--cool-pale);
+    color: var(--cool); padding: 1px 6px; border-radius: 4px; font-style: normal;
+  }
+
+  /* ── TABLES ──────────────────────────────────────────── */
+  .tbl-wrap, .tbl { overflow-x: auto; margin: 1rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: var(--fs-xs); }
+  caption {
+    caption-side: top; text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted); padding: 0 0 6px; font-weight: 700;
+  }
+  th {
+    background: var(--cool);
+    color: white; padding: .5rem .7rem;
+    text-align: left; font-weight: 600; font-size: var(--fs-xs);
+  }
+  td { padding: .45rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--cream); }
+  tr:hover td { background: var(--accent-pale); }
+  td strong { color: var(--accent-dark); }
+
+  /* ── DIAGRAMS / SVG FIGURES ───────────────────────────── */
+  figure.dia {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: .8rem;
+    margin: 1rem 0;
+    overflow-x: auto;
+  }
+  figure.dia svg { width: 100%; height: auto; display: block; }
+  figure.dia figcaption {
+    font-size: var(--fs-xs); color: var(--muted);
+    margin-top: .4rem; font-style: italic; line-height: 1.5;
+  }
+  .svg-bg { fill: var(--cream); }
+  .svg-cell { fill: white; stroke: var(--border); stroke-width: 1.4; }
+  .svg-ink { fill: var(--ink); }
+  .svg-soft { fill: var(--ink-soft); }
+  .svg-faint { fill: var(--muted); }
+  .svg-lbl { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: var(--ink-soft); }
+  .svg-lbl-b { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; }
+  .svg-title { font-family: 'Fraunces', serif; font-size: 14px; font-weight: 600; fill: var(--ink); }
+
+  /* ── QUIZ ────────────────────────────────────────────── */
+  .quizbank > h2, .quizset-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--ink);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: .3rem;
+  }
+  .quizbank > p.qb-sub {
+    font-size: var(--fs-sm);
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  /* Quiz intro banner */
+  .quiz-intro {
+    background: linear-gradient(135deg, var(--accent-darker), var(--accent-dark));
+    color: white;
+    border-radius: var(--radius);
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  /* Collapsible quiz sections */
+  details.qsec, details.quizset {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: white;
+    margin: 16px 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  details.qsec > summary, details.quizset > summary {
+    cursor: pointer; list-style: none;
+    padding: 1rem 1.3rem;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    font-weight: 600; font-size: var(--fs-sm);
+    display: flex; align-items: center; gap: .6rem;
+    user-select: none; transition: opacity .2s;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  details.qsec > summary::-webkit-details-marker,
+  details.quizset > summary::-webkit-details-marker { display: none; }
+  details.qsec > summary:hover, details.quizset > summary:hover { opacity: .88; }
+  .qs-title { flex: 1; }
+  .qs-meta { font-size: var(--fs-xs); color: rgba(255,255,255,.65); font-weight: 400; }
+  .qcaret { transition: transform .25s; color: rgba(255,255,255,.8); font-size: 1.05rem; }
+  details.quizset[open] > summary .qcaret { transform: rotate(90deg); }
+
+  /* Individual Q&A items */
+  .quiz-item, .q {
+    margin-bottom: .7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .quiz-q, .qq {
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: .5rem;
+    user-select: none;
+    transition: background .15s;
+  }
+  .qq .qbody { flex: 1; display: flex; align-items: flex-start; gap: .6rem; }
+  .qq .qs-num, .qq b {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem; font-weight: 700;
+    background: var(--cool-pale); color: var(--cool);
+    border-radius: 4px; padding: 2px 6px;
+    flex-shrink: 0; margin-top: 1px;
+    display: inline-block;
+  }
+  .q-text { flex: 1; }
+  .quiz-q:hover, .qq:hover { background: var(--accent-pale); }
+  .quiz-q::after, .qq::after {
+    content: '▼';
+    font-size: .65rem; color: var(--muted); flex-shrink: 0; margin-top: 3px;
+  }
+  .quiz-item.open .quiz-q::after, .q.open .qq::after { content: '▲'; }
+
+  /* Answer panel */
+  .quiz-a, .qa {
+    display: none;
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0;
+    color: var(--ink-soft);
+  }
+  .quiz-item.open .quiz-a, .q.open .qa { display: block; }
+  .quiz-a strong, .qa strong, .ans strong, .ans b { color: #1f7a42; }
+  .ans { font-size: var(--fs-sm); }
+
+  /* GI native <details class="qa"> — hide summary, show content via JS open class */
+  details.qa { display: block !important; border: none !important; margin: 0 !important; background: #F0FBF3; border-top: 1px solid #C3E6D0 !important; }
+  details.qa > summary { display: none !important; }
+  details.qa > .ans { padding: .75rem 1rem; font-size: var(--fs-sm); color: var(--ink-soft); }
+  .qq details.qa { display: none !important; }
+  .qq.open details.qa { display: block !important; }
+
+  /* quiz section + body padding */
+  .qs-body, .qbody-wrap { padding: 1rem 1.2rem .5rem; }
+
+  /* ── MISC ────────────────────────────────────────────── */
+  .lead { font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: 1rem; }
+  /* tier spans should be inline inside h2 on dark bg */
+  .mod-head .tier, .mh-body .tier {
+    display: inline-block !important; font-size: var(--fs-xs);
+    color: var(--accent-light) !important; background: rgba(255,255,255,.15) !important;
+    border: 1px solid rgba(255,255,255,.3) !important;
+    border-radius: 20px; padding: 2px 10px; margin-left: 8px;
+    vertical-align: middle; font-weight: 500;
+  }
+
+  /* ── BADGES ─────────────────────────────────────────── */
+  .badge {
+    display: inline-block; font-size: var(--fs-xs);
+    font-family: 'JetBrains Mono', monospace;
+    padding: .15rem .5rem; border-radius: 4px;
+    font-weight: 500; vertical-align: middle;
+  }
+  .badge-saffron, .badge-accent {
+    background: var(--accent-pale); color: var(--accent-darker); border: 1px solid var(--accent);
+  }
+  .badge-teal, .badge-cool {
+    background: var(--cool-pale); color: var(--cool); border: 1px solid var(--cool-light);
+  }
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────── */
+  p { margin-bottom: .7rem; font-size: var(--fs-sm); }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--accent-darker); }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin-bottom: .35rem; font-size: var(--fs-sm); }
+  h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg); font-weight: 700;
+    margin: 1.2rem 0 .6rem; color: var(--ink);
+  }
+  h4 { font-size: var(--fs-md); font-weight: 700; margin: 1rem 0 .4rem; }
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: .85em;
+    background: var(--cream); padding: .1em .3em; border-radius: 3px;
+  }
+
+  /* ── FOOTER ─────────────────────────────────────────── */
+  footer, .footer {
+    text-align: center; padding: 2rem 1.5rem;
+    font-size: var(--fs-xs); color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer .wrap, .footer .wrap {
+    max-width: 940px; margin: 0 auto;
+    display: block !important; text-align: center;
+  }
+  footer .src { color: var(--muted); line-height: 1.6; font-size: var(--fs-xs); }
+
+  /* ── SCROLLBAR ──────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── PRINT ──────────────────────────────────────────── */
+  @media print {
+    nav.toc, .method-strip, .method { display: none; }
+    details.gate[open] { break-inside: avoid; }
+  }
+
+
+  /* ── FLASHCARDS ─────────────────────────────────────── */
+  #flashcards { margin-top: 3rem; margin-bottom: 2rem; }
+  #flashcards > h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md); color: var(--ink);
+    margin-bottom: .4rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: .3rem;
+  }
+  #flashcards > .fc-lead {
+    font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: 1.5rem;
+  }
+  .flashcards { display: flex; flex-direction: column; gap: .75rem; }
+  .flashcard {
+    border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; background: var(--cream); transition: box-shadow .2s;
+  }
+  .flashcard:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+  .flashcard > summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: flex-start; gap: .9rem;
+    padding: .9rem 1.1rem; background: var(--accent-pale); user-select: none;
+  }
+  .flashcard > summary::-webkit-details-marker { display: none; }
+  .flashcard > summary::after {
+    content: '▶'; color: var(--accent); font-size: .75rem;
+    margin-left: auto; margin-top: .25rem; flex-shrink: 0; transition: transform .2s;
+  }
+  .flashcard[open] > summary::after { transform: rotate(90deg); }
+  .fc-num {
+    font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+    font-weight: 500; color: var(--muted); flex-shrink: 0;
+    margin-top: .2rem; min-width: 2rem;
+  }
+  .fc-q { font-size: var(--fs-sm); color: var(--ink); line-height: 1.55; font-weight: 500; }
+  .fc-back {
+    padding: 1.1rem 1.2rem; border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: .75rem; background: #fff;
+  }
+  .fc-answer {
+    border-left: 3px solid var(--accent); padding: .7rem 1rem;
+    border-radius: 0 8px 8px 0; font-size: var(--fs-sm);
+    color: var(--ink); line-height: 1.65; background: var(--accent-pale);
+  }
+  .fc-answer strong { color: var(--accent-dark, var(--accent)); }
+  .fc-pearl {
+    border-left: 3px solid var(--cool); padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: var(--cool-pale); line-height: 1.5;
+  }
+  .fc-trap {
+    border-left: 3px solid #d97706; padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: #fffbeb; line-height: 1.5;
+  }
+  .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
+
+</style>
+  <link rel="stylesheet" href="learning-interactive.css">
+</head>
+<body>
+
+<header class="hero">
+  <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
+    <a href="learning.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">← Learning Hub</a>
+    <a href="index.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">🏠 Study Hub</a>
+  </div>
+  <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#f8efd9" stroke-width="3" fill="none" opacity="0.8">
+      <g transform="translate(120,80)"><circle cx="0" cy="0" r="28"/><circle cx="0" cy="0" r="14"/><line x1="0" y1="-28" x2="0" y2="-48"/><line x1="24" y1="14" x2="42" y2="24"/><line x1="-24" y1="14" x2="-42" y2="24"/></g>
+      <g transform="translate(380,260)"><circle cx="0" cy="0" r="28"/><circle cx="0" cy="0" r="14"/><line x1="0" y1="-28" x2="0" y2="-48"/><line x1="24" y1="14" x2="42" y2="24"/><line x1="-24" y1="14" x2="-42" y2="24"/></g>
+      <g transform="translate(820,110)"><circle cx="0" cy="0" r="28"/><circle cx="0" cy="0" r="14"/><line x1="0" y1="-28" x2="0" y2="-48"/><line x1="24" y1="14" x2="42" y2="24"/><line x1="-24" y1="14" x2="-42" y2="24"/></g>
+      <g transform="translate(1050,290)"><circle cx="0" cy="0" r="28"/><circle cx="0" cy="0" r="14"/><line x1="0" y1="-28" x2="0" y2="-48"/><line x1="24" y1="14" x2="42" y2="24"/><line x1="-24" y1="14" x2="-42" y2="24"/></g>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Goodman &amp; Gilman 14e · Section VI · Active-Recall Volume</div>
+    <h1>Gastrointestinal Pharmacology<br><em>Chapters 53–55</em></h1>
+    <p class="sub">Acid–Peptic Disease · Motility &amp; Emesis · Inflammatory Bowel Disease — built as an study guide with 80/20 maps, blurting gates, plain analogies, and a spaced-repetition plan.</p>
+    <div class="meta">
+      <span class="chip">3 modules · chapters 53–55</span>
+      <span class="chip">5 custom SVG diagrams</span>
+      <span class="chip">56 quiz questions</span>
+      <span class="chip">4 cognitive stages each</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#method">The Method</a>
+    <a class="key" href="#mod1">53 · Acid–Peptic &amp; GERD</a>
+    <a class="key" href="#mod2">54 · Motility &amp; Emesis</a>
+    <a class="key" href="#mod3">55 · IBD</a>
+    <a href="#flashcards">🃏 Flashcards</a>
+    <a href="#quizbank">★ Quiz Bank</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="method" style="padding-top:30px;margin-bottom:2rem">
+  <p class="lead" style="font-size:var(--fs-sm);color:var(--ink-soft);margin-bottom:16px">Same four-stage engine used across the whole G&amp;G 14e series. Each module runs these stages in order — and the blurting gate is the most important step: retrieving before you read is what builds durable memory.</p>
+  <div class="method">
+    <div class="m"><h4>① 80/20 Map</h4><p>One Core Pillar sentence, exam-critical bullets, comparison tables, and a custom SVG diagram per chapter.</p></div>
+    <div class="m"><h4>② Blurting Gate</h4><p>A clinical blurt prompt — dump everything before reading on — plus three WHY primers forcing mechanism over memorisation.</p></div>
+    <div class="m"><h4>③ Plain-Language Notes</h4><p>Plain-language mechanism, one simple analogy, and a trap box. Hidden behind the gate — no peeking.</p></div>
+    <div class="m"><h4>④ Spaced + Bridge</h4><p>Day 1/3/7/21 re-test schedule and one interleaving bridge to another topic.</p></div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- MODULE 1 — CHAPTER 53 -->
+<!-- ============================================================= -->
+<section class="module" id="mod1">
+  <div class="mod-head">
+    <div class="mod-num">53</div>
+    <div class="mh-body">
+      <h2>Pharmacotherapy for Gastric Acidity, Peptic Ulcers &amp; GERD <span class="tier tier-1">Tier 1</span></h2>
+      <div class="mh-meta">PPIs · H₂RAs · P-CABs · mucosal defence · H. pylori eradication · special acid-peptic disorders</div>
+    </div>
+  </div>
+
+  <!-- STAGE 1 -->
+  <div class="cog map">
+    <div class="cog-label">🧭 Stage 1 — 80/20 High-Yield Map</div>
+    <div class="pillar">Nearly every acid-peptic drug shifts a single balance — acid aggression versus mucosal defence — and the most powerful lever is the <em>irreversible covalent shutdown of the parietal-cell H⁺,K⁺-ATPase (the proton pump)</em>, the common final step of all acid secretion.</div>
+
+    <ul>
+      <li><strong>Three stimulatory inputs to the parietal cell:</strong> <span class="tagword">ACh → M3</span> (vagal/ENS, cephalic phase), <span class="tagword">histamine → H2</span> (paracrine from ECL cells — the dominant amplifier, Gs–cAMP), and <span class="tagword">gastrin → CCK2</span> (antral G cells — <em>most potent inducer</em>, but acts <em>mainly indirectly</em> by releasing ECL histamine).</li>
+      <li><strong>The brake:</strong> somatostatin from antral <strong>D cells</strong>; luminal pH &lt; 3 triggers SST → suppresses gastrin (negative feedback). <em>H. pylori</em> depletes D cells → less SST → excess gastrin.</li>
+      <li><strong>Final common path:</strong> cAMP (from H2) + Ca²⁺ (from M3/CCK2) both activate the <strong>H⁺,K⁺-ATPase</strong>, exchanging H⁺ for K⁺ — the largest ion gradient in vertebrates (intracellular pH ≈ 7.3, intracanalicular ≈ 0.8).</li>
+      <li><strong>PPIs are prodrugs:</strong> need an <em>acid</em> environment → form a tetracyclic <strong>sulfenamide</strong> → bind <em>covalently/irreversibly</em> to pump cysteines. Suppress 80–95% of acid. Effect lasts 24–48 h (until <em>new pumps</em> are made) despite a plasma t½ of only 0.5–3 h. Give 30–60 min <em>before the first meal</em> (more pumps after fasting). The six PPIs are equi-efficacious.</li>
+      <li><strong>PPI interactions/toxicity:</strong> CYP2C19 + 3A4 metabolism; Asians/Oceanians more often poor metabolisers. <em>Only omeprazole</em> inhibits CYP2C19 (↓ clopidogrel activation — controversial; pantoprazole is the safest co-prescription). Long-term: ↓ B12, ↓ Mg²⁺ (worse with diuretics), ↑ fracture, ↑ infections (C. difficile, pneumonia, SBP), hypergastrinaemia → ECL hyperplasia → rebound hypersecretion.</li>
+      <li><strong>H₂ antagonists:</strong> <em>reversible competitive</em> at H2; ~70% suppression (esp. nocturnal/basal). Renally cleared → dose-reduce in renal impairment. Cimetidine = CYP inhibitor + antiandrogen (gynaecomastia, impotence). Tolerance within ~3 days (tachyphylaxis via hypergastrinaemia). Ranitidine/nizatidine largely <em>withdrawn</em> (NDMA contamination).</li>
+      <li><strong>Potassium-competitive acid blockers (P-CABs):</strong> vonoprazan, tegoprazan, revaprazan — <em>reversibly</em> block the K⁺ site; weak bases that concentrate in the canaliculus, bind <em>both active and inactive</em> pump → faster onset (full effect day 1), longer duration, better nocturnal control; <em>no acid activation needed</em> → meal-independent; CYP2C19-independent. Mostly Asia.</li>
+      <li><strong>Mucosal-defence agents:</strong> <em>Misoprostol</em> (PGE₁ analogue → EP3/Gi → ↓cAMP ↓acid + cytoprotection; prevents NSAID ulcers; diarrhoea; <strong>absolutely contraindicated in pregnancy — uterotonic/abortifacient</strong>). <em>Sucralfate</em> (sucrose-octasulfate + Al(OH)₃; polymerises at pH &lt; 4, coats the ulcer; take on empty stomach; constipation; avoid in renal failure → Al accumulation). <em>Antacids</em> (balance Mg = diarrhoea vs Al = constipation; chelate other drugs → space by 2 h).</li>
+      <li><strong>GERD &amp; PUD:</strong> PPIs &gt; H₂RAs for healing erosive oesophagitis and duodenal/gastric ulcers. <em>NSAIDs</em> cause ulcers by suppressing mucosal PGE₂/PGI₂. Barrett's is refractory. Zollinger-Ellison = gastrinoma → high-dose PPI (± octreotide).</li>
+    </ul>
+
+    <div class="tbl-wrap">
+    <table>
+      <caption>Acid suppressors — the three classes at a glance</caption>
+      <thead><tr><th>Feature</th><th>PPIs</th><th>H₂ antagonists</th><th>P-CABs (vonoprazan)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Target</strong></td><td>H⁺,K⁺-ATPase cysteines</td><td>H2 receptor (basolateral)</td><td>K⁺-binding site of the pump</td></tr>
+        <tr><td><strong>Binding</strong></td><td>Covalent · <em>irreversible</em></td><td>Competitive · <em>reversible</em></td><td>Competitive · <em>reversible</em></td></tr>
+        <tr><td><strong>Acid activation?</strong></td><td>Required (prodrug)</td><td>No</td><td>No → meal-independent</td></tr>
+        <tr><td><strong>Acid suppression</strong></td><td>80–95%</td><td>~70%</td><td>Highest / fastest</td></tr>
+        <tr><td><strong>Onset of full effect</strong></td><td>2–5 days</td><td>Rapid but tolerance ~3 d</td><td>Day 1 (first dose)</td></tr>
+        <tr><td><strong>Dosing tip</strong></td><td>30–60 min pre-breakfast</td><td>Evening (nocturnal)</td><td>Independent of meals</td></tr>
+        <tr><td><strong>Key liability</strong></td><td>↓Mg/B12, fracture, C. diff, clopidogrel (omeprazole)</td><td>Cimetidine: CYP-inhib + antiandrogen</td><td>Availability (mostly Asia)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="tbl-wrap">
+    <table>
+      <caption>Mucosal-defence / cytoprotective agents</caption>
+      <thead><tr><th>Agent</th><th>Mechanism</th><th>Use</th><th>Watch out</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Misoprostol</strong></td><td>PGE₁ analogue → EP3/Gi → ↓acid + mucus/HCO₃⁻</td><td>Prevent NSAID ulcers</td><td>Diarrhoea; <strong>pregnancy-contraindicated</strong> (abortifacient)</td></tr>
+        <tr><td><strong>Sucralfate</strong></td><td>Cross-links at pH&lt;4 → sticky ulcer-coat</td><td>GERD in pregnancy; stress-ulcer prophylaxis</td><td>Empty stomach; constipation; Al in renal failure; binds other drugs</td></tr>
+        <tr><td><strong>Antacids</strong></td><td>Neutralise luminal H⁺</td><td>Mild intermittent reflux</td><td>Mg=diarrhoea, Al=constipation; chelation; milk-alkali (Ca)</td></tr>
+        <tr><td><strong>Bismuth</strong></td><td>Coats ulcer base, antibacterial</td><td>Part of <em>H. pylori</em> quadruple therapy</td><td>Black stools &amp; tongue (bismuth sulfide)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- SVG-A: parietal cell sites of action -->
+    <figure class="dia">
+      <svg viewBox="0 0 820 430" role="img" aria-label="Gastric acid secretion regulation and drug sites of action">
+        <rect class="svg-bg" x="0" y="0" width="820" height="430" rx="14"/>
+        <text class="svg-title" x="24" y="32">Gastric acid secretion — regulation &amp; drug sites of action</text>
+
+        <!-- enteroendocrine cells -->
+        <circle cx="95" cy="120" r="34" class="svg-cell"/>
+        <text class="svg-lbl-b" x="95" y="116" text-anchor="middle" fill="#1f6b46">G cell</text>
+        <text class="svg-lbl" x="95" y="132" text-anchor="middle">gastrin</text>
+
+        <circle cx="95" cy="230" r="34" class="svg-cell"/>
+        <text class="svg-lbl-b" x="95" y="226" text-anchor="middle" fill="#c98a2a">ECL cell</text>
+        <text class="svg-lbl" x="95" y="242" text-anchor="middle">histamine</text>
+
+        <circle cx="95" cy="340" r="34" class="svg-cell"/>
+        <text class="svg-lbl-b" x="95" y="336" text-anchor="middle" fill="#3f5560">D cell</text>
+        <text class="svg-lbl" x="95" y="352" text-anchor="middle">SST (−)</text>
+
+        <!-- vagus -->
+        <text class="svg-lbl-b" x="40" y="60" fill="#b6502e">Vagus / ENS — ACh</text>
+
+        <!-- parietal cell big -->
+        <rect x="360" y="80" width="320" height="270" rx="22" class="svg-cell" stroke-width="2"/>
+        <text class="svg-title" x="520" y="112" text-anchor="middle">Parietal cell</text>
+
+        <!-- receptors on basolateral membrane -->
+        <g font-family="JetBrains Mono,monospace" font-size="12" font-weight="700">
+          <rect x="346" y="135" width="42" height="26" rx="6" fill="#e3efe6" stroke="#1f6b46"/>
+          <text x="367" y="152" text-anchor="middle" fill="#13502f">CCK2</text>
+          <rect x="346" y="200" width="42" height="26" rx="6" fill="#f8efd9" stroke="#c98a2a"/>
+          <text x="367" y="217" text-anchor="middle" fill="#9c6815">H2</text>
+          <rect x="346" y="265" width="42" height="26" rx="6" fill="#f7e8df" stroke="#b6502e"/>
+          <text x="367" y="282" text-anchor="middle" fill="#8c3c21">M3</text>
+        </g>
+
+        <!-- arrows from cells to receptors -->
+        <g stroke="#5e5448" stroke-width="2" fill="none" marker-end="url(#arrow)">
+          <path d="M129,120 C220,120 250,148 344,148"/>
+          <path d="M129,230 C220,230 250,213 344,213"/>
+        </g>
+        <text class="svg-lbl" x="240" y="113">gastrin →</text>
+        <text class="svg-lbl" x="232" y="245">histamine →</text>
+        <!-- ACh to M3 -->
+        <path d="M150,62 C260,90 250,270 344,278" stroke="#5e5448" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+        <text class="svg-lbl" x="250" y="300">ACh →</text>
+        <!-- gastrin also drives ECL -->
+        <path d="M120,150 C120,180 120,196 95,196" stroke="#9c6815" stroke-width="1.6" stroke-dasharray="4 3" fill="none" marker-end="url(#arrowO)"/>
+        <text class="svg-lbl" x="128" y="178" fill="#9c6815">(indirect)</text>
+        <!-- SST brake -->
+        <path d="M129,330 C220,330 280,250 344,225" stroke="#3f5560" stroke-width="1.6" fill="none" stroke-dasharray="5 4"/>
+        <circle cx="318" cy="244" r="9" fill="#3f5560"/><text x="318" y="248" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">−</text>
+
+        <!-- second messengers -->
+        <text class="svg-lbl" x="430" y="158" fill="#13502f">Ca²⁺ ↑</text>
+        <text class="svg-lbl" x="430" y="220" fill="#9c6815">cAMP ↑</text>
+        <text class="svg-lbl" x="430" y="285" fill="#8c3c21">Ca²⁺ ↑</text>
+        <path d="M395,150 C470,150 520,190 560,205" stroke="#1f6b46" stroke-width="1.6" fill="none"/>
+        <path d="M395,213 C470,213 520,210 560,210" stroke="#c98a2a" stroke-width="1.6" fill="none"/>
+        <path d="M395,278 C470,278 520,228 560,218" stroke="#b6502e" stroke-width="1.6" fill="none"/>
+
+        <!-- proton pump -->
+        <rect x="560" y="190" width="100" height="48" rx="10" fill="#13502f"/>
+        <text x="610" y="211" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">H⁺,K⁺-</text>
+        <text x="610" y="227" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">ATPase</text>
+        <path d="M660,205 L705,205" stroke="#b6502e" stroke-width="3" marker-end="url(#arrowR)"/>
+        <text x="700" y="198" font-family="JetBrains Mono,monospace" font-size="13" font-weight="700" fill="#b6502e">H⁺</text>
+        <text x="690" y="252" class="svg-lbl">→ lumen pH 0.8</text>
+
+        <!-- drug T-bars -->
+        <g font-family="JetBrains Mono,monospace" font-size="11" font-weight="700">
+          <!-- PPI / PCAB on pump -->
+          <line x1="610" y1="186" x2="610" y2="160" stroke="#b6502e" stroke-width="3"/>
+          <line x1="592" y1="160" x2="628" y2="160" stroke="#b6502e" stroke-width="3"/>
+          <text x="610" y="150" text-anchor="middle" fill="#8c3c21">PPI / P-CAB</text>
+          <!-- H2 antagonist -->
+          <line x1="367" y1="200" x2="367" y2="178" stroke="#9c6815" stroke-width="3"/>
+          <line x1="349" y1="178" x2="385" y2="178" stroke="#9c6815" stroke-width="3"/>
+          <text x="300" y="173" fill="#9c6815">H2 blocker</text>
+          <!-- muscarinic antag -->
+          <line x1="367" y1="265" x2="367" y2="320" stroke="#b6502e" stroke-width="3"/>
+          <line x1="349" y1="320" x2="385" y2="320" stroke="#b6502e" stroke-width="3"/>
+          <text x="300" y="338" fill="#8c3c21">pirenzepine (M1)</text>
+        </g>
+
+        <!-- misoprostol / EP3 inhibitory -->
+        <rect x="708" y="300" width="92" height="44" rx="8" fill="#f8efd9" stroke="#c98a2a"/>
+        <text x="754" y="320" text-anchor="middle" font-size="11" font-weight="700" fill="#9c6815" font-family="JetBrains Mono,monospace">Misoprostol</text>
+        <text x="754" y="336" text-anchor="middle" font-size="10" fill="#9c6815" font-family="JetBrains Mono,monospace">EP3 → Gi (−cAMP)</text>
+        <path d="M708,322 C680,290 660,250 632,228" stroke="#c98a2a" stroke-width="1.6" fill="none" stroke-dasharray="5 4"/>
+        <circle cx="640" cy="234" r="9" fill="#c98a2a"/><text x="640" y="238" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">−</text>
+
+        <defs>
+          <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#5e5448"/></marker>
+          <marker id="arrowO" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#9c6815"/></marker>
+          <marker id="arrowR" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#b6502e"/></marker>
+        </defs>
+      </svg>
+      <figcaption>Red T-bars = sites of pharmacological antagonism. Gastrin's main route to acid is <em>indirect</em> (via ECL histamine, dashed). The pump is the convergence point of both second-messenger arms — hence PPIs work regardless of the upstream stimulus.</figcaption>
+    </figure>
+
+    <!-- SVG-B: PPI activation cascade -->
+    <figure class="dia">
+      <svg viewBox="0 0 820 200" role="img" aria-label="PPI prodrug activation cascade">
+        <rect class="svg-bg" x="0" y="0" width="820" height="200" rx="14"/>
+        <text class="svg-title" x="24" y="30">PPI activation — why a short half-life gives a long effect</text>
+        <g font-family="JetBrains Mono,monospace" font-size="11">
+          <rect x="24" y="70" width="150" height="60" rx="10" fill="#fff" stroke="#d8cbb6"/>
+          <text x="99" y="95" text-anchor="middle" font-weight="700" fill="#2c2520">Omeprazole</text>
+          <text x="99" y="112" text-anchor="middle" fill="#5e5448">neutral prodrug</text>
+
+          <rect x="232" y="70" width="160" height="60" rx="10" fill="#f7e8df" stroke="#b6502e"/>
+          <text x="312" y="92" text-anchor="middle" font-weight="700" fill="#8c3c21">Trapped in</text>
+          <text x="312" y="108" text-anchor="middle" fill="#8c3c21">acid canaliculus</text>
+          <text x="312" y="122" text-anchor="middle" fill="#8c3c21">(pH ≈ 0.8)</text>
+
+          <rect x="450" y="70" width="150" height="60" rx="10" fill="#f8efd9" stroke="#c98a2a"/>
+          <text x="525" y="95" text-anchor="middle" font-weight="700" fill="#9c6815">Tetracyclic</text>
+          <text x="525" y="112" text-anchor="middle" fill="#9c6815">sulfenamide</text>
+
+          <rect x="658" y="70" width="140" height="60" rx="10" fill="#13502f"/>
+          <text x="728" y="92" text-anchor="middle" font-weight="700" fill="#fff">Covalent S–S</text>
+          <text x="728" y="108" text-anchor="middle" fill="#cfe0d4">to pump cysteine</text>
+          <text x="728" y="122" text-anchor="middle" fill="#cfe0d4">IRREVERSIBLE</text>
+
+          <path d="M174,100 L228,100" stroke="#5e5448" stroke-width="2" marker-end="url(#a2)"/>
+          <path d="M392,100 L446,100" stroke="#5e5448" stroke-width="2" marker-end="url(#a2)"/>
+          <text x="419" y="92" text-anchor="middle" fill="#b6502e">H⁺</text>
+          <path d="M600,100 L654,100" stroke="#5e5448" stroke-width="2" marker-end="url(#a2)"/>
+        </g>
+        <text class="svg-lbl" x="24" y="170">Plasma t½ ≈ 0.5–3 h — but acid stays suppressed 24–48 h because secretion can only resume once <tspan font-weight="700" fill="#8c3c21">new pumps are synthesised</tspan>.</text>
+        <defs><marker id="a2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#5e5448"/></marker></defs>
+      </svg>
+      <figcaption>The activation step <em>only</em> happens in the parietal cell's acidic canaliculus, which is what makes the drug exquisitely targeted — and the covalent bond is what decouples duration of effect from plasma half-life.</figcaption>
+    </figure>
+
+    <div class="mnemonic"><b>"All Hands Grab" </b>→ the three stimulators of acid: <b>A</b>Ch (M3) · <b>H</b>istamine (H2) · <b>G</b>astrin (CCK2). The lone brake is <b>S</b>omatostatin (D cell).</div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="cog recall">
+    <div class="cog-label">🧠 Stage 2 — Active Recall &amp; Blurting Gate</div>
+    <p class="blurt-prompt"><b>Blurt before you read on.</b> A 58-year-old on long-term diclofenac for arthritis presents with epigastric pain and a bleeding gastric ulcer; he is <em>H. pylori</em>–positive. Dump everything now — which cells &amp; receptors drive his acid output, exactly <em>how</em> the NSAID set him up, which single drug class heals fastest and <em>why</em>, and write out the full eradication regimen with durations. No notes until it's all on paper.</p>
+    <ol class="primers">
+      <li><span class="why">WHY</span> do PPIs produce 24–48 h of acid suppression despite a plasma half-life of only 0.5–3 hours?</li>
+      <li><span class="why">WHY</span> is gastrin called the "most potent inducer" of acid secretion yet exerts that effect <em>largely indirectly</em>?</li>
+      <li><span class="why">WHY</span> does giving a PPI 30–60 minutes <em>before the first meal of the day</em> matter mechanistically?</li>
+    </ol>
+  </div>
+
+  <!-- STAGE 3 (GATE) -->
+  <details class="gate">
+    <summary><span class="caret">▸</span> ✓ I've blurted — reveal the plain-language notes <span class="lock">🔒 locked until you click</span></summary>
+    <div class="cog feynman">
+      <div class="cog-label">📝 Stage 3 — Plain-Language Notes</div>
+      <h3>Acid is a faucet with three handles and one drain</h3>
+      <p>Picture the parietal cell as a sink. Three handles can open the tap: the <strong>nerve handle</strong> (ACh on M3, fired by the sight/smell of food — the cephalic phase), the <strong>local handle</strong> (histamine on H2, leaking from neighbouring ECL cells — this is the big one), and the <strong>hormone handle</strong> (gastrin on CCK2, shouted from the antrum). Gastrin is the loudest voice but it mostly works by <em>telling the ECL cell to release histamine</em> rather than turning the tap directly — that's why it is "most potent" yet "indirect." A D cell sits nearby as a float valve: once the sink fills with acid (pH &lt; 3) it releases somatostatin and quietly shuts the gastrin handle off.</p>
+      <p>All three handles funnel into one drain plug — the <strong>H⁺,K⁺-ATPase</strong>. H2 works through cAMP; ACh and gastrin through Ca²⁺; both arms end at the same pump. That is the strategic beauty of the PPI: instead of fighting three handles, you weld the drain shut. The PPI is a smart bomb — it's inert in the bloodstream and only arms itself in the one place acidic enough to detonate it: the parietal cell's secretory canaliculus. Once armed, it forms a permanent covalent bond, so even though the drug itself is long gone from the blood, the pump stays dead until the cell manufactures fresh ones (a day or two). Give it before breakfast because fasting <em>restocks</em> pumps overnight — you want the maximum number of freshly inserted, actively pumping targets when the drug arrives.</p>
+
+      <div class="analogy"><p>A PPI is like jamming superglue into the building's only loading dock the moment the morning shift clocks in. The glue tube empties in minutes (short half-life), but the dock stays sealed for two days until maintenance bolts on a new door (new pump synthesis). H₂ blockers, by contrast, are a security guard who just <em>stands in front</em> of one of three entrances — reversible, and the building quickly learns to route deliveries around him (tolerance).</p></div>
+
+      <blockquote class="warn">
+        <ul>
+          <li>Gastrin acts <strong>mainly via ECL histamine</strong>, not directly on the parietal cell — don't call it a direct stimulant.</li>
+          <li>PPIs bind <strong>covalently / irreversibly</strong>. Calling them "competitive" is wrong — that's the H₂ blockers and P-CABs.</li>
+          <li><strong>Misoprostol is absolutely contraindicated in pregnancy</strong> (uterotonic, abortifacient) — a classic single-best-answer trap.</li>
+          <li><strong>Cimetidine</strong> = CYP inhibitor + antiandrogen (gynaecomastia, impotence). Don't attribute these to the whole H₂ class.</li>
+          <li><strong>Ranitidine &amp; nizatidine</strong> were withdrawn (NDMA) — if an exam offers ranitidine as "first-line," be suspicious.</li>
+          <li>Of the PPIs, <strong>only omeprazole inhibits CYP2C19</strong> (clopidogrel interaction); <strong>pantoprazole</strong> is the safest pairing.</li>
+        </ul>
+      </blockquote>
+    </div>
+  </details>
+
+  <!-- STAGE 4 -->
+  
+</section>
+
+
+<!-- ============================================================= -->
+<!-- MODULE 2 — CHAPTER 54 -->
+<!-- ============================================================= -->
+<section class="module" id="mod2">
+  <div class="mod-head">
+    <div class="mod-num" style="background:linear-gradient(150deg,var(--pine),var(--pine-deep))">54</div>
+    <div class="mh-body">
+      <h2>GI Motility, Water Flux, Emesis &amp; Biliary/Pancreatic Disease <span class="tier tier-1">Tier 1</span></h2>
+      <div class="mh-meta">ENS · prokinetics · laxatives · antidiarrhoeals · IBS · antiemetics · ursodiol · pancreatic enzymes</div>
+    </div>
+  </div>
+
+  <!-- STAGE 1 -->
+  <div class="cog map">
+    <div class="cog-label">🧭 Stage 1 — 80/20 High-Yield Map</div>
+    <div class="pillar">The enteric nervous system is the gut's autonomous brain — <em>ACh (excitatory) and NO (inhibitory)</em> motor neurons run peristalsis, while <em>serotonin (5HT) from enterochromaffin cells</em> ignites both the gut reflexes and the vomiting circuitry; nearly every motility, laxative, antidiarrhoeal and antiemetic drug is a targeted nudge on one neurotransmitter–receptor pair.</div>
+
+    <h3 style="font-size:1.05rem;margin-top:18px;color:var(--clay-deep)">Prokinetics</h3>
+    <ul>
+      <li><span class="tagword">Metoclopramide</span> = D2 antagonist + 5HT4 agonist + 5HT3 antagonist; ↑ LES tone &amp; upper-gut contractions (<em>no</em> large-bowel effect); first-line gastroparesis; also antiemetic (CTZ D2). Crosses BBB → <strong>extrapyramidal</strong> (acute dystonia, chronic <em>tardive dyskinesia — may be irreversible</em>), hyperprolactinaemia, QT. Limit to &lt; 12 weeks.</li>
+      <li><span class="tagword">Domperidone</span> = <em>peripheral</em> D2 antagonist (poor BBB) → fewer EPS, but still prolactin &amp; emesis (CTZ is outside the BBB); <strong>ventricular arrhythmia / sudden death</strong>, esp. &gt; 60 y or &gt; 30 mg/day.</li>
+      <li><span class="tagword">5HT4 agonists</span>: cisapride (<em>withdrawn</em> — torsades via hERG), prucalopride (selective, chronic constipation, t½ 24 h), tegaserod (partial agonist, female constipation-IBS &lt; 65 y).</li>
+      <li><span class="tagword">Erythromycin</span> mimics <strong>motilin</strong> → triggers phase III MMC; diabetic gastroparesis (short term); <em>tachyphylaxis ~28 days</em> via motilin-receptor downregulation.</li>
+    </ul>
+
+    <h3 style="font-size:1.05rem;margin-top:18px;color:var(--clay-deep)">Laxatives → Antidiarrhoeals (the two-way street)</h3>
+    <ul>
+      <li><strong>Bulk:</strong> psyllium, methylcellulose (bloating). <strong>Osmotic:</strong> PEG (cleansing/chronic), Mg/phosphate saline (diarrhoea; avoid Mg in renal failure &amp; on diuretics), lactulose/sorbitol (<em>also treats hepatic encephalopathy</em> — traps NH₃ as NH₄⁺). <strong>Softeners:</strong> docusate (marginal), mineral oil (↓fat-soluble vitamins).</li>
+      <li><strong>Stimulant:</strong> bisacodyl, senna/anthraquinones (melanosis coli), castor oil (ricinoleic acid). <strong>Prosecretory:</strong> lubiprostone (ClC-2), linaclotide/plecanatide (GC-C agonists), tenapanor (NHE3 inhibitor).</li>
+      <li><strong>Opioid-induced constipation:</strong> peripheral MOR antagonists — methylnaltrexone, naloxegol, naldemedine (P-gp substrates → CNS-excluded). <em>Alvimopan</em> = postoperative ileus only (restricted access, MI risk).</li>
+      <li><strong>Antidiarrhoeals:</strong> <span class="tagword">loperamide</span> (peripheral MOR; poor CNS; <em>black-box cardiac</em> at overdose; max 16 mg/day), diphenoxylate/difenoxin (+ atropine, schedule V), bismuth subsalicylate (black stool/tongue; salicylate → Reye's), octreotide (secretory/carcinoid diarrhoea, variceal bleeding), clonidine (α2, diabetic diarrhoea), racecadotril (enkephalinase inhibitor), cholestyramine (bile-salt diarrhoea post-ileal resection), crofelemer (CFTR/CaCC inhibitor, HIV diarrhoea), rifaximin (nonabsorbable).</li>
+      <li><strong>Empiric antibiotics:</strong> fluoroquinolone for traveller's diarrhoea; azithromycin preferred in children. <strong>Avoid antibiotics &amp; antimotility if EHEC (HUS) or C. difficile</strong> suspected.</li>
+    </ul>
+
+    <h3 style="font-size:1.05rem;margin-top:18px;color:var(--clay-deep)">IBS</h3>
+    <ul>
+      <li>TCAs (visceral pain), alosetron (5HT3 antagonist — diarrhoea-IBS in women; <em>ischaemic colitis</em>, REMS), eluxadoline (MOR agonist/DOR antagonist/KOR agonist — pancreatitis &amp; sphincter-of-Oddi risk; use 75 mg if <em>no gallbladder</em>), antispasmodics (dicyclomine, hyoscyamine), lubiprostone/linaclotide for constipation-IBS, rifaximin (diarrhoea-IBS).</li>
+    </ul>
+
+    <h3 style="font-size:1.05rem;margin-top:18px;color:var(--clay-deep)">Antiemetics — match the receptor to the trigger</h3>
+    <ul>
+      <li><span class="tagword">5HT3 antagonists</span> (ondansetron, granisetron, palonosetron): best for chemo-induced (CINV) &amp; PONV; QT (esp. first-gen; IV dolasetron CI for prophylaxis); <em>palonosetron</em> = long t½, helps delayed emesis, no QT. Weak vs nausea &amp; motion sickness.</li>
+      <li><span class="tagword">NK1 antagonists</span> (aprepitant/fosaprepitant, rolapitant, netupitant): the answer for <strong>delayed-phase</strong> CINV; always with a 5HT3 antagonist + dexamethasone; CYP3A4.</li>
+      <li><span class="tagword">Dopamine antagonists</span>: phenothiazines (prochlorperazine), butyrophenones (droperidol PONV; haloperidol = cannabinoid hyperemesis), benzamides (metoclopramide, amisulpride), olanzapine (delayed CINV).</li>
+      <li><span class="tagword">H1 antihistamines</span> &amp; <span class="tagword">anticholinergic scopolamine</span> = <strong>motion sickness / vestibular</strong>. Cannabinoids (dronabinol, nabilone) = refractory CINV. Dexamethasone &amp; benzodiazepines (anticipatory) = adjuncts. <strong>Doxylamine + pyridoxine = nausea/vomiting of pregnancy.</strong></li>
+    </ul>
+
+    <h3 style="font-size:1.05rem;margin-top:18px;color:var(--clay-deep)">Biliary, pancreatic &amp; miscellaneous</h3>
+    <ul>
+      <li>Pancreatic enzymes (pancrelipase; lipase-titrated, 500 USP/kg/meal up to 2500). <strong>Ursodiol</strong> (gallstones, primary biliary cholangitis). <strong>Obeticholic acid</strong> = FXR agonist for PBC (black-box hepatic decompensation). Simethicone = flatulence. Teduglutide (GLP-2) = short-bowel syndrome. Rifaximin = SIBO.</li>
+    </ul>
+
+    <div class="tbl-wrap">
+    <table>
+      <caption>Antiemetic classes — best match to the emetic trigger</caption>
+      <thead><tr><th>Class · example</th><th>Receptor</th><th>Most effective against</th><th>Key liability</th></tr></thead>
+      <tbody>
+        <tr><td>5HT3 antag · <strong>ondansetron</strong></td><td>5HT3</td><td>CINV (acute), PONV, radiation</td><td>QT (palonosetron spares); poor at delayed/motion</td></tr>
+        <tr><td>NK1 antag · <strong>aprepitant</strong></td><td>NK1 (substance P)</td><td>Delayed-phase CINV</td><td>CYP3A4 interactions</td></tr>
+        <tr><td>D2 antag · <strong>metoclopramide</strong></td><td>D2 (CTZ)</td><td>Gastroparesis + emesis</td><td>EPS / tardive dyskinesia, prolactin</td></tr>
+        <tr><td>H1 antihistamine · <strong>cyclizine</strong></td><td>H1</td><td>Motion sickness, vestibular</td><td>Sedation</td></tr>
+        <tr><td>Antimuscarinic · <strong>scopolamine</strong></td><td>M1</td><td>Motion sickness (patch)</td><td>Dry mouth, blurred vision</td></tr>
+        <tr><td>Cannabinoid · <strong>dronabinol</strong></td><td>CB1</td><td>Refractory CINV</td><td>Psychoactive</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- SVG-C: emesis receptor map -->
+    <figure class="dia">
+      <svg viewBox="0 0 820 400" role="img" aria-label="Emetic reflex receptor map">
+        <rect class="svg-bg" x="0" y="0" width="820" height="400" rx="14"/>
+        <text class="svg-title" x="24" y="30">The vomiting circuit — five inputs, six receptors, matched drugs</text>
+
+        <!-- emetic center -->
+        <rect x="330" y="150" width="160" height="60" rx="14" fill="#13502f"/>
+        <text x="410" y="176" text-anchor="middle" fill="#fff" font-size="13" font-weight="700" font-family="Fraunces,serif">Emetic Center</text>
+        <text x="410" y="194" text-anchor="middle" fill="#cfe0d4" font-size="11" font-family="JetBrains Mono,monospace">medulla</text>
+
+        <!-- CTZ -->
+        <rect x="330" y="60" width="160" height="52" rx="12" fill="#f7e8df" stroke="#b6502e" stroke-width="1.6"/>
+        <text x="410" y="82" text-anchor="middle" font-size="12" font-weight="700" fill="#8c3c21" font-family="JetBrains Mono,monospace">CTZ (area postrema)</text>
+        <text x="410" y="99" text-anchor="middle" font-size="10.5" fill="#8c3c21" font-family="JetBrains Mono,monospace">5HT3 · D2 · M1 · CB1 — NO BBB</text>
+        <path d="M410,112 L410,148" stroke="#5e5448" stroke-width="2" marker-end="url(#ae)"/>
+
+        <!-- inputs around -->
+        <g font-family="JetBrains Mono,monospace" font-size="11">
+          <!-- gut -->
+          <rect x="40" y="250" width="150" height="56" rx="10" fill="#fff" stroke="#1f6b46" stroke-width="1.5"/>
+          <text x="115" y="272" text-anchor="middle" font-weight="700" fill="#13502f">Gut (EC cells)</text>
+          <text x="115" y="289" text-anchor="middle" fill="#5e5448">5HT3 → vagus</text>
+          <path d="M190,278 C260,278 290,210 330,195" stroke="#5e5448" stroke-width="2" fill="none" marker-end="url(#ae)"/>
+
+          <!-- blood-borne -->
+          <rect x="40" y="60" width="150" height="56" rx="10" fill="#fff" stroke="#b6502e" stroke-width="1.5"/>
+          <text x="115" y="82" text-anchor="middle" font-weight="700" fill="#8c3c21">Blood-borne</text>
+          <text x="115" y="99" text-anchor="middle" fill="#5e5448">cytotoxics, opioids</text>
+          <path d="M190,88 C250,88 290,86 328,86" stroke="#5e5448" stroke-width="2" fill="none" marker-end="url(#ae)"/>
+
+          <!-- vestibular -->
+          <rect x="630" y="60" width="150" height="56" rx="10" fill="#fff" stroke="#c98a2a" stroke-width="1.5"/>
+          <text x="705" y="82" text-anchor="middle" font-weight="700" fill="#9c6815">Inner ear</text>
+          <text x="705" y="99" text-anchor="middle" fill="#5e5448">H1 · M — motion</text>
+          <path d="M630,100 C560,120 520,150 492,168" stroke="#5e5448" stroke-width="2" fill="none" marker-end="url(#ae)"/>
+
+          <!-- cortex -->
+          <rect x="630" y="250" width="150" height="56" rx="10" fill="#fff" stroke="#3f5560" stroke-width="1.5"/>
+          <text x="705" y="272" text-anchor="middle" font-weight="700" fill="#3f5560">Cortex</text>
+          <text x="705" y="289" text-anchor="middle" fill="#5e5448">anticipatory</text>
+          <path d="M630,278 C560,278 520,215 492,200" stroke="#5e5448" stroke-width="2" fill="none" marker-end="url(#ae)"/>
+        </g>
+
+        <!-- drug blockers -->
+        <g font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="700">
+          <rect x="250" y="330" width="135" height="30" rx="8" fill="#e3efe6" stroke="#1f6b46"/>
+          <text x="317" y="350" text-anchor="middle" fill="#13502f">ondansetron ⟂ 5HT3</text>
+          <rect x="400" y="330" width="150" height="30" rx="8" fill="#f7e8df" stroke="#b6502e"/>
+          <text x="475" y="350" text-anchor="middle" fill="#8c3c21">aprepitant ⟂ NK1 (delayed)</text>
+          <rect x="565" y="330" width="150" height="30" rx="8" fill="#f8efd9" stroke="#c98a2a"/>
+          <text x="640" y="350" text-anchor="middle" fill="#9c6815">scopolamine ⟂ vestibular</text>
+        </g>
+        <defs><marker id="ae" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#5e5448"/></marker></defs>
+      </svg>
+      <figcaption>The CTZ sits in the area postrema <em>outside</em> the blood–brain barrier — that's why blood-borne toxins (and the 5HT3/D2 drugs that block them) act there. Pick the antiemetic to match the input: gut/chemo → 5HT3 + NK1 + dexamethasone; motion → antihistamine/antimuscarinic.</figcaption>
+    </figure>
+
+    <!-- SVG-D: laxative classification tree -->
+    <figure class="dia">
+      <svg viewBox="0 0 820 300" role="img" aria-label="Laxative classification tree">
+        <rect class="svg-bg" x="0" y="0" width="820" height="300" rx="14"/>
+        <text class="svg-title" x="24" y="30">Laxatives — a four-branch classification tree</text>
+        <rect x="335" y="48" width="150" height="40" rx="10" fill="#13502f"/>
+        <text x="410" y="73" text-anchor="middle" fill="#fff" font-size="12" font-weight="700" font-family="JetBrains Mono,monospace">LAXATIVES</text>
+
+        <g font-family="JetBrains Mono,monospace" font-size="10.5">
+          <!-- branch 1 luminal -->
+          <rect x="20" y="130" width="180" height="120" rx="10" fill="#fff" stroke="#b6502e" stroke-width="1.5"/>
+          <text x="110" y="150" text-anchor="middle" font-weight="700" fill="#8c3c21">1 · Luminally active</text>
+          <text x="110" y="170" text-anchor="middle" fill="#5e5448">Bulk: psyllium</text>
+          <text x="110" y="186" text-anchor="middle" fill="#5e5448">Osmotic: PEG, Mg, lactulose</text>
+          <text x="110" y="202" text-anchor="middle" fill="#5e5448">Softener: docusate, oil</text>
+          <text x="110" y="230" text-anchor="middle" fill="#9c6815">retain / draw water</text>
+
+          <rect x="215" y="130" width="180" height="120" rx="10" fill="#fff" stroke="#c98a2a" stroke-width="1.5"/>
+          <text x="305" y="150" text-anchor="middle" font-weight="700" fill="#9c6815">2 · Stimulant / irritant</text>
+          <text x="305" y="170" text-anchor="middle" fill="#5e5448">Diphenylmethanes: bisacodyl</text>
+          <text x="305" y="186" text-anchor="middle" fill="#5e5448">Anthraquinones: senna</text>
+          <text x="305" y="202" text-anchor="middle" fill="#5e5448">Castor oil (ricinoleic)</text>
+          <text x="305" y="230" text-anchor="middle" fill="#9c6815">↑ secretion + motility</text>
+
+          <rect x="410" y="130" width="180" height="120" rx="10" fill="#fff" stroke="#1f6b46" stroke-width="1.5"/>
+          <text x="500" y="150" text-anchor="middle" font-weight="700" fill="#13502f">3 · Prokinetic</text>
+          <text x="500" y="170" text-anchor="middle" fill="#5e5448">5HT4 agonist: prucalopride</text>
+          <text x="500" y="186" text-anchor="middle" fill="#5e5448">D2 antag, motilides</text>
+          <text x="500" y="230" text-anchor="middle" fill="#9c6815">↑ transit via receptors</text>
+
+          <rect x="605" y="130" width="190" height="120" rx="10" fill="#fff" stroke="#3f5560" stroke-width="1.5"/>
+          <text x="700" y="150" text-anchor="middle" font-weight="700" fill="#3f5560">4 · Prosecretory</text>
+          <text x="700" y="170" text-anchor="middle" fill="#5e5448">ClC-2: lubiprostone</text>
+          <text x="700" y="186" text-anchor="middle" fill="#5e5448">GC-C: linaclotide/plecanatide</text>
+          <text x="700" y="202" text-anchor="middle" fill="#5e5448">NHE3: tenapanor</text>
+          <text x="700" y="230" text-anchor="middle" fill="#9c6815">pump Cl⁻ + water in</text>
+        </g>
+        <g stroke="#5e5448" stroke-width="2" fill="none" marker-end="url(#al)">
+          <path d="M380,88 C300,100 200,110 110,128"/>
+          <path d="M395,90 C360,105 330,112 305,128"/>
+          <path d="M425,90 C460,105 480,112 500,128"/>
+          <path d="M440,88 C540,100 640,110 700,128"/>
+        </g>
+        <defs><marker id="al" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#5e5448"/></marker></defs>
+      </svg>
+      <figcaption>Four mechanistic branches. The newest agents (branch 4) act <em>only in the gut lumen</em> — minimal systemic absorption — which is also why they're prized for chronic use.</figcaption>
+    </figure>
+
+    <div class="mnemonic"><b>"Some Drugs Help Make Nausea Calm"</b> → the six emetic receptors to target: <b>S</b>erotonin (5HT3) · <b>D</b>opamine (D2) · <b>H</b>istamine (H1) · <b>M</b>uscarinic (M1) · <b>N</b>eurokinin (NK1) · <b>C</b>annabinoid (CB1).</div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="cog recall">
+    <div class="cog-label">🧠 Stage 2 — Active Recall &amp; Blurting Gate</div>
+    <p class="blurt-prompt"><b>Blurt before you read on.</b> A patient on cisplatin chemotherapy is <em>also</em> a diabetic with gastroparesis and chronic constipation. Dump the entire map now — which receptors trigger her vomiting and which drug class blocks each (and why one agent covers <em>delayed</em> emesis where 5HT3 blockers fail), why metoclopramide is risky long-term, and the full ladder of laxatives from bulk to prosecretory.</p>
+    <ol class="primers">
+      <li><span class="why">WHY</span> is the chemoreceptor trigger zone uniquely able to "taste" blood-borne emetics that the rest of the brain cannot?</li>
+      <li><span class="why">WHY</span> does erythromycin lose its prokinetic punch after roughly a month of use?</li>
+      <li><span class="why">WHY</span> does loperamide relieve diarrhoea without producing the euphoria or analgesia of other opioids?</li>
+    </ol>
+  </div>
+
+  <!-- STAGE 3 (GATE) -->
+  <details class="gate">
+    <summary><span class="caret">▸</span> ✓ I've blurted — reveal the plain-language notes <span class="lock">🔒 locked until you click</span></summary>
+    <div class="cog feynman">
+      <div class="cog-label">📝 Stage 3 — Plain-Language Notes</div>
+      <h3>The vomiting tower and the gut's own thermostat</h3>
+      <p>Think of the emetic centre in the medulla as an air-traffic control tower receiving signals from five runways: the gut (via the vagus, lit up by 5HT3 when chemo bursts serotonin out of enterochromaffin cells), the bloodstream, the inner ear, the higher cortex (anticipation), and a special outpost called the <strong>CTZ</strong>. The CTZ sits in the area postrema, a spot the brain deliberately leaves <em>un-fenced</em> by the blood–brain barrier — so it can constantly sample blood and CSF for poisons. That's a feature, not a bug: it lets the body detect ingested toxins and eject them. It also explains why drugs that block CTZ receptors (5HT3, D2) work there even though they're "outside" the protected brain. The drug logic then becomes a matching game — pick the antagonist for the runway that's firing. Chemo fires the gut + CTZ (5HT3, plus NK1 for the slow delayed wave, plus dexamethasone); motion sickness fires the vestibular runway (antihistamine/antimuscarinic); pregnancy nausea responds to doxylamine + pyridoxine.</p>
+      <p>For motility, remember the gut runs itself: excitatory ACh neurons squeeze, inhibitory NO neurons relax, and 5HT lights the fuse. Prokinetics nudge these gently and in a coordinated way; old cholinomimetics just make the whole gut twitch uselessly. Erythromycin cheats by impersonating <strong>motilin</strong> at its receptor — brilliant short-term, but the receptor gets tired of being shouted at and downregulates, so the effect fades in about a month (tachyphylaxis). And loperamide is the gut-only opioid: it hammers peripheral μ-receptors on enteric nerves to slow transit, but it's pumped back out of the brain, so you get the constipation without the high.</p>
+
+      <div class="analogy"><p>The CTZ is the building's <em>outdoor</em> weather sensor, mounted on the roof beyond the climate-controlled interior — exposed on purpose so it can feel the rain (blood-borne toxins) the sealed rooms never would. Erythromycin is a guest who keeps yelling the motilin password at the doorman; effective until the doorman simply stops listening (receptor downregulation).</p></div>
+
+      <blockquote class="warn">
+        <ul>
+          <li><strong>Metoclopramide → tardive dyskinesia can be irreversible</strong>; cap use at &lt; 12 weeks. Domperidone &amp; ondansetron carry QT risk.</li>
+          <li>5HT3 antagonists are <strong>weak against delayed emesis &amp; motion sickness</strong> — add NK1 + dexamethasone for delayed CINV.</li>
+          <li><strong>Loperamide has a black-box cardiac warning</strong> at supratherapeutic doses (torsades). Don't exceed 16 mg/day.</li>
+          <li><strong>Avoid antimotility agents in invasive/bloody diarrhoea, EHEC (HUS) and C. difficile</strong> — they trap the pathogen and risk toxic megacolon.</li>
+          <li><strong>Eluxadoline</strong> → pancreatitis &amp; sphincter-of-Oddi spasm, especially in patients <em>without a gallbladder</em> (use the lower 75 mg dose; some shouldn't get it at all).</li>
+          <li>Lactulose's "extra" indication is <strong>hepatic encephalopathy</strong> (ammonia trapping) — easy to forget under "laxatives."</li>
+        </ul>
+      </blockquote>
+    </div>
+  </details>
+
+  <!-- STAGE 4 -->
+  
+</section>
+
+
+<!-- ============================================================= -->
+<!-- MODULE 3 — CHAPTER 55 -->
+<!-- ============================================================= -->
+<section class="module" id="mod3">
+  <div class="mod-head">
+    <div class="mod-num" style="background:linear-gradient(150deg,var(--ochre),var(--ochre-deep))">55</div>
+    <div class="mh-body">
+      <h2>Pharmacotherapy of Inflammatory Bowel Disease <span class="tier tier-2">Tier 2</span></h2>
+      <div class="mh-meta">5-ASA · glucocorticoids · thiopurines/MTX · anti-TNF &amp; other biologics · JAK · S1P · microbiome</div>
+    </div>
+  </div>
+
+  <!-- STAGE 1 -->
+  <div class="cog map">
+    <div class="cog-label">🧭 Stage 1 — 80/20 High-Yield Map</div>
+    <div class="pillar">IBD is an aberrant mucosal immune response to commensal microbiota in a genetically susceptible host — <em>Crohn's = transmural TH1/TH17</em> (IL-12/23, IFN-γ, TNF-α); <em>ulcerative colitis = mucosal TH2-like</em> (IL-13) — and therapy climbs a ladder from topical 5-ASA up to targeted biologics and small molecules that each sever one node of that immune cascade.</div>
+
+    <ul>
+      <li><strong>5-ASA (mesalamine):</strong> first-line for mild–moderate UC; acts <em>topically</em> on mucosa. <em>Sulfasalazine</em> = 5-ASA + sulfapyridine joined by an <strong>azo bond</strong> cleaved by colonic bacteria (delivers drug to the colon); the sulfa moiety causes most side effects, ↓ folate (supplement), reversible ↓ sperm. <em>Olsalazine</em> (2× 5-ASA, diarrhoea), <em>balsalazide</em> (inert carrier); delayed/pH-coated forms for distal delivery. Largely abandoned for Crohn's maintenance.</li>
+      <li><strong>Glucocorticoids:</strong> prednisone, methylprednisolone, hydrocortisone, budesonide — induce remission in moderate–severe; <strong>NOT for maintenance</strong> (toxicity); always <em>taper</em> to avoid HPA suppression/relapse. <em>Budesonide</em> = high first-pass → low systemic exposure, targeted to ileum/colon; multimatrix releases at pH &gt; 7 (colon). Patients split into steroid-responsive / -dependent / -resistant.</li>
+      <li><strong>Thiopurines:</strong> azathioprine → 6-MP → 6-thioguanine nucleotides. <strong>Check TPMT</strong> (low TPMT → shunts to 6-TGN → marrow suppression). <em>Allopurinol</em> blocks XO → ↑ active metabolites → reduce dose to 25%. Pancreatitis ~5%, 4× lymphoma; slow onset (weeks–months); steroid-sparing.</li>
+      <li><strong>Methotrexate:</strong> DHFR inhibitor; Crohn's maintenance; given SC; folate supplement; <strong>absolutely teratogenic — CI in pregnancy</strong>; NSAIDs/PPIs/penicillins ↓ renal clearance → ↑ toxicity. <strong>Cyclosporine/tacrolimus</strong> = calcineurin inhibitors, severe steroid-resistant disease, bridge therapy, nephrotoxic.</li>
+      <li><strong>Anti-TNF biologics:</strong> infliximab (chimeric, IV; antidrug antibodies → combine with azathioprine; CI in severe CHF), adalimumab/golimumab (humanised SC), certolizumab pegol (pegylated Fab — <em>safest in pregnancy, no placental transfer</em>). <strong>Screen for latent TB before starting.</strong></li>
+      <li><strong>Other biologics:</strong> vedolizumab (anti-α4β7, <em>gut-selective</em>), natalizumab (anti-α4 — <strong>PML / JC virus</strong>, TOUCH restricted programme), etrolizumab (β7/αEβ7), ustekinumab (anti-IL-12/23 p40; long t½ ~120 d → hold 15 wk before live vaccine).</li>
+      <li><strong>Small molecules:</strong> <em>tofacitinib</em> (JAK1/3 inhibitor; oral; moderate–severe UC after biologics fail; boxed warning — cardiac, clots, malignancy; teratogen). <em>Ozanimod</em> (S1P1/5 modulator — traps lymphocytes in nodes; metabolite inhibits MAO-B → tyramine/SSRI hypertensive interactions; needs contraception).</li>
+      <li><strong>Microbiome:</strong> antibiotics (metronidazole, ciprofloxacin, rifaximin) help <em>Crohn's</em> (perianal/fistulising) but little in UC; probiotics; faecal transplant (best evidence in recurrent C. difficile).</li>
+    </ul>
+
+    <div class="tbl-wrap">
+    <table>
+      <caption>Crohn's vs ulcerative colitis — the immunology that drives drug choice</caption>
+      <thead><tr><th>Feature</th><th>Crohn's disease</th><th>Ulcerative colitis</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Inflammation depth</strong></td><td>Transmural, skip lesions, any GI segment</td><td>Mucosal, confluent, colon from anus up</td></tr>
+        <tr><td><strong>Cytokine profile</strong></td><td>TH1/TH17: IL-12, IL-23, IFN-γ, TNF-α</td><td>TH2-like: IL-4, IL-13</td></tr>
+        <tr><td><strong>5-ASA role</strong></td><td>Limited (deeper disease)</td><td>First-line mild–moderate</td></tr>
+        <tr><td><strong>Antibiotics</strong></td><td>Useful (perianal/fistulising)</td><td>Little/no benefit</td></tr>
+        <tr><td><strong>Surgical cure?</strong></td><td>No (recurs)</td><td>Yes (colectomy)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="tbl-wrap">
+    <table>
+      <caption>Pregnancy quick-reference in IBD</caption>
+      <thead><tr><th>Safe / preferred</th><th>Absolutely contraindicated</th></tr></thead>
+      <tbody>
+        <tr><td>Mesalamine, glucocorticoids, thiopurines, anti-TNF (esp. <strong>certolizumab</strong> — no placental transfer)</td><td><strong>Methotrexate</strong>, <strong>JAK inhibitors (tofacitinib)</strong>, <strong>ozanimod</strong></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- SVG-E: IBD immune cascade + targets -->
+    <figure class="dia">
+      <svg viewBox="0 0 820 410" role="img" aria-label="IBD immune cascade and drug target sites">
+        <rect class="svg-bg" x="0" y="0" width="820" height="410" rx="14"/>
+        <text class="svg-title" x="24" y="30">IBD cascade — where each drug class cuts the wire</text>
+
+        <!-- lumen / bacteria -->
+        <rect x="40" y="55" width="740" height="34" rx="8" fill="#f8efd9" stroke="#c98a2a"/>
+        <text x="60" y="77" font-size="11" font-weight="700" fill="#9c6815" font-family="JetBrains Mono,monospace">LUMEN — commensal bacteria (antibiotics · probiotics · faecal transplant)</text>
+
+        <!-- APC -->
+        <rect x="60" y="120" width="150" height="50" rx="10" class="svg-cell"/>
+        <text x="135" y="142" text-anchor="middle" font-size="11" font-weight="700" fill="#13502f" font-family="JetBrains Mono,monospace">Dendritic / APC</text>
+        <text x="135" y="158" text-anchor="middle" font-size="10" fill="#5e5448" font-family="JetBrains Mono,monospace">IL-12 / IL-23 →</text>
+        <path d="M135,89 L135,118" stroke="#5e5448" stroke-width="2" marker-end="url(#ai)"/>
+
+        <!-- T cells -->
+        <rect x="300" y="120" width="130" height="50" rx="10" class="svg-cell"/>
+        <text x="365" y="148" text-anchor="middle" font-size="11" font-weight="700" fill="#8c3c21" font-family="JetBrains Mono,monospace">TH1 / TH17</text>
+        <path d="M210,145 L298,145" stroke="#5e5448" stroke-width="2" marker-end="url(#ai)"/>
+
+        <!-- cytokines -->
+        <rect x="520" y="120" width="150" height="50" rx="10" class="svg-cell"/>
+        <text x="595" y="142" text-anchor="middle" font-size="11" font-weight="700" fill="#b6502e" font-family="JetBrains Mono,monospace">TNF-α · IFN-γ</text>
+        <text x="595" y="158" text-anchor="middle" font-size="10" fill="#5e5448" font-family="JetBrains Mono,monospace">IL-17/21/22</text>
+        <path d="M430,145 L518,145" stroke="#5e5448" stroke-width="2" marker-end="url(#ai)"/>
+
+        <!-- inflammation -->
+        <rect x="300" y="250" width="220" height="46" rx="10" fill="#13502f"/>
+        <text x="410" y="278" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Fraunces,serif">Mucosal inflammation</text>
+        <path d="M595,170 C595,220 520,250 522,256" stroke="#5e5448" stroke-width="2" fill="none" marker-end="url(#ai)"/>
+        <path d="M365,170 L405,248" stroke="#5e5448" stroke-width="2" fill="none" marker-end="url(#ai)"/>
+
+        <!-- drug blockers (T-bars) -->
+        <g font-family="JetBrains Mono,monospace" font-size="10.5" font-weight="700">
+          <!-- anti IL12/23 on APC output -->
+          <rect x="230" y="185" width="170" height="28" rx="7" fill="#e3efe6" stroke="#1f6b46"/>
+          <text x="315" y="204" text-anchor="middle" fill="#13502f">ustekinumab ⟂ IL-12/23</text>
+          <!-- JAK on T cell signaling -->
+          <rect x="300" y="80" width="130" height="0" />
+          <rect x="430" y="185" width="150" height="28" rx="7" fill="#f8efd9" stroke="#c98a2a"/>
+          <text x="505" y="204" text-anchor="middle" fill="#9c6815">tofacitinib ⟂ JAK-STAT</text>
+          <!-- anti-TNF -->
+          <rect x="585" y="185" width="180" height="28" rx="7" fill="#f7e8df" stroke="#b6502e"/>
+          <text x="675" y="204" text-anchor="middle" fill="#8c3c21">infliximab/adalimumab ⟂ TNF-α</text>
+          <!-- integrin -->
+          <rect x="40" y="250" width="200" height="28" rx="7" fill="#e8eef0" stroke="#3f5560"/>
+          <text x="140" y="269" text-anchor="middle" fill="#3f5560">vedolizumab ⟂ α4β7 (gut homing)</text>
+          <!-- S1P -->
+          <rect x="40" y="290" width="200" height="28" rx="7" fill="#e8eef0" stroke="#3f5560"/>
+          <text x="140" y="309" text-anchor="middle" fill="#3f5560">ozanimod ⟂ lymphocyte egress</text>
+          <!-- broad steroids -->
+          <rect x="560" y="250" width="220" height="28" rx="7" fill="#f7e8df" stroke="#b6502e"/>
+          <text x="670" y="269" text-anchor="middle" fill="#8c3c21">steroids / thiopurines / MTX = broad</text>
+        </g>
+
+        <text class="svg-lbl" x="24" y="350">Ladder logic: 5-ASA (topical, mild UC) → steroids (induce, never maintain) → thiopurines/MTX (steroid-sparing) →</text>
+        <text class="svg-lbl" x="24" y="372">biologics (anti-TNF · anti-integrin · anti-IL12/23) → small molecules (JAK · S1P) when biologics fail.</text>
+        <defs><marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#5e5448"/></marker></defs>
+      </svg>
+      <figcaption>Each red/coloured bar is a therapeutic "wire-cut." Broad agents (steroids, thiopurines, MTX) hit many nodes at once; biologics &amp; small molecules are precision cuts at a single cytokine, integrin, or signalling step.</figcaption>
+    </figure>
+
+    <div class="mnemonic"><b>Crohn's = "CD"</b> — <b>C</b>obblestones, <b>C</b>reeping fat, <b>C</b>hains-of-skip-lesions, transmural, TH1/TH17 (IL-12/23). <b>UC = "U"</b> — <b>U</b>ninterrupted/continuous, mucosal-only, starts at rectum, TH2-like, <b>U</b>ndergoes surgical cure.</div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="cog recall">
+    <div class="cog-label">🧠 Stage 2 — Active Recall &amp; Blurting Gate</div>
+    <p class="blurt-prompt"><b>Blurt before you read on.</b> A young woman with moderate-to-severe Crohn's and a perianal fistula is planning a pregnancy. Dump it all now — the immune cascade driving her disease, the therapeutic ladder from 5-ASA to biologics, which agents are <em>absolutely</em> contraindicated in pregnancy, what you must check <em>before</em> starting an anti-TNF, and why you'd avoid loperamide if she flared severely.</p>
+    <ol class="primers">
+      <li><span class="why">WHY</span> does sulfasalazine deliver its active drug specifically to the colon rather than the stomach or small intestine?</li>
+      <li><span class="why">WHY</span> must TPMT activity (or genotype) be considered <em>before</em> dosing azathioprine?</li>
+      <li><span class="why">WHY</span> are glucocorticoids excellent for <em>inducing</em> remission yet unacceptable for <em>maintaining</em> it?</li>
+    </ol>
+  </div>
+
+  <!-- STAGE 3 (GATE) -->
+  <details class="gate">
+    <summary><span class="caret">▸</span> ✓ I've blurted — reveal the plain-language notes <span class="lock">🔒 locked until you click</span></summary>
+    <div class="cog feynman">
+      <div class="cog-label">📝 Stage 3 — Plain-Language Notes</div>
+      <h3>Putting out a fire that the body keeps re-lighting</h3>
+      <p>IBD is the immune system declaring war on its own resident bacteria in a genetically primed gut. The fire spreads through a relay: bacteria slip past a leaky epithelium → antigen-presenting cells raise the alarm with IL-12/IL-23 → T cells differentiate (TH1/TH17 in Crohn's, a TH2-ish flavour in UC) → they pour out TNF-α, IFN-γ and friends → tissue burns. Every drug class is a different firefighting tactic. <strong>5-ASA</strong> wets the surface embers — purely topical, which is why it shines in mucosal UC but underperforms in deep transmural Crohn's. <strong>Steroids</strong> are the fire-hose: they douse the whole blaze fast (great for <em>induction</em>) but you can't leave the hose running — chronic steroids wreck bones, skin, glucose and the HPA axis, so they're hopeless for <em>maintenance</em>. <strong>Thiopurines and methotrexate</strong> are slow-acting accelerant-removers (steroid-sparing, weeks to work). <strong>Biologics</strong> are sniper rifles — infliximab shoots TNF-α, vedolizumab shoots the gut-homing integrin so lymphocytes can't even reach the fire, ustekinumab takes out IL-12/23. <strong>JAK inhibitors and S1P modulators</strong> jam the signalling switchboard or lock the lymphocytes inside their barracks.</p>
+      <p>Two mechanistic gems worth owning. Sulfasalazine is a Trojan horse: the azo bond survives the stomach and small bowel and is only snapped by <em>colonic bacterial azoreductases</em> — so the 5-ASA payload is released exactly where colitis lives. And thiopurines hinge on the enzyme TPMT: if you have low TPMT, the drug pours down the alternative pathway into bone-marrow-toxic 6-thioguanine — hence you check TPMT (and slash the dose if the patient is on allopurinol, which blocks the other escape route, xanthine oxidase).</p>
+
+      <div class="analogy"><p>Sulfasalazine is a sealed parcel addressed "Do not open until Colon." Stomach acid and small-bowel enzymes can't break the azo seal; only the colonic bacteria have the right scissors (azoreductase), so the active 5-ASA is unwrapped right on the doorstep of the disease.</p></div>
+
+      <blockquote class="warn">
+        <ul>
+          <li><strong>Steroids induce but never maintain</strong> remission — and must be <em>tapered</em> (HPA suppression / relapse). Budesonide's first-pass metabolism is what limits its systemic toll.</li>
+          <li><strong>Methotrexate is teratogenic — absolutely contraindicated in pregnancy.</strong> JAK inhibitors &amp; ozanimod are also contraindicated; certolizumab is the pregnancy-friendly anti-TNF.</li>
+          <li><strong>Screen for latent TB before any anti-TNF</strong> (reactivation risk); infliximab is contraindicated in severe CHF.</li>
+          <li><strong>Check TPMT before azathioprine</strong>; with allopurinol cut the dose to ~25% (xanthine-oxidase block diverts to toxic metabolites).</li>
+          <li><strong>Natalizumab → PML (JC virus)</strong> — restricted TOUCH programme; never combine with other immunosuppressants.</li>
+          <li><strong>Antimotility agents &amp; anticholinergics are contraindicated in severe IBD</strong> — risk of toxic megacolon. NSAIDs can flare IBD.</li>
+        </ul>
+      </blockquote>
+    </div>
+  </details>
+
+  <!-- STAGE 4 -->
+  
+</section>
+
+
+<!-- ============================================================= -->
+
+
+<!-- ============ FLASHCARDS ============ -->
+<section id="flashcards">
+  <div class="wrap">
+    <h2>🃏 Clinical Vignette Flashcards</h2>
+    <p class="fc-lead">Tap a card to reveal the answer, mechanism, clinical pearl, and exam trap. Twenty high-yield scenarios across GI Pharmacology — Chapters 53–55.</p>
+    <div class="flashcards">
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">01</span>
+          <span class="fc-q">A 62-year-old man on long-term omeprazole for GERD sustains a hip fracture after a minor fall. What is the pharmacological link between his PPI and bone loss?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Long-term PPI use causes <strong>hypochlorhydria</strong> → impaired ionisation and absorption of calcium carbonate (requires acid for dissolution; calcium citrate does not). Additionally, PPIs may inhibit osteoclast vacuolar H⁺-ATPase, disrupting bone remodelling. Net result: reduced bone mineral density and increased fracture risk, especially hip, spine, and wrist with &gt;1 year of continuous use.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Use the lowest effective PPI dose for the shortest duration. If long-term PPI is unavoidable, supplement with <strong>calcium citrate</strong> (acid-independent absorption) and vitamin D rather than calcium carbonate.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> PPIs also cause <strong>hypomagnesaemia</strong> by impairing intestinal Mg²⁺ absorption — can present as refractory hypokalaemia or hyponatraemia (Mg²⁺ depletion impairs K⁺ and Na⁺ regulation). Check Mg²⁺ in long-term PPI patients with arrhythmias or muscle cramps.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">02</span>
+          <span class="fc-q">H. pylori triple therapy (amoxicillin + clarithromycin + PPI × 14 days) fails. Urea breath test remains positive. What is the most likely cause, and what is the next regimen?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Clarithromycin resistance</strong> — now 15–40% in many countries, the leading cause of triple therapy failure. Next regimen: <strong>bismuth quadruple therapy</strong> (PPI + bismuth subcitrate + tetracycline + metronidazole × 14 days) — does not rely on clarithromycin. Alternatively, levofloxacin-based triple therapy. Culture and susceptibility testing should guide retreatment when available.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> The urea breath test and stool antigen test are the preferred non-invasive tests for confirming eradication — perform at least 4 weeks after completing antibiotics and 2 weeks after stopping PPI (PPIs suppress H. pylori without eradicating, giving false-negative results).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Serology (IgG anti-H. pylori antibodies) remains positive for years after eradication — do NOT use serology to confirm cure. Use urea breath test or stool antigen test only.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">03</span>
+          <span class="fc-q">A 32-year-old pregnant woman (12 weeks) with an NSAID-induced gastric ulcer is considered for misoprostol therapy. Why is this absolutely contraindicated?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Misoprostol is a <strong>PGE1 analogue</strong> that replaces the cytoprotective prostaglandins depleted by NSAID-mediated COX-1 inhibition → protects gastric mucosa. However, PGE1 stimulates <strong>uterine smooth muscle contraction</strong> → uterotonic effect → risk of miscarriage, preterm labour, or uterine rupture. Misoprostol is used therapeutically for medical abortion (with mifepristone) and cervical ripening — thus absolutely contraindicated in ongoing pregnancy for GI indications.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> For NSAID-induced ulcer prophylaxis in pregnancy: use a PPI (omeprazole — Category C, generally considered safe) or switch to paracetamol (acetaminophen). Sucralfate is also safe (minimal systemic absorption).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Misoprostol IS used intentionally in obstetrics: ripening the cervix before induction of labour, management of postpartum haemorrhage (uterotonic), and missed/incomplete miscarriage — the same uterotonic property that makes it dangerous in early pregnancy is therapeutic in these contexts.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">04</span>
+          <span class="fc-q">An oncology patient develops nausea and vomiting within 2 hours of cisplatin infusion (acute phase) and again on day 3 (delayed phase). What antiemetic targets each phase?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Acute phase (0–24 h):</strong> primarily serotonin-mediated — enterochromaffin cells release 5-HT₃ in response to cisplatin → vagal afferent activation → vomiting centre. Target: <strong>5-HT₃ antagonists</strong> (ondansetron, granisetron). <strong>Delayed phase (24–120 h):</strong> primarily substance P/neurokinin-1 mediated. Target: <strong>NK1 antagonists</strong> (aprepitant, fosaprepitant). Both phases benefit from <strong>dexamethasone</strong> (enhances efficacy via unknown mechanism). Triple therapy (5-HT₃ + NK1 + dexamethasone) is standard for highly emetogenic chemotherapy.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Palonosetron (second-generation 5-HT₃ antagonist, t½ ~40 h) has superior activity against delayed emesis compared to ondansetron — it allosterically blocks 5-HT₃ receptors and inhibits SP/NK1 crosstalk signalling.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> <strong>Anticipatory emesis</strong> (before chemotherapy, conditioned response from prior cycles) does NOT respond to 5-HT₃ or NK1 antagonists — it requires <strong>benzodiazepines</strong> (lorazepam) for anxiolysis and behavioural conditioning therapy.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">05</span>
+          <span class="fc-q">A 38-year-old woman with gastroparesis takes metoclopramide for 8 months. She develops involuntary repetitive lip-smacking and tongue protrusion that persists after stopping the drug. What has happened?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Tardive dyskinesia (TD)</strong> — caused by chronic central D2 receptor blockade (metoclopramide crosses the BBB). Prolonged D2 blockade → dopamine receptor supersensitivity/upregulation in the nigrostriatal pathway → involuntary stereotyped orofacial movements. May be <strong>irreversible</strong>. FDA black-box warning: metoclopramide should not be used for &gt;12 weeks. Risk is higher in elderly patients and women.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> <strong>Domperidone</strong> is a D2 antagonist that does NOT cross the BBB — effective prokinetic without central extrapyramidal/TD risk. Available in most countries but not FDA-approved in the USA. Preferred over metoclopramide for long-term gastroparesis management.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Acute dystonic reactions (oculogyric crisis, torticollis, jaw spasm) can occur within hours of starting metoclopramide — these are REVERSIBLE and treated with IV diphenhydramine or benztropine. Do not confuse with tardive dyskinesia (weeks–months of exposure, often irreversible).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">06</span>
+          <span class="fc-q">A patient with Crohn's disease on azathioprine develops severe pancytopenia. TPMT genotyping reveals he is a poor metaboliser. Explain the pathway.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Azathioprine → 6-mercaptopurine (6-MP) → via HPRT → 6-thioguanine nucleotides (6-TGNs, cytotoxic, active). Parallel pathway: 6-MP → via <strong>TPMT</strong> → methylated (inactive) metabolites. In TPMT <strong>poor metabolisers</strong> (homozygous low activity, ~0.3% of population), 6-MP is not methylated → diverted entirely to 6-TGN production → profound myelosuppression. TPMT testing (or NUDT15 in Asian populations) before starting azathioprine/6-MP is now standard of care.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Allopurinol (xanthine oxidase inhibitor) also increases 6-TGN by blocking 6-MP catabolism — combining allopurinol with azathioprine without dose reduction (by 75%) causes life-threatening pancytopenia. This combination can be used therapeutically ('allopurinol shunting') under expert supervision in selected IBD patients.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> TPMT testing predicts <strong>myelosuppression</strong> risk, NOT hepatotoxicity from azathioprine. Hepatotoxicity can occur independently of TPMT status. Monitor CBC monthly for the first 3 months regardless of TPMT genotype.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">07</span>
+          <span class="fc-q">Before starting infliximab for ulcerative colitis, a patient has a positive QuantiFERON-TB Gold test and a normal chest X-ray. What is the management?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Latent TB</strong> must be treated before starting any anti-TNF agent. TNF-α is essential for granuloma integrity — anti-TNF therapy reactivates latent TB, often as <strong>extrapulmonary/disseminated</strong> disease. Management: start <strong>isoniazid × 9 months</strong> (or rifampin × 4 months) and wait at least <strong>4 weeks</strong> before initiating infliximab. Also screen for hepatitis B (reactivation risk) and update all live vaccines before starting.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Anti-TNF-induced TB reactivation classically presents as miliary or extrapulmonary TB (lymph nodes, meninges, peritoneum) — different from typical post-primary pulmonary reactivation. A high index of suspicion is needed since chest X-ray may be normal.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> IGRA (QuantiFERON) can be falsely negative in severely immunosuppressed patients (anergy). If clinical suspicion for latent TB is high despite negative IGRA (endemic region, prior exposure), treat empirically for latent TB before starting anti-TNF. Do NOT rely on IGRA alone.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">08</span>
+          <span class="fc-q">A patient with hepatic encephalopathy is started on lactulose. His family asks why a laxative would help his confusion.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Lactulose is a synthetic, non-absorbable disaccharide cleaved by colonic bacteria → lactic acid + acetic acid → <strong>acidifies the colon</strong> (pH drops from ~7 to ~5). In the acidic colon, ammonia (NH₃) is trapped as ammonium ion (NH₄⁺) which cannot be absorbed → faecal excretion of ammonia. Reduced systemic ammonia → less CNS toxicity → improved hepatic encephalopathy. Secondary effect: osmotic laxation → shorter GI transit → less ammonia production and absorption.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Target: 2–3 soft stools per day. Over-laxation causes dehydration → worsens encephalopathy (pre-renal azotaemia → more ammonia). <strong>Rifaximin</strong> (non-absorbable antibiotic targeting gut ammonia-producing bacteria) is added for recurrent or refractory HE.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Lactulose is NOT lacTOSE. Lactose intolerance is a completely separate condition (brush-border lactase deficiency). Lactulose is synthetic and non-absorbable by design. Also: lactulose enema is used for obtunded patients who cannot take oral medication.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">09</span>
+          <span class="fc-q">A patient with active peptic ulcer has negative H. pylori testing. She takes naproxen daily for rheumatoid arthritis. Explain the dual mechanism of NSAID-induced ulceration.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Mechanism 1 (systemic — dominant):</strong> NSAIDs inhibit COX-1 → reduce PGE₂ and PGI₂ (prostacyclin) in gastric mucosa → decreased mucus secretion, decreased bicarbonate secretion, decreased mucosal blood flow → barrier breakdown. <strong>Mechanism 2 (topical/local):</strong> NSAIDs are weak acids; in the acidic stomach they are protonated → lipophilic → penetrate epithelial cells → intracellular acidification → direct cytotoxicity. This is why enteric-coated NSAIDs reduce topical injury but do NOT eliminate systemic (COX-1) damage.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Risk stratification for NSAID GI toxicity — HIGH risk: age &gt;65, H. pylori co-infection, history of ulcer/GI bleed, anticoagulant use, high-dose NSAIDs. In high-risk patients: use COX-2 selective NSAID (celecoxib) + PPI, or switch to paracetamol.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Enteric coating does NOT reduce ulcer risk — it only moves the topical damage from stomach to small intestine. The major mechanism (COX-1 systemic inhibition) is unaffected by formulation. Only a PPI or misoprostol truly reduces ulcer risk in NSAID users.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">10</span>
+          <span class="fc-q">A patient takes bismuth subsalicylate for H. pylori therapy and calls alarmed about black, tarry-looking stools. How do you differentiate this from melaena?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Bismuth-black stool</strong>: bismuth reacts with hydrogen sulphide from gut bacteria → bismuth sulphide (jet-black, non-odorous, formed stool). This is expected, harmless, and reversible on stopping the drug. <strong>Melaena</strong>: upper GI bleeding → Hb oxidised by gut bacteria and acid → haematin (black, sticky, tarry, foul-smelling 'coffee-ground' consistency). Key differentiators: melaena has a characteristic foul odour and sticky tarry consistency; also check for concomitant symptoms (haemodynamic instability, vomiting blood, anaemia).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Bismuth also causes <strong>black tongue</strong> (bismuth sulphide on tongue bacteria) — equally harmless. Bismuth has weak antimicrobial effects against H. pylori (inhibits urease, disrupts bacterial adherence to gastric mucosa), cytoprotective effects, and anti-diarrhoeal (antisecretory) properties.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Bismuth subsalicylate contains <strong>salicylate</strong> — contraindicated in children with viral illness (Reye's syndrome risk) and in patients with aspirin hypersensitivity, bleeding disorders, or taking anticoagulants (additive antiplatelet effect from salicylate).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">11</span>
+          <span class="fc-q">Sucralfate is prescribed alongside a fluoroquinolone antibiotic for a patient with a peptic ulcer. The antibiotic level is undetectable at 2 hours. Explain.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Sucralfate (aluminium sucrose octasulphate) chelates many drugs in the GI tract: <strong>fluoroquinolones, tetracyclines, digoxin, phenytoin, warfarin, levothyroxine, ketoconazole</strong> — reducing their absorption by 30–90%. Sucralfate must be given at least <strong>2 hours before or after</strong> other medications. Additionally, sucralfate requires an acidic pH to activate (polymerises at pH &lt;4) — simultaneous antacid or PPI use impairs its gastroprotective effect.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Sucralfate works entirely locally — it binds positively charged proteins in the ulcer base (necrotic tissue and albumin) → forms a protective physical barrier over the ulcer surface lasting 4–6 hours. Systemic absorption is &lt;5%. Safe in pregnancy and renal failure (unlike aluminium-containing antacids in CKD).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Sucralfate contains aluminium — can accumulate in CKD (dialysis patients) → aluminium toxicity (encephalopathy, osteomalacia, anaemia). Use with caution or avoid in advanced CKD.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">12</span>
+          <span class="fc-q">Cholestyramine is prescribed for hypercholesterolaemia. The patient notes that her warfarin is less effective. Explain.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Cholestyramine is a <strong>bile acid sequestrant</strong> (anion exchange resin) — binds bile acids in the gut → prevents reabsorption → increased hepatic bile acid synthesis from cholesterol → lowers LDL. The same binding mechanism non-selectively traps co-administered drugs including <strong>warfarin, digoxin, levothyroxine, fat-soluble vitamins (A, D, E, K), some statins, and thiazides</strong> → reduced absorption. Give cholestyramine at least <strong>4 hours after</strong> other medications.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Cholestyramine is used therapeutically to interrupt enterohepatic recirculation of drugs that need rapid elimination — e.g., <strong>leflunomide washout</strong> (give cholestyramine 8 g TID × 11 days to accelerate active metabolite elimination, as required before pregnancy).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Long-term cholestyramine use causes <strong>fat-soluble vitamin malabsorption</strong> (vitamins A, D, E, K) → vitamin K deficiency can independently prolong PT/INR, compounding the warfarin interaction. Supplement fat-soluble vitamins.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">13</span>
+          <span class="fc-q">Erythromycin 125 mg is prescribed at subantimicrobial doses for gastroparesis. The patient asks why an antibiotic is being used for a stomach motility problem.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">At low (sub-antimicrobial) doses, erythromycin and other macrolides are potent <strong>motilin receptor agonists</strong>. Motilin is a gut peptide hormone that triggers the <strong>migrating motor complex (MMC)</strong> — the 'housekeeper' wave that clears the stomach of undigested contents between meals. Erythromycin mimics motilin → stimulates gastric antral contractions → accelerates gastric emptying. The antibiotic effect requires much higher concentrations than the prokinetic effect.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Tachyphylaxis (motilin receptor downregulation) is a major limitation — efficacy typically wanes after 4 weeks of continuous use. Cycling the drug (2 weeks on / 2 weeks off) or using it intermittently may preserve the prokinetic response.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> All macrolides (including azithromycin, clarithromycin) prolong the <strong>QT interval</strong> via hERG K⁺ channel blockade — risk of Torsades de Pointes. Avoid combining erythromycin with other QT-prolonging drugs (ondansetron, haloperidol, antiarrhythmics). This is especially relevant given that erythromycin inhibits CYP3A4, which can raise levels of QT-prolonging co-medications.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">14</span>
+          <span class="fc-q">Mesalamine (5-ASA) is started for mild UC. Two weeks later the patient returns with significantly worse bloody diarrhoea. Could mesalamine be the cause?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Yes — <strong>paradoxical mesalamine-induced exacerbation of colitis</strong> occurs in approximately 2–3% of patients. Mechanism unclear (possibly hapten-mediated immune reaction). The presentation is indistinguishable from IBD flare, making it a diagnosis of exclusion. Key clue: onset within 2–4 weeks of starting or increasing mesalamine dose, rapid resolution within days of stopping the drug. Do not rechallenge.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Mesalamine mechanism: inhibits NF-κB → reduces TNF-α, IL-6, COX-2 in colonic epithelium; also inhibits 5-lipoxygenase → reduces LTB4. Key long-term toxicity: <strong>interstitial nephritis</strong> → check renal function annually in all patients on mesalamine.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> <strong>Sulfasalazine</strong> (the original 5-ASA prodrug) is split by gut bacteria into 5-ASA (active) + sulphapyridine (largely responsible for side effects): haemolytic anaemia (G6PD-dependent), agranulocytosis, hepatotoxicity, <strong>reversible oligospermia</strong>, folate deficiency, and hypersensitivity. Mesalamine formulations eliminate sulphapyridine and have a much better side-effect profile.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">15</span>
+          <span class="fc-q">Vedolizumab is chosen over infliximab for a 72-year-old woman with Crohn's disease and recurrent pneumonias. What is the mechanism and why is it preferred in this patient?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Vedolizumab is an anti-<strong>α4β7 integrin</strong> monoclonal antibody. The α4β7 integrin on gut-homing lymphocytes binds <strong>MAdCAM-1</strong> (mucosal addressin cell adhesion molecule-1), expressed exclusively on gut endothelium → lymphocyte trafficking into intestinal mucosa is selectively blocked. Because the target is gut-specific, vedolizumab does not suppress systemic immunity — no increased risk of systemic infections, TB reactivation, or PML. Ideal for elderly patients with recurrent respiratory infections who cannot tolerate systemic immunosuppression.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Vedolizumab has a <strong>slow onset</strong> (weeks–months for Crohn's; faster for UC) — bridge with corticosteroids if rapid control is needed. It does not cross the BBB, so it never causes PML (unlike natalizumab — anti-α4 integrin, NOT gut-selective, associated with JC virus reactivation).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Natalizumab (anti-α4 integrin) targets BOTH gut α4β7 AND CNS α4β1 (VLA-4) → blocks lymphocyte entry into CNS → risk of <strong>progressive multifocal leukoencephalopathy (PML)</strong> from JC virus. Vedolizumab targets only α4β7 (gut) → NO PML risk. This gut-selectivity is the critical differentiator.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">16</span>
+          <span class="fc-q">A patient is treated with polyethylene glycol (PEG) for constipation. Another patient on long-term opioids is given methylnaltrexone. Explain why PEG would not work for the second patient.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">PEG (osmotic laxative): large polymer draws water osmotically into the colon → softens stool + stimulates peristalsis. This addresses mechanical stool hardening but does NOT address the underlying cause of opioid-induced constipation (OIC), which is <strong>peripheral µ-opioid receptor activation</strong> in the enteric nervous system → decreased GI motility + decreased secretion + increased sphincter tone. <strong>Methylnaltrexone</strong> is a peripherally acting µ-opioid receptor antagonist (PAMORA) — blocks enteric opioid receptors without crossing the BBB, restoring GI motility without reversing analgesia.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Other PAMORAs: <strong>naloxegol</strong> (oral, PEGylated naloxone — too large to cross BBB), <strong>naldemedine</strong> (oral). Lubiprostone (ClC-2 activator) also has an FDA indication specifically for OIC in non-cancer chronic pain patients.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Oral naloxone (unmodified) does have some intestinal effect for OIC, but is absorbed and undergoes partial hepatic first-pass — systemic exposure can occur in liver disease, reversing analgesia. PAMORAs are specifically designed to avoid CNS penetration and are safer for reliable OIC treatment without reversing pain control.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">17</span>
+          <span class="fc-q">Lubiprostone is prescribed for chronic idiopathic constipation. A colleague says it 'works like a laxative.' What is the more precise mechanism?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Lubiprostone specifically activates <strong>ClC-2 chloride channels</strong> (type-2 chloride channels) in intestinal epithelial cells → Cl⁻ secretion into the lumen → passive Na⁺ and water follow → fluid accumulates in the lumen → softer stool + increased GI transit. Unlike osmotic laxatives (which draw water passively), lubiprostone actively secretes fluid via a targeted channel. It is also approved for IBS-C and OIC (at higher doses).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> <strong>Linaclotide</strong> activates guanylate cyclase-C (GC-C) receptor → cGMP → CFTR Cl⁻ secretion (different channel) + analgesic effect on subepithelial afferent neurons. Preferred for IBS-C (addresses both constipation AND visceral pain). Plecanatide is a newer GC-C agonist.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Lubiprostone, linaclotide, and plecanatide are contraindicated in patients &lt;6 years old (risk of severe diarrhoea and dehydration). Lubiprostone causes nausea in up to 30% of patients — take with food and water to reduce GI side effects.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">18</span>
+          <span class="fc-q">A 40-year-old woman with primary biliary cholangitis (PBC) is started on ursodeoxycholic acid (UDCA). How does a bile acid treat a liver disease?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">UDCA (ursodiol) is a hydrophilic, non-toxic bile acid that, when given orally, replaces the endogenous pool of hydrophobic, cytotoxic bile acids (chenodeoxycholic, lithocholic, deoxycholic acids) via competitive inhibition of their intestinal reabsorption. Mechanisms in PBC: (1) replaces toxic bile acids → reduces hepatocyte injury; (2) stabilises cholangiocyte membranes; (3) has immunomodulatory and anti-apoptotic effects; (4) stimulates biliary HCO₃⁻ secretion ('bicarbonate umbrella'). Slows disease progression, improves LFTs, reduces need for transplant.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> UDCA is also used for cholesterol gallstone dissolution (takes 6–24 months; only works for small, cholesterol-rich, radiolucent stones in functioning gallbladder) and to prevent gallstones during rapid weight loss or octreotide therapy.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> UDCA does NOT cure PBC — it slows progression. For patients with inadequate response to UDCA, add <strong>obeticholic acid</strong> (FXR agonist → reduces bile acid synthesis, improves cholestasis) — but it can cause dose-dependent pruritus and is contraindicated in decompensated cirrhosis.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">19</span>
+          <span class="fc-q">Ondansetron is given for post-operative nausea in a patient on fluoxetine. The anaesthetist is concerned about a drug interaction. What is it, and how significant is the risk?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Potential <strong>serotonin syndrome</strong>: fluoxetine (SSRI) increases synaptic serotonin by blocking reuptake; ondansetron is primarily a 5-HT₃ <em>antagonist</em>. The risk is real but low with ondansetron alone — however, in the context of polypharmacy (SSRI + opioids with serotonergic activity like tramadol/fentanyl + antiemetics like metoclopramide), cumulative serotonin burden increases. The more clinically significant concern: ondansetron <strong>QT prolongation</strong> in combination with other QT-prolonging perioperative drugs (haloperidol, droperidol, some antibiotics).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> True serotonin syndrome risk with ondansetron monotherapy + SSRI is low because ondansetron ANTAGONISES 5-HT₃ (it doesn't activate serotonin receptors). The interaction concern is greatest when multiple serotonergic agents are used simultaneously — applies more to granisetron in some studies.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Max single IV ondansetron dose is <strong>16 mg</strong> (the old 32 mg dose was removed due to QT prolongation risk). FDA warning: avoid in patients with congenital long-QT syndrome and concurrent QT-prolonging drugs. Oral 24 mg single dose for highly emetogenic chemotherapy is still acceptable.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">20</span>
+          <span class="fc-q">A patient with Clostridioides difficile infection (CDI) fails a first course of oral metronidazole. What is the correct treatment escalation, and why has treatment guidance changed?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Current IDSA/ESCMID guidelines no longer recommend metronidazole as first-line for CDI of any severity. <strong>Vancomycin oral</strong> (125 mg QID × 10 days) or <strong>fidaxomicin</strong> (200 mg BID × 10 days) are now first-line. Fidaxomicin has a narrower spectrum → preserves Bacteroides and Lactobacillus colonisation resistance → significantly lower recurrence rate (~40% reduction vs oral vancomycin). Metronidazole is acceptable only for mild cases when cost is prohibitive.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> For recurrent CDI: second recurrence — fidaxomicin (if first treatment was vancomycin) or vancomycin taper/pulse. Third or more recurrences: <strong>bezlotoxumab</strong> (anti-toxin B monoclonal antibody) as adjunct, or <strong>faecal microbiota transplant (FMT)</strong> — 85–90% cure rate for multiply recurrent CDI.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> IV vancomycin does NOT treat CDI — it does not reach the colon lumen in therapeutic concentrations. Only <strong>oral</strong> vancomycin achieves adequate colonic levels. Fidaxomicin also has minimal systemic absorption — both act locally in the colon.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ BANK -->
+<!-- ============================================================= -->
+<section class="quizbank" id="quizbank">
+  <h2>★ Quiz Bank</h2>
+  <p class="qb-sub">One collapsible set per chapter. Read the question, commit to an answer aloud, <em>then</em> reveal. 56 questions total.</p>
+
+  <!-- QUIZ SET 53 -->
+  <details class="quizset">
+    <summary><span class="qcaret">▸</span><span class="qs-title">Quiz Set 53 — Acid–Peptic Disease &amp; GERD</span><span class="qs-meta">18 Q</span></summary>
+    <div class="qs-body">
+
+      <div class="qq"><div class="qbody"><span class="qs-num">1</span><div class="q-text">Which single cell type, via which receptor, is the dominant paracrine amplifier of parietal-cell acid secretion?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">The <b>ECL cell</b> releasing <b>histamine</b>, acting on the parietal-cell <b>H2 receptor</b> (Gs → cAMP). This is why H₂ blockers and PPIs are so effective.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">2</span><div class="q-text">Gastrin is the most potent inducer of acid yet acts "largely indirectly." Explain.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Gastrin (from antral <b>G cells</b>, via CCK2) stimulates acid <b>mainly by releasing histamine from ECL cells</b>; its direct action on parietal cells is comparatively minor.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">3</span><div class="q-text">What luminal change triggers somatostatin release, and what is its downstream effect?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Luminal <b>pH &lt; 3</b> stimulates antral <b>D cells</b> → somatostatin → <b>suppresses gastrin</b> (negative feedback). <i>H. pylori</i> depletes D cells, removing this brake.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">4</span><div class="q-text">Why is the PPI's duration of acid suppression (24–48 h) so much longer than its plasma half-life (0.5–3 h)?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">PPIs bind the pump <b>covalently and irreversibly</b>; acid secretion only resumes once the cell <b>synthesises new pumps</b> — decoupling effect duration from plasma clearance.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">5</span><div class="q-text">Why should a PPI be taken 30–60 minutes before the first meal of the day?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Pump numbers are <b>highest after fasting</b>; dosing before the meal means the maximum number of freshly inserted, actively secreting pumps are available to be irreversibly inhibited.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">6</span><div class="q-text">Where exactly is a PPI prodrug activated, and into what active species?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">In the acidic <b>secretory canaliculus</b> of the parietal cell, it forms a <b>tetracyclic sulfenamide</b> that covalently binds pump cysteines.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">7</span><div class="q-text">Which PPI uniquely inhibits CYP2C19 and may impair clopidogrel activation, and which is the safest co-prescription?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Omeprazole</b> inhibits CYP2C19 (controversial clopidogrel interaction); <b>pantoprazole</b> is the safest pairing.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">8</span><div class="q-text">List four recognised long-term adverse associations of PPIs.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">↓ <b>vitamin B12</b>, <b>hypomagnesaemia</b> (worse with diuretics), <b>↑ fracture</b> risk, and <b>↑ infections</b> (C. difficile, pneumonia, SBP). Also hypergastrinaemia → ECL hyperplasia/rebound.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">9</span><div class="q-text">By what type of binding do H₂ antagonists act, and roughly what % acid suppression do they achieve?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Reversible competitive</b> antagonism at H2; ~<b>70%</b> suppression (especially nocturnal/basal). Tolerance develops within ~3 days.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">10</span><div class="q-text">Which H₂ antagonist causes gynaecomastia/impotence and inhibits CYP enzymes? Which two were withdrawn and why?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Cimetidine</b> (antiandrogen + CYP inhibitor). <b>Ranitidine and nizatidine</b> were largely withdrawn due to <b>NDMA contamination</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">11</span><div class="q-text">How do potassium-competitive acid blockers differ mechanistically from PPIs, and what clinical advantages follow?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">P-CABs <b>reversibly</b> block the K⁺ site of the pump, need <b>no acid activation</b>, and bind both active and inactive pump → <b>faster onset (day 1)</b>, longer duration, better nocturnal control, meal-independence, CYP2C19-independence.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">12</span><div class="q-text">Misoprostol's mechanism and its single most important contraindication?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">PGE₁ analogue → <b>EP3/Gi → ↓cAMP ↓acid</b> + cytoprotection (prevents NSAID ulcers). <b>Absolutely contraindicated in pregnancy</b> (uterotonic/abortifacient).</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">13</span><div class="q-text">Why must sucralfate be taken on an empty stomach, and in whom is it risky?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">It needs <b>acid (pH &lt; 4)</b> to cross-link into its protective gel. Avoid in <b>renal failure</b> (aluminium accumulation); it also binds other drugs (space dosing).</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">14</span><div class="q-text">Contrast the bowel effects of magnesium- vs aluminium-containing antacids.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Mg²⁺ → diarrhoea</b>; <b>Al³⁺ → constipation</b>. Combinations aim to balance the two.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">15</span><div class="q-text">State a standard 10–14-day triple therapy for H. pylori.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>PPI + clarithromycin 500 mg + amoxicillin 1 g</b>, all twice daily (metronidazole can replace amoxicillin if penicillin-allergic).</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">16</span><div class="q-text">What is the quadruple regimen, and when is it preferred?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>PPI + bismuth + tetracycline + metronidazole</b> — preferred where <b>clarithromycin/metronidazole resistance</b> is common.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">17</span><div class="q-text">In GERD during pregnancy, outline the stepwise drug progression.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Start with <b>antacids / alginates / sucralfate</b> → then <b>H₂ antagonist</b> (cimetidine best track record; avoid nizatidine) → reserve <b>PPI</b> (lansoprazole/pantoprazole) for intractable/complicated disease.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">18</span><div class="q-text">Drug of choice for Zollinger-Ellison syndrome, and the rescue if uncontrolled?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>High-dose PPI</b> (≈ twice the usual ulcer dose); if acid still uncontrolled, add the somatostatin analogue <b>octreotide</b>.</div></details></div>
+
+    </div>
+  </details>
+
+  <!-- QUIZ SET 54 -->
+  <details class="quizset">
+    <summary><span class="qcaret">▸</span><span class="qs-title">Quiz Set 54 — Motility, Emesis &amp; Biliary/Pancreatic</span><span class="qs-meta">22 Q</span></summary>
+    <div class="qs-body">
+
+      <div class="qq"><div class="qbody"><span class="qs-num">1</span><div class="q-text">Name the primary excitatory and inhibitory neurotransmitters of enteric motor neurons.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Excitatory = <b>acetylcholine</b>; inhibitory = <b>nitric oxide</b> (with VIP, ATP, PACAP as contributors).</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">2</span><div class="q-text">Which cell releases serotonin to ignite the peristaltic reflex, and which cells set the gut's electrical pacemaker rhythm?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Enterochromaffin cells</b> release 5HT; <b>interstitial cells of Cajal</b> set the pacemaker/slow-wave rhythm.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">3</span><div class="q-text">Give metoclopramide's full receptor profile and its most feared chronic adverse effect.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">D2 antagonist + 5HT4 agonist + 5HT3 antagonist. Chronic use → <b>tardive dyskinesia (may be irreversible)</b>; also acute dystonia, hyperprolactinaemia, QT. Limit to &lt; 12 weeks.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">4</span><div class="q-text">How does domperidone avoid extrapyramidal effects yet still cause prolactin elevation and antiemesis?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">It's a <b>peripheral D2 antagonist that poorly crosses the BBB</b>; but it still acts at sites <b>outside the BBB</b> (CTZ for emesis, pituitary for prolactin). Caution: ventricular arrhythmia/sudden death.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">5</span><div class="q-text">Why was cisapride withdrawn?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Fatal <b>QT prolongation / torsades</b> via blockade of the <b>hERG K⁺ channel</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">6</span><div class="q-text">Erythromycin's prokinetic mechanism and why its effect fades within ~28 days.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">It mimics <b>motilin</b> (triggers phase III MMC). <b>Tachyphylaxis</b> from <b>motilin-receptor downregulation</b> after ~28 days.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">7</span><div class="q-text">Lactulose has an indication beyond constipation — what, and by what mechanism?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Hepatic encephalopathy</b>: colonic fermentation drops luminal pH, <b>trapping ammonia as non-absorbable NH₄⁺</b>, plus faster transit lowers blood ammonia.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">8</span><div class="q-text">Match each prosecretory laxative to its target: lubiprostone, linaclotide/plecanatide, tenapanor.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Lubiprostone → <b>ClC-2 chloride channel</b>; linaclotide/plecanatide → <b>guanylate cyclase-C (GC-C)</b>; tenapanor → <b>NHE3 inhibition</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">9</span><div class="q-text">Which laxative class should be avoided in renal failure and in patients on diuretics, and why?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Magnesium (saline) laxatives</b> — risk of <b>hypermagnesaemia</b> and electrolyte disturbance.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">10</span><div class="q-text">Why does loperamide relieve diarrhoea without central opioid effects, and what is its black-box warning?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">It's a <b>peripheral MOR agonist</b> that penetrates the CNS poorly (40–50× morphine as an antidiarrhoeal). Black box: <b>cardiac events / torsades at overdose</b> (max 16 mg/day).</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">11</span><div class="q-text">Why is atropine co-formulated with diphenoxylate/difenoxin?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">A subtherapeutic atropine dose <b>discourages abuse/overdose</b> (unpleasant anticholinergic effects at high doses).</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">12</span><div class="q-text">In which two diarrhoeal scenarios must antibiotics AND antimotility agents be avoided?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Enterohaemorrhagic E. coli</b> (HUS risk) and <b>C. difficile</b>. Antimotility risks toxic megacolon and prolonged organism clearance.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">13</span><div class="q-text">Bismuth subsalicylate: two harmless signs it causes, and one systemic caution.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Black stools and black tongue</b> (bismuth sulfide). Caution: the absorbed <b>salicylate</b> → Reye's risk, tinnitus, CNS effects.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">14</span><div class="q-text">Which IBS drug carries an ischaemic-colitis risk and a REMS, and in whom is it used?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Alosetron</b> (5HT3 antagonist) — for <b>women with severe diarrhoea-predominant IBS</b>, under a restricted prescribing programme.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">15</span><div class="q-text">Eluxadoline's receptor profile and the special dosing rule for patients without a gallbladder.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>MOR agonist / DOR antagonist / KOR agonist</b>. Without a gallbladder use <b>75 mg twice daily</b> (lower) to reduce sphincter-of-Oddi spasm/pancreatitis risk.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">16</span><div class="q-text">Why is the CTZ uniquely positioned to detect blood-borne emetics?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">It lies in the <b>area postrema, outside the blood–brain barrier</b>, sampling blood and CSF for toxins.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">17</span><div class="q-text">Which antiemetic class is the key addition for delayed-phase chemotherapy emesis, and with what two partners is it given?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>NK1 antagonists</b> (aprepitant/fosaprepitant, rolapitant), given with a <b>5HT3 antagonist + dexamethasone</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">18</span><div class="q-text">Best drug classes for motion sickness?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>H1 antihistamines</b> (cyclizine, meclizine) and the <b>antimuscarinic scopolamine</b> (patch). 5HT3 antagonists are ineffective for motion sickness.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">19</span><div class="q-text">First-line agent for nausea/vomiting of pregnancy?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Doxylamine (H1 antihistamine) + pyridoxine (vitamin B6)</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">20</span><div class="q-text">Which 5HT3 antagonist helps with delayed emesis and spares the QT interval, and why?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Palonosetron</b> — long half-life (~40 h) and highest receptor affinity; does not appear to prolong QT.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">21</span><div class="q-text">Ursodiol and obeticholic acid both treat primary biliary cholangitis — how do they differ mechanistically, and what is obeticholic acid's black-box risk?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Ursodiol = hydrophilic bile acid that <b>displaces toxic bile acids</b> &amp; reduces lithogenicity; obeticholic acid = <b>FXR agonist</b> that suppresses bile-acid synthesis. Black box: <b>hepatic decompensation / liver failure</b> if mis-dosed.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">22</span><div class="q-text">How is pancreatic enzyme replacement dosed, and on which enzyme is it titrated?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Titrated on <b>lipase</b> content: start ~<b>500 USP units/kg per meal</b>, up to ~2500 USP units/kg per meal (≤ 10,000 USP units/kg/day).</div></details></div>
+
+    </div>
+  </details>
+
+  <!-- QUIZ SET 55 -->
+  <details class="quizset">
+    <summary><span class="qcaret">▸</span><span class="qs-title">Quiz Set 55 — Inflammatory Bowel Disease</span><span class="qs-meta">16 Q</span></summary>
+    <div class="qs-body">
+
+      <div class="qq"><div class="qbody"><span class="qs-num">1</span><div class="q-text">Contrast the cytokine profiles of Crohn's disease vs ulcerative colitis.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Crohn's = <b>TH1/TH17</b> (IL-12, IL-23, IFN-γ, TNF-α); UC = <b>TH2-like</b> (IL-4, IL-13). Crohn's is transmural with skip lesions; UC is mucosal and continuous.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">2</span><div class="q-text">Which is the active moiety of sulfasalazine, and how is it released specifically in the colon?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>5-ASA (mesalamine)</b>. The <b>azo bond</b> survives stomach/small bowel and is cleaved by <b>colonic bacterial azoreductases</b>; sulfapyridine is the inert (toxic) carrier.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">3</span><div class="q-text">Two adverse effects attributable to the sulfapyridine moiety, and the supplement routinely given with sulfasalazine.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Headache/nausea/fatigue, rash, reversible <b>↓ sperm count/motility</b>, marrow suppression. Give <b>folate</b> (sulfasalazine inhibits folate absorption).</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">4</span><div class="q-text">Why are glucocorticoids excellent for induction but not maintenance of IBD remission?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">They rapidly damp inflammation (induction) but chronic use carries <b>serious toxicity</b> (bone, skin, metabolic, HPA suppression). Always <b>taper</b> to avoid adrenal insufficiency/relapse.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">5</span><div class="q-text">What makes budesonide gentler systemically than prednisone?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Extensive <b>first-pass hepatic metabolism</b> (CYP3A4) keeps systemic levels low while delivering steroid locally to ileum/colon.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">6</span><div class="q-text">Trace the activation pathway of azathioprine to its active moiety.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Azathioprine → <b>6-mercaptopurine</b> → (via HGPRT) → <b>6-thioguanine nucleotides</b>, the active immunosuppressive species.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">7</span><div class="q-text">Why must TPMT be assessed before azathioprine, and what is the allopurinol interaction rule?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Low <b>TPMT</b> shunts drug to <b>6-TGN → bone-marrow suppression</b>. Allopurinol blocks <b>xanthine oxidase</b> → more active metabolite → <b>reduce dose to ~25%</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">8</span><div class="q-text">Two notable thiopurine toxicities beyond marrow suppression.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Pancreatitis (~5%)</b> and a <b>4-fold increased risk of (non-Hodgkin) lymphoma</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">9</span><div class="q-text">Methotrexate's role in IBD, its main contraindication, and drugs that raise its toxicity.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Maintenance of <b>Crohn's</b> remission (SC). <b>Absolutely contraindicated in pregnancy</b> (teratogen). <b>NSAIDs, PPIs, penicillins, probenecid, ciprofloxacin</b> reduce its renal clearance → toxicity.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">10</span><div class="q-text">Distinguish infliximab from adalimumab/certolizumab in structure and antidrug-antibody risk.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Infliximab = <b>chimeric</b> (mouse/human), IV, more antidrug antibodies → often combined with azathioprine. Adalimumab/golimumab = humanised; certolizumab = pegylated Fab — both fewer antibodies, given SC.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">11</span><div class="q-text">What must be screened for before starting any anti-TNF agent, and which cardiac condition contraindicates infliximab?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Screen for <b>latent tuberculosis</b> (reactivation risk). Infliximab is contraindicated in <b>severe congestive heart failure</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">12</span><div class="q-text">Which biologic is gut-selective by blocking α4β7, and which carries a PML risk under a restricted programme?</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>Vedolizumab</b> (anti-α4β7, gut-selective). <b>Natalizumab</b> (anti-α4) → <b>PML/JC virus</b>, available only via the TOUCH programme.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">13</span><div class="q-text">Ustekinumab's target, and a practical vaccination caution from its long half-life.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Targets the <b>p40 subunit of IL-12/IL-23</b>. Half-life up to ~120 days → <b>stop 15 weeks before a live vaccine</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">14</span><div class="q-text">Tofacitinib's mechanism, key indication, and boxed warnings.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>JAK1/3 inhibitor</b> (oral) for moderate–severe <b>UC after biologic failure</b>. Boxed warnings: <b>serious cardiac events, thromboembolism, malignancy</b>; teratogenic.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">15</span><div class="q-text">Ozanimod's mechanism and the dietary/drug interaction its metabolite creates.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans"><b>S1P1/5 receptor modulator</b> — traps lymphocytes in lymph nodes. A metabolite inhibits <b>MAO-B</b> → hypertensive interactions with <b>tyramine, SSRIs/SNRIs, TCAs, MAO inhibitors</b>.</div></details></div>
+
+      <div class="qq"><div class="qbody"><span class="qs-num">16</span><div class="q-text">In a pregnant IBD patient, name the safest anti-TNF and the three drug categories that are absolutely contraindicated.</div></div>
+        <details class="qa"><summary>Reveal answer</summary><div class="ans">Safest anti-TNF = <b>certolizumab pegol</b> (no placental transfer). Contraindicated: <b>methotrexate</b>, <b>JAK inhibitors (tofacitinib)</b>, and <b>ozanimod</b>.</div></details></div>
+
+    </div>
+  </details>
+
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong>Gastrointestinal Pharmacology · Accelerated Learning System</strong><br>
+      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section VI (Chs 53–55, Sharkey &amp; MacNaughton).<br>
+      Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
+      Mnemonics are standard teaching aids. Verify all drug dosing against current protocols before clinical use.</span>
+    </div>
+    <div class="src" style="text-align:right">
+      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Built around active recall and spaced repetition.
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── QUIZ TAP-TO-REVEAL ──────────────────────────────────────────────────────
+// Supports: .quiz-q/.quiz-a  (special_systems)
+//           .qq/.qa          (other volumes)
+//           .qq/details.qa   (GI — native details, revealed via JS open class)
+
+(function() {
+  function initReveal(triggerSel, containerSel) {
+    document.querySelectorAll(triggerSel).forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var container = trigger.closest(containerSel);
+        if (!container) return;
+        var wasOpen = container.classList.contains('open');
+        var parent = container.parentElement;
+        if (parent) {
+          parent.querySelectorAll(containerSel).forEach(function(el) {
+            el.classList.remove('open');
+          });
+        }
+        if (!wasOpen) container.classList.add('open');
+      });
+    });
+  }
+
+  // Pattern 1: special_systems  .quiz-item > .quiz-q
+  initReveal('.quiz-q', '.quiz-item');
+
+  // Pattern 2: others  .q > .qq
+  initReveal('.qq', '.q');
+
+  // GI: .qq wraps details.qa — sync open state
+  document.querySelectorAll('.qq').forEach(function(qq) {
+    qq.addEventListener('click', function() {
+      // For GI-style .qq that IS the container (no .q parent)
+      var isDirectContainer = !qq.closest('.q');
+      if (isDirectContainer) {
+        var wasOpen = qq.classList.contains('open');
+        var parent = qq.parentElement;
+        if (parent) {
+          parent.querySelectorAll('.qq').forEach(function(el) { el.classList.remove('open'); });
+        }
+        if (!wasOpen) qq.classList.add('open');
+      }
+      // Sync details.qa open attribute
+      var det = qq.querySelector('details.qa');
+      if (det) {
+        var nowOpen = qq.classList.contains('open');
+        if (nowOpen) det.setAttribute('open',''); else det.removeAttribute('open');
+      }
+    });
+  });
+})();
+</script>
+
+<script src="learning-interactive.js"></script>
+</body>
+</html>

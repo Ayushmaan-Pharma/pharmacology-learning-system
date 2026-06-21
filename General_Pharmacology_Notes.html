@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Pharmacology — PYQ Notes</title>
+<style>
+  :root{
+    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
+    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
+  header.top{margin-bottom:26px}
+  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
+  .sub{color:var(--muted); font-size:.92rem; margin:0}
+  .tools{
+    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
+    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
+    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  }
+  #search{
+    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
+    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
+    outline:none;
+  }
+  #search:focus{border-color:var(--accent)}
+  .btn{
+    border:1px solid var(--line); background:var(--panel); color:var(--ink);
+    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
+    transition:.15s; white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+
+  .toc{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+  }
+  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
+  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
+  .toc a:hover{color:var(--accent)}
+
+  section.sec{margin:34px 0}
+  .sec > h2{
+    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
+    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+  }
+  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+
+  details.q{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+  }
+  details.q[open]{border-color:#d6e6e0}
+  summary.q-head{
+    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
+    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+  }
+  summary.q-head::-webkit-details-marker{display:none}
+  summary.q-head:hover{background:#fcfdfc}
+  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
+  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  .q-text{flex:1}
+  .answer{
+    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
+    font-size:.93rem; color:#33383d;
+  }
+  .answer h4{
+    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
+    margin:18px 0 7px;
+  }
+  .answer p{margin:9px 0}
+  .answer ul,.answer ol{margin:8px 0; padding-left:20px}
+  .answer li{margin:4px 0}
+  .answer b{font-weight:620}
+  .answer table{
+    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
+  }
+  .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
+  .answer th{background:var(--accent-soft); font-weight:600}
+  .answer .dia{
+    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
+    margin:12px 0; font-size:.85rem; color:#4a5550;
+  }
+  .answer .dia b{color:var(--accent)}
+  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .recent b{color:#9a7000}
+  .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
+  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
+  mark{background:#fff2a8; padding:0 1px}
+  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+
+  /* ---- v2 interactive additions ---- */
+  body{transition:background .25s, color .25s}
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
+  .chip:hover{border-color:var(--accent); color:var(--accent)}
+  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
+  .iconbtn{font-size:1rem; line-height:1}
+  details.q.vignette{border-left:3px solid #c98a3c}
+  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
+  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
+  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
+
+  /* ---- dark theme ---- */
+  [data-theme="dark"]{
+    --bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad;
+    --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a;
+    --shadow:0 1px 2px rgba(0,0,0,.35);
+  }
+  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
+  [data-theme="dark"] summary.q-head:hover{background:#23272c}
+  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  [data-theme="dark"] .answer{color:#cfd4d8}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:#2a2519}
+  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] mark{background:#7a6212; color:#fff}
+  [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
+
+  /* ---- per-section colour theming ---- */
+  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
+  .sec > h2{border-bottom:2px solid var(--sec)}
+  .sec details.q{border-left:4px solid var(--sec)}
+  .sec details.q[open]{border-left-color:var(--sec)}
+  .sec details.q[open] .chev{color:var(--sec)}
+  .sec .answer h4{color:var(--sec)}
+  .sec .answer th{background:var(--sec-soft)}
+  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
+  .toc a{display:flex; align-items:center}
+  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
+  [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
+  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>General Pharmacology — Consolidated PYQ Notes</h1>
+    <p class="sub">Exam-oriented model answers · contextualised to Goodman &amp; Gilman (14th ed.) · click any question to open the answer</p>
+  </header>
+
+  <div class="tools">
+    <a class="btn" href="index_pyq.html" title="Back to PYQ Library" style="text-decoration:none">← PYQ Library</a>
+    <a class="btn" href="index.html" title="Back to study hub" style="text-decoration:none">← Hub</a>
+    <input id="search" type="text" placeholder="🔍  Search… ( / )" autocomplete="off">
+    <button class="btn" id="shuffle" title="Random question (R)">🎲 Quiz me</button>
+    <button class="btn" id="expandAll" title="Expand visible (E)">Expand</button>
+    <button class="btn" id="collapseAll" title="Collapse all (C)">Collapse</button>
+    <button class="btn iconbtn" id="theme" title="Dark mode (D)">🌙</button>
+    <span class="count" id="counter"></span>
+  </div>
+  <div class="chips" id="chips">
+    <button class="chip active" data-f="all">All</button>
+    <button class="chip" data-f="3">★★★</button>
+    <button class="chip" data-f="2">★★</button>
+    <button class="chip" data-f="1">★</button>
+    <button class="chip" data-f="case">🩺 Cases</button>
+  </div>
+  <p class="hint">Shortcuts: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K</kbd>/<kbd>J</kbd> next/prev · <kbd>Space</kbd> open · <kbd>E</kbd>/<kbd>C</kbd> expand/collapse · <kbd>D</kbd> dark</p>
+
+  <nav class="toc" id="toc">
+    <h2>Sections</h2>
+    <a href="#s1"><span class="dot" style="background:#2f7d6a"></span>1 · Drug Discovery, Development &amp; Clinical Evaluation</a>
+    <a href="#s2"><span class="dot" style="background:#3f6cb0"></span>2 · Pharmacokinetics (ADME, TDM &amp; Individualisation)</a>
+    <a href="#s3"><span class="dot" style="background:#845bb0"></span>3 · Pharmacodynamics — Receptors, Signaling &amp; Dose-Response</a>
+    <a href="#s4"><span class="dot" style="background:#b15068"></span>4 · Novel &amp; Targeted Drug Delivery Systems</a>
+    <a href="#s5"><span class="dot" style="background:#b3852f"></span>5 · Rational Use of Drugs &amp; Clinical Pharmacology</a>
+    <a href="#s6"><span class="dot" style="background:#2f8696"></span>6 · Pharmacovigilance, ADR &amp; Drug Safety</a>
+    <a href="#s7"><span class="dot" style="background:#548a4f"></span>7 · Pharmacoeconomics &amp; Drug Utilization</a>
+    <a href="#s8"><span class="dot" style="background:#c06a3e"></span>8 · Preclinical Studies, Ethics &amp; Alternatives</a>
+    <a href="#s9"><span class="dot" style="background:#7a5bbd"></span>9 · Emerging &amp; Special Topics</a>
+    <a href="#s10"><span class="dot" style="background:#aa5590"></span>10 · 🩺 Clinical Case Vignettes</a>
+  </nav>
+
+  <p class="nohit" id="nohit">No questions match your search.</p>
+
+  <div id="content">
+<!-- CONTENT START -->
+
+<section class="sec" id="s1" style="--sec:#2f7d6a;--sec-soft:#2f7d6a26">
+  <h2>Section 1 · Drug Discovery, Development &amp; Clinical Evaluation</h2>
+  <p class="sec-note">G&amp;G 14e — Chapter 1: Drug Discovery, From Medicinal Plants to Computer-Aided Drug Design.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Discuss in detail the complete process of new drug discovery and development (methods, preclinical, clinical phases, regulatory, recent advances). Add a note on microdosing &amp; ethics.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> Drug development is the systematic, regulated, multi-stage conversion of a validated biological target into a safe and effective marketed medicine. G&amp;G frames it as moving "from medicinal plants to computer-aided drug design." It takes ~10–15 years and >US$1–2.5 billion, with attrition of ~1 in 5000–10000 screened molecules.</p>
+
+    <h4>I. Target identification &amp; validation</h4>
+    <ul>
+      <li><b>Target identification:</b> a protein/gene/pathway whose modulation alters disease — from genomics, proteomics, GWAS, disease biology.</li>
+      <li><b>Target validation:</b> proving modulation produces benefit — knockout/knock-in animals, siRNA/CRISPR, human genetic evidence.</li>
+      <li><b>Druggability:</b> does the target possess a binding pocket amenable to a small molecule or biologic?</li>
+    </ul>
+
+    <h4>II. Methods / approaches to drug discovery</h4>
+    <table>
+      <tr><th>Approach</th><th>Principle / Example</th></tr>
+      <tr><td>High-Throughput Screening (HTS)</td><td>Robotic assay of large compound libraries (10⁵–10⁶) against a target; gives "hits."</td></tr>
+      <tr><td>Rational / structure-based design</td><td>Designing ligand to fit a known 3-D target structure (X-ray, cryo-EM). e.g. HIV protease inhibitors, captopril.</td></tr>
+      <tr><td>SAR (structure–activity relationship)</td><td>Systematic chemical modification of a lead to optimise potency/selectivity/PK.</td></tr>
+      <tr><td>CADD (computer-aided drug design)</td><td>In-silico docking, molecular dynamics, pharmacophore &amp; QSAR modelling, virtual screening.</td></tr>
+      <tr><td>Fragment-based design</td><td>Small low-affinity fragments grown/linked into a high-affinity lead (e.g. vemurafenib).</td></tr>
+      <tr><td>Reverse pharmacology</td><td>Start from a traditional/clinical observation, then identify mechanism — strong in Indian/Ayurvedic research.</td></tr>
+      <tr><td>Antisense / RNA</td><td>Oligonucleotides, siRNA, mRNA targeting the gene/transcript (e.g. nusinersen, patisiran).</td></tr>
+      <tr><td>Proteomics / epigenetics</td><td>Protein expression maps &amp; epigenetic targets (HDAC, DNMT inhibitors).</td></tr>
+      <tr><td>AI / Machine learning</td><td>Generative models, deep-learning hit prediction, AlphaFold structure prediction.</td></tr>
+    </table>
+
+    <h4>III. Preclinical evaluation</h4>
+    <ul>
+      <li><b>Pharmacodynamics/PK/ADME</b> in cell lines and ≥2 animal species (one rodent + one non-rodent).</li>
+      <li><b>Toxicity battery:</b> acute (single dose, LD₅₀ concept), sub-acute &amp; chronic, reproductive/teratogenicity, mutagenicity (Ames), carcinogenicity, safety pharmacology.</li>
+      <li><b>Alternatives &amp; 3R/4R:</b> Replacement, Reduction, Refinement (+ Rehabilitation as 4th R) — in-vitro, organ-on-chip, in-silico, organoids.</li>
+      <li><b>Indian oversight:</b> <b>CPCSEA / CCSEA</b> guidelines and the <b>IAEC</b> (Institutional Animal Ethics Committee) approve animal protocols.</li>
+    </ul>
+
+    <h4>IV. Investigational New Drug (IND) → clinical trials</h4>
+    <p>After successful preclinical data, an <b>IND</b> (US-FDA) / application under <b>New Drugs &amp; Clinical Trials Rules 2019</b> + erstwhile <b>Schedule Y</b> (India, CDSCO/DCGI) is filed before human dosing.</p>
+    <table>
+      <tr><th>Phase</th><th>Subjects</th><th>Aim</th></tr>
+      <tr><td>Phase 0 (microdosing)</td><td>6–15</td><td>Sub-therapeutic dose; early human PK/PD; "exploratory IND."</td></tr>
+      <tr><td>Phase I</td><td>20–80 healthy volunteers</td><td>Safety, tolerability, PK, MTD, dose-escalation.</td></tr>
+      <tr><td>Phase II</td><td>100–300 patients</td><td>Efficacy proof-of-concept &amp; dose-finding (IIa/IIb).</td></tr>
+      <tr><td>Phase III</td><td>1000–3000 patients</td><td>Confirmatory efficacy &amp; safety vs standard; basis for approval (NDA).</td></tr>
+      <tr><td>Phase IV</td><td>Post-marketing</td><td>Pharmacovigilance, rare ADRs, new indications.</td></tr>
+    </table>
+
+    <h4>V. Trial design concepts</h4>
+    <ul>
+      <li><b>Adaptive design:</b> pre-planned modification of design (dose, sample size, arms) using accumulating data — efficient, ethical (e.g. RECOVERY, SOLIDARITY for COVID).</li>
+      <li><b>Sequential design:</b> data analysed as they accrue; trial stopped when significance/futility reached.</li>
+      <li><b>Crossover design:</b> each subject receives both treatments in sequence (own control), needs washout; good for chronic stable conditions.</li>
+      <li><b>Protocol deviation</b> = minor unplanned departure not affecting subject rights/safety/data integrity; <b>Protocol violation</b> = serious departure that does (e.g. enrolling ineligible subject, dosing error).</li>
+    </ul>
+
+    <h4>VI. Regulatory &amp; GCP</h4>
+    <p>IND/NDA, <b>ICH-GCP</b>, ethics-committee (IEC) approval, informed consent, audit-trail, ICMR ethical guidelines (2017), and post-approval surveillance.</p>
+
+    <div class="recent"><b>Recent advances:</b> AI-discovered candidates entering trials (Insilico's INS018_055 for IPF), AlphaFold-driven structure-based design, master/platform &amp; basket-umbrella trials, decentralised &amp; real-world-evidence trials, and India's CDSCO online <i>SUGAM</i> portal.</div>
+
+    <h4>Note — Microdosing (Phase 0)</h4>
+    <p>Administration of ≤1/100th of the pharmacologically active dose (≤100 µg) to obtain early human PK using ultrasensitive assays (AMS, PET). <b>Advantages:</b> human data earlier, reduced cost, less animal toxicity testing, early de-selection of poor candidates. <b>Ethics:</b> minimal risk yet still requires consent &amp; IEC approval; cannot give efficacy data and is not predictive at therapeutic doses (non-linear PK).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Role of AI, HTS, reverse pharmacology and CADD in modern drug discovery (with examples).</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Method</th><th>Principle</th><th>Application / Example</th></tr>
+      <tr><td><b>HTS</b></td><td>Automated, miniaturised (384/1536-well) assay of huge libraries against a target to find hits.</td><td>Kinase inhibitor screening; statins lead optimisation.</td></tr>
+      <tr><td><b>CADD</b></td><td>In-silico methods: molecular docking, QSAR, pharmacophore mapping, MD simulation, virtual screening — reduces wet-lab burden.</td><td>Captopril (SBDD), HIV protease inhibitors, dorzolamide, oseltamivir.</td></tr>
+      <tr><td><b>Reverse pharmacology</b></td><td>"Bedside → bench": start from clinical/traditional efficacy, then define the target/mechanism.</td><td>Artemisinin, reserpine, many Ayurvedic leads (CSIR programmes).</td></tr>
+      <tr><td><b>AI / ML</b></td><td>Deep learning for hit prediction, generative chemistry, ADMET &amp; toxicity prediction, protein-structure prediction.</td><td>AlphaFold (structures), Insilico Medicine candidate for IPF, BenevolentAI repurposing of baricitinib for COVID-19.</td></tr>
+    </table>
+    <p><b>Combined value:</b> CADD + AI triage millions of molecules virtually; HTS validates hits experimentally; reverse pharmacology supplies clinically-validated starting points — together compressing timelines and cost.</p>
+    <div class="recent"><b>Recent:</b> Generative-AI de-novo molecules, foundation models for chemistry, and AI-predicted polypharmacology now feature in early pipelines.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Principles, applications, advantages &amp; limitations of microdosing (Phase 0) studies.</span></summary>
+  <div class="answer">
+    <p><b>Definition/principle:</b> Phase 0 "exploratory IND" giving a <b>microdose</b> — ≤100 µg or ≤1/100th of the dose predicted to give a pharmacological effect — to a few humans (6–15) to obtain early PK/PD before full Phase I.</p>
+    <h4>Detection methods</h4>
+    <ul><li><b>Accelerator Mass Spectrometry (AMS)</b> with ¹⁴C-label.</li><li><b>PET</b> for receptor occupancy/tissue distribution.</li><li>Ultra-sensitive LC-MS/MS.</li></ul>
+    <h4>Applications</h4>
+    <ul><li>Early human PK &amp; bioavailability; candidate ranking/selection.</li><li>Confirm target engagement/receptor occupancy (PET).</li><li>Reduce late-stage attrition due to poor PK.</li></ul>
+    <h4>Advantages</h4>
+    <ul><li>Human data earlier; lower cost and animal use; faster go/no-go decisions; minimal subject risk.</li></ul>
+    <h4>Limitations</h4>
+    <ul><li>No efficacy or toxicity information.</li><li>Non-linear PK → microdose may not predict therapeutic-dose kinetics.</li><li>Requires costly specialised assays (AMS/PET); not suitable for drugs with active metabolites or saturable processes.</li></ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Phases of clinical trials with emphasis on Phase I design (esp. antiepileptics) &amp; adaptive designs — advantages, challenges, examples.</span></summary>
+  <div class="answer">
+    <h4>Phases (overview)</h4>
+    <table>
+      <tr><th>Phase</th><th>Subjects</th><th>Objective</th></tr>
+      <tr><td>I</td><td>20–80 healthy volunteers*</td><td>Safety, tolerability, PK, dose-escalation / MTD</td></tr>
+      <tr><td>II</td><td>100–300 patients</td><td>Efficacy proof-of-concept, dose-finding</td></tr>
+      <tr><td>III</td><td>1000–3000 patients</td><td>Confirmatory efficacy/safety vs standard</td></tr>
+      <tr><td>IV</td><td>Post-marketing</td><td>Surveillance, rare ADRs, new indications</td></tr>
+    </table>
+    <p>*For cytotoxic/CNS drugs Phase I is often in patients.</p>
+    <h4>Phase I designs</h4>
+    <ul>
+      <li><b>Single Ascending Dose (SAD)</b> and <b>Multiple Ascending Dose (MAD)</b>.</li>
+      <li><b>"3+3" rule</b> dose-escalation (oncology).</li>
+      <li><b>Food-effect, drug–drug interaction</b> and bioequivalence sub-studies.</li>
+    </ul>
+    <p><b>Antiepileptic-specific:</b> healthy-volunteer single/multiple dose PK; CNS tolerability (sedation, ataxia); EEG/cognitive testing; <b>add-on (adjunctive) design</b> on refractory partial seizures before monotherapy claims; careful for CYP induction/inhibition interactions and the photosensitivity/photoparoxysmal model.</p>
+    <h4>Adaptive design</h4>
+    <p>Pre-specified modification of trial features using interim data — dose-dropping, sample-size re-estimation, response-adaptive randomisation, seamless Phase II/III.</p>
+    <ul>
+      <li><b>Advantages:</b> efficient, ethical (more patients to better arm), faster, fewer subjects, cost-saving.</li>
+      <li><b>Challenges:</b> risk of bias/type-I error inflation, statistical &amp; logistic complexity, need for fast data capture and regulatory acceptance, operational unblinding risk.</li>
+      <li><b>Examples:</b> I-SPY 2 (breast cancer), RECOVERY &amp; SOLIDARITY (COVID-19).</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Constitution, functions &amp; role of IAEC and CPCSEA guidelines. Compare CCSEA and ARRIVE guidelines.</span></summary>
+  <div class="answer">
+    <h4>CPCSEA / CCSEA</h4>
+    <p><b>CPCSEA</b> (Committee for the Purpose of Control &amp; Supervision of Experiments on Animals), now renamed <b>CCSEA</b> (Committee for Control &amp; Supervision of Experiments on Animals), is a statutory body under the Prevention of Cruelty to Animals Act 1960 (MoEFCC). It registers establishments, frames guidelines, and oversees ethical animal use.</p>
+    <h4>IAEC — constitution</h4>
+    <p>Each institution forms an <b>Institutional Animal Ethics Committee</b> with (typically):</p>
+    <ul>
+      <li>Chairperson; Member-Secretary; Biological/Veterinary scientist(s).</li>
+      <li>Scientist from another discipline; a scientist from outside the institute.</li>
+      <li><b>CCSEA-nominated main &amp; link nominee</b> (mandatory) — a non-affiliated member / socially aware person.</li>
+    </ul>
+    <h4>Functions</h4>
+    <ul><li>Review &amp; approve animal-use protocols (justification, numbers, species, endpoints).</li><li>Ensure 3R compliance, humane care, anaesthesia/analgesia, euthanasia standards.</li><li>Inspect facilities; maintain records; can suspend non-compliant projects.</li></ul>
+    <h4>CCSEA vs ARRIVE</h4>
+    <table>
+      <tr><th>Feature</th><th>CCSEA (CPCSEA)</th><th>ARRIVE</th></tr>
+      <tr><td>Nature</td><td>Statutory <b>regulatory</b> guideline (India)</td><td>Voluntary <b>reporting</b> guideline (international)</td></tr>
+      <tr><td>Scope</td><td>Approval, housing, ethics, oversight of experiments</td><td>Transparent reporting of in-vivo research in publications</td></tr>
+      <tr><td>Focus</td><td>Animal welfare &amp; legal compliance</td><td>Reproducibility &amp; quality of published data (design, randomisation, blinding, sample size)</td></tr>
+      <tr><td>Enforced by</td><td>Government/CCSEA &amp; IAEC</td><td>Journals/editors (NC3Rs, UK)</td></tr>
+    </table>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Contribution of animal experimentation in biomedical research — limitations &amp; alternatives (3R/4R).</span></summary>
+  <div class="answer">
+    <h4>Contributions</h4>
+    <ul>
+      <li>Understanding physiology/pathology; disease models (diabetes, hypertension, cancer xenografts).</li>
+      <li>Drug efficacy (PD), PK/ADME, and the toxicity battery before human exposure.</li>
+      <li>Vaccine &amp; biologic development; surgical technique training; insulin, antibiotics, polio vaccine historically.</li>
+    </ul>
+    <h4>Limitations</h4>
+    <ul>
+      <li>Species differences in PK/PD → poor human predictivity (e.g. TGN1412 disaster despite animal safety).</li>
+      <li>Ethical concerns &amp; cost; stress/handling artefacts; small numbers; reproducibility issues.</li>
+    </ul>
+    <h4>Alternatives &amp; the 3R/4R principle (Russell &amp; Burch, 1959)</h4>
+    <table>
+      <tr><th>Principle</th><th>Meaning / example</th></tr>
+      <tr><td><b>Replacement</b></td><td>Use non-animal methods: in-vitro cell lines, organoids, organ-on-chip, in-silico/QSAR, microdosing in humans.</td></tr>
+      <tr><td><b>Reduction</b></td><td>Fewer animals via better statistical design &amp; shared data.</td></tr>
+      <tr><td><b>Refinement</b></td><td>Minimise pain/distress — analgesia, anaesthesia, humane endpoints, enrichment.</td></tr>
+      <tr><td><b>Rehabilitation (4th R)</b></td><td>Rehoming/rehabilitating animals after experiments where possible.</td></tr>
+    </table>
+    <div class="recent"><b>Recent:</b> US FDA Modernization Act 2.0 (2022) permits non-animal alternatives (organ-chips, AI models) for IND data — a major shift away from mandatory animal testing.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Artificial Intelligence &amp; Machine Learning in Drug Discovery and Pharmacology.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> AI = computer systems performing tasks that normally need human intelligence (pattern recognition, prediction, reasoning); machine learning (ML) is the AI subset where algorithms learn statistical relationships from data rather than explicit programming; deep learning (DL) uses multi-layer neural networks for highly non-linear data (chemical structures, images, sequences). In drug development these extend computational ("in-silico") pharmacology — software-driven design/refinement of candidates while reducing animal use (3Rs).</p>
+    <h4>Key terms</h4>
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>ML</td><td>Algorithms learn patterns from data (supervised/unsupervised/reinforcement)</td></tr>
+      <tr><td>Deep learning</td><td>Multi-layer neural networks; learns features automatically</td></tr>
+      <tr><td>Generative models</td><td>DL that creates novel molecules (GANs, VAEs, transformers/LLMs)</td></tr>
+      <tr><td>QSAR</td><td>Quantitative structure-activity relationship — predicts activity from molecular descriptors</td></tr>
+    </table>
+    <h4>AI/ML across the discovery pipeline</h4>
+    <table>
+      <tr><th>Stage</th><th>Role of AI/ML</th><th>Example</th></tr>
+      <tr><td>Target ID &amp; validation</td><td>Mine genomics/omics &amp; pathways to nominate targets</td><td>Computational genomics, microarray mining</td></tr>
+      <tr><td>Protein structure prediction</td><td>Predict 3D structure from sequence</td><td>AlphaFold / RoseTTAFold</td></tr>
+      <tr><td>Virtual/HT screening</td><td>Filter millions of compounds by similarity/docking</td><td>Virtual HTS, CADD</td></tr>
+      <tr><td>Lead optimisation &amp; de novo design</td><td>Generative models build novel ligands; SAR-guided refinement</td><td>GAN/transformer "large chemistry models"</td></tr>
+      <tr><td>QSAR &amp; property prediction</td><td>Predict potency, solubility, physicochemical properties</td><td>DL regression; Lipinski Ro5 as classical filter</td></tr>
+      <tr><td>ADMET/toxicity prediction</td><td>Predict absorption, metabolism, off-target/organ toxicity early</td><td>In-silico ADME/TOX models</td></tr>
+      <tr><td>Drug repurposing</td><td>Match existing drugs to new indications</td><td>Connectivity/network ML</td></tr>
+    </table>
+    <div class="dia"><b>Pipeline:</b> Target ID → Structure prediction (AlphaFold) → Virtual screening/docking → De novo design (generative AI) → QSAR &amp; ADMET → Hit/Lead → Clinical trials → Pharmacovigilance.</div>
+    <h4>Applications beyond discovery</h4>
+    <ul>
+      <li>Clinical-trial design — patient stratification, site/cohort selection, dropout prediction, synthetic control arms.</li>
+      <li>Pharmacovigilance — automated ADR signal detection from spontaneous reports, EHRs, social media.</li>
+      <li>Precision dosing/PK-PD — ML-assisted model-informed dosing, TDM, Bayesian dose individualisation.</li>
+      <li>Pharmacogenomics — predicting response/toxicity from genotype/multi-omic data.</li>
+      <li>Manufacturing &amp; quality — process optimisation, QC.</li>
+    </ul>
+    <h4>Limitations &amp; concerns</h4>
+    <ul>
+      <li>"Garbage in, garbage out" — needs large, clean, well-curated, unbiased training data.</li>
+      <li>Black-box problem — poor interpretability of DL predictions, hard to validate mechanistically.</li>
+      <li>Overfitting/poor generalisation outside training chemical space; needs external validation.</li>
+      <li>Regulatory/ethical issues — accountability, transparency, data privacy; experimental (in-vitro/in-vivo) confirmation remains mandatory — AI augments, doesn't replace, the pharmacologist.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Rentosertib (ISM001-055), a TNIK inhibitor designed by Insilico Medicine's generative-AI platform for idiopathic pulmonary fibrosis, met endpoints in a randomised Phase 2a trial — first AI-designed drug with clinical proof-of-concept (<i>Nat Med</i> 2025). US FDA issued its first draft guidance (Jan 2025) on AI in regulatory decision-making, proposing a risk-based 7-step credibility framework across nonclinical, clinical, post-marketing and manufacturing phases.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s2" style="--sec:#3f6cb0;--sec-soft:#3f6cb026">
+  <h2>Section 2 · Pharmacokinetics (ADME, TDM &amp; Individualisation)</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 2 (Pharmacokinetics), Ch. 4 (Membrane Transporters), Ch. 5 (Drug Metabolism), Ch. 7 (Pharmacogenetics).</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacokinetics in detail — ADME, membrane transport, bioavailability, Vd, clearance, kinetics (1st/0-order), metabolism (Phase I/II, inducers/inhibitors), excretion, chrono- &amp; toxicokinetics, genetic polymorphism.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> Pharmacokinetics = "what the body does to the drug" — the quantitative study of <b>A</b>bsorption, <b>D</b>istribution, <b>M</b>etabolism and <b>E</b>xcretion (ADME). G&amp;G: PK determines the concentration of drug at its site of action over time.</p>
+
+    <h4>Membrane transport mechanisms</h4>
+    <ul>
+      <li><b>Passive diffusion</b> (lipid-soluble, unionised drugs; governed by pH-partition &amp; Henderson-Hasselbalch).</li>
+      <li><b>Facilitated diffusion</b> &amp; <b>aqueous (paracellular) diffusion.</b></li>
+      <li><b>Active transport</b> (carrier, ATP-dependent) — e.g. <b>P-glycoprotein (MDR1), OATP, OCT, OAT</b> (G&amp;G Ch.4).</li>
+      <li><b>Endocytosis/pinocytosis</b> for large molecules.</li>
+    </ul>
+
+    <h4>A — Absorption &amp; Bioavailability (F)</h4>
+    <p><b>Bioavailability</b> = fraction of administered dose reaching systemic circulation unchanged. IV = 100%. Reduced by <b>first-pass metabolism</b> (gut/liver), poor solubility, efflux. <code>F = AUC(oral)/AUC(IV)</code>. Factors: formulation, GI pH/motility, food, surface area, blood flow.</p>
+
+    <h4>D — Distribution &amp; Volume of distribution (Vd)</h4>
+    <p><b>Vd = Dose / plasma concentration (C₀)</b> — apparent volume relating amount of drug in body to plasma concentration. High Vd = extensive tissue binding (e.g. digoxin ~500 L, chloroquine huge); low Vd = vascular/protein-bound (warfarin). Affected by plasma-protein binding (albumin, α1-acid glycoprotein), tissue binding, lipid solubility, BBB/placenta.</p>
+
+    <h4>M — Metabolism (biotransformation)</h4>
+    <table>
+      <tr><th>Phase</th><th>Reactions</th><th>Enzymes / notes</th></tr>
+      <tr><td><b>Phase I</b> (non-synthetic)</td><td>Oxidation, reduction, hydrolysis → introduces/exposes functional group</td><td>Mainly <b>CYP450</b> (CYP3A4, 2D6, 2C9, 1A2…); often makes metabolite more reactive.</td></tr>
+      <tr><td><b>Phase II</b> (synthetic conjugation)</td><td>Glucuronidation, sulfation, acetylation, methylation, glutathione, glycine</td><td>Usually inactivating, ↑ water solubility for excretion (UGT, NAT, GST, SULT).</td></tr>
+    </table>
+    <table>
+      <tr><th>Enzyme inducers</th><th>Enzyme inhibitors</th></tr>
+      <tr><td>Rifampicin, phenytoin, phenobarbitone, carbamazepine, chronic alcohol, smoking, St John's wort, griseofulvin</td><td>Ketoconazole, erythromycin/clarithromycin, ciprofloxacin, cimetidine, valproate, grapefruit juice, ritonavir, omeprazole</td></tr>
+    </table>
+    <p><b>Clinical importance:</b> inducers ↓ effect (e.g. OC pill failure with rifampicin); inhibitors ↑ toxicity (e.g. ↑warfarin INR). Basis of many drug–drug interactions.</p>
+
+    <h4>E — Excretion</h4>
+    <ul><li><b>Renal:</b> glomerular filtration, active tubular secretion, passive reabsorption (pH-dependent — alkalinise urine to excrete acidic aspirin/phenobarbitone).</li><li>Biliary &amp; <b>enterohepatic recirculation</b>; lungs (volatiles); milk, sweat, saliva.</li></ul>
+
+    <h4>Kinetics &amp; clearance</h4>
+    <ul>
+      <li><b>First-order:</b> constant <i>fraction</i> eliminated/unit time; rate ∝ concentration; constant t½ (most drugs).</li>
+      <li><b>Zero-order:</b> constant <i>amount</i> eliminated; saturable; e.g. <b>phenytoin, ethanol, aspirin (high dose), warfarin, theophylline</b> — small dose change → large concentration rise.</li>
+      <li><b>Clearance (CL)</b> = volume of plasma cleared/unit time; CL = rate of elimination/C; determines maintenance dose. <b>t½ = 0.693 × Vd / CL.</b> Steady state reached in ~4–5 half-lives.</li>
+    </ul>
+
+    <h4>Special kinetics</h4>
+    <ul>
+      <li><b>Chronokinetics:</b> circadian variation in ADME (e.g. evening statin/antihypertensive dosing).</li>
+      <li><b>Toxicokinetics:</b> PK at toxic doses — saturation, altered protein binding, prolonged t½ (overdose management).</li>
+      <li><b>Genetic polymorphism:</b> CYP2D6 (poor/ultra-rapid metabolisers — codeine), CYP2C19 (clopidogrel/PPIs), NAT2 (isoniazid fast/slow acetylators), TPMT (azathioprine), DPYD (5-FU) — basis of pharmacogenomics.</li>
+    </ul>
+    <div class="recent"><b>Recent:</b> Physiologically-Based PK (PBPK) modelling &amp; model-informed drug development now guide dosing in special populations and DDI prediction for regulatory submissions.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Define TDM. Indications, sampling strategy, interpretation, dose-regimen calculation, applications for specific drugs.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> Therapeutic Drug Monitoring is the measurement of drug concentration in body fluids (usually plasma) at designated intervals to individualise dosage and keep levels within the therapeutic range.</p>
+    <h4>Drugs requiring TDM (and ranges)</h4>
+    <table>
+      <tr><th>Drug</th><th>Therapeutic range</th></tr>
+      <tr><td>Digoxin</td><td>0.5–2 ng/mL (≤0.8–2)</td></tr>
+      <tr><td>Phenytoin</td><td>10–20 µg/mL</td></tr>
+      <tr><td>Lithium</td><td>0.6–1.2 mEq/L</td></tr>
+      <tr><td>Theophylline</td><td>10–20 µg/mL</td></tr>
+      <tr><td>Vancomycin / Aminoglycosides</td><td>trough-guided (nephro/ototoxicity)</td></tr>
+      <tr><td>Cyclosporine/Tacrolimus, Valproate, Carbamazepine, Methotrexate</td><td>assay-specific</td></tr>
+    </table>
+    <h4>Indications (when to do TDM)</h4>
+    <ul>
+      <li>Narrow therapeutic index; poor concentration–dose correlation; zero-order kinetics (phenytoin).</li>
+      <li>No clear clinical endpoint; suspected toxicity vs under-dosing; non-adherence.</li>
+      <li>Altered PK — renal/hepatic disease, paediatric/geriatric/pregnancy, drug interactions.</li>
+    </ul>
+    <h4>Sampling strategy</h4>
+    <ul><li><b>Trough</b> just before next dose (most useful for efficacy/toxicity); <b>peak</b> for aminoglycoside efficacy.</li><li>Sample at <b>steady state</b> (after 4–5 t½); for digoxin sample ≥6–8 h post-dose (distribution complete).</li></ul>
+    <h4>Interpretation &amp; dose calculation</h4>
+    <p>Adjust using linear (first-order) proportionality: <code>New dose = current dose × (target conc / measured conc)</code>. <b>Maintenance dose = Css × CL</b>; <b>Loading dose = Css × Vd</b>. Caution with phenytoin (non-linear — use Michaelis-Menten, small increments).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Drug-dosage individualisation in special populations (paediatric, geriatric, renal &amp; hepatic impairment) &amp; role of pharmacogenomics.</span></summary>
+  <div class="answer">
+    <h4>Paediatric</h4>
+    <ul><li>Immature CYP/UGT (neonatal "gray baby" with chloramphenicol), higher body water, ↓protein binding, immature renal function.</li><li>Dose by <b>body weight (mg/kg)</b> or BSA; formulae — Clark's, Young's, BSA-based.</li></ul>
+    <h4>Geriatric</h4>
+    <ul><li>↓ renal clearance &amp; hepatic mass/flow, ↑ fat → ↑ Vd of lipophilic drugs &amp; t½, ↑ sensitivity (CNS, anticoagulants), polypharmacy.</li><li>"Start low, go slow"; use Beers criteria; estimate renal function (Cockcroft-Gault).</li></ul>
+    <h4>Renal impairment</h4>
+    <ul><li>Reduce dose / lengthen interval per <b>eGFR/CrCl</b> for renally-cleared drugs (aminoglycosides, digoxin, metformin, vancomycin); avoid nephrotoxins.</li></ul>
+    <h4>Hepatic impairment</h4>
+    <ul><li>↓ metabolism &amp; first-pass, hypoalbuminaemia, altered protein binding; use Child-Pugh to guide; avoid hepatotoxins; caution with high-extraction drugs.</li></ul>
+    <h4>Pharmacogenomics in precision dosing</h4>
+    <table>
+      <tr><th>Gene</th><th>Drug — implication</th></tr>
+      <tr><td>CYP2C9 + VKORC1</td><td>Warfarin — genotype-guided dose</td></tr>
+      <tr><td>CYP2C19</td><td>Clopidogrel (poor metaboliser → ↓ activation), PPIs</td></tr>
+      <tr><td>CYP2D6</td><td>Codeine, tamoxifen, antidepressants</td></tr>
+      <tr><td>TPMT / NUDT15</td><td>Azathioprine/6-MP myelosuppression</td></tr>
+      <tr><td>HLA-B*15:02 / *57:01</td><td>Carbamazepine (SJS), abacavir hypersensitivity</td></tr>
+      <tr><td>DPYD</td><td>5-Fluorouracil toxicity</td></tr>
+    </table>
+    <div class="recent"><b>Recent:</b> CPIC guidelines &amp; pre-emptive pharmacogenomic panels; PBPK-based dosing for paediatrics and organ impairment.</div>
+  </div></details>
+
+</section>
+
+<section class="sec" id="s3" style="--sec:#845bb0;--sec-soft:#845bb026">
+  <h2>Section 3 · Pharmacodynamics — Receptors, Signaling &amp; Dose-Response</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 3: Pharmacodynamics, Molecular Mechanisms of Drug Action.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Explain the receptor concept of drug action. Classify receptor types (location, signal transduction, an agonist &amp; antagonist each, clinical importance). Discuss GPCRs in detail (G-protein types &amp; second messengers).</span></summary>
+  <div class="answer">
+    <p><b>Receptor concept:</b> A receptor is a macromolecule (usually protein) that recognises and binds a drug/ligand to initiate a response. <b>"Receptors determine quantitative relations between dose and pharmacological effect; they are responsible for selectivity; and they mediate the actions of agonists and antagonists"</b> (Ehrlich's "corpora non agunt nisi fixata"; occupancy theory of Clark). Key terms: affinity, intrinsic activity/efficacy, spare receptors, agonist, antagonist.</p>
+
+    <h4>Classification of receptors (4 superfamilies)</h4>
+    <table>
+      <tr><th>Type</th><th>Location</th><th>Transduction</th><th>Time-scale</th><th>Agonist / Antagonist</th></tr>
+      <tr><td>1. Ligand-gated ion channels (ionotropic)</td><td>Membrane</td><td>Ion flux (Na⁺/Cl⁻/Ca²⁺)</td><td>Milliseconds</td><td>Nicotinic ACh: ACh / tubocurarine; GABA-A: muscimol / bicuculline</td></tr>
+      <tr><td>2. GPCRs (metabotropic)</td><td>Membrane (7-TM)</td><td>G-protein → 2nd messenger</td><td>Seconds</td><td>β-adrenergic: adrenaline / propranolol</td></tr>
+      <tr><td>3. Enzyme-linked (kinase) receptors</td><td>Membrane</td><td>Tyrosine kinase / guanylyl cyclase</td><td>Minutes</td><td>Insulin: insulin / —; ANP: ANP / —</td></tr>
+      <tr><td>4. Nuclear (intracellular) receptors</td><td>Cytoplasm/nucleus</td><td>Gene transcription (DNA)</td><td>Hours</td><td>Glucocorticoid: cortisol / mifepristone</td></tr>
+    </table>
+
+    <h4>GPCRs in detail</h4>
+    <p>Seven-transmembrane proteins coupled to heterotrimeric G-proteins (α, β, γ). Agonist binding → GDP/GTP exchange on Gα → dissociation → effector modulation → GTP hydrolysis (off).</p>
+    <table>
+      <tr><th>G-protein</th><th>Effector</th><th>2nd messenger</th><th>Example receptor</th></tr>
+      <tr><td><b>Gs</b></td><td>↑ Adenylyl cyclase</td><td>↑ cAMP → PKA</td><td>β1/β2, D1, H2, glucagon</td></tr>
+      <tr><td><b>Gi/Go</b></td><td>↓ Adenylyl cyclase / ↓Ca²⁺, ↑K⁺</td><td>↓ cAMP</td><td>α2, M2, D2, µ-opioid</td></tr>
+      <tr><td><b>Gq</b></td><td>↑ Phospholipase C</td><td>IP₃ (↑Ca²⁺) + DAG → PKC</td><td>α1, M1/M3, H1, 5-HT2, AT1</td></tr>
+    </table>
+    <div class="dia"><b>Diagram:</b> Agonist → 7-TM GPCR → Gαβγ → (Gs)↑AC↑cAMP→PKA / (Gq)↑PLC→IP₃+DAG→↑Ca²⁺&amp;PKC → cellular response.</div>
+    <p><b>Clinical importance:</b> ~30–40% of marketed drugs act on GPCRs; receptor up/down-regulation explains tolerance &amp; supersensitivity; biased agonism is an emerging therapeutic concept.</p>
+    <div class="recent"><b>Recent:</b> Cryo-EM GPCR structures, <b>biased agonists</b> (e.g. oliceridine — G-protein-biased µ-opioid), and allosteric modulators.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Dose–response relationship: graded vs quantal, DRC vs log-DRC; define potency, efficacy, therapeutic index &amp; therapeutic window (graphs &amp; examples).</span></summary>
+  <div class="answer">
+    <h4>Graded vs Quantal DRC</h4>
+    <table>
+      <tr><th>Feature</th><th>Graded</th><th>Quantal (all-or-none)</th></tr>
+      <tr><td>Measures</td><td>Continuous response in one individual/tissue</td><td>% of population showing a defined response</td></tr>
+      <tr><td>Curve</td><td>Hyperbolic (or sigmoid on log scale)</td><td>Sigmoid cumulative</td></tr>
+      <tr><td>Yields</td><td>Emax, EC₅₀, potency, efficacy</td><td>ED₅₀, TD₅₀, LD₅₀, Therapeutic Index</td></tr>
+      <tr><td>Use</td><td>Compare drug potency/efficacy</td><td>Compare drug safety in a population</td></tr>
+    </table>
+    <p><b>DRC vs log-DRC:</b> plotting response against <i>log dose</i> converts the hyperbola into a symmetrical <b>sigmoid</b>, expands the low-dose region, and gives a straight middle segment — easier to compare EC₅₀ and parallelism (agonist/antagonist analysis).</p>
+    <h4>Key definitions</h4>
+    <ul>
+      <li><b>Potency:</b> dose required for a given effect (position on x-axis; lower EC₅₀ = more potent). e.g. bumetanide more potent than furosemide.</li>
+      <li><b>Efficacy (intrinsic activity):</b> maximal effect achievable (Emax; height of curve). e.g. morphine > codeine; loop diuretics > thiazides. <i>Efficacy &gt; potency clinically.</i></li>
+      <li><b>Therapeutic Index (TI) = TD₅₀ / ED₅₀</b> (or LD₅₀/ED₅₀). Higher = safer. Low-TI drugs: digoxin, warfarin, lithium, phenytoin, aminoglycosides.</li>
+      <li><b>Therapeutic window:</b> concentration range between minimum effective and minimum toxic concentration — a more clinically useful safety measure than TI.</li>
+    </ul>
+    <div class="dia"><b>Diagram:</b> Log-dose (x) vs % response (y): two sigmoid curves — ED₅₀ (efficacy) and TD₅₀/LD₅₀; gap between them = therapeutic window/safety margin.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Classify agonists (full, partial, inverse) &amp; antagonists (competitive, non-competitive, physiological, chemical) with mechanisms &amp; examples. Note on receptor up/down-regulation.</span></summary>
+  <div class="answer">
+    <h4>Agonists</h4>
+    <table>
+      <tr><th>Type</th><th>Intrinsic activity</th><th>Example</th></tr>
+      <tr><td>Full agonist</td><td>1 (max effect)</td><td>Adrenaline, morphine</td></tr>
+      <tr><td>Partial agonist</td><td>0–1 (submaximal even at full occupancy)</td><td>Buprenorphine, pindolol, aripiprazole</td></tr>
+      <tr><td>Inverse agonist</td><td>−1 (opposite effect; needs constitutive activity)</td><td>Propranolol, naloxone (at some receptors), antihistamines</td></tr>
+    </table>
+    <h4>Antagonists</h4>
+    <table>
+      <tr><th>Type</th><th>Mechanism / DRC effect</th><th>Example</th></tr>
+      <tr><td>Competitive (reversible)</td><td>Same site; surmountable; shifts log-DRC right, Emax unchanged</td><td>Atropine vs ACh; naloxone vs morphine</td></tr>
+      <tr><td>Non-competitive / irreversible</td><td>Different site or covalent; ↓Emax, not surmountable</td><td>Phenoxybenzamine (α), ketamine (NMDA)</td></tr>
+      <tr><td>Physiological (functional)</td><td>Opposite effect via different receptor</td><td>Adrenaline vs histamine in anaphylaxis</td></tr>
+      <tr><td>Chemical</td><td>Combine chemically, inactivate drug</td><td>Chelators (dimercaprol + metals); protamine + heparin</td></tr>
+    </table>
+    <h4>Receptor regulation</h4>
+    <ul>
+      <li><b>Down-regulation / desensitisation:</b> ↓ receptor number/sensitivity with prolonged agonist → tolerance (e.g. β-agonist tachyphylaxis in asthma).</li>
+      <li><b>Up-regulation / supersensitivity:</b> ↑ receptors with chronic antagonist/denervation → rebound on withdrawal (e.g. β-blocker withdrawal angina, clonidine rebound HTN).</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Signaling mechanisms &amp; transduction pathways in drug action (role of GPCRs &amp; drugs modulating adenylyl cyclase).</span></summary>
+  <div class="answer">
+    <h4>Major transduction pathways</h4>
+    <ul>
+      <li><b>Ion channels:</b> direct conductance change (nicotinic, GABA-A).</li>
+      <li><b>GPCR → second messengers:</b> Gs↑cAMP, Gi↓cAMP, Gq→IP₃/DAG→Ca²⁺/PKC (see GPCR table).</li>
+      <li><b>Receptor tyrosine kinases:</b> insulin, EGFR, VEGFR → autophosphorylation → RAS-MAPK / PI3K-AKT.</li>
+      <li><b>JAK-STAT:</b> cytokine/GH receptors (target of tofacitinib).</li>
+      <li><b>Guanylyl cyclase → cGMP:</b> ANP, nitric oxide/nitrates (vasodilation; PDE5 inhibitors potentiate).</li>
+      <li><b>Nuclear receptors → gene transcription:</b> steroids, thyroid, vitamin D.</li>
+    </ul>
+    <h4>Drugs modulating adenylyl cyclase / cAMP</h4>
+    <ul>
+      <li>↑cAMP: β-agonists (salbutamol), glucagon, forskolin, <b>PDE inhibitors</b> (theophylline, milrinone, sildenafil-cGMP).</li>
+      <li>↓cAMP: α2-agonists (clonidine), M2 (ACh), opioids (Gi-coupled).</li>
+    </ul>
+    <div class="dia"><b>Flowchart:</b> Signal (ms→hours) — Ion channel → GPCR/2nd messenger → Enzyme-linked kinase → Nuclear/transcription, in order of increasing latency.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Detailed account of 5-HT (serotonin) receptors — subtypes, distribution, agonists, antagonists, therapeutic applications.</span></summary>
+  <div class="answer">
+    <p>7 families (5-HT1–7); all GPCRs except <b>5-HT3</b> (ligand-gated ion channel).</p>
+    <table>
+      <tr><th>Receptor</th><th>Coupling</th><th>Location</th><th>Agonist</th><th>Antagonist</th><th>Use</th></tr>
+      <tr><td>5-HT1A</td><td>Gi</td><td>Raphe, hippocampus</td><td>Buspirone</td><td>—</td><td>Anxiety, depression</td></tr>
+      <tr><td>5-HT1B/1D</td><td>Gi</td><td>Cranial vessels</td><td><b>Triptans</b> (sumatriptan)</td><td>—</td><td>Migraine (abortive)</td></tr>
+      <tr><td>5-HT2A</td><td>Gq</td><td>Platelets, smooth muscle, cortex</td><td>LSD (partial)</td><td>Ketanserin, atypical antipsychotics (risperidone)</td><td>HTN, schizophrenia</td></tr>
+      <tr><td>5-HT2C</td><td>Gq</td><td>Hypothalamus, choroid plexus</td><td>Lorcaserin</td><td>—</td><td>Obesity</td></tr>
+      <tr><td>5-HT3</td><td>Ion channel</td><td>Area postrema, gut (CTZ)</td><td>—</td><td><b>Ondansetron</b> (-setrons)</td><td>Antiemetic (CINV, PONV)</td></tr>
+      <tr><td>5-HT4</td><td>Gs</td><td>GIT</td><td>Prucalopride, tegaserod</td><td>—</td><td>Prokinetic, constipation/IBS</td></tr>
+    </table>
+    <p><b>Other agents:</b> SSRIs ↑ synaptic 5-HT (depression); ergots; risk of <b>serotonin syndrome</b> with combinations.</p>
+    <div class="recent"><b>Recent:</b> Psilocybin/esketamine and 5-HT2A research for treatment-resistant depression; lasmiditan (5-HT1F "ditan") for migraine without vasoconstriction.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Adrenergic receptors in detail (classification, subtypes, signaling, agonists/antagonists) with emphasis on third-generation beta-blockers.</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Receptor</th><th>G-protein</th><th>Effect</th><th>Agonist</th><th>Antagonist</th></tr>
+      <tr><td>α1</td><td>Gq (↑IP₃/Ca²⁺)</td><td>Vasoconstriction, mydriasis</td><td>Phenylephrine</td><td>Prazosin</td></tr>
+      <tr><td>α2</td><td>Gi (↓cAMP)</td><td>↓ NA release, ↓ central sympathetic</td><td>Clonidine</td><td>Yohimbine</td></tr>
+      <tr><td>β1</td><td>Gs (↑cAMP)</td><td>↑ HR &amp; contractility, renin</td><td>Dobutamine</td><td>Metoprolol</td></tr>
+      <tr><td>β2</td><td>Gs</td><td>Bronchodilation, vasodilation</td><td>Salbutamol</td><td>(propranolol non-selective)</td></tr>
+      <tr><td>β3</td><td>Gs</td><td>Lipolysis, bladder relaxation</td><td>Mirabegron</td><td>—</td></tr>
+    </table>
+    <h4>Generations of β-blockers</h4>
+    <ul>
+      <li><b>1st gen (non-selective):</b> propranolol, timolol, nadolol.</li>
+      <li><b>2nd gen (β1-selective/cardioselective):</b> metoprolol, atenolol, bisoprolol, esmolol.</li>
+      <li><b>3rd gen (additional vasodilatory action):</b> <b>carvedilol &amp; labetalol</b> (also α1-block), <b>nebivolol</b> (β1-selective + NO-mediated vasodilation), celiprolol.</li>
+    </ul>
+    <p><b>3rd-gen clinical uses:</b> hypertension (esp. with metabolic syndrome — nebivolol improves insulin sensitivity), heart failure (carvedilol — mortality benefit), and lower peripheral resistance/fewer metabolic adverse effects than older agents.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">SERMs and SPRMs — classification, mechanism, pharmacological profile, clinical applications.</span></summary>
+  <div class="answer">
+    <h4>SERMs (Selective Estrogen Receptor Modulators)</h4>
+    <p><b>Mechanism:</b> tissue-selective agonist/antagonist at estrogen receptors depending on co-activator/co-repressor recruitment.</p>
+    <table>
+      <tr><th>Drug</th><th>Breast</th><th>Bone</th><th>Uterus</th><th>Use</th></tr>
+      <tr><td>Tamoxifen</td><td>Antagonist</td><td>Agonist</td><td>Agonist (↑Ca risk)</td><td>ER+ breast cancer</td></tr>
+      <tr><td>Raloxifene</td><td>Antagonist</td><td>Agonist</td><td>Neutral</td><td>Postmenopausal osteoporosis</td></tr>
+      <tr><td>Clomiphene</td><td>—</td><td>—</td><td>Antagonist (hypothalamus)</td><td>Ovulation induction</td></tr>
+      <tr><td>Ospemifene</td><td>—</td><td>—</td><td>Agonist (vagina)</td><td>Dyspareunia</td></tr>
+    </table>
+    <h4>SPRMs (Selective Progesterone Receptor Modulators)</h4>
+    <ul>
+      <li><b>Mifepristone</b> — PR antagonist: medical abortion (with misoprostol), Cushing's.</li>
+      <li><b>Ulipristal acetate</b> — emergency contraception &amp; uterine fibroids.</li>
+    </ul>
+    <p><b>Profile:</b> SERMs ↑ VTE risk &amp; hot flushes; tamoxifen ↑ endometrial cancer; raloxifene safer on uterus. SPRMs — monitor liver (ulipristal).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">NMDA receptors, glutamate receptors and drugs acting on them with therapeutic potential.</span></summary>
+  <div class="answer">
+    <p><b>Glutamate</b> is the major excitatory CNS neurotransmitter. Receptors:</p>
+    <table>
+      <tr><th>Type</th><th>Subtypes</th><th>Notes</th></tr>
+      <tr><td>Ionotropic</td><td>NMDA, AMPA, Kainate</td><td>Fast excitation; NMDA = Ca²⁺-permeable, Mg²⁺-blocked, needs glycine co-agonist</td></tr>
+      <tr><td>Metabotropic</td><td>mGluR1–8 (GPCR)</td><td>Modulatory</td></tr>
+    </table>
+    <h4>Drugs &amp; uses</h4>
+    <ul>
+      <li><b>NMDA antagonists:</b> ketamine &amp; esketamine (anaesthesia, treatment-resistant depression), <b>memantine</b> (Alzheimer's — moderate-severe), dextromethorphan, amantadine.</li>
+      <li><b>AMPA antagonist:</b> perampanel (epilepsy).</li>
+      <li>Excitotoxicity (Ca²⁺ overload) implicated in stroke, neurodegeneration → neuroprotection target.</li>
+    </ul>
+    <div class="recent"><b>Recent:</b> Esketamine nasal spray &amp; <b>dextromethorphan–bupropion (Auvelity)</b> for major depression — rapid NMDA-modulating antidepressants.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Ion channels as drug targets — examples and classification.</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Class</th><th>Example channel</th><th>Drug</th><th>Use</th></tr>
+      <tr><td>Voltage-gated Na⁺</td><td>Cardiac/neuronal Na⁺</td><td>Lidocaine, phenytoin, flecainide</td><td>Antiarrhythmic, antiepileptic, LA</td></tr>
+      <tr><td>Voltage-gated Ca²⁺</td><td>L-type, T-type</td><td>Amlodipine, verapamil, ethosuximide (T)</td><td>HTN, angina, absence seizures</td></tr>
+      <tr><td>K⁺ channels</td><td>K-ATP, others</td><td>Sulfonylureas (block), minoxidil/nicorandil (open)</td><td>Diabetes, HTN/angina</td></tr>
+      <tr><td>Ligand-gated</td><td>Nicotinic, GABA-A, NMDA</td><td>Benzodiazepines, NMBAs</td><td>Sedation, paralysis</td></tr>
+      <tr><td>Cl⁻ channel (CFTR)</td><td>CFTR</td><td>Ivacaftor</td><td>Cystic fibrosis</td></tr>
+    </table>
+    <p><b>Classification:</b> by gating — voltage-gated, ligand-gated, mechano-/temperature-gated (TRP), and leak channels. ~15% of drugs target ion channels.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Enzymes as drug targets, with emphasis on phosphodiesterase (PDE) enzymes &amp; their inhibitors.</span></summary>
+  <div class="answer">
+    <h4>Enzymes as targets (general)</h4>
+    <p>Drugs inhibit enzymes to alter substrate/product levels — e.g. ACE inhibitors, HMG-CoA reductase (statins), COX (NSAIDs), xanthine oxidase (allopurinol), DHFR (methotrexate), monoamine oxidase, DPP-4 (gliptins). Some are pro-drugs activated by enzymes.</p>
+    <h4>PDE isoenzymes &amp; inhibitors</h4>
+    <table>
+      <tr><th>PDE</th><th>Substrate</th><th>Inhibitor</th><th>Clinical use</th></tr>
+      <tr><td>PDE3</td><td>cAMP (heart, platelet)</td><td>Milrinone, cilostazol</td><td>Acute HF; intermittent claudication</td></tr>
+      <tr><td>PDE4</td><td>cAMP (inflammatory cells)</td><td>Roflumilast, apremilast</td><td>COPD; psoriasis/psoriatic arthritis</td></tr>
+      <tr><td>PDE5</td><td>cGMP (vascular)</td><td>Sildenafil, tadalafil</td><td>Erectile dysfunction, PAH, BPH</td></tr>
+      <tr><td>Non-selective</td><td>cAMP/cGMP</td><td>Theophylline, pentoxifylline</td><td>Asthma/COPD; PVD</td></tr>
+    </table>
+    <p><b>Mechanism:</b> PDE inhibition ↑ cAMP/cGMP → smooth-muscle relaxation, ↑ cardiac contractility, ↓ inflammation, antiplatelet effects.</p>
+  </div></details>
+<details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Discuss transporters as drug targets with examples.</span></summary>
+  <div class="answer">
+<p><b>Concept:</b> Membrane transport proteins (SLC carriers and ABC efflux pumps) move ions, solutes and drugs across membranes; targeting them alters physiology or drug disposition.</p>
+<table><tr><th>Transporter</th><th>Drug</th><th>Use</th></tr>
+<tr><td>SGLT2 (proximal tubule)</td><td>Dapagliflozin, empagliflozin</td><td>Diabetes, heart failure, CKD</td></tr>
+<tr><td>NKCC2 / NCC / ENaC</td><td>Furosemide / thiazides / amiloride</td><td>Diuretics</td></tr>
+<tr><td>H-K-ATPase (proton pump)</td><td>Omeprazole (PPI)</td><td>Acid-peptic disease</td></tr>
+<tr><td>Na-K-ATPase</td><td>Digoxin</td><td>Heart failure, AF</td></tr>
+<tr><td>SERT / NET / DAT (monoamine reuptake)</td><td>SSRIs, SNRIs, TCAs, atomoxetine, cocaine</td><td>Depression, ADHD</td></tr>
+<tr><td>VMAT2 (vesicular)</td><td>Reserpine, tetrabenazine</td><td>HTN (old), chorea</td></tr>
+<tr><td>OAT (organic anion)</td><td>Probenecid</td><td>Blocks penicillin secretion; gout</td></tr>
+<tr><td>P-glycoprotein (efflux)</td><td>Inhibitors e.g. verapamil</td><td>Multidrug-resistance modulation</td></tr></table>
+<p><b>Significance:</b> transporters mediate drug action, drug-drug interactions (OATP, P-gp affect statin/digoxin levels) and resistance (tumour and microbial efflux).</p>
+  </div></details>
+<details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Discuss biased agonism (functional selectivity) and its therapeutic implications.</span></summary>
+  <div class="answer">
+<p><b>Definition:</b> also called <b>functional selectivity</b> — a GPCR ligand preferentially activates one downstream signalling pathway (e.g. G-protein) over another (e.g. beta-arrestin) instead of activating all pathways equally.</p>
+<p><b>Rationale:</b> if therapeutic and adverse effects are mediated by different pathways, a biased ligand can separate benefit from harm.</p>
+<ul><li><b>Oliceridine</b> — G-protein-biased mu-opioid agonist (aim: analgesia with less beta-arrestin-mediated respiratory depression/constipation).</li>
+<li><b>Carvedilol</b> — shows beta-arrestin-biased signalling at beta-adrenoceptors.</li>
+<li>TRV027 (angiotensin AT1) and biased dopamine/5-HT ligands are under study.</li></ul>
+<p><b>Implications:</b> a route to safer, more selective drugs; adds complexity to screening and development.</p>
+  </div></details>
+</section>
+
+<section class="sec" id="s4" style="--sec:#b15068;--sec-soft:#b1506826">
+  <h2>Section 4 · Novel &amp; Targeted Drug Delivery Systems (NDDS)</h2>
+  <p class="sec-note">Supplemented from standard pharmaceutics/pharmacology (limited in G&amp;G Ch.1–9).</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">What are NDDS? Objectives, properties of an ideal targeted delivery system, strategies of drug targeting (with examples), particulate carriers/nanoparticles/nanomedicine, recent advances.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> Novel Drug Delivery Systems are advanced formulations designed to deliver a drug at a <b>controlled rate, for a sustained duration, and/or to a specific target site</b>, improving efficacy and safety over conventional dosage forms.</p>
+    <h4>Objectives</h4>
+    <ul>
+      <li>Maintain plasma concentration within the therapeutic window (controlled/sustained release).</li>
+      <li>Target the site of action → ↑ efficacy, ↓ dose &amp; systemic toxicity.</li>
+      <li>Improve bioavailability of poorly soluble/unstable drugs; better patient compliance.</li>
+      <li>Protect drug from degradation; cross biological barriers (BBB).</li>
+    </ul>
+    <h4>Properties of an ideal targeted delivery system</h4>
+    <ul>
+      <li>Biocompatible, biodegradable, non-immunogenic, non-toxic carrier.</li>
+      <li>Site-specific, with controlled &amp; predictable release at the target only.</li>
+      <li>Physically/chemically stable; easy to manufacture &amp; sterilise; cost-effective.</li>
+      <li>Adequate drug-loading; protects drug; eliminated safely after delivery.</li>
+    </ul>
+    <h4>Strategies of drug targeting</h4>
+    <table>
+      <tr><th>Order</th><th>Type</th><th>Meaning / Example</th></tr>
+      <tr><td>1st</td><td>Organ targeting</td><td>To a specific organ/tissue (e.g. liver via Kupffer cells)</td></tr>
+      <tr><td>2nd</td><td>Cellular targeting</td><td>To a specific cell type (e.g. tumour cells)</td></tr>
+      <tr><td>3rd</td><td>Intracellular/organelle</td><td>To a sub-cellular site (e.g. nucleus, mitochondria)</td></tr>
+    </table>
+    <ul>
+      <li><b>Passive targeting:</b> exploits <b>EPR effect</b> (Enhanced Permeability &amp; Retention) — nanoparticles accumulate in leaky tumour vasculature (e.g. Doxil).</li>
+      <li><b>Active targeting:</b> ligand/antibody-decorated carriers bind tumour antigens/receptors (folate, transferrin, mAb).</li>
+      <li><b>Physical/stimuli-responsive:</b> pH, temperature, magnetic, ultrasound-triggered release.</li>
+    </ul>
+    <h4>Particulate carriers / nanomedicine</h4>
+    <table>
+      <tr><th>Carrier</th><th>Example</th></tr>
+      <tr><td>Liposomes</td><td>Liposomal doxorubicin (Doxil), amphotericin B (AmBisome)</td></tr>
+      <tr><td>Polymeric nanoparticles / micelles</td><td>Nab-paclitaxel (Abraxane)</td></tr>
+      <tr><td>Dendrimers, niosomes, SLNs</td><td>Gene/drug delivery</td></tr>
+      <tr><td><b>Lipid nanoparticles (LNP)</b></td><td><b>mRNA COVID-19 vaccines</b>, patisiran (siRNA)</td></tr>
+      <tr><td>Antibody–drug conjugates</td><td>Trastuzumab emtansine, brentuximab vedotin</td></tr>
+    </table>
+    <div class="recent"><b>Recent advances:</b> LNP-mRNA platforms, ADCs, CAR-T, theranostics (therapy + imaging), 3D-printed dosage forms, microneedle patches, and AI-designed nanocarriers.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Concept of drug targeting &amp; its clinical utility (esp. cancer &amp; other diseases) with examples.</span></summary>
+  <div class="answer">
+    <p><b>Concept:</b> directing a drug selectively to its site of action ("magic bullet" — Paul Ehrlich) to maximise local effect while minimising systemic exposure and toxicity.</p>
+    <h4>Utility &amp; examples</h4>
+    <table>
+      <tr><th>Disease</th><th>Targeted approach</th></tr>
+      <tr><td>Cancer</td><td>Liposomal doxorubicin (↓cardiotoxicity), nab-paclitaxel, ADCs (T-DM1), folate/transferrin nanocarriers, EPR-based passive targeting</td></tr>
+      <tr><td>Fungal infection</td><td>Liposomal amphotericin B (↓nephrotoxicity)</td></tr>
+      <tr><td>Genetic disease</td><td>LNP-siRNA (patisiran), AAV gene therapy</td></tr>
+      <tr><td>Inflammation/IBD</td><td>pH/colon-targeted mesalamine</td></tr>
+      <tr><td>CNS</td><td>Nanoparticle/BBB-shuttle delivery</td></tr>
+    </table>
+    <p><b>Benefits:</b> dose reduction, fewer ADRs, overcomes resistance/poor solubility. <b>Limitations:</b> high cost, complex manufacture, possible immunogenicity, incomplete targeting.</p>
+  </div></details>
+</section>
+
+<section class="sec" id="s5" style="--sec:#b3852f;--sec-soft:#b3852f26">
+  <h2>Section 5 · Rational Use of Drugs &amp; Clinical Pharmacology Concepts</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 1 (public policy, biosimilars) &amp; Ch. 7; supplemented with WHO/Indian guidance.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Rational Use of Drugs &amp; the 'P-drug' concept — importance, methods to improve RUD using technology; note on rational/irrational antibiotic use &amp; antibiotic policy.</span></summary>
+  <div class="answer">
+    <p><b>WHO definition of RUD:</b> patients receive medications appropriate to their clinical needs, in doses that meet their own individual requirements, for an adequate period, at the lowest cost to them and their community.</p>
+    <h4>Criteria of a rational prescription</h4>
+    <ul><li>Right drug, right patient, right dose, right route, right time, right duration, right cost, and right information.</li></ul>
+    <h4>P-drug ("Personal drug") concept</h4>
+    <p>A WHO "Guide to Good Prescribing" tool: each prescriber pre-selects a set of preferred drugs for common conditions based on <b>Efficacy, Safety, Suitability, Cost</b>. Steps:</p>
+    <ol>
+      <li>Define the diagnosis/therapeutic objective.</li>
+      <li>Make an inventory of effective drug groups.</li>
+      <li>Choose a group by Efficacy/Safety/Suitability/Cost.</li>
+      <li>Choose a P-drug (active substance, form, dose, duration).</li>
+      <li>Verify suitability for the individual patient; write prescription; inform/monitor.</li>
+    </ol>
+    <p><b>Importance:</b> reduces polypharmacy, ADRs, resistance, and cost; standardises prescribing; improves outcomes.</p>
+    <h4>Methods to improve RUD using technology</h4>
+    <ul>
+      <li>e-Prescribing &amp; CDSS (clinical decision support, drug-interaction alerts).</li>
+      <li>Computerised Physician Order Entry (CPOE); EHR-integrated formularies; STG &amp; Essential Medicines List (NLEM).</li>
+      <li>Audit &amp; feedback, drug-utilisation reviews, m-health/apps, AI prescription screening.</li>
+    </ul>
+    <h4>Antibiotic use &amp; policy</h4>
+    <ul>
+      <li><b>Irrational use:</b> for viral illness, wrong drug/dose/duration, inadequate course, OTC misuse → AMR.</li>
+      <li><b>Antibiotic policy / stewardship (AMSP):</b> hospital antibiogram, restricted/reserve lists (WHO <b>AWaRe</b>: Access, Watch, Reserve), de-escalation, culture-directed therapy.</li>
+      <li><b>Indian context:</b> Schedule H1, ICMR treatment guidelines, National Action Plan on AMR (NAP-AMR), Red Line campaign.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Pharmacological rationale for drug combinations in disease management (with examples).</span></summary>
+  <div class="answer">
+    <h4>Rationale for combining drugs</h4>
+    <ul>
+      <li><b>Synergism / additive effect</b> → greater efficacy, lower individual doses.</li>
+      <li><b>↓ Dose-related toxicity</b> of each agent.</li>
+      <li><b>Prevent/delay resistance</b> (TB, HIV, malaria).</li>
+      <li><b>Target multiple mechanisms/pathways</b> of a multifactorial disease.</li>
+      <li>Treat coexisting components (e.g. analgesic + antiemetic).</li>
+      <li>Improve compliance via fixed-dose combinations (FDCs).</li>
+    </ul>
+    <h4>Examples</h4>
+    <table>
+      <tr><th>Area</th><th>Combination &amp; rationale</th></tr>
+      <tr><td>Antimicrobial</td><td>HRZE for TB, ART for HIV (resistance prevention); amoxicillin + clavulanate (β-lactamase inhibition); cotrimoxazole (sequential blockade)</td></tr>
+      <tr><td>Hypertension</td><td>ACEi/ARB + CCB + diuretic — complementary mechanisms, ↓ side effects</td></tr>
+      <tr><td>Diabetes</td><td>Metformin + SGLT2i/DPP-4i — different pathways</td></tr>
+      <tr><td>Cancer</td><td>Combination chemotherapy (CHOP) — synergy, ↓ resistance</td></tr>
+      <tr><td>Parkinson's</td><td>Levodopa + carbidopa — ↑ CNS bioavailability, ↓ peripheral SE</td></tr>
+      <tr><td>H. pylori</td><td>PPI + 2 antibiotics</td></tr>
+    </table>
+    <p><b>Caution:</b> irrational FDCs (banned in India), additive toxicity, drug interactions.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">What is drug repurposing? Approaches (with examples); differentiate from 'newer uses of old drugs'.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> Drug repurposing (repositioning) = identifying <b>new therapeutic indications</b> for existing/approved or shelved/abandoned drugs.</p>
+    <h4>Approaches</h4>
+    <ul>
+      <li><b>Computational:</b> data-mining, network/transcriptome analysis, AI, molecular docking.</li>
+      <li><b>Experimental:</b> phenotypic screening, target-based screening, retrospective clinical analysis.</li>
+      <li><b>Serendipity/clinical observation.</b></li>
+    </ul>
+    <h4>Classic examples</h4>
+    <table>
+      <tr><th>Drug</th><th>Original</th><th>Repurposed</th></tr>
+      <tr><td>Sildenafil</td><td>Angina</td><td>Erectile dysfunction, PAH</td></tr>
+      <tr><td>Thalidomide</td><td>Sedative/antiemetic</td><td>Multiple myeloma, ENL leprosy</td></tr>
+      <tr><td>Minoxidil</td><td>Hypertension</td><td>Alopecia</td></tr>
+      <tr><td>Aspirin</td><td>Analgesic</td><td>Antiplatelet, colorectal Ca prophylaxis</td></tr>
+      <tr><td>Dexamethasone / baricitinib</td><td>Inflammation / RA</td><td>COVID-19</td></tr>
+    </table>
+    <h4>Repurposing vs "newer uses of old drugs"</h4>
+    <p>"Newer uses of old drugs" is a broad textbook umbrella covering any expanded indication — including dose adjustment or new populations. <b>Repurposing</b> specifically denotes a formal, often patent/development-driven, discovery of a <b>distinct new indication</b> for an existing molecule, frequently bypassing early-phase development (PK/safety already known) → faster, cheaper, lower-risk.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Precision/Personalised Medicine &amp; its role in rational pharmacotherapy (pharmacogenomics, polymorphisms).</span></summary>
+  <div class="answer">
+    <p><b>Definition (G&amp;G Ch.1/7):</b> tailoring prevention &amp; treatment to individual variability in genes, environment, and lifestyle — "the right drug, for the right patient, at the right dose."</p>
+    <h4>Pillars</h4>
+    <ul><li><b>Pharmacogenomics</b> (genotype-guided choice/dose).</li><li>Biomarkers &amp; companion diagnostics.</li><li>Omics (genomics, proteomics, metabolomics) &amp; big data/AI.</li></ul>
+    <h4>Examples</h4>
+    <table>
+      <tr><th>Marker</th><th>Application</th></tr>
+      <tr><td>HER2</td><td>Trastuzumab in breast cancer</td></tr>
+      <tr><td>EGFR / ALK</td><td>TKIs in NSCLC</td></tr>
+      <tr><td>BCR-ABL</td><td>Imatinib in CML</td></tr>
+      <tr><td>HLA-B*57:01 / *15:02</td><td>Abacavir / carbamazepine screening</td></tr>
+      <tr><td>CYP2C9+VKORC1</td><td>Warfarin dosing</td></tr>
+    </table>
+    <p><b>Role in RUD:</b> avoids non-responders &amp; ADRs, optimises dose, reduces trial-and-error → safer, cost-effective therapy.</p>
+    <div class="recent"><b>Recent:</b> CAR-T &amp; gene therapies, tumour-agnostic (e.g. larotrectinib for NTRK), pre-emptive PGx panels.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Spurious, counterfeit &amp; not-of-standard-quality (NSQ) drugs — definitions &amp; mitigation; note on designer drugs.</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Category</th><th>Meaning</th></tr>
+      <tr><td><b>Spurious/Counterfeit (falsified)</b></td><td>Deliberately mislabelled re: identity/source; fake brand; may contain wrong/no/harmful active ingredient.</td></tr>
+      <tr><td><b>NSQ / Substandard</b></td><td>Genuine but fails a quality specification (assay, dissolution, sterility) — manufacturing defect.</td></tr>
+      <tr><td><b>Adulterated/misbranded</b></td><td>Contains filth/contaminant or false labelling.</td></tr>
+    </table>
+    <h4>Mitigation strategies</h4>
+    <ul>
+      <li>Strict GMP, regulatory inspection &amp; licensing (CDSCO, state FDAs).</li>
+      <li>Track-and-trace: barcoding/QR, serialisation, tamper-evident packaging (India's anti-counterfeit for top brands).</li>
+      <li>Random sampling &amp; testing, stringent penalties (Drugs &amp; Cosmetics Act — Schedule for spurious drugs is a non-bailable offence).</li>
+      <li>Public awareness; procure from licensed sources; WHO GSMS reporting.</li>
+    </ul>
+    <h4>Designer drugs</h4>
+    <p>Synthetic analogues of controlled substances chemically modified to evade legal control while mimicking effects (e.g. synthetic cannabinoids "spice", cathinones "bath salts", fentanyl analogues). Concern: unpredictable potency/toxicity, drug-of-abuse, regulatory lag — managed by analogue-control laws &amp; NDPS Act (India).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Generic, branded, branded-generic &amp; pseudo-generic medicines — definitions; how is quality assessed?</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Type</th><th>Definition</th></tr>
+      <tr><td><b>Branded (innovator)</b></td><td>Original patented product marketed under a proprietary name by the developer (e.g. Glucophage).</td></tr>
+      <tr><td><b>Generic</b></td><td>Bioequivalent copy sold by INN/generic name after patent expiry; cheaper (e.g. metformin).</td></tr>
+      <tr><td><b>Branded-generic</b></td><td>Off-patent molecule sold under a company's brand name (common in India, e.g. various metformin brands).</td></tr>
+      <tr><td><b>Pseudo-generic</b></td><td>Identical to innovator product but sold as a "generic" by/under licence from the same company (a second brand).</td></tr>
+    </table>
+    <h4>Quality assessment of medicines</h4>
+    <ul>
+      <li><b>Bioequivalence</b> studies (AUC/Cmax within 80–125% of innovator).</li>
+      <li>Pharmacopoeial tests (IP/USP/BP): assay (potency), dissolution, disintegration, content uniformity, sterility, impurities/stability.</li>
+      <li>GMP compliance, batch certification, regulatory approval.</li>
+    </ul>
+    <div class="recent"><b>Indian context:</b> Jan Aushadhi (PMBJP) generic stores; NPPA price control; quality concerns drive bioequivalence mandates.</div>
+  </div></details>
+<details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Discuss drug interactions — mechanisms and clinical significance. Add a note on food-drug interactions.</span></summary>
+  <div class="answer">
+<p><b>Definition:</b> modification of the effect of one drug by another drug, food or herb, leading to altered efficacy or toxicity.</p>
+<h4>Types and mechanisms</h4>
+<table><tr><th>Type</th><th>Mechanism / example</th></tr>
+<tr><td>Pharmaceutical incompatibility</td><td>Physico-chemical, before administration (mixing incompatible drugs in an IV line)</td></tr>
+<tr><td>PK — absorption</td><td>Chelation (tetracycline/fluoroquinolone + calcium/antacid); altered pH/motility</td></tr>
+<tr><td>PK — distribution</td><td>Protein-binding displacement (warfarin + sulfonamides)</td></tr>
+<tr><td>PK — metabolism</td><td>Enzyme induction (rifampicin lowers effect) or inhibition (ketoconazole, erythromycin raise toxicity)</td></tr>
+<tr><td>PK — excretion</td><td>Probenecid lowers penicillin secretion; NSAIDs/thiazide raise lithium</td></tr>
+<tr><td>Pharmacodynamic</td><td>Additive/synergistic (alcohol + benzodiazepine), antagonistic (naloxone + morphine), electrolyte-mediated (digoxin toxicity with diuretic-induced hypokalaemia)</td></tr></table>
+<h4>Clinical significance</h4>
+<p>Greatest risk with <b>narrow therapeutic index</b> drugs (warfarin, digoxin, phenytoin, lithium, theophylline), polypharmacy and the elderly. Interactions may be deliberately beneficial (levodopa + carbidopa) or harmful.</p>
+<h4>Food-drug interactions</h4>
+<ul><li><b>Grapefruit juice</b> — inhibits intestinal CYP3A4 → raises statins, CCBs, some immunosuppressants.</li>
+<li><b>Tyramine-rich foods + MAOIs</b> → hypertensive crisis.</li>
+<li><b>Vitamin-K-rich foods</b> antagonise warfarin.</li>
+<li><b>Dairy/calcium + tetracyclines/fluoroquinolones</b> → chelation lowers absorption.</li>
+<li>Enteral feeds reduce phenytoin absorption; food alters bioavailability of many drugs.</li></ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Influence of disease states on drug action.</span></summary>
+  <div class="answer">
+    <p><b>Concept:</b> drug action depends not just on the drug/dose/route but on the patient's physiological/pathological status. Disease alters drug response in two ways — pharmacokinetically (PK: absorption, distribution, metabolism, excretion) and pharmacodynamically (PD: target-organ/receptor sensitivity). Effects are most marked for narrow-therapeutic-index drugs and form the rational basis for dose individualisation; different drugs are affected to different extents.</p>
+    <h4>1. GI disease</h4>
+    <p>Malabsorption ↓ amoxicillin but paradoxically ↑ cephalexin/co-trimoxazole absorption; gastric stasis (e.g. migraine) retards absorption; achlorhydria ↓ aspirin absorption (favours ionisation); NSAIDs aggravate peptic ulcer disease.</p>
+    <h4>2. Hepatic disease (cirrhosis)</h4>
+    <ul>
+      <li>↑ bioavailability of high first-pass drugs (propranolol, morphine, lidocaine) from porto-caval shunting.</li>
+      <li>↓ albumin → ↑ free fraction of acidic drugs (diclofenac, warfarin).</li>
+      <li>↓ metabolism of morphine, lidocaine, propranolol — reduce dose; prefer oxazepam/lorazepam (glucuronidated) over diazepam, atenolol over hepatically-cleared β-blockers; avoid prodrugs needing hepatic activation (bacampicillin).</li>
+      <li>PD: ↑ brain sensitivity to morphine/barbiturates (can precipitate coma); diuretic-induced hypokalaemic alkalosis → hepatic encephalopathy; prolonged PT with oral anticoagulants; Child-Pugh score (bilirubin, albumin, PT/INR, ascites, encephalopathy) guides dose reduction — no creatinine-clearance equivalent exists for the liver.</li>
+    </ul>
+    <h4>3. Renal disease</h4>
+    <table>
+      <tr><th>CL_cr (mL/min)</th><th>Maintenance dose reduced to</th></tr>
+      <tr><td>50–70</td><td>70%</td></tr>
+      <tr><td>30–50</td><td>50%</td></tr>
+      <tr><td>10–30</td><td>30%</td></tr>
+      <tr><td>5–10</td><td>20%</td></tr>
+    </table>
+    <p>Loading dose unchanged; maintenance dose/interval reduced per Cockcroft-Gault CL_cr. PD: ↑ BBB permeability (more CNS depression with opiates/barbiturates/phenothiazines/BZDs; pethidine avoided — norpethidine accumulates, causing seizures); ↑ postural hypotension with antihypertensives; thiazides ineffective (use furosemide), K⁺-sparing diuretics contraindicated; avoid nephrotoxins (aminoglycosides, tetracyclines except doxycycline, sulfonamides, vancomycin, amphotericin B).</p>
+    <h4>4. CHF, thyroid disease &amp; other modifiers</h4>
+    <ul>
+      <li><b>CHF:</b> ↓ GI absorption (mucosal oedema); altered Vd (lower loading doses of lidocaine/procainamide); retarded elimination (↓ hepatic/renal perfusion); decompensated heart more digitalis-sensitive.</li>
+      <li><b>Thyroid:</b> hypothyroid → ↑ sensitivity to digoxin/morphine/CNS depressants; hyperthyroid → resistant inotropy but more arrhythmogenic with digoxin.</li>
+      <li><b>Hypoalbuminaemia</b> (renal/hepatic/chronic inflammatory disease) → ↑ free fraction of phenytoin, warfarin, diclofenac.</li>
+      <li><b>Extremes of age:</b> elderly — ↓ renal/hepatic clearance, ↓ albumin, ↓ β-receptor responsiveness, digitalis intolerance; neonates — immature metabolism (chloramphenicol → grey-baby syndrome), permeable BBB (kernicterus risk).</li>
+      <li>Other PD examples: fever (antipyretics work only if temperature raised), myasthenia gravis (curare-sensitive), schizophrenia (tolerates large phenothiazine doses), head injury (morphine → respiratory failure even at normal dose), prostatic hypertrophy (anticholinergics → retention).</li>
+    </ul>
+    <div class="dia"><b>Diagram:</b> Patient with arrows to four organs — GI (absorption ↑/↓), Liver (first-pass↓, metabolism↓), Kidney (clearance↓), Plasma (albumin↓→free drug↑) → net effect = altered free-drug level + altered target sensitivity.</div>
+    <div class="recent"><b>Exam pointer:</b> always state both PK and PD limbs are altered — examiners specifically credit this two-limb structure.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Chronopharmacology — definition, biological basis &amp; clinical chronotherapy.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> chronopharmacology studies the bidirectional interaction between biological (chiefly ~24-h circadian) rhythms and drugs — how administration time alters kinetics/effect/toxicity, and how drugs modify those rhythms. Deliberate dosing-time optimisation = chronotherapy/chronotherapeutics.</p>
+    <h4>Key terminology</h4>
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>Chronopharmacokinetics</td><td>Rhythmic (time-of-day) variation in ADME</td></tr>
+      <tr><td>Chronesthesy</td><td>Rhythmic variation in target/receptor sensitivity</td></tr>
+      <tr><td>Chronergy</td><td>Net rhythmic effect = chronokinetics + chronesthesy</td></tr>
+      <tr><td>Chronotoxicity</td><td>Time-dependent variation in drug toxicity</td></tr>
+    </table>
+    <p>Rhythm classes: ultradian (&lt;20h), circadian (~20–28h — sleep-wake, cortisol), infradian (&gt;28h — menstrual, circannual). Circadian rhythms are endogenous (free-run ~24.2h), entrained by zeitgebers (mainly light-dark cycle).</p>
+    <h4>Biological clock</h4>
+    <p>Master clock = suprachiasmatic nucleus (SCN), entrained by light via retinohypothalamic tract, synchronising peripheral clocks (liver, heart, kidney). Molecular clock = CLOCK-BMAL1 heterodimer drives PER/CRY transcription; accumulated PER/CRY feed back to inhibit CLOCK-BMAL1 (~24h loop). Melatonin (pineal, dark-secreted) and cortisol (peaks ~06:00–08:00) are the principal humoral "hands" of the clock.</p>
+    <div class="dia"><b>Diagram:</b> 24-h clock face — 06:00 cortisol/BP/platelet/MI-stroke peak; 04:00 nocturnal asthma (PEFR nadir); night = gastric acid &amp; cholesterol synthesis peak.</div>
+    <h4>Circadian variation in disease &amp; clinical chronotherapy</h4>
+    <table>
+      <tr><th>Condition/drug</th><th>Pattern</th><th>Optimal timing</th></tr>
+      <tr><td>MI/angina/stroke</td><td>Peak early morning (↑platelet aggregability, catecholamines, cortisol)</td><td>Bedtime antiplatelet/overnight cover</td></tr>
+      <tr><td>Bronchial asthma</td><td>Bronchoconstriction worst ~04:00</td><td>Evening anti-asthmatics (theophylline SR, LABA, evening ICS)</td></tr>
+      <tr><td>Rheumatoid arthritis</td><td>Morning stiffness (nocturnal IL-6 peak)</td><td>Bedtime/modified-release glucocorticoid</td></tr>
+      <tr><td>Peptic ulcer/GERD</td><td>Gastric acid peaks at night</td><td>Bedtime H₂-blocker; PPI before breakfast</td></tr>
+      <tr><td>Statins (short t½)</td><td>Hepatic HMG-CoA reductase peaks at night</td><td>Evening/bedtime (simvastatin, lovastatin)</td></tr>
+      <tr><td>Glucocorticoids</td><td>Mimics natural cortisol peak</td><td>Morning — least HPA-axis suppression</td></tr>
+      <tr><td>Diuretics</td><td>—</td><td>Morning — avoid nocturnal diuresis</td></tr>
+    </table>
+    <p>Chronotherapeutic formulations: controlled-onset extended-release (COER) verapamil/diltiazem (bedtime, timed to release at the dawn BP surge); pulsatile delayed-release prednisone for RA morning stiffness; prolonged-release melatonin for circadian sleep disorders. Anticancer chronomodulation (timed infusion of 5-FU, oxaliplatin, irinotecan) exploits circadian differences between tumour and normal-cell cycling.</p>
+    <div class="recent"><b>Recent advances:</b> the bedtime-antihypertensive-dosing debate — Hygia trial (n≈19,084) reported bedtime dosing halved major CVD events (HR 0.55) but was widely questioned/not replicated; the larger pragmatic TIME study (n=21,104) found no difference between evening and morning dosing (HR 0.95) — current stance: dose antihypertensives for adherence, not clock-time. "Circadian medicine" is emerging with clock-modulating drugs (REV-ERB/ROR ligands, CK1/CRY modulators) under investigation.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s6" style="--sec:#2f8696;--sec-soft:#2f869626">
+  <h2>Section 6 · Pharmacovigilance, ADR Monitoring &amp; Drug Safety</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 8: Postmarketing Drug Safety; supplemented with PvPI/CDSCO.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Define Pharmacovigilance. PvPI in detail; classify ADRs; methods of ADR monitoring, causality assessment, signal detection, PSUR, DSMB; challenges in India.</span></summary>
+  <div class="answer">
+    <p><b>WHO definition:</b> Pharmacovigilance (PV) is the science &amp; activities relating to the <b>detection, assessment, understanding and prevention</b> of adverse effects or any other drug-related problem.</p>
+    <h4>PvPI (Pharmacovigilance Programme of India)</h4>
+    <ul>
+      <li>Launched 2010; <b>National Coordinating Centre = IPC, Ghaziabad</b> (under CDSCO/MoHFW).</li>
+      <li>Network of ADR Monitoring Centres (AMCs) reporting via <b>VigiFlow</b> to WHO-UMC (Uppsala) global database <b>VigiBase</b>.</li>
+      <li>Tools: suspected ADR reporting form (red form), medicines &amp; Materiovigilance/Haemovigilance programmes, toll-free helpline.</li>
+    </ul>
+    <h4>ADR classification (Rawlins-Thompson)</h4>
+    <table>
+      <tr><th>Type</th><th>Feature / Example</th></tr>
+      <tr><td>A (Augmented)</td><td>Dose-related, predictable, common (bradycardia with β-blocker)</td></tr>
+      <tr><td>B (Bizarre)</td><td>Not dose-related, unpredictable (penicillin anaphylaxis)</td></tr>
+      <tr><td>C (Chronic)</td><td>Long-term use (steroid osteoporosis)</td></tr>
+      <tr><td>D (Delayed)</td><td>Teratogenicity, carcinogenicity</td></tr>
+      <tr><td>E (End of use)</td><td>Withdrawal (β-blocker rebound, opioid)</td></tr>
+      <tr><td>F (Failure)</td><td>Therapeutic failure (rifampicin + OC pill)</td></tr>
+    </table>
+    <h4>Methods of ADR monitoring</h4>
+    <ul><li><b>Spontaneous (voluntary) reporting</b> — yellow card system.</li><li>Cohort event monitoring / Prescription Event Monitoring (PEM).</li><li>Case-control &amp; cohort studies; record linkage; targeted active surveillance.</li></ul>
+    <h4>Causality assessment</h4>
+    <p>WHO-UMC categories (certain, probable, possible, unlikely, unclassified) &amp; <b>Naranjo scale</b> (definite/probable/possible/doubtful).</p>
+    <h4>Signal detection &amp; management</h4>
+    <p><b>Signal</b> = new/changing drug–event association warranting investigation. Detected by disproportionality analysis (PRR, ROR) in databases; assessed, then risk-minimisation (label change, REMS, withdrawal).</p>
+    <h4>PSUR &amp; DSMB</h4>
+    <ul>
+      <li><b>PSUR/PBRER</b> — Periodic Safety Update Report: periodic benefit–risk reassessment submitted to regulators.</li>
+      <li><b>DSMB/DSMC</b> — Data &amp; Safety Monitoring Board: independent group reviewing interim safety/efficacy in trials, can recommend stopping.</li>
+    </ul>
+    <h4>Challenges in India &amp; role in safety</h4>
+    <p>Under-reporting, lack of awareness/training, vast population &amp; informal drug use, OTC misuse. PV protects patient safety, supports regulatory decisions &amp; rational prescribing.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">What is an adverse event? Rationale for pharmacovigilance; methods of signal detection &amp; management.</span></summary>
+  <div class="answer">
+    <h4>Definitions</h4>
+    <ul>
+      <li><b>Adverse Event (AE):</b> any untoward medical occurrence in a patient given a drug, <b>not necessarily causally related</b>.</li>
+      <li><b>ADR:</b> a harmful, unintended response at normal doses, <b>where causality is at least possible</b>.</li>
+      <li><b>SAE:</b> death, life-threatening, hospitalisation, disability, congenital anomaly.</li>
+    </ul>
+    <h4>Rationale for PV</h4>
+    <ul>
+      <li>Pre-marketing trials are limited (few patients, short, exclude special groups) → rare/delayed ADRs missed.</li>
+      <li>Detect rare, long-latency, special-population &amp; interaction effects post-marketing.</li>
+      <li>Continuous benefit–risk assessment; regulatory action; rational use; historical disasters (thalidomide, rofecoxib).</li>
+    </ul>
+    <h4>Signal detection &amp; management</h4>
+    <ul>
+      <li>Quantitative: disproportionality (PRR, ROR, IC/BCPNN, EBGM) in spontaneous databases.</li>
+      <li>Qualitative: case review, literature, clinical assessment.</li>
+      <li>Management: validate → prioritise → assess → act (label update, Dear Doctor letter, restriction, withdrawal, risk-management plan).</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Medication errors — causes &amp; prevention strategies in a tertiary care hospital; note on patient safety.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> any preventable event that may cause inappropriate medication use or patient harm while the drug is in the control of the healthcare professional, patient, or consumer.</p>
+    <h4>Types &amp; causes</h4>
+    <ul>
+      <li><b>Stages:</b> prescribing, transcribing, dispensing, administration, monitoring errors.</li>
+      <li><b>Causes:</b> illegible/verbal orders, look-alike sound-alike (LASA) drugs, abbreviations, calculation errors, workload/fatigue, inadequate knowledge, poor communication, lack of double-checks.</li>
+    </ul>
+    <h4>Prevention strategies</h4>
+    <ul>
+      <li><b>CPOE + CDSS</b>, e-prescribing, barcode medication administration.</li>
+      <li>"Five rights" check; Tall-Man lettering for LASA; high-alert drug protocols.</li>
+      <li>Standard order sets, avoid error-prone abbreviations, medication reconciliation, pharmacist review.</li>
+      <li>Reporting culture (non-punitive), root-cause analysis, training.</li>
+    </ul>
+    <h4>Patient safety</h4>
+    <p>A core healthcare quality goal (WHO "Medication Without Harm" challenge — aim 50% reduction in severe avoidable harm). Builds on a systems (not blame) approach &amp; just culture.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Ecopharmacology and pharmaceuticals in the environment.</span></summary>
+  <div class="answer">
+    <p><b>Ecopharmacology / ecopharmacovigilance:</b> study of the entry, fate, and effects of pharmaceuticals (and metabolites) in the environment and strategies to minimise harm.</p>
+    <h4>Sources &amp; examples</h4>
+    <ul>
+      <li>Excretion by patients, manufacturing effluent, improper disposal of unused drugs.</li>
+      <li><b>Diclofenac</b> → near-extinction of Indian vultures (renal failure). <b>Estrogens</b> → feminisation of fish. <b>Antibiotics</b> → environmental AMR. Antineoplastics, NSAIDs in water.</li>
+    </ul>
+    <h4>Mitigation</h4>
+    <ul><li>Green/environmental risk assessment in drug approval; "green pharmacy"/eco-friendly design.</li><li>Drug take-back programmes, proper disposal guidelines, improved sewage treatment, manufacturing effluent norms.</li></ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Phototoxic and photoallergic reactions — mechanism, implicated drugs &amp; management.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> drug-induced photosensitivity is a cutaneous ADR from drug-sensitisation of skin to UV radiation, so ordinary sun exposure produces an abnormal reaction. Needs a photosensitising drug/metabolite in the skin plus light of the right wavelength (UVB 290–320 nm, UVA 320–400 nm). Two mechanistically distinct types:</p>
+    <h4>Phototoxic vs photoallergic</h4>
+    <table>
+      <tr><th>Feature</th><th>Phototoxic</th><th>Photoallergic</th></tr>
+      <tr><td>Basis</td><td>Direct, non-immune tissue damage</td><td>Immune — type IV cell-mediated</td></tr>
+      <tr><td>Prior sensitisation</td><td>Not needed; first exposure suffices</td><td>Required (latent period)</td></tr>
+      <tr><td>Dose relationship</td><td>Dose-dependent</td><td>Dose-independent</td></tr>
+      <tr><td>Action spectrum</td><td>Mainly UVB</td><td>Mainly UVA</td></tr>
+      <tr><td>Onset</td><td>Fast (min–hours)</td><td>Delayed (24–72h)</td></tr>
+      <tr><td>Morphology</td><td>Exaggerated sunburn — erythema, blistering</td><td>Papular/eczematous dermatitis</td></tr>
+      <tr><td>Incidence</td><td>Common</td><td>Uncommon</td></tr>
+    </table>
+    <div class="dia"><b>Diagram:</b> Phototoxic = drug+UVB → ROS → direct cell damage (sunburn pattern); Photoallergic = drug+UVA → hapten-protein antigen → T-cell response (eczema, spreads beyond exposed area).</div>
+    <h4>Implicated drugs</h4>
+    <ul>
+      <li>Tetracyclines (demeclocycline — classic acute phototoxic), fluoroquinolones, nalidixic acid.</li>
+      <li>Sulfonamides, dapsone, griseofulvin, sulfonylureas — photoallergic.</li>
+      <li>Amiodarone (slate-grey pigmentation), thiazides, phenothiazines, carbamazepine, chloroquine, NSAIDs (piroxicam, naproxen), psoralens (PUVA).</li>
+    </ul>
+    <h4>Diagnosis &amp; management</h4>
+    <ul>
+      <li>History (temporal link to drug+sun, sun-exposed distribution); photopatch test (duplicate allergen series, one set UVA-irradiated) confirms photoallergy — phototoxicity is largely a clinical/exclusion diagnosis.</li>
+      <li>Withdraw/substitute offending drug; photoprotection (sunscreen SPF 15–60, protective clothing); calamine/wet dressings for sunburn; topical/systemic steroids and antihistamines for photoallergy.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> newer tetracycline sarecycline is less photosensitising than doxycycline/tetracycline (practical advantage in acne). FDA is reassessing PABA/trolamine salicylate sunscreen filters for non-GRASE status; PABA-free filters (zinc oxide, titanium dioxide, avobenzone) now preferred.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s7" style="--sec:#548a4f;--sec-soft:#548a4f26">
+  <h2>Section 7 · Pharmacoeconomics &amp; Drug Utilization Studies</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Define Drug Utilization Studies (DUS). Role in improving rational use of drugs.</span></summary>
+  <div class="answer">
+    <p><b>WHO definition:</b> DUS is the study of the <b>marketing, distribution, prescription, and use of drugs</b> in a society, with special emphasis on the resulting medical, social, and economic consequences.</p>
+    <h4>Methods/metrics</h4>
+    <ul>
+      <li><b>DDD</b> (Defined Daily Dose) &amp; <b>ATC</b> classification (WHO standard units).</li>
+      <li><b>WHO prescribing indicators:</b> average no. of drugs/encounter, % by generic name, % with an antibiotic, % with injection, % from EML.</li>
+      <li>Drug-use evaluation/review (DUE/DUR); PDD (prescribed daily dose).</li>
+    </ul>
+    <h4>Role in RUD</h4>
+    <ul>
+      <li>Identifies over/under/misuse &amp; irrational prescribing patterns.</li>
+      <li>Detects polypharmacy, antibiotic overuse, off-label use.</li>
+      <li>Guides EML/formulary, policy, education &amp; audit-feedback; cost-containment; quality improvement.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Pharmacoeconomics, Health Technology Assessment (HTA) &amp; economic evaluation in pharmacotherapy.</span></summary>
+  <div class="answer">
+    <p><b>Pharmacoeconomics:</b> the description &amp; analysis of the <b>costs of drug therapy to healthcare systems and society</b> — comparing cost &amp; consequences of therapeutic options.</p>
+    <h4>Types of economic evaluation</h4>
+    <table>
+      <tr><th>Method</th><th>Outcome measured</th><th>Result</th></tr>
+      <tr><td>Cost-Minimisation (CMA)</td><td>Outcomes assumed equal</td><td>Compare cost only</td></tr>
+      <tr><td>Cost-Effectiveness (CEA)</td><td>Natural units (life-years, mmHg)</td><td>Cost per unit effect (ICER)</td></tr>
+      <tr><td>Cost-Utility (CUA)</td><td><b>QALY/DALY</b></td><td>Cost per QALY</td></tr>
+      <tr><td>Cost-Benefit (CBA)</td><td>Monetary value of outcome</td><td>Net benefit ratio</td></tr>
+    </table>
+    <h4>Cost categories</h4>
+    <p>Direct (medical/non-medical), indirect (lost productivity), intangible (pain/suffering).</p>
+    <h4>HTA</h4>
+    <p>Systematic, multidisciplinary evaluation of the clinical, economic, social &amp; ethical value of a health technology to inform reimbursement/policy. <b>India:</b> HTAIn (Health Technology Assessment in India, Dept. of Health Research) guides cost-effective policy &amp; NLEM pricing.</p>
+  </div></details>
+</section>
+
+<section class="sec" id="s8" style="--sec:#c06a3e;--sec-soft:#c06a3e26">
+  <h2>Section 8 · Preclinical Studies, Ethics &amp; Alternatives</h2>
+  <p class="sec-note">G&amp;G 14e — Ch. 1 (preclinical/IND) &amp; Ch. 9 (toxicology).</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Aims, methodology &amp; limitations of acute &amp; chronic toxicity studies; prerequisites/battery of safety studies before IND.</span></summary>
+  <div class="answer">
+    <h4>Acute toxicity</h4>
+    <ul>
+      <li><b>Aim:</b> determine short-term toxicity of a single (or 24-h) dose; estimate LD₅₀/approximate lethal dose, target organs, dose for further studies.</li>
+      <li><b>Method:</b> single escalating doses in ≥2 species (rodent + sometimes non-rodent), 2 routes incl. intended clinical route; observe 14 days; gross pathology. Modern: <b>fixed-dose, up-and-down, ATC</b> methods (replace classical LD₅₀).</li>
+    </ul>
+    <h4>Sub-acute &amp; chronic toxicity</h4>
+    <ul>
+      <li><b>Aim:</b> toxicity on repeated dosing; NOAEL, cumulative &amp; target-organ effects; reversibility.</li>
+      <li><b>Method:</b> sub-acute 14–28 days; chronic up to 6–12 months in 2 species, 3 dose levels + control; haematology, clinical chemistry, histopathology. Duration tied to intended clinical-use duration.</li>
+    </ul>
+    <h4>Full safety battery before IND</h4>
+    <ul>
+      <li>Acute, sub-acute, chronic toxicity.</li>
+      <li><b>Safety pharmacology</b> (CV — hERG/QT, CNS, respiratory).</li>
+      <li><b>Genotoxicity</b> (Ames, micronucleus, chromosomal aberration).</li>
+      <li><b>Reproductive/developmental</b> toxicity (Segment I, II teratogenicity, III).</li>
+      <li><b>Carcinogenicity</b> (for chronic-use drugs), local tolerance, immunotoxicity, toxicokinetics.</li>
+    </ul>
+    <h4>Limitations</h4>
+    <p>Species differences → poor human prediction; high cost/time; ethical concerns; cannot detect idiosyncratic/immune ADRs; high-dose extrapolation issues.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Principles of 3R/4R in animal experimentation &amp; alternatives (with examples).</span></summary>
+  <div class="answer">
+    <p><b>3R (Russell &amp; Burch 1959):</b></p>
+    <table>
+      <tr><th>R</th><th>Principle</th><th>Example</th></tr>
+      <tr><td>Replacement</td><td>Avoid/replace animals</td><td>Cell cultures, organoids, organ-on-chip, in-silico, microdosing</td></tr>
+      <tr><td>Reduction</td><td>Use fewest animals</td><td>Better statistics, shared/historical controls</td></tr>
+      <tr><td>Refinement</td><td>Minimise suffering</td><td>Analgesia, humane endpoints, enrichment</td></tr>
+      <tr><td>Rehabilitation (4th R)</td><td>Rehome after study</td><td>Adoption of research dogs/primates</td></tr>
+    </table>
+    <h4>Validated alternatives</h4>
+    <ul>
+      <li><b>Eye/skin irritation:</b> EpiOcular, BCOP, reconstructed human epidermis (replacing Draize test).</li>
+      <li><b>Pyrogen testing:</b> Monocyte Activation Test / LAL (replacing rabbit pyrogen test).</li>
+      <li><b>Toxicity/efficacy:</b> 3D organoids, zebrafish, QSAR, PBPK, human organ-chips.</li>
+    </ul>
+    <div class="recent"><b>Recent:</b> FDA Modernization Act 2.0 (2022) accepts non-animal methods; OECD validated in-vitro test guidelines.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s9" style="--sec:#7a5bbd;--sec-soft:#7a5bbd26">
+  <h2>Section 9 · Emerging &amp; Special Topics</h2>
+  <p class="sec-note">Mixed G&amp;G + Katzung/Rang &amp; Dale + recent literature.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Current status &amp; applications of Gene Therapy (esp. inherited conditions).</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> introduction, removal, or modification of genetic material in a patient's cells to treat/prevent disease.</p>
+    <h4>Approaches</h4>
+    <ul>
+      <li><b>Gene augmentation</b> (add functional copy — recessive disorders).</li>
+      <li><b>Gene silencing</b> (siRNA/antisense — dominant/gain-of-function).</li>
+      <li><b>Gene editing</b> (CRISPR-Cas9, base/prime editing).</li>
+      <li><b>Vectors:</b> viral (AAV, lentivirus) &amp; non-viral (LNP); ex-vivo vs in-vivo.</li>
+    </ul>
+    <h4>Approved examples</h4>
+    <table>
+      <tr><th>Product</th><th>Disease</th></tr>
+      <tr><td>Luxturna (voretigene)</td><td>RPE65 retinal dystrophy</td></tr>
+      <tr><td>Zolgensma (onasemnogene)</td><td>Spinal muscular atrophy</td></tr>
+      <tr><td>Hemgenix / Roctavian</td><td>Haemophilia B / A</td></tr>
+      <tr><td>Casgevy (CRISPR), Zynteglo</td><td>Sickle cell / β-thalassaemia</td></tr>
+      <tr><td>CAR-T (Kymriah, Yescarta)</td><td>Leukaemia/lymphoma</td></tr>
+    </table>
+    <p><b>Challenges:</b> very high cost, immunogenicity, durability, insertional mutagenesis, delivery, ethics (germline editing).</p>
+    <div class="recent"><b>Recent:</b> 2023 — first CRISPR therapy (Casgevy) approved for sickle cell disease.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Clinical pharmacology of Orphan Drugs.</span></summary>
+  <div class="answer">
+    <p><b>Orphan drug:</b> a product for a <b>rare disease</b> — US: &lt;200,000 patients; EU: &lt;5 in 10,000; India (NPRD 2021): defined rare diseases list.</p>
+    <h4>Incentives</h4>
+    <ul><li>Market exclusivity (7 yr US/10 yr EU), tax credits, fee waivers, grants, accelerated/priority review, smaller trials with surrogate endpoints.</li></ul>
+    <h4>Clinical-pharmacology challenges</h4>
+    <ul><li>Small, heterogeneous populations → adaptive/n-of-1/Bayesian designs, natural-history controls.</li><li>Limited PK/dose data; high cost; ethical access issues.</li></ul>
+    <p><b>Examples:</b> enzyme replacement (imiglucerase — Gaucher), eculizumab (PNH/aHUS), nusinersen (SMA), ivacaftor (CF).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Differences between monoclonal antibodies and small-molecule kinase inhibitors; drugs targeting growth-factor receptor signaling in cancer.</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Feature</th><th>Monoclonal antibody</th><th>Small-molecule kinase inhibitor</th></tr>
+      <tr><td>Size</td><td>Large protein (~150 kDa)</td><td>Small (&lt;1 kDa)</td></tr>
+      <tr><td>Target site</td><td>Extracellular / cell-surface receptor or ligand</td><td>Intracellular ATP-binding kinase domain</td></tr>
+      <tr><td>Route</td><td>Parenteral only</td><td>Usually oral</td></tr>
+      <tr><td>Half-life</td><td>Long (days–weeks)</td><td>Short (hours)</td></tr>
+      <tr><td>Selectivity</td><td>High</td><td>Often multi-kinase</td></tr>
+      <tr><td>Immunogenicity</td><td>Possible</td><td>Low</td></tr>
+      <tr><td>Naming</td><td>-mab</td><td>-nib</td></tr>
+      <tr><td>Example</td><td>Trastuzumab, cetuximab, bevacizumab</td><td>Imatinib, gefitinib, erlotinib</td></tr>
+    </table>
+    <h4>Drugs targeting growth-factor receptor signaling</h4>
+    <ul>
+      <li><b>EGFR/HER:</b> trastuzumab, cetuximab (mAb); gefitinib, erlotinib, osimertinib (TKI).</li>
+      <li><b>VEGF/VEGFR (angiogenesis):</b> bevacizumab (mAb); sunitinib, sorafenib (TKI).</li>
+      <li><b>BCR-ABL/KIT:</b> imatinib, dasatinib.</li>
+      <li><b>ALK:</b> crizotinib, alectinib.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">COVID-19 vaccines available &amp; key learnings for drug development &amp; discovery.</span></summary>
+  <div class="answer">
+    <h4>Vaccine platforms</h4>
+    <table>
+      <tr><th>Platform</th><th>Examples</th></tr>
+      <tr><td><b>mRNA-LNP</b></td><td>Pfizer-BioNTech (Comirnaty), Moderna</td></tr>
+      <tr><td>Viral vector</td><td>Covishield/AstraZeneca, Sputnik V, J&amp;J</td></tr>
+      <tr><td>Inactivated</td><td><b>Covaxin (Bharat Biotech)</b>, Sinovac</td></tr>
+      <tr><td>Protein subunit</td><td>Corbevax, Novavax</td></tr>
+      <tr><td>DNA</td><td>ZyCoV-D (India — needle-free)</td></tr>
+    </table>
+    <h4>Key learnings</h4>
+    <ul>
+      <li><b>mRNA/LNP platform</b> validated — rapid, plug-and-play for future pathogens &amp; cancer vaccines.</li>
+      <li><b>Accelerated yet rigorous development:</b> parallel/overlapping phases, rolling review, adaptive &amp; platform trials (RECOVERY/SOLIDARITY) without compromising safety standards.</li>
+      <li>Global collaboration, pre-investment in manufacturing, real-world pharmacovigilance at scale.</li>
+      <li>Importance of equitable access &amp; cold-chain logistics; emergency-use authorisation frameworks.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Novel targets &amp; recent advances in depression, bronchial asthma, multiple sclerosis, Alzheimer's &amp; CHF.</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Disease</th><th>Novel targets / recent drugs</th></tr>
+      <tr><td><b>Depression</b></td><td>NMDA — esketamine; GABA-A — brexanolone/zuranolone (postpartum); dextromethorphan-bupropion; psilocybin (trials)</td></tr>
+      <tr><td><b>Asthma</b></td><td>Biologics: anti-IgE (omalizumab), anti-IL-5 (mepolizumab, benralizumab), anti-IL-4/13 (dupilumab), anti-TSLP (tezepelumab)</td></tr>
+      <tr><td><b>Multiple sclerosis</b></td><td>S1P modulators (fingolimod, siponimod), anti-CD20 (ocrelizumab, ofatumumab), cladribine, BTK inhibitors (trials)</td></tr>
+      <tr><td><b>Alzheimer's</b></td><td>Anti-amyloid mAbs — <b>lecanemab, donanemab</b> (approved); aducanumab; plus NMDA (memantine), AChE inhibitors</td></tr>
+      <tr><td><b>CHF</b></td><td><b>ARNI</b> (sacubitril/valsartan), <b>SGLT2 inhibitors</b> (dapagliflozin, empagliflozin), <b>vericiguat</b> (sGC stimulator), <b>ivabradine</b>, omecamtiv mecarbil (trials)</td></tr>
+    </table>
+    <div class="recent"><b>Recent:</b> SGLT2 inhibitors now benefit HFrEF <i>and</i> HFpEF; anti-amyloid mAbs are first disease-modifying Alzheimer's drugs.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Rationale for agents in congestive cardiac failure &amp; newer targets in its management.</span></summary>
+  <div class="answer">
+    <h4>Pharmacological rationale (by mechanism)</h4>
+    <table>
+      <tr><th>Class</th><th>Rationale</th></tr>
+      <tr><td>ACEi / ARB</td><td>Block RAAS → ↓ afterload/preload, anti-remodelling, mortality ↓</td></tr>
+      <tr><td>β-blockers (carvedilol, bisoprolol, metoprolol)</td><td>Block harmful sympathetic over-activity → mortality ↓</td></tr>
+      <tr><td>MRA (spironolactone, eplerenone)</td><td>Block aldosterone → anti-fibrotic, ↓ K loss</td></tr>
+      <tr><td>Diuretics (furosemide)</td><td>Symptomatic congestion relief</td></tr>
+      <tr><td>Digoxin</td><td>Positive inotrope, rate control (symptom benefit)</td></tr>
+    </table>
+    <h4>Newer agents / targets ("four pillars" + new)</h4>
+    <ul>
+      <li><b>ARNI</b> — sacubitril/valsartan (neprilysin inhibition ↑ natriuretic peptides).</li>
+      <li><b>SGLT2 inhibitors</b> — dapagliflozin/empagliflozin (benefit independent of diabetes).</li>
+      <li><b>Ivabradine</b> — If-channel (heart-rate reduction).</li>
+      <li><b>Vericiguat</b> — soluble guanylate cyclase stimulator.</li>
+      <li><b>Omecamtiv mecarbil</b> — cardiac myosin activator (trials).</li>
+    </ul>
+    <p>Modern HFrEF therapy = "four pillars" (ARNI/ACEi + β-blocker + MRA + SGLT2i) started early.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Pros &amp; cons of combining probiotics with antibiotic therapy; rationality of such combinations in the Indian market.</span></summary>
+  <div class="answer">
+    <h4>Rationale / Pros</h4>
+    <ul>
+      <li>Restore gut microbiota disrupted by antibiotics; <b>prevent antibiotic-associated diarrhoea &amp; C. difficile</b> (evidence: <i>Saccharomyces boulardii, Lactobacillus rhamnosus GG</i>).</li>
+      <li>May improve tolerability/compliance.</li>
+    </ul>
+    <h4>Cons / Concerns</h4>
+    <ul>
+      <li>Antibiotic may kill the co-administered probiotic if taken together → needs <b>time gap (≥2 h)</b>.</li>
+      <li>Strain/dose-specific efficacy; many marketed FDCs are <b>irrational</b> (unproven strains/CFU, no separation).</li>
+      <li>Risk in immunocompromised (bacteraemia/fungaemia); quality/viability issues.</li>
+    </ul>
+    <h4>Indian market</h4>
+    <p>Many fixed-dose antibiotic + probiotic combinations are sold but several lack robust evidence and were scrutinised among India's banned/irrational FDCs. <b>Rational practice:</b> use evidence-based strains, adequate CFU, separate timing — not blanket FDCs.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Intellectual Property Rights (IPR) in drug development; Cytokines as drug targets.</span></summary>
+  <div class="answer">
+    <h4>IPR in drug development</h4>
+    <ul>
+      <li><b>Patent:</b> 20-year exclusivity (from filing) — incentivises R&amp;D investment (G&amp;G Ch.1: industry operates in a capitalist economy).</li>
+      <li><b>TRIPS</b> &amp; Indian Patents Act 1970 (amended 2005): product patents; <b>Section 3(d)</b> prevents "evergreening" (Novartis-Glivec case).</li>
+      <li><b>Compulsory licensing</b> (e.g. Natco-sorafenib) for public health; data exclusivity; <b>Bayh-Dole Act</b> (US — academic patenting).</li>
+      <li>Patent expiry → generics &amp; biosimilars.</li>
+    </ul>
+    <h4>Cytokines as drug targets</h4>
+    <table>
+      <tr><th>Cytokine</th><th>Drug</th><th>Use</th></tr>
+      <tr><td>TNF-α</td><td>Infliximab, adalimumab, etanercept</td><td>RA, IBD, psoriasis</td></tr>
+      <tr><td>IL-6</td><td>Tocilizumab</td><td>RA, CRS, COVID-19</td></tr>
+      <tr><td>IL-1</td><td>Anakinra, canakinumab</td><td>Auto-inflammatory</td></tr>
+      <tr><td>IL-17 / IL-23</td><td>Secukinumab / ustekinumab</td><td>Psoriasis</td></tr>
+      <tr><td>IL-4/13</td><td>Dupilumab</td><td>Atopic dermatitis/asthma</td></tr>
+      <tr><td>JAK (downstream)</td><td>Tofacitinib, baricitinib</td><td>RA, COVID-19</td></tr>
+    </table>
+    <p>Cytokines (recombinant) are also used <b>as drugs</b>: interferons, IL-2 (aldesleukin), G-CSF, erythropoietin.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Structure of the bacterial cell wall &amp; antimicrobial strategies for drug designing.</span></summary>
+  <div class="answer">
+    <h4>Cell-wall structure</h4>
+    <ul>
+      <li><b>Peptidoglycan</b> (murein): NAG-NAM backbone cross-linked by peptide bridges via transpeptidases (PBPs).</li>
+      <li><b>Gram-positive:</b> thick peptidoglycan + teichoic acids.</li>
+      <li><b>Gram-negative:</b> thin peptidoglycan + outer membrane with LPS + periplasmic space (β-lactamases).</li>
+    </ul>
+    <h4>Antimicrobial strategies targeting it</h4>
+    <table>
+      <tr><th>Step / target</th><th>Drug</th></tr>
+      <tr><td>Transpeptidase/PBP cross-linking</td><td>β-lactams (penicillins, cephalosporins, carbapenems)</td></tr>
+      <tr><td>NAM-pentapeptide (D-Ala-D-Ala)</td><td>Vancomycin (glycopeptide)</td></tr>
+      <tr><td>Cytoplasmic precursor (MurA)</td><td>Fosfomycin</td></tr>
+      <tr><td>Bactoprenol/lipid carrier</td><td>Bacitracin</td></tr>
+      <tr><td>β-lactamase inhibition</td><td>Clavulanate, tazobactam, avibactam</td></tr>
+    </table>
+    <p><b>Drug-design strategies:</b> exploit unique bacterial targets (selective toxicity), β-lactamase-stable scaffolds, BLI combinations, novel PBP-binders, outer-membrane permeabilisers, and anti-resistance (e.g. siderophore cephalosporins — cefiderocol).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Mechanism of gene-expression regulation by glucocorticoids &amp; rationale of their use in some cancers.</span></summary>
+  <div class="answer">
+    <h4>Molecular mechanism (genomic)</h4>
+    <ol>
+      <li>Lipophilic glucocorticoid enters cell → binds cytoplasmic <b>glucocorticoid receptor (GR)</b> (bound to HSP90).</li>
+      <li>HSP dissociates → GR–steroid complex dimerises → translocates to nucleus.</li>
+      <li>Binds <b>Glucocorticoid Response Elements (GRE)</b> on DNA.</li>
+      <li><b>Transactivation</b> (↑ anti-inflammatory genes: lipocortin/annexin-1, IκB) &amp; <b>transrepression</b> (↓ NF-κB/AP-1 → ↓ cytokines, COX-2).</li>
+    </ol>
+    <p>Plus rapid <b>non-genomic</b> membrane effects.</p>
+    <h4>Rationale in cancer</h4>
+    <ul>
+      <li><b>Lympholytic effect</b> → apoptosis of lymphoid cells: used in ALL, lymphomas, multiple myeloma, CLL (part of CHOP, VAD regimens).</li>
+      <li>Antiemetic (with chemo), ↓ cerebral oedema (brain tumours/metastasis), hypercalcaemia of malignancy, appetite/palliation, prevent hypersensitivity to chemo.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Contents of a concept paper &amp; protocol design for clinical evaluation of an Ayurvedic preparation.</span></summary>
+  <div class="answer">
+    <h4>Concept paper — contents</h4>
+    <ul>
+      <li>Title, background &amp; rationale (classical Ayurvedic reference/reverse pharmacology).</li>
+      <li>Objectives &amp; hypothesis; preliminary/pre-clinical &amp; traditional-use data.</li>
+      <li>Proposed design, population, intervention, comparator, outcomes.</li>
+      <li>Feasibility, ethical &amp; regulatory considerations, timeline, budget.</li>
+    </ul>
+    <h4>Protocol design — contents</h4>
+    <ul>
+      <li>Title, objectives, study design (RCT/observational), standardisation &amp; quality control of the herbal product (batch, fingerprinting, heavy-metal/safety testing).</li>
+      <li>Inclusion/exclusion criteria, sample size, randomisation/blinding, dose &amp; duration.</li>
+      <li>Outcome measures (Ayurvedic + modern parameters), safety &amp; ADR monitoring.</li>
+      <li>Statistical plan, ethics (IEC, informed consent), ICMR/AYUSH &amp; CTRI registration, GCP-compliance.</li>
+    </ul>
+    <p><b>Indian framework:</b> CCRAS, Ministry of AYUSH guidelines, Good Clinical Practice for ASU drugs, CTRI registration.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Status of herbal drug research in India, herbal drug interactions, academia–industry interaction.</span></summary>
+  <div class="answer">
+    <h4>Status in India</h4>
+    <ul>
+      <li>Rich traditional systems (Ayurveda, Siddha, Unani); Ministry of AYUSH, CCRAS, CSIR &amp; NMPB programmes.</li>
+      <li>Standardisation, fingerprinting (HPTLC/marker compounds), reverse pharmacology; "Golden Triangle" (AYUSH-CSIR-ICMR).</li>
+      <li>Challenges: standardisation, batch variability, lack of RCTs, adulteration/heavy metals, IPR/biopiracy (Traditional Knowledge Digital Library).</li>
+    </ul>
+    <h4>Herbal–drug interactions (examples)</h4>
+    <table>
+      <tr><th>Herb</th><th>Interaction</th></tr>
+      <tr><td>St John's wort</td><td>CYP3A4/P-gp inducer → ↓ OC, warfarin, cyclosporine, ARV</td></tr>
+      <tr><td>Ginkgo, garlic, ginger</td><td>↑ bleeding with anticoagulants/antiplatelets</td></tr>
+      <tr><td>Grapefruit (food)</td><td>CYP3A4 inhibition → ↑ statin/CCB levels</td></tr>
+      <tr><td>Ginseng</td><td>↓ warfarin effect; hypoglycaemia additive</td></tr>
+    </table>
+    <h4>Academia–industry interaction</h4>
+    <p>Collaboration for translation: shared funding, technology transfer, contract research, incubators/start-ups, public-private partnerships — key to converting research into marketed products (also addressed in G&amp;G's public-policy discussion).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Role of microbiota in therapeutics &amp; the human microbiome in health and disease.</span></summary>
+  <div class="answer">
+    <p><b>G&amp;G Ch.6</b> dedicates a chapter to the GI microbiome and drug response.</p>
+    <h4>Roles in health/disease</h4>
+    <ul>
+      <li>Digestion, vitamin (K, B) synthesis, immune development, colonisation resistance, gut-brain axis.</li>
+      <li>Dysbiosis linked to IBD, obesity, diabetes, allergy, C. difficile, CNS disorders.</li>
+    </ul>
+    <h4>Microbiome &amp; drug response (pharmacomicrobiomics)</h4>
+    <ul>
+      <li>Bacterial metabolism activates/inactivates drugs: <b>sulfasalazine</b> activation, <b>digoxin</b> inactivation (<i>Eggerthella lenta</i>), L-dopa metabolism, irinotecan toxicity (β-glucuronidase).</li>
+      <li>Microbiota modulates efficacy of <b>immune-checkpoint inhibitors</b>.</li>
+    </ul>
+    <h4>Therapeutics</h4>
+    <ul><li>Probiotics, prebiotics, synbiotics; <b>Faecal Microbiota Transplant (FMT)</b> for recurrent C. difficile; engineered/live-biotherapeutic products.</li></ul>
+    <div class="recent"><b>Recent:</b> FDA-approved microbiome therapeutics for recurrent C. difficile (Rebyota 2022, Vowst 2023).</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">3D printing technology and its role in medicine and drug development.</span></summary>
+  <div class="answer">
+    <h4>Concept</h4>
+    <p>Additive layer-by-layer manufacturing used to fabricate dosage forms, devices, and tissues.</p>
+    <h4>Applications</h4>
+    <ul>
+      <li><b>Drug products:</b> <b>Spritam (levetiracetam)</b> — first FDA-approved 3D-printed tablet (rapid-disintegrating, high drug load); personalised dose &amp; polypills; complex release profiles.</li>
+      <li><b>Medical devices &amp; implants:</b> patient-specific prosthetics, surgical guides, dental.</li>
+      <li><b>Bioprinting:</b> tissues/organoids for drug testing &amp; regenerative medicine.</li>
+    </ul>
+    <h4>Advantages / limitations</h4>
+    <p><b>Pros:</b> personalised dosing, on-demand/point-of-care manufacturing, complex geometries. <b>Cons:</b> regulatory/QC challenges, scalability, material limits.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Concept of P-value, normal distribution, confounding factors &amp; tests of significance in research/clinical trials.</span></summary>
+  <div class="answer">
+    <h4>Normal distribution</h4>
+    <p>Symmetric bell-shaped curve; mean = median = mode; ~68/95/99.7% data within ±1/2/3 SD. Basis of parametric tests.</p>
+    <h4>P-value</h4>
+    <p>Probability of obtaining the observed (or more extreme) result if the <b>null hypothesis is true</b>. <b>P &lt; 0.05</b> → statistically significant (reject null). Not the probability the hypothesis is true; complement with confidence intervals &amp; effect size.</p>
+    <ul><li><b>Type I error (α):</b> false positive (reject true null).</li><li><b>Type II error (β):</b> false negative; <b>Power = 1−β</b>.</li></ul>
+    <h4>Confounding factor</h4>
+    <p>An extraneous variable associated with both exposure &amp; outcome, distorting the true association (e.g. smoking confounding alcohol–lung cancer). Controlled by randomisation, matching, restriction, stratification, multivariable adjustment.</p>
+    <h4>Tests of significance</h4>
+    <table>
+      <tr><th>Data</th><th>Test</th></tr>
+      <tr><td>2 means (parametric)</td><td>Student's t-test (paired/unpaired)</td></tr>
+      <tr><td>&gt;2 means</td><td>ANOVA</td></tr>
+      <tr><td>Categorical/proportions</td><td>Chi-square, Fisher's exact</td></tr>
+      <tr><td>Non-parametric</td><td>Mann-Whitney, Wilcoxon, Kruskal-Wallis</td></tr>
+      <tr><td>Correlation/prediction</td><td>Pearson/Spearman, regression</td></tr>
+      <tr><td>Survival</td><td>Kaplan-Meier, log-rank, Cox</td></tr>
+    </table>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Pharmacological basis &amp; rationale of drugs used in peptic ulcer, gout, migraine &amp; diabetic ketoacidosis.</span></summary>
+  <div class="answer">
+    <h4>Peptic ulcer disease</h4>
+    <ul><li><b>↓ acid:</b> PPIs (omeprazole — irreversible H⁺/K⁺-ATPase), H2-blockers (ranitidine/famotidine).</li><li><b>Eradicate H. pylori:</b> PPI + 2 antibiotics.</li><li><b>Mucosal protection:</b> sucralfate, misoprostol (PGE1, esp. NSAID ulcers), antacids.</li></ul>
+    <h4>Gout</h4>
+    <ul>
+      <li><b>Acute:</b> NSAIDs, <b>colchicine</b> (inhibits microtubules/neutrophil migration), steroids.</li>
+      <li><b>Chronic (urate-lowering):</b> allopurinol/febuxostat (xanthine oxidase inhibitors), probenecid (uricosuric), pegloticase/rasburicase (uricase).</li>
+    </ul>
+    <h4>Migraine</h4>
+    <ul>
+      <li><b>Abortive:</b> triptans (5-HT1B/1D agonists → cranial vasoconstriction, ↓CGRP), NSAIDs, ergots, <b>gepants</b> (CGRP antagonists), lasmiditan.</li>
+      <li><b>Prophylaxis:</b> β-blockers (propranolol), topiramate, amitriptyline, valproate, <b>anti-CGRP mAbs</b> (erenumab).</li>
+    </ul>
+    <h4>Diabetic ketoacidosis (DKA)</h4>
+    <ul><li><b>IV regular insulin</b> (corrects hyperglycaemia/ketogenesis), aggressive <b>IV fluids</b> (normal saline), <b>potassium</b> replacement (insulin drives K⁺ intracellularly), correct precipitating cause; bicarbonate only if severe acidosis.</li></ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Toxin-based drugs approved by USFDA &amp; their therapeutic applications.</span></summary>
+  <div class="answer">
+    <table>
+      <tr><th>Toxin-derived drug</th><th>Source</th><th>Use</th></tr>
+      <tr><td><b>Botulinum toxin</b> (onabotulinumtoxinA)</td><td>Clostridium botulinum</td><td>Dystonia, blepharospasm, chronic migraine, spasticity, hyperhidrosis, cosmetic</td></tr>
+      <tr><td><b>Ziconotide</b></td><td>Cone snail (ω-conotoxin)</td><td>Severe chronic pain (intrathecal)</td></tr>
+      <tr><td><b>Exenatide</b></td><td>Gila monster (exendin-4)</td><td>Type 2 diabetes (GLP-1 agonist)</td></tr>
+      <tr><td><b>Captopril</b> (design basis)</td><td>Brazilian pit-viper peptide</td><td>Hypertension (ACE inhibitor)</td></tr>
+      <tr><td><b>Eptifibatide / Tirofiban</b></td><td>Snake venom (disintegrin)</td><td>Antiplatelet (GpIIb/IIIa)</td></tr>
+      <tr><td><b>Bivalirudin</b></td><td>Leech hirudin analogue</td><td>Anticoagulant</td></tr>
+      <tr><td>Diphtheria-toxin fusions (denileukin diftitox)</td><td>C. diphtheriae</td><td>Cutaneous T-cell lymphoma</td></tr>
+    </table>
+    <p><b>Concept:</b> potent natural toxins, in controlled doses, exploit specific molecular targets — "poison as medicine."</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Management of heavy-metal poisoning &amp; the role of chelating agents.</span></summary>
+  <div class="answer">
+    <p><b>Chelating agent:</b> forms stable, water-soluble, non-toxic complexes with metal ions for excretion (G&amp;G Ch.9 — clinical toxicology).</p>
+    <table>
+      <tr><th>Metal</th><th>Chelator of choice</th></tr>
+      <tr><td>Lead</td><td>CaNa₂-EDTA, DMSA (succimer), dimercaprol (BAL) for encephalopathy</td></tr>
+      <tr><td>Arsenic / Mercury / Gold</td><td>Dimercaprol (BAL), DMSA, DMPS</td></tr>
+      <tr><td>Iron</td><td>Deferoxamine (IV), deferasirox/deferiprone (oral)</td></tr>
+      <tr><td>Copper (Wilson's)</td><td>D-penicillamine, trientine</td></tr>
+      <tr><td>Plutonium/uranium</td><td>DTPA</td></tr>
+    </table>
+    <h4>General management</h4>
+    <ul><li>Remove source/decontaminate; ABC support; identify metal (history, levels).</li><li>Chelation timing &amp; agent per metal &amp; severity; monitor renal function, electrolytes; haemodialysis if renal failure.</li><li>Avoid oral chelator if gut still contains metal (may ↑ absorption).</li></ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Current guidelines &amp; rationale for combination therapy in hypertension, incl. effect of comorbidities on drug selection.</span></summary>
+  <div class="answer">
+    <h4>Rationale for combinations</h4>
+    <ul>
+      <li>Most patients need ≥2 drugs to reach target; complementary mechanisms; lower doses → fewer dose-dependent side effects; better &amp; faster control; single-pill combos improve adherence.</li>
+    </ul>
+    <h4>Preferred combinations (ACC/AHA, ESC, JNC principles)</h4>
+    <ul>
+      <li>ACEi/ARB + CCB (e.g. amlodipine) — preferred.</li>
+      <li>ACEi/ARB + thiazide diuretic.</li>
+      <li>CCB + diuretic.</li>
+      <li><b>Avoid</b> ACEi + ARB together (↑ renal/hyperkalaemia risk).</li>
+      <li>Resistant HTN: add spironolactone (4th drug).</li>
+    </ul>
+    <h4>Comorbidity-based selection (compelling indications)</h4>
+    <table>
+      <tr><th>Comorbidity</th><th>Preferred</th></tr>
+      <tr><td>Diabetes / CKD with proteinuria</td><td>ACEi or ARB</td></tr>
+      <tr><td>Heart failure</td><td>ACEi/ARNI + β-blocker + MRA + SGLT2i</td></tr>
+      <tr><td>Post-MI / angina</td><td>β-blocker + ACEi</td></tr>
+      <tr><td>Pregnancy</td><td>Labetalol, methyldopa, nifedipine (avoid ACEi/ARB)</td></tr>
+      <tr><td>BPH</td><td>α-blocker (add-on)</td></tr>
+      <tr><td>Osteoporosis</td><td>Thiazide (↓ Ca excretion)</td></tr>
+    </table>
+    <div class="recent"><b>Recent:</b> Single-pill (fixed-dose) combinations &amp; even "polypill" strategies recommended to start in stage 2 HTN; aprocitentan for resistant HTN.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s10" style="--sec:#aa5590;--sec-soft:#aa559026">
+  <h2>Section 10 · 🩺 Clinical Case Vignettes</h2>
+  <p class="sec-note">Apply the concepts — read the scenario, decide your answer, then open to check. Filter to just these with the "🩺 Cases" chip.</p>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A 26-year-old woman on combined oral contraceptive pills is started on <b>rifampicin</b> for tuberculosis. Two months later she is pregnant. Explain the pharmacological basis &amp; what advice was missed.</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Which CYP process does rifampicin trigger, and how does that affect the pill?</div>
+    <p><b>Mechanism:</b> Rifampicin is a potent <b>CYP3A4 (and P-glycoprotein) inducer</b> → ↑ metabolism of estrogen &amp; progestin → ↓ contraceptive plasma levels → <b>loss of efficacy</b> → ovulation &amp; pregnancy.</p>
+    <p><b>What should have happened:</b> warn the patient and advise an <b>additional/alternative non-hormonal method</b> (e.g. copper IUD, barrier) during and for ~4 weeks after rifampicin.</p>
+    <p><b>Concept tested:</b> enzyme induction &amp; clinically important drug interactions (Type F ADR — therapeutic failure). Other inducers: phenytoin, carbamazepine, phenobarbitone, St John's wort.</p>
+  </div></details>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient with epilepsy is stable on <b>phenytoin</b>. The dose is increased by a small amount and he develops nystagmus, ataxia and drowsiness with a disproportionately high serum level. Why?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> What order of kinetics does phenytoin follow at therapeutic doses?</div>
+    <p><b>Mechanism:</b> Phenytoin shows <b>zero-order (saturation / Michaelis-Menten) kinetics</b> — the metabolising enzymes are saturated, so a small dose increase causes a <b>large, non-linear rise</b> in plasma concentration → toxicity.</p>
+    <p><b>Implication:</b> titrate in small increments, monitor levels (TDM), and remember t½ lengthens as concentration rises. Other zero-order drugs: <b>ethanol, aspirin (high dose), warfarin, theophylline</b>.</p>
+  </div></details>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient on digoxin has a measured trough of 0.6 ng/mL but remains symptomatic; target is ~1.2 ng/mL. The current dose is 0.125 mg/day. Roughly what maintenance dose is needed, and what's the caveat?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Digoxin follows first-order kinetics — concentration is proportional to dose.</div>
+    <p><b>Calculation:</b> For first-order drugs, <code>new dose = current dose × (target / measured)</code> = 0.125 × (1.2 / 0.6) = <b>0.25 mg/day</b>.</p>
+    <p><b>Caveats:</b> digoxin has a <b>narrow therapeutic index</b> — recheck level at steady state (after ~5 half-lives; sample ≥6–8 h post-dose), watch for toxicity (nausea, visual halos, arrhythmia), and reduce dose in renal impairment, hypokalaemia &amp; the elderly. This linear rule does <b>not</b> apply to phenytoin.</p>
+  </div></details>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A breastfeeding mother is given <b>codeine</b> for post-partum pain. Her neonate becomes excessively sedated with poor feeding. What happened?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Codeine is a prodrug — which enzyme activates it, and what genetic variant is dangerous?</div>
+    <p><b>Mechanism:</b> Codeine is converted to <b>morphine by CYP2D6</b>. An <b>ultra-rapid metaboliser</b> (gene duplication) produces excessive morphine, which is secreted in breast milk → neonatal opioid toxicity (sedation, respiratory depression).</p>
+    <p><b>Lesson:</b> avoid codeine in breastfeeding/ultra-rapid metabolisers (regulatory warning); a poor metaboliser instead gets <b>no analgesia</b>. Classic pharmacogenomics example.</p>
+  </div></details>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A young man starts <b>azathioprine</b> for inflammatory bowel disease and develops profound bone-marrow suppression within two weeks. Which enzyme should have been checked first?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Thiopurine metabolism depends on a polymorphic enzyme.</div>
+    <p><b>Mechanism:</b> Azathioprine → 6-mercaptopurine, inactivated by <b>thiopurine methyltransferase (TPMT)</b> (and NUDT15). <b>TPMT-deficient</b> patients accumulate cytotoxic thioguanine nucleotides → severe myelosuppression.</p>
+    <p><b>Lesson:</b> test <b>TPMT/NUDT15 activity or genotype</b> before starting; reduce dose or avoid in deficiency. Also: never co-prescribe full-dose azathioprine with <b>allopurinol</b> (blocks xanthine oxidase → ↑ toxicity).</p>
+  </div></details>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient stable on <b>warfarin</b> (INR 2.5) is prescribed a course of an antibiotic and presents days later with bruising and an INR of 7. Name a likely culprit &amp; the mechanism.</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> warfarin is metabolised by CYP2C9/3A4 — what would an enzyme inhibitor do?</div>
+    <p><b>Mechanism:</b> Drugs such as <b>metronidazole, ciprofloxacin, co-trimoxazole, macrolides, fluconazole</b> inhibit warfarin metabolism (CYP2C9) → ↑ warfarin levels → ↑ INR → bleeding risk. Some also displace protein binding.</p>
+    <p><b>Management:</b> hold warfarin, give <b>vitamin K</b> ± PCC/FFP if bleeding, monitor INR; anticipate interactions when adding any drug to warfarin.</p>
+  </div></details>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A 70-year-old with eGFR 25 mL/min is admitted; the team plans gentamicin and metformin. What pharmacokinetic principles guide dosing here?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> both drugs are renally cleared — what changes in renal impairment?</div>
+    <p><b>Principles:</b> renally-eliminated drugs accumulate when GFR falls → <b>reduce dose and/or extend the dosing interval</b> per eGFR/CrCl.</p>
+    <ul>
+      <li><b>Gentamicin</b> — extend interval, use TDM (trough to avoid nephro/ototoxicity); loading dose unchanged (Vd same).</li>
+      <li><b>Metformin</b> — risk of <b>lactic acidosis</b>; avoid if eGFR &lt;30 (contraindicated), caution 30–45.</li>
+    </ul>
+    <p><b>Concept:</b> dose individualisation in renal impairment + avoiding nephrotoxins.</p>
+  </div></details>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">Two weeks after starting a new drug, a patient develops a maculopapular rash. How would you decide whether the drug caused it?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> there are formal causality-assessment tools.</div>
+    <p><b>Approach — causality assessment:</b> use the <b>WHO-UMC categories</b> (certain, probable, possible, unlikely) or the <b>Naranjo algorithm</b> (definite/probable/possible/doubtful), assessing:</p>
+    <ul>
+      <li><b>Temporal</b> relationship (timing after drug start).</li>
+      <li><b>Dechallenge</b> (improves on stopping) &amp; <b>rechallenge</b> (recurs on restart).</li>
+      <li>Alternative causes excluded; known ADR profile; dose-relationship.</li>
+    </ul>
+    <p><b>Action:</b> stop suspected drug, manage rash, and <b>report to PvPI</b> (suspected-ADR form). Concept: pharmacovigilance &amp; ADR causality.</p>
+  </div></details>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">You must start IV therapy that needs an immediate therapeutic level. The drug has Vd 40 L and target concentration 5 mg/L. What loading dose, and why is it independent of clearance?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> loading dose depends on Vd, not clearance.</div>
+    <p><b>Calculation:</b> <code>Loading dose = Vd × target concentration</code> = 40 L × 5 mg/L = <b>200 mg</b>.</p>
+    <p><b>Why:</b> the loading dose fills the apparent volume to reach the target immediately; <b>clearance</b> determines the <b>maintenance dose</b> (= Css × CL) and the time to steady state (~5 t½), not the loading dose. Useful when waiting 4–5 half-lives is unacceptable (e.g. status epilepticus, severe infection).</p>
+  </div></details>
+
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A junior doctor must choose a first-line antihypertensive for a new clinic. How would the "P-drug" concept guide a rational choice?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> WHO "Guide to Good Prescribing" — four selection criteria.</div>
+    <p><b>P-drug approach:</b> pre-select a personal drug of choice by comparing groups on <b>Efficacy, Safety, Suitability &amp; Cost</b>.</p>
+    <ol>
+      <li>Define the objective (lower BP, reduce CV risk).</li>
+      <li>List effective groups (ACEi/ARB, CCB, thiazide).</li>
+      <li>Choose by E-S-S-C → e.g. a thiazide or ACEi/ARB/CCB depending on comorbidity (diabetes/CKD → ACEi/ARB).</li>
+      <li>Verify suitability for the individual patient, prescribe, inform &amp; monitor.</li>
+    </ol>
+    <p><b>Concept:</b> rational prescribing reduces polypharmacy, ADRs &amp; cost.</p>
+  </div></details>
+</section>
+
+<!-- CONTENT END -->
+  </div>
+
+  <footer>
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman 14e (Ch. 1–9), Katzung, Rang &amp; Dale, Indian regulatory guidelines.
+  </footer>
+</div>
+
+<script>
+  const search   = document.getElementById('search');
+  const items    = Array.from(document.querySelectorAll('details.q'));
+  const sections = Array.from(document.querySelectorAll('section.sec'));
+  const counter  = document.getElementById('counter');
+  const nohit    = document.getElementById('nohit');
+  const chips    = Array.from(document.querySelectorAll('.chip'));
+  const themeBtn = document.getElementById('theme');
+  const root     = document.documentElement;
+  let activeFilter = 'all';
+  let kbIndex = -1;
+
+  items.forEach(d=>{
+    const s = d.querySelector('.stars');
+    d.dataset.pri  = s ? (s.textContent.match(/★/g)||[]).length : 0;
+    d.dataset.type = d.classList.contains('vignette') ? 'case' : 'q';
+  });
+
+  const visible = ()=> items.filter(d=> d.style.display!=='none');
+
+  function apply(){
+    const q = search.value.trim().toLowerCase();
+    let hits = 0;
+    items.forEach(d=>{
+      const matchSearch = !q || d.textContent.toLowerCase().includes(q);
+      let matchFilter = true;
+      if(activeFilter==='case')      matchFilter = d.dataset.type==='case';
+      else if(activeFilter!=='all')  matchFilter = d.dataset.pri===activeFilter;
+      const show = matchSearch && matchFilter;
+      d.style.display = show ? '' : 'none';
+      if(show){ hits++; if(q.length>2) d.open = true; }
+    });
+    sections.forEach(s=>{
+      const any = Array.from(s.querySelectorAll('details.q')).some(d=> d.style.display!=='none');
+      s.style.display = any ? '' : 'none';
+    });
+    nohit.style.display = hits===0 ? 'block' : 'none';
+    counter.textContent = (q || activeFilter!=='all') ? hits + ' shown' : items.length + ' questions';
+    clearKb();
+  }
+
+  chips.forEach(c=> c.onclick = ()=>{
+    chips.forEach(x=> x.classList.remove('active'));
+    c.classList.add('active');
+    activeFilter = c.dataset.f;
+    apply();
+  });
+
+  let t;
+  search.addEventListener('input', ()=>{ clearTimeout(t); t = setTimeout(apply, 110); });
+
+  document.getElementById('expandAll').onclick  = ()=> visible().forEach(d=> d.open=true);
+  document.getElementById('collapseAll').onclick = ()=> items.forEach(d=> d.open=false);
+
+  function randomQ(){
+    const vis = visible(); if(!vis.length) return;
+    items.forEach(d=> d.open=false);
+    const pick = vis[Math.floor(Math.random()*vis.length)];
+    pick.open = true;
+    setKb(items.indexOf(pick));
+  }
+  document.getElementById('shuffle').onclick = randomQ;
+
+  function setTheme(mode){
+    if(mode==='dark'){ root.setAttribute('data-theme','dark'); themeBtn.textContent='☀️'; }
+    else { root.removeAttribute('data-theme'); themeBtn.textContent='🌙'; }
+    try{ localStorage.setItem('pharm-theme', mode); }catch(e){}
+  }
+  themeBtn.onclick = ()=> setTheme(root.getAttribute('data-theme')==='dark' ? 'light' : 'dark');
+  try{ if(localStorage.getItem('pharm-theme')==='dark') setTheme('dark'); }catch(e){}
+
+  function clearKb(){ items.forEach(d=> d.classList.remove('kbfocus')); kbIndex=-1; }
+  function setKb(i){
+    items.forEach(d=> d.classList.remove('kbfocus'));
+    kbIndex = i;
+    if(i>=0){ items[i].classList.add('kbfocus'); items[i].scrollIntoView({behavior:'smooth', block:'center'}); }
+  }
+  function moveKb(dir){
+    const vis = visible(); if(!vis.length) return;
+    let cur = kbIndex>=0 ? vis.indexOf(items[kbIndex]) : -1;
+    cur = (cur + dir + vis.length) % vis.length;
+    setKb(items.indexOf(vis[cur]));
+  }
+
+  document.addEventListener('keydown', e=>{
+    if(e.target===search){ if(e.key==='Escape'){ search.value=''; apply(); search.blur(); } return; }
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    switch(e.key){
+      case '/': e.preventDefault(); search.focus(); break;
+      case 'r': case 'R': randomQ(); break;
+      case 'e': case 'E': visible().forEach(d=> d.open=true); break;
+      case 'c': case 'C': items.forEach(d=> d.open=false); break;
+      case 'd': case 'D': themeBtn.click(); break;
+      case 'k': case 'K': case 'ArrowDown': e.preventDefault(); moveKb(1); break;
+      case 'j': case 'J': case 'ArrowUp':   e.preventDefault(); moveKb(-1); break;
+      case ' ': case 'Enter':
+        if(kbIndex>=0){ e.preventDefault(); items[kbIndex].open = !items[kbIndex].open; }
+        break;
+    }
+  });
+
+  apply();
+</script>
+</body>
+</html>

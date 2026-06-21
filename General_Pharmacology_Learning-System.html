@@ -1,0 +1,2359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Pharmacology · Accelerated Learning System</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+  /* Navy × Amber × Teal — General Pharmacology */
+  :root {
+    --accent: #b07410;
+    --accent-light: #d4a440;
+    --accent-pale: #faf0d9;
+    --accent-dark: #16344a;
+    --accent-darker: #102634;
+    --cool: #0f6b6b;
+    --cool-light: #2e8e8e;
+    --cool-pale: #e2efed;
+    --cream: #f5f4ef;
+    --ink: #13212a;
+    --ink-soft: #3c4a54;
+    --muted: #7a8a94;
+    --border: #d9d3c7;
+    --hero-gradient: linear-gradient(135deg,#102634 0%,#0f6b6b 55%,#16344a 100%);
+    /* Semantic aliases */
+    --bg: var(--cream);
+    --surface: white;
+    --text: var(--ink);
+    --text-soft: var(--ink-soft);
+    --highlight-bg: var(--accent-pale);
+    --cog-bg: var(--cool-pale);
+    --cog-border: var(--cool);
+  }
+
+  /* ── SHARED TOKENS ─────────────────────────────────── */
+  :root {
+    --fs-xs:   0.72rem;  --fs-sm:  0.85rem;  --fs-base: 1rem;
+    --fs-md:   1.125rem; --fs-lg:  1.35rem;  --fs-xl:   1.7rem;
+    --fs-2xl:  2.2rem;   --fs-3xl: 3rem;
+    --radius:    10px;   --radius-sm: 6px;
+    --shadow:    0 2px 12px rgba(26,26,46,.08);
+    --shadow-lg: 0 8px 32px rgba(26,26,46,.14);
+    --shadow-sm: 0 1px 3px rgba(26,26,46,.08);
+  }
+
+  /* ── RESET & BASE ───────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-base);
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ───────────────────────────────────────────── */
+  .hero, header.hero {
+    background: var(--hero-gradient);
+    color: white;
+    padding: 2.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: none;
+  }
+  .hero::before, header.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* decorative SVG elements inside hero – keep but make subtle */
+  header.hero svg { opacity: .08; pointer-events: none; }
+
+  .eyebrow {
+    font-size: var(--fs-sm);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    font-weight: 600;
+    margin-bottom: .8rem;
+    position: relative;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero h1, header.hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2rem, 5vw, var(--fs-3xl));
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: .6rem;
+    position: relative;
+    letter-spacing: -.01em;
+  }
+  .hero h1 em { font-style: italic; font-weight: 500; color: rgba(255,255,255,.82); }
+  .hero-sub, .hero .sub, header.hero .sub {
+    color: rgba(255,255,255,.78);
+    font-size: var(--fs-md);
+    margin-bottom: 1.8rem;
+    position: relative;
+    max-width: 720px;
+    margin-left: auto; margin-right: auto;
+  }
+  .chips, .hero .meta {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    justify-content: center; position: relative;
+    margin-top: .5rem;
+  }
+  .chip {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: .25rem .85rem;
+    font-size: var(--fs-xs);
+    letter-spacing: .05em;
+    font-weight: 500;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .chip.tier1 { background: rgba(255,255,255,.22); border-color: var(--accent-light); }
+  .chip.tier2 { background: rgba(0,0,0,.18); border-color: rgba(255,255,255,.45); }
+  .hero .thesis {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35);
+    border-radius: 9px; padding: 9px 14px; font-size: .86rem;
+    color: rgba(255,255,255,.9); margin-top: 18px; position: relative;
+  }
+
+  /* ── METHOD STRIP ───────────────────────────────────── */
+  .method-strip, .method {
+    background: var(--ink);
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .method-item, .method .m {
+    padding: 1.2rem 1.4rem;
+    border-right: 1px solid rgba(255,255,255,.08);
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
+  .method-item:last-child, .method .m:last-child { border-right: none; }
+  .method-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-light);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+  .method-name, .method .m h4 {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin: .1rem 0;
+    color: white !important;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .method-desc, .method .m p {
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,.55);
+    margin: 0; line-height: 1.5;
+  }
+  @media (max-width: 760px) {
+    .method-strip, .method { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── STICKY NAV ─────────────────────────────────────── */
+  .sticky-nav, nav.toc {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,244,240,.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--accent);
+    padding: .6rem 2rem;
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  }
+  .sticky-nav::-webkit-scrollbar, nav.toc::-webkit-scrollbar { display: none; }
+  nav.toc .wrap {
+    display: flex; gap: 1.5rem; padding: 0;
+    max-width: none; margin: 0;
+  }
+  .nav-link, nav.toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    white-space: nowrap;
+    padding: .2rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    border-radius: 0;
+    background: transparent !important;
+  }
+  .nav-link:hover, nav.toc a:hover {
+    color: var(--accent-dark);
+    border-bottom-color: var(--accent-dark);
+    background: transparent !important;
+  }
+  nav.toc a.thesis-link { color: var(--cool); font-weight: 600; }
+  nav.toc a.key { color: var(--accent-dark); font-weight: 600; }
+
+  /* ── LAYOUT ─────────────────────────────────────────── */
+  .container { max-width: 940px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 1.5rem; }
+  main { padding: 6px 0 60px; }
+  main.container { padding: 2rem 1.5rem 4rem; }
+
+  /* ── MODULE CARD ─────────────────────────────────────── */
+  .module, section.module {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    padding: 0 !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+  }
+  section.module.thesis-mod { border-color: var(--cool); }
+
+  .module-header {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+  }
+  /* mod-head used in other files */
+  .mod-head {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white !important;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+    align-items: initial !important;
+    gap: 0 !important;
+    flex-wrap: initial !important;
+    margin-bottom: 0 !important;
+  }
+  .mod-num { display: none !important; }  /* hide big decorative number */
+  .mod-titleblock { flex: none !important; min-width: 0 !important; }
+
+  .module-tier, .tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent-light) !important;
+    margin-bottom: .3rem;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    font-weight: 600;
+    display: block;
+  }
+  .module-header h2,
+  .mod-titleblock h2,
+  .mod-head h2 {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-size: var(--fs-xl) !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    color: white !important;
+    letter-spacing: -.01em;
+  }
+  .module-header p,
+  .mod-titleblock .mod-sub,
+  .mod-head p {
+    color: rgba(255,255,255,.72) !important;
+    font-size: var(--fs-sm) !important;
+    margin-top: .3rem !important;
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+  }
+
+  /* ── STAGE BLOCKS ────────────────────────────────────── */
+  .stage { padding: 1.6rem 1.8rem; border-bottom: 1px solid var(--border); }
+  .stage:last-child { border-bottom: none; }
+  .stage-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .stage-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* MAP / COG block */
+  .cog {
+    background: var(--cool-pale) !important;
+    border-left: 4px solid var(--cool) !important;
+    border-top: none !important; border-right: none !important; border-bottom: none !important;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+    padding: 1.2rem 1.4rem !important;
+    margin-bottom: 1rem;
+    box-shadow: none !important;
+  }
+  .cog > .tag, .cog .stage-label { color: var(--cool) !important; }
+  /* blurt variant overrides cog */
+  .cog.blurt {
+    background: var(--accent-pale) !important;
+    border-left-color: var(--accent) !important;
+  }
+  .cog.blurt > .tag { color: var(--accent-dark) !important; }
+  /* feyn variant */
+  .cog.feyn {
+    background: white !important;
+    border-left-color: var(--cool) !important;
+  }
+  /* spaced variant */
+  .cog.spaced {
+    background: #F4FAF5 !important;
+    border-left-color: #2E7D52 !important;
+  }
+  .cog.spaced > .tag { color: #2E7D52 !important; }
+
+  .pillar {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--cool);
+    border-bottom: 2px solid var(--cool-light);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+    line-height: 1.34;
+    background: none !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    padding-left: 0 !important;
+    padding-top: 0 !important;
+    padding-right: 0 !important;
+  }
+  .thesis-mod .pillar { color: var(--cool); border-left: none !important; }
+
+  .cog ul, .cog ol { padding-left: 1.4rem; }
+  .cog li { margin-bottom: .4rem; font-size: var(--fs-sm); }
+  .cog li::marker { color: var(--cool); }
+  .cog li strong { color: var(--accent-dark); }
+  .cog h4 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 700; margin: 16px 0 5px; color: var(--ink); }
+
+  /* BLURT STAGE */
+  .blurt-stage {
+    background: var(--accent-pale);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.2rem 1.4rem;
+  }
+  .blurt-stage .stage-label { color: var(--accent-dark); }
+  .blurt-prompt {
+    font-style: italic;
+    background: white;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    font-size: var(--fs-sm);
+    margin-bottom: 1rem;
+    color: var(--ink-soft);
+    font-family: 'Fraunces', Georgia, serif;
+    line-height: 1.4;
+  }
+  /* blurt-prompt in other files (non-italic class) */
+  .blurt-prompt.fraunces { font-style: italic; }
+
+  .primers { list-style: none; padding: 0; counter-reset: p; margin: 0; }
+  .primers li {
+    counter-increment: p;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    padding: .5rem .7rem .5rem 2.4rem;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    color: var(--accent-darker);
+    position: relative;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin: 7px 0;
+  }
+  .primers li::before {
+    content: 'Q' counter(p);
+    position: absolute; left: 10px; top: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    color: white; background: var(--accent-dark);
+    padding: 2px 5px; border-radius: 4px;
+  }
+
+  /* FEYNMAN GATE */
+  details.gate { margin: 12px 0 2px; }
+  details.gate > summary {
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    padding: .85rem 1.3rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    list-style: none;
+    user-select: none;
+    transition: opacity .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    letter-spacing: .04em;
+  }
+  details.gate > summary::-webkit-details-marker { display: none; }
+  details.gate > summary:hover { opacity: .88; }
+  details.gate > summary::before { content: '🔒 '; }
+  details.gate[open] > summary::before { content: '🔓 '; }
+  details.gate > summary::after { content: none !important; }
+  details.gate[open] > summary {
+    background: transparent; color: var(--ink-soft);
+    border: 1.5px solid var(--border); opacity: 1;
+  }
+  details.gate[open] { border-left: 3px solid var(--border); padding-left: 14px; margin-left: 2px; }
+  details.gate > *:not(summary) { animation: gateReveal .25s ease; }
+  @keyframes gateReveal { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+
+  .feynman-content { padding: 1.2rem 0 .4rem; }
+  .feynman-content h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--cool);
+    margin: 1.2rem 0 .5rem;
+  }
+  .feynman-content h4:first-child { margin-top: 0; }
+  .feynman-content p, .feynman-content li { font-size: var(--fs-sm); }
+  .feynman-content ul, .feynman-content ol { padding-left: 1.4rem; margin-bottom: .7rem; }
+  .feynman-content li { margin-bottom: .35rem; }
+
+  .analogy {
+    background: var(--accent-pale);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  .analogy::before { content: '💡 Analogy — '; font-weight: 700; color: var(--accent-dark); }
+  /* analogy in other-file style (has .alabel child) */
+  .analogy:has(.alabel)::before { content: none; }
+  .analogy .alabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cool); font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 7px;
+  }
+  .analogy .alabel::before { content: '💡 '; }
+  .analogy p { margin: 5px 0; }
+  .analogy .key { font-family: 'Fraunces', serif; font-style: italic; color: var(--cool); font-weight: 600; }
+
+  blockquote.warn {
+    background: #FFF3F0;
+    border-left: 4px solid var(--accent-dark);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: .85rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  blockquote.warn::before { content: '⚠️ Exam Trap — '; font-weight: 700; color: var(--accent-dark); }
+  blockquote.warn .wl { font-weight: 700; color: var(--accent-dark); }
+
+  /* SPACED REP STAGE */
+  .sched-stage {
+    background: #F4FAF5;
+    border-left: 4px solid #2E7D52;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.2rem 1.4rem;
+  }
+  .sched-stage .stage-label { color: #2E7D52; }
+  .sched {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: .6rem;
+    margin-bottom: 1rem;
+    flex-wrap: initial !important;
+  }
+  .sched-day, .sched .day {
+    background: white;
+    border: 1px solid #C3E6D0 !important;
+    border-top: 3px solid #2E7D52 !important;
+    border-radius: var(--radius-sm);
+    padding: .7rem .9rem;
+    font-size: var(--fs-xs);
+  }
+  .sched-day strong, .sched .day .d {
+    display: block; color: #2E7D52;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-sm); font-weight: 700; margin-bottom: .2rem; letter-spacing: .05em;
+  }
+  .sched .day .f { font-size: .82rem; color: var(--ink-soft); margin-top: 3px; }
+  .bridge {
+    background: white;
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .8rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--accent-darker);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    line-height: 1.4;
+    margin-top: 12px;
+  }
+  .bridge::before { content: '🌉 Bridge — '; font-weight: 700; font-style: normal; font-family: 'Inter',sans-serif; }
+
+  /* ── TABLES ──────────────────────────────────────────── */
+  .tbl-wrap, .tbl { overflow-x: auto; margin: 1rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: var(--fs-xs); }
+  th {
+    background: var(--cool);
+    color: white; padding: .5rem .7rem;
+    text-align: left; font-weight: 600; font-size: var(--fs-xs);
+  }
+  td { padding: .45rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--cream); }
+  tr:hover td { background: var(--accent-pale); }
+  td strong { color: var(--accent-dark); }
+
+  /* ── DIAGRAMS ─────────────────────────────────────────── */
+  .diagram-wrap {
+    background: white; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: .8rem; margin: 1rem 0;
+    text-align: center; overflow-x: auto;
+  }
+  .diagram-caption { font-size: var(--fs-xs); color: var(--muted); margin-top: .4rem; font-style: italic; }
+
+  /* ── QUIZ — TAP TO REVEAL ────────────────────────────── */
+  /* Supports: .quiz-item/.quiz-q/.quiz-a  AND  .q/.qq/.qa patterns */
+  .quizset-title, .quiz-intro h2, .quizbank > h2, section.quizzes h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--ink);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: .3rem;
+    border-top: none; border-left: none; border-right: none;
+  }
+
+  /* Quiz intro banner */
+  .quiz-intro {
+    background: linear-gradient(135deg, var(--accent-darker), var(--accent-dark));
+    color: white;
+    border-radius: var(--radius);
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .quiz-intro h2 { color: white !important; border: none !important; font-size: 1.4rem; margin-bottom: .5rem; padding: 0; }
+  .quiz-intro p { color: rgba(255,255,255,.82); font-size: var(--fs-sm); margin: 0; }
+  .quiz-intro .qi-sub { color: rgba(255,255,255,.7); font-size: var(--fs-xs); margin-top: 5px; }
+
+  /* Collapsible quiz section headers (details.qsec, details.quizset) */
+  details.qsec, details.quizset {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: white;
+    margin: 16px 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  details.qsec > summary, details.quizset > summary {
+    cursor: pointer; list-style: none;
+    padding: 1rem 1.3rem;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    font-weight: 600; font-size: var(--fs-sm);
+    display: flex; align-items: center; gap: .6rem;
+    user-select: none; transition: opacity .2s;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  details.qsec > summary::-webkit-details-marker,
+  details.quizset > summary::-webkit-details-marker { display: none; }
+  details.qsec > summary:hover, details.quizset > summary:hover { opacity: .88; }
+  .qs-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    background: rgba(255,255,255,.2); border-radius: 4px;
+    padding: 2px 7px; color: white;
+  }
+  .qs-title { flex: 1; }
+  .qs-meta { font-size: var(--fs-xs); color: rgba(255,255,255,.65); font-weight: 400; }
+  .qcaret { transition: transform .25s; color: rgba(255,255,255,.8); font-size: 1.05rem; }
+  details.quizset[open] > summary .qcaret { transform: rotate(90deg); }
+
+  /* Individual Q&A items — BOTH patterns unified */
+  .quiz-item, .q {
+    margin-bottom: .7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  /* Question row */
+  .quiz-q, .qq {
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: .5rem;
+    user-select: none;
+    transition: background .15s;
+  }
+  /* inner layout of .qq (other files wrap in .qbody) */
+  .qq .qbody { flex: 1; display: flex; align-items: flex-start; gap: .6rem; }
+  .qq .qs-num, .qq b { /* question number prefix */
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem; font-weight: 700;
+    background: var(--cool-pale); color: var(--cool);
+    border-radius: 4px; padding: 2px 6px;
+    flex-shrink: 0; margin-top: 1px;
+    display: inline-block;
+  }
+  .qq b { background: var(--cool-pale); color: var(--cool); border-radius: 4px; padding: 2px 6px; }
+  .q-text { flex: 1; }
+
+  .quiz-q:hover, .qq:hover { background: var(--accent-pale); }
+  .quiz-q::after, .qq::after {
+    content: '▼';
+    font-size: .65rem; color: var(--muted); flex-shrink: 0; margin-top: 3px;
+  }
+  .quiz-item.open .quiz-q::after, .q.open .qq::after { content: '▲'; }
+
+  /* Answer panel */
+  .quiz-a, .qa {
+    display: none;
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0;
+    color: var(--ink-soft);
+  }
+  .quiz-item.open .quiz-a, .q.open .qa { display: block; }
+  .quiz-a strong, .qa strong, .ans strong, .ans b { color: #1f7a42; }
+  .ans { font-size: var(--fs-sm); }
+
+  /* GI file: .qa is a <details> — override to always show */
+  details.qa {
+    display: block !important;
+    border: none !important;
+    margin: 0 !important;
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0 !important;
+  }
+  details.qa > summary {
+    display: none !important; /* handled by JS click on .qq */
+  }
+  details.qa > .ans {
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+  }
+  .qq { position: relative; }
+  /* show/hide GI-style answers via open class on parent .qq */
+  .qq details.qa { display: none !important; }
+  .qq.open details.qa { display: block !important; }
+
+  /* quiz section body padding */
+  .qbody-wrap, section.quizzes .wrap { padding-top: 1rem; }
+
+  /* ── BADGES ─────────────────────────────────────────── */
+  .badge {
+    display: inline-block; font-size: var(--fs-xs);
+    font-family: 'JetBrains Mono', monospace;
+    padding: .15rem .5rem; border-radius: 4px;
+    font-weight: 500; vertical-align: middle;
+  }
+  .badge-saffron, .badge-accent {
+    background: var(--accent-pale); color: var(--accent-darker); border: 1px solid var(--accent);
+  }
+  .badge-teal, .badge-cool {
+    background: var(--cool-pale); color: var(--cool); border: 1px solid var(--cool-light);
+  }
+  .badge-rust { background: #FFF0EB; color: var(--accent-darker); border: 1px solid #F4B89A; }
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────── */
+  p { margin-bottom: .7rem; font-size: var(--fs-sm); }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--accent-darker); }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin-bottom: .35rem; font-size: var(--fs-sm); }
+  h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg); font-weight: 700;
+    margin: 1.2rem 0 .6rem; color: var(--ink);
+  }
+  h4 { font-size: var(--fs-md); font-weight: 700; margin: 1rem 0 .4rem; }
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: .85em;
+    background: var(--cream); padding: .1em .3em; border-radius: 3px;
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── FOOTER ─────────────────────────────────────────── */
+  footer, .footer {
+    text-align: center; padding: 2rem 1.5rem;
+    font-size: var(--fs-xs); color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer .wrap, .footer .wrap {
+    max-width: 940px; margin: 0 auto;
+    display: block !important; text-align: center;
+  }
+  footer .src { color: var(--muted); line-height: 1.6; font-size: var(--fs-xs); }
+
+  /* ── SCROLLBAR ──────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── PRINT ──────────────────────────────────────────── */
+  @media print {
+    .sticky-nav, nav.toc, .method-strip, .method { display: none; }
+    details.gate[open] { break-inside: avoid; }
+  }
+
+
+  /* ── FLASHCARDS ─────────────────────────────────────── */
+  #flashcards { margin-top: 3rem; margin-bottom: 2rem; }
+  #flashcards > h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--ink);
+    margin-bottom: .4rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: .3rem;
+  }
+  #flashcards > .fc-lead {
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+  }
+  .flashcards { display: flex; flex-direction: column; gap: .75rem; }
+  .flashcard {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--cream);
+    transition: box-shadow .2s;
+  }
+  .flashcard:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+  .flashcard > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: .9rem;
+    padding: .9rem 1.1rem;
+    background: var(--accent-pale);
+    user-select: none;
+  }
+  .flashcard > summary::-webkit-details-marker { display: none; }
+  .flashcard > summary::after {
+    content: '▶';
+    color: var(--accent);
+    font-size: .75rem;
+    margin-left: auto;
+    margin-top: .25rem;
+    flex-shrink: 0;
+    transition: transform .2s;
+  }
+  .flashcard[open] > summary::after { transform: rotate(90deg); }
+  .fc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem;
+    font-weight: 500;
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: .2rem;
+    min-width: 2rem;
+  }
+  .fc-q {
+    font-size: var(--fs-sm);
+    color: var(--ink);
+    line-height: 1.55;
+    font-weight: 500;
+  }
+  .fc-back {
+    padding: 1.1rem 1.2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    background: #fff;
+  }
+  .fc-answer {
+    border-left: 3px solid var(--accent);
+    padding: .7rem 1rem;
+    border-radius: 0 8px 8px 0;
+    font-size: var(--fs-sm);
+    color: var(--ink);
+    line-height: 1.65;
+    background: var(--accent-pale);
+  }
+  .fc-answer strong { color: var(--accent-dark, var(--accent)); }
+  .fc-pearl {
+    border-left: 3px solid var(--cool);
+    padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0;
+    font-size: .8rem;
+    color: var(--ink-soft);
+    background: var(--cool-pale);
+    line-height: 1.5;
+  }
+  .fc-trap {
+    border-left: 3px solid #d97706;
+    padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0;
+    font-size: .8rem;
+    color: var(--ink-soft);
+    background: #fffbeb;
+    line-height: 1.5;
+  }
+  .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
+
+</style>
+  <link rel="stylesheet" href="learning-interactive.css">
+</head>
+<body>
+
+<header class="hero">
+  <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
+    <a href="learning.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">← Learning Hub</a>
+    <a href="index.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">🏠 Study Hub</a>
+  </div>
+  <svg class="curve" viewBox="0 0 1200 96" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,90 C120,90 180,20 280,18 C420,16 460,60 600,66 C760,72 820,40 960,38 C1080,36 1140,70 1200,74"
+      fill="none" stroke="#8fd4ce" stroke-width="2.5"/>
+    <g fill="#7fc4bf"><circle cx="280" cy="18" r="4"/><circle cx="600" cy="66" r="3.5"/><circle cx="960" cy="38" r="4"/></g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Goodman &amp; Gilman · 14th Ed · Section I</div>
+    <h1>General Pharmacology<br><em>an accelerated learning system</em></h1>
+    <p class="sub">The foundations — Chapters 1–9 — organized as a study guide: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies that make the mechanisms clear, and a spaced-repetition plan to help you remember it. Pharmacokinetics, pharmacodynamics, metabolism and toxicology: the principles every other drug chapter is built on.</p>
+    <div class="meta">
+      <span class="chip">9 modules · full depth</span>
+      <span class="chip">15 diagrams</span>
+      <span class="chip">blurting gates + analogies</span>
+      <span class="chip">10 quiz sets × 20 Q</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#method">The method</a>
+    <a class="key" href="#m2">2 · Pharmacokinetics</a>
+    <a class="key" href="#m3">3 · Pharmacodynamics</a>
+    <a class="key" href="#m5">5 · Metabolism</a>
+    <a class="key" href="#m9">9 · Toxicology</a>
+    <a href="#m4">4 · Transporters</a>
+    <a href="#m7">7 · Pharmacogenetics</a>
+    <a href="#m1">1 · Drug Discovery</a>
+    <a href="#m6">6 · Microbiome</a>
+    <a href="#m8">8 · Drug Safety</a>
+    <a href="#flashcards">🃏 Flashcards</a>
+    <a href="#quizzes">★ 200 Questions</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="method" style="padding-top:30px">
+  <p class="lead">Each module runs four evidence-based stages. The blurting gate matters most — retrieving <em>before</em> you read is what builds durable memory. Chapters are ordered by yield, Tier 1 first.</p>
+  <div class="method">
+    <div class="m m1"><h4>① 80/20 Map</h4><p>The 20% of ideas that explain 80% of the pharmacology. The skeleton first.</p></div>
+    <div class="m m2"><h4>② Blurting Gate</h4><p>Dump everything you know <em>before</em> reading the notes. Active recall.</p></div>
+    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The mechanism in plain language, with a simple analogy.</p></div>
+    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>When to re-test, and one question linking this topic to another.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Tier 1 (own cold): <strong>Pharmacokinetics, Pharmacodynamics, Metabolism, Toxicology</strong>. Tier 2: Transporters, Pharmacogenetics. Tier 3 (framework only): Drug Discovery, Microbiome, Drug Safety.</p>
+</section>
+
+<!-- ============ MODULE 2 — PHARMACOKINETICS ============ -->
+<section class="module" id="m2">
+  <div class="mod-head">
+    <div class="mod-num">02</div>
+    <div class="mod-titleblock">
+      <h2>Pharmacokinetics — what the body does to the drug</h2>
+      <div class="mod-sub">Absorption · Distribution · Metabolism · Elimination</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">All of pharmacokinetics reduces to <strong>four parameters</strong> — bioavailability (F), volume of distribution (V<sub>d</sub>), clearance (CL) and half-life (t½) — and the handful of equations that link a dose to a plasma concentration over time.</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>Drug transport:</strong> passive diffusion favours small, lipophilic, non-ionised molecules; carrier-mediated transport (SLC uptake, ABC efflux) is saturable and selective.</li>
+      <li><strong>pH partitioning / ion trapping:</strong> a drug is trapped where it is more ionised — <em>acids accumulate in basic compartments, bases in acidic ones</em>.</li>
+      <li><strong>The four parameters:</strong> F (fraction reaching circulation), V<sub>d</sub> (apparent volume), CL (volume cleared/time), t½ (derived from the other two).</li>
+      <li><strong>Order of kinetics:</strong> first-order (constant fraction/time, most drugs) vs zero-order (constant amount/time — ethanol, phenytoin, high-dose aspirin).</li>
+      <li><strong>Steady state</strong> ≈ 4–5 half-lives; loading dose fills V<sub>d</sub>, maintenance dose matches CL.</li>
+    </ul>
+    <figure>
+    <div class="fig-title">Figure 2·1 — The LADME journey</div>
+    <svg viewBox="0 0 900 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+      <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0f6b6b"/></marker>
+      </defs>
+      <!-- boxes -->
+      <g font-size="13" font-weight="600" text-anchor="middle">
+        <rect x="10" y="95" width="120" height="56" rx="9" fill="#16344a"/><text x="70" y="120" fill="#fff">Drug dose</text><text x="70" y="138" fill="#8fd4ce" font-size="10">tablet / IV / etc.</text>
+        <rect x="170" y="95" width="130" height="56" rx="9" fill="#e3efed" stroke="#0f6b6b"/><text x="235" y="120" fill="#0a4f54">Absorption</text><text x="235" y="138" fill="#3a4a55" font-size="10">→ bioavailability F</text>
+        <rect x="340" y="40" width="150" height="56" rx="9" fill="#e3efed" stroke="#0f6b6b"/><text x="415" y="65" fill="#0a4f54">Distribution</text><text x="415" y="83" fill="#3a4a55" font-size="10">→ V<tspan baseline-shift="sub" font-size="8">d</tspan>, protein binding</text>
+        <rect x="370" y="160" width="180" height="56" rx="9" fill="#fbf0dc" stroke="#b9791a"/><text x="460" y="185" fill="#b9791a">Tissue reservoirs</text><text x="460" y="203" fill="#3a4a55" font-size="10">fat, plasma protein, bone</text>
+        <rect x="560" y="95" width="140" height="56" rx="9" fill="#e3efed" stroke="#0f6b6b"/><text x="630" y="120" fill="#0a4f54">Metabolism</text><text x="630" y="138" fill="#3a4a55" font-size="10">liver (CYP / phase 1·2)</text>
+        <rect x="745" y="95" width="140" height="56" rx="9" fill="#16344a"/><text x="815" y="120" fill="#fff">Elimination</text><text x="815" y="138" fill="#8fd4ce" font-size="10">renal · biliary</text>
+      </g>
+      <g stroke="#0f6b6b" stroke-width="2" fill="none" marker-end="url(#ar)">
+        <path d="M130,123 H168"/>
+        <path d="M300,113 C320,113 320,68 338,68"/>
+        <path d="M415,96 C415,130 440,128 460,158" marker-end="url(#ar)"/>
+        <path d="M460,160 C455,128 440,118 492,113" marker-end="url(#ar)" stroke-dasharray="4 3"/>
+        <path d="M490,68 C530,68 535,113 558,113"/>
+        <path d="M700,123 H743"/>
+      </g>
+      <text x="450" y="20" text-anchor="middle" font-size="11" fill="#3a4a55" font-style="italic">"L" = Liberation precedes Absorption for solid dosage forms</text>
+    </svg>
+    <figcaption>Free (unbound) drug in the central compartment equilibrates with the site of action, tissue stores, and the eliminating organs. Only free drug acts, distributes and is cleared.</figcaption>
+  </figure>
+    <h4>Drug transport across membranes</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Mechanism</th><th>Energy?</th><th>Carrier?</th><th>Key features</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Passive diffusion</td><td>No</td><td>No</td><td>Down gradient; small, lipophilic, non-ionised; non-saturable</td><td>Most drugs</td></tr>
+        <tr><td>Paracellular</td><td>No</td><td>No</td><td>Through inter-cellular gaps; size-limited; tight in BBB</td><td>Small polar solutes</td></tr>
+        <tr><td>Facilitated diffusion</td><td>No</td><td>Yes (SLC)</td><td>Down electrochemical gradient; saturable</td><td>OCT1 → metformin</td></tr>
+        <tr><td>Active transport (1°)</td><td>ATP direct</td><td>Yes (ABC)</td><td>Against gradient; saturable; competitive</td><td>P-gp exports digoxin</td></tr>
+        <tr><td>Active transport (2°)</td><td>Ion gradient</td><td>Yes (SLC)</td><td>Symport/antiport coupled to Na⁺ gradient</td><td>NCX, SERT</td></tr>
+      </tbody>
+    </table></div>
+    <h4>The four key PK parameters</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Parameter</th><th>Meaning</th><th>Equation / value</th><th>What changes it</th></tr></thead>
+      <tbody>
+        <tr><td>Bioavailability (F)</td><td>Fraction of dose reaching systemic circulation intact</td><td class="mono">F = AUC<sub>oral</sub>/AUC<sub>IV</sub>; IV F = 1</td><td>First-pass metabolism, formulation, gut P-gp</td></tr>
+        <tr><td>Volume of distribution</td><td><em>Apparent</em> volume relating amount in body to plasma conc.</td><td class="mono">V<sub>d</sub> = Amount / C<sub>p</sub></td><td>Lipophilicity, tissue & protein binding</td></tr>
+        <tr><td>Clearance (CL)</td><td>Volume of plasma cleared of drug per unit time</td><td class="mono">CL = CL<sub>renal</sub>+CL<sub>hepatic</sub>+CL<sub>other</sub></td><td>Organ blood flow, enzyme activity, disease</td></tr>
+        <tr><td>Half-life (t½)</td><td>Time for C<sub>p</sub> to fall by 50%</td><td class="mono">t½ ≈ 0.693 · V<sub>d</sub>/CL</td><td>Derived — moves with both V<sub>d</sub> and CL</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A drug is given orally and you need to predict its plasma level over the next 24 hours. Before reading on, blurt out the four parameters you'd need to know — and for each, state the one thing it controls (peak? steady state? time to reach it?). Where does your map go blank?</div>
+    <h4 style="color:var(--coral)">Guiding primers — ask "why," not "what"</h4>
+    <ul class="primers">
+      <li>Why does alkalinising the urine speed up excretion of a weak acid like aspirin — what happens to its ionisation in the tubule?</li>
+      <li>Why is half-life a <em>derived</em> parameter rather than an independent one — what two things actually move it?</li>
+      <li>Why does a small dose increase cause a disproportionate, dangerous rise in phenytoin levels but not in most drugs?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>pH partitioning &amp; ion trapping</h4>
+    <p>Weak acids and bases exist as a lipid-soluble <strong>non-ionised</strong> form (crosses membranes) and a poorly diffusible <strong>ionised</strong> form. The ratio is set by the <strong>Henderson–Hasselbalch</strong> relationship, and a drug accumulates wherever it becomes more ionised.</p>
+    <div class="eq"><span class="tag">EQ 2·1</span> log([protonated]/[unprotonated]) = pK<sub>a</sub> − pH</div>
+    <figure>
+    <div class="fig-title">Figure 2·3 — Ion trapping of a weak acid (pKa 4.4)</div>
+    <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace">
+      <rect x="40" y="20" width="300" height="70" rx="8" fill="#e3efed" stroke="#0f6b6b"/>
+      <rect x="40" y="120" width="300" height="70" rx="8" fill="#f8e6e0" stroke="#a8331f"/>
+      <rect x="338" y="14" width="10" height="182" fill="#16344a"/>
+      <text x="190" y="14" text-anchor="middle" font-size="11" fill="#0a4f54">PLASMA  pH 7.4</text>
+      <text x="190" y="208" text-anchor="middle" font-size="11" fill="#a8331f">GASTRIC JUICE  pH 1.4</text>
+      <text x="354" y="108" font-size="9" fill="#16344a" writing-mode="tb">lipid barrier</text>
+      <g font-size="13" text-anchor="middle">
+        <text x="120" y="58" fill="#3a4a55">HA</text><text x="120" y="74" font-size="10" fill="#3a4a55">1</text>
+        <text x="260" y="58" fill="#0a4f54" font-weight="600">A⁻ 1000</text>
+        <text x="120" y="158" fill="#3a4a55">HA</text><text x="120" y="174" font-size="10" fill="#3a4a55">1</text>
+        <text x="260" y="158" fill="#a8331f">A⁻ 0.001</text>
+      </g>
+      <line x1="120" y1="92" x2="120" y2="118" stroke="#16344a" stroke-width="2" stroke-dasharray="3 3"/>
+      <text x="135" y="108" font-size="9" fill="#16344a">non-ionised HA crosses freely</text>
+      <g font-family="Inter" font-size="12" fill="#15212b">
+        <text x="430" y="50">Same HA on both sides (1 : 1),</text>
+        <text x="430" y="72">but ionised A⁻ is <tspan font-weight="700">10⁶× higher</tspan> in</text>
+        <text x="430" y="94">plasma → <tspan fill="#0a4f54" font-weight="700">acid is trapped in plasma.</tspan></text>
+        <text x="430" y="130" font-size="11" fill="#3a4a55">Ratio set by ΔpH across the barrier</text>
+        <text x="430" y="150" font-size="11" fill="#3a4a55">(7.4 − 1.4 = 6 pH units = 10⁶).</text>
+      </g>
+    </svg>
+    <figcaption>The 6-unit pH gradient produces a millionfold difference in the trapped ionised species, even though diffusible HA is equal on both sides.</figcaption>
+  </figure>
+    <h4>The parameters interlock</h4>
+    <p><strong>V<sub>d</sub> governs the loading dose</strong> (the peak you reach), <strong>CL governs the maintenance dose</strong> (the steady state you hold), and their ratio sets the half-life. t½ is therefore a consequence, not a cause.</p>
+    <figure>
+    <div class="fig-title">Figure 2·4 — How the four parameters interlock</div>
+    <svg viewBox="0 0 860 200" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+      <defs><marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#16344a"/></marker></defs>
+      <g text-anchor="middle" font-size="13" font-weight="600">
+        <rect x="20" y="80" width="150" height="48" rx="9" fill="#0f6b6b"/><text x="95" y="100" fill="#fff">Dose × F</text><text x="95" y="117" fill="#cfe9e6" font-size="10">amount absorbed</text>
+        <rect x="220" y="20" width="150" height="48" rx="9" fill="#e3efed" stroke="#0f6b6b"/><text x="295" y="40" fill="#0a4f54">Vd</text><text x="295" y="57" fill="#3a4a55" font-size="10">sets peak C<tspan baseline-shift="sub" font-size="8">p</tspan></text>
+        <rect x="220" y="140" width="150" height="48" rx="9" fill="#e3efed" stroke="#0f6b6b"/><text x="295" y="160" fill="#0a4f54">CL</text><text x="295" y="177" fill="#3a4a55" font-size="10">sets C<tspan baseline-shift="sub" font-size="8">ss</tspan></text>
+        <rect x="430" y="80" width="170" height="48" rx="9" fill="#16344a"/><text x="515" y="100" fill="#fff">t½ ≈ 0.693·Vd/CL</text><text x="515" y="117" fill="#8fd4ce" font-size="10">dosing interval, time to SS</text>
+        <rect x="660" y="80" width="180" height="48" rx="9" fill="#fbf0dc" stroke="#b9791a"/><text x="750" y="100" fill="#b9791a">Css = F·Dose/(CL·τ)</text><text x="750" y="117" fill="#3a4a55" font-size="10">maintenance dosing</text>
+      </g>
+      <g stroke="#16344a" stroke-width="1.8" fill="none" marker-end="url(#ar2)">
+        <path d="M170,96 C190,96 200,44 218,44"/>
+        <path d="M170,112 C190,112 200,164 218,164"/>
+        <path d="M370,44 C400,44 410,96 428,96"/>
+        <path d="M370,164 C400,164 410,112 428,112"/>
+        <path d="M600,104 H658"/>
+      </g>
+    </svg>
+    <figcaption>V<sub>d</sub> governs the loading dose (peak); CL governs the maintenance dose (steady state). Their ratio sets the half-life.</figcaption>
+  </figure>
+    <div class="eq"><span class="tag">EQ 2·3</span> C<sub>ss</sub> = (F × Dose) / (CL × τ)&nbsp;&nbsp;|&nbsp;&nbsp;<span class="tag" style="border:none">EQ 2·15</span> t½ = 0.693 · V<sub>d</sub>/CL</div>
+    <h4>Order of kinetics</h4>
+    <figure>
+    <div class="fig-title">Figure 2·5 — First-order vs zero-order elimination</div>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+      <!-- axes -->
+      <g stroke="#3a4a55" stroke-width="1.5">
+        <line x1="60" y1="20" x2="60" y2="210"/><line x1="60" y1="210" x2="350" y2="210"/>
+        <line x1="430" y1="20" x2="430" y2="210"/><line x1="430" y1="210" x2="720" y2="210"/>
+      </g>
+      <!-- first order: exponential -->
+      <path d="M60,40 C120,120 180,180 350,200" fill="none" stroke="#0f6b6b" stroke-width="3"/>
+      <!-- zero order: straight -->
+      <path d="M430,40 L690,200" fill="none" stroke="#a8331f" stroke-width="3"/>
+      <g font-size="12" fill="#15212b" text-anchor="middle">
+        <text x="205" y="232" font-weight="600">FIRST-ORDER</text>
+        <text x="205" y="248" font-size="10" fill="#3a4a55">constant <tspan font-weight="700">fraction</tspan>/time · curve · t½ fixed</text>
+        <text x="575" y="232" font-weight="600">ZERO-ORDER</text>
+        <text x="575" y="248" font-size="10" fill="#3a4a55">constant <tspan font-weight="700">amount</tspan>/time · line · saturable</text>
+      </g>
+      <text x="35" y="120" font-size="11" fill="#3a4a55" transform="rotate(-90 35 120)">plasma conc.</text>
+      <text x="200" y="120" font-size="11" fill="#0a4f54" font-style="italic">e⁻ᵏᵗ</text>
+      <text x="600" y="100" font-size="11" fill="#a8331f" font-style="italic">enzyme saturated</text>
+    </svg>
+    <figcaption>Most drugs at therapeutic doses follow first-order kinetics. Ethanol, phenytoin and high-dose aspirin show zero-order (Michaelis–Menten / saturation) kinetics — a fixed amount cleared per hour regardless of concentration.</figcaption>
+  </figure>
+
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a sink with a drain</div>
+      <p>Picture the body as a <span class="key">sink being filled by a tap and emptied by a drain</span>. The <strong>tap rate</strong> is your dose × bioavailability. The <strong>size of the sink</strong> is the volume of distribution — a big sink (lipophilic drug spread into tissues) means the same dose barely raises the water level. The <strong>drain width</strong> is clearance. <strong>Steady state</strong> is when the water level holds constant because inflow equals outflow — and it always takes about four "drain-times" (half-lives) to get there, no matter how hard you open the tap.</p>
+      <p>First-order kinetics is a normal drain: the fuller the sink, the faster it empties (constant <em>fraction</em>). Zero-order is a <strong>drain clogged to a fixed trickle</strong> — it removes the same <em>amount</em> per minute regardless of how full the sink is, so a little extra inflow overflows the basin fast. That's phenytoin and ethanol.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — the zero-order trap:</span> <strong>ethanol, phenytoin and high-dose aspirin</strong> (also theophylline) saturate their elimination, so small dose increases produce disproportionate, non-linear rises in plasma level → toxicity. For high-extraction drugs (propranolol, lidocaine, morphine) clearance is flow-limited with large first-pass; for low-extraction drugs it's capacity-limited and vulnerable to enzyme induction/inhibition.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 3 — PHARMACODYNAMICS ============ -->
+<section class="module" id="m3">
+  <div class="mod-head">
+    <div class="mod-num">03</div>
+    <div class="mod-titleblock">
+      <h2>Pharmacodynamics — what the drug does to the body</h2>
+      <div class="mod-sub">Receptors · dose-response · signal transduction</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">The whole chapter is a vocabulary you must own cold — <strong>affinity, potency, efficacy, agonist/antagonist</strong> — plus the four receptor families and the G-protein second messengers that turn binding into a response.</div>
+    <h4>Receptor superfamilies</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Family</th><th>Mechanism</th><th>Time scale</th><th>Examples</th></tr></thead>
+      <tbody>
+        <tr><td>GPCR (7-TM)</td><td>G-protein → second messengers</td><td>seconds</td><td>β-adrenergic, muscarinic, opioid</td></tr>
+        <tr><td>Ligand-gated ion channel</td><td>Direct ionotropic gating</td><td>milliseconds</td><td>Nicotinic ACh, GABA<sub>A</sub>, NMDA</td></tr>
+        <tr><td>Enzyme-linked (catalytic)</td><td>Receptor tyrosine kinase / guanylyl cyclase</td><td>minutes–hours</td><td>Insulin, growth factors, ANP</td></tr>
+        <tr><td>Nuclear (intracellular)</td><td>Alter gene transcription</td><td>hours–days</td><td>Steroids, thyroid, vit D</td></tr>
+      </tbody>
+    </table></div>
+    <figure>
+    <div class="fig-title">Figure 3·1 — The four receptor classes</div>
+    <svg viewBox="0 0 860 200" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+      <rect x="0" y="78" width="860" height="22" fill="#e3efed"/>
+      <text x="8" y="93" font-size="9" fill="#0a4f54">cell membrane</text>
+      <!-- ion channel -->
+      <g transform="translate(60,0)"><rect x="-8" y="55" width="14" height="70" fill="#0f6b6b"/><rect x="38" y="55" width="14" height="70" fill="#0f6b6b"/><circle cx="22" cy="40" r="10" fill="#a8331f"/><line x1="22" y1="60" x2="22" y2="120" stroke="#a8331f" stroke-width="2" stroke-dasharray="3 3"/><text x="22" y="150" text-anchor="middle" font-weight="600">Ion channel</text><text x="22" y="165" text-anchor="middle" font-size="9" fill="#3a4a55">ions flow</text></g>
+      <!-- GPCR -->
+      <g transform="translate(250,0)"><path d="M0,55 q5,35 0,70 M10,55 q5,35 0,70 M20,55 q5,35 0,70 M30,55 q5,35 0,70" stroke="#0f6b6b" stroke-width="5" fill="none"/><circle cx="15" cy="42" r="9" fill="#a8331f"/><ellipse cx="15" cy="135" rx="20" ry="9" fill="#b9791a"/><text x="15" y="139" text-anchor="middle" font-size="8" fill="#fff">G</text><text x="15" y="165" text-anchor="middle" font-weight="600">GPCR</text></g>
+      <!-- RTK -->
+      <g transform="translate(450,0)"><rect x="-4" y="55" width="10" height="70" fill="#0f6b6b"/><rect x="36" y="55" width="10" height="70" fill="#0f6b6b"/><circle cx="1" cy="42" r="8" fill="#a8331f"/><circle cx="41" cy="42" r="8" fill="#a8331f"/><rect x="-10" y="125" width="62" height="16" rx="4" fill="#5b4a7a"/><text x="21" y="137" text-anchor="middle" font-size="8" fill="#fff">kinase</text><text x="21" y="165" text-anchor="middle" font-weight="600">RTK</text></g>
+      <!-- nuclear -->
+      <g transform="translate(650,0)"><circle cx="40" cy="50" r="9" fill="#a8331f"/><path d="M40,60 V100" stroke="#a8331f" stroke-dasharray="3 3"/><ellipse cx="120" cy="120" rx="70" ry="45" fill="#ece7f3" stroke="#5b4a7a"/><text x="120" y="115" text-anchor="middle" font-size="9" fill="#5b4a7a">nucleus</text><path d="M100,130 q20,-8 40,0" stroke="#5b4a7a" fill="none"/><text x="120" y="178" text-anchor="middle" font-weight="600">Nuclear receptor</text></g>
+    </svg>
+    <figcaption>Surface receptors (channel, GPCR, RTK) transduce extracellular signals; nuclear receptors bind lipophilic ligands that cross the membrane and act as transcription factors.</figcaption>
+  </figure>
+    <h4>The core vocabulary</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Term</th><th>Definition</th><th>Measured by</th></tr></thead>
+      <tbody>
+        <tr><td>Affinity</td><td>Tightness of drug–receptor binding</td><td class="mono">K<sub>d</sub> (lower = tighter)</td></tr>
+        <tr><td>Potency</td><td>Amount needed for a given effect (horizontal position)</td><td class="mono">EC₅₀ / ED₅₀</td></tr>
+        <tr><td>Efficacy</td><td>Maximal effect possible (the ceiling)</td><td class="mono">E<sub>max</sub></td></tr>
+        <tr><td>Spare receptors</td><td>Max response before 100% occupancy</td><td>EC₅₀ &lt; K<sub>d</sub></td></tr>
+      </tbody>
+    </table></div>
+    <h4>G-protein signalling</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>G-protein</th><th>Effector</th><th>Second messenger</th><th>Receptors</th></tr></thead>
+      <tbody>
+        <tr><td>G<sub>s</sub></td><td>Adenylyl cyclase ↑</td><td>cAMP ↑ → PKA</td><td>β-adrenergic, D₁, H₂</td></tr>
+        <tr><td>G<sub>i/o</sub></td><td>Adenylyl cyclase ↓</td><td>cAMP ↓</td><td>M₂/M₄, α₂, μ-opioid, D₂</td></tr>
+        <tr><td>G<sub>q</sub></td><td>Phospholipase C-β</td><td>IP₃ (→Ca²⁺) + DAG (→PKC)</td><td>α₁, M₁/M₃, H₁, AT₁</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">Two drugs act on the same receptor. One reaches a higher maximum effect; the other works at a far lower dose. Blurt out which property each demonstrates (potency vs efficacy), draw the two dose-response curves, and say which property actually matters more for choosing a drug.</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does a competitive antagonist shift the curve right but a non-competitive one lower the ceiling — what's different about how they let go?</li>
+      <li>Why can a partial agonist behave as an antagonist when a full agonist is also present?</li>
+      <li>Why does chronic β-blockade cause rebound tachycardia when stopped — what did the receptors do?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Potency vs efficacy — don't confuse them</h4>
+    <p><strong>Potency</strong> is about <em>dose</em> (where the curve sits left–right); <strong>efficacy</strong> is about <em>maximal effect</em> (how high the ceiling). A more potent drug is not better — efficacy and therapeutic index matter more. Furosemide is less potent but more efficacious than thiazides.</p>
+    <figure>
+    <div class="fig-title">Figure 3·6 — Graded dose-response: potency vs efficacy</div>
+    <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+      <g stroke="#3a4a55" stroke-width="1.5"><line x1="70" y1="20" x2="70" y2="220"/><line x1="70" y1="220" x2="710" y2="220"/></g>
+      <!-- Drug A high efficacy high potency -->
+      <path d="M70,210 C180,205 230,60 360,45 L710,45" fill="none" stroke="#0f6b6b" stroke-width="3"/>
+      <!-- Drug B same efficacy lower potency -->
+      <path d="M70,210 C300,205 380,60 500,45 L710,45" fill="none" stroke="#16344a" stroke-width="3" stroke-dasharray="6 4"/>
+      <!-- Drug C lower efficacy (partial) -->
+      <path d="M70,210 C180,205 230,130 360,120 L710,120" fill="none" stroke="#a8331f" stroke-width="3"/>
+      <g font-size="11" fill="#15212b">
+        <line x1="70" y1="45" x2="700" y2="45" stroke="#0f6b6b" stroke-dasharray="2 3" stroke-width="1"/>
+        <text x="715" y="48" fill="#0f6b6b" font-weight="600">Emax (A,B)</text>
+        <text x="715" y="123" fill="#a8331f" font-weight="600">Emax (C) ↓ efficacy</text>
+        <text x="250" y="248" fill="#0f6b6b">A = potent, full</text>
+        <text x="430" y="248" fill="#16344a">B = ↓ potency</text>
+        <text x="600" y="248" fill="#a8331f">C = partial</text>
+      </g>
+      <text x="40" y="130" font-size="11" fill="#3a4a55" transform="rotate(-90 40 130)">% effect</text>
+      <text x="390" y="240" font-size="11" fill="#3a4a55">log [dose] →</text>
+    </svg>
+    <figcaption>A and B reach the same ceiling (equal efficacy) but B sits to the right (lower potency). C plateaus below maximum — lower efficacy, the signature of a partial agonist.</figcaption>
+  </figure>
+    <h4>The agonist–antagonist spectrum</h4>
+    <figure>
+    <div class="fig-title">Figure 3·5 — Two-state model: full → partial → antagonist → inverse</div>
+    <svg viewBox="0 0 780 170" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+      <line x1="40" y1="120" x2="740" y2="120" stroke="#3a4a55" stroke-width="2"/>
+      <line x1="40" y1="60" x2="40" y2="125" stroke="#3a4a55"/>
+      <g text-anchor="middle" font-size="12">
+        <rect x="70" y="40" width="120" height="80" fill="#0f6b6b" opacity=".85" rx="6"/><text x="130" y="135" font-weight="600" fill="#0a4f54">Full agonist</text><text x="130" y="80" fill="#fff">100% Emax</text>
+        <rect x="230" y="80" width="120" height="40" fill="#3a6b3a" opacity=".75" rx="6"/><text x="290" y="135" font-weight="600" fill="#3a6b3a">Partial agonist</text><text x="290" y="105" fill="#fff" font-size="10">↓ Emax</text>
+        <rect x="390" y="116" width="120" height="6" fill="#16344a" rx="3"/><text x="450" y="135" font-weight="600" fill="#16344a">Antagonist</text><text x="450" y="108" fill="#16344a" font-size="10">0 (blocks)</text>
+        <rect x="550" y="120" width="120" height="34" fill="#a8331f" opacity=".75" rx="6"/><text x="610" y="167" font-weight="600" fill="#a8331f">Inverse agonist</text><text x="610" y="140" fill="#fff" font-size="10">below basal</text>
+      </g>
+      <text x="20" y="55" font-size="9" fill="#3a4a55">effect</text>
+      <text x="32" y="118" font-size="9" fill="#3a4a55">basal</text>
+    </svg>
+    <figcaption>An inverse agonist reduces <em>constitutive</em> (basal) receptor activity below the no-drug baseline; in systems without basal tone it behaves like a neutral antagonist.</figcaption>
+  </figure>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Antagonism</th><th>Effect on agonist curve</th><th>Surmountable?</th></tr></thead>
+      <tbody>
+        <tr><td>Competitive (reversible)</td><td>Parallel <strong>right shift</strong>; E<sub>max</sub> unchanged</td><td>Yes — ↑ agonist overcomes</td></tr>
+        <tr><td>Non-competitive / irreversible</td><td><strong>E<sub>max</sub> ↓</strong></td><td>No</td></tr>
+        <tr><td>Physiological</td><td>Opposite effect, different receptor</td><td>—</td></tr>
+        <tr><td>Chemical</td><td>Binds & inactivates the drug itself</td><td>— (chelators, protamine)</td></tr>
+      </tbody>
+    </table></div>
+    <h4>Quantal curves &amp; therapeutic index</h4>
+    <figure>
+    <div class="fig-title">Figure 3·9 / 9·1 — Quantal curves &amp; the therapeutic index</div>
+    <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+      <g stroke="#3a4a55" stroke-width="1.5"><line x1="70" y1="20" x2="70" y2="210"/><line x1="70" y1="210" x2="710" y2="210"/></g>
+      <path d="M70,205 C150,200 200,40 300,35 L360,35" fill="none" stroke="#0f6b6b" stroke-width="3"/>
+      <path d="M360,205 C440,200 490,40 590,35 L700,35" fill="none" stroke="#a8331f" stroke-width="3"/>
+      <text x="215" y="232" fill="#0f6b6b" font-weight="600" font-size="12">ED₅₀ (efficacy)</text>
+      <text x="500" y="232" fill="#a8331f" font-weight="600" font-size="12">LD₅₀ (lethality)</text>
+      <line x1="215" y1="120" x2="215" y2="210" stroke="#0f6b6b" stroke-dasharray="3 3"/>
+      <line x1="525" y1="120" x2="525" y2="210" stroke="#a8331f" stroke-dasharray="3 3"/>
+      <line x1="215" y1="120" x2="525" y2="120" stroke="#16344a" stroke-width="1.5"/>
+      <text x="370" y="113" text-anchor="middle" font-size="12" fill="#16344a" font-weight="600">TI window</text>
+      <text x="40" y="140" font-size="11" fill="#3a4a55" transform="rotate(-90 40 140)">% responding</text>
+      <text x="390" y="245" font-size="11" fill="#3a4a55">log [dose] →</text>
+    </svg>
+    <figcaption>Quantal curves plot the <em>fraction of a population</em> showing an all-or-none response. The gap between the therapeutic and toxic/lethal curves defines the margin of safety.</figcaption>
+  </figure>
+    <div class="eq"><span class="tag">SAFETY</span> Therapeutic Index TI = LD₅₀ / ED₅₀&nbsp;&nbsp;|&nbsp;&nbsp;Certain Safety Factor = LD₁ / ED₉₉</div>
+    <h4>GPCR signalling cascade</h4>
+    <figure>
+    <div class="fig-title">Figure 3·12 — The Gs → cAMP cascade</div>
+    <svg viewBox="0 0 820 130" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono,monospace" font-size="12">
+      <defs><marker id="ar3" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0f6b6b"/></marker></defs>
+      <g text-anchor="middle" font-weight="600">
+        <rect x="10" y="45" width="100" height="40" rx="7" fill="#a8331f"/><text x="60" y="69" fill="#fff">Agonist</text>
+        <rect x="140" y="45" width="90" height="40" rx="7" fill="#16344a"/><text x="185" y="69" fill="#fff">GPCR</text>
+        <rect x="260" y="45" width="90" height="40" rx="7" fill="#b9791a"/><text x="305" y="69" fill="#fff">Gs·GTP</text>
+        <rect x="380" y="45" width="120" height="40" rx="7" fill="#0f6b6b"/><text x="440" y="69" fill="#fff">adenylyl cyclase</text>
+        <rect x="530" y="45" width="90" height="40" rx="7" fill="#e3efed" stroke="#0f6b6b"/><text x="575" y="69" fill="#0a4f54">cAMP↑</text>
+        <rect x="650" y="45" width="70" height="40" rx="7" fill="#e3efed" stroke="#0f6b6b"/><text x="685" y="69" fill="#0a4f54">PKA</text>
+        <rect x="750" y="45" width="60" height="40" rx="7" fill="#3a6b3a"/><text x="780" y="69" fill="#fff">effect</text>
+      </g>
+      <g stroke="#0f6b6b" stroke-width="2" marker-end="url(#ar3)">
+        <line x1="110" y1="65" x2="138" y2="65"/><line x1="230" y1="65" x2="258" y2="65"/><line x1="350" y1="65" x2="378" y2="65"/>
+        <line x1="500" y1="65" x2="528" y2="65"/><line x1="620" y1="65" x2="648" y2="65"/><line x1="720" y1="65" x2="748" y2="65"/>
+      </g>
+    </svg>
+    <figcaption>cAMP is degraded by phosphodiesterases (PDE) — inhibiting PDE (caffeine, sildenafil, milrinone) prolongs the signal.</figcaption>
+  </figure>
+
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — keys, locks &amp; volume knobs</div>
+      <p>A receptor is a <span class="key">lock</span> and a drug is a <strong>key</strong>. <strong>Affinity</strong> is how well the key fits; <strong>efficacy</strong> is how far it can turn the lock once in. A <strong>full agonist</strong> turns it all the way; a <strong>partial agonist</strong> only half-turns it no matter how hard you push (and if it's hogging the keyhole, it blocks the full agonist — acting as a brake). A <strong>competitive antagonist</strong> is a blank key in the slot you can pop out by jamming in more real keys; an <strong>irreversible</strong> one is superglued in. <strong>Potency</strong> is just how many keys you needed to bring.</p>
+      <p>Downstream, the GPCR is a <strong>volume knob</strong>: G<sub>s</sub> turns the cAMP volume up, G<sub>i</sub> turns it down, G<sub>q</sub> switches to a different channel (calcium). Phosphodiesterase is the hand slowly turning cAMP back down — block it (caffeine, sildenafil) and the signal stays loud.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — narrow-TI drugs:</span> <strong>warfarin, digoxin, lithium, phenytoin, theophylline, aminoglycosides</strong> sit close to their toxic dose — small changes risk toxicity, so therapeutic drug monitoring is mandatory. Also remember receptor regulation: chronic agonist → down-regulation (tolerance); chronic antagonist → up-regulation (rebound on withdrawal).</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 5 — DRUG METABOLISM ============ -->
+<section class="module" id="m5">
+  <div class="mod-head">
+    <div class="mod-num">05</div>
+    <div class="mod-titleblock">
+      <h2>Drug Metabolism — biotransformation</h2>
+      <div class="mod-sub">Phase 1 · Phase 2 · the cytochrome P450 system</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">One theme runs the whole chapter — <strong>Phase 1 functionalises, Phase 2 conjugates</strong> — and the CYP450 enzymes sit at the centre of nearly every clinically important drug interaction.</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>Phase 1</strong> (oxidation/reduction/hydrolysis) adds or exposes a functional group; usually inactivates, but can <em>activate prodrugs</em> or create toxic metabolites. Enzymes: CYP450, FMO, epoxide hydrolase.</li>
+      <li><strong>Phase 2</strong> (conjugation — glucuronidation, sulfation, acetylation, etc.) adds a polar group → almost always inactivates and aids excretion. Can occur without Phase 1.</li>
+      <li><strong>CYP3A4</strong> alone metabolises <strong>&gt;50%</strong> of clinical drugs; the big players are CYP2C, 2D, 3A subfamilies.</li>
+      <li><strong>Induction</strong> (slow, ↓drug level) vs <strong>inhibition</strong> (fast, ↑drug level) — effects invert for prodrugs.</li>
+    </ul>
+    <figure>
+    <div class="fig-title">Figure 5·1 — Phase 1 then Phase 2 (phenytoin example)</div>
+    <svg viewBox="0 0 820 160" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
+      <defs><marker id="ar4" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#16344a"/></marker></defs>
+      <g text-anchor="middle" font-size="12" font-weight="600">
+        <rect x="20" y="55" width="150" height="56" rx="9" fill="#16344a"/><text x="95" y="80" fill="#fff">Lipophilic drug</text><text x="95" y="98" fill="#8fd4ce" font-size="10">inactive to excrete</text>
+        <rect x="240" y="20" width="170" height="56" rx="9" fill="#e3efed" stroke="#0f6b6b"/><text x="325" y="42" fill="#0a4f54">PHASE 1</text><text x="325" y="60" fill="#3a4a55" font-size="10">oxidise / reduce / hydrolyse</text>
+        <rect x="240" y="92" width="170" height="44" rx="9" fill="#fbf0dc" stroke="#b9791a"/><text x="325" y="119" fill="#b9791a" font-size="10">adds –OH, –NH₂, –SH group</text>
+        <rect x="480" y="55" width="170" height="56" rx="9" fill="#ece7f3" stroke="#5b4a7a"/><text x="565" y="77" fill="#5b4a7a">PHASE 2</text><text x="565" y="95" fill="#3a4a55" font-size="10">conjugate (UGT, etc.)</text>
+        <rect x="700" y="55" width="105" height="56" rx="9" fill="#3a6b3a"/><text x="752" y="80" fill="#fff" font-size="11">Excreted</text><text x="752" y="98" fill="#cfe9d6" font-size="9">urine / bile</text>
+      </g>
+      <g stroke="#16344a" stroke-width="1.8" fill="none" marker-end="url(#ar4)">
+        <path d="M170,83 C200,83 210,48 238,48"/>
+        <path d="M410,55 C440,55 450,83 478,83"/>
+        <path d="M650,83 H698"/>
+      </g>
+    </svg>
+    <figcaption>CYP 4-hydroxylates phenytoin (Phase 1); UGT then attaches glucuronic acid (Phase 2) to make it water-soluble for excretion.</figcaption>
+  </figure>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th></th><th>Phase 1 (functionalisation)</th><th>Phase 2 (conjugation)</th></tr></thead>
+      <tbody>
+        <tr><td>Reactions</td><td>Oxidation, reduction, hydrolysis</td><td>Glucuronidation, sulfation, acetylation, methylation, GSH</td></tr>
+        <tr><td>Enzymes</td><td><strong>CYP450</strong>, FMO, epoxide hydrolase</td><td><strong>UGT</strong>, SULT, NAT, GST, TPMT</td></tr>
+        <tr><td>Result</td><td>Usually inactivates; can activate prodrugs</td><td>Almost always inactivates; ↑ water solubility</td></tr>
+      </tbody>
+    </table></div>
+    <h4>Key CYP isoforms</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Isoform</th><th>Substrates</th><th>Clinical note</th></tr></thead>
+      <tbody>
+        <tr><td>CYP3A4/5</td><td>Statins, CCBs, cyclosporine, many</td><td>&gt;50% of drugs; grapefruit inhibits</td></tr>
+        <tr><td>CYP2D6</td><td>Codeine, β-blockers, antidepressants</td><td>Highly polymorphic (PM↔UM)</td></tr>
+        <tr><td>CYP2C9</td><td>Warfarin (S), phenytoin, NSAIDs</td><td>Polymorphic; warfarin dosing</td></tr>
+        <tr><td>CYP2C19</td><td>Clopidogrel, PPIs, diazepam</td><td>PM → clopidogrel failure</td></tr>
+        <tr><td>CYP1A2</td><td>Theophylline, caffeine, clozapine</td><td><strong>Induced by smoking</strong></td></tr>
+        <tr><td>CYP2E1</td><td>Ethanol, paracetamol → NAPQI</td><td>Induced by chronic alcohol</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A patient on a stable warfarin dose starts an antibiotic and their INR shoots up dangerously. Blurt out what the antibiotic did to a specific enzyme, why that raised the warfarin level, and what the <em>opposite</em> drug (an inducer) would have done — and why an inducer would have the reverse effect on a prodrug like codeine.</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does the <em>same</em> enzyme reaction inactivate most drugs but <em>activate</em> codeine and clopidogrel?</li>
+      <li>Why does enzyme induction take days–weeks while inhibition acts within hours?</li>
+      <li>Why does chronic alcohol make a modest paracetamol dose dangerous (which enzyme, which metabolite)?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Induction vs inhibition — the interaction engine</h4>
+    <p><strong>Induction</strong> means the cell builds more enzyme (takes days–weeks): metabolism speeds up, drug levels fall, efficacy is lost — but a prodrug is <em>activated</em> more. <strong>Inhibition</strong> blocks the enzyme directly (hours): drug levels rise toward toxicity — but a prodrug is <em>under</em>-activated.</p>
+    <figure>
+    <div class="fig-title">Figure 5·5 — Opposite consequences of enzyme induction &amp; inhibition</div>
+    <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <rect x="20" y="20" width="360" height="160" rx="11" fill="#e7efe2" stroke="#3a6b3a"/>
+      <rect x="420" y="20" width="360" height="160" rx="11" fill="#f8e6e0" stroke="#a8331f"/>
+      <text x="200" y="48" text-anchor="middle" font-weight="700" fill="#3a6b3a" font-size="14">INDUCTION (slow, days–wks)</text>
+      <text x="600" y="48" text-anchor="middle" font-weight="700" fill="#a8331f" font-size="14">INHIBITION (fast, hours)</text>
+      <g text-anchor="middle" fill="#15212b">
+        <text x="200" y="78">↑ enzyme synthesis → ↑ metabolism</text>
+        <text x="200" y="100">↓ drug level → <tspan font-weight="700" fill="#3a6b3a">loss of efficacy</tspan></text>
+        <text x="200" y="122">but ↑ toxic metabolite of prodrugs</text>
+        <text x="200" y="158" font-size="11" fill="#3a6b3a">Rifampin · Phenytoin · Carbamazepine ·</text>
+        <text x="200" y="173" font-size="11" fill="#3a6b3a">Phenobarbital · Smoking · St John's wort</text>
+        <text x="600" y="78">enzyme blocked → ↓ metabolism</text>
+        <text x="600" y="100">↑ drug level → <tspan font-weight="700" fill="#a8331f">toxicity</tspan></text>
+        <text x="600" y="122">but ↓ effect of prodrugs</text>
+        <text x="600" y="158" font-size="11" fill="#a8331f">Grapefruit · Ketoconazole · Macrolides ·</text>
+        <text x="600" y="173" font-size="11" fill="#a8331f">Cimetidine · Ritonavir · Valproate</text>
+      </g>
+    </svg>
+    <figcaption>Induction takes days–weeks (new protein synthesis); inhibition is near-immediate (competition at the active site). Net clinical effect flips for prodrugs.</figcaption>
+  </figure>
+
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — the liver's recycling plant</div>
+      <p>The liver is a <span class="key">recycling plant that shreds drugs into disposable pieces</span>. Phase 1 is the machine that <strong>cuts a handle onto the molecule</strong>; Phase 2 <strong>bolts on a bag</strong> so it can be thrown out in urine. An <strong>inducer</strong> is like hiring more shredder staff over a few weeks — everything gets processed faster, so drug levels drop. An <strong>inhibitor</strong> is jamming the shredder <em>today</em> — drugs pile up and overflow into toxicity.</p>
+      <p>The twist: a <strong>prodrug</strong> arrives needing the shredder to switch it <em>on</em> (codeine → morphine). So more shredding means more effect, and a jammed shredder means no effect — the exact opposite of a normal drug. Same machine, opposite consequence.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — mnemonics &amp; two killers:</span> Inducers "<strong>CRAP GPS</strong>" (Carbamazepine, Rifampin, Alcohol-chronic, Phenytoin, Griseofulvin/Phenobarbital, Smoking, St John's wort); inhibitors "<strong>SICKFACES.COM</strong>" (valproate, Isoniazid, Cimetidine, Ketoconazole, Fluconazole, Alcohol-acute, Chloramphenicol, Erythromycin, Sulfonamides, Ciprofloxacin, Omeprazole, Metronidazole). Two classics: rifampin → <strong>oral contraceptive failure</strong>; chronic alcohol (CYP2E1) + paracetamol → <strong>hepatotoxic NAPQI</strong>.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 9 — CLINICAL TOXICOLOGY ============ -->
+<section class="module" id="m9">
+  <div class="mod-head">
+    <div class="mod-num">09</div>
+    <div class="mod-titleblock">
+      <h2>Principles of Clinical Toxicology</h2>
+      <div class="mod-sub">Dose-response · poisoning management · antidotes</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · High yield (clinical)</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">"The dose makes the poison" — toxicology applies PK/PD to the overdosed patient: <strong>stabilise, decontaminate, give a specific antidote where one exists, and enhance elimination.</strong></div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>Dose-response:</strong> LD₅₀ = dose lethal to 50%; curve <em>slope</em> matters as much as position. Non-monotonic curves: U-shaped (hormesis), inverted-U, hockey-stick (saturable removal).</li>
+      <li><strong>Management ladder:</strong> stabilise (ABCs) → decontaminate (charcoal) → antidote → enhance elimination → support.</li>
+      <li><strong>Activated charcoal</strong> binds most toxins but <em>not</em> metals, alcohols, hydrocarbons, caustics, lithium, iron.</li>
+      <li><strong>Acetaminophen</strong> = the saturated-pathway paradigm → CYP2E1 makes <strong>NAPQI</strong>, glutathione depletes, liver necroses.</li>
+    </ul>
+    <figure>
+    <div class="fig-title">Figure 9·A — The poisoned-patient algorithm</div>
+    <svg viewBox="0 0 860 210" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <defs><marker id="ar5" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0f6b6b"/></marker></defs>
+      <g text-anchor="middle" font-weight="600">
+        <rect x="20" y="80" width="150" height="50" rx="9" fill="#16344a"/><text x="95" y="100" fill="#fff">1 · Stabilise</text><text x="95" y="118" fill="#8fd4ce" font-size="10">ABC + glucose</text>
+        <rect x="200" y="80" width="150" height="50" rx="9" fill="#e3efed" stroke="#0f6b6b"/><text x="275" y="100" fill="#0a4f54">2 · Decontaminate</text><text x="275" y="118" fill="#3a4a55" font-size="10">charcoal, irrigation</text>
+        <rect x="380" y="80" width="150" height="50" rx="9" fill="#fbf0dc" stroke="#b9791a"/><text x="455" y="100" fill="#b9791a">3 · Antidote</text><text x="455" y="118" fill="#3a4a55" font-size="10">if one exists</text>
+        <rect x="560" y="80" width="160" height="50" rx="9" fill="#ece7f3" stroke="#5b4a7a"/><text x="640" y="100" fill="#5b4a7a">4 · Enhance elim.</text><text x="640" y="118" fill="#3a4a55" font-size="10">alkalinise / dialyse</text>
+        <rect x="750" y="80" width="100" height="50" rx="9" fill="#3a6b3a"/><text x="800" y="100" fill="#fff">5 · Support</text><text x="800" y="118" fill="#cfe9d6" font-size="10">+ monitor</text>
+      </g>
+      <g stroke="#0f6b6b" stroke-width="2" marker-end="url(#ar5)">
+        <line x1="170" y1="105" x2="198" y2="105"/><line x1="350" y1="105" x2="378" y2="105"/>
+        <line x1="530" y1="105" x2="558" y2="105"/><line x1="720" y1="105" x2="748" y2="105"/>
+      </g>
+      <text x="430" y="30" text-anchor="middle" font-style="italic" fill="#3a4a55">Activated charcoal binds most toxins — but NOT metals, alcohols, hydrocarbons, caustics, lithium, iron</text>
+    </svg>
+    <figcaption>Multiple-dose activated charcoal (MDAC) interrupts enterohepatic recycling for drugs like theophylline, carbamazepine and dapsone.</figcaption>
+  </figure>
+    <h4>Antidotes — must-know table</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Poison / drug</th><th>Antidote</th><th>Mechanism</th></tr></thead>
+      <tbody>
+        <tr><td>Paracetamol</td><td><strong>N-acetylcysteine</strong></td><td>Replenishes glutathione</td></tr>
+        <tr><td>Opioids</td><td>Naloxone</td><td>μ-receptor antagonist</td></tr>
+        <tr><td>Benzodiazepines</td><td>Flumazenil</td><td>GABA<sub>A</sub> antagonist (caution: seizures)</td></tr>
+        <tr><td>Organophosphate</td><td>Atropine + Pralidoxime</td><td>Muscarinic block + reactivate AChE</td></tr>
+        <tr><td>Methanol / ethylene glycol</td><td>Fomepizole (or ethanol)</td><td>Inhibits alcohol dehydrogenase</td></tr>
+        <tr><td>Iron</td><td>Deferoxamine</td><td>Chelation</td></tr>
+        <tr><td>Warfarin</td><td>Vitamin K + FFP/PCC</td><td>Restores clotting factors</td></tr>
+        <tr><td>Heparin</td><td>Protamine</td><td>Chemical antagonist</td></tr>
+        <tr><td>Digoxin</td><td>Digoxin-specific Fab</td><td>Antibody binding</td></tr>
+        <tr><td>Cyanide</td><td>Hydroxocobalamin / thiosulfate</td><td>Binds / detoxifies CN⁻</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">An unconscious patient arrives after an overdose. Before reading on, blurt out the five-step management ladder in order — and for three poisons of your choice, name the specific antidote and what it does mechanistically. Which step comes <em>before</em> any antidote?</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does a normal paracetamol dose cause no harm but a large one destroys the liver — what saturates?</li>
+      <li>Why does urinary alkalinisation speed up salicylate removal (link back to ion trapping)?</li>
+      <li>Why is a drug with a large volume of distribution poorly removed by haemodialysis?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Acetaminophen — the saturation paradigm</h4>
+    <p>At therapeutic doses, paracetamol is conjugated (glucuronide/sulfate) and only a little <strong>NAPQI</strong> forms, mopped up by glutathione. In overdose those pathways saturate → CYP2E1 makes excess NAPQI → glutathione runs out → centrilobular hepatic necrosis. <strong>N-acetylcysteine</strong> refills glutathione.</p>
+    <h4>Enhanced elimination</h4>
+    <ul>
+      <li><strong>Urinary alkalinisation</strong> (NaHCO₃) — weak acids: salicylate, phenobarbital.</li>
+      <li><strong>Haemodialysis</strong> favours drugs with <em>low V<sub>d</sub>, low protein binding, low MW, water-soluble</em>: lithium, salicylate, methanol, ethylene glycol, theophylline, valproate, metformin, barbiturates.</li>
+    </ul>
+
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a factory's overflow drain</div>
+      <p>The liver detoxifies paracetamol through <span class="key">two wide main drains</span> (glucuronidation, sulfation) and one small <strong>hazardous-waste pipe</strong> (CYP2E1 → NAPQI), which is normally neutralised by a tank of cleaner (glutathione). In overdose the two main drains <strong>clog and back up</strong>, forcing the flood through the hazardous pipe — and the cleaner tank empties. Now raw toxin (NAPQI) corrodes the building (hepatocytes). N-acetylcysteine is a <strong>tanker refilling the cleaner</strong> before the corrosion is fatal.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — the dialysis trap:</span> large-V<sub>d</sub> or highly protein-bound drugs (digoxin, TCAs, benzodiazepines) are <strong>NOT</strong> effectively dialysed — most of the drug sits in tissue, not plasma. And note the toxicology link to earlier chapters: many antidotes are <em>chemical</em> antagonists (chelators, protamine) or <em>physiological</em> antagonists from the pharmacodynamics chapter.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 4 — TRANSPORTERS ============ -->
+<section class="module" id="m4">
+  <div class="mod-head">
+    <div class="mod-num">04</div>
+    <div class="mod-titleblock">
+      <h2>Membrane Transporters &amp; Drug Response</h2>
+      <div class="mod-sub">SLC uptake · ABC efflux</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Specialty layer</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Two superfamilies decide where drugs go and how interactions arise — <strong>SLC carriers pull drugs in, ABC pumps push drugs out</strong> — at the gut, liver, kidney and blood-brain barrier.</div>
+    <ul>
+      <li><strong>SLC (solute carriers):</strong> uptake / secondary active transport — OATP (statin uptake), OCT (metformin), OAT (anion secretion), PEPT.</li>
+      <li><strong>ABC (ATP-binding cassette):</strong> efflux — P-glycoprotein (ABCB1/MDR1), MRP, BCRP.</li>
+      <li><strong>P-gp</strong> limits gut absorption, guards the BBB, and confers tumour multidrug resistance.</li>
+    </ul>
+    <figure>
+    <div class="fig-title">Figure 4·1 — SLC vs ABC at a cell</div>
+    <svg viewBox="0 0 760 180" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <rect x="120" y="60" width="520" height="26" fill="#e3efed"/><text x="130" y="77" font-size="9" fill="#0a4f54">plasma membrane</text>
+      <defs>
+        <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0f6b6b"/></marker>
+        <marker id="ao" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a8331f"/></marker>
+      </defs>
+      <g text-anchor="middle" font-weight="600">
+        <rect x="170" y="50" width="90" height="46" rx="7" fill="#0f6b6b"/><text x="215" y="70" fill="#fff">SLC</text><text x="215" y="86" fill="#cfe9e6" font-size="9">uptake / 2° active</text>
+        <rect x="490" y="50" width="90" height="46" rx="7" fill="#a8331f"/><text x="535" y="70" fill="#fff">ABC</text><text x="535" y="86" fill="#f6ddd5" font-size="9">efflux / ATP</text>
+      </g>
+      <line x1="215" y1="140" x2="215" y2="100" stroke="#0f6b6b" stroke-width="2.5" marker-end="url(#ai)"/>
+      <line x1="535" y1="46" x2="535" y2="6" stroke="#a8331f" stroke-width="2.5" marker-end="url(#ao)"/>
+      <text x="215" y="160" text-anchor="middle" font-size="10" fill="#0a4f54">OATP, OCT, OAT, PEPT → drug IN</text>
+      <text x="535" y="160" text-anchor="middle" font-size="10" fill="#a8331f">P-gp, MRP, BCRP → drug OUT</text>
+    </svg>
+    <figcaption>SLC (solute carrier) move drugs into cells down gradients; ABC (ATP-binding cassette) pump drugs out using ATP.</figcaption>
+  </figure>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A chemotherapy drug stops working as a tumour becomes "multidrug resistant." Blurt out which transporter family is most likely responsible, which direction it moves drugs, and how the same pump at the gut and blood-brain barrier shapes a drug's whole profile.</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does inhibiting P-gp (e.g., verapamil) raise digoxin levels?</li>
+      <li>Why does an OATP1B1 variant increase the risk of statin myopathy?</li>
+      <li>Why does probenecid prolong penicillin's action (which transporter does it block)?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Mechanism</h4>
+    <p>SLC carriers move drugs <em>into</em> cells down gradients (or coupled to Na⁺); ABC pumps burn ATP to throw drugs <em>out</em>. <strong>P-glycoprotein</strong> (ABCB1/MDR1) is the one to know — it exports digoxin and many chemo agents.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — bouncers and turnstiles</div>
+      <p>Picture each cell as a <span class="key">nightclub</span>. SLC transporters are <strong>turnstiles letting specific guests in</strong> (metformin via OCT, statins via OATP). ABC pumps like P-gp are <strong>bouncers throwing drugs back out the door</strong> — at the gut they bounce drugs before they're absorbed, at the brain they keep drugs out entirely, and tumour cells hire extra bouncers to eject chemotherapy (multidrug resistance). Block the bouncer (verapamil) and the drug (digoxin) piles up inside.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Transporter interactions are a hidden cause of toxicity that don't show up as CYP interactions — e.g., a P-gp inhibitor raising digoxin, or an OATP inhibitor raising statin levels. Always consider transport, not just metabolism.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 7 — PHARMACOGENETICS ============ -->
+<section class="module" id="m7">
+  <div class="mod-head">
+    <div class="mod-num">07</div>
+    <div class="mod-titleblock">
+      <h2>Pharmacogenetics &amp; Pharmacogenomics</h2>
+      <div class="mod-sub">Genetic variation in drug response</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Specialty layer</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Inherited differences in metabolising enzymes, transporters and targets explain much of why the same dose helps one patient, fails another, and poisons a third — the foundation of precision dosing.</div>
+    <ul>
+      <li><strong>Metabolizer phenotypes:</strong> poor → intermediate → extensive (normal) → ultrarapid. For a <em>prodrug</em>, the consequences invert versus an active drug.</li>
+      <li><strong>Test-before-prescribe:</strong> HLA-B*57:01 → abacavir; HLA-B*15:02 → carbamazepine (Asian ancestry).</li>
+    </ul>
+    <figure>
+    <div class="fig-title">Figure 7·1 — Metabolizer phenotype spectrum (e.g., CYP2D6)</div>
+    <svg viewBox="0 0 760 120" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+      <defs><linearGradient id="g7" x1="0" x2="1"><stop offset="0" stop-color="#a8331f"/><stop offset="0.5" stop-color="#3a6b3a"/><stop offset="1" stop-color="#b9791a"/></linearGradient></defs>
+      <rect x="40" y="40" width="680" height="22" rx="11" fill="url(#g7)"/>
+      <g text-anchor="middle" font-weight="600" fill="#15212b">
+        <text x="110" y="80">Poor (PM)</text><text x="110" y="95" font-size="9" fill="#a8331f">no enzyme</text>
+        <text x="300" y="80">Intermediate</text>
+        <text x="470" y="80">Extensive (normal)</text>
+        <text x="650" y="80">Ultrarapid (UM)</text><text x="650" y="95" font-size="9" fill="#b9791a">gene duplication</text>
+      </g>
+      <text x="380" y="28" text-anchor="middle" font-style="italic" fill="#3a4a55">For a prodrug (codeine), the consequences invert vs an active drug</text>
+    </svg>
+    <figcaption>Codeine in a UM → excess morphine (toxicity, infant deaths via breast milk); in a PM → no analgesia. The opposite holds for drugs <em>inactivated</em> by the enzyme.</figcaption>
+  </figure>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Gene</th><th>Drug</th><th>Consequence of variant</th></tr></thead>
+      <tbody>
+        <tr><td>CYP2D6</td><td>Codeine</td><td>UM → opioid toxicity; PM → no analgesia</td></tr>
+        <tr><td>CYP2C19</td><td>Clopidogrel</td><td>PM → activation failure → stent thrombosis</td></tr>
+        <tr><td>TPMT</td><td>Azathioprine / 6-MP</td><td>Low activity → severe myelosuppression</td></tr>
+        <tr><td>UGT1A1</td><td>Irinotecan</td><td>*28 → ↑ neutropenia, diarrhoea</td></tr>
+        <tr><td>G6PD</td><td>Primaquine, rasburicase, sulfa</td><td>Deficiency → haemolysis</td></tr>
+        <tr><td>VKORC1 + CYP2C9</td><td>Warfarin</td><td>Determines maintenance dose</td></tr>
+        <tr><td>HLA-B*57:01</td><td>Abacavir</td><td>Hypersensitivity — test before use</td></tr>
+        <tr><td>HLA-B*15:02</td><td>Carbamazepine</td><td>SJS/TEN (Asian ancestry)</td></tr>
+        <tr><td>NAT2</td><td>Isoniazid</td><td>Slow acetylators → neuropathy/hepatitis</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A mother given codeine for pain after delivery is an "ultrarapid metaboliser," and her breastfed infant suffers opioid toxicity. Blurt out why — what did her genetics do to the codeine — and explain why a "poor metaboliser" would have the exact opposite problem (no pain relief).</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does the same enzyme defect cause opioid toxicity with one drug but treatment failure with another?</li>
+      <li>Why must you screen for HLA-B*57:01 before starting abacavir?</li>
+      <li>Why does G6PD deficiency turn certain "safe" drugs into a cause of haemolysis?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Mechanism</h4>
+    <p>A polymorphism changes how much functional enzyme you make. A <strong>poor metaboliser</strong> of CYP2D6 can't convert codeine to morphine → no analgesia; an <strong>ultrarapid</strong> one makes too much → toxicity. For a drug that the enzyme <em>inactivates</em>, the consequences flip.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — different-sized engines</div>
+      <p>Think of each person's metaboliser status as the <span class="key">size of their engine for a given drug</span>. For codeine (a prodrug that must be "revved up" into morphine), a <strong>huge engine</strong> (ultrarapid) over-revs into toxicity, while a <strong>stalled engine</strong> (poor metaboliser) never gets going — no pain relief. For a normal drug the engine <em>burns it off</em>, so the stalled engine lets it accumulate to toxic levels instead. Same engine sizes, opposite outcomes depending on whether the drug needs revving up or burning off.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>HLA-B*57:01 → abacavir</strong> and <strong>HLA-B*15:02 → carbamazepine</strong> (at-risk ancestry) are guideline-mandated pre-prescription genetic screens — skipping them risks fatal hypersensitivity / Stevens-Johnson syndrome.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 1 — DRUG DISCOVERY ============ -->
+<section class="module" id="m1">
+  <div class="mod-head">
+    <div class="mod-num">01</div>
+    <div class="mod-titleblock">
+      <h2>Drug Discovery &amp; Development</h2>
+      <div class="mod-sub">From medicinal plants to computer-aided design</div>
+    </div>
+    <span class="tier tier-3">Tier 3 · Framework</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Know the pipeline vocabulary and the clinical-trial phases — a drug travels from a validated target, through preclinical testing and four human phases, to approval and surveillance.</div>
+    <ul>
+      <li><strong>Target → lead → preclinical → IND → Phase I–III → NDA → Phase IV.</strong> Druggable target = one a small molecule/biologic can modulate.</li>
+      <li><strong>IND</strong> filed before human trials; <strong>NDA</strong> before marketing. Biologics → biosimilars (not identical generics).</li>
+    </ul>
+    <figure>
+    <div class="fig-title">Figure 1·1 — The drug-development pipeline</div>
+    <svg viewBox="0 0 860 130" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+      <defs><marker id="ar6" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0f6b6b"/></marker></defs>
+      <g text-anchor="middle" font-weight="600">
+        <rect x="10" y="45" width="120" height="48" rx="8" fill="#16344a"/><text x="70" y="66" fill="#fff" font-size="11">Target ID</text><text x="70" y="82" fill="#8fd4ce" font-size="9">+ validation</text>
+        <rect x="150" y="45" width="120" height="48" rx="8" fill="#e3efed" stroke="#0f6b6b"/><text x="210" y="66" fill="#0a4f54" font-size="11">Lead / HTS</text><text x="210" y="82" fill="#3a4a55" font-size="9">medicinal chem</text>
+        <rect x="290" y="45" width="120" height="48" rx="8" fill="#fbf0dc" stroke="#b9791a"/><text x="350" y="66" fill="#b9791a" font-size="11">Preclinical</text><text x="350" y="82" fill="#3a4a55" font-size="9">animal · IND</text>
+        <rect x="430" y="45" width="200" height="48" rx="8" fill="#ece7f3" stroke="#5b4a7a"/><text x="530" y="62" fill="#5b4a7a" font-size="11">Clinical I → II → III</text><text x="530" y="80" fill="#3a4a55" font-size="9">safety→efficacy→confirm</text>
+        <rect x="650" y="45" width="90" height="48" rx="8" fill="#0f6b6b"/><text x="695" y="66" fill="#fff" font-size="11">NDA</text><text x="695" y="82" fill="#cfe9e6" font-size="9">FDA approval</text>
+        <rect x="760" y="45" width="90" height="48" rx="8" fill="#3a6b3a"/><text x="805" y="66" fill="#fff" font-size="11">Phase IV</text><text x="805" y="82" fill="#cfe9d6" font-size="9">post-market</text>
+      </g>
+      <g stroke="#0f6b6b" stroke-width="1.8" marker-end="url(#ar6)">
+        <line x1="130" y1="69" x2="148" y2="69"/><line x1="270" y1="69" x2="288" y2="69"/><line x1="410" y1="69" x2="428" y2="69"/><line x1="630" y1="69" x2="648" y2="69"/><line x1="740" y1="69" x2="758" y2="69"/>
+      </g>
+    </svg>
+    <figcaption>~10–15 years and very high attrition from target to market.</figcaption>
+  </figure>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Phase</th><th>Subjects</th><th>Question answered</th></tr></thead>
+      <tbody>
+        <tr><td>Phase I</td><td>20–100 healthy volunteers</td><td>Safety, PK, tolerable dose</td></tr>
+        <tr><td>Phase II</td><td>100–500 patients</td><td>Efficacy + dose-finding</td></tr>
+        <tr><td>Phase III</td><td>1000s of patients</td><td>Confirm efficacy vs standard; rarer ADRs</td></tr>
+        <tr><td>Phase IV</td><td>Population (post-approval)</td><td>Long-term safety / surveillance</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A promising molecule has just shown it works in mice. Blurt out every step it must still pass before a doctor can prescribe it — name the application filed before human testing, the four trial phases and what each asks, and the application filed before marketing.</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why are Phase I trials usually in <em>healthy</em> volunteers rather than patients?</li>
+      <li>Why do many serious adverse effects only surface in Phase IV, after approval?</li>
+      <li>Why is a biosimilar not simply a "generic biologic"?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Mechanism of the pipeline</h4>
+    <p>Discovery starts by identifying and <strong>validating a target</strong>, screening libraries for a <strong>lead</strong>, optimising it (medicinal chemistry), then <strong>preclinical</strong> animal testing. An <strong>IND</strong> opens human trials: Phase I (safety), II (efficacy + dose), III (confirmation). An <strong>NDA</strong> wins approval; Phase IV watches the population.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — auditioning for a role</div>
+      <p>Drug development is a <span class="key">brutal audition with rounds of cuts</span>. Thousands of molecules try out; medicinal chemistry is the rehearsal that polishes a few. Preclinical is the <strong>screen test on animals</strong>. Phase I asks "will it harm a healthy person?", Phase II "can it actually act?", Phase III "is it better than what we already cast?" — and only then does it get the part (NDA). Phase IV is the <strong>reviews after opening night</strong>, when rare flaws finally show in a huge audience.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> attrition is enormous and the timeline is ~10–15 years — most candidates fail. And because trials are short and modest in size, rare or delayed harms are precisely what Phase IV pharmacovigilance (Ch 8) exists to catch.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 6 — GI MICROBIOME ============ -->
+<section class="module" id="m6">
+  <div class="mod-head">
+    <div class="mod-num">06</div>
+    <div class="mod-titleblock">
+      <h2>The GI Microbiome &amp; Drug Response</h2>
+      <div class="mod-sub">The "forgotten organ" of metabolism</div>
+    </div>
+    <span class="tier tier-3">Tier 3 · Framework</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Gut bacteria run their own metabolism — chiefly <strong>reductions, hydrolyses and deconjugations</strong> — that can activate, inactivate, or recycle a drug behind the host's back.</div>
+    <ul>
+      <li><strong>β-glucuronidase</strong> deconjugates glucuronides in the gut → regenerates active drug → <strong>enterohepatic recirculation</strong> (prolongs effect; basis of irinotecan gut toxicity).</li>
+      <li><strong>Eggerthella lenta</strong> inactivates <strong>digoxin</strong> — antibiotics that suppress it raise digoxin levels.</li>
+      <li><strong>Sulfasalazine</strong> is a prodrug cleaved by gut bacteria into 5-ASA (active) + sulfapyridine.</li>
+      <li>Antibiotics disrupt the microbiome and can alter co-administered drug metabolism.</li>
+    </ul>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A patient's digoxin level unexpectedly jumps after starting an antibiotic for an unrelated infection. Blurt out how gut bacteria could be involved — what were they doing to the digoxin before the antibiotic killed them off?</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>How does bacterial β-glucuronidase prolong a drug's effect (what does it undo)?</li>
+      <li>Why is sulfasalazine useless without gut bacteria?</li>
+      <li>Why can a course of antibiotics change the effectiveness of an unrelated oral drug?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Mechanism</h4>
+    <p>The liver tags drugs with glucuronide "bags" for disposal in bile. Gut bacteria carrying <strong>β-glucuronidase</strong> rip those bags off, freeing active drug to be reabsorbed — <strong>enterohepatic recycling</strong>. Other bacteria inactivate drugs (digoxin) or activate prodrugs (sulfasalazine).</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — recycling bandits in the gut</div>
+      <p>The liver throws used drugs into the bile "rubbish chute" wrapped in disposal bags. But the gut is full of <span class="key">recycling bandits</span> who <strong>tear the bags open and toss the drug back into circulation</strong> (β-glucuronidase → enterohepatic recycling), making the dose last longer than expected. Some bandits instead <strong>destroy</strong> useful drugs (digoxin), and some <strong>assemble</strong> a prodrug into its active form (sulfasalazine). Kill the bandits with antibiotics and all these hidden effects shift.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> microbiome effects are an under-recognised, invisible source of variable drug response and interactions — easy to miss because they don't appear in standard CYP interaction tables.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 8 — POSTMARKETING DRUG SAFETY ============ -->
+<section class="module" id="m8">
+  <div class="mod-head">
+    <div class="mod-num">08</div>
+    <div class="mod-titleblock">
+      <h2>Postmarketing Drug Safety</h2>
+      <div class="mod-sub">Pharmacovigilance · adverse drug reactions</div>
+    </div>
+    <span class="tier tier-3">Tier 3 · Framework</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Premarketing trials are short and small, so rare and delayed harms surface only after launch — catching them is the job of <strong>pharmacovigilance</strong>.</div>
+    <div class="tbl-scroll"><table class="plain">
+      <thead><tr><th>Feature</th><th>Type A (Augmented)</th><th>Type B (Bizarre)</th></tr></thead>
+      <tbody>
+        <tr><td>Predictable?</td><td>Yes — from pharmacology</td><td>No — idiosyncratic</td></tr>
+        <tr><td>Dose-related?</td><td>Yes</td><td>No</td></tr>
+        <tr><td>Frequency</td><td>Common</td><td>Rare</td></tr>
+        <tr><td>Mortality</td><td>Low</td><td>Higher</td></tr>
+        <tr><td>Example</td><td>Warfarin bleeding, opioid sedation</td><td>Penicillin anaphylaxis, SJS</td></tr>
+      </tbody>
+    </table></div>
+    <ul>
+      <li><strong>Spontaneous reporting</strong> (FDA FAERS; India's PvPI/IPC) generates safety <em>signals</em>.</li>
+      <li><strong>Black box warning</strong> = the strongest label caution; persistent signals → <strong>withdrawal</strong> (terfenadine, cerivastatin, rofecoxib).</li>
+      <li>Genetic variants (e.g., TPMT) are recognised ADR risk factors.</li>
+    </ul>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A drug passes all its trials, gets approved, then is pulled from the market two years later after rare deaths emerge. Blurt out why the trials missed it — what about trial size and duration — and distinguish the two fundamental types of adverse drug reaction (predictable vs idiosyncratic).</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why would an anaphylactic reaction to penicillin be classed Type B, but warfarin bleeding Type A?</li>
+      <li>Why does spontaneous reporting only generate a "signal" rather than proof of causation?</li>
+      <li>Why are genetic factors (like TPMT) treated as ADR risk factors?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Mechanism &amp; systems</h4>
+    <p><strong>Type A</strong> reactions are augmented pharmacology — predictable, dose-related, common (more warfarin → more bleeding). <strong>Type B</strong> are bizarre, idiosyncratic, dose-independent and rarer (penicillin anaphylaxis). After approval, <strong>spontaneous reporting</strong> systems collect cases that aggregate into <em>signals</em>, which can lead to black-box warnings or withdrawal.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a car recall after sale</div>
+      <p>Clinical trials are like <span class="key">test-driving a new car for a few thousand miles with a few hundred drivers</span>. That catches obvious, predictable problems (Type A — "press the brake too hard and it lurches"). But a defect that strikes <strong>one driver in fifty thousand</strong> (Type B — idiosyncratic) only shows once millions are on the road. Pharmacovigilance is the <strong>recall hotline</strong>: scattered reports accumulate into a signal, triggering a warning label or, if serious enough, a full recall (withdrawal).</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> a spontaneous-report "signal" is a hypothesis, not proof of causation — it must be weighed against background rates. But persistent serious signals (rofecoxib, cerivastatin) rightly end in withdrawal. This chapter is the real-world payoff of the trial pipeline in Ch 1.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+
+
+<!-- ============ FLASHCARDS ============ -->
+<section id="flashcards">
+  <div class="wrap">
+    <h2>🃏 Clinical Vignette Flashcards</h2>
+    <p class="fc-lead">Tap a card to reveal the full answer, mechanism, clinical pearl, and exam trap. Twenty high-yield scenarios covering the core concepts of General Pharmacology.</p>
+    <div class="flashcards">
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">01</span>
+          <span class="fc-q">A drug has a volume of distribution of 500 L in a 70 kg patient. What does this tell you about its distribution, and how does it affect overdose management?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">A Vd of 500 L far exceeds total body water (~42 L), meaning the drug is extensively sequestered in tissues (lipophilic or tissue-bound). High Vd → low plasma concentration per dose, long half-life, and activated charcoal / haemodialysis are <em>ineffective</em> for overdose (most drug is in tissues, not blood). Examples: amiodarone (~60 L/kg), chlorpromazine (~20 L/kg).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Loading dose = Vd × target plasma concentration ÷ bioavailability. Critical when rapid therapeutic levels are needed (digoxin, amiodarone, phenytoin).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Warfarin has LOW Vd (~0.15 L/kg) because it is 99% albumin-bound — it stays in plasma. Yet dialysis is still ineffective because the protein-bound fraction is not filterable.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">02</span>
+          <span class="fc-q">Ethanol is eliminated at ~10 mL/hour regardless of blood level. What kinetic model describes this, and which other clinically important drugs share it?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Zero-order (saturation) kinetics — alcohol dehydrogenase is saturated at typical drinking levels, so elimination rate is constant (independent of concentration). Blood alcohol falls linearly, not exponentially. Other zero-order drugs at clinical/toxic concentrations: <strong>phenytoin</strong> (Michaelis–Menten / mixed-order — switches to zero-order at therapeutic levels), <strong>high-dose salicylates</strong>.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Phenytoin follows first-order kinetics at low doses but switches to zero-order at therapeutic/supratherapeutic levels. This means small dose increases cause disproportionately large rises in plasma levels — the key reason phenytoin toxicity is common.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Zero-order drugs have NO constant half-life. Elimination time increases with dose. This makes toxic dose estimation unreliable from standard half-life calculations.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">03</span>
+          <span class="fc-q">A drug has 5% oral bioavailability. The IV dose is 10 mg. What oral dose achieves equivalent systemic exposure, and what factors reduce bioavailability?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Oral dose = IV dose ÷ F = 10 mg ÷ 0.05 = <strong>200 mg</strong>. Bioavailability is reduced by: poor GI absorption, first-pass hepatic metabolism, intestinal CYP3A4 metabolism, P-glycoprotein efflux (returns drug to gut lumen), formulation factors, and gut motility.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Nitroglycerin (F ~1%) and lidocaine (F ~35%) are almost entirely destroyed on first pass — must be given sublingually/transdermally/IV. Morphine F ~30% — oral doses must be 3× the IV dose for equivalent effect.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> IV bioavailability is always 100% by definition. When converting oral → IV opioids, always use an equianalgesic chart — do not simply halve the dose.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">04</span>
+          <span class="fc-q">A patient on warfarin is started on rifampin for TB. Her INR drops from 2.8 to 1.2 over two weeks despite taking the same warfarin dose. Explain.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Rifampin is a potent inducer of <strong>CYP2C9, CYP3A4, and P-glycoprotein</strong>. Warfarin (especially the active S-enantiomer) is a CYP2C9 substrate. Enzyme induction → accelerated warfarin metabolism → lower plasma levels → subtherapeutic anticoagulation. Induction develops over 1–2 weeks and reverses 1–2 weeks after stopping rifampin (both windows require close INR monitoring).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Major CYP inducers (RIPS): <strong>R</strong>ifampin, <strong>I</strong>soniazid (mild), <strong>P</strong>henytoin/Phenobarbital, <strong>S</strong>t. John's Wort, carbamazepine. All also reduce OCP efficacy — counsel on contraception.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Clarithromycin is a CYP3A4 <em>inhibitor</em>, not an inducer. Erythromycin is also an inhibitor. Azithromycin does NOT significantly inhibit CYP — preferred when drug interactions are a concern.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">05</span>
+          <span class="fc-q">Grapefruit juice is taken with simvastatin. The patient develops severe myalgia and dark urine. Which statins are safest, and what is the mechanism?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Grapefruit contains <strong>furanocoumarins</strong> that irreversibly inhibit <em>intestinal</em> CYP3A4 → increased first-pass bioavailability of CYP3A4-metabolised statins (lovastatin, simvastatin, atorvastatin) → elevated plasma levels → myopathy / rhabdomyolysis. One glass can inhibit CYP3A4 for 24–72 hours.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Safest statins with CYP3A4 inhibitors or grapefruit: <strong>rosuvastatin</strong> (primarily renal excretion, not CYP3A4) and <strong>pravastatin</strong> (not a CYP substrate). Fluvastatin is CYP2C9.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Grapefruit affects intestinal CYP3A4 primarily, not hepatic — so IV drugs given the same day are not affected. The interaction persists even if grapefruit was consumed hours before the drug.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">06</span>
+          <span class="fc-q">A competitive antagonist is added to an agonist preparation — the dose–response curve shifts right but Emax is unchanged. An irreversible antagonist is then used. What happens to Emax?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Competitive antagonist:</strong> shifts EC₅₀ right (requires more agonist for the same effect) but Emax is preserved because, at high enough agonist concentrations, all binding sites can be occupied. <strong>Irreversible (non-competitive, covalent) antagonist:</strong> permanently reduces the number of available receptors → Emax falls even at maximum agonist concentration — cannot be overcome by increasing agonist dose.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Aspirin is the classic irreversible inhibitor — covalently acetylates COX-1 serine. Platelet COX-1 is permanently blocked for the platelet's lifespan (~10 days). Ibuprofen is competitive/reversible — antiplatelet effect lasts only while drug is present.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Non-competitive allosteric antagonists also reduce Emax WITHOUT shifting EC₅₀ — distinguish from irreversible antagonists by reversibility. Some allosteric antagonists are fully reversible.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">07</span>
+          <span class="fc-q">A patient on warfarin is newly prescribed a full-dose NSAID. The INR rises from 2.5 to 4.9 within a week. Identify both the pharmacokinetic and pharmacodynamic mechanisms.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Pharmacokinetic:</strong> NSAIDs displace warfarin from albumin binding sites → transient rise in free warfarin → increased anticoagulant effect. Some NSAIDs (phenylbutazone) also inhibit CYP2C9 → reduced warfarin metabolism → sustained elevation. <strong>Pharmacodynamic:</strong> NSAIDs inhibit COX-1 in platelets → antiplatelet effect, synergising with anticoagulation; also cause gastric mucosal injury → bleeding risk multiplied.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Protein displacement is usually transient — free drug redistributes and elimination re-equilibrates. The more dangerous, sustained interaction is CYP2C9 inhibition (metronidazole, fluconazole, amiodarone are stronger inhibitors than most NSAIDs).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Even topical diclofenac has measurable systemic absorption sufficient to interact with warfarin. Celecoxib (COX-2 selective) is safer for GI bleeding risk but still inhibits CYP2C9 — warfarin interaction persists.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">08</span>
+          <span class="fc-q">A patient on codeine for post-operative pain develops respiratory depression and pinpoint pupils despite a 'standard' dose. Genetic testing shows she is an ultrarapid CYP2D6 metaboliser. Explain.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Codeine is a prodrug; <strong>CYP2D6</strong> converts codeine → morphine (the active opioid). Ultrarapid metabolisers (gene duplication, common in North African/Ethiopian populations: ~10–29%) convert codeine to morphine very rapidly → dangerously elevated morphine levels → respiratory depression, even fatal. The FDA has black-box warnings and restricts codeine use in children and breast-feeding mothers for this reason.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Tramadol is also a CYP2D6 prodrug (→ O-desmethyltramadol). Same ultrarapid metaboliser danger applies. Poor metabolisers (~7–10% Caucasians) derive no benefit from codeine — they cannot produce morphine.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> CYP2D6 inhibitors (fluoxetine, paroxetine, bupropion) convert extensive metabolisers into phenotypic poor metabolisers — codeine is ineffective in these patients and increases codeine toxicity from unconverted parent drug.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">09</span>
+          <span class="fc-q">A child develops haemolytic anaemia with Heinz bodies after starting dapsone for dermatitis herpetiformis. What enzyme deficiency explains this?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>G6PD deficiency</strong> (X-linked). G6PD is essential for the hexose monophosphate shunt → NADPH production → reduced glutathione → protection against oxidative stress in RBCs. Oxidant drugs (dapsone, primaquine, nitrofurantoin, rasburicase) generate reactive oxygen species → Hb oxidation → Heinz body formation (denatured Hb) → haemolysis. G6PD testing is mandatory before prescribing oxidant drugs.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> G6PD activity should be tested during a quiescent (non-haemolytic) period — during active haemolysis, older deficient RBCs are destroyed first; remaining young RBCs have more G6PD, giving a falsely normal result.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> G6PD deficiency protects against Plasmodium falciparum malaria (infected RBCs lyse more easily, limiting parasite spread) — this explains its high prevalence in malaria-endemic regions. The same feature that confers malaria resistance causes drug-induced haemolysis.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">10</span>
+          <span class="fc-q">A patient on phenelzine (MAOI) for depression eats aged blue cheese at dinner and develops sudden severe headache, BP 220/130, and diaphoresis. What is happening and how is it treated?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Hypertensive crisis from tyramine ('cheese effect').</strong> MAO-A normally deaminates dietary tyramine in the gut wall and liver before it reaches systemic circulation. MAO inhibition → tyramine absorbed → displaces noradrenaline from sympathetic terminals → massive catecholamine surge → hypertensive crisis. Risk of intracerebral haemorrhage. Treatment: IV phentolamine (alpha-blocker) or labetalol; avoid beta-blockers alone (unopposed alpha → worsens hypertension).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> High-tyramine foods: aged cheeses, cured/smoked meats, fermented foods (soy sauce, Marmite), broad beans, Chianti wine. Patients on MAOIs require strict dietary restriction throughout therapy and for 2 weeks after stopping.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> MAOI + serotonergic drugs (SSRIs, SNRIs, tramadol, pethidine/meperidine) → <strong>serotonin syndrome</strong> (NOT hypertensive crisis). Wash-out: 14 days after stopping MAOI before starting serotonergic drug; 5 weeks after stopping fluoxetine (long t½) before starting MAOI.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">11</span>
+          <span class="fc-q">Phenytoin is started for epilepsy. A serum level of 16 µg/mL is reported in a patient with albumin of 2.0 g/dL (normal 4.0). Is dose adjustment needed?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Yes. Phenytoin is 90% albumin-bound; total drug level measures bound + free, but only free drug is active. In hypoalbuminaemia, a normal 'total' level actually represents a higher free (active) fraction. Use the <strong>Sheiner–Tozer correction</strong>: Corrected level = measured level ÷ [(0.2 × albumin) + 0.1]. Here: 16 ÷ [(0.2 × 2.0) + 0.1] = 16 ÷ 0.5 = 32 µg/mL → already toxic range. Reduce dose; ideally measure free phenytoin directly.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Phenytoin toxicity is dose-related: nystagmus (20–30 µg/mL) → ataxia (30–40 µg/mL) → mental status changes (>40 µg/mL) → paradoxical seizures. Saturable (Michaelis–Menten) kinetics mean small dose increases can cause large level spikes.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> IV phenytoin must be infused ≤50 mg/min with ECG monitoring — the propylene glycol vehicle causes cardiac conduction block and hypotension. Fosphenytoin (water-soluble prodrug) can be infused at 150 mg PE/min and given IM.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">12</span>
+          <span class="fc-q">A drug has a therapeutic index of 2. Compare this to penicillin and explain why monitoring is required.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Therapeutic index (TI) = TD₅₀ ÷ ED₅₀. TI of 2 means the toxic dose is only twice the effective dose — a very narrow safety margin. Classic narrow TI drugs requiring therapeutic drug monitoring: <strong>lithium, digoxin, warfarin, aminoglycosides, vancomycin, theophylline, phenytoin, cyclosporine</strong>. Penicillins have an extremely wide TI (essentially no upper toxicity limit from direct drug effects at achievable doses) — monitoring is unnecessary.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Narrow TI drugs are sensitive to: renal/hepatic impairment (reduced clearance), age extremes, drug interactions, protein binding changes, and pharmacogenomic variation. Always check TI before prescribing a new interacting drug.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> TI is a population-derived ratio, not a guarantee for an individual patient. A patient with CKD, elderly age, or TPMT deficiency may reach toxic levels well within the 'therapeutic' population range.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">13</span>
+          <span class="fc-q">Isoniazid is given to two patients with latent TB: a slow NAT2 acetylator and a fast NAT2 acetylator. How does acetylator status affect each patient's risk profile?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Slow acetylators</strong> (common in Caucasians/Egyptians): higher isoniazid plasma levels → more effective bactericidal activity, but higher risk of <strong>peripheral neuropathy</strong> (pyridoxine-responsive) and drug–drug interactions (inhibits CYP2C9/CYP2E1 more). <strong>Fast acetylators</strong> (common in East Asians): lower isoniazid levels → potential treatment failure; acetylhydrazine metabolite accumulates → higher <strong>hepatotoxicity</strong> risk. Pyridoxine (B6) 25–50 mg/day is co-prescribed for all patients to prevent neuropathy.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Hydralazine (antihypertensive) and procainamide (antiarrhythmic) are also NAT2 substrates. Slow acetylators on hydralazine or procainamide are at higher risk for <strong>drug-induced lupus</strong> (DIL) — check ANA and anti-histone antibodies.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> 'Fast' acetylators of isoniazid have more hepatotoxicity, not less — the acetylhydrazine intermediate is the hepatotoxin. Slow acetylators have more neuropathy. This counter-intuitive relationship is a classic exam question.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">14</span>
+          <span class="fc-q">A patient is at steady state on a drug taken every 8 hours. The dose is doubled. When does the new steady state occur?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Steady state is reached after ~5 × t½, regardless of dose. Doubling the dose doubles the steady-state plasma concentration but does <strong>NOT change when steady state is reached</strong> — only the half-life determines that. If t½ = 8 h, new steady state occurs ~40 h after the dose change whether the dose is 1× or 100×.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> A <strong>loading dose</strong> shortens the time to therapeutic concentrations without waiting 5 × t½. Practical example: digoxin (t½ 36–48 h) — without a loading dose, therapeutic levels take 7–10 days to develop.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Changing the dosing interval (not dose) changes the peak–trough fluctuation. Same total daily dose given more frequently → smoother, less fluctuating plasma levels → same average steady-state concentration.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">15</span>
+          <span class="fc-q">Phase I vs Phase II metabolism: which phase more commonly produces reactive toxic intermediates, and give a clinical example.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Phase I</strong> (CYP450-mediated oxidation, reduction, hydrolysis) introduces/exposes polar functional groups — often generating reactive electrophilic intermediates. Example: <strong>paracetamol (acetaminophen)</strong> → CYP2E1/CYP3A4 → NAPQI (N-acetyl-p-benzoquinone imine) → normally conjugated with glutathione (Phase II). In overdose, glutathione depletes → NAPQI accumulates → covalent binding to hepatocytes → necrosis. <strong>Phase II</strong> (glucuronidation, sulphation, acetylation, glutathione conjugation) produces water-soluble, pharmacologically inactive metabolites — generally harmless.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> N-acetylcysteine (NAC) replenishes glutathione stores in paracetamol overdose. Works best if given within 8–10 hours. Give empirically if >150 µg/mL at 4 h on the Rumack–Matthew nomogram.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Lorazepam and oxazepam bypass Phase I — they only require Phase II glucuronidation. They are the 'safe' benzodiazepines in severe liver disease (no Phase I enzymes needed). Remember 'LOT' — Lorazepam, Oxazepam, Temazepam.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">16</span>
+          <span class="fc-q">Enterohepatic recirculation prolongs the effect of some drugs. Explain the mechanism and give two clinical implications.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Parent drug or its glucuronide conjugate is excreted into bile → reaches the intestine → gut bacteria express β-glucuronidase → deconjugate the drug → free drug reabsorbed → recirculates through the liver → prolonged half-life. Clinical implications: (1) <strong>Drug prolongation</strong>: morphine-6-glucuronide, oestrogens, some NSAIDs, colchicine have prolonged action via EHC; (2) <strong>Drug interaction</strong>: cholestyramine sequesters drugs in bile, interrupting EHC and reducing their efficacy/level (relevant for levothyroxine, digoxin, warfarin if taken simultaneously).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Cholestyramine is used therapeutically to interrupt EHC of leflunomide (active metabolite) during 'washout' in patients who need rapid drug elimination (e.g., before pregnancy or hepatotoxicity).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> The claimed 'antibiotic disrupts gut flora → reduces EHC of OCP oestrogens → contraceptive failure' has very weak evidence. The FDA does not require OCP warnings with most antibiotics (exception: rifampin — but this works via CYP induction, not EHC).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">17</span>
+          <span class="fc-q">A receptor is exposed to a high agonist concentration for 48 hours. Describe the molecular sequence of desensitisation and downregulation.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Acute (minutes):</strong> GRK (G-protein-coupled receptor kinase) phosphorylates the agonist-occupied receptor → β-arrestin recruitment → uncoupling from G-protein → desensitisation (reduced signalling despite continued agonist). <strong>Hours:</strong> β-arrestin mediates receptor internalisation (endocytosis) → sequestration in endosomes. <strong>Days:</strong> Internalised receptors directed to lysosomes for degradation → receptor downregulation (reduced total receptor number). Net result: <strong>tachyphylaxis/tolerance</strong> — diminished response to same drug concentration.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> <strong>Upregulation</strong> occurs with prolonged antagonist exposure. Example: chronic beta-blocker use upregulates β-adrenoceptors → abrupt withdrawal → supersensitivity to catecholamines → rebound tachycardia, hypertension, angina. Always taper beta-blockers; never abruptly stop in cardiac patients.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Nitrate tolerance (ISDN/nitroglycerin patches) involves receptor-level and downstream desensitisation of guanylate cyclase. Requires a 'nitrate-free interval' (8–12 h/day) to restore sensitivity.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">18</span>
+          <span class="fc-q">A 70-year-old patient with HF and CKD (eGFR 18) needs gentamicin for Gram-negative bacteraemia. How should dosing be adjusted?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Two strategies for renal impairment: (1) <strong>Extend the dosing interval</strong> (preferred): maintain same dose, lengthen interval proportional to CrCl reduction → maintains high peak (efficacy — aminoglycosides are concentration-dependent killers) while reducing trough accumulation (toxicity is trough-driven). (2) Reduce dose per interval (less preferred — low peaks may compromise efficacy). Monitor trough <1 µg/mL (traditional dosing) or use Hartford nomogram for extended-interval dosing.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> <strong>Nephrotoxicity</strong> is usually reversible (proximal tubule regenerates). <strong>Ototoxicity</strong> (cochleotoxicity and vestibulotoxicity) is often irreversible — damaged inner ear hair cells cannot regenerate. Never resume an aminoglycoside that caused confirmed ototoxicity.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> TDM for aminoglycosides: peak (30 min after infusion end) measures efficacy; trough (just before next dose) measures toxicity risk. Extended-interval dosing uses a single 6–14 h post-dose level plotted on a nomogram — do NOT use traditional peak/trough targets.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">19</span>
+          <span class="fc-q">Two drugs, each 90% protein-bound, are given together. Drug A is displaced from albumin by Drug B. Describe the immediate effect and the long-term equilibrium.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Immediately:</strong> Free (active) Drug A rises → increased pharmacological effect and potential toxicity, increased Vd. <strong>Long-term:</strong> The additional free drug is available for hepatic metabolism and renal filtration → clearance increases → free drug concentration gradually returns toward baseline (new equilibrium). For most drugs, the net clinical effect is modest, but for <strong>narrow TI drugs</strong>, the initial spike is clinically dangerous (e.g., phenytoin displaced by valproate → transient phenytoin toxicity).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Valproate both displaces phenytoin from albumin (transient free drug ↑) AND inhibits CYP2C9 (persistent total drug ↑). The combination creates a complex, biphasic interaction that can be severely misleading if total phenytoin level is used alone.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Protein displacement is clinically significant only when: (1) the displaced drug has a narrow TI, (2) >90% protein-bound, and (3) clearance cannot immediately compensate (e.g., saturated hepatic metabolism). Most displacement interactions are transient and of limited clinical significance.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">20</span>
+          <span class="fc-q">A patient is on a prodrug that requires hepatic CYP2C19 for activation. She is also prescribed omeprazole. What problem arises, and name the drug.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Clopidogrel</strong> (antiplatelet prodrug for ACS/stent). CYP2C19 converts clopidogrel → active thiol metabolite that irreversibly blocks P2Y12 receptors on platelets. Omeprazole (and esomeprazole) are CYP2C19 <strong>inhibitors</strong> → reduced clopidogrel activation → up to 45% reduction in antiplatelet effect → increased risk of stent thrombosis and MACE. <strong>Use pantoprazole instead</strong> (weakest CYP2C19 inhibition among PPIs).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> CYP2C19 poor metabolisers (10–15% Caucasians, 15–25% Asians) have inherently reduced clopidogrel activation — consider genotyping or switch to ticagrelor/prasugrel (direct-acting P2Y12 inhibitors, no CYP activation needed).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Ticagrelor and prasugrel do NOT require metabolic activation — they are direct-acting P2Y12 inhibitors. They are NOT affected by CYP2C19 status or PPIs. Prasugrel is contraindicated in prior TIA/stroke and age >75 (excess bleeding risk).</div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+<!-- ============ QUIZZES ============ -->
+<section class="quizzes" id="quizzes">
+  <div class="quiz-intro">
+    <h2>★ 200 Self-Test Questions</h2>
+    <p>Ten sets of twenty, mapped to the spaced-repetition days in each module. Cover the green answer strip, commit out loud, then reveal. Struggling to retrieve is the point — that's what builds durable memory.</p>
+  </div>
+  <details class="quizset" open>
+    <summary><span class="qs-num">1</span><span class="qs-title">Pharmacokinetics I — Membrane transport &amp; ADME</span><span class="qs-meta">Ch 2 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What does ADME stand for?</div><div class="qa">Absorption, Distribution, Metabolism, Elimination.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Which physicochemical form of a weak electrolyte crosses membranes by passive diffusion?</div><div class="qa">The non-ionised (uncharged, lipid-soluble) form.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Write the Henderson–Hasselbalch relationship for an ionisable drug.</div><div class="qa">log([protonated]/[unprotonated]) = pKₐ − pH.</div></div>
+      <div class="q"><div class="qq"><b>4</b>On which side of a membrane does a weak acid accumulate?</div><div class="qa">On the more basic (alkaline) side — it becomes more ionised and is trapped there.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Why does alkalinising the urine help in aspirin overdose?</div><div class="qa">Aspirin is a weak acid; alkaline urine ionises (traps) it in the tubule, preventing reabsorption and enhancing excretion.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Name the two transporter superfamilies and their direction.</div><div class="qa">SLC (solute carriers) — mostly uptake; ABC (ATP-binding cassette) — efflux.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Distinguish facilitated diffusion from active transport.</div><div class="qa">Facilitated diffusion is carrier-mediated but needs no energy and moves down the gradient; active transport needs energy and can move against the gradient.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Give an example of a primary active transporter relevant to drugs.</div><div class="qa">P-glycoprotein (ABCB1/MDR1) — hydrolyses ATP to export drugs such as digoxin.</div></div>
+      <div class="q"><div class="qq"><b>9</b>What drives secondary active transport?</div><div class="qa">An ion electrochemical gradient (usually Na⁺), established by Na⁺/K⁺-ATPase.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Why are second-generation antihistamines (e.g., loratadine) non-sedating?</div><div class="qa">They are more ionised/hydrophilic, so they poorly cross the blood-brain barrier.</div></div>
+      <div class="q"><div class="qq"><b>11</b>What is paracellular transport?</div><div class="qa">Passage of solutes through gaps between cells; large in most capillaries but tight at the BBB.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Define bioavailability (F).</div><div class="qa">The fraction of an administered dose that reaches the systemic circulation in unchanged form.</div></div>
+      <div class="q"><div class="qq"><b>13</b>What is the bioavailability of an intravenous drug?</div><div class="qa">1 (100%) by definition.</div></div>
+      <div class="q"><div class="qq"><b>14</b>What is the first-pass effect?</div><div class="qa">Metabolism of an orally absorbed drug by gut/liver before it reaches the systemic circulation, reducing bioavailability.</div></div>
+      <div class="q"><div class="qq"><b>15</b>How is oral bioavailability calculated relative to IV?</div><div class="qa">F = AUC(oral)/AUC(IV) for equal doses.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Which transporter in the enterocyte limits oral absorption of some drugs?</div><div class="qa">P-glycoprotein, by exporting drug back into the gut lumen.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Name a major tissue reservoir for lipophilic drugs.</div><div class="qa">Adipose tissue (fat); also plasma proteins and bone.</div></div>
+      <div class="q"><div class="qq"><b>18</b>Only what kind of drug is pharmacologically active and able to distribute/clear?</div><div class="qa">Free (unbound) drug.</div></div>
+      <div class="q"><div class="qq"><b>19</b>What plasma protein chiefly binds acidic drugs vs basic drugs?</div><div class="qa">Albumin binds acidic drugs; α₁-acid glycoprotein binds basic drugs.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Over what pH range can urine vary, enabling pH-dependent excretion?</div><div class="qa">Approximately 4.5 to 8.0.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">2</span><span class="qs-title">Pharmacokinetics II — Parameters, clearance &amp; dosing</span><span class="qs-meta">Ch 2 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Name the four key pharmacokinetic parameters.</div><div class="qa">Bioavailability (F), volume of distribution (Vd), clearance (CL), half-life (t½).</div></div>
+      <div class="q"><div class="qq"><b>2</b>Define volume of distribution.</div><div class="qa">The apparent volume relating the amount of drug in the body to its plasma concentration: Vd = amount/Cp.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Why is Vd called "apparent"?</div><div class="qa">It is a mathematical proportionality constant, not a real anatomical volume; lipophilic, tissue-bound drugs can have Vd far exceeding total body water.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Define clearance.</div><div class="qa">The volume of plasma completely cleared of drug per unit time; the body's efficiency at eliminating drug.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Write systemic clearance as a sum.</div><div class="qa">CL = CL(renal) + CL(hepatic) + CL(other).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Give the equation linking half-life to Vd and CL.</div><div class="qa">t½ ≈ 0.693 × Vd/CL.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Why is half-life called a "derived" parameter?</div><div class="qa">Because it depends on the two independent variables CL and Vd; it changes when either changes.</div></div>
+      <div class="q"><div class="qq"><b>8</b>If clearance falls (e.g., renal disease) but Vd is constant, what happens to t½?</div><div class="qa">t½ increases (lengthens).</div></div>
+      <div class="q"><div class="qq"><b>9</b>Define first-order kinetics.</div><div class="qa">A constant fraction of drug is eliminated per unit time; rate is proportional to concentration; t½ is constant.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Define zero-order kinetics.</div><div class="qa">A constant amount of drug is eliminated per unit time (saturable); rate is independent of concentration.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Name three drugs showing zero-order kinetics.</div><div class="qa">Ethanol, phenytoin, high-dose aspirin (also theophylline at high dose).</div></div>
+      <div class="q"><div class="qq"><b>12</b>Roughly how fast is ethanol metabolised?</div><div class="qa">About 10 g per hour (a fixed amount — zero-order).</div></div>
+      <div class="q"><div class="qq"><b>13</b>After how many half-lives is steady state essentially reached?</div><div class="qa">~4–5 half-lives (≈94% after 4 t½).</div></div>
+      <div class="q"><div class="qq"><b>14</b>Does the dose affect the <em>time</em> to reach steady state?</div><div class="qa">No — time to steady state depends only on half-life, not on dose.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Write the steady-state concentration equation for oral dosing.</div><div class="qa">Css = (F × Dose)/(CL × τ), where τ is the dosing interval.</div></div>
+      <div class="q"><div class="qq"><b>16</b>How is a maintenance dosing rate calculated?</div><div class="qa">Dosing rate = CL × target Css (÷ F for oral).</div></div>
+      <div class="q"><div class="qq"><b>17</b>How is a loading dose calculated, and why give one?</div><div class="qa">LD = Vd × target Cp / F; given to reach therapeutic levels rapidly when the half-life is long (e.g., digoxin).</div></div>
+      <div class="q"><div class="qq"><b>18</b>For a high-extraction-ratio drug, hepatic clearance approaches what?</div><div class="qa">Hepatic blood flow — clearance is flow-limited.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Which type of drug (high vs low extraction) is more sensitive to enzyme induction/inhibition?</div><div class="qa">Low-extraction (capacity-limited) drugs.</div></div>
+      <div class="q"><div class="qq"><b>20</b>What is AUC and what does it relate to?</div><div class="qa">Area under the concentration–time curve; for F=1, CL = Dose/AUC, so it reflects total drug exposure.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">3</span><span class="qs-title">Pharmacodynamics I — Receptors &amp; vocabulary</span><span class="qs-meta">Ch 3 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Name the four main receptor superfamilies.</div><div class="qa">GPCRs, ligand-gated ion channels, enzyme-linked (catalytic, e.g., RTK) receptors, and nuclear (intracellular) receptors.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Which receptor type acts fastest, and on what time scale?</div><div class="qa">Ligand-gated ion channels — milliseconds.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Which receptor type acts slowest and why?</div><div class="qa">Nuclear receptors — hours to days, because they alter gene transcription.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Define affinity.</div><div class="qa">The tightness with which a drug binds its receptor; quantified by Kd (lower Kd = higher affinity).</div></div>
+      <div class="q"><div class="qq"><b>5</b>Define potency.</div><div class="qa">The amount of drug needed to produce a given effect; measured by EC₅₀/ED₅₀ (horizontal position of the curve).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Define efficacy.</div><div class="qa">The maximal effect a drug can produce (Emax) — the ceiling, reflecting intrinsic activity.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Which matters more clinically, potency or efficacy?</div><div class="qa">Efficacy (and therapeutic index); potency mainly determines the dose.</div></div>
+      <div class="q"><div class="qq"><b>8</b>What is a full agonist?</div><div class="qa">A ligand that produces the maximal response a receptor population can give (full intrinsic activity).</div></div>
+      <div class="q"><div class="qq"><b>9</b>What is a partial agonist?</div><div class="qa">A ligand that activates the receptor but cannot produce the maximal response even at full occupancy (submaximal Emax).</div></div>
+      <div class="q"><div class="qq"><b>10</b>What can a partial agonist do in the presence of a full agonist?</div><div class="qa">Act as a functional antagonist — competing for receptor and lowering the overall response.</div></div>
+      <div class="q"><div class="qq"><b>11</b>What is an inverse agonist?</div><div class="qa">A ligand that reduces constitutive (basal) receptor activity below the no-drug baseline.</div></div>
+      <div class="q"><div class="qq"><b>12</b>How does an inverse agonist behave when there is no basal activity?</div><div class="qa">It appears to act as a neutral antagonist.</div></div>
+      <div class="q"><div class="qq"><b>13</b>In the two-state model, full vs partial agonists differ in what?</div><div class="qa">Their efficacy — i.e., how far they shift the receptor equilibrium toward the active (Ra) state.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Effect of a competitive (reversible) antagonist on the agonist curve?</div><div class="qa">Parallel rightward shift; Emax unchanged (surmountable by more agonist).</div></div>
+      <div class="q"><div class="qq"><b>15</b>Effect of a non-competitive/irreversible antagonist?</div><div class="qa">Reduced Emax; not surmountable.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Define a physiological antagonist with an example.</div><div class="qa">A drug producing an opposite effect via a different receptor — e.g., adrenaline vs histamine in anaphylaxis.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Define a chemical antagonist with an example.</div><div class="qa">A drug that inactivates another by binding it directly — e.g., protamine + heparin, or chelators.</div></div>
+      <div class="q"><div class="qq"><b>18</b>What are spare receptors?</div><div class="qa">Receptors in excess of those needed for maximal response — maximal effect occurs before 100% occupancy (EC₅₀ &lt; Kd).</div></div>
+      <div class="q"><div class="qq"><b>19</b>What is an allosteric modulator?</div><div class="qa">A ligand binding a site distinct from the orthosteric (agonist) site to enhance (PAM) or reduce (NAM) receptor function — e.g., benzodiazepines on GABAA.</div></div>
+      <div class="q"><div class="qq"><b>20</b>What does "orthosteric" mean?</div><div class="qa">Binding at the same site as the endogenous agonist.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">4</span><span class="qs-title">Pharmacodynamics II — Dose-response, TI &amp; signalling</span><span class="qs-meta">Ch 3 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Difference between graded and quantal dose-response curves?</div><div class="qa">Graded = continuous magnitude of effect in one system; quantal = all-or-none response across a population (fraction responding).</div></div>
+      <div class="q"><div class="qq"><b>2</b>What does ED₅₀ mean on a quantal curve?</div><div class="qa">The dose producing the specified effect in 50% of the population.</div></div>
+      <div class="q"><div class="qq"><b>3</b>What does LD₅₀ mean?</div><div class="qa">The dose lethal to 50% of the (experimental) population.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Write the therapeutic index.</div><div class="qa">TI = LD₅₀ / ED₅₀.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Why can two drugs with identical LD₅₀ differ in safety?</div><div class="qa">Curve slope differs — a steeper curve gives less separation between effective and toxic doses.</div></div>
+      <div class="q"><div class="qq"><b>6</b>What is the certain safety factor and why is it stricter?</div><div class="qa">LD₁/ED₉₉; it accounts for the extremes of the curves rather than the midpoints.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Name four narrow-therapeutic-index drugs.</div><div class="qa">Warfarin, digoxin, lithium, phenytoin (also theophylline, aminoglycosides).</div></div>
+      <div class="q"><div class="qq"><b>8</b>What is the therapeutic window?</div><div class="qa">The concentration range between minimum effective and minimum toxic concentrations.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Effector and second messenger for Gs?</div><div class="qa">Activates adenylyl cyclase → raises cAMP → activates PKA.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Effector for Gi?</div><div class="qa">Inhibits adenylyl cyclase (lowers cAMP); also opens K⁺ and inhibits Ca²⁺ channels.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Effector and messengers for Gq?</div><div class="qa">Activates phospholipase C-β → IP₃ (releases Ca²⁺) + DAG (activates PKC).</div></div>
+      <div class="q"><div class="qq"><b>12</b>Which G-protein do β-adrenergic receptors couple to?</div><div class="qa">Gs.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Which G-proteins for M₁, M₂, M₃ muscarinic receptors?</div><div class="qa">M₁ and M₃ → Gq; M₂ → Gi.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Which G-protein for α₁ and α₂ adrenergic receptors?</div><div class="qa">α₁ → Gq; α₂ → Gi.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Who discovered cAMP as a second messenger?</div><div class="qa">Earl Sutherland (Nobel Prize, 1972).</div></div>
+      <div class="q"><div class="qq"><b>16</b>What degrades cAMP, and name a drug class that inhibits it?</div><div class="qa">Phosphodiesterases (PDEs); inhibitors include caffeine, sildenafil, milrinone, theophylline.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Define tachyphylaxis.</div><div class="qa">Rapid loss of response on repeated/continuous dosing (acute desensitisation).</div></div>
+      <div class="q"><div class="qq"><b>18</b>Molecular basis of GPCR desensitisation?</div><div class="qa">GRK phosphorylates the agonist-occupied receptor → β-arrestin binds → uncouples it from the G-protein and promotes internalisation.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Why does chronic β-blockade cause rebound on abrupt withdrawal?</div><div class="qa">Receptor up-regulation/supersensitivity → exaggerated response (rebound tachycardia/hypertension) when the drug is stopped.</div></div>
+      <div class="q"><div class="qq"><b>20</b>What does down-regulation of receptors underlie clinically?</div><div class="qa">Tolerance to chronic agonist exposure (reduced receptor number).</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">5</span><span class="qs-title">Drug Metabolism I — Phase 1/2 &amp; CYP</span><span class="qs-meta">Ch 5 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What is the overall purpose of drug metabolism?</div><div class="qa">To convert lipophilic drugs into more water-soluble, excretable metabolites.</div></div>
+      <div class="q"><div class="qq"><b>2</b>What do Phase 1 reactions do?</div><div class="qa">Introduce or expose a functional group (–OH, –NH₂, –SH) via oxidation, reduction or hydrolysis (functionalisation).</div></div>
+      <div class="q"><div class="qq"><b>3</b>What do Phase 2 reactions do?</div><div class="qa">Conjugate the drug (or its Phase 1 product) with an endogenous molecule, greatly increasing water solubility.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Name the major Phase 2 conjugation reactions.</div><div class="qa">Glucuronidation, sulfation, acetylation, methylation, glutathione conjugation, glycine conjugation.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Which is the most common Phase 2 reaction and its enzyme?</div><div class="qa">Glucuronidation, by UDP-glucuronosyltransferases (UGTs).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Must Phase 1 always precede Phase 2?</div><div class="qa">No — some drugs are conjugated directly (e.g., directly glucuronidated).</div></div>
+      <div class="q"><div class="qq"><b>7</b>Where in the cell are CYPs and UGTs located?</div><div class="qa">In the endoplasmic reticulum (microsomal fraction).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Decode the name CYP3A4.</div><div class="qa">Cytochrome P450, family 3, subfamily A, gene 4.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Which CYP subfamilies are most important in drug metabolism?</div><div class="qa">CYP2C, CYP2D, and CYP3A.</div></div>
+      <div class="q"><div class="qq"><b>10</b>What fraction of clinical drugs does CYP3A4 metabolise?</div><div class="qa">Over 50%.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Which CYP is most abundant in the liver?</div><div class="qa">CYP3A4.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Which CYP metabolises codeine to morphine?</div><div class="qa">CYP2D6.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Which CYP activates clopidogrel?</div><div class="qa">CYP2C19.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Which CYP metabolises S-warfarin?</div><div class="qa">CYP2C9.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Which CYP is induced by cigarette smoking?</div><div class="qa">CYP1A2 (affecting theophylline, caffeine, clozapine).</div></div>
+      <div class="q"><div class="qq"><b>16</b>Which CYP generates the toxic paracetamol metabolite, and what is it?</div><div class="qa">CYP2E1 generates NAPQI (N-acetyl-p-benzoquinone imine).</div></div>
+      <div class="q"><div class="qq"><b>17</b>List the commonly polymorphic CYPs.</div><div class="qa">CYP2A6, CYP2C9, CYP2C19, CYP2D6.</div></div>
+      <div class="q"><div class="qq"><b>18</b>What is a prodrug?</div><div class="qa">An inactive (or less active) compound that is metabolised into its active form.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Give three prodrug examples and their active forms.</div><div class="qa">Codeine→morphine, clopidogrel→active thiol metabolite, enalapril→enalaprilat (also levodopa, valacyclovir).</div></div>
+      <div class="q"><div class="qq"><b>20</b>What enzyme class besides CYP carries out Phase 1 oxidations?</div><div class="qa">Flavin-containing monooxygenases (FMOs) and epoxide hydrolases; esterases for hydrolysis.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">6</span><span class="qs-title">Drug Metabolism II — Induction, inhibition &amp; interactions</span><span class="qs-meta">Ch 5 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What is enzyme induction?</div><div class="qa">Increased synthesis of a metabolising enzyme, raising metabolic capacity over days to weeks.</div></div>
+      <div class="q"><div class="qq"><b>2</b>What is enzyme inhibition, and how fast does it act?</div><div class="qa">Blockade of enzyme activity (often competitive at the active site); near-immediate (hours).</div></div>
+      <div class="q"><div class="qq"><b>3</b>Effect of induction on a normal (active) drug's level and effect?</div><div class="qa">Lower drug level → loss of efficacy.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Effect of inhibition on a normal drug's level?</div><div class="qa">Higher drug level → risk of toxicity.</div></div>
+      <div class="q"><div class="qq"><b>5</b>How do induction/inhibition effects invert for a prodrug?</div><div class="qa">Induction increases active metabolite (more effect/toxicity); inhibition decreases activation (reduced effect).</div></div>
+      <div class="q"><div class="qq"><b>6</b>List five classic CYP inducers.</div><div class="qa">Rifampin, carbamazepine, phenytoin, phenobarbital, St John's wort (also chronic alcohol, smoking, griseofulvin).</div></div>
+      <div class="q"><div class="qq"><b>7</b>List five classic CYP inhibitors.</div><div class="qa">Ketoconazole, erythromycin/clarithromycin, cimetidine, ritonavir, grapefruit juice (also valproate, isoniazid, fluconazole).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Which component of grapefruit juice inhibits CYP3A4?</div><div class="qa">Furanocoumarins (and flavonoids like naringin) — chiefly intestinal CYP3A4.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Why is rifampin + oral contraceptive a classic interaction?</div><div class="qa">Rifampin induces CYP3A4 → faster OCP metabolism → contraceptive failure.</div></div>
+      <div class="q"><div class="qq"><b>10</b>How does chronic alcohol increase paracetamol hepatotoxicity?</div><div class="qa">It induces CYP2E1 → more NAPQI formed → greater glutathione depletion.</div></div>
+      <div class="q"><div class="qq"><b>11</b>What does St John's wort induce, and a consequence?</div><div class="qa">CYP3A4 (and P-gp) → lowers levels of cyclosporine, OCPs, many drugs.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Why was terfenadine withdrawn?</div><div class="qa">It is a prodrug; CYP3A4 inhibitors (erythromycin, grapefruit) raised the parent level → fatal QT prolongation/arrhythmia.</div></div>
+      <div class="q"><div class="qq"><b>13</b>What does an inducer mnemonic "CRAP GPS" stand for?</div><div class="qa">Carbamazepine, Rifampin, Alcohol(chronic), Phenytoin, Griseofulvin/Phenobarbital, Smoking, St John's wort.</div></div>
+      <div class="q"><div class="qq"><b>14</b>What enzyme detoxifies NAPQI?</div><div class="qa">Glutathione (conjugation via glutathione-S-transferase).</div></div>
+      <div class="q"><div class="qq"><b>15</b>How does N-acetylcysteine treat paracetamol toxicity?</div><div class="qa">It replenishes hepatic glutathione (provides cysteine), allowing NAPQI detoxification.</div></div>
+      <div class="q"><div class="qq"><b>16</b>What enzyme acetylates isoniazid, and why does it matter?</div><div class="qa">N-acetyltransferase 2 (NAT2); slow acetylators accumulate INH → neuropathy/hepatotoxicity.</div></div>
+      <div class="q"><div class="qq"><b>17</b>What does TPMT metabolise?</div><div class="qa">Thiopurines (azathioprine, 6-mercaptopurine); low activity → myelosuppression.</div></div>
+      <div class="q"><div class="qq"><b>18</b>What is the first-pass effect in relation to metabolism?</div><div class="qa">Pre-systemic metabolism by gut wall and liver that reduces oral bioavailability.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Generally, do Phase 1 reactions activate or inactivate drugs?</div><div class="qa">Usually inactivate — but they can activate prodrugs or create reactive/toxic metabolites.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Which Phase 2 reaction can produce reactive electrophiles linked to toxicity?</div><div class="qa">Some conjugations (and Phase 1 oxidations) yield reactive metabolites; the classic toxic intermediate is NAPQI from paracetamol.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">7</span><span class="qs-title">Clinical Toxicology — Antidotes &amp; management</span><span class="qs-meta">Ch 9 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Whose principle is "the dose makes the poison"?</div><div class="qa">Paracelsus.</div></div>
+      <div class="q"><div class="qq"><b>2</b>What does an LD₅₀ value describe?</div><div class="qa">The dose lethal to 50% of a test population.</div></div>
+      <div class="q"><div class="qq"><b>3</b>What is a U-shaped (hormetic) dose-response curve?</div><div class="qa">Both deficiency and excess are harmful — typical of essential metals and hormones.</div></div>
+      <div class="q"><div class="qq"><b>4</b>What does a hockey-stick curve indicate?</div><div class="qa">No effect until a saturable removal process is overwhelmed, then effect appears (zero-order saturation).</div></div>
+      <div class="q"><div class="qq"><b>5</b>List the five steps of poisoning management.</div><div class="qa">Stabilise (ABCs), decontaminate, give antidote, enhance elimination, supportive care/monitoring.</div></div>
+      <div class="q"><div class="qq"><b>6</b>What does activated charcoal NOT bind well?</div><div class="qa">Metals (iron, lithium), alcohols, hydrocarbons, and caustics.</div></div>
+      <div class="q"><div class="qq"><b>7</b>What does multiple-dose activated charcoal achieve?</div><div class="qa">Interrupts enterohepatic recirculation (e.g., theophylline, carbamazepine, dapsone, phenobarbital).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Antidote for paracetamol?</div><div class="qa">N-acetylcysteine.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Antidote for opioids?</div><div class="qa">Naloxone (μ-opioid antagonist).</div></div>
+      <div class="q"><div class="qq"><b>10</b>Antidote for benzodiazepines, and main caution?</div><div class="qa">Flumazenil; can precipitate seizures (especially in dependence or co-ingested proconvulsants).</div></div>
+      <div class="q"><div class="qq"><b>11</b>Antidotes for organophosphate poisoning?</div><div class="qa">Atropine (blocks muscarinic effects) + pralidoxime (reactivates acetylcholinesterase).</div></div>
+      <div class="q"><div class="qq"><b>12</b>Antidote for methanol/ethylene glycol?</div><div class="qa">Fomepizole (or ethanol) — inhibits alcohol dehydrogenase.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Antidote for iron overdose?</div><div class="qa">Deferoxamine (chelation).</div></div>
+      <div class="q"><div class="qq"><b>14</b>Antidote for digoxin toxicity?</div><div class="qa">Digoxin-specific antibody fragments (Fab).</div></div>
+      <div class="q"><div class="qq"><b>15</b>Antidote for heparin?</div><div class="qa">Protamine sulfate (chemical antagonist).</div></div>
+      <div class="q"><div class="qq"><b>16</b>Antidote for warfarin over-anticoagulation?</div><div class="qa">Vitamin K, plus FFP or prothrombin complex concentrate for active bleeding.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Antidote for cyanide?</div><div class="qa">Hydroxocobalamin and/or sodium thiosulfate (± nitrites).</div></div>
+      <div class="q"><div class="qq"><b>18</b>Which drug properties favour removal by haemodialysis?</div><div class="qa">Low Vd, low protein binding, low molecular weight, water-soluble.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Name dialysable toxins.</div><div class="qa">Lithium, salicylate, methanol, ethylene glycol, theophylline, valproate, metformin, barbiturates.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Why is acetaminophen overdose the classic "saturated pathway" example?</div><div class="qa">Conjugation pathways saturate in overdose, diverting metabolism via CYP2E1 to toxic NAPQI and depleting glutathione → hepatic necrosis.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">8</span><span class="qs-title">Transporters &amp; Pharmacogenetics</span><span class="qs-meta">Ch 4 &amp; 7 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What do SLC transporters generally do?</div><div class="qa">Mediate uptake (facilitated or secondary active transport) into cells.</div></div>
+      <div class="q"><div class="qq"><b>2</b>What do ABC transporters do, and what powers them?</div><div class="qa">Efflux drugs out of cells, powered by ATP hydrolysis.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Give the alternative names for P-glycoprotein.</div><div class="qa">ABCB1 / MDR1.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Name three sites where P-gp is clinically important.</div><div class="qa">Gut enterocytes (limits absorption), the BBB (limits brain entry), and tumour cells (multidrug resistance).</div></div>
+      <div class="q"><div class="qq"><b>5</b>Which classic cardiac drug is a P-gp substrate?</div><div class="qa">Digoxin (P-gp inhibitors like verapamil/quinidine raise its level).</div></div>
+      <div class="q"><div class="qq"><b>6</b>What does OATP1B1 transport, and a consequence of inhibition?</div><div class="qa">Hepatic uptake of statins; inhibition/variants → higher statin levels → myopathy.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Which transporter secretes metformin renally?</div><div class="qa">OCT2 (organic cation transporter).</div></div>
+      <div class="q"><div class="qq"><b>8</b>How does probenecid prolong penicillin action?</div><div class="qa">It inhibits OAT-mediated tubular secretion of penicillin, reducing renal clearance.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Define a poor metabolizer (PM).</div><div class="qa">An individual with little/no functional enzyme activity (e.g., two no-function CYP2D6 alleles).</div></div>
+      <div class="q"><div class="qq"><b>10</b>Define an ultrarapid metabolizer (UM).</div><div class="qa">Someone with increased enzyme activity, often from gene duplication.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Codeine in an ultrarapid CYP2D6 metabolizer — risk?</div><div class="qa">Excess morphine → respiratory depression/toxicity (infant deaths via breast milk reported).</div></div>
+      <div class="q"><div class="qq"><b>12</b>Codeine in a CYP2D6 poor metabolizer — effect?</div><div class="qa">Little or no analgesia (cannot form morphine).</div></div>
+      <div class="q"><div class="qq"><b>13</b>CYP2C19 poor metabolizer on clopidogrel — risk?</div><div class="qa">Reduced activation → reduced antiplatelet effect → stent thrombosis risk.</div></div>
+      <div class="q"><div class="qq"><b>14</b>TPMT deficiency with thiopurines — danger?</div><div class="qa">Severe, potentially fatal myelosuppression.</div></div>
+      <div class="q"><div class="qq"><b>15</b>UGT1A1*28 with irinotecan — risk?</div><div class="qa">Increased neutropenia and diarrhoea.</div></div>
+      <div class="q"><div class="qq"><b>16</b>G6PD deficiency — which drugs cause haemolysis?</div><div class="qa">Primaquine, rasburicase, sulfonamides, dapsone, nitrofurantoin.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Which genes guide warfarin dosing?</div><div class="qa">VKORC1 (target) and CYP2C9 (metabolism).</div></div>
+      <div class="q"><div class="qq"><b>18</b>Which HLA allele predicts abacavir hypersensitivity?</div><div class="qa">HLA-B*57:01.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Which HLA allele predicts carbamazepine SJS/TEN, and in whom?</div><div class="qa">HLA-B*15:02, particularly in people of Southeast/East Asian ancestry.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Why does CYP3A5 expression vary by ancestry?</div><div class="qa">Allele frequencies differ; many individuals carry no-function alleles, affecting drugs like tacrolimus dosing.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">9</span><span class="qs-title">Drug Discovery, Microbiome &amp; Drug Safety</span><span class="qs-meta">Ch 1, 6 &amp; 8 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What is target validation?</div><div class="qa">Confirming that modulating a chosen molecular target produces the desired therapeutic effect.</div></div>
+      <div class="q"><div class="qq"><b>2</b>What does "druggable" mean?</div><div class="qa">A target that can be modulated by a small molecule or biologic to therapeutic benefit.</div></div>
+      <div class="q"><div class="qq"><b>3</b>What is high-throughput screening?</div><div class="qa">Rapid automated testing of large compound libraries against a target to find hits/leads.</div></div>
+      <div class="q"><div class="qq"><b>4</b>What document must be filed before first-in-human trials?</div><div class="qa">An Investigational New Drug (IND) application.</div></div>
+      <div class="q"><div class="qq"><b>5</b>What is studied in Phase I trials?</div><div class="qa">Safety, tolerability and pharmacokinetics, usually in healthy volunteers.</div></div>
+      <div class="q"><div class="qq"><b>6</b>What is the focus of Phase II?</div><div class="qa">Efficacy and dose-finding in patients.</div></div>
+      <div class="q"><div class="qq"><b>7</b>What does Phase III establish?</div><div class="qa">Confirmatory efficacy and safety in large patient numbers vs standard therapy.</div></div>
+      <div class="q"><div class="qq"><b>8</b>What is filed for marketing approval?</div><div class="qa">A New Drug Application (NDA) — or BLA for biologics.</div></div>
+      <div class="q"><div class="qq"><b>9</b>What is a biosimilar?</div><div class="qa">A biologic highly similar to an approved reference biologic — not an identical generic, due to manufacturing complexity.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Which bacterial enzyme drives enterohepatic recycling of drugs?</div><div class="qa">Bacterial β-glucuronidase (deconjugates glucuronides, regenerating active drug).</div></div>
+      <div class="q"><div class="qq"><b>11</b>Which gut bacterium inactivates digoxin?</div><div class="qa">Eggerthella lenta.</div></div>
+      <div class="q"><div class="qq"><b>12</b>How do gut bacteria activate sulfasalazine?</div><div class="qa">They cleave it into 5-aminosalicylate (active) and sulfapyridine.</div></div>
+      <div class="q"><div class="qq"><b>13</b>What types of reactions does the microbiome predominantly perform?</div><div class="qa">Reductions, hydrolyses and deconjugations.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Why is postmarketing surveillance necessary?</div><div class="qa">Premarketing trials are short and small, missing rare or delayed adverse effects.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Distinguish Type A from Type B adverse drug reactions.</div><div class="qa">Type A = augmented, dose-related, predictable, common; Type B = bizarre, idiosyncratic, dose-independent, rare.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Give an example of a Type B reaction.</div><div class="qa">Penicillin anaphylaxis or Stevens-Johnson syndrome.</div></div>
+      <div class="q"><div class="qq"><b>17</b>What is a spontaneous reporting system, with an example?</div><div class="qa">Voluntary ADR reporting that generates safety signals — e.g., FDA FAERS, India's PvPI/IPC.</div></div>
+      <div class="q"><div class="qq"><b>18</b>What is a black box warning?</div><div class="qa">The FDA's strongest labelling warning about a serious or life-threatening risk.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Name two drugs withdrawn for safety postmarketing.</div><div class="qa">Rofecoxib (CV events), cerivastatin (rhabdomyolysis); also terfenadine, troglitazone.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Give an example of a genetic ADR risk factor recognised in pharmacovigilance.</div><div class="qa">TPMT variants predisposing to thiopurine myelosuppression.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">10</span><span class="qs-title">Integrated rapid-fire — mixed high-yield</span><span class="qs-meta">All chapters · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>A drug has a very large Vd — is it more likely lipophilic or hydrophilic?</div><div class="qa">Lipophilic (it partitions widely into tissues, leaving little in plasma).</div></div>
+      <div class="q"><div class="qq"><b>2</b>Doubling clearance, with Vd unchanged, does what to half-life?</div><div class="qa">Halves it (t½ ∝ Vd/CL).</div></div>
+      <div class="q"><div class="qq"><b>3</b>Why give sodium bicarbonate in salicylate poisoning?</div><div class="qa">It alkalinises urine, ionising and trapping the weak-acid salicylate → enhanced renal excretion.</div></div>
+      <div class="q"><div class="qq"><b>4</b>A patient on clopidogrel has recurrent stent thrombosis — name a pharmacogenetic cause.</div><div class="qa">CYP2C19 poor-metaboliser status (failed prodrug activation).</div></div>
+      <div class="q"><div class="qq"><b>5</b>Starting rifampin lowers a patient's cyclosporine level — mechanism?</div><div class="qa">CYP3A4 (and P-gp) induction increases cyclosporine metabolism/efflux.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Why is IV the only reliable route for a drug with ~100% first-pass metabolism?</div><div class="qa">Oral bioavailability is near zero because the liver/gut clear it before systemic entry.</div></div>
+      <div class="q"><div class="qq"><b>7</b>A β-blocker is stopped abruptly and the patient has rebound tachycardia — why?</div><div class="qa">Chronic blockade up-regulated β-receptors (supersensitivity).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Which is more dangerous to overdose: a high-TI or low-TI drug?</div><div class="qa">Low-TI drug (narrow margin between effective and toxic doses).</div></div>
+      <div class="q"><div class="qq"><b>9</b>Naloxone reverses opioid overdose by acting as what?</div><div class="qa">A competitive μ-opioid receptor antagonist.</div></div>
+      <div class="q"><div class="qq"><b>10</b>A chronic alcoholic takes a modest paracetamol overdose and develops severe hepatotoxicity — why?</div><div class="qa">CYP2E1 induction increases NAPQI formation, overwhelming glutathione.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Which receptor superfamily do steroids act on, and how fast?</div><div class="qa">Nuclear receptors — slow (hours–days), via gene transcription.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Salbutamol acts on β₂ receptors coupled to which G-protein/messenger?</div><div class="qa">Gs → adenylyl cyclase → cAMP.</div></div>
+      <div class="q"><div class="qq"><b>13</b>A partial agonist given with a full agonist reduces the response — what is it acting as?</div><div class="qa">A competitive (functional) antagonist.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Grapefruit juice raises a statin's level — mechanism and risk?</div><div class="qa">Inhibits intestinal CYP3A4 → higher statin exposure → myopathy/rhabdomyolysis risk.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Why is digoxin given with a loading dose?</div><div class="qa">Its long half-life would otherwise delay therapeutic levels for days; LD fills the large Vd quickly.</div></div>
+      <div class="q"><div class="qq"><b>16</b>A drug is highly protein-bound with small Vd — is it dialysable?</div><div class="qa">Poorly — most drug is bound/in plasma compartment but protein binding limits free drug removal; large Vd also reduces dialysability. (Best dialysed: low binding + low Vd.)</div></div>
+      <div class="q"><div class="qq"><b>17</b>An irreversible antagonist does what to Emax?</div><div class="qa">Reduces it (non-surmountable).</div></div>
+      <div class="q"><div class="qq"><b>18</b>Phenytoin shows a sudden jump from therapeutic to toxic levels with small dose increases — why?</div><div class="qa">It follows zero-order (saturable) kinetics at therapeutic doses.</div></div>
+      <div class="q"><div class="qq"><b>19</b>A test for HLA-B*57:01 is ordered before which drug?</div><div class="qa">Abacavir (to prevent hypersensitivity).</div></div>
+      <div class="q"><div class="qq"><b>20</b>State the master equation linking maintenance dose to clearance and target level.</div><div class="qa">Dosing rate = CL × Css(target); equivalently Css = F·Dose/(CL·τ).</div></div>
+    </div>
+  </details>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong>General Pharmacology · Accelerated Learning System</strong><br>
+      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section I (Chs 1–9).<br>
+      Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
+      Mnemonics are standard teaching aids. Verify all drug dosing against current local protocols before clinical use.</span>
+    </div>
+    <div class="src" style="text-align:right">
+      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Built around active recall and spaced repetition.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+// ── QUIZ TAP-TO-REVEAL ──────────────────────────────────────────────────────
+// Supports: .quiz-q/.quiz-a  (special_systems)
+//           .qq/.qa          (CV-Renal, Endocrine, General, Infectious, Inflammation, Neoplastic, Neuro)
+//           .qq/details.qa   (GI StudyGuide)
+
+(function() {
+  function initReveal(triggerSel, containerSel) {
+    document.querySelectorAll(triggerSel).forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var container = trigger.closest(containerSel);
+        if (!container) return;
+        var wasOpen = container.classList.contains('open');
+        // close all siblings in same quiz group
+        var parent = container.parentElement;
+        if (parent) {
+          parent.querySelectorAll(containerSel).forEach(function(el) {
+            el.classList.remove('open');
+          });
+        }
+        if (!wasOpen) container.classList.add('open');
+      });
+    });
+  }
+
+  // Pattern 1: special_systems  .quiz-item > .quiz-q
+  initReveal('.quiz-q', '.quiz-item');
+
+  // Pattern 2: others  .q > .qq  (qa may be div or details)
+  initReveal('.qq', '.q');
+
+  // For GI: .qq contains details.qa — open/close it directly too
+  document.querySelectorAll('.qq').forEach(function(qq) {
+    qq.addEventListener('click', function() {
+      var q = qq.closest('.q');
+      if (!q) return;
+      var det = q.querySelector('details.qa');
+      if (det) {
+        if (q.classList.contains('open')) {
+          det.setAttribute('open', '');
+        } else {
+          det.removeAttribute('open');
+        }
+      }
+    });
+  });
+})();
+</script>
+
+<script src="learning-interactive.js"></script>
+</body>
+</html>

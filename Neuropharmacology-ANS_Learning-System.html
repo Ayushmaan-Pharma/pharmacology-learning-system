@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neuropharmacology — Autonomic Nervous System · Accelerated Learning System</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+  /* Indigo × Amber × Cyan — Neuropharmacology & ANS */
+  :root {
+    --accent: #b07410;
+    --accent-light: #d4a440;
+    --accent-pale: #fbf0d9;
+    --accent-dark: #3b2f7a;
+    --accent-darker: #2a2057;
+    --cool: #0c7c8c;
+    --cool-light: #1aa0b4;
+    --cool-pale: #dff0f1;
+    --cream: #f6f4ef;
+    --ink: #1a1726;
+    --ink-soft: #4a4560;
+    --muted: #7a7890;
+    --border: #ddd6cb;
+    --hero-gradient: linear-gradient(135deg,#2a2057 0%,#0c7c8c 55%,#3b2f7a 100%);
+    /* Semantic aliases */
+    --bg: var(--cream);
+    --surface: white;
+    --text: var(--ink);
+    --text-soft: var(--ink-soft);
+    --highlight-bg: var(--accent-pale);
+    --cog-bg: var(--cool-pale);
+    --cog-border: var(--cool);
+  }
+
+  /* ── SHARED TOKENS ─────────────────────────────────── */
+  :root {
+    --fs-xs:   0.72rem;  --fs-sm:  0.85rem;  --fs-base: 1rem;
+    --fs-md:   1.125rem; --fs-lg:  1.35rem;  --fs-xl:   1.7rem;
+    --fs-2xl:  2.2rem;   --fs-3xl: 3rem;
+    --radius:    10px;   --radius-sm: 6px;
+    --shadow:    0 2px 12px rgba(26,26,46,.08);
+    --shadow-lg: 0 8px 32px rgba(26,26,46,.14);
+    --shadow-sm: 0 1px 3px rgba(26,26,46,.08);
+  }
+
+  /* ── RESET & BASE ───────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-base);
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ───────────────────────────────────────────── */
+  .hero, header.hero {
+    background: var(--hero-gradient);
+    color: white;
+    padding: 2.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: none;
+  }
+  .hero::before, header.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* decorative SVG elements inside hero – keep but make subtle */
+  header.hero svg { opacity: .08; pointer-events: none; }
+
+  .eyebrow {
+    font-size: var(--fs-sm);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    font-weight: 600;
+    margin-bottom: .8rem;
+    position: relative;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero h1, header.hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2rem, 5vw, var(--fs-3xl));
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: .6rem;
+    position: relative;
+    letter-spacing: -.01em;
+  }
+  .hero h1 em { font-style: italic; font-weight: 500; color: rgba(255,255,255,.82); }
+  .hero-sub, .hero .sub, header.hero .sub {
+    color: rgba(255,255,255,.78);
+    font-size: var(--fs-md);
+    margin-bottom: 1.8rem;
+    position: relative;
+    max-width: 720px;
+    margin-left: auto; margin-right: auto;
+  }
+  .chips, .hero .meta {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    justify-content: center; position: relative;
+    margin-top: .5rem;
+  }
+  .chip {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: .25rem .85rem;
+    font-size: var(--fs-xs);
+    letter-spacing: .05em;
+    font-weight: 500;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .chip.tier1 { background: rgba(255,255,255,.22); border-color: var(--accent-light); }
+  .chip.tier2 { background: rgba(0,0,0,.18); border-color: rgba(255,255,255,.45); }
+  .hero .thesis {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35);
+    border-radius: 9px; padding: 9px 14px; font-size: .86rem;
+    color: rgba(255,255,255,.9); margin-top: 18px; position: relative;
+  }
+
+  /* ── METHOD STRIP ───────────────────────────────────── */
+  .method-strip, .method {
+    background: var(--ink);
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .method-item, .method .m {
+    padding: 1.2rem 1.4rem;
+    border-right: 1px solid rgba(255,255,255,.08);
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
+  .method-item:last-child, .method .m:last-child { border-right: none; }
+  .method-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-light);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+  .method-name, .method .m h4 {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin: .1rem 0;
+    color: white !important;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .method-desc, .method .m p {
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,.55);
+    margin: 0; line-height: 1.5;
+  }
+  @media (max-width: 760px) {
+    .method-strip, .method { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── STICKY NAV ─────────────────────────────────────── */
+  .sticky-nav, nav.toc {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,244,240,.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--accent);
+    padding: .6rem 2rem;
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  }
+  .sticky-nav::-webkit-scrollbar, nav.toc::-webkit-scrollbar { display: none; }
+  nav.toc .wrap {
+    display: flex; gap: 1.5rem; padding: 0;
+    max-width: none; margin: 0;
+  }
+  .nav-link, nav.toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    white-space: nowrap;
+    padding: .2rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    border-radius: 0;
+    background: transparent !important;
+  }
+  .nav-link:hover, nav.toc a:hover {
+    color: var(--accent-dark);
+    border-bottom-color: var(--accent-dark);
+    background: transparent !important;
+  }
+  nav.toc a.thesis-link { color: var(--cool); font-weight: 600; }
+  nav.toc a.key { color: var(--accent-dark); font-weight: 600; }
+
+  /* ── LAYOUT ─────────────────────────────────────────── */
+  .container { max-width: 940px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 1.5rem; }
+  main { padding: 6px 0 60px; }
+  main.container { padding: 2rem 1.5rem 4rem; }
+
+  /* ── MODULE CARD ─────────────────────────────────────── */
+  .module, section.module {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    padding: 0 !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+  }
+  section.module.thesis-mod { border-color: var(--cool); }
+
+  .module-header {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+  }
+  /* mod-head used in other files */
+  .mod-head {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white !important;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+    align-items: initial !important;
+    gap: 0 !important;
+    flex-wrap: initial !important;
+    margin-bottom: 0 !important;
+  }
+  .mod-num { display: none !important; }  /* hide big decorative number */
+  .mod-titleblock { flex: none !important; min-width: 0 !important; }
+
+  .module-tier, .tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent-light) !important;
+    margin-bottom: .3rem;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    font-weight: 600;
+    display: block;
+  }
+  .module-header h2,
+  .mod-titleblock h2,
+  .mod-head h2 {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-size: var(--fs-xl) !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    color: white !important;
+    letter-spacing: -.01em;
+  }
+  .module-header p,
+  .mod-titleblock .mod-sub,
+  .mod-head p {
+    color: rgba(255,255,255,.72) !important;
+    font-size: var(--fs-sm) !important;
+    margin-top: .3rem !important;
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+  }
+
+  /* ── STAGE BLOCKS ────────────────────────────────────── */
+  .stage { padding: 1.6rem 1.8rem; border-bottom: 1px solid var(--border); }
+  .stage:last-child { border-bottom: none; }
+  .stage-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .stage-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* MAP / COG block */
+  .cog {
+    background: var(--cool-pale) !important;
+    border-left: 4px solid var(--cool) !important;
+    border-top: none !important; border-right: none !important; border-bottom: none !important;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+    padding: 1.2rem 1.4rem !important;
+    margin-bottom: 1rem;
+    box-shadow: none !important;
+  }
+  .cog > .tag, .cog .stage-label { color: var(--cool) !important; }
+  /* blurt variant overrides cog */
+  .cog.blurt {
+    background: var(--accent-pale) !important;
+    border-left-color: var(--accent) !important;
+  }
+  .cog.blurt > .tag { color: var(--accent-dark) !important; }
+  /* feyn variant */
+  .cog.feyn {
+    background: white !important;
+    border-left-color: var(--cool) !important;
+  }
+  /* spaced variant */
+  .cog.spaced {
+    background: #F4FAF5 !important;
+    border-left-color: #2E7D52 !important;
+  }
+  .cog.spaced > .tag { color: #2E7D52 !important; }
+
+  .pillar {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--cool);
+    border-bottom: 2px solid var(--cool-light);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+    line-height: 1.34;
+    background: none !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    padding-left: 0 !important;
+    padding-top: 0 !important;
+    padding-right: 0 !important;
+  }
+  .thesis-mod .pillar { color: var(--cool); border-left: none !important; }
+
+  .cog ul, .cog ol { padding-left: 1.4rem; }
+  .cog li { margin-bottom: .4rem; font-size: var(--fs-sm); }
+  .cog li::marker { color: var(--cool); }
+  .cog li strong { color: var(--accent-dark); }
+  .cog h4 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 700; margin: 16px 0 5px; color: var(--ink); }
+
+  /* BLURT STAGE */
+  .blurt-stage {
+    background: var(--accent-pale);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.2rem 1.4rem;
+  }
+  .blurt-stage .stage-label { color: var(--accent-dark); }
+  .blurt-prompt {
+    font-style: italic;
+    background: white;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    font-size: var(--fs-sm);
+    margin-bottom: 1rem;
+    color: var(--ink-soft);
+    font-family: 'Fraunces', Georgia, serif;
+    line-height: 1.4;
+  }
+  /* blurt-prompt in other files (non-italic class) */
+  .blurt-prompt.fraunces { font-style: italic; }
+
+  .primers { list-style: none; padding: 0; counter-reset: p; margin: 0; }
+  .primers li {
+    counter-increment: p;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    padding: .5rem .7rem .5rem 2.4rem;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    color: var(--accent-darker);
+    position: relative;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin: 7px 0;
+  }
+  .primers li::before {
+    content: 'Q' counter(p);
+    position: absolute; left: 10px; top: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    color: white; background: var(--accent-dark);
+    padding: 2px 5px; border-radius: 4px;
+  }
+
+  /* FEYNMAN GATE */
+  details.gate { margin: 12px 0 2px; }
+  details.gate > summary {
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    padding: .85rem 1.3rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    list-style: none;
+    user-select: none;
+    transition: opacity .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    letter-spacing: .04em;
+  }
+  details.gate > summary::-webkit-details-marker { display: none; }
+  details.gate > summary:hover { opacity: .88; }
+  details.gate > summary::before { content: '🔒 '; }
+  details.gate[open] > summary::before { content: '🔓 '; }
+  details.gate > summary::after { content: none !important; }
+  details.gate[open] > summary {
+    background: transparent; color: var(--ink-soft);
+    border: 1.5px solid var(--border); opacity: 1;
+  }
+  details.gate[open] { border-left: 3px solid var(--border); padding-left: 14px; margin-left: 2px; }
+  details.gate > *:not(summary) { animation: gateReveal .25s ease; }
+  @keyframes gateReveal { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+
+  .feynman-content { padding: 1.2rem 0 .4rem; }
+  .feynman-content h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--cool);
+    margin: 1.2rem 0 .5rem;
+  }
+  .feynman-content h4:first-child { margin-top: 0; }
+  .feynman-content p, .feynman-content li { font-size: var(--fs-sm); }
+  .feynman-content ul, .feynman-content ol { padding-left: 1.4rem; margin-bottom: .7rem; }
+  .feynman-content li { margin-bottom: .35rem; }
+
+  .analogy {
+    background: var(--accent-pale);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  .analogy::before { content: '💡 Analogy — '; font-weight: 700; color: var(--accent-dark); }
+  /* analogy in other-file style (has .alabel child) */
+  .analogy:has(.alabel)::before { content: none; }
+  .analogy .alabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cool); font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 7px;
+  }
+  .analogy .alabel::before { content: '💡 '; }
+  .analogy p { margin: 5px 0; }
+  .analogy .key { font-family: 'Fraunces', serif; font-style: italic; color: var(--cool); font-weight: 600; }
+
+  blockquote.warn {
+    background: #FFF3F0;
+    border-left: 4px solid var(--accent-dark);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: .85rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  blockquote.warn::before { content: '⚠️ Exam Trap — '; font-weight: 700; color: var(--accent-dark); }
+  blockquote.warn .wl { font-weight: 700; color: var(--accent-dark); }
+
+  /* SPACED REP STAGE */
+  .sched-stage {
+    background: #F4FAF5;
+    border-left: 4px solid #2E7D52;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.2rem 1.4rem;
+  }
+  .sched-stage .stage-label { color: #2E7D52; }
+  .sched {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: .6rem;
+    margin-bottom: 1rem;
+    flex-wrap: initial !important;
+  }
+  .sched-day, .sched .day {
+    background: white;
+    border: 1px solid #C3E6D0 !important;
+    border-top: 3px solid #2E7D52 !important;
+    border-radius: var(--radius-sm);
+    padding: .7rem .9rem;
+    font-size: var(--fs-xs);
+  }
+  .sched-day strong, .sched .day .d {
+    display: block; color: #2E7D52;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-sm); font-weight: 700; margin-bottom: .2rem; letter-spacing: .05em;
+  }
+  .sched .day .f { font-size: .82rem; color: var(--ink-soft); margin-top: 3px; }
+  .bridge {
+    background: white;
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .8rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--accent-darker);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    line-height: 1.4;
+    margin-top: 12px;
+  }
+  .bridge::before { content: '🌉 Bridge — '; font-weight: 700; font-style: normal; font-family: 'Inter',sans-serif; }
+
+  /* ── TABLES ──────────────────────────────────────────── */
+  .tbl-wrap, .tbl { overflow-x: auto; margin: 1rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: var(--fs-xs); }
+  th {
+    background: var(--cool);
+    color: white; padding: .5rem .7rem;
+    text-align: left; font-weight: 600; font-size: var(--fs-xs);
+  }
+  td { padding: .45rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--cream); }
+  tr:hover td { background: var(--accent-pale); }
+  td strong { color: var(--accent-dark); }
+
+  /* ── DIAGRAMS ─────────────────────────────────────────── */
+  .diagram-wrap {
+    background: white; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: .8rem; margin: 1rem 0;
+    text-align: center; overflow-x: auto;
+  }
+  .diagram-caption { font-size: var(--fs-xs); color: var(--muted); margin-top: .4rem; font-style: italic; }
+
+  /* ── QUIZ — TAP TO REVEAL ────────────────────────────── */
+  /* Supports: .quiz-item/.quiz-q/.quiz-a  AND  .q/.qq/.qa patterns */
+  .quizset-title, .quiz-intro h2, .quizbank > h2, section.quizzes h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--ink);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: .3rem;
+    border-top: none; border-left: none; border-right: none;
+  }
+
+  /* Quiz intro banner */
+  .quiz-intro {
+    background: linear-gradient(135deg, var(--accent-darker), var(--accent-dark));
+    color: white;
+    border-radius: var(--radius);
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .quiz-intro h2 { color: white !important; border: none !important; font-size: 1.4rem; margin-bottom: .5rem; padding: 0; }
+  .quiz-intro p { color: rgba(255,255,255,.82); font-size: var(--fs-sm); margin: 0; }
+  .quiz-intro .qi-sub { color: rgba(255,255,255,.7); font-size: var(--fs-xs); margin-top: 5px; }
+
+  /* Collapsible quiz section headers (details.qsec, details.quizset) */
+  details.qsec, details.quizset {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: white;
+    margin: 16px 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  details.qsec > summary, details.quizset > summary {
+    cursor: pointer; list-style: none;
+    padding: 1rem 1.3rem;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    font-weight: 600; font-size: var(--fs-sm);
+    display: flex; align-items: center; gap: .6rem;
+    user-select: none; transition: opacity .2s;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  details.qsec > summary::-webkit-details-marker,
+  details.quizset > summary::-webkit-details-marker { display: none; }
+  details.qsec > summary:hover, details.quizset > summary:hover { opacity: .88; }
+  .qs-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    background: rgba(255,255,255,.2); border-radius: 4px;
+    padding: 2px 7px; color: white;
+  }
+  .qs-title { flex: 1; }
+  .qs-meta { font-size: var(--fs-xs); color: rgba(255,255,255,.65); font-weight: 400; }
+  .qcaret { transition: transform .25s; color: rgba(255,255,255,.8); font-size: 1.05rem; }
+  details.quizset[open] > summary .qcaret { transform: rotate(90deg); }
+
+  /* Individual Q&A items — BOTH patterns unified */
+  .quiz-item, .q {
+    margin-bottom: .7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  /* Question row */
+  .quiz-q, .qq {
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: .5rem;
+    user-select: none;
+    transition: background .15s;
+  }
+  /* inner layout of .qq (other files wrap in .qbody) */
+  .qq .qbody { flex: 1; display: flex; align-items: flex-start; gap: .6rem; }
+  .qq .qs-num, .qq b { /* question number prefix */
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem; font-weight: 700;
+    background: var(--cool-pale); color: var(--cool);
+    border-radius: 4px; padding: 2px 6px;
+    flex-shrink: 0; margin-top: 1px;
+    display: inline-block;
+  }
+  .qq b { background: var(--cool-pale); color: var(--cool); border-radius: 4px; padding: 2px 6px; }
+  .q-text { flex: 1; }
+
+  .quiz-q:hover, .qq:hover { background: var(--accent-pale); }
+  .quiz-q::after, .qq::after {
+    content: '▼';
+    font-size: .65rem; color: var(--muted); flex-shrink: 0; margin-top: 3px;
+  }
+  .quiz-item.open .quiz-q::after, .q.open .qq::after { content: '▲'; }
+
+  /* Answer panel */
+  .quiz-a, .qa {
+    display: none;
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0;
+    color: var(--ink-soft);
+  }
+  .quiz-item.open .quiz-a, .q.open .qa { display: block; }
+  .quiz-a strong, .qa strong, .ans strong, .ans b { color: #1f7a42; }
+  .ans { font-size: var(--fs-sm); }
+
+  /* GI file: .qa is a <details> — override to always show */
+  details.qa {
+    display: block !important;
+    border: none !important;
+    margin: 0 !important;
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0 !important;
+  }
+  details.qa > summary {
+    display: none !important; /* handled by JS click on .qq */
+  }
+  details.qa > .ans {
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+  }
+  .qq { position: relative; }
+  /* show/hide GI-style answers via open class on parent .qq */
+  .qq details.qa { display: none !important; }
+  .qq.open details.qa { display: block !important; }
+
+  /* quiz section body padding */
+  .qbody-wrap, section.quizzes .wrap { padding-top: 1rem; }
+
+  /* ── BADGES ─────────────────────────────────────────── */
+  .badge {
+    display: inline-block; font-size: var(--fs-xs);
+    font-family: 'JetBrains Mono', monospace;
+    padding: .15rem .5rem; border-radius: 4px;
+    font-weight: 500; vertical-align: middle;
+  }
+  .badge-saffron, .badge-accent {
+    background: var(--accent-pale); color: var(--accent-darker); border: 1px solid var(--accent);
+  }
+  .badge-teal, .badge-cool {
+    background: var(--cool-pale); color: var(--cool); border: 1px solid var(--cool-light);
+  }
+  .badge-rust { background: #FFF0EB; color: var(--accent-darker); border: 1px solid #F4B89A; }
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────── */
+  p { margin-bottom: .7rem; font-size: var(--fs-sm); }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--accent-darker); }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin-bottom: .35rem; font-size: var(--fs-sm); }
+  h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg); font-weight: 700;
+    margin: 1.2rem 0 .6rem; color: var(--ink);
+  }
+  h4 { font-size: var(--fs-md); font-weight: 700; margin: 1rem 0 .4rem; }
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: .85em;
+    background: var(--cream); padding: .1em .3em; border-radius: 3px;
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── FOOTER ─────────────────────────────────────────── */
+  footer, .footer {
+    text-align: center; padding: 2rem 1.5rem;
+    font-size: var(--fs-xs); color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer .wrap, .footer .wrap {
+    max-width: 940px; margin: 0 auto;
+    display: block !important; text-align: center;
+  }
+  footer .src { color: var(--muted); line-height: 1.6; font-size: var(--fs-xs); }
+
+  /* ── SCROLLBAR ──────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── PRINT ──────────────────────────────────────────── */
+  @media print {
+    .sticky-nav, nav.toc, .method-strip, .method { display: none; }
+    details.gate[open] { break-inside: avoid; }
+  }
+
+
+  /* ── FLASHCARDS ─────────────────────────────────────── */
+  #flashcards { margin-top: 3rem; margin-bottom: 2rem; }
+  #flashcards > h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md); color: var(--ink);
+    margin-bottom: .4rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: .3rem;
+  }
+  #flashcards > .fc-lead {
+    font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: 1.5rem;
+  }
+  .flashcards { display: flex; flex-direction: column; gap: .75rem; }
+  .flashcard {
+    border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; background: var(--cream); transition: box-shadow .2s;
+  }
+  .flashcard:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+  .flashcard > summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: flex-start; gap: .9rem;
+    padding: .9rem 1.1rem; background: var(--accent-pale); user-select: none;
+  }
+  .flashcard > summary::-webkit-details-marker { display: none; }
+  .flashcard > summary::after {
+    content: '▶'; color: var(--accent); font-size: .75rem;
+    margin-left: auto; margin-top: .25rem; flex-shrink: 0; transition: transform .2s;
+  }
+  .flashcard[open] > summary::after { transform: rotate(90deg); }
+  .fc-num {
+    font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+    font-weight: 500; color: var(--muted); flex-shrink: 0;
+    margin-top: .2rem; min-width: 2rem;
+  }
+  .fc-q { font-size: var(--fs-sm); color: var(--ink); line-height: 1.55; font-weight: 500; }
+  .fc-back {
+    padding: 1.1rem 1.2rem; border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: .75rem; background: #fff;
+  }
+  .fc-answer {
+    border-left: 3px solid var(--accent); padding: .7rem 1rem;
+    border-radius: 0 8px 8px 0; font-size: var(--fs-sm);
+    color: var(--ink); line-height: 1.65; background: var(--accent-pale);
+  }
+  .fc-answer strong { color: var(--accent-dark, var(--accent)); }
+  .fc-pearl {
+    border-left: 3px solid var(--cool); padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: var(--cool-pale); line-height: 1.5;
+  }
+  .fc-trap {
+    border-left: 3px solid #d97706; padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: #fffbeb; line-height: 1.5;
+  }
+  .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
+
+</style>
+  <link rel="stylesheet" href="learning-interactive.css">
+</head>
+<body>
+
+<header class="hero">
+  <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
+    <a href="learning.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">← Learning Hub</a>
+    <a href="index.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">🏠 Study Hub</a>
+  </div>
+  <svg class="synapse" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#7fe0d9" stroke-width="1" fill="none" opacity="0.8">
+      <path d="M100,200 Q300,120 500,200 T900,200"/><path d="M150,300 Q400,260 650,300 T1100,260"/>
+      <path d="M80,100 Q350,180 600,120 T1150,160"/>
+    </g>
+    <g fill="#6fd6e0"><circle cx="500" cy="200" r="5"/><circle cx="900" cy="200" r="5"/><circle cx="650" cy="300" r="4"/>
+      <circle cx="600" cy="120" r="4"/><circle cx="300" cy="120" r="3"/><circle cx="1100" cy="260" r="4"/></g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Goodman &amp; Gilman · 14th Ed · Section II Neuropharmacology</div>
+    <h1>The Autonomic Nervous System<br><em>an accelerated learning system</em></h1>
+    <p class="sub">Chapters 10–14 organized as a study guide: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies that make the mechanisms clear, and a spaced-repetition plan to help you remember it. Plus a high-yield map of the entire CNS block (Ch 15–28) and 100 self-test questions.</p>
+    <div class="meta">
+      <span class="chip">5 ANS modules · full depth</span>
+      <span class="chip">14 CNS chapters · mapped</span>
+      <span class="chip">blurting gates + analogies</span>
+      <span class="chip">5 quiz sets × 20 Q</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#method">The method</a>
+    <a class="key" href="#m10">10 · Neurotransmission</a>
+    <a class="key" href="#m11">11 · Muscarinic</a>
+    <a class="key" href="#m12">12 · Anti-ChE</a>
+    <a class="key" href="#m13">13 · NMJ &amp; ganglia</a>
+    <a class="key" href="#m14">14 · Adrenergic</a>
+    <a href="#cns">CNS map (15–28)</a>
+    <a href="#flashcards">🃏 Flashcards</a>
+    <a href="#quizzes">★ 100 Questions</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="method" style="padding-top:30px">
+  <p class="lead">This guide isn't built to be <em>read</em> — it's built to be <em>used</em>. Each module runs through four evidence-based learning stages. Don't skip the blurting gate: retrieving before reading is what builds durable memory.</p>
+  <div class="method">
+    <div class="m m1"><h4>① 80/20 Map</h4><p>The 20% of ideas that explain 80% of the pharmacology. Start here for the skeleton.</p></div>
+    <div class="m m2"><h4>② Blurting Gate</h4><p>Close your eyes and dump everything you know — <em>before</em> reading the notes. Active recall.</p></div>
+    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The mechanism in plain language, with a simple analogy. If you can't explain it simply…</p></div>
+    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>When to re-test, and one question linking this topic to another so it never sits in isolation.</p></div>
+  </div>
+</section>
+
+<!-- ============ MODULE 10 ============ -->
+<section class="module" id="m10">
+  <div class="mod-head">
+    <div class="mod-num">10</div>
+    <div class="mod-titleblock">
+      <h2>Neurotransmission &amp; the Autonomic Nervous System</h2>
+      <div class="mod-sub">The wiring diagram every downstream drug acts on</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Foundation</span>
+  </div>
+
+  <!-- 1 MAP -->
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Every autonomic drug works by mimicking, blocking, or modulating just two transmitters — <strong>acetylcholine</strong> and <strong>norepinephrine</strong> — at a small set of receptors, so mastering the wiring map lets you predict the action of hundreds of drugs you've never seen.</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>Two divisions, opposing tone:</strong> <strong>Sympathetic</strong> (thoracolumbar, T1–L2) = "fight or flight"; <strong>Parasympathetic</strong> (craniosacral, CN III, VII, IX, X + S2–4) = "rest and digest."</li>
+      <li><strong>The transmitter rule:</strong> <em>All</em> preganglionic fibers (both divisions) release <strong>ACh onto nicotinic receptors</strong>. <em>All</em> parasympathetic postganglionic fibers release <strong>ACh onto muscarinic receptors</strong>. <em>Most</em> sympathetic postganglionic fibers release <strong>NE onto adrenergic receptors</strong>.</li>
+      <li><strong>The two exceptions to know:</strong> sympathetic fibers to <strong>sweat glands</strong> release ACh (muscarinic, cholinergic sympathetic); the <strong>adrenal medulla</strong> is a modified ganglion — preganglionic ACh (nicotinic) triggers it to dump <strong>epinephrine</strong> straight into blood.</li>
+      <li><strong>Receptor families:</strong> Nicotinic = ligand-gated ion channels (fast). Muscarinic (M1–M5) and adrenergic (α1, α2, β1, β2, β3) = GPCRs (slower).</li>
+      <li><strong>Six steps = six drug targets:</strong> synthesis → storage → release → receptor binding → signal termination (reuptake / enzymatic breakdown) → autoreceptor feedback. Every autonomic drug hits one of these.</li>
+    </ul>
+  </div>
+
+  <figure>
+    <div class="fig-title">Figure 10·1 — The autonomic wiring map</div>
+    <svg viewBox="0 0 880 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <defs><marker id="na" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3b2f7a"/></marker></defs>
+      <!-- CNS bar -->
+      <rect x="20" y="20" width="40" height="280" rx="8" fill="#2a2057"/><text x="40" y="165" fill="#efeaff" font-size="11" transform="rotate(-90 40 165)" text-anchor="middle">CNS</text>
+      <!-- PARASYMPATHETIC -->
+      <text x="70" y="40" fill="#0d7a63" font-weight="700">PARASYMPATHETIC</text>
+      <line x1="60" y1="58" x2="250" y2="58" stroke="#0d7a63" stroke-width="3" marker-end="url(#na)"/>
+      <circle cx="265" cy="58" r="14" fill="#e0f0e9" stroke="#0d7a63"/><text x="265" y="62" text-anchor="middle" font-size="9" fill="#0d7a63">N</text>
+      <line x1="280" y1="58" x2="470" y2="58" stroke="#0d7a63" stroke-width="3" marker-end="url(#na)"/>
+      <rect x="478" y="44" width="120" height="28" rx="6" fill="#e0f0e9" stroke="#0d7a63"/><text x="538" y="62" text-anchor="middle" font-size="10" fill="#0d7a63">M · organ</text>
+      <text x="150" y="50" fill="#0d7a63" font-size="9">ACh→N (long pre)</text><text x="370" y="50" fill="#0d7a63" font-size="9">ACh→M (short post)</text>
+      <!-- SYMPATHETIC -->
+      <text x="70" y="125" fill="#b5246b" font-weight="700">SYMPATHETIC</text>
+      <line x1="60" y1="143" x2="180" y2="143" stroke="#b5246b" stroke-width="3" marker-end="url(#na)"/>
+      <circle cx="195" cy="143" r="14" fill="#fbe5ef" stroke="#b5246b"/><text x="195" y="147" text-anchor="middle" font-size="9" fill="#b5246b">N</text>
+      <line x1="210" y1="143" x2="470" y2="143" stroke="#b5246b" stroke-width="3" marker-end="url(#na)"/>
+      <rect x="478" y="129" width="130" height="28" rx="6" fill="#fbe5ef" stroke="#b5246b"/><text x="543" y="147" text-anchor="middle" font-size="10" fill="#b5246b">α/β · organ</text>
+      <text x="105" y="135" fill="#b5246b" font-size="9">ACh→N (short pre)</text><text x="320" y="135" fill="#b5246b" font-size="9">NE→α/β (long post)</text>
+      <!-- sweat exception -->
+      <line x1="210" y1="195" x2="470" y2="195" stroke="#b07410" stroke-width="2.5" stroke-dasharray="5 3" marker-end="url(#na)"/>
+      <rect x="478" y="181" width="130" height="28" rx="6" fill="#fbf0d9" stroke="#b07410"/><text x="543" y="199" text-anchor="middle" font-size="10" fill="#b07410">M · sweat gland</text>
+      <text x="300" y="187" fill="#b07410" font-size="9">ACh→M (exception!)</text>
+      <!-- adrenal -->
+      <line x1="210" y1="245" x2="470" y2="245" stroke="#b07410" stroke-width="2.5" marker-end="url(#na)"/>
+      <rect x="478" y="231" width="160" height="28" rx="6" fill="#fbf0d9" stroke="#b07410"/><text x="558" y="249" text-anchor="middle" font-size="10" fill="#b07410">adrenal → EPI to blood</text>
+      <text x="290" y="237" fill="#b07410" font-size="9">ACh→N (no 2nd neuron)</text>
+      <!-- somatic -->
+      <text x="70" y="290" fill="#3b2f7a" font-weight="700">SOMATIC MOTOR</text>
+      <line x1="60" y1="300" x2="470" y2="300" stroke="#3b2f7a" stroke-width="3" marker-end="url(#na)"/>
+      <rect x="478" y="286" width="160" height="28" rx="6" fill="#ece9f6" stroke="#3b2f7a"/><text x="558" y="304" text-anchor="middle" font-size="10" fill="#3b2f7a">Nm · skeletal muscle</text>
+      <text x="230" y="292" fill="#3b2f7a" font-size="9">ACh→Nm (no ganglion)</text>
+    </svg>
+    <figcaption>Green = cholinergic/muscarinic, pink = adrenergic, gold = exceptions. The somatic motor neuron runs uninterrupted from CNS to muscle (no ganglion), releasing ACh onto nicotinic-muscle (Nm) receptors.</figcaption>
+  </figure>
+
+  <!-- 2 BLURT -->
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">Cover the screen. In 90 seconds, draw or say aloud the entire path of a signal from the spinal cord to a target organ — for <em>both</em> divisions. Name every transmitter and every receptor at every synapse. Where does your map go blank? That gap is tonight's study target.</div>
+    <h4 style="color:var(--magenta)">Guiding primers — ask "why," not "what"</h4>
+    <ul class="primers">
+      <li>Why can a single drug (e.g., a ganglionic blocker) knock out <em>both</em> sympathetic and parasympathetic tone at once — what's the shared component?</li>
+      <li>If you blocked acetylcholinesterase in the synapse, why would the effect be more dramatic at the neuromuscular junction than you'd predict from blocking reuptake elsewhere?</li>
+      <li>Why does adrenaline released from the adrenal medulla reach receptors (like β2 in bronchi) that direct sympathetic nerves barely touch?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+
+  <!-- 3 FEYNMAN -->
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>The mechanism, step by step</h4>
+    <p><strong>Cholinergic transmission</strong> (the ACh life-cycle): choline + acetyl-CoA → ACh by <strong>choline acetyltransferase (ChAT)</strong> → packaged into vesicles by VAChT → Ca²⁺-triggered release → binds nicotinic or muscarinic receptor → terminated <em>fast</em> by <strong>acetylcholinesterase (AChE)</strong> splitting ACh back into choline + acetate → choline recycled by reuptake. <span class="pill c">drug targets: hemicholinium blocks uptake · vesamicol blocks storage · botulinum blocks release · AChE inhibitors block breakdown</span></p>
+    <p><strong>Adrenergic transmission</strong> (the NE life-cycle): tyrosine → DOPA (by tyrosine hydroxylase, the <strong>rate-limiting step</strong>) → dopamine → packaged into vesicle where <strong>dopamine β-hydroxylase</strong> makes NE → released → binds α/β receptor → terminated <em>mainly by reuptake</em> via <strong>NET</strong> (not enzymatic), then repackaged or broken down by <strong>MAO + COMT</strong>. <span class="pill">drug targets: metyrosine blocks synthesis · reserpine blocks storage · guanethidine blocks release · cocaine/TCAs block NET reuptake · MAO-Is block breakdown</span></p>
+
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — two postal systems</div>
+      <p>Think of the autonomic system as <span class="key">two courier companies delivering to the same neighbourhoods with opposite messages</span>. Every package starts at a <strong>regional depot</strong> (the ganglion), and <em>every</em> depot uses the same handshake to receive incoming trucks — a "<strong>nicotinic</strong> handshake." That's why one saboteur at the depots (a ganglionic blocker) shuts down <em>both</em> companies.</p>
+      <p>From the depot, the <strong>parasympathetic courier</strong> hand-delivers using a "<strong>muscarinic</strong>" knock; the <strong>sympathetic courier</strong> uses an "<strong>adrenergic</strong>" knock. The cholinergic courier picks up its undelivered parcels almost instantly (AChE shreds them on the doorstep), while the adrenergic courier mostly <em>vacuums the parcel back into the truck</em> to reuse later (NET reuptake) — which is exactly why drugs that jam that vacuum (cocaine) flood the doorstep with signal.</p>
+    </div>
+
+    <blockquote class="warn"><span class="wl">⚠️ Warning — the classic mistake:</span> Students lump "all sympathetic = adrenergic." Two carve-outs break this: <strong>sweat glands</strong> use cholinergic (muscarinic) sympathetic fibers, and the <strong>adrenal medulla</strong> is reached by a cholinergic <em>nicotinic</em> preganglionic fiber with no second neuron. Miss these and you'll mispredict drug effects on sweating and on circulating epinephrine.</blockquote>
+  </div>
+
+  <!-- 4 SPACED -->
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 11 ============ -->
+<section class="module" id="m11">
+  <div class="mod-head">
+    <div class="mod-num">11</div>
+    <div class="mod-titleblock">
+      <h2>Muscarinic Agonists &amp; Antagonists</h2>
+      <div class="mod-sub">"Rest-and-digest" turned up or switched off</div>
+    </div>
+    <span class="tier tier-1">Tier 1</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Muscarinic drugs are pharmacology's cleanest mirror image: <strong>agonists reproduce the whole parasympathetic discharge</strong> (SLUDGE-M) and <strong>antagonists like atropine produce the exact opposite</strong>, so learning one set automatically teaches you the other.</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>Agonists (parasympathomimetic):</strong> pilocarpine (glaucoma, xerostomia), bethanechol (urinary retention, GI atony — bladder &amp; bowel, "bethanechol = bladder"). Effects = <strong>SLUDGE-M</strong>: Salivation, Lacrimation, Urination, Defecation, GI motility, Emesis, Miosis.</li>
+      <li><strong>Antagonists (antimuscarinic):</strong> <strong>atropine</strong> is the prototype. Uses: bradycardia, organophosphate poisoning, preanesthetic drying, mydriasis. Others: ipratropium/tiotropium (COPD), oxybutynin (overactive bladder), scopolamine (motion sickness), glycopyrrolate.</li>
+      <li><strong>Antimuscarinic toxidrome:</strong> "<strong>Dry as a bone, red as a beet, blind as a bat, mad as a hatter, hot as a hare.</strong>"</li>
+      <li><strong>Receptor map:</strong> M1 (CNS, gastric acid), M2 (heart → bradycardia, Gi), M3 (smooth muscle, glands, eye → Gq).</li>
+    </ul>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A patient is brought in flushed, dry-mouthed, hallucinating, with dilated pupils and a racing heart after eating unknown berries. Before reading on — blurt out: which transmitter system is involved, is it being blocked or stimulated, and what single class of drug would you reach for to reverse it?</div>
+    <h4 style="color:var(--magenta)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does atropine speed the heart but have little effect on a <em>denervated</em> (transplanted) heart?</li>
+      <li>Why does pilocarpine help glaucoma — what does muscarinic stimulation do to the drainage angle of the eye?</li>
+      <li>If atropine blocks M3 on blood vessels, why don't you see big blood-pressure changes (think: are those vessels normally innervated)?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Mechanism</h4>
+    <p><strong>Agonists</strong> bind muscarinic GPCRs directly. <strong>M3</strong> (Gq) on smooth muscle, glands and the eye → contraction, secretion, miosis; <strong>M2</strong> (Gi) on the SA/AV node → slows the heart. <strong>Antagonists</strong> (atropine) competitively block these — a <em>surmountable</em> block, which is why massive ACh from an organophosphate can be out-competed and you must give large, repeated atropine doses.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — the body's "idle mode" dial</div>
+      <p>Picture parasympathetic tone as your body's <span class="key">"idle / housekeeping" dial</span> — saliva flowing, gut churning, pupils relaxed, heart ticking slow. A muscarinic <strong>agonist turns the housekeeping dial up to maximum</strong> (everything secretes and contracts). <strong>Atropine yanks the dial to zero</strong> — the cleaners go home: mouth dries, gut stalls, pupils blow open, heart races. The toxidrome rhymes just describe an office with no janitor: dry, hot, and a bit deranged.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Don't confuse <strong>nicotinic</strong> and <strong>muscarinic</strong> blockade. Atropine blocks <em>only</em> muscarinic receptors — it does nothing at the neuromuscular junction or ganglia. In organophosphate poisoning, atropine fixes the muscarinic ("wet") signs but <strong>not</strong> the nicotinic muscle weakness/paralysis — that needs <strong>pralidoxime</strong>.</blockquote>
+  </div>
+
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 12 ============ -->
+<section class="module" id="m12">
+  <div class="mod-head">
+    <div class="mod-num">12</div>
+    <div class="mod-titleblock">
+      <h2>Anticholinesterases &amp; Reactivators</h2>
+      <div class="mod-sub">Flooding the synapse by stopping the cleanup crew</div>
+    </div>
+    <span class="tier tier-1">Tier 1</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Anticholinesterases don't add acetylcholine — they <strong>stop it being destroyed</strong>, so ACh piles up and amplifies <em>every</em> cholinergic synapse at once (muscarinic, nicotinic, and CNS).</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>Reversible inhibitors:</strong> <strong>neostigmine</strong> (myasthenia gravis, reverse non-depolarising blockade, post-op ileus — doesn't cross BBB), <strong>physostigmine</strong> (crosses BBB → antimuscarinic toxicity, tertiary amine), <strong>donepezil/rivastigmine/galantamine</strong> (Alzheimer's), <strong>pyridostigmine, edrophonium</strong> (short-acting, dx).</li>
+      <li><strong>Irreversible (organophosphates):</strong> insecticides (malathion, parathion) &amp; nerve agents (sarin) — they <strong>phosphorylate</strong> AChE permanently; "<strong>aging</strong>" makes the bond irreversible.</li>
+      <li><strong>Poisoning = cholinergic crisis:</strong> DUMBELS / SLUDGE + bradycardia + nicotinic <strong>muscle fasciculations → weakness → respiratory paralysis</strong>.</li>
+      <li><strong>Antidotes:</strong> <strong>atropine</strong> (blocks muscarinic effects) <em>plus</em> <strong>pralidoxime/2-PAM</strong> (reactivates AChE — works on nicotinic signs, must be given before aging).</li>
+    </ul>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A farmer collapses in his field, drooling, pinpoint pupils, muscles twitching then going limp, struggling to breathe. Blurt: what's the molecule he's been exposed to doing to one specific enzyme — and name the two-drug antidote and what each one fixes.</div>
+    <h4 style="color:var(--magenta)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does the <em>same drug class</em> treat myasthenia gravis but also cause lethal poisoning — what's different about the dose and the synapse?</li>
+      <li>Why must pralidoxime be given <em>early</em> — what does "aging" of the enzyme mean mechanically?</li>
+      <li>Why does atropine alone fail to save an organophosphate victim from respiratory paralysis?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Mechanism</h4>
+    <p>AChE normally chops ACh apart within milliseconds. Inhibit it and ACh lingers, so the cholinergic signal is amplified everywhere. <strong>Reversible</strong> inhibitors release the enzyme over minutes-hours; <strong>organophosphates</strong> bolt onto it covalently, and after "<strong>aging</strong>" (loss of an alkyl group) the bond can never be broken — only newly synthesised enzyme restores function. <strong>Pralidoxime</strong> pries the phosphate off the enzyme, but <em>only before aging</em>.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — jamming the synapse's shredder</div>
+      <p>AChE is the <span class="key">paper-shredder</span> that instantly destroys each ACh "memo" after it's read. A reversible inhibitor <strong>jams the shredder with a paperclip</strong> — annoying, fixable. An organophosphate <strong>pours superglue into it</strong>; pralidoxime is the solvent that dissolves the glue — but only if you apply it before the glue fully cures ("aging"). Either way, unshredded memos pile up and every desk in the office is screaming the same message.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> A patient on too much anticholinesterase for myasthenia can look exactly like one with worsening myasthenia — both are weak. This is the <strong>cholinergic crisis vs myasthenic crisis</strong> trap. The (historical) edrophonium test distinguishes them: it transiently <em>improves</em> a myasthenic crisis but <em>worsens</em> a cholinergic one.</blockquote>
+  </div>
+
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 13 ============ -->
+<section class="module" id="m13">
+  <div class="mod-head">
+    <div class="mod-num">13</div>
+    <div class="mod-titleblock">
+      <h2>NMJ, Ganglia, Nicotine &amp; Muscle Relaxants</h2>
+      <div class="mod-sub">Pharmacology of the nicotinic synapse</div>
+    </div>
+    <span class="tier tier-1">Tier 1</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Neuromuscular blockers paralyse skeletal muscle by hitting the <strong>nicotinic-muscle (Nm) receptor</strong> in one of two opposite ways — <strong>blocking it (non-depolarising) or over-stimulating it (depolarising)</strong> — and telling them apart is the highest-yield distinction in the chapter.</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>Non-depolarising (competitive) blockers:</strong> "-curium / -curonium" — <strong>rocuronium, vecuronium, atracurium, pancuronium</strong>. Compete with ACh; <strong>reversed by neostigmine</strong> (or sugammadex for rocuronium/vecuronium). Show <strong>fade</strong> on train-of-four.</li>
+      <li><strong>Depolarising blocker:</strong> <strong>succinylcholine</strong> — persistent depolarisation → Phase I block; ultra-short (plasma cholinesterase). <strong>NOT reversed by neostigmine</strong> (worsens it). Risks: <strong>hyperkalemia, malignant hyperthermia, prolonged apnea</strong> in pseudocholinesterase deficiency.</li>
+      <li><strong>Ganglionic blockers:</strong> hexamethonium, trimethaphan — block Nn at autonomic ganglia → shut down <em>both</em> divisions (mostly historical).</li>
+      <li><strong>Nicotine:</strong> biphasic — low dose stimulates ganglia, high dose blocks (depolarising block).</li>
+    </ul>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">An anaesthetist gives a paralytic to intubate a patient. Blurt out the two mechanistically opposite ways a drug could paralyse that muscle, and — critically — why giving neostigmine would <em>help</em> reverse one type but <em>worsen</em> the other.</div>
+    <h4 style="color:var(--magenta)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does succinylcholine cause <em>fasciculations</em> before paralysis, but a non-depolariser causes a smooth flaccid paralysis?</li>
+      <li>Why does adding more acetylcholine (via neostigmine) reverse a competitive block but deepen a depolarising one?</li>
+      <li>Why does a ganglionic blocker drop blood pressure <em>and</em> cause dry mouth — what's the shared receptor it hits?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Mechanism</h4>
+    <p><strong>Non-depolarisers</strong> sit on the Nm receptor and block ACh without activating it — a competitive plug. Pile up ACh (neostigmine) and you out-compete them → reversal. <strong>Succinylcholine</strong> does the opposite: it <em>activates</em> the receptor and won't let go, so the muscle depolarises once (fasciculation), then can't repolarise to fire again (flaccid paralysis). Adding more ACh just sustains the depolarisation.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — the doorbell</div>
+      <p>The Nm receptor is a <span class="key">doorbell that rings the muscle</span>. A non-depolariser is a <strong>wad of gum stuck over the button</strong> — nobody can press it; clear away the gum (more ACh) and it works again. Succinylcholine is someone <strong>jamming the button down permanently</strong> — it rings once (the fasciculation) then the bell is stuck "on" and useless. Pressing harder (adding ACh) doesn't un-jam it — it makes it worse.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Two succinylcholine killers: (1) it transiently <strong>raises serum potassium</strong> — dangerous in burns, crush injury, denervation; (2) it can trigger <strong>malignant hyperthermia</strong> (treat with dantrolene). Never "reverse" succinylcholine with neostigmine.</blockquote>
+  </div>
+
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 14 ============ -->
+<section class="module" id="m14">
+  <div class="mod-head">
+    <div class="mod-num">14</div>
+    <div class="mod-titleblock">
+      <h2>Adrenergic Agonists &amp; Antagonists</h2>
+      <div class="mod-sub">The sympathetic toolbox — the single biggest ANS chapter</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Once you know what each adrenergic receptor <em>does</em> (α1, α2, β1, β2, β3), every sympathomimetic and every blocker becomes predictable — the drug is just a key, and the receptor is the lock that determines the effect.</div>
+    <h4>The high-yield elements — the receptor effects</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Receptor</th><th>G-protein</th><th>Signature effects</th><th>Therapeutic lever</th></tr></thead>
+      <tbody>
+        <tr><td>α1</td><td>Gq (↑IP₃/Ca²⁺)</td><td>Vasoconstriction, mydriasis, ↑BP, bladder sphincter contraction</td><td>Phenylephrine (decongestant, pressor); prazosin <em>blocks</em> (HTN, BPH)</td></tr>
+        <tr><td>α2</td><td>Gi (↓cAMP)</td><td>Presynaptic — ↓NE release; central ↓sympathetic outflow</td><td>Clonidine (HTN, withdrawal) — an <em>agonist</em> that lowers BP</td></tr>
+        <tr><td>β1</td><td>Gs (↑cAMP)</td><td>↑Heart rate, contractility, AV conduction; renin release</td><td>Dobutamine (inotrope); metoprolol <em>blocks</em> (HTN, HF, post-MI)</td></tr>
+        <tr><td>β2</td><td>Gs (↑cAMP)</td><td>Bronchodilation, vasodilation (skeletal), uterine relaxation, ↑glycogenolysis</td><td>Salbutamol/albuterol, terbutaline (asthma)</td></tr>
+        <tr><td>β3</td><td>Gs</td><td>Lipolysis; bladder detrusor relaxation</td><td>Mirabegron (overactive bladder)</td></tr>
+      </tbody>
+    </table></div>
+    <h4>The drugs to anchor</h4>
+    <ul>
+      <li><strong>Endogenous catecholamines:</strong> EPI (α1 α2 β1 β2 — drug of choice in <strong>anaphylaxis</strong>), NE (α1 α2 β1, weak β2 — septic shock pressor), dopamine (dose-dependent: D→β1→α1), isoproterenol (β1 β2).</li>
+      <li><strong>Selective agonists:</strong> phenylephrine (α1), clonidine (α2), dobutamine (β1), salbutamol/terbutaline (β2).</li>
+      <li><strong>Indirect/mixed:</strong> ephedrine, amphetamine, tyramine (release NE); cocaine (blocks NET reuptake).</li>
+      <li><strong>α-blockers:</strong> prazosin/-zosin (selective α1); phenoxybenzamine (irreversible) &amp; phentolamine (reversible) — used in <strong>pheochromocytoma</strong>.</li>
+      <li><strong>β-blockers:</strong> "-olol" — propranolol (non-selective), metoprolol/atenolol (β1-selective, "cardioselective"), carvedilol/labetalol (α+β).</li>
+    </ul>
+  </div>
+
+  <figure>
+    <div class="fig-title">Figure 14·1 — The α/β receptor selectivity spectrum</div>
+    <svg viewBox="0 0 860 170" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+      <defs><linearGradient id="spec" x1="0" x2="1"><stop offset="0" stop-color="#b5246b"/><stop offset="0.5" stop-color="#3b2f7a"/><stop offset="1" stop-color="#0c7c8c"/></linearGradient></defs>
+      <rect x="40" y="55" width="780" height="20" rx="10" fill="url(#spec)"/>
+      <text x="60" y="48" fill="#b5246b" font-weight="700">pure α</text>
+      <text x="780" y="48" fill="#0c7c8c" font-weight="700" text-anchor="end">pure β</text>
+      <g text-anchor="middle" font-size="10" fill="#1a1726">
+        <line x1="80" y1="50" x2="80" y2="80" stroke="#b5246b" stroke-width="2"/><text x="80" y="98" fill="#b5246b">phenylephrine</text><text x="80" y="111" font-size="8">α1</text>
+        <line x1="200" y1="50" x2="200" y2="80" stroke="#b5246b" stroke-width="2"/><text x="200" y="98">clonidine</text><text x="200" y="111" font-size="8">α2</text>
+        <line x1="340" y1="50" x2="340" y2="80" stroke="#3b2f7a" stroke-width="2"/><text x="340" y="98">norepinephrine</text><text x="340" y="111" font-size="8">α1 α2 β1</text>
+        <line x1="450" y1="50" x2="450" y2="80" stroke="#3b2f7a" stroke-width="2"/><text x="450" y="98">epinephrine</text><text x="450" y="111" font-size="8">α1 α2 β1 β2</text>
+        <line x1="600" y1="50" x2="600" y2="80" stroke="#0c7c8c" stroke-width="2"/><text x="600" y="98">isoproterenol</text><text x="600" y="111" font-size="8">β1 β2</text>
+        <line x1="690" y1="50" x2="690" y2="80" stroke="#0c7c8c" stroke-width="2"/><text x="690" y="98">dobutamine</text><text x="690" y="111" font-size="8">β1</text>
+        <line x1="780" y1="50" x2="780" y2="80" stroke="#0c7c8c" stroke-width="2"/><text x="780" y="98">salbutamol</text><text x="780" y="111" font-size="8">β2</text>
+      </g>
+      <text x="430" y="145" text-anchor="middle" font-style="italic" fill="#4a4560">Position on this line predicts a sympathomimetic's whole clinical profile.</text>
+    </svg>
+    <figcaption>Adding methyl groups shifts activity toward β; the catecholamines (NE, EPI) sit in the middle, hitting multiple receptors.</figcaption>
+  </figure>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">Someone collapses in anaphylactic shock — throat swelling, wheezing, blood pressure crashing. You reach for adrenaline. Blurt out: <em>which receptors does adrenaline hit, and how does each one fix a different part of this emergency?</em> (One receptor opens the airway, one raises the pressure, one calms the swelling.) Then explain why a pure β-agonist or pure α-agonist alone would be inferior.</div>
+    <h4 style="color:var(--magenta)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does giving a β-blocker to an asthmatic risk a dangerous bronchospasm — which receptor did you accidentally silence?</li>
+      <li>"Epinephrine reversal": why does adrenaline <em>raise</em> BP normally, but after α-blockade the <em>same</em> dose <em>lowers</em> it?</li>
+      <li>Why must you block α <em>before</em> β in pheochromocytoma, never the reverse?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Mechanism &amp; the logic of selectivity</h4>
+    <p>All adrenergic receptors are GPCRs. The trick is matching effect to receptor: <strong>α1 = squeeze</strong> (vessels, sphincters), <strong>α2 = brake</strong> (presynaptic "enough already" feedback; clonidine pulls this brake centrally to <em>lower</em> BP), <strong>β1 = "one heart" — drive it harder</strong>, <strong>β2 = "two lungs" — open them</strong>. A drug's clinical effect is just the sum of which locks it turns.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a building's control panel</div>
+      <p>Think of the sympathetic system as the <span class="key">emergency control panel of a building</span>. <strong>α1</strong> is the master valve that <em>narrows the water pipes</em> (raises pressure). <strong>β1</strong> is the dial on the <em>furnace/pump in the basement</em> — turn it up and the whole building's pump (the heart) runs faster and harder ("β<strong>1</strong> = the <strong>one</strong> central pump"). <strong>β2</strong> opens the <em>air vents</em> ("β<strong>2</strong> = the <strong>two</strong> lungs"). <strong>α2</strong> is the foreman radioing "ease off" back to the crew (presynaptic feedback). Adrenaline is the master override that grabs every switch at once — which is exactly why it's perfect for anaphylaxis: it pumps pressure (α1), opens airways (β2), and supports the heart (β1) simultaneously.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — two classic exam traps:</span> (1) <strong>Epinephrine reversal</strong> — after an α-blocker, adrenaline's α1 pressor effect is gone, leaving only β2 vasodilation, so BP <em>falls</em>. (2) <strong>Unopposed α in pheochromocytoma</strong> — give a β-blocker first and you remove β2 vasodilation while leaving α1 vasoconstriction unchecked → hypertensive crisis. Always α-block first.</blockquote>
+    <h4>Antagonist quick-map</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Blocker</th><th>Target</th><th>Key use</th><th>Watch-out</th></tr></thead>
+      <tbody>
+        <tr><td>Prazosin (-zosin)</td><td>α1</td><td>HTN, BPH</td><td>First-dose orthostatic hypotension</td></tr>
+        <tr><td>Phenoxybenzamine</td><td>α1/α2 irreversible</td><td>Pheochromocytoma (pre-op)</td><td>Reflex tachycardia</td></tr>
+        <tr><td>Propranolol</td><td>β1/β2 non-selective</td><td>HTN, angina, arrhythmia, tremor, migraine</td><td>Bronchospasm; masks hypoglycemia</td></tr>
+        <tr><td>Metoprolol/atenolol</td><td>β1 selective</td><td>HF, post-MI, HTN</td><td>Selectivity lost at high dose</td></tr>
+        <tr><td>Carvedilol/labetalol</td><td>α1 + β</td><td>HF; HTN in pregnancy (labetalol)</td><td>—</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  </details>
+
+  
+</section>
+
+<!-- ============ CNS MAP ============ -->
+<section class="module" id="cns">
+  <div class="mod-head">
+    <div class="mod-num">15<tspan>–28</tspan></div>
+    <div class="mod-titleblock">
+      <h2>The CNS Block — High-Yield Map</h2>
+      <div class="mod-sub">Chapters 15–28 · core pillar + anchors for each</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Map now, deep-dive next</span>
+  </div>
+  <p class="lead">The autonomic block above is built for mastery <em>now</em>. The CNS chapters are vast clinical topics — here is the 80/20 skeleton of each so you have the whole section mapped. Ask me to expand any one into a full four-stage module like the ANS chapters.</p>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Neurotransmitter systems &amp; the major drug classes</div>
+
+    <h4>15 · Serotonin (5-HT) &amp; Dopamine</h4>
+    <p><strong>Pillar:</strong> two monoamines underlie mood, psychosis, nausea, migraine and movement. <strong>Anchors:</strong> 5-HT synthesised from tryptophan; key receptors 5-HT₁ (triptans → migraine), 5-HT₂ (antipsychotic target), 5-HT₃ (ondansetron → antiemetic). Dopamine pathways: nigrostriatal (movement → Parkinson's), mesolimbic (psychosis), tuberoinfundibular (prolactin). <span class="pill r">⚠ serotonin syndrome from combining serotonergic drugs</span></p>
+
+    <h4>16 · CNS Neurotransmission</h4>
+    <p><strong>Pillar:</strong> the brain runs on a balance of one main <strong>excitatory</strong> transmitter (<strong>glutamate</strong> → NMDA/AMPA) and one main <strong>inhibitory</strong> transmitter (<strong>GABA</strong> → GABA<sub>A</sub> Cl⁻ channel). Nearly every CNS drug tips this balance. <span class="pill c">GABA<sub>A</sub> = target of benzodiazepines, barbiturates, alcohol, anaesthetics</span></p>
+
+    <h4>17 · Blood-Brain Barrier</h4>
+    <p><strong>Pillar:</strong> tight junctions + efflux pumps (<strong>P-glycoprotein</strong>) keep most drugs out; only small, lipophilic, non-P-gp-substrate molecules enter the CNS. Connects directly to your transporter chapter.</p>
+
+    <h4>18 · Depression &amp; Anxiety</h4>
+    <p><strong>Pillar:</strong> raise synaptic monoamines (5-HT ± NE). <strong>Anchors:</strong> <strong>SSRIs</strong> (fluoxetine — first-line, safest in overdose), SNRIs (venlafaxine), TCAs (amitriptyline — cardiotoxic in OD), MAOIs (tyramine/"cheese" crisis). Onset takes weeks (receptor adaptation, not just reuptake block).</p>
+
+    <h4>19 · Psychosis &amp; Mania</h4>
+    <p><strong>Pillar:</strong> antipsychotics <strong>block D₂</strong> dopamine receptors. <strong>Anchors:</strong> <strong>typicals</strong> (haloperidol — strong D₂ → extrapyramidal side effects); <strong>atypicals</strong> (risperidone, olanzapine, clozapine — D₂+5-HT₂, fewer EPS; clozapine → agranulocytosis, needs monitoring). Lithium for mania (narrow TI). <span class="pill r">⚠ neuroleptic malignant syndrome</span></p>
+
+    <h4>20 · Epilepsy</h4>
+    <p><strong>Pillar:</strong> suppress excess neuronal firing by <strong>blocking Na⁺ channels, enhancing GABA, or blocking Ca²⁺ channels</strong>. <strong>Anchors:</strong> phenytoin/carbamazepine (Na⁺ block; zero-order &amp; enzyme-inducing — ties to your PK/metabolism chapters), valproate (broad), ethosuximide (absence, T-type Ca²⁺), benzodiazepines (status epilepticus).</p>
+
+    <h4>21 · Neurodegenerative Disorders</h4>
+    <p><strong>Pillar:</strong> replace what's lost. <strong>Parkinson's</strong> = restore dopamine (<strong>levodopa + carbidopa</strong>; dopamine agonists; MAO-B/COMT inhibitors). <strong>Alzheimer's</strong> = boost ACh (cholinesterase inhibitors) + memantine (NMDA antagonist).</p>
+
+    <h4>22 · Sedatives &amp; Hypnotics</h4>
+    <p><strong>Pillar:</strong> both enhance <strong>GABA<sub>A</sub></strong>, differently. <strong>Benzodiazepines</strong> ↑<em>frequency</em> of Cl⁻ channel opening (safer, ceiling effect; antidote flumazenil). <strong>Barbiturates</strong> ↑<em>duration</em> (no ceiling → fatal respiratory depression). "Frequ-ENZ-y" = benzos.</p>
+
+    <h4>23 · Opioid Analgesics</h4>
+    <p><strong>Pillar:</strong> agonists at <strong>μ (mu) opioid receptors</strong> (Gi) → analgesia, euphoria, respiratory depression, miosis, constipation. <strong>Anchors:</strong> morphine, fentanyl, codeine (prodrug → CYP2D6), tramadol; antagonist <strong>naloxone</strong>. Triad of overdose: coma + pinpoint pupils + respiratory depression. <span class="pill r">⚠ tolerance + dependence</span></p>
+
+    <h4>24 · General Anaesthetics</h4>
+    <p><strong>Pillar:</strong> reversible loss of consciousness by enhancing inhibition (GABA<sub>A</sub>) and reducing excitation (NMDA). <strong>Anchors:</strong> inhaled (sevoflurane, N₂O — MAC = potency); IV (propofol — fast, "milk of amnesia"; ketamine — NMDA blocker, dissociative). Lower MAC = more potent.</p>
+
+    <h4>25 · Local Anaesthetics</h4>
+    <p><strong>Pillar:</strong> block <strong>voltage-gated Na⁺ channels</strong> from inside the axon → no action potential → no pain signal. <strong>Anchors:</strong> "-caine"; esters (procaine) vs amides (lidocaine — two "i"s). Work poorly in infected/acidic tissue (ion trapping — ties to your pH-partitioning concept!). Added adrenaline prolongs action.</p>
+
+    <h4>26 · Cannabinoids</h4>
+    <p><strong>Pillar:</strong> THC acts on <strong>CB1 (CNS)</strong> and <strong>CB2 (immune)</strong> receptors; endocannabinoid system modulates appetite, pain, mood. Therapeutic: nausea, appetite, spasticity, seizures (cannabidiol).</p>
+
+    <h4>27 · Ethanol</h4>
+    <p><strong>Pillar:</strong> CNS depressant; enhances GABA, inhibits NMDA. Metabolised by <strong>alcohol dehydrogenase → acetaldehyde → acetate</strong> via <strong>zero-order kinetics</strong> (~10 g/h — your PK chapter!). Disulfiram blocks aldehyde dehydrogenase → aversive reaction.</p>
+
+    <h4>28 · Drug Use Disorders &amp; Addiction</h4>
+    <p><strong>Pillar:</strong> addiction is a disorder of the <strong>mesolimbic dopamine reward pathway</strong>. <strong>Anchors:</strong> tolerance, dependence, withdrawal; treatments — methadone/buprenorphine (opioids), naltrexone/acamprosate (alcohol), varenicline/NRT (nicotine).</p>
+  </div>
+
+  <blockquote class="warn"><span class="wl">⚠️ Notice the recurring spine:</span> almost every CNS drug class reduces to <strong>GABA up, glutamate down, or a monoamine (dopamine/5-HT/NE) tuned up or down</strong>. Learn those four levers once and the entire CNS section becomes variations on a theme — that's the deepest 80/20 in neuropharmacology.</blockquote>
+</section>
+
+
+
+<!-- ============ FLASHCARDS ============ -->
+<section id="flashcards">
+  <div class="wrap">
+    <h2>🃏 Clinical Vignette Flashcards</h2>
+    <p class="fc-lead">Tap a card to reveal the answer, mechanism, clinical pearl, and exam trap. Twenty high-yield scenarios spanning neuropharmacology and the autonomic nervous system.</p>
+    <div class="flashcards">
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">01</span>
+          <span class="fc-q">A patient on phenelzine (MAOI) for depression eats aged cheese at a party and collapses with a hypertensive crisis, severe headache, and diaphoresis. Explain the full pharmacological chain of events.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">The <strong>cheese reaction</strong> (tyramine crisis): aged cheese is rich in <strong>tyramine</strong> — normally metabolised by MAO-A in intestinal epithelium and liver (first-pass), preventing systemic absorption. Phenelzine irreversibly inhibits MAO-A and MAO-B → tyramine bypasses first-pass metabolism → enters systemic circulation → taken up into presynaptic terminals by NET → displaces noradrenaline from vesicles → massive NA release into synapse → intense α1/β1 adrenoceptor stimulation → <strong>hypertensive crisis</strong> (NA + adrenaline surge), tachycardia, severe occipital headache, diaphoresis, risk of intracerebral haemorrhage. Treatment: IV phentolamine (non-selective α-blocker) or nitroprusside.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Moclobemide is a reversible MAO-A inhibitor (RIMA) — tyramine competitively displaces it, making the cheese reaction far less severe. Dietary restrictions less strict than irreversible MAOIs. Selegiline (low dose) is a selective MAO-B inhibitor — does NOT require tyramine dietary restriction at standard doses (MAO-B does not metabolise tyramine in the gut).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> MAOIs + SSRIs/SNRIs/tramadol/pethidine → <strong>serotonin syndrome</strong> (not cheese reaction). MAOIs + sympathomimetics (pseudoephedrine, amphetamine) → tyramine-like crisis. Minimum 14-day washout after stopping an irreversible MAOI before starting any serotonergic drug; 5 weeks after fluoxetine (long half-life) before starting an MAOI.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">02</span>
+          <span class="fc-q">A 70-year-old man with Parkinson's disease on levodopa/carbidopa develops sudden uncontrollable leg movements, fluctuating responsiveness, and periods of freezing. What are these phenomena called and what causes them?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">These are <strong>motor complications of long-term levodopa therapy</strong>: (1) <strong>Dyskinesias</strong> — involuntary choreiform movements, typically at peak levodopa plasma levels (peak-dose dyskinesia). Caused by sensitisation of dopamine receptors (especially D1) in the striatum from pulsatile dopamine stimulation → aberrant corticostriatal plasticity. (2) <strong>Wearing off</strong> — return of Parkinsonian symptoms before next dose (as levodopa plasma levels fall) — due to progressive loss of striatal dopaminergic neuron terminals that previously buffered dopamine levels. (3) <strong>On-off fluctuations</strong> — unpredictable switches between mobile (on) and frozen (off) states. Management: continuous dopaminergic stimulation — COMT inhibitors (entacapone), MAO-B inhibitors (selegiline, rasagiline), dopamine agonists, controlled-release levodopa, deep brain stimulation.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Carbidopa is a peripheral DOPA decarboxylase inhibitor — it does NOT cross the blood-brain barrier, preventing peripheral conversion of levodopa to dopamine (reducing nausea, vomiting, hypotension) and allowing lower levodopa doses. The standard ratio is 4:1 or 10:1 levodopa:carbidopa.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Dietary protein competes with levodopa for transport across the gut (via LAT1 amino acid transporter) — a high-protein meal significantly delays levodopa absorption and onset. Advise patients to take levodopa 30–60 minutes before meals and consider low-protein diet during daytime.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">03</span>
+          <span class="fc-q">A patient with schizophrenia on haloperidol develops severe muscle rigidity, hyperthermia (40.5°C), altered consciousness, and autonomic instability with diaphoresis over 24 hours. What is this and how is it managed?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Neuroleptic malignant syndrome (NMS)</strong> — a life-threatening idiosyncratic reaction to dopamine antagonists (antipsychotics, metoclopramide). Mechanism: abrupt central D2 receptor blockade → disruption of dopaminergic pathways in hypothalamus (thermoregulation) and basal ganglia (motor control) → hyperthermia, lead-pipe muscle rigidity (causing rhabdomyolysis → AKI), altered consciousness, autonomic instability. Tetrad: <strong>Hyperthermia + Rigidity + Altered consciousness + Autonomic instability</strong>. Management: (1) <strong>Stop the offending drug immediately</strong>; (2) Aggressive cooling, IV fluids, supportive care; (3) <strong>Dantrolene</strong> (directly blocks SR Ca²⁺ release → reduces muscle rigidity and heat generation); (4) <strong>Bromocriptine</strong> (D2 agonist → restores dopaminergic tone).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> NMS is NOT dose-dependent — it can occur after a single dose or after years of stable treatment. CK is dramatically elevated (rhabdomyolysis). Distinguish from serotonin syndrome: NMS has lead-pipe rigidity + slower onset (days) + hyporeflexia; serotonin syndrome has hyperreflexia + clonus + faster onset (hours) + myoclonus. Both can have hyperthermia and autonomic instability.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Antipsychotic rechallenge after NMS: wait ≥2 weeks after full resolution; switch to a lower-potency or atypical antipsychotic (e.g., quetiapine — lowest D2 affinity among atypicals). Clozapine has the lowest NMS risk. Avoid high-potency typical antipsychotics (haloperidol, fluphenazine) in patients with prior NMS.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">04</span>
+          <span class="fc-q">A 35-year-old woman with generalised tonic-clonic epilepsy takes phenytoin. She is started on oral contraceptives. Six months later she has a breakthrough seizure. What happened?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Phenytoin is a potent inducer of <strong>CYP3A4, CYP2C9, and P-glycoprotein</strong>. Combined oral contraceptives (COC) contain ethinylestradiol and progestogen — both metabolised by CYP3A4. Phenytoin induction → dramatically accelerated oestrogen/progestogen metabolism → sub-therapeutic OCP levels → <strong>contraceptive failure</strong> (unwanted pregnancy OR, as here, a hormonal trigger for catamenial epilepsy). Additionally, phenytoin itself has narrow therapeutic index — drug interactions can alter seizure control. Management: use non-hormonal contraception (copper IUD — not affected by enzyme induction) or a combined pill with higher oestrogen dose (50 µg EE). Do NOT use progestogen-only pill or implant (too reliant on progestogen levels).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Enzyme-inducing AEDs (phenytoin, carbamazepine, phenobarbital, primidone, topiramate at high doses, oxcarbazepine) all reduce effectiveness of hormonal contraception. Non-enzyme-inducing AEDs (lamotrigine, levetiracetam, valproate, gabapentin, pregabalin) are safe with hormonal contraception. Lamotrigine itself is affected by OCP — OCP induces lamotrigine glucuronidation → lamotrigine levels fall 50% when OCP started.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Phenytoin has <strong>zero-order (saturable) kinetics</strong> at therapeutic doses — small dose changes cause disproportionately large changes in plasma levels. Phenytoin also causes concentration-dependent toxicity: nystagmus (early), ataxia, diplopia (intermediate), altered consciousness (high). Monitor levels carefully, especially with any drug interaction.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">05</span>
+          <span class="fc-q">An elderly man with Alzheimer's disease is started on donepezil. His wife calls 2 weeks later reporting vivid nightmares and the patient waking with bradycardia (HR 48). Explain both effects.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Donepezil is a <strong>reversible acetylcholinesterase inhibitor (AChEI)</strong> — inhibits AChE in CNS synapses → increased synaptic acetylcholine → enhances cholinergic transmission in the hippocampus and cortex (modest cognitive benefit). Both effects are cholinergic: (1) <strong>Vivid dreams/nightmares</strong> — increased central ACh during REM sleep → intensified dreaming (parasympathetic CNS effects on sleep architecture). Mitigate by taking donepezil in the morning (not at night). (2) <strong>Bradycardia</strong> — increased peripheral ACh → enhanced M2 muscarinic receptor activation at the SA node → reduced heart rate. Other GI effects: nausea, diarrhoea, urinary urgency (all cholinergic).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> AChEIs for Alzheimer's: donepezil (all stages), rivastigmine (mild-moderate, also available as patch — fewer GI side effects), galantamine (mild-moderate). Memantine (NMDA receptor antagonist) is used for moderate-severe AD — can be combined with an AChEI. None modify disease progression — they provide modest symptomatic benefit.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> AChEIs are contraindicated in patients with <strong>sick sinus syndrome or heart block</strong> — severe bradycardia risk. They worsen <strong>peptic ulcers</strong> (cholinergic → increased gastric acid secretion) and should be used cautiously with NSAIDs. AChEIs also lower the seizure threshold — caution in epilepsy.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">06</span>
+          <span class="fc-q">A patient with bipolar disorder on lithium presents with coarse tremor, vomiting, diarrhoea, and confusion. Lithium level is 2.8 mmol/L (therapeutic range 0.6–1.0). What precipitated toxicity and what is the treatment?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Lithium toxicity — therapeutic range is very narrow (0.6–1.0 mmol/L). Likely precipitant: <strong>volume depletion</strong> → increased proximal tubular reabsorption of Na⁺ and Li⁺ together (Li⁺ is handled like Na⁺ in the kidney — reabsorbed proximally, competes with Na⁺). Volume depletion → avid proximal Na⁺ reabsorption → Li⁺ reabsorption rises → toxicity. Common causes: vomiting/diarrhoea (this patient), dehydration, <strong>NSAIDs</strong> (reduce GFR → reduce Li⁺ excretion — most common drug interaction), <strong>thiazide diuretics</strong> (proximal Na⁺ loss → compensatory proximal Li⁺ retention), <strong>ACE inhibitors/ARBs</strong> (reduce GFR → reduce Li⁺ clearance). Treatment: IV normal saline (restore volume → increase Li⁺ clearance), hold lithium, consider <strong>haemodialysis</strong> if level &gt;2.5 mmol/L or severe symptoms.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Lithium toxicity signs by level: 1.0–1.5 (fine tremor, thirst, polyuria — therapeutic range upper limit); 1.5–2.0 (coarse tremor, nausea, confusion); &gt;2.0 (severe tremor, ataxia, seizures, coma, arrhythmias). Chronic toxicity can occur at lower levels than acute toxicity. Neurological effects (cerebellar ataxia, cognitive impairment) can be irreversible.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Loop diuretics (furosemide) do NOT significantly increase lithium levels — they increase distal Na⁺ delivery which does NOT enhance proximal Li⁺ reabsorption. In fact, furosemide with adequate Na⁺ replacement is relatively safe. <strong>Thiazides</strong> are the dangerous diuretic for lithium (proximal tubule effect). Amiloride is used to treat lithium-induced nephrogenic DI — by blocking ENaC in collecting duct, it reduces aquaporin-2 downregulation.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">07</span>
+          <span class="fc-q">A 25-year-old woman presents with absence seizures. Sodium valproate is started. After 3 months she has gained 8 kg, has tremor, and reports hair loss. Explain each adverse effect.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">All three are well-recognised valproate adverse effects: (1) <strong>Weight gain</strong> — valproate increases appetite and reduces fatty acid β-oxidation (inhibits mitochondrial carnitine transport) → adipogenesis; also stimulates neuropeptide Y. Common (~50% of patients). (2) <strong>Tremor</strong> — valproate-induced postural/action tremor (dose-related) — due to GABA-A enhancement → inhibition of cerebellar pathways that stabilise limb movement. (3) <strong>Hair loss (alopecia)</strong> — zinc/selenium chelation by valproate → impaired hair follicle enzyme function → telogen effluvium. Supplementation with zinc and selenium may help; hair often regrows even with continued therapy.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Most important valproate adverse effects to know: <strong>hepatotoxicity</strong> (idiosyncratic, most common in children &lt;2 on polytherapy — monitor LFTs; mitochondrial disease is a contraindication); <strong>teratogenicity</strong> — highest rate of any AED (neural tube defects, neurodevelopmental impairment, cardiac/limb defects — avoid in women of childbearing age; requires PREVENT programme registration in UK). <strong>Hyperammonaemia</strong> — valproate inhibits carbamoyl phosphate synthetase → raised ammonia even with normal LFTs.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Valproate is <strong>highly teratogenic</strong> — highest rates of neural tube defects (2–3% vs 0.1% background) AND neurodevelopmental harm (autism, reduced IQ). Despite this, valproate remains the most effective AED for idiopathic generalised epilepsy (absence, myoclonic, tonic-clonic). High-dose folic acid (5 mg/day) before conception reduces NTD risk but does NOT eliminate it. Consider lamotrigine or levetiracetam as alternatives in women of reproductive age.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">08</span>
+          <span class="fc-q">A patient with treatment-resistant depression on clomipramine (TCA) takes an overdose of 30 tablets. In A&E, ECG shows QRS duration 160 ms, QTc 550 ms, and BP 80/50. What is the immediate treatment?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">TCA overdose — the major life-threatening effects are: (1) <strong>QRS widening</strong> (fast Na⁺ channel blockade → slowed ventricular conduction → risk of VT/VF); (2) <strong>QTc prolongation</strong> (K⁺ channel blockade → Torsades de Pointes risk); (3) <strong>Hypotension</strong> (α1-blockade → vasodilation + negative inotropy). Immediate treatment: <strong>IV sodium bicarbonate</strong> (1–2 mmol/kg bolus, repeat to maintain pH 7.45–7.55) — two mechanisms: (a) alkalinisation increases the fraction of Na⁺ channels in the non-ionised state, reducing TCA binding; (b) increased plasma Na⁺ concentration increases the Na⁺ gradient across the cardiac membrane → partially reverses Na⁺ channel blockade → narrows QRS. Target: QRS &lt;120 ms. Vasopressors for hypotension (noradrenaline — avoid adrenaline which can worsen arrhythmias).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> QRS &gt;100 ms in TCA overdose predicts significant toxicity; &gt;160 ms predicts risk of seizures and VT. Seizures in TCA overdose → IV benzodiazepines (GABA-A agonist — first-line). Do NOT use flumazenil in TCA overdose (can precipitate seizures by removing any benzodiazepine-mediated seizure protection).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Do NOT use class Ia or class Ic antiarrhythmics (procainamide, flecainide) in TCA overdose — they also block Na⁺ channels → additive toxicity. Amiodarone is also contraindicated (QT prolongation). The antidote is sodium bicarbonate — the only pharmacological intervention with proven benefit in TCA-induced QRS widening.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">09</span>
+          <span class="fc-q">A 55-year-old with Parkinson's disease starts pramipexole (dopamine agonist). His wife reports he has developed compulsive gambling, hypersexuality, and binge eating. What is this syndrome?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Impulse control disorders (ICDs)</strong> — a class effect of <strong>dopamine agonists</strong> (pramipexole, ropinirole, rotigotine) acting on <strong>D3 receptors</strong> in the mesolimbic reward circuit (nucleus accumbens, ventral striatum). D3 receptor stimulation in the reward pathway → dysregulated reward-seeking behaviour → pathological gambling, hypersexuality, compulsive shopping, binge eating, dopamine dysregulation syndrome. Risk factors: male sex, younger age at PD diagnosis, prior history of addictive behaviour, higher dopamine agonist doses. Management: <strong>reduce or stop the dopamine agonist</strong> — ICDs generally resolve. Switch to levodopa (lower ICD risk) if dopaminergic replacement still required.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Dopamine agonists are also used for: restless legs syndrome (RLS) — first-line; hyperprolactinaemia (cabergoline, bromocriptine — D2 agonists reduce prolactin secretion from pituitary lactotrophs); acromegaly (cabergoline as adjunct). ICD risk applies across all these uses, though highest in PD patients on long-term high-dose therapy.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Dopamine agonist <strong>withdrawal syndrome</strong> — abrupt cessation after long-term use → dopamine agonist withdrawal syndrome (DAWS): severe anxiety, depression, diaphoresis, nausea, fatigue — resembles opioid withdrawal. Taper slowly. Also: <strong>daytime somnolence and sudden-onset sleep</strong> (sleep attacks) are class effects of dopamine agonists — warn patients not to drive until established on stable dose.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">10</span>
+          <span class="fc-q">An 18-year-old with generalised anxiety disorder is prescribed diazepam. After 6 weeks she has developed tolerance and wants to stop abruptly. Explain why this is dangerous and the correct approach.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Benzodiazepines (BZDs) act as <strong>positive allosteric modulators of GABA-A receptors</strong> — they bind the α/γ subunit interface → increase frequency of Cl⁻ channel opening in response to GABA → enhanced inhibitory tone. Chronic BZD use → <strong>downregulation of GABA-A receptors</strong> (reduced receptor number and sensitivity) AND upregulation of excitatory systems (glutamate/NMDA). Abrupt cessation → rebound CNS hyperexcitability → <strong>BZD withdrawal syndrome</strong>: anxiety, insomnia, tremor, diaphoresis, tachycardia → <strong>seizures</strong> (potentially fatal, as in alcohol withdrawal — both target GABA-A). Correct approach: <strong>gradual tapering</strong> over weeks to months — switch to diazepam (long-acting) if on short-acting BZD, reduce by 5–10% every 1–2 weeks.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Flumazenil (BZD antagonist — competitive antagonist at the BZD binding site on GABA-A) reverses BZD sedation acutely. BUT: in BZD-dependent patients, flumazenil can precipitate acute withdrawal seizures. Also: flumazenil has a short half-life (1 hour) — re-sedation occurs with long-acting BZDs. NOT a substitute for supportive care in BZD overdose.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> BZDs are relatively SAFE in overdose alone (respiratory depression is rare unless combined with other CNS depressants). The dangerous combinations are BZD + alcohol, BZD + opioid, BZD + other sedatives — synergistic respiratory depression. Z-drugs (zolpidem, zopiclone) act at the same BZD binding site (α1-selective) — same dependence risk, same flumazenil reversal.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">11</span>
+          <span class="fc-q">A patient is given suxamethonium for rapid-sequence intubation. After 15 minutes they have not recovered from paralysis and are still apnoeic. What genetic condition explains this, and how is it managed?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Pseudocholinesterase (butyrylcholinesterase) deficiency</strong> — suxamethonium (succinylcholine) is a depolarising neuromuscular blocker (activates nAChRs at NMJ → persistent depolarisation → flaccid paralysis). Normally hydrolysed within 3–5 minutes by plasma pseudocholinesterase (BChE) → action terminates. In BChE deficiency (autosomal recessive, dibucaine-resistant variants) → suxamethonium is not hydrolysed → prolonged apnoea (hours). Management: <strong>continue mechanical ventilation</strong> until paralysis resolves naturally (BChE-independent metabolism via spontaneous Hofmann elimination is minimal for suxamethonium — must wait). Fresh frozen plasma (contains BChE) can accelerate recovery. Test with dibucaine number (BChE activity assay) after recovery; genetic testing; screen family members.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Suxamethonium also causes <strong>hyperkalaemia</strong> (K⁺ released from depolarised muscle — usually mild) — dangerous (cardiac arrest) in burns &gt;24h old, crush injuries, prolonged immobilisation, upper motor neuron injuries (proliferation of extrajunctional nAChRs → massive K⁺ release). Contraindicated in these conditions. Also causes <strong>malignant hyperthermia</strong> in susceptible individuals (RYR1 mutation — suxamethonium ± volatile anaesthetics → uncontrolled SR Ca²⁺ release → hyperthermia, rigidity).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Suxamethonium is NOT reversed by neostigmine (AChEI) — it is a <strong>depolarising</strong> blocker; AChEI would worsen or prolong paralysis by increasing ACh at the already-depolarised NMJ. Non-depolarising blockers (rocuronium, vecuronium, atracurium) ARE reversed by neostigmine (or sugammadex for rocuronium/vecuronium — encapsulates the drug).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">12</span>
+          <span class="fc-q">A patient with acute alcohol withdrawal is treated with chlordiazepoxide. He also receives thiamine before any glucose. Why is thiamine given first, and what syndrome does glucose-before-thiamine risk precipitating?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Glucose administration in a thiamine-deficient patient → rapidly consumes the remaining cellular thiamine stores (thiamine pyrophosphate is an essential cofactor for pyruvate dehydrogenase, α-KG dehydrogenase, and transketolase — all required for glucose metabolism). Depleting thiamine further → acute <strong>Wernicke's encephalopathy</strong> (thiamine-deficient neurons cannot oxidise pyruvate → lactate accumulates → selective necrosis of high-metabolic-rate areas: mammillary bodies, medial thalamus, periaqueductal grey). Triad: <strong>Confusion + Ophthalmoplegia/nystagmus + Ataxia</strong>. Treatment: parenteral thiamine (Pabrinex IV). Untreated → <strong>Korsakoff's psychosis</strong> (irreversible anterograde amnesia + confabulation — mammillary body and thalamic damage).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> In any malnourished, alcohol-dependent, or vomiting patient presenting to A&E — give IV thiamine (Pabrinex) BEFORE glucose. Always. This is a critical clinical reflex. Oral thiamine supplementation is insufficient if there is any suspicion of Wernicke's — GI absorption is unreliable in malnourished patients.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Wernicke's can also occur in: <strong>hyperemesis gravidarum</strong>, prolonged TPN without thiamine supplementation, bariatric surgery patients, cancer patients with poor oral intake, dialysis patients. Not exclusively an alcohol-related diagnosis. Any patient with unexplained ophthalmoplegia + confusion should receive empirical IV thiamine immediately.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">13</span>
+          <span class="fc-q">A 65-year-old man is on warfarin post-AF ablation. He is prescribed carbamazepine for trigeminal neuralgia. His INR drops from 2.5 to 1.3. Explain, and what alternative AED would be safer?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Carbamazepine is a potent <strong>CYP3A4, CYP2C9, and CYP1A2 inducer</strong>. Warfarin (S-warfarin primarily CYP2C9; R-warfarin CYP3A4/1A2) → dramatically accelerated metabolism → reduced warfarin plasma levels → reduced anticoagulant effect → subtherapeutic INR → increased stroke risk. This is one of the most important drug interactions in clinical practice. Safer AED alternatives for trigeminal neuralgia: <strong>oxcarbazepine</strong> (weaker CYP inducer — less effect on warfarin), <strong>gabapentin, pregabalin</strong> (not CYP inducers — renally excreted — no significant warfarin interaction), <strong>lamotrigine</strong> (not a CYP inducer). Carbamazepine also induces its own metabolism (<strong>autoinduction</strong>) — requires dose escalation over the first 4–6 weeks as CYP3A4 is induced.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Carbamazepine mechanism of action: blocks voltage-gated Na⁺ channels (use-dependent — preferentially blocks rapidly firing neurons) → reduces repetitive neuronal firing. Effective in: focal epilepsy, trigeminal neuralgia (drug of choice), bipolar disorder (mood stabiliser). Carbamazepine also causes <strong>SIADH</strong> (hyponatraemia — enhances ADH action at V2 receptor — especially in elderly).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Carbamazepine hypersensitivity: Stevens-Johnson syndrome (SJS) and toxic epidermal necrolysis (TEN) — strongly associated with HLA-B*1502 allele (Han Chinese, South-East Asian populations). Screen for HLA-B*1502 before prescribing carbamazepine in these ethnic groups. Cross-reactivity with oxcarbazepine and phenytoin exists but is incomplete.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">14</span>
+          <span class="fc-q">A patient is started on clozapine for treatment-resistant schizophrenia. After 3 weeks, she develops a sore throat and fever. FBC shows neutrophils 0.3 ×10⁹/L. What must happen immediately?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Clozapine-induced agranulocytosis</strong> — occurs in ~1–3% of patients. Clozapine's metabolite (norclozapine) is believed to directly damage neutrophil precursors in bone marrow (immune-mediated and/or direct toxicity). Agranulocytosis is potentially fatal (sepsis) but is prevented by mandatory blood monitoring. Immediate action: (1) <strong>STOP CLOZAPINE IMMEDIATELY</strong> — neutrophils &lt;0.5 ×10⁹/L = absolute contraindication; (2) Infective screening (blood cultures, CXR); (3) Broad-spectrum antibiotics for febrile neutropenia; (4) <strong>G-CSF</strong> to stimulate neutrophil recovery; (5) Report to the clozapine monitoring service (mandatory). <strong>Clozapine is permanently contraindicated</strong> in this patient after agranulocytosis.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Clozapine monitoring schedule (UK): weekly FBC for 18 weeks → fortnightly for 12 months → monthly thereafter. Must be registered with the CPMS (Clozapine Patient Monitoring Service). Dispensing is linked to blood results — pharmacy will not dispense if overdue monitoring. Clozapine is the only antipsychotic with proven superior efficacy in treatment-resistant schizophrenia.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Clozapine's other serious adverse effects: <strong>myocarditis</strong> (1st 4–8 weeks — check troponin and ECG at baseline and if symptoms); <strong>metabolic syndrome</strong> (weight gain, dyslipidaemia, T2DM — greatest metabolic risk of any antipsychotic); <strong>seizures</strong> (dose-dependent — plasma level monitoring crucial); <strong>hypersalivation</strong> (M4 muscarinic agonism paradoxically → excess saliva); <strong>constipation/bowel obstruction</strong> (anticholinergic).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">15</span>
+          <span class="fc-q">A patient with severe chronic pain on morphine 30 mg/day develops constipation despite laxatives. What opioid-specific drug should be added, and what is the mechanism?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Methylnaltrexone</strong> (or naloxegol) — peripherally-acting mu-opioid receptor antagonists (PAMORAs). Morphine activates μ-opioid receptors in myenteric plexus → reduced propulsive peristalsis, increased sphincter tone, delayed gastric emptying → opioid-induced constipation (OIC). PAMORAs block peripheral GI μ-receptors to reverse OIC WITHOUT crossing the BBB → do not reverse central analgesia. Methylnaltrexone is a quaternary ammonium compound (charged → cannot cross BBB). Naloxegol is a PEGylated naloxone derivative (PEGylation makes it a P-gp substrate → actively excluded from CNS). Both specifically treat OIC while preserving pain control.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Standard laxatives should be prescribed with every opioid prescription — lactulose, senna, or macrogol. However, unlike most opioid side effects, <strong>tolerance does NOT develop to opioid constipation</strong> (peripheral GI receptors do not desensitise like CNS receptors) — OIC persists indefinitely and requires ongoing laxative/PAMORA treatment.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Naloxone (oral) in naloxegol/Targinact (oxycodone/naloxone combination) undergoes extensive first-pass hepatic metabolism → very low systemic bioavailability (2%) → blocks GI opioid receptors without reversing analgesia. This first-pass mechanism fails if liver function is severely impaired → systemic naloxone absorption → opioid withdrawal. Avoid oral naloxone-containing formulations in severe hepatic impairment.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">16</span>
+          <span class="fc-q">A 45-year-old with migraine takes sumatriptan and within 30 minutes has complete relief. Two days later she takes another dose but develops chest tightness during the dose. Explain the mechanism and contraindication.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Sumatriptan is a <strong>5-HT1B/1D agonist</strong>. 5-HT1D agonism → inhibits trigeminal nerve terminal release of CGRP and substance P → reduces neurogenic inflammation around meningeal blood vessels → aborts migraine. 5-HT1B agonism → <strong>vasoconstriction of intracranial blood vessels</strong> (the therapeutic target — reverses meningeal vasodilation of migraine). However, 5-HT1B receptors are also present on <strong>coronary artery smooth muscle</strong> → coronary vasoconstriction → chest tightness, and in patients with underlying CAD, risk of myocardial ischaemia or MI. Contraindications: ischaemic heart disease, Prinzmetal angina, uncontrolled hypertension, stroke/TIA history, peripheral vascular disease.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> CGRP is now the major therapeutic target in preventive migraine treatment: <strong>erenumab</strong> (anti-CGRP receptor monoclonal antibody), <strong>fremanezumab, galcanezumab</strong> (anti-CGRP monoclonal antibodies) — monthly SC injections. Also: gepants (CGRP receptor antagonists — rimegepant, ubrogepant) for acute treatment — do NOT cause vasoconstriction, safe in cardiovascular disease, no overuse headache risk.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Triptans + SSRIs/SNRIs → theoretical serotonin syndrome risk (5-HT1 agonism + serotonin reuptake inhibition). However, FDA advisory (2006) was largely based on weak case reports — major neurological societies state the actual risk of clinically significant serotonin syndrome from this combination is very low. More clinically relevant serotonin syndrome risks: MAOIs + any serotonergic drug.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">17</span>
+          <span class="fc-q">A patient with myasthenia gravis is treated with pyridostigmine. Despite adequate doses, she remains weak. What would happen if you accidentally gave too much pyridostigmine?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Pyridostigmine is a reversible AChE inhibitor → increases ACh at the NMJ → enhances transmission in MG (where autoantibodies against nAChRs reduce functional receptor numbers). Excessive pyridostigmine → too much ACh at NMJ → <strong>depolarisation block</strong> (same mechanism as suxamethonium — persistent receptor depolarisation → flaccid paralysis = cholinergic crisis). Both myasthenic crisis (too little AChE inhibitor) and cholinergic crisis (too much) cause muscle weakness. Distinguish by <strong>muscarinic signs</strong>: cholinergic crisis → DUMBELS (Diarrhoea, Urination, Miosis, Bradycardia/Bronchospasm, Emesis, Lacrimation, Salivation/Sweating) — present in cholinergic crisis, absent in myasthenic crisis. <strong>Edrophonium (Tensilon) test</strong>: brief improvement → myasthenic crisis; worsening → cholinergic crisis.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> MG treatment pyramid: (1) Pyridostigmine (symptomatic); (2) Prednisolone (immunosuppression); (3) Azathioprine or mycophenolate (steroid-sparing); (4) Rituximab or eculizumab (anti-C5, for MuSK-Ab or complement-mediated MG); (5) Thymectomy (if thymoma present — mandatory; also improves outcomes in generalised AChR-Ab MG even without thymoma in patients &lt;65).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Drugs that can precipitate or worsen myasthenic crisis: aminoglycosides (block pre-synaptic Ca²⁺ channels → reduced ACh release), fluoroquinolones, macrolides, neuromuscular blocking agents, beta-blockers, iodinated contrast, magnesium (blocks NMJ transmission — caution in eclampsia treatment). Avoid or use with extreme caution in MG patients.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">18</span>
+          <span class="fc-q">A patient with treatment-resistant depression fails three SSRIs and one SNRI. She is started on ketamine infusions. What is the rapid antidepressant mechanism, distinct from all other antidepressants?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Ketamine (and its S-enantiomer esketamine/Spravato) produces rapid antidepressant effects within hours — compared to weeks for conventional antidepressants. Mechanism: <strong>NMDA receptor antagonism</strong> (non-competitive, open-channel block of glutamate NMDA receptors). This rapidly increases synaptic glutamate (by blocking inhibitory interneuron NMDA receptors → disinhibition) → activates AMPA receptors → BDNF (brain-derived neurotrophic factor) release → TrkB receptor activation → <strong>mTOR signalling → rapid synaptogenesis</strong> in prefrontal cortex and hippocampus. Depression is associated with synaptic loss in these areas; ketamine reverses this within hours. This mechanism is completely distinct from monoamine-based antidepressants (SSRIs/SNRIs/TCAs/MAOIs).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Esketamine (Spravato) nasal spray is FDA/EMA-approved for treatment-resistant depression (+ standard antidepressant) and for major depression with acute suicidal ideation. It must be administered in a certified medical setting with 2-hour post-dose monitoring (dissociation, haemodynamic effects, abuse potential). Effects are NOT permanent — repeated dosing required (twice-weekly × 4 weeks, then weekly, then fortnightly).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Ketamine at anaesthetic doses causes the 'dissociative anaesthesia' state: profound analgesia + amnesia + cataleptic immobility, but patient maintains airway reflexes and spontaneous breathing — unlike other general anaesthetics. Ketamine increases sympathetic tone (raises BP and HR) — useful in haemodynamically compromised patients but avoid in hypertensive emergencies. Contraindicated in psychosis (can worsen psychotic symptoms through NMDA blockade in schizophrenia-relevant pathways).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">19</span>
+          <span class="fc-q">A 72-year-old man with Parkinson's disease on levodopa develops acute prostatic symptoms (urinary retention, dry mouth, blurred vision). The A&E doctor gives him procyclidine for his tremor. Was this appropriate?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">No — procyclidine is a <strong>centrally-acting antimuscarinic (anticholinergic)</strong> drug used for drug-induced parkinsonism (D2 blockade from antipsychotics → relative cholinergic excess in basal ganglia → tremor/rigidity — corrected by anticholinergic). In <strong>idiopathic Parkinson's disease</strong>, antimuscarinics are now largely avoided — poor evidence in PD, and they worsen: (1) <strong>urinary retention</strong> (this patient's presenting symptom — M3 block → detrusor relaxation); (2) Cognitive impairment/delirium (elderly are especially sensitive to central anticholinergic effects); (3) Glaucoma (M3 block → reduced aqueous humour drainage); (4) Constipation, dry mouth, tachycardia. Procyclidine is contraindicated here — the appropriate management of this patient's PD tremor would be adjustment of levodopa or addition of a beta-blocker for tremor.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> The <strong>anticholinergic burden</strong> concept is important in elderly patients — many drugs have anticholinergic activity (TCAs, antihistamines, oxybutynin, procyclidine, promethazine, some antipsychotics) and their combined effect → confusion, falls, urinary retention, constipation. Use the Anticholinergic Cognitive Burden (ACB) scale to identify polypharmacy anticholinergic risk.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Distinguish: procyclidine/benztropine (anticholinergics) are used for DRUG-INDUCED parkinsonism (antipsychotic-induced), NOT for idiopathic PD. For idiopathic PD: levodopa, dopamine agonists, MAO-B inhibitors, COMT inhibitors, amantadine. Amantadine (NMDA antagonist + anticholinergic + dopamine-releasing) is used for levodopa-induced dyskinesias — effective but causes livedo reticularis and ankle oedema.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">20</span>
+          <span class="fc-q">A patient with severe Alzheimer's develops agitation. A colleague proposes haloperidol. What specific risk in this population makes all antipsychotics a serious concern, and what is the only MHRA/FDA-approved non-antipsychotic alternative?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Antipsychotics (both typical and atypical) carry a <strong>black-box warning for increased mortality</strong> in elderly patients with dementia — primarily from <strong>cerebrovascular events</strong> (stroke, TIA) and cardiovascular death (arrhythmia, heart failure). Risk is ~1.6–1.7× higher than placebo. Additionally, antipsychotics worsen <strong>extrapyramidal symptoms in DLB (Lewy body dementia)</strong> — where dopamine neurons are depleted even more than in Parkinson's — potentially causing severe, life-threatening antipsychotic sensitivity reactions (rigidity, aspiration, rapid cognitive decline). <strong>Non-antipsychotic alternative</strong>: <strong>brexpiprazole</strong> is now approved (FDA 2023) for agitation in Alzheimer's — partial D2 agonist with lower EPS risk. Also: citalopram/escitalopram for agitation, non-pharmacological approaches (structured activity, sensory stimulation, caregiver training) are first-line.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> In DLB specifically: antipsychotics (especially typicals and risperidone) are <strong>absolutely contraindicated</strong> — severe antipsychotic sensitivity in ~50% → acute parkinsonism, autonomic instability, impaired consciousness → death in some cases. If an antipsychotic is unavoidable in DLB, quetiapine or clozapine (lowest D2 affinity) are relatively safer options.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Memantine (NMDA antagonist) has some evidence for agitation in moderate-severe AD. Donepezil/rivastigmine may reduce BPSD (behavioural and psychological symptoms of dementia) modestly. Valproate is sometimes used for agitation off-label but evidence is weak and toxicity risk (falls, hepatotoxicity, cognitive effects) is significant in this population.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+<!-- ============ QUIZZES ============ -->
+<section class="quizzes" id="quizzes">
+  <div class="quiz-intro">
+    <h2>★ 100 Self-Test Questions</h2>
+    <p>Five sets of twenty, mapped to the spaced-repetition schedule in each module. Cover the green answer strip, commit out loud, then reveal. These are active-recall reps — struggling to retrieve is the point.</p>
+  </div>
+
+  <details class="quizset" open>
+    <summary><span class="qs-num">1</span><span class="qs-title">ANS Foundations &amp; Neurotransmission</span><span class="qs-meta">Ch 10 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What transmitter is released by ALL preganglionic autonomic fibers, onto which receptor?</div><div class="qa">Acetylcholine, onto nicotinic receptors.</div></div>
+      <div class="q"><div class="qq"><b>2</b>What transmitter/receptor do parasympathetic postganglionic fibers use?</div><div class="qa">Acetylcholine onto muscarinic receptors.</div></div>
+      <div class="q"><div class="qq"><b>3</b>What transmitter/receptor do most sympathetic postganglionic fibers use?</div><div class="qa">Norepinephrine onto adrenergic (α/β) receptors.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Which spinal levels give rise to sympathetic outflow?</div><div class="qa">Thoracolumbar — T1 to L2.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Which sites give rise to parasympathetic outflow?</div><div class="qa">Craniosacral — cranial nerves III, VII, IX, X and sacral segments S2–S4.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Name the two exceptions to the "sympathetic = adrenergic" rule.</div><div class="qa">Sweat glands (cholinergic/muscarinic sympathetic) and the adrenal medulla (cholinergic nicotinic, releases epinephrine).</div></div>
+      <div class="q"><div class="qq"><b>7</b>Why is the adrenal medulla considered a modified sympathetic ganglion?</div><div class="qa">A preganglionic cholinergic (nicotinic) fiber stimulates it directly; it has no second neuron and secretes epinephrine into the blood.</div></div>
+      <div class="q"><div class="qq"><b>8</b>What enzyme synthesises acetylcholine, and from what?</div><div class="qa">Choline acetyltransferase (ChAT), from choline + acetyl-CoA.</div></div>
+      <div class="q"><div class="qq"><b>9</b>How is acetylcholine action terminated?</div><div class="qa">Rapid hydrolysis by acetylcholinesterase into choline + acetate.</div></div>
+      <div class="q"><div class="qq"><b>10</b>What is the rate-limiting step of norepinephrine synthesis?</div><div class="qa">Conversion of tyrosine to DOPA by tyrosine hydroxylase.</div></div>
+      <div class="q"><div class="qq"><b>11</b>What enzyme converts dopamine to norepinephrine?</div><div class="qa">Dopamine β-hydroxylase (inside the vesicle).</div></div>
+      <div class="q"><div class="qq"><b>12</b>How is norepinephrine action mainly terminated?</div><div class="qa">Reuptake into the nerve terminal via the norepinephrine transporter (NET) — not by enzymatic breakdown.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Which two enzymes degrade catecholamines?</div><div class="qa">Monoamine oxidase (MAO) and catechol-O-methyltransferase (COMT).</div></div>
+      <div class="q"><div class="qq"><b>14</b>Which drug blocks NE reuptake at NET, intensifying its effect?</div><div class="qa">Cocaine (also tricyclic antidepressants).</div></div>
+      <div class="q"><div class="qq"><b>15</b>What does botulinum toxin block?</div><div class="qa">Acetylcholine release (vesicle fusion) at the nerve terminal.</div></div>
+      <div class="q"><div class="qq"><b>16</b>What does reserpine block?</div><div class="qa">Vesicular storage of monoamines (VMAT), depleting NE.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Receptor type and speed: nicotinic receptors are…?</div><div class="qa">Ligand-gated ion channels — fast (millisecond) signalling.</div></div>
+      <div class="q"><div class="qq"><b>18</b>Receptor type: muscarinic and adrenergic receptors are…?</div><div class="qa">G-protein-coupled receptors (slower).</div></div>
+      <div class="q"><div class="qq"><b>19</b>Why does a ganglionic blocker abolish both divisions of the ANS?</div><div class="qa">Both use nicotinic receptors at the ganglion — the shared component.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Which transmitter do some parasympathetic nerves use besides ACh (nitrergic)?</div><div class="qa">Nitric oxide (NO).</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">2</span><span class="qs-title">Cholinergic Pharmacology</span><span class="qs-meta">Ch 11–13 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What does the mnemonic SLUDGE-M stand for?</div><div class="qa">Salivation, Lacrimation, Urination, Defecation, GI motility, Emesis, Miosis — the muscarinic agonist effects.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Clinical use of pilocarpine?</div><div class="qa">Glaucoma (and xerostomia/dry mouth).</div></div>
+      <div class="q"><div class="qq"><b>3</b>Clinical use of bethanechol?</div><div class="qa">Urinary retention and GI atony ("bethanechol = bladder/bowel").</div></div>
+      <div class="q"><div class="qq"><b>4</b>Prototype antimuscarinic drug?</div><div class="qa">Atropine.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Recite the antimuscarinic toxidrome.</div><div class="qa">Dry as a bone, red as a beet, blind as a bat, mad as a hatter, hot as a hare.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Antimuscarinic used in COPD/asthma by inhalation?</div><div class="qa">Ipratropium / tiotropium.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Antimuscarinic for motion sickness?</div><div class="qa">Scopolamine.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Which muscarinic subtype slows the heart, via which G-protein?</div><div class="qa">M2, via Gi.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Which muscarinic subtypes act on smooth muscle/glands, via which G-protein?</div><div class="qa">M3 (and M1/M5), via Gq.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Do anticholinesterases add ACh or prevent its breakdown?</div><div class="qa">They prevent breakdown by inhibiting acetylcholinesterase, so ACh accumulates.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Which reversible anticholinesterase treats myasthenia gravis and does NOT cross the BBB?</div><div class="qa">Neostigmine.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Which crosses the BBB and treats antimuscarinic (atropine) toxicity?</div><div class="qa">Physostigmine.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Name an anticholinesterase used in Alzheimer's disease.</div><div class="qa">Donepezil (or rivastigmine, galantamine).</div></div>
+      <div class="q"><div class="qq"><b>14</b>How do organophosphates inhibit AChE?</div><div class="qa">They phosphorylate it covalently (irreversibly after "aging").</div></div>
+      <div class="q"><div class="qq"><b>15</b>What is enzyme "aging" in organophosphate poisoning?</div><div class="qa">Loss of an alkyl group makes the phosphorylated enzyme permanently inactive, so pralidoxime can no longer reactivate it.</div></div>
+      <div class="q"><div class="qq"><b>16</b>What two-drug antidote treats organophosphate poisoning, and what does each do?</div><div class="qa">Atropine (blocks muscarinic effects) + pralidoxime/2-PAM (reactivates AChE, addresses nicotinic effects).</div></div>
+      <div class="q"><div class="qq"><b>17</b>Name the non-depolarising neuromuscular blockers' suffixes.</div><div class="qa">"-curium" / "-curonium" (e.g., rocuronium, vecuronium, atracurium).</div></div>
+      <div class="q"><div class="qq"><b>18</b>How is a non-depolarising block reversed?</div><div class="qa">Neostigmine (↑ACh out-competes it) or sugammadex (for rocuronium/vecuronium).</div></div>
+      <div class="q"><div class="qq"><b>19</b>Why must succinylcholine NOT be reversed with neostigmine?</div><div class="qa">It is a depolarising blocker; more ACh sustains the depolarisation and worsens the block.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Three major adverse effects of succinylcholine?</div><div class="qa">Hyperkalemia, malignant hyperthermia, and prolonged apnea in pseudocholinesterase deficiency.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">3</span><span class="qs-title">Adrenergic I — Receptors &amp; Agonists</span><span class="qs-meta">Ch 14 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>α1 receptor: G-protein and signature effect?</div><div class="qa">Gq → vasoconstriction (↑BP, mydriasis, sphincter contraction).</div></div>
+      <div class="q"><div class="qq"><b>2</b>α2 receptor: G-protein and main action?</div><div class="qa">Gi → presynaptic inhibition of NE release; centrally lowers sympathetic outflow.</div></div>
+      <div class="q"><div class="qq"><b>3</b>β1 receptor: G-protein and signature effect?</div><div class="qa">Gs → increased heart rate, contractility, AV conduction, renin release.</div></div>
+      <div class="q"><div class="qq"><b>4</b>β2 receptor: G-protein and signature effect?</div><div class="qa">Gs → bronchodilation, vasodilation, uterine relaxation.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Which receptors does epinephrine act on?</div><div class="qa">α1, α2, β1, β2 (and β3).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Which receptors does norepinephrine act on (weak at which)?</div><div class="qa">α1, α2, β1 — weak at β2.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Drug of choice for anaphylaxis, and why?</div><div class="qa">Epinephrine — α1 raises BP, β2 opens airways, β1 supports the heart, all at once.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Selective α1 agonist used as a decongestant/pressor?</div><div class="qa">Phenylephrine.</div></div>
+      <div class="q"><div class="qq"><b>9</b>α2 agonist used for hypertension — and why does an α2 <em>agonist</em> lower BP?</div><div class="qa">Clonidine; central α2 stimulation reduces sympathetic outflow.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Selective β1 agonist used as an inotrope?</div><div class="qa">Dobutamine.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Selective β2 agonists for asthma?</div><div class="qa">Salbutamol/albuterol, terbutaline.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Describe dopamine's dose-dependent receptor profile.</div><div class="qa">Low → dopamine receptors (renal); medium → β1; high → α1.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Which receptors does isoproterenol act on?</div><div class="qa">β1 and β2 only.</div></div>
+      <div class="q"><div class="qq"><b>14</b>How do indirect sympathomimetics like tyramine/amphetamine work?</div><div class="qa">They promote release of stored norepinephrine.</div></div>
+      <div class="q"><div class="qq"><b>15</b>β3 agonist used for overactive bladder?</div><div class="qa">Mirabegron.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Compare effects of NE vs isoproterenol on heart rate (direct vs reflex).</div><div class="qa">Isoproterenol directly raises HR (β1); NE raises BP via α1, triggering reflex bradycardia that can offset its direct β1 effect.</div></div>
+      <div class="q"><div class="qq"><b>17</b>What structural change shifts a sympathomimetic toward β activity?</div><div class="qa">Adding bulky/methyl substituents on the amino group (e.g., EPI's N-methyl gives β2 activity vs NE).</div></div>
+      <div class="q"><div class="qq"><b>18</b>Which receptor mediates skeletal-muscle vasodilation from epinephrine?</div><div class="qa">β2.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Why are catecholamines ineffective orally?</div><div class="qa">Rapid inactivation by COMT/MAO in gut and liver (first-pass).</div></div>
+      <div class="q"><div class="qq"><b>20</b>Which receptor relaxes the uterus (tocolysis)?</div><div class="qa">β2 (e.g., terbutaline).</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">4</span><span class="qs-title">Adrenergic II — Antagonists &amp; Clinical Logic</span><span class="qs-meta">Ch 14 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Suffix for selective α1 blockers, and a key use?</div><div class="qa">"-zosin" (prazosin); hypertension and BPH.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Characteristic adverse effect of the first prazosin dose?</div><div class="qa">First-dose orthostatic (postural) hypotension.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Irreversible vs reversible α-blocker used in pheochromocytoma?</div><div class="qa">Phenoxybenzamine (irreversible) and phentolamine (reversible).</div></div>
+      <div class="q"><div class="qq"><b>4</b>Non-selective β-blocker prototype?</div><div class="qa">Propranolol.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Two β1-selective ("cardioselective") blockers?</div><div class="qa">Metoprolol and atenolol.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Combined α+β blockers, and a use of labetalol?</div><div class="qa">Carvedilol and labetalol; labetalol for hypertension in pregnancy.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Why are β-blockers risky in asthmatics?</div><div class="qa">Blocking β2 can cause bronchoconstriction/bronchospasm.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Why can β-blockers mask hypoglycemia?</div><div class="qa">They blunt the adrenergic warning signs (tremor, tachycardia) of low blood sugar.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Explain "epinephrine reversal."</div><div class="qa">After α-blockade, epinephrine's α1 pressor effect is lost, leaving β2 vasodilation, so BP falls instead of rising.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Why must you α-block before β-block in pheochromocytoma?</div><div class="qa">β-blockade first removes β2 vasodilation, leaving unopposed α1 vasoconstriction → hypertensive crisis.</div></div>
+      <div class="q"><div class="qq"><b>11</b>How does a β-blocker lower blood pressure (two mechanisms)?</div><div class="qa">↓Cardiac output (β1 on heart) and ↓renin release (β1 on kidney).</div></div>
+      <div class="q"><div class="qq"><b>12</b>Non-cardiac uses of propranolol?</div><div class="qa">Essential tremor, migraine prophylaxis, performance/anxiety, thyrotoxicosis symptoms.</div></div>
+      <div class="q"><div class="qq"><b>13</b>What happens to β1 selectivity at high doses?</div><div class="qa">It is lost — the drug also blocks β2.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Which adrenergic blocker relaxes the prostate/bladder neck in BPH?</div><div class="qa">α1 blockers (e.g., tamsulosin, prazosin).</div></div>
+      <div class="q"><div class="qq"><b>15</b>Why does abrupt β-blocker withdrawal cause rebound?</div><div class="qa">Chronic blockade up-regulates β-receptors → supersensitivity → rebound tachycardia/hypertension.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Which α2 agonist is used in opioid/alcohol withdrawal?</div><div class="qa">Clonidine.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Effect of an α1 blocker on pupil?</div><div class="qa">Miosis/ptosis tendency (blocks pupillary dilator and Müller's muscle tone).</div></div>
+      <div class="q"><div class="qq"><b>18</b>What reflex commonly accompanies α-blocker-induced vasodilation?</div><div class="qa">Reflex tachycardia.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Which β-blocker property helps in heart failure despite negative inotropy?</div><div class="qa">Long-term reduction in harmful sympathetic remodeling (e.g., carvedilol, metoprolol succinate improve survival).</div></div>
+      <div class="q"><div class="qq"><b>20</b>Cocaine potentiates adrenergic effects by what mechanism?</div><div class="qa">Blocking NET reuptake of norepinephrine, prolonging its synaptic action.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">5</span><span class="qs-title">CNS Rapid-Fire</span><span class="qs-meta">Ch 15–28 · 20 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Main excitatory and inhibitory CNS transmitters?</div><div class="qa">Glutamate (excitatory) and GABA (inhibitory).</div></div>
+      <div class="q"><div class="qq"><b>2</b>Which receptor do benzodiazepines, barbiturates and alcohol all enhance?</div><div class="qa">GABA<sub>A</sub> (the chloride channel).</div></div>
+      <div class="q"><div class="qq"><b>3</b>Benzodiazepines vs barbiturates at GABA<sub>A</sub>?</div><div class="qa">Benzos increase frequency of Cl⁻ channel opening (ceiling, safer); barbiturates increase duration (no ceiling, lethal).</div></div>
+      <div class="q"><div class="qq"><b>4</b>Antidote for benzodiazepine overdose?</div><div class="qa">Flumazenil.</div></div>
+      <div class="q"><div class="qq"><b>5</b>First-line antidepressant class and prototype?</div><div class="qa">SSRIs — fluoxetine (safest in overdose).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Why do antidepressants take weeks to work?</div><div class="qa">Receptor adaptation/downregulation, not just immediate reuptake blockade.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Dietary danger with MAO inhibitors?</div><div class="qa">Tyramine-rich foods → hypertensive ("cheese") crisis.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Primary receptor blocked by antipsychotics?</div><div class="qa">D₂ dopamine receptors.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Why do typical antipsychotics cause extrapyramidal effects?</div><div class="qa">Strong D₂ blockade in the nigrostriatal pathway.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Which atypical antipsychotic requires blood monitoring, and for what?</div><div class="qa">Clozapine — agranulocytosis.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Three antiepileptic mechanisms?</div><div class="qa">Block Na⁺ channels, enhance GABA, or block (T-type) Ca²⁺ channels.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Drug for absence seizures and its target?</div><div class="qa">Ethosuximide — T-type calcium channels.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Cornerstone of Parkinson's therapy, and why add carbidopa?</div><div class="qa">Levodopa; carbidopa blocks peripheral conversion, reducing side effects and increasing CNS delivery.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Opioid receptor mediating analgesia, and its G-protein?</div><div class="qa">μ (mu) receptor, coupled to Gi.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Classic opioid overdose triad?</div><div class="qa">Coma, pinpoint pupils, respiratory depression.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Opioid antidote?</div><div class="qa">Naloxone.</div></div>
+      <div class="q"><div class="qq"><b>17</b>What does MAC measure for inhaled anaesthetics?</div><div class="qa">Potency — lower MAC means more potent.</div></div>
+      <div class="q"><div class="qq"><b>18</b>Mechanism of local anaesthetics?</div><div class="qa">Block voltage-gated Na⁺ channels from inside the axon.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Why do local anaesthetics work poorly in infected (acidic) tissue?</div><div class="qa">Acidic pH keeps more drug ionised, so less crosses the membrane to reach its intracellular site (ion trapping).</div></div>
+      <div class="q"><div class="qq"><b>20</b>Which pathway underlies addiction/reward?</div><div class="qa">The mesolimbic dopamine pathway.</div></div>
+    </div>
+  </details>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong>Neuropharmacology — The Autonomic Nervous System · Accelerated Learning System</strong><br>
+      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section II (Chs 10–28).<br>
+      Learning design: Pareto (80/20) · Active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
+      Mnemonics are standard teaching aids. Verify all drug dosing against current local protocols before clinical use.</span>
+    </div>
+    <div class="src" style="text-align:right">
+      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Built around active recall and spaced repetition.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+// ── QUIZ TAP-TO-REVEAL ──────────────────────────────────────────────────────
+// Supports: .quiz-q/.quiz-a  (special_systems)
+//           .qq/.qa          (CV-Renal, Endocrine, General, Infectious, Inflammation, Neoplastic, Neuro)
+//           .qq/details.qa   (GI StudyGuide)
+
+(function() {
+  function initReveal(triggerSel, containerSel) {
+    document.querySelectorAll(triggerSel).forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var container = trigger.closest(containerSel);
+        if (!container) return;
+        var wasOpen = container.classList.contains('open');
+        // close all siblings in same quiz group
+        var parent = container.parentElement;
+        if (parent) {
+          parent.querySelectorAll(containerSel).forEach(function(el) {
+            el.classList.remove('open');
+          });
+        }
+        if (!wasOpen) container.classList.add('open');
+      });
+    });
+  }
+
+  // Pattern 1: special_systems  .quiz-item > .quiz-q
+  initReveal('.quiz-q', '.quiz-item');
+
+  // Pattern 2: others  .q > .qq  (qa may be div or details)
+  initReveal('.qq', '.q');
+
+  // For GI: .qq contains details.qa — open/close it directly too
+  document.querySelectorAll('.qq').forEach(function(qq) {
+    qq.addEventListener('click', function() {
+      var q = qq.closest('.q');
+      if (!q) return;
+      var det = q.querySelector('details.qa');
+      if (det) {
+        if (q.classList.contains('open')) {
+          det.setAttribute('open', '');
+        } else {
+          det.removeAttribute('open');
+        }
+      }
+    });
+  });
+})();
+</script>
+
+<script src="learning-interactive.js"></script>
+</body>
+</html>

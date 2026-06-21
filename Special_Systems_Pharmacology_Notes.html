@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Systems Pharmacology — PYQ Notes</title>
+<style>
+  :root{
+    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
+    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
+  header.top{margin-bottom:26px}
+  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
+  .sub{color:var(--muted); font-size:.92rem; margin:0}
+  .tools{
+    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
+    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
+    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  }
+  #search{
+    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
+    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
+    outline:none;
+  }
+  #search:focus{border-color:var(--accent)}
+  .btn{
+    border:1px solid var(--line); background:var(--panel); color:var(--ink);
+    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
+    transition:.15s; white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+
+  .toc{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+  }
+  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
+  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
+  .toc a:hover{color:var(--accent)}
+
+  section.sec{margin:34px 0}
+  .sec > h2{
+    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
+    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+  }
+  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+
+  details.q{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+  }
+  details.q[open]{border-color:#d6e6e0}
+  summary.q-head{
+    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
+    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+  }
+  summary.q-head::-webkit-details-marker{display:none}
+  summary.q-head:hover{background:#fcfdfc}
+  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
+  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  .q-text{flex:1}
+  .answer{
+    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
+    font-size:.93rem; color:#33383d;
+  }
+  .answer h4{
+    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
+    margin:18px 0 7px;
+  }
+  .answer h5{font-size:.92rem; color:var(--ink); margin:14px 0 4px; font-weight:640}
+  .answer p{margin:9px 0}
+  .answer ul,.answer ol{margin:8px 0; padding-left:20px}
+  .answer li{margin:4px 0}
+  .answer b{font-weight:620}
+  .answer table{
+    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
+  }
+  .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
+  .answer th{background:var(--accent-soft); font-weight:600}
+  .answer .dia{
+    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
+    margin:12px 0; font-size:.85rem; color:#4a5550;
+  }
+  .answer .dia b{color:var(--accent)}
+  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .recent b{color:#9a7000}
+  .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
+  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
+  mark{background:#fff2a8; padding:0 1px}
+  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+
+  /* ---- v2 interactive additions ---- */
+  body{transition:background .25s, color .25s}
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
+  .chip:hover{border-color:var(--accent); color:var(--accent)}
+  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
+  .iconbtn{font-size:1rem; line-height:1}
+  details.q.vignette{border-left:3px solid #c98a3c}
+  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
+  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
+  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
+  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a; --shadow:0 1px 2px rgba(0,0,0,.35)}
+  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
+  [data-theme="dark"] summary.q-head:hover{background:#23272c}
+  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  [data-theme="dark"] .answer{color:#cfd4d8}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:#2a2519}
+  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] mark{background:#7a6212; color:#fff}
+  [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
+
+  /* ---- per-section colour theming ---- */
+  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
+  .sec > h2{border-bottom:2px solid var(--sec)}
+  .sec details.q{border-left:4px solid var(--sec)}
+  .sec details.q[open]{border-left-color:var(--sec)}
+  .sec details.q[open] .chev{color:var(--sec)}
+  .sec .answer h4{color:var(--sec)}
+  .sec .answer th{background:var(--sec-soft)}
+  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
+  .toc a{display:flex; align-items:center}
+  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
+  [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
+  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Special Systems Pharmacology — Consolidated PYQ Notes</h1>
+    <p class="sub">Exam-oriented model answers · Goodman &amp; Gilman, Katzung, Rang &amp; Dale + current guidelines · click any question to open the answer</p>
+  </header>
+
+  <div class="tools">
+    <a class="btn" href="index_pyq.html" title="Back to PYQ Library" style="text-decoration:none">← PYQ Library</a>
+    <a class="btn" href="index.html" title="Back to study hub" style="text-decoration:none">← Hub</a>
+    <input id="search" type="text" placeholder="🔍  Search… ( / )" autocomplete="off">
+    <button class="btn" id="shuffle" title="Random question (R)">🎲 Quiz me</button>
+    <button class="btn" id="expandAll" title="Expand visible (E)">Expand</button>
+    <button class="btn" id="collapseAll" title="Collapse all (C)">Collapse</button>
+    <button class="btn iconbtn" id="theme" title="Dark mode (D)">🌙</button>
+    <span class="count" id="counter"></span>
+  </div>
+  <div class="chips" id="chips">
+    <button class="chip active" data-f="all">All</button>
+    <button class="chip" data-f="3">★★★</button>
+    <button class="chip" data-f="2">★★</button>
+    <button class="chip" data-f="1">★</button>
+    <button class="chip" data-f="case">🩺 Cases</button>
+  </div>
+  <p class="hint">Shortcuts: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K</kbd>/<kbd>J</kbd> next/prev · <kbd>Space</kbd> open · <kbd>E</kbd>/<kbd>C</kbd> expand/collapse · <kbd>D</kbd> dark</p>
+
+  <nav class="toc" id="toc">
+    <h2>Sections</h2>
+    <a href="#s1"><span class="dot" style="background:#2f7d6a"></span>1 · Antibiotic Use, Resistance &amp; Stewardship</a>
+    <a href="#s2"><span class="dot" style="background:#3f6cb0"></span>2 · Ocular Pharmacology</a>
+    <a href="#s3"><span class="dot" style="background:#845bb0"></span>3 · Dermatopharmacology</a>
+    <a href="#s4"><span class="dot" style="background:#b15068"></span>4 · Corticosteroids — Uses &amp; Safety</a>
+    <a href="#s5"><span class="dot" style="background:#b3852f"></span>5 · Ecopharmacology &amp; One Health</a>
+    <a href="#s6"><span class="dot" style="background:#2f8696"></span>6 · Poisoning Management &amp; Chelating Agents</a>
+    <a href="#s7"><span class="dot" style="background:#548a4f"></span>7 · Other Important Topics (Overlaps)</a>
+    <a href="#scase"><span class="dot" style="background:#c06a3e"></span>🩺 Clinical Case Vignettes</a>
+  </nav>
+
+  <p class="nohit" id="nohit">No questions match your search.</p>
+
+  <div id="content">
+<!-- CONTENT START -->
+
+<section class="sec" id="s1" style="--sec:#2f7d6a;--sec-soft:#2f7d6a26">
+  <h2>Section 1 · Antibiotic Use, Resistance &amp; Stewardship</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Rational &amp; irrational use of antibiotics; genetic basis &amp; biochemical mechanisms of bacterial resistance; measures to reduce resistance; Antibiotic Stewardship Programme (CDC core elements, AWaRe, India context) &amp; antibiotic policy.</span></summary>
+  <div class="answer">
+    <h4>Mechanisms of antibiotic action</h4>
+    <table>
+      <tr><th>Target</th><th>Class / example</th></tr>
+      <tr><td>Cell-wall synthesis</td><td>β-lactams (penicillins, cephalosporins, carbapenems), vancomycin</td></tr>
+      <tr><td>Protein synthesis</td><td>Aminoglycosides, tetracyclines, macrolides, clindamycin, linezolid, chloramphenicol</td></tr>
+      <tr><td>Nucleic acid synthesis</td><td>Fluoroquinolones (DNA gyrase), rifampicin (RNA polymerase)</td></tr>
+      <tr><td>Folate synthesis</td><td>Sulfonamides, trimethoprim</td></tr>
+      <tr><td>Cell membrane</td><td>Polymyxins, daptomycin</td></tr>
+    </table>
+    <h4>Rational vs irrational use</h4>
+    <table>
+      <tr><th>Rational</th><th>Irrational</th></tr>
+      <tr><td>Right drug/dose/duration; culture-directed; correct indication (bacterial); de-escalation</td><td>For viral illness; wrong/excess dose; inadequate or excessive duration; OTC misuse; unnecessary broad-spectrum/combinations</td></tr>
+    </table>
+    <h4>Natural vs acquired resistance</h4>
+    <p><b>Natural (intrinsic)</b> resistance is a genetically determined species/group trait — the organism lacks the metabolic process or target site (e.g. Gram-negatives to penicillin G, anaerobes to aminoglycosides, <i>M. tuberculosis</i> to tetracyclines) — and is not a clinical problem. <b>Acquired</b> resistance — a previously sensitive organism becoming resistant on drug exposure — is the major clinical/public-health threat; essentially every major antibiotic class now shows significant acquired resistance.</p>
+    <h4>Genetic basis of acquired resistance</h4>
+    <table>
+      <tr><th>Route</th><th>Basis</th><th>Example</th></tr>
+      <tr><td>Mutation — single-step</td><td>One gene mutation → high-grade resistance, emerges rapidly</td><td>Enterococci to streptomycin</td></tr>
+      <tr><td>Mutation — multistep</td><td>Stepwise modifications; sensitivity falls gradually</td><td>Erythromycin, tetracyclines, chloramphenicol</td></tr>
+      <tr><td>Vertical (clonal) transfer</td><td>Mutant passed to daughter cells</td><td>Single-drug antitubercular therapy</td></tr>
+      <tr><td>Conjugation</td><td>Sex pilus transfers plasmid/R-factor DNA; common among Gram-negatives</td><td>Chloramphenicol resistance in typhoid; streptomycin resistance in <i>E. coli</i></td></tr>
+      <tr><td>Transduction</td><td>Resistance gene carried by bacteriophage</td><td>Penicillin, erythromycin, chloramphenicol resistance</td></tr>
+      <tr><td>Transformation</td><td>Uptake of naked resistance DNA from medium</td><td>Clinically minor</td></tr>
+    </table>
+    <p>Horizontal (infectious) transfer spreads resistance fastest and can confer <b>multidrug resistance (MDR)</b> concurrently via mobile genetic elements — plasmids, transducing phages, transposons, integrons/gene cassettes — avoiding the cost of a lethal mutation while amplifying rapidly.</p>
+    <h4>Biochemical mechanisms of resistance</h4>
+    <table>
+      <tr><th>Mechanism</th><th>Molecular event</th><th>Examples</th></tr>
+      <tr><td>Enzymatic inactivation</td><td>Microbe elaborates an enzyme that destroys the drug</td><td>β-lactamases (&gt;1000 known — staphylococci, <i>Haemophilus</i>, gonococci); aminoglycoside-modifying enzymes (adenylate/acetylate/phosphorylate); chloramphenicol acetyltransferase; macrolide esterification</td></tr>
+      <tr><td>Altered target structure</td><td>Point mutation/modification reduces drug affinity</td><td>Low-affinity PBP → MRSA; altered RNA polymerase → rifampin resistance; ribosomal protection → macrolide/tetracycline resistance; mutated DNA gyrase → fluoroquinolone resistance; altered PBP in penicillin-resistant pneumococci; katG Ser315 → isoniazid resistance</td></tr>
+      <tr><td>Reduced permeability</td><td>Loss/mutation of porin channels lowers intracellular uptake</td><td>Loss of OprD porin → imipenem resistance in <i>Pseudomonas</i>; reduced aminoglycoside/tetracycline entry</td></tr>
+      <tr><td>Active efflux</td><td>Energy-dependent efflux pumps (MATE, MFS, SMR, RND, ABC families) expel the drug</td><td>Tetracyclines, erythromycin, fluoroquinolones; MexAB-OprM in <i>Pseudomonas</i> raises MICs across classes</td></tr>
+      <tr><td>Bypass / altered pathway</td><td>Acquisition of an alternative metabolic route or target over-production</td><td>Sulfonamide-resistant bacteria use preformed folic acid instead of synthesising it from PABA</td></tr>
+    </table>
+    <p>More than one mechanism may act concurrently against a single drug. <b>Cross-resistance</b> (resistance to one agent conferring resistance to a related, unexposed agent) is usually complete within a class (all sulfonamides, all tetracyclines) but may be partial/absent across drugs (gentamicin-resistant strains may still respond to amikacin). A striking modern example of plasmid-mediated spread is the <b>mcr-1</b> gene conferring colistin resistance — alarming because colistin is a last-resort agent.</p>
+    <div class="dia"><b>Diagram (labelled description):</b> Schematic bacterium showing the five resistance mechanisms — β-lactamase (enzyme destroying drug in periplasm), altered PBP/ribosome/RNA polymerase (target change), porin loss (reduced entry across outer membrane), efflux pump (energy-dependent expulsion), and bypass pathway (alternate enzyme/metabolite bypassing the blocked step).</div>
+    <h4>Measures to reduce/prevent resistance</h4>
+    <ul>
+      <li><b>Rational, restrained prescribing</b> — avoid indiscriminate, inadequate or unduly prolonged use; shortest effective, symptom-determined course for acute localised infection in healthy patients — minimises selection pressure.</li>
+      <li><b>Prefer narrow-spectrum, rapidly acting agents</b>; reserve broad-spectrum drugs for when a specific organism/drug cannot be determined; <b>de-escalate/streamline</b> once culture &amp; sensitivity return (24–48 h).</li>
+      <li><b>Combination therapy</b> for prolonged treatment to prevent emergence of resistance to monotherapy — anti-TB multidrug regimens, combination ART for HIV/AIDS, SABE.</li>
+      <li>Treat resistance-prone organisms intensively (<i>S. aureus, E. coli, M. tuberculosis, Proteus</i>).</li>
+      <li>Surgical/empiric prophylaxis discipline — shortest possible course (ideally a single dose), avoid unnecessarily broad coverage.</li>
+      <li>Infection control &amp; stewardship — accurate culture-based diagnosis, hand hygiene/barrier nursing, vaccination, restrict OTC sale (Schedule H1), avoid agricultural/veterinary misuse (One Health); develop new antibiotics &amp; β-lactamase inhibitors; surveillance.</li>
+    </ul>
+    <h4>Antibiotic Stewardship Programme (ASP) — definition &amp; goals</h4>
+    <p>A coordinated, institution-wide set of interventions to optimise antimicrobial use — right drug, dose, route and duration for the right indication — maximising clinical cure while minimising four unintended consequences: <b>emergence of resistance, adverse drug events, superinfection</b> (e.g. <i>C. difficile</i>) and <b>cost</b>. It is the clinical counterpart of infection-prevention and a cornerstone of national/global AMR containment. Useful mnemonic — the "5 D's": right <b>D</b>iagnosis → right <b>D</b>rug → right <b>D</b>ose → right <b>D</b>uration → <b>D</b>e-escalation.</p>
+    <h4>CDC 7 core elements of a hospital ASP</h4>
+    <table>
+      <tr><th>Element</th><th>Meaning</th></tr>
+      <tr><td>Leadership commitment</td><td>Administration provides funding, staff time, IT support, authority</td></tr>
+      <tr><td>Accountability</td><td>A single identified leader (usually an ID physician)</td></tr>
+      <tr><td>Pharmacy expertise</td><td>ID-trained/clinical pharmacist co-leading interventions</td></tr>
+      <tr><td>Action</td><td>≥1 core intervention implemented (audit &amp; feedback, preauthorisation, etc.)</td></tr>
+      <tr><td>Tracking</td><td>Monitoring consumption, resistance patterns, process measures</td></tr>
+      <tr><td>Reporting</td><td>Feeding data back to prescribers, units, leadership</td></tr>
+      <tr><td>Education</td><td>Training clinicians, nurses and patients on optimal prescribing</td></tr>
+    </table>
+    <h4>Core ASP interventions/strategies</h4>
+    <ul>
+      <li><b>Front-end (restrictive):</b> formulary restriction &amp; pre-authorisation before release of reserve/restricted drugs.</li>
+      <li><b>Back-end (persuasive):</b> prospective audit &amp; feedback — real-time, non-coercive review of ongoing prescriptions.</li>
+      <li><b>De-escalation/"streamlining":</b> the single most emphasised principle — start broad empirically, narrow to a targeted agent once culture/sensitivity return; switch to monotherapy where one drug suffices.</li>
+      <li><b>IV-to-oral (step-down) conversion</b> when: (a) overall clinical improvement, (b) afebrile 8–24 h, (c) falling WBC, (d) functioning GI tract — suited agents: fluoroquinolones, clindamycin, doxycycline, metronidazole, linezolid, co-trimoxazole.</li>
+      <li><b>PK/PD-guided dosing:</b> concentration-dependent killers (aminoglycosides, fluoroquinolones, daptomycin) optimise Cmax/MIC or AUC/MIC (high once-daily dosing); time-dependent killers (β-lactams) optimise T&gt;MIC (frequent/extended infusions).</li>
+      <li>Clinical order-sets/guidelines (e.g. IDSA pneumonia/meningitis protocols); rational combination only for defined indications (prevent resistance, broaden empiric cover, synergy, dose-sparing toxicity reduction) — never as a substitute for accurate diagnosis; antibiotic policy/cycling.</li>
+    </ul>
+    <h4>Measuring an ASP</h4>
+    <p><b>Consumption:</b> Defined Daily Doses (DDD)/1000 patient-days, Days of Therapy (DOT). <b>Process:</b> de-escalation rate, IV-to-oral conversion rate, guideline adherence. <b>Outcome:</b> antibiogram/resistance trends, <i>C. difficile</i> incidence, length of stay, mortality, cost savings.</p>
+    <h4>WHO AWaRe classification &amp; Indian context</h4>
+    <ul>
+      <li><b>WHO AWaRe:</b> <b>A</b>ccess (first-line, narrow-spectrum, low resistance potential — e.g. amoxicillin; target ≥60% of total use), <b>W</b>atch (higher resistance potential — fluoroquinolones, 3rd-gen cephalosporins, carbapenems), <b>R</b>eserve (last-resort — colistin, linezolid, ceftazidime-avibactam).</li>
+      <li><b>India:</b> ICMR &amp; NCDC national AMS/treatment guidelines; National Action Plan on AMR (NAP-AMR); Schedule H1 of the Drugs &amp; Cosmetics Rules (restricts OTC antibiotic sale); "Red Line" campaign (red line on prescription-only antibiotic packs).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> CDC 2019 Core Elements update reframed "Drug expertise" as "Pharmacy expertise" — by 2018 ~85% of US acute-care hospitals met all 7 elements. The WHO Access target was raised from ≥60% to a globally binding <b>≥70% by 2030</b> at the Sept 2024 UN General Assembly High-Level Meeting on AMR; amoxicillin-clavulanate is promoted as the Access-group "cornerstone." An ICMR need-assessment found very high antibiotic-prescribing rates at primary/secondary Indian hospitals (~60–64%), showing AMS is still largely confined to tertiary centres — driving calls for AMSP at lower tiers. COVID-19 shifted prescribing toward higher "Watch"-category antibiotics, reinforcing the need for sustained stewardship vigilance.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Resistance to β-lactam antibiotics; newer β-lactams &amp; β-lactamase inhibitors with clinical applications.</span></summary>
+  <div class="answer">
+    <h4>Mechanisms of β-lactam resistance</h4>
+    <ul>
+      <li><b>β-lactamase production</b> — hydrolyse β-lactam ring (penicillinase, ESBL, AmpC, carbapenemases — KPC, NDM-1, OXA).</li>
+      <li><b>Altered PBPs</b> — e.g. PBP2a in MRSA (mecA gene); altered PBP in penicillin-resistant pneumococci.</li>
+      <li><b>↓ Permeability</b> (porin loss) &amp; <b>efflux</b> in gram-negatives.</li>
+    </ul>
+    <h4>β-lactamase inhibitors &amp; combinations</h4>
+    <table>
+      <tr><th>Inhibitor</th><th>Combination</th><th>Use</th></tr>
+      <tr><td>Clavulanic acid</td><td>Amoxicillin-clavulanate</td><td>Common infections</td></tr>
+      <tr><td>Sulbactam</td><td>Ampicillin-sulbactam, cefoperazone-sulbactam</td><td>Mixed/Acinetobacter</td></tr>
+      <tr><td>Tazobactam</td><td>Piperacillin-tazobactam, ceftolozane-tazobactam</td><td>Nosocomial, Pseudomonas</td></tr>
+      <tr><td><b>Avibactam</b></td><td>Ceftazidime-avibactam</td><td>ESBL, KPC, AmpC, OXA-48</td></tr>
+      <tr><td><b>Vaborbactam / Relebactam</b></td><td>Meropenem-vaborbactam, imipenem-relebactam</td><td>Carbapenem-resistant Enterobacterales</td></tr>
+    </table>
+    <h4>Newer β-lactams</h4>
+    <p><b>Cefiderocol</b> — siderophore cephalosporin (uses iron-transport to enter; active vs MDR gram-negatives incl. carbapenem-resistant); newer cephalosporins (ceftaroline — anti-MRSA); carbapenems for ESBL.</p>
+    <div class="recent"><b>Recent:</b> Newer BLI combinations (avibactam, relebactam, vaborbactam) &amp; cefiderocol combat carbapenem-resistant gram-negatives (NDM, KPC).</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Anti-pseudomonal antibiotics and treatment of pseudomonal infections.</span></summary>
+  <div class="answer">
+    <h4>Anti-pseudomonal antibiotics by class</h4>
+    <table>
+      <tr><th>Class</th><th>Agents</th></tr>
+      <tr><td>Anti-pseudomonal penicillins</td><td>Piperacillin (-tazobactam), ticarcillin</td></tr>
+      <tr><td>Cephalosporins</td><td>Ceftazidime, cefepime, ceftolozane-tazobactam, ceftazidime-avibactam</td></tr>
+      <tr><td>Carbapenems</td><td>Meropenem, imipenem, doripenem (not ertapenem)</td></tr>
+      <tr><td>Monobactam</td><td>Aztreonam</td></tr>
+      <tr><td>Aminoglycosides</td><td>Amikacin, tobramycin, gentamicin</td></tr>
+      <tr><td>Fluoroquinolones</td><td>Ciprofloxacin, levofloxacin</td></tr>
+      <tr><td>Polymyxins (MDR)</td><td>Colistin, polymyxin B</td></tr>
+      <tr><td>Newer</td><td>Cefiderocol</td></tr>
+    </table>
+    <h4>Treatment principles</h4>
+    <ul>
+      <li><b>Pseudomonas aeruginosa</b> is intrinsically resistant to many drugs &amp; develops resistance rapidly.</li>
+      <li><b>Combination therapy</b> often used for serious infections (β-lactam + aminoglycoside or fluoroquinolone) — broaden cover, synergy, ↓ resistance.</li>
+      <li>Conditions: hospital-acquired/ventilator pneumonia, burns, febrile neutropenia, UTIs, cystic fibrosis (inhaled tobramycin/colistin), osteomyelitis, endocarditis.</li>
+      <li>De-escalate per culture; MDR strains → ceftolozane-tazobactam, ceftazidime-avibactam, cefiderocol, colistin.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Definitive therapy &amp; management of drug-resistant / MDR-TB; WHO drug grouping (A/B/C); newer all-oral regimens (BPaL/BPaLM).</span></summary>
+  <div class="answer">
+    <h4>Definitions</h4>
+    <p>Drug-resistant TB (DR-TB) arises when <i>M. tuberculosis</i> acquires spontaneous chromosomal point mutations, selected by inadequate/irregular/single-drug therapy — resistance is <b>not plasmid-mediated</b>. Because mutation rates for different drugs are independent (~1 in 10⁶ for rifampicin, ~1 in 10⁸ for isoniazid), a single bacillus resistant to two drugs simultaneously is vanishingly rare (~10⁻¹⁴) — the rationale for multidrug therapy.</p>
+    <table>
+      <tr><th>Category</th><th>Definition</th></tr>
+      <tr><td>Mono-resistant</td><td>Resistant to one first-line drug (not rifampicin)</td></tr>
+      <tr><td>Poly-drug resistant (PDR)</td><td>Resistant to &gt;1 first-line drug, but not both H and R</td></tr>
+      <tr><td>Rifampicin-resistant (RR-TB)</td><td>Resistant to R (± others) but not H — treated as MDR-TB</td></tr>
+      <tr><td><b>MDR-TB</b></td><td>Resistant to <b>both isoniazid (H) and rifampicin (R)</b> (± other first-line drugs)</td></tr>
+      <tr><td>Pre-XDR-TB</td><td>MDR/RR-TB + resistance to any fluoroquinolone</td></tr>
+      <tr><td>XDR-TB (2021)</td><td>MDR/RR-TB + FQ resistance + resistance to ≥1 Group A drug (bedaquiline or linezolid)</td></tr>
+    </table>
+    <h4>WHO grouping of drugs for MDR/RR-TB (2019 reclassification)</h4>
+    <table>
+      <tr><th>Group</th><th>Drugs</th><th>Role</th></tr>
+      <tr><td>A (include all 3)</td><td>Levofloxacin/Moxifloxacin, Bedaquiline, Linezolid</td><td>Standard-of-care backbone</td></tr>
+      <tr><td>B (add one/both)</td><td>Clofazimine, Cycloserine/Terizidone</td><td>Strengthen the regimen</td></tr>
+      <tr><td>C (complete regimen)</td><td>Ethambutol, Delamanid, Pyrazinamide, Imipenem-cilastatin/Meropenem (+ amoxicillin-clavulanate), Amikacin/streptomycin, Ethionamide/Prothionamide, PAS</td><td>Used when A+B cannot supply enough effective drugs</td></tr>
+    </table>
+    <p>Injectables (kanamycin, capreomycin) are <b>no longer recommended</b> — the modern era is all-oral, bedaquiline-anchored.</p>
+    <h4>Key second-line drug mechanisms</h4>
+    <ul>
+      <li><b>Bedaquiline:</b> diarylquinoline inhibiting the c-subunit of mycobacterial ATP synthase (human enzyme ~20,000-fold less sensitive); active vs dividing &amp; dormant bacilli; CYP3A4-metabolised; very long t½ (~5.5 months); resistance via <i>atpE</i> or <i>Rv0678</i> efflux mutation (causes cross-resistance with clofazimine). Toxicity: QT prolongation (serial ECG), hepatotoxicity. Dose: 400 mg OD × 2 wk → 200 mg thrice-weekly × 22 wk.</li>
+      <li><b>Linezolid:</b> oxazolidinone, inhibits ribosomal protein synthesis, ~100% oral bioavailability; mitochondrial toxicity on prolonged use → myelosuppression, peripheral/optic neuropathy, lactic acidosis; weak MAO inhibitor (avoid SSRIs).</li>
+      <li><b>Pretomanid &amp; delamanid:</b> bicyclic nitroimidazole prodrugs activated by F420-dependent nitroreductase; dual action — inhibit mycolic-acid synthesis (aerobic) and generate reactive nitrogen species killing dormant persisters (anaerobic); both prolong QT modestly.</li>
+      <li><b>Fluoroquinolones</b> (levofloxacin/moxifloxacin): inhibit DNA gyrase — the pivotal oral bactericidal Group A backbone.</li>
+    </ul>
+    <h4>Definitive regimens &amp; durations</h4>
+    <table>
+      <tr><th>Regimen</th><th>Composition</th><th>Duration</th><th>Setting</th></tr>
+      <tr><td><b>BPaLM</b> (WHO 2022 preferred)</td><td>Bedaquiline + Pretomanid + Linezolid + Moxifloxacin</td><td>6 months</td><td>MDR/RR-TB &amp; pre-XDR (no prior Bdq/Lzd/Pa exposure)</td></tr>
+      <tr><td>BPaL</td><td>Bedaquiline + Pretomanid + Linezolid</td><td>6 months</td><td>Moxifloxacin unusable / FQ-resistant XDR</td></tr>
+      <tr><td>WHO shorter all-oral</td><td>Bdq + FQ + clofazimine + Z + E + high-dose H + ethionamide</td><td>9–12 months</td><td>FQ-susceptible MDR, no extensive disease</td></tr>
+      <tr><td>WHO/NTEP longer individualised</td><td>≥4–5 effective drugs: all Group A + Group B ± C</td><td>18–20 months</td><td>FQ-resistance, intolerance, extensive disease, failure</td></tr>
+    </table>
+    <p>General principles: include ≥4 (often 5–6) drugs certain to be effective per DST &amp; drug history; avoid cross-resistant pairs; never add a single drug to a failing regimen; pyridoxine 100 mg/day throughout; directly-observed/patient-centred care; monitor monthly sputum culture conversion, ECG (QT), CBC, visual acuity. RR-TB is treated on the MDR backbone with high-dose isoniazid added (bacilli remain H-sensitive). Mono-/poly-resistant TB get shorter 9–12 month regimens built around retained first-line drugs + an FQ.</p>
+    <div class="dia"><b>Diagram (labelled description):</b> DST-guided pathway — Xpert MTB/RIF → R-resistant → second-line line-probe assay → FQ-susceptible → BPaLM (6 mo) vs FQ-resistant/XDR → BPaL (6 mo) vs intolerance → longer individualised regimen (18–20 mo).</div>
+    <div class="recent"><b>Recent advances:</b> <b>TB-PRACTECAL</b> (NEJM 2022) — 24-week all-oral BPaLM superior to local standard-of-care for RR-TB with less toxicity, establishing the modern 6-month standard. <b>ZeNix</b> (NEJM 2022) — linezolid 600 mg (vs 1200 mg) for 26 weeks within BPaL retains efficacy in MDR/pre-XDR/XDR-TB with markedly less neuropathy/myelosuppression. <b>WHO 2022 consolidated guidelines</b> formally recommend BPaLM as preferred, phasing out injectable-based regimens and kanamycin/capreomycin. India's NTEP (renamed from RNTCP, 2020; 2025 elimination target) has rolled out all-oral bedaquiline-/delamanid-containing regimens and BPaLM nationally, with universal DST being scaled up.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Clofazimine — mechanism, pharmacokinetics &amp; place in anti-tubercular treatment (with its use in leprosy).</span></summary>
+  <div class="answer">
+    <h4>Introduction</h4>
+    <p>Clofazimine is a lipophilic riminophenazine dye with both antimycobacterial and anti-inflammatory properties. First evaluated as an anti-TB agent in 1954, but owing to inconsistent early results it was instead licensed for leprosy (1969), becoming a pillar of WHO multidrug therapy (MDT). It has since been repurposed as a key oral companion drug in MDR/RR/XDR-TB regimens, and is also used in non-tuberculous mycobacteria (NTM) and <i>M. ulcerans</i> (Buruli ulcer).</p>
+    <h4>Mechanism of action (multifactorial, incompletely understood)</h4>
+    <ul>
+      <li><b>Membrane disruption</b> — alters mycobacterial cell-membrane structure &amp; transport function.</li>
+      <li><b>Redox cycling/ROS generation</b> — reduced by NADH dehydrogenase (NDH-2), reoxidised by O₂, generating H₂O₂/ROS that interfere with the electron-transport chain — lethal to the bacillus.</li>
+      <li>Inhibition of mycobacterial phospholipase A₂ and microbial K⁺ transport; interference with DNA template function; efflux-pump inhibition contributing to anti-persister activity.</li>
+      <li><b>Anti-inflammatory/immunomodulatory action</b> — inhibits macrophages, T cells, neutrophils, complement — the basis of its use in lepra reactions.</li>
+    </ul>
+    <p>Against <i>M. leprae</i> it is slowly bactericidal (weaker/slower than dapsone); against <i>M. tuberculosis</i> it suppresses multiplication with notable sterilising activity on dormant/persister bacilli — explaining its value in shortening DR-TB regimens.</p>
+    <div class="dia"><b>Diagram (labelled description):</b> Clofazimine redox cycling at the mycobacterial membrane — clofazimine → reduced by NADH dehydrogenase (NDH-2) → reduced clofazimine → reoxidised by O₂ → H₂O₂/ROS → membrane disruption → bacterial death.</div>
+    <h4>Resistance</h4>
+    <p>Mutations in the transcriptional repressor <b>Rv0678 (mmpR)</b> up-regulate the <b>MmpL5 efflux pump</b>, conferring <b>cross-resistance between clofazimine and bedaquiline</b> — clinically critical since both are mainstays of all-oral DR-TB regimens. <i>pepQ</i> mutations also confer cross-resistance to both; <i>Rv1979c</i> mutations affect clofazimine only. Resistance in leprosy remains rare.</p>
+    <h4>Pharmacokinetics</h4>
+    <table>
+      <tr><th>Parameter</th><th>Detail</th></tr>
+      <tr><td>Route/dose</td><td>Oral; up to 300 mg/day in TB/leprosy MDT (RNTCP XDR regimen used 200 mg)</td></tr>
+      <tr><td>Bioavailability</td><td>~40–70%; doubled by high-fat meals, reduced ~30% by antacids</td></tr>
+      <tr><td>Distribution</td><td>Highly lipophilic; accumulates in macrophages, deposits as needle-shaped crystals in fat, RE tissue, skin, gut, liver, spleen, lymph nodes; poor CSF penetration</td></tr>
+      <tr><td>Half-life</td><td>Very long, t½ ≈ 70 days (tissue depot) — allows intermittent dosing</td></tr>
+      <tr><td>Metabolism</td><td>Hepatic — dehalogenation, deamination, glucuronidation, hydroxylation; not removed by haemodialysis</td></tr>
+    </table>
+    <h4>Place in DR-TB therapy</h4>
+    <p>Clofazimine is a <b>WHO Group B</b> companion drug (added to the three Group A drugs — fluoroquinolone, bedaquiline, linezolid). It is a core component of the <b>9-month shorter all-oral MDR-TB regimen</b> (with bedaquiline, FQ, high-dose isoniazid, ethambutol, pyrazinamide, ethionamide/linezolid) and a preferred Group B add-on in longer individualised regimens for its sterilising activity. The RNTCP/NTEP 2016 XDR-TB regimen used clofazimine 200 mg/day as one of 7 intensive-phase drugs continued into the continuation phase. Also an alternative agent for <i>M. avium</i> complex and rapidly-growing NTM (synergy with amikacin).</p>
+    <h4>Adverse effects</h4>
+    <ul>
+      <li><b>Skin/eye pigmentation (hallmark):</b> dose-dependent reddish-black to violaceous discolouration of skin, conjunctiva, hair, and all body secretions; reversible but fades over months–years — major cause of non-adherence/stigma. Also ichthyosis, itching, phototoxicity.</li>
+      <li><b>GI:</b> very common (nausea, anorexia, abdominal pain, weight loss) in 40–50% on higher TB doses; crystal deposition can cause rare fatal "clofazimine enteropathy" — take with meals.</li>
+      <li><b>Cardiac:</b> QT prolongation — additive with bedaquiline, fluoroquinolones, delamanid → mandatory baseline + serial ECG/electrolyte monitoring.</li>
+    </ul>
+    <p><b>Caution:</b> avoid in early pregnancy and significant hepatic/renal impairment; caution with pre-existing QT prolongation/electrolyte derangement. Antacids ↓ absorption; high-fat meals ↑ absorption. In leprosy, clofazimine treats lepra reactions itself (unlike rifampicin).</p>
+    <div class="recent"><b>Recent advances:</b> A 2024 multicentre RCT (China) of a 9-month all-oral regimen (bedaquiline + linezolid + levofloxacin + clofazimine + cycloserine) was non-inferior to longer therapy (unfavourable outcomes 16.5% vs 22.4%), confirming clofazimine's role in short regimens, though QTcF prolongation occurred in ~22.6% — underscoring ECG monitoring. Programmatic use of shorter clofazimine-containing regimens achieved high success rates (e.g. 83.7% in Pakistan). Clofazimine exemplifies host-directed drug repurposing in TB, sparing the 20–30 year cost of novel drug discovery. The newer clofazimine-sparing BPaLM/BPaL regimens are preferred where applicable, but clofazimine remains central where BPaLM is unsuitable (extensive prior exposure, intolerance) — with ongoing vigilance for Rv0678/mmpL5-mediated cross-resistance with bedaquiline.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">HIV protease inhibitors — mechanism, pharmacokinetic boosting (ritonavir/cobicistat), uses &amp; adverse effects.</span></summary>
+  <div class="answer">
+    <h4>Introduction</h4>
+    <p>Protease inhibitors (PIs) are peptidomimetic antiretrovirals that competitively block the HIV-1 aspartyl protease, the enzyme performing the final maturation step of the virion. By preventing cleavage of viral polyproteins they cause release of immature, non-infectious virions. They act at a late (maturation) step, so are effective in both newly and chronically infected cells, and need no intracellular phosphorylation/activation (unlike NRTIs).</p>
+    <h4>Classification</h4>
+    <table>
+      <tr><th>Status</th><th>Agents</th><th>Note</th></tr>
+      <tr><td>Preferred/current</td><td>Atazanavir, Darunavir, Lopinavir (only as LPV/r)</td><td>Boosted; high genetic barrier</td></tr>
+      <tr><td>Booster (PK enhancer)</td><td>Ritonavir (low-dose), Cobicistat</td><td>CYP3A4 inhibition, not antiviral effect</td></tr>
+      <tr><td>Older/rarely used</td><td>Indinavir, Nelfinavir, Saquinavir, Fosamprenavir, Tipranavir</td><td>Poor efficacy/tolerability, high pill load</td></tr>
+    </table>
+    <h4>Mechanism of action</h4>
+    <p>HIV protease is an aspartyl-protease homodimer; it cleaves the <i>gag</i> and <i>gag-pol</i> polyproteins into the structural proteins and enzymes (reverse transcriptase, integrase) of the mature virion. PIs bind the active site, blocking this cleavage, so defective, immature, non-infectious progeny are produced, preventing further rounds of infection.</p>
+    <div class="dia"><b>Diagram (labelled description):</b> Late HIV life cycle — gag-pol polyprotein → HIV aspartyl protease (blocked by PI) → cleavage prevented → immature, non-infectious virion released.</div>
+    <h4>Ritonavir/cobicistat boosting</h4>
+    <p>Most PIs are extensively CYP3A4-metabolised. Ritonavir, itself a weak PI, is used at sub-therapeutic dose (100 mg) purely as a potent <b>CYP3A4 inhibitor</b> — raising the companion PI's bioavailability and t½, reducing pill burden, and raising the genetic barrier to resistance ("/r" boosted regimen). <b>Cobicistat</b> is a ritonavir analogue with no antiviral activity — a pure PK enhancer, more CYP3A4-selective, better tolerated, no enzyme induction, but blocks tubular creatinine secretion (small reversible rise in serum creatinine). Nelfinavir is not boosted (cleared by CYP2C19, unaffected by ritonavir).</p>
+    <h4>Clinical uses</h4>
+    <ul>
+      <li>Component of combination ART (typically 2 NRTIs + 1 boosted PI); reserved largely for second-line/salvage regimens (WHO/NACO) since PI use restricts later options.</li>
+      <li>Boosted darunavir or atazanavir preferred in pregnancy (lopinavir/r not preferred — preterm-birth signal); also used in post-exposure prophylaxis.</li>
+    </ul>
+    <h4>Adverse effects</h4>
+    <ul>
+      <li><b>Class:</b> GI intolerance (often dose-limiting), asthenia, headache, circumoral/peripheral paraesthesias.</li>
+      <li><b>Metabolic syndrome/lipodystrophy:</b> central obesity, "buffalo hump", peripheral/facial wasting, dyslipidaemia, insulin resistance/hyperglycaemia.</li>
+      <li><b>Agent-specific:</b> atazanavir → indirect hyperbilirubinaemia (UGT1A1 inhibition), PR prolongation; indinavir → nephrolithiasis/crystalluria; lopinavir/r → PR/QT prolongation, pancreatitis; darunavir/fosamprenavir (sulfonamide moiety) → rash/hypersensitivity; darunavir → hepatotoxicity.</li>
+    </ul>
+    <h4>Drug interactions</h4>
+    <p>As CYP3A4 inhibitors, PIs raise levels of narrow-margin CYP3A4 substrates — contraindicated with ergot alkaloids, cisapride, simvastatin/lovastatin, oral midazolam/triazolam. Enzyme inducers (rifampin, carbamazepine, phenytoin, St John's wort) lower PI levels → use rifabutin instead of rifampin. Atazanavir absorption is acid-dependent — PPIs are contraindicated.</p>
+    <div class="recent"><b>Recent advances:</b> Ritonavir's CYP3A4-inhibiting property is now exploited beyond HIV — as the booster in nirmatrelvir/ritonavir (Paxlovid) for COVID-19. Cobicistat increasingly replaces ritonavir as booster (fixed-dose with atazanavir/darunavir/elvitegravir). PIs have largely moved to second-line roles as integrase inhibitors (dolutegravir-based) now dominate first-line ART. The HCV protease (NS3/4A) "-previrs" (simeprevir, paritaprevir, grazoprevir, glecaprevir, voxilaprevir) extend the protease-inhibition concept to hepatitis C within all-oral DAA combinations.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Classification of systemic antifungal drugs by molecular target/mechanism.</span></summary>
+  <div class="answer">
+    <h4>Rationale</h4>
+    <p>Systemic antifungals treat invasive/deep mycoses and recalcitrant superficial infections. The clinically useful classes exploit fungus-specific targets — chiefly membrane <b>ergosterol</b> and cell-wall <b>β-(1,3)-glucan</b> — both absent from mammalian cells, giving selective toxicity. Classification is rational by molecular target.</p>
+    <table>
+      <tr><th>Class</th><th>Key drug(s)</th><th>Target/mechanism</th><th>Spectrum/notes</th></tr>
+      <tr><td>Polyene antibiotics</td><td>Amphotericin B (± liposomal), nystatin/natamycin (topical)</td><td>Bind membrane ergosterol → pore formation → K⁺/ion leakage → fungicidal</td><td>Broadest spectrum; gold standard for severe systemic mycoses; IV; nephrotoxic</td></tr>
+      <tr><td>Azoles — imidazoles</td><td>Ketoconazole (clotrimazole, miconazole — topical)</td><td>Inhibit fungal CYP450 14-α-demethylase → block ergosterol synthesis</td><td>Ketoconazole now largely replaced (toxicity)</td></tr>
+      <tr><td>Azoles — triazoles</td><td>Fluconazole, itraconazole, voriconazole, posaconazole, isavuconazole</td><td>Same target, greater selectivity, fewer interactions</td><td>Fluconazole — excellent CNS penetration; voriconazole/isavuconazole — invasive aspergillosis</td></tr>
+      <tr><td>Echinocandins</td><td>Caspofungin, micafungin, anidulafungin</td><td>Inhibit β-(1,3)-glucan synthase → defective cell wall → fungicidal</td><td>IV only; Candida (incl. azole-resistant), aspergillosis</td></tr>
+      <tr><td>Allylamine</td><td>Terbinafine</td><td>Inhibit squalene epoxidase → ↓ergosterol + toxic squalene accumulation</td><td>Mainly dermatophytes/onychomycosis; oral</td></tr>
+      <tr><td>Antimetabolite (pyrimidine)</td><td>Flucytosine (5-FC)</td><td>Converted to 5-FU → 5-fluoro-dUMP inhibits thymidylate synthase + incorporated into fungal RNA</td><td>Cryptococcal/Candida; always combined (with AMB) to limit resistance</td></tr>
+      <tr><td>Antifungal antibiotic</td><td>Griseofulvin</td><td>Keratophilic; disrupts mitotic spindle (microtubules) → fungistatic</td><td>Oral, dermatophytoses only</td></tr>
+    </table>
+    <div class="dia"><b>Diagram (labelled description):</b> Fungal cell wall + membrane with drug targets mapped — β-(1,3)-glucan synthase → echinocandins; squalene epoxidase → terbinafine; 14-α-demethylase → azoles; ergosterol → polyenes; thymidylate synthase → flucytosine.</div>
+    <p><b>High yield:</b> two master targets — membrane (polyenes bind ergosterol directly; azoles/allylamines block its synthesis) vs cell wall (echinocandins). Amphotericin B = broadest-spectrum/gold standard; flucytosine = only antimetabolite, synergistic with AMB in cryptococcal meningitis; echinocandins/polyenes are fungicidal, azoles largely fungistatic; terbinafine + griseofulvin = dermatophyte/keratin agents.</p>
+    <div class="recent"><b>Recent advances:</b> <b>Isavuconazole</b> (water-soluble prodrug isavuconazonium) licensed for invasive aspergillosis and mucormycosis with favourable kinetics/fewer interactions. Newer classes: <b>ibrexafungerp</b> (oral triterpenoid β-(1,3)-glucan synthase inhibitor) and <b>oteseconazole</b> (tetrazole); <b>rezafungin</b>, a long-acting once-weekly echinocandin, is an emerging agent.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Current status of HIV treatment &amp; latest HAART/cART guidelines (drug classes, preferred first-line regimen, long-acting therapy).</span></summary>
+  <div class="answer">
+    <h4>Introduction</h4>
+    <p>HAART/cART is combination therapy with ≥3 drugs from ≥2 classes that maximally and durably suppresses HIV replication. Goal: plasma HIV-RNA &lt;50 copies/mL, CD4 restoration, and prevention of transmission ("U=U" — undetectable = untransmissible). Therapy controls but does not eradicate integrated provirus, so it is life-long; monotherapy is contraindicated (rapid resistance).</p>
+    <h4>ART drug classes</h4>
+    <table>
+      <tr><th>Class</th><th>Examples</th></tr>
+      <tr><td>NRTI (chain termination)</td><td>Tenofovir (TDF/TAF), lamivudine, emtricitabine, abacavir, zidovudine</td></tr>
+      <tr><td>NNRTI</td><td>Efavirenz, nevirapine, rilpivirine, doravirine, etravirine</td></tr>
+      <tr><td>PI (boosted)</td><td>Darunavir, atazanavir, lopinavir</td></tr>
+      <tr><td>INSTI</td><td>Dolutegravir, bictegravir, raltegravir, cabotegravir, elvitegravir</td></tr>
+      <tr><td>Entry/fusion/capsid</td><td>Maraviroc (CCR5), enfuvirtide (gp41), lenacapavir (capsid)</td></tr>
+    </table>
+    <h4>Current preferred regimen (WHO/NACO)</h4>
+    <ul>
+      <li><b>Test-and-treat / rapid initiation:</b> start ART in all PLHIV immediately after diagnosis, irrespective of CD4 count or stage (basis: START, TEMPRANO trials) — adopted by NACO/Government of India.</li>
+      <li><b>First-line (preferred): TLD</b> = Tenofovir + Lamivudine + Dolutegravir — an INSTI-anchored, single-tablet, once-daily regimen with high potency, high genetic barrier, low pill burden, few interactions.</li>
+      <li>Alternatives: bictegravir/TAF/emtricitabine; abacavir/3TC/DTG (if HLA-B*5701 negative); 2-drug DTG+3TC; TDF/FTC/efavirenz (older NACO regimen).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> <b>Long-acting injectables</b> — cabotegravir + rilpivirine IM every 2 months for maintenance in virologically suppressed patients, freeing patients from daily pills. <b>Lenacapavir</b> — first-in-class capsid inhibitor, subcutaneous twice-yearly dosing, minimal CYP interactions. <b>PrEP/PEP:</b> oral TDF/FTC and CAB-LA for prevention; lenacapavir for PrEP FDA-approved (Yeztugo, Jun 2025) and WHO-recommended (Jul 2025) — PURPOSE 1 (cisgender women, 0 infections) and PURPOSE 2 (men/gender-diverse, 99.9% protection) showed superiority over daily oral PrEP. High-yield: TLD = WHO/NACO first-line mnemonic; DTG dose doubled with rifampicin/efavirenz; stagger from Ca²⁺/Mg²⁺/antacids (chelation); avoid nevirapine in hepatic disease/high CD4.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Recent advances in antimicrobial therapy: novel antibacterial agents for MDR/XDR Gram-negative infections &amp; novel anti-tubercular drugs (BPaL/BPaLM).</span></summary>
+  <div class="answer">
+    <h4>Introduction</h4>
+    <p>The accelerating loss of effective drugs against MDR/XDR/pan-drug-resistant Gram-negatives and <i>M. tuberculosis</i> has driven development of novel antibacterials (chiefly newer β-lactamase-inhibitor combinations) and novel anti-TB agents (bedaquiline, delamanid, pretomanid), alongside structured stewardship to preserve them.</p>
+    <h4>Novel antibacterial agents</h4>
+    <table>
+      <tr><th>Agent</th><th>Class/mechanism</th><th>Key niche</th></tr>
+      <tr><td>Ceftazidime–avibactam</td><td>Cephalosporin + novel (non-β-lactam) BLI</td><td>KPC &amp; OXA-48 carbapenemase-producing Enterobacterales, MDR <i>Pseudomonas</i></td></tr>
+      <tr><td>Ceftolozane–tazobactam</td><td>Anti-pseudomonal cephalosporin + BLI</td><td>MDR <i>P. aeruginosa</i>, complicated UTI/intra-abdominal infection</td></tr>
+      <tr><td>Meropenem–vaborbactam</td><td>Carbapenem + boronate BLI</td><td>KPC-producing CRE</td></tr>
+      <tr><td>Cefiderocol</td><td>Siderophore ("Trojan-horse") cephalosporin — chelates Fe³⁺, enters via bacterial iron transporters</td><td>Carbapenem-resistant Gram-negatives incl. metallo-β-lactamase producers, <i>Acinetobacter</i>, <i>Stenotrophomonas</i></td></tr>
+      <tr><td>Plazomicin</td><td>Next-gen aminoglycoside, stable to modifying enzymes</td><td>CRE complicated UTI</td></tr>
+      <tr><td>Eravacycline</td><td>Fluorocycline (tetracycline class)</td><td>Complicated intra-abdominal infection, MDR incl. tetracycline-resistant</td></tr>
+      <tr><td>Lefamulin</td><td>First systemic pleuromutilin (50S inhibitor)</td><td>Community-acquired bacterial pneumonia incl. atypicals</td></tr>
+    </table>
+    <div class="dia"><b>Diagram (labelled description):</b> Cefiderocol "Trojan-horse" uptake — Fe³⁺–cefiderocol chelate binds bacterial siderophore/iron transporter → actively transported into periplasm → reaches PBP3 target despite outer-membrane impermeability.</div>
+    <h4>Novel anti-tuberculosis drugs &amp; regimens</h4>
+    <ul>
+      <li><b>Bedaquiline</b> — diarylquinoline; inhibits subunit-c of mycobacterial ATP synthase, depleting bacillary ATP; cationic amphiphilic drug, huge V_d (&gt;10,000 L), t½ ≈5.5 months (CYP3A4 → active M2 metabolite); now WHO Group A, standard of care in MDR-TB. ADR: QT prolongation (M2-driven), nausea, diarrhoea.</li>
+      <li><b>Pretomanid &amp; delamanid</b> — bicyclic nitroimidazole prodrugs activated by F420-dependent nitroreductase (FGD1/Rv3547); inhibit mycolic-acid synthesis in replicating bacilli, generate reactive nitrogen species in persisters. Pretomanid lacks activity vs non-tuberculous mycobacteria; both partly CYP3A-metabolised (rifampicin lowers pretomanid levels). ADR: delamanid — modest QT effect; pretomanid — hepatotoxicity.</li>
+      <li><b>Regimens:</b> bedaquiline added to a second-line backbone roughly doubled 8-week culture conversion vs placebo in early trials. The all-oral 6-month <b>BPaL</b> (Bedaquiline+Pretomanid+Linezolid) is highly effective in XDR-TB; <b>BPaLM</b> (+ Moxifloxacin) was superior to long standard care for rifampicin-resistant TB (unfavourable outcomes 12% vs 41%), and WHO (2022) now recommends BPaLM as the preferred MDR/RR-TB regimen.</li>
+    </ul>
+    <div class="dia"><b>Diagram (labelled description):</b> Comparison bar — old 18–24 month injectable MDR-TB regimen vs 6-month all-oral BPaLM — axes: duration, pill burden, success rate, injectable use.</div>
+    <h4>Other advances &amp; India-specific initiatives</h4>
+    <ul>
+      <li><b>Bacteriophage therapy</b> — lytic phages/cocktails as personalised "last-resort" salvage for MDR infections (compassionate use); still largely investigational.</li>
+      <li><b>India:</b> ICMR AMR Surveillance &amp; Research Network with annual treatment guidelines; NCDC-coordinated National Programme on AMR Containment and NAP-AMR; Schedule H1 restricting OTC antibiotic sale; Red-Line campaign.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> TB-PRACTECAL confirmed 24-week all-oral BPaLM non-inferior/superior to standard care for rifampicin-resistant TB, underpinning WHO 2022 guidance. The CREDIBLE-CR phase 3 trial positioned cefiderocol as an option for carbapenem-resistant Gram-negative infections with limited alternatives (noting an <i>Acinetobacter</i>-mortality signal warranting caution). AWaRe-guided prescribing remains central to operational stewardship. India continues expanding ICMR/NCDC surveillance and NAP-AMR implementation, with phage therapy advancing only in compassionate-use settings.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Antimicrobial use in pregnancy and lactation — placental/lactational transfer principles, safe vs avoided agents, and timing-related foetal risks.</span></summary>
+  <div class="answer">
+    <h4>Introduction</h4>
+    <p>Untreated maternal infection itself harms the foetus, so antimicrobials cannot simply be withheld in pregnancy — the challenge is dual safety, since most antimicrobial agents (AMAs) cross the placenta and many enter breast milk. Guiding rule: use only AMAs with an established safety record, at the lowest effective dose for the shortest duration.</p>
+    <h4>General principles of placental transfer &amp; pregnancy pharmacokinetics</h4>
+    <ul>
+      <li>Lipid-soluble, un-ionised, low-molecular-weight drugs cross readily (high foetal levels); large molecules (e.g. heparin) do not — placental P-glycoprotein partly pumps some drugs back to the mother.</li>
+      <li>Pregnancy PK changes: delayed gastric emptying, ↑ plasma volume (~30%, ↑ Vd/haemodilution), progesterone-induced hepatic enzyme induction (faster metabolism), ↑ renal blood flow → faster clearance (e.g. aminoglycosides) — some AMA doses need upward adjustment.</li>
+      <li><b>Timing matters:</b> 1st trimester = organogenesis/teratogenesis risk; near-term/3rd trimester = functional/neonatal toxicity risk (kernicterus, grey-baby syndrome).</li>
+    </ul>
+    <h4>Antimicrobials in pregnancy — safe vs avoid</h4>
+    <table>
+      <tr><th>Agent</th><th>Status</th><th>Basis/foetal risk</th></tr>
+      <tr><td>Penicillins, most cephalosporins</td><td><b>Safe</b> — drugs of choice</td><td>No teratogenicity, long safety record</td></tr>
+      <tr><td>Erythromycin (not estolate), azithromycin</td><td>Safe</td><td>Estolate → maternal cholestatic hepatitis</td></tr>
+      <tr><td>Metronidazole</td><td>Avoid 1st trimester</td><td>Mutagenic potential (not proven teratogenic)</td></tr>
+      <tr><td>Tetracyclines</td><td><b>Contraindicated</b></td><td>Teeth/bone deformity; maternal acute fatty liver, pancreatitis, kidney damage</td></tr>
+      <tr><td>Aminoglycosides</td><td>Avoid</td><td>Foetal VIII-nerve ototoxicity</td></tr>
+      <tr><td>Fluoroquinolones</td><td>Avoid</td><td>Cartilage/arthropathy risk</td></tr>
+      <tr><td>Sulfonamides/co-trimoxazole</td><td>Avoid, esp. near term</td><td>Bilirubin displacement → kernicterus; folate antagonism early</td></tr>
+      <tr><td>Chloramphenicol</td><td>Avoid, esp. near term</td><td>Grey-baby syndrome (immature glucuronidation)</td></tr>
+      <tr><td>Nitrofurantoin</td><td>Caution; avoid near term</td><td>Animal foetal risk; haemolysis if G6PD-deficient</td></tr>
+    </table>
+    <p>In G6PD deficiency, primaquine, nitrofurantoin, sulfonamides, chloramphenicol and fluoroquinolones risk haemolysis. <b>Heparin, not warfarin,</b> is the safe anticoagulant (does not cross placenta — illustrates the molecular-weight principle).</p>
+    <div class="dia"><b>Diagram (labelled description):</b> Trimester safety strip — 1st trimester: avoid metronidazole, folate antagonists; 2nd–3rd trimester: avoid tetracyclines (teeth/bone); near term: avoid sulfonamides (kernicterus), chloramphenicol (grey-baby); green "safe throughout" band: penicillins, cephalosporins, erythromycin, azithromycin.</div>
+    <h4>Antimicrobials in lactation</h4>
+    <p>Most drugs enter milk only in tiny amounts and do not harm the infant; lipid-soluble drugs diffuse passively into milk while highly protein-bound drugs barely enter (only the unbound fraction transfers) — quantified by the milk-to-plasma (M/P) ratio (low M/P + high maternal protein binding = favourable).</p>
+    <table>
+      <tr><th>Safe in lactation</th><th>Avoid/contraindicated in lactation</th></tr>
+      <tr><td>Penicillins, erythromycin, most cephalosporins, chloroquine; metronidazole (safe but bitters milk)</td><td>Tetracyclines (teeth discolouration); chloramphenicol &amp; sulfonamides (neonatal jaundice/G6PD risk); fluoroquinolones (cartilage concern)</td></tr>
+    </table>
+    <h4>FDA pregnancy categories (regulatory framework)</h4>
+    <p>The historical A/B/C/D/X letter system (A = no risk; B = no human risk shown — most penicillins/cephalosporins/erythromycin/azithromycin; C = risk not ruled out; D = positive evidence of risk; X = contraindicated) has been replaced by narrative labelling (see Recent advances).</p>
+    <div class="recent"><b>Recent advances:</b> The <b>FDA PLLR</b> (Pregnancy and Lactation Labeling Rule, 2015) phased out the A/B/C/D/X letter categories; legacy ratings expired in 2018, and labels now carry narrative risk summaries for pregnancy, lactation and reproductive potential. A 2025 safety review found 19 new antibiotics FDA-approved since 2014 mostly lack human pregnancy data, so beta-lactams remain the best-characterised safe choice. <b>LactMed</b> (NIH) is now the standard point-of-care database for lactation drug safety, replacing category-based guesswork. Short courses of <b>doxycycline</b> are increasingly accepted (CDC) as enamel-staining risk appears lower than with older tetracyclines, though routine antenatal use is still avoided.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Post-exposure prophylaxis (PEP) in HIV — risk assessment, timing, preferred regimens &amp; follow-up; distinction from PrEP.</span></summary>
+  <div class="answer">
+    <h4>Introduction</h4>
+    <p>Post-exposure prophylaxis (PEP) is the short-course administration of antiretroviral (ARV) drugs, begun as soon as possible after accidental exposure to potentially HIV-infected material, to abort establishment of systemic infection by suppressing local viral replication before dissemination/integration. PEP is classified as <b>occupational (oPEP)</b> — e.g. a needle-stick in a healthcare worker — or <b>non-occupational (nPEP)</b> — condomless intercourse, sexual assault, shared injection equipment, other community exposures.</p>
+    <h4>Risk assessment of the exposure</h4>
+    <table>
+      <tr><th>Category</th><th>Exposure/source features</th><th>PEP decision</th></tr>
+      <tr><td>High-risk</td><td>Symptomatic source, high HIV-RNA/low CD4, not on ART; large-bore hollow needle, deep puncture, visible blood, sexual exposure, major mucosal/abraded-skin splash</td><td><b>Indicated</b></td></tr>
+      <tr><td>Low-risk</td><td>Asymptomatic source, low viral load/high CD4 or on ART; superficial scratch, thin solid needle</td><td>Consider (individualise)</td></tr>
+      <tr><td>No-risk</td><td>Source confirmed HIV-negative; exposure to urine/sweat/non-blood-stained saliva; intact skin</td><td>Not indicated</td></tr>
+    </table>
+    <p>PEP is an urgent decision and must not be delayed awaiting the source's HIV result if reasonable suspicion exists; test the source by rapid HIV test wherever feasible.</p>
+    <h4>First-aid (immediate)</h4>
+    <p>Wounds/skin: wash immediately with soap and running water (do not scrub/squeeze; allow free bleeding). Mucous membranes/eyes: irrigate copiously with water/saline (avoid caustic antiseptics). Then report, document, risk-assess, and start drugs without delay.</p>
+    <h4>Timing &amp; duration</h4>
+    <p>Start ASAP — ideally within 1–2 h, and not beyond <b>72 h</b> of exposure (efficacy falls sharply with delay). Duration: <b>28 days (4 weeks)</b> of the full regimen.</p>
+    <h4>Preferred regimens (WHO/NACO)</h4>
+    <table>
+      <tr><th>Component</th><th>Preferred</th><th>Notes</th></tr>
+      <tr><td>NRTI backbone</td><td>Tenofovir DF 300 mg + Lamivudine 300 mg (or Emtricitabine 200 mg) OD</td><td>Fixed-dose combination, once-daily</td></tr>
+      <tr><td>Third drug (preferred)</td><td>Dolutegravir 50 mg OD or Raltegravir 400 mg BD</td><td>INSTI; well tolerated, high genetic barrier</td></tr>
+      <tr><td>Third drug (alternative)</td><td>Darunavir/r 800+100 mg OD (or LPV/r, ATV/r)</td><td>Boosted-PI option (older WHO-2016 preference)</td></tr>
+      <tr><td>Renal impairment</td><td>Zidovudine/Lamivudine (dose-adjusted) + DTG/RAL</td><td>Avoid/adjust TDF</td></tr>
+      <tr><td>Children ≤10 yr</td><td>Zidovudine + Lamivudine + LPV/r</td><td>WHO paediatric PEP backbone</td></tr>
+    </table>
+    <p><b>Nevirapine is NOT used for PEP</b> (risk of severe hepatotoxicity/rash in immunocompetent recipients). Zidovudine, the historical first PEP drug, is now rarely used in adults (toxicity, pill burden). If the source is treatment-experienced, individualise with expert consultation — but never delay the first dose.</p>
+    <h4>Baseline &amp; follow-up</h4>
+    <p><b>Baseline:</b> HIV (rapid + confirmatory), HBsAg/anti-HBs, anti-HCV, pregnancy test, renal/liver function, CBC. <b>Counselling:</b> informed consent, expected ADRs, strict 28-day adherence, barrier precautions, avoid blood/organ donation during follow-up. <b>Follow-up HIV testing:</b> 4–6 weeks, 12 weeks (and per older protocols, 6 months); monitor for GI intolerance, headache, transaminitis, renal dysfunction (TDF) and acute retroviral syndrome.</p>
+    <h4>PEP vs PrEP</h4>
+    <table>
+      <tr><th>Feature</th><th>PEP</th><th>PrEP</th></tr>
+      <tr><td>Timing</td><td>After exposure (&lt;72 h)</td><td>Before/ongoing risk</td></tr>
+      <tr><td>Goal</td><td>Abort an exposure already happened</td><td>Prevent acquisition in high-risk persons</td></tr>
+      <tr><td>Duration</td><td>28-day course</td><td>Continuous while at risk</td></tr>
+      <tr><td>Typical regimen</td><td>3 drugs (2 NRTI + INSTI/PI)</td><td>TDF/FTC oral or long-acting cabotegravir</td></tr>
+    </table>
+    <div class="dia"><b>Diagram (labelled description):</b> PEP decision algorithm — Exposure → first-aid (wash/irrigate) → risk-assess (high/low/no) → source HIV test → start PEP &lt;72 h (ideally &lt;2 h) → TDF+3TC/FTC+DTG/RAL ×28 days → HIV retest at 4–6 and 12 weeks.</div>
+    <div class="recent"><b>Recent advances:</b> NACO adopted the fixed-dose TLD (Tenofovir+Lamivudine+Dolutegravir) regimen as preferred first-line ART from 2020–21, underpinning DTG's preference as the PEP third drug too. Updated CDC non-occupational PEP recommendations (2025) continue to endorse a 28-day INSTI-anchored 3-drug regimen within the 72-h window. Long-acting cabotegravir is now an established PrEP option, and "U=U" (undetectable=untransmittable) reframes treatment-as-prevention, informing whether a sexual-exposure source is truly infectious.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Recent advances in the treatment of Hepatitis C — direct-acting antivirals (DAA classification, mechanisms, pangenotypic regimens).</span></summary>
+  <div class="answer">
+    <h4>Introduction — the paradigm shift</h4>
+    <p>HCV (a hepatotropic, positive-sense RNA flavivirus, genotypes 1–6) causes chronic hepatitis progressing to cirrhosis/HCC. The toxic, prolonged, low-cure peginterferon-α (PegIFNα) + ribavirin era (24–48 weeks, SVR only ~50%, flu-like illness, cytopenias, depression, haemolytic anaemia) has been replaced by short, all-oral, well-tolerated <b>direct-acting antiviral (DAA)</b> regimens achieving <b>sustained virological response (SVR12)</b> in &gt;95% of patients over just 8–12 weeks, IFN-free and increasingly ribavirin-free. HCV is now the only chronic viral infection reliably curable with drugs.</p>
+    <p><b>Rationale for combination:</b> HCV NS5B polymerase lacks proofreading → enormous daily viral turnover and pre-existing resistance-associated substitutions (RASs); single agents have a low genetic barrier, so ≥2 DAAs on different targets suppress replication and prevent resistance (analogous to HIV/ART).</p>
+    <h4>Classification of DAAs (by NS target)</h4>
+    <table>
+      <tr><th>Target/suffix</th><th>Drugs</th><th>Mechanism</th></tr>
+      <tr><td>NS3/4A protease inhibitors (-previr)</td><td>Simeprevir, grazoprevir, glecaprevir, voxilaprevir</td><td>Block cleavage of the HCV polyprotein → no functional replication complex</td></tr>
+      <tr><td>NS5A inhibitors (-asvir)</td><td>Daclatasvir, ledipasvir, velpatasvir, pibrentasvir, elbasvir</td><td>Inhibit the multifunctional NS5A protein → block HCV-RNA replication &amp; virion assembly</td></tr>
+      <tr><td>NS5B polymerase inhibitors (-buvir)</td><td>Sofosbuvir (nucleotide, active-site)</td><td>Defective nucleotide → chain termination of RdRp-driven RNA synthesis</td></tr>
+    </table>
+    <p><b>Sofosbuvir</b> — uridine-analogue prodrug, phosphorylated intracellularly to the active triphosphate that competes with UTP for incorporation into nascent HCV RNA, acting as a chain terminator. NS5B is highly conserved → active against all genotypes (pangenotypic), high genetic barrier (S282T resistance rare). Not a CYP substrate but a P-glycoprotein/BCRP substrate — avoid P-gp inducers (rifampin, phenytoin, carbamazepine, St John's wort). Renally cleared; <b>bradycardia/cardiac arrest with amiodarone</b> co-administration.</p>
+    <h4>Pangenotypic fixed-dose combinations</h4>
+    <table>
+      <tr><th>Regimen</th><th>Class composition</th><th>Genotypes</th><th>Duration</th></tr>
+      <tr><td>Sofosbuvir/velpatasvir (SOF/VEL)</td><td>NS5B + NS5A</td><td>Pangenotypic (1–6)</td><td>12 wk</td></tr>
+      <tr><td>Glecaprevir/pibrentasvir (GLE/PIB)</td><td>NS3/4A + NS5A</td><td>Pangenotypic (1–6)</td><td>8 wk (no/compensated cirrhosis)</td></tr>
+      <tr><td>Ledipasvir/sofosbuvir (LDV/SOF)</td><td>NS5A + NS5B</td><td>1, 4, 5, 6</td><td>12 wk</td></tr>
+      <tr><td>Elbasvir/grazoprevir</td><td>NS5A + NS3/4A</td><td>1b, 4</td><td>12 wk</td></tr>
+      <tr><td>SOF/VEL/voxilaprevir</td><td>NS5B+NS5A+NS3/4A</td><td>Pangenotypic salvage</td><td>12 wk</td></tr>
+    </table>
+    <p>SVR rates: SOF/VEL ~99%; GLE/PIB 94–100%; LDV/SOF 95–99%; SOF/VEL/VOX salvage 99% (93% with cirrhosis). Decompensated cirrhosis (Child-Pugh B/C) needs extended therapy with ribavirin added, and is restricted to NS5A/NS5B regimens — <b>protease (-previr) inhibitors are contraindicated</b> (risk of hepatic decompensation).</p>
+    <h4>Resistance-associated substitutions (RASs)</h4>
+    <p>Nucleotide NS5B inhibitors have a high resistance barrier; NS5A and protease inhibitors have a low barrier. NS5A RASs (Q30R, L31M/V, Y93H/N) persist for years with broad cross-resistance — pre-treatment Y93 testing is advised before elbasvir/grazoprevir in GT1a and before SOF/VEL in GT3 with cirrhosis.</p>
+    <div class="dia"><b>Diagram (labelled description):</b> HCV genome/polyprotein map with DAA target sites — Core–E1–E2–p7–NS2–NS3/4A (→ -previr) – NS4B – NS5A (→ -asvir) – NS5B/RdRp (→ -buvir).</div>
+    <h4>Clinical &amp; public-health impact</h4>
+    <p>Short oral course, &gt;95% cure, minimal monitoring; SVR reduces cirrhosis, HCC and liver-related mortality and can reverse fibrosis. WHO (2016) set a goal to eliminate HCV as a public-health threat by 2030 (90% reduction in new infections, 65% reduction in mortality); affordable Indian generics (sofosbuvir, daclatasvir, LDV/SOF, SOF/VEL) underpin scale-up.</p>
+    <div class="recent"><b>Recent advances:</b> WHO's 2030 elimination target remains distant — an estimated 57–58 million people were living with HCV (2020) with ~290,000–300,000 deaths/year; screening, linkage-to-care and treatment access must accelerate. Real-world pangenotypic DAA cohorts confirm registration-trial efficacy (SVR12 ~90–100%, mostly mild ADRs). There is a growing trend toward simplified, genotype-free, test-and-treat/single-visit point-of-care models and decentralised delivery to reach people who inject drugs.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Status of metronidazole in different diseases — mechanism of selective toxicity, spectrum, disease-wise dosing, and current shift away from first-line use in C. difficile colitis.</span></summary>
+  <div class="answer">
+    <h4>Introduction</h4>
+    <p>Metronidazole, the prototype 5-nitroimidazole (introduced 1959 for trichomoniasis, later shown to be a highly active amoebicide), is a broad-spectrum cidal agent against anaerobic protozoa and anaerobic/microaerophilic bacteria — a workhorse across protozoal, anaerobic-surgical, gastrointestinal and genital infections. Its therapeutic "status" has shifted in several diseases (notably <i>C. difficile</i> colitis) with current guidelines.</p>
+    <h4>Mechanism / basis of selective toxicity</h4>
+    <p>Metronidazole is a prodrug. After diffusing into the cell, its nitro group is reduced by low-redox-potential electron-transport proteins found only in anaerobes (the pyruvate:ferredoxin oxidoreductase, PFOR, pathway). The resulting highly reactive nitro radical acts as an electron sink, competing with the organism's biological electron acceptors, generating reactive compounds that damage DNA and disrupt the energy metabolism of anaerobes (which lack mitochondria). It is selectively toxic to anaerobic/microaerophilic organisms because an aerobic environment attenuates cytotoxicity (O₂ inhibits reductive activation and competes for free electrons) — hence no activity vs aerobes. Additional actions: inhibits cell-mediated immunity, mutagenic, radiosensitising.</p>
+    <div class="dia"><b>Diagram (labelled description):</b> Reductive activation cartoon — metronidazole (NO₂ group) → PFOR/ferredoxin reduction → reactive nitro radical → DNA damage; side note: "O₂ blocks activation (aerobes spared)".</div>
+    <h4>Spectrum</h4>
+    <p><b>Anaerobic protozoa:</b> <i>Entamoeba histolytica, Giardia lamblia, Trichomonas vaginalis</i>. <b>Anaerobic/microaerophilic bacteria:</b> <i>Bacteroides fragilis, Fusobacterium, Clostridium perfringens, C. difficile</i>, peptococci, anaerobic streptococci, spirochetes, <i>H. pylori, Campylobacter</i> (Gram-positive anaerobes — <i>Actinomyces, Propionibacterium, Lactobacillus</i> — are typically resistant).</p>
+    <h4>Pharmacokinetics</h4>
+    <p>Almost completely absorbed from the small intestine (little reaches the colon unabsorbed → poor luminal cyst clearance); wide distribution — therapeutic levels in vaginal secretion, semen, saliva and CSF (treats brain abscess); hepatic metabolism + renal excretion; t½ ≈ 8 h; CYP inhibitor.</p>
+    <h4>Status across diseases</h4>
+    <table>
+      <tr><th>Disease</th><th>Status</th><th>Regimen</th></tr>
+      <tr><td>Invasive amoebic dysentery/liver abscess</td><td>First-line; must follow with a luminal amoebicide for cysts</td><td>800 mg TDS × 7–10 d; severe — IV 500 mg slow q6–8h</td></tr>
+      <tr><td>Mild intestinal amoebiasis</td><td>Effective but poor cyst eradication</td><td>400 mg TDS × 5–7 d</td></tr>
+      <tr><td>Giardiasis</td><td>Highly effective/DOC (~90% cure)</td><td>400 mg TDS × 7 d, or 2 g/d × 3 d</td></tr>
+      <tr><td>Trichomoniasis</td><td>Drug of choice; treat partner</td><td>2 g single dose (or 400 mg BD–TDS × 7 d)</td></tr>
+      <tr><td>Bacterial vaginosis</td><td>Responds; single-agent therapy</td><td>Per BV regimen (oral/intravaginal gel)</td></tr>
+      <tr><td>Anaerobic bacterial infections (intra-abdominal, pelvic, post-surgical, brain abscess, endocarditis)</td><td>Effective; usually combined with gentamicin/cephalosporin (mixed flora)</td><td>IV 15 mg/kg over 1h → 7.5 mg/kg q6h, then 400–800 mg TDS oral; also surgical prophylaxis</td></tr>
+      <tr><td><b>C. difficile pseudomembranous colitis</b></td><td>Historically preferred; <b>now downgraded</b> (see Recent advances)</td><td>Oral 400–800 mg BD–TDS × 10–14 d</td></tr>
+      <tr><td>ANUG ("trench mouth")</td><td>Drug of choice (with amoxicillin)</td><td>200–400 mg TDS</td></tr>
+      <tr><td>H. pylori gastritis/peptic ulcer</td><td>Component of triple therapy</td><td>400 mg TDS, with amoxicillin/clarithromycin + PPI</td></tr>
+    </table>
+    <h4>Adverse effects</h4>
+    <p>Common: anorexia, nausea, metallic taste, abdominal cramps. Less frequent: headache, glossitis, dry mouth, impaired concentration, allergic rash/urticaria. Prolonged/high dose: peripheral neuropathy, CNS effects, seizures, leucopenia with repeated courses; thrombophlebitis if poorly diluted IV.</p>
+    <h4>Contraindications &amp; interactions</h4>
+    <p>Caution in neurological disease, blood dyscrasias, 1st trimester pregnancy (mutagenic potential), chronic alcoholics. <b>Disulfiram-like reaction with alcohol</b>; enzyme inducers (phenobarbitone, rifampin) reduce efficacy; cimetidine raises levels; potentiates warfarin (inhibits metabolism); reduces renal lithium clearance → lithium toxicity.</p>
+    <h4>Resistance</h4>
+    <p>Clinically significant resistance has not emerged in <i>E. histolytica</i>; reduced responsiveness reported in some <i>T. vaginalis</i> and <i>Giardia</i>; resistance is a real clinical problem mainly with <i>H. pylori</i>. Mechanism: deficient generation of the reactive nitro radical/lower PFOR activity; in <i>Bacteroides</i>, <i>nim</i> resistance genes encode a nitroimidazole reductase converting the drug to an inactive 5-aminoimidazole.</p>
+    <div class="recent"><b>Recent advances:</b> For <b>C. difficile infection, metronidazole is no longer first-line for adults</b> — oral vancomycin or fidaxomicin are now preferred for initial non-severe CDI (2017–18 IDSA update); IV metronidazole is retained only as an adjunct to oral vancomycin in fulminant disease/ileus. For <i>H. pylori</i>, high background metronidazole resistance (~27% treatment-naïve, ~41% treatment-experienced) undermines metronidazole-containing triple therapy — bismuth quadruple therapy and the 3-in-1 bismuth/metronidazole/tetracycline capsule retain efficacy even against resistant strains; concomitant therapy and 10–14 day courses are favoured. Congeners broaden the picture: <b>tinidazole</b> (t½ ~12h, better tolerated, single-dose) and <b>secnidazole</b> (t½ 17–29h, single 2 g dose for amoebiasis/giardiasis/trichomoniasis/BV) share metronidazole's spectrum with more convenient dosing.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s2" style="--sec:#3f6cb0;--sec-soft:#3f6cb026">
+  <h2>Section 2 · Ocular Pharmacology</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacotherapy of glaucoma; classify drugs (mechanisms); autonomic drugs in ophthalmic practice, ocular NSAIDs, ocular drug-delivery; note on drug-induced ocular toxicity &amp; ocular dyes.</span></summary>
+  <div class="answer">
+    <h4>Glaucoma drug classes</h4>
+    <table>
+      <tr><th>Class</th><th>Drug</th><th>Mechanism</th></tr>
+      <tr><td>Prostaglandin analogues (1st-line)</td><td>Latanoprost, bimatoprost, travoprost</td><td>↑ uveoscleral outflow</td></tr>
+      <tr><td>β-blockers</td><td>Timolol, betaxolol</td><td>↓ aqueous production</td></tr>
+      <tr><td>α2-agonists</td><td>Brimonidine, apraclonidine</td><td>↓ production + ↑ outflow</td></tr>
+      <tr><td>Carbonic anhydrase inhibitors</td><td>Dorzolamide (topical), acetazolamide (oral)</td><td>↓ aqueous production</td></tr>
+      <tr><td>Cholinergic miotics</td><td>Pilocarpine</td><td>↑ trabecular outflow</td></tr>
+      <tr><td>Rho-kinase inhibitor</td><td>Netarsudil</td><td>↑ trabecular outflow</td></tr>
+      <tr><td>Hyperosmotics</td><td>Mannitol, glycerol</td><td>↓ vitreous volume (acute)</td></tr>
+    </table>
+    <p><b>Acute angle-closure:</b> IV acetazolamide + mannitol + topical pilocarpine + timolol → laser iridotomy.</p>
+    <h4>Autonomic drugs in ophthalmic practice</h4>
+    <ul>
+      <li><b>Mydriatics/cycloplegics:</b> atropine, homatropine, cyclopentolate, tropicamide (antimuscarinic); phenylephrine (α1 — mydriasis without cycloplegia).</li>
+      <li><b>Miotics:</b> pilocarpine (muscarinic agonist).</li>
+      <li>β-blockers &amp; α2-agonists for IOP (above).</li>
+    </ul>
+    <h4>Ocular uses of NSAIDs</h4>
+    <p>Ketorolac, nepafenac, diclofenac, flurbiprofen — control postoperative inflammation/pain, prevent cystoid macular oedema, maintain intraoperative mydriasis, allergic conjunctivitis.</p>
+    <h4>Ocular drug-delivery strategies</h4>
+    <ul>
+      <li>Topical drops/ointments (most common), gels, inserts (Ocusert), soft contact lenses.</li>
+      <li>Subconjunctival, intravitreal injection (anti-VEGF, steroids), intravitreal implants (dexamethasone, fluocinolone), periocular; nanocarriers/iontophoresis (emerging).</li>
+    </ul>
+    <h4>Drug-induced ocular toxicity</h4>
+    <p>Chloroquine/hydroxychloroquine — retinopathy; ethambutol — optic neuritis; corticosteroids — cataract &amp; glaucoma; amiodarone — corneal deposits; topiramate — acute glaucoma; tamoxifen — retinopathy; digoxin — xanthopsia; sildenafil — blue vision.</p>
+    <h4>Ocular dyes</h4>
+    <p><b>Fluorescein</b> — corneal abrasion/ulcer detection, angiography, applanation tonometry; <b>rose bengal/lissamine green</b> — devitalised cells (dry eye).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Pharmacological management of glaucoma with emphasis on newer agents (including Brimonidine).</span></summary>
+  <div class="answer">
+    <h4>Stepwise management</h4>
+    <ul>
+      <li><b>First-line:</b> prostaglandin analogue (latanoprost) — most effective, once-daily, ↑ uveoscleral outflow.</li>
+      <li>Add/alternative: β-blocker, α2-agonist, topical CAI; combination eye-drops to improve adherence.</li>
+      <li>Refractory → laser trabeculoplasty / surgery.</li>
+    </ul>
+    <h4>Brimonidine (α2-agonist)</h4>
+    <ul>
+      <li>Selective α2-agonist → ↓ aqueous production <b>and</b> ↑ uveoscleral outflow; possible <b>neuroprotection</b>.</li>
+      <li>Uses: open-angle glaucoma/ocular hypertension, peri-laser IOP spikes.</li>
+      <li>ADR: ocular allergy, dry mouth, fatigue; <b>avoid in infants/young children</b> (CNS depression, apnoea).</li>
+    </ul>
+    <h4>Newer agents</h4>
+    <ul>
+      <li><b>Netarsudil</b> (Rho-kinase inhibitor) — ↑ trabecular outflow, ↓ episcleral venous pressure.</li>
+      <li><b>Latanoprostene bunod</b> — NO-donating prostaglandin (dual outflow).</li>
+      <li>Fixed-combination drops; sustained-release bimatoprost implant (Durysta).</li>
+    </ul>
+    <div class="recent"><b>Recent:</b> Rho-kinase inhibitors &amp; NO-donating prostaglandins; intracameral sustained-release implants reduce adherence burden.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s3" style="--sec:#845bb0;--sec-soft:#845bb026">
+  <h2>Section 3 · Dermatopharmacology</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Treatment &amp; recent developments in psoriasis; role of topical glucocorticoids, retinoids, calcineurin inhibitors (tacrolimus) &amp; biologics/TNF-α inhibitors in dermatology.</span></summary>
+  <div class="answer">
+    <h4>Psoriasis — stepwise treatment</h4>
+    <table>
+      <tr><th>Severity</th><th>Treatment</th></tr>
+      <tr><td>Mild (topical)</td><td>Topical corticosteroids, vitamin-D analogues (calcipotriol), topical retinoid (tazarotene), calcineurin inhibitors (face/flexures), coal tar, salicylic acid, emollients</td></tr>
+      <tr><td>Moderate-severe</td><td>Phototherapy (NB-UVB, PUVA); systemic — methotrexate, ciclosporin, acitretin, apremilast (PDE4)</td></tr>
+      <tr><td>Severe/refractory</td><td><b>Biologics</b></td></tr>
+    </table>
+    <h4>Biologics in psoriasis</h4>
+    <table>
+      <tr><th>Target</th><th>Drugs</th></tr>
+      <tr><td>TNF-α</td><td>Etanercept, infliximab, adalimumab</td></tr>
+      <tr><td>IL-12/23</td><td>Ustekinumab</td></tr>
+      <tr><td>IL-17</td><td>Secukinumab, ixekizumab, brodalumab</td></tr>
+      <tr><td>IL-23</td><td>Guselkumab, risankizumab, tildrakizumab</td></tr>
+      <tr><td>Oral targeted</td><td>Apremilast (PDE4), deucravacitinib (TYK2)</td></tr>
+    </table>
+    <h4>Drug classes in dermatology (roles)</h4>
+    <ul>
+      <li><b>Topical glucocorticoids:</b> anti-inflammatory/immunosuppressive; classified by potency (mild → super-potent). ADR: skin atrophy, striae, telangiectasia, tachyphylaxis, HPA suppression. Avoid prolonged use on face/flexures.</li>
+      <li><b>Retinoids:</b> topical (tretinoin, adapalene, tazarotene — acne, psoriasis) &amp; systemic (isotretinoin — severe acne; acitretin — psoriasis); <b>highly teratogenic</b> (pregnancy prevention).</li>
+      <li><b>Calcineurin inhibitors (tacrolimus, pimecrolimus):</b> topical steroid-sparing for atopic dermatitis &amp; sensitive areas (face, eyelids); no skin atrophy.</li>
+      <li><b>TNF-α inhibitors/biologics:</b> moderate-severe psoriasis/psoriatic arthritis; screen latent TB.</li>
+    </ul>
+    <div class="recent"><b>Recent:</b> IL-17 &amp; IL-23 biologics give high skin-clearance (PASI 90/100); oral <b>deucravacitinib</b> (TYK2) &amp; JAK inhibitors (atopic dermatitis — upadacitinib, abrocitinib); topical roflumilast/tapinarof.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Short note on topical antifungal agents; antiseptics &amp; disinfectants with clinical applications.</span></summary>
+  <div class="answer">
+    <h4>Topical antifungal agents</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Use</th></tr>
+      <tr><td>Azoles</td><td>Clotrimazole, miconazole, ketoconazole, luliconazole</td><td>Dermatophytosis, candidiasis, pityriasis</td></tr>
+      <tr><td>Allylamines</td><td>Terbinafine, naftifine</td><td>Tinea (fungicidal)</td></tr>
+      <tr><td>Polyenes</td><td>Nystatin</td><td>Cutaneous/oral candidiasis</td></tr>
+      <tr><td>Others</td><td>Ciclopirox, amorolfine (nail), tolnaftate, Whitfield's ointment</td><td>Onychomycosis, tinea</td></tr>
+    </table>
+    <p>Extensive/nail/scalp infection needs systemic therapy (terbinafine, itraconazole).</p>
+    <h4>Antiseptics &amp; disinfectants</h4>
+    <p><b>Antiseptic</b> = applied to living tissue; <b>disinfectant</b> = applied to inanimate objects (some agents both).</p>
+    <table>
+      <tr><th>Agent</th><th>Application</th></tr>
+      <tr><td>Alcohols (ethyl/isopropyl 60–90%)</td><td>Skin/hand &amp; surface disinfection</td></tr>
+      <tr><td>Chlorhexidine</td><td>Pre-op skin, hand scrub, mouthwash</td></tr>
+      <tr><td>Povidone-iodine</td><td>Skin/wound antisepsis, pre-surgical</td></tr>
+      <tr><td>Hydrogen peroxide</td><td>Wound cleansing</td></tr>
+      <tr><td>Chlorine compounds (hypochlorite)</td><td>Water/surface/instrument disinfection</td></tr>
+      <tr><td>Glutaraldehyde / formaldehyde</td><td>Instrument sterilisation (endoscopes)</td></tr>
+      <tr><td>Quaternary ammonium (cetrimide)</td><td>Surface &amp; skin</td></tr>
+    </table>
+  </div></details>
+</section>
+
+<section class="sec" id="s4" style="--sec:#b15068;--sec-soft:#b1506826">
+  <h2>Section 4 · Corticosteroids — Uses &amp; Safety</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Corticosteroids — MOA, therapeutic uses (endocrine &amp; non-endocrine), ADRs; life-saving uses, role in malignancy/COVID-19/dermatology; note on long-term &amp; topical therapy.</span></summary>
+  <div class="answer">
+    <h4>Mechanism of action</h4>
+    <ol>
+      <li>Lipophilic steroid enters cell → binds cytoplasmic <b>glucocorticoid receptor</b> (HSP90-bound) → complex translocates to nucleus.</li>
+      <li>Binds <b>Glucocorticoid Response Elements (GRE)</b> → <b>transactivation</b> of anti-inflammatory genes (annexin-1/lipocortin, IκB) &amp; <b>transrepression</b> of NF-κB/AP-1 → ↓ cytokines, COX-2, phospholipase A2.</li>
+      <li>Net: anti-inflammatory, immunosuppressive, metabolic (gluconeogenesis), plus rapid non-genomic effects.</li>
+    </ol>
+    <h4>Therapeutic uses</h4>
+    <table>
+      <tr><th>Endocrine (replacement)</th><th>Non-endocrine (pharmacological)</th></tr>
+      <tr><td>Adrenal insufficiency (Addison's), CAH, acute adrenal crisis</td><td>Inflammatory/allergic disease, autoimmune disease, asthma/COPD, dermatoses, IBD, transplant immunosuppression, malignancy, cerebral oedema, shock</td></tr>
+    </table>
+    <h4>Life-saving uses</h4>
+    <ul><li>Anaphylaxis (adjunct), acute severe asthma, adrenal crisis, septic shock (refractory), cerebral oedema, severe COVID-19, status asthmaticus, severe drug reactions (SJS/TEN), autoimmune crises.</li></ul>
+    <h4>Role in malignancy</h4>
+    <p>Lympholytic → apoptosis of lymphoid cells: ALL, lymphoma, multiple myeloma, CLL (CHOP/VAD regimens); antiemetic with chemo; ↓ cerebral oedema (brain tumours/metastases); hypercalcaemia of malignancy; appetite/palliation.</p>
+    <h4>Role in COVID-19</h4>
+    <p><b>Dexamethasone</b> (RECOVERY trial) reduced mortality in patients needing oxygen/ventilation by dampening the cytokine-mediated inflammatory/hyperimmune response.</p>
+    <h4>Role in dermatology</h4>
+    <p>Topical (eczema, psoriasis, dermatitis) &amp; systemic (pemphigus, severe drug reactions). Topical potency graded; ADR — skin atrophy, striae, tachyphylaxis.</p>
+    <h4>Adverse effects (esp. long-term)</h4>
+    <ul>
+      <li><b>Iatrogenic Cushing's</b>, weight gain, moon face, truncal obesity.</li>
+      <li>Hyperglycaemia/diabetes, hypertension, osteoporosis, avascular necrosis, myopathy.</li>
+      <li>Peptic ulcer, immunosuppression/infection (TB reactivation), cataract &amp; glaucoma, growth retardation (children), mood/psychosis, skin thinning.</li>
+      <li><b>HPA-axis suppression</b> → never stop abruptly (taper to avoid adrenal crisis).</li>
+    </ul>
+    <h4>Precautions for long-term &amp; topical therapy</h4>
+    <ul>
+      <li>Lowest effective dose, shortest duration; alternate-day dosing; morning dosing (mimic circadian); taper gradually.</li>
+      <li>Calcium + vitamin D ± bisphosphonate (bone protection); monitor BP, glucose, weight, eyes; PPI if ulcer risk; screen/treat latent TB.</li>
+      <li>Topical: use appropriate potency for site, avoid prolonged use on face/flexures, beware systemic absorption in children/large areas.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section class="sec" id="s5" style="--sec:#b3852f;--sec-soft:#b3852f26">
+  <h2>Section 5 · Ecopharmacology &amp; One Health</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Ecopharmacology — pharmaceuticals in the environment, ecopharmacovigilance &amp; the One Health concept; recent advances &amp; regulatory aspects.</span></summary>
+  <div class="answer">
+    <h4>Definitions</h4>
+    <ul>
+      <li><b>Ecopharmacology:</b> study of the entry, fate, distribution and effects of pharmaceuticals (and their metabolites) in the environment.</li>
+      <li><b>Ecopharmacovigilance (EPV):</b> the science &amp; activities concerning detection, assessment, understanding and prevention of adverse effects of pharmaceuticals <b>in the environment</b> (the environmental analogue of pharmacovigilance).</li>
+    </ul>
+    <h4>Pharmaceuticals in the environment — sources &amp; examples</h4>
+    <ul>
+      <li><b>Sources:</b> patient excretion (urine/faeces), manufacturing effluent, improper disposal of unused/expired drugs, hospital &amp; livestock waste.</li>
+      <li><b>Examples of harm:</b> <b>diclofenac</b> → catastrophic decline of Indian vultures (renal failure); <b>synthetic estrogens</b> → feminisation/altered reproduction in fish; <b>antibiotics</b> → environmental antimicrobial resistance; antineoplastics, NSAIDs, hormones &amp; psychoactive drugs detected in surface/drinking water.</li>
+    </ul>
+    <h4>One Health concept</h4>
+    <p>A collaborative, multisectoral approach recognising that <b>human, animal and environmental health are interconnected</b>. Crucial for <b>AMR</b> — antibiotic use in humans, animals/agriculture &amp; environmental contamination all drive resistance, requiring coordinated action.</p>
+    <h4>Mitigation &amp; regulatory aspects</h4>
+    <ul>
+      <li><b>Environmental Risk Assessment (ERA)</b> now part of drug approval (EMA/FDA).</li>
+      <li>"Green pharmacy"/eco-friendly drug design (benign-by-design, biodegradable molecules).</li>
+      <li>Drug take-back/disposal programmes; improved sewage &amp; effluent treatment; manufacturing discharge norms.</li>
+      <li>Surveillance &amp; classification of environmentally hazardous drugs; ban on veterinary diclofenac (India).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> One Health AMR action plans (NAP-AMR), antibiotic discharge limits for manufacturers, environmental monitoring of waterways, and incorporation of EPV into pharmacovigilance frameworks.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s6" style="--sec:#2f8696;--sec-soft:#2f869626">
+  <h2>Section 6 · Poisoning Management &amp; Chelating Agents</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">General principles of poisoning management; role of chelating agents in heavy-metal poisoning (examples); note on paracetamol poisoning, iron overload &amp; atropine poisoning.</span></summary>
+  <div class="answer">
+    <h4>General principles of poisoning management</h4>
+    <ol>
+      <li><b>Resuscitation &amp; stabilisation (ABCDE)</b> — airway, breathing, circulation, disability, exposure.</li>
+      <li><b>Identification</b> — history, examination, toxidromes, lab/levels.</li>
+      <li><b>Decontamination:</b> activated charcoal (within 1 h), gastric lavage (selected early presentations), skin/eye irrigation, whole-bowel irrigation (iron, packets, SR drugs).</li>
+      <li><b>Enhanced elimination:</b> urine alkalinisation (salicylate, phenobarbitone), multiple-dose charcoal, haemodialysis (methanol, lithium, salicylate, ethylene glycol).</li>
+      <li><b>Specific antidotes.</b></li>
+      <li><b>Supportive &amp; symptomatic care</b>, monitoring, psychiatric referral.</li>
+    </ol>
+    <h4>Common antidotes</h4>
+    <table>
+      <tr><th>Poison</th><th>Antidote</th></tr>
+      <tr><td>Opioids</td><td>Naloxone</td></tr>
+      <tr><td>Benzodiazepines</td><td>Flumazenil</td></tr>
+      <tr><td>Organophosphate</td><td>Atropine + pralidoxime</td></tr>
+      <tr><td>Paracetamol</td><td>N-acetylcysteine</td></tr>
+      <tr><td>Methanol/ethylene glycol</td><td>Fomepizole/ethanol</td></tr>
+      <tr><td>Cyanide</td><td>Hydroxocobalamin, sodium thiosulfate</td></tr>
+      <tr><td>Warfarin</td><td>Vitamin K, PCC</td></tr>
+    </table>
+    <h4>Chelating agents in heavy-metal poisoning</h4>
+    <p><b>Chelator</b> = forms stable, water-soluble, non-toxic complexes with metal ions for excretion.</p>
+    <table>
+      <tr><th>Metal</th><th>Chelator</th></tr>
+      <tr><td>Lead</td><td>CaNa₂-EDTA, DMSA (succimer), dimercaprol (encephalopathy)</td></tr>
+      <tr><td>Arsenic/Mercury/Gold</td><td>Dimercaprol (BAL), DMSA, DMPS</td></tr>
+      <tr><td>Iron</td><td>Deferoxamine (IV), deferasirox/deferiprone (oral)</td></tr>
+      <tr><td>Copper (Wilson's)</td><td>D-penicillamine, trientine</td></tr>
+    </table>
+    <p>Avoid oral chelator while metal remains in gut (may ↑ absorption); monitor renal function.</p>
+    <h4>Paracetamol poisoning</h4>
+    <p>Toxic metabolite <b>NAPQI</b> (via CYP2E1) depletes glutathione → hepatic necrosis. Use the <b>Rumack-Matthew nomogram</b>; antidote <b>N-acetylcysteine</b> (replenishes glutathione) — most effective within 8 h; activated charcoal if early.</p>
+    <h4>Iron overload</h4>
+    <p>Acute iron poisoning or chronic transfusional overload (thalassaemia). Chelation: <b>deferoxamine</b> (IV/IM, "vin rosé" urine), oral <b>deferasirox / deferiprone</b>; supportive care, whole-bowel irrigation in acute ingestion.</p>
+    <h4>Atropine (anticholinergic) poisoning</h4>
+    <p>Toxidrome: "hot, dry, red, blind, mad" (hyperthermia, dry skin, flushing, mydriasis, delirium). <b>Treatment:</b> supportive cooling, benzodiazepines for agitation, and <b>physostigmine</b> (reversible anticholinesterase crossing BBB) for severe central toxicity.</p>
+  </div></details>
+</section>
+
+<section class="sec" id="s7" style="--sec:#548a4f;--sec-soft:#548a4f26">
+  <h2>Section 7 · Other Important Topics (Overlaps)</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Current status &amp; issues with COX-2 inhibitors; note on non-endocrine uses of corticosteroids &amp; their therapeutic status in malignancy.</span></summary>
+  <div class="answer">
+    <h4>COX-2 inhibitors</h4>
+    <ul>
+      <li><b>Rationale:</b> selectively inhibit inducible COX-2 (inflammation), sparing constitutive COX-1 (gastric mucosa, platelets) → <b>fewer GI ulcers/bleeds</b>, no antiplatelet effect. Drugs: celecoxib, etoricoxib, parecoxib.</li>
+      <li><b>Issues:</b> <b>↑ cardiovascular thrombotic risk</b> (↓ vascular prostacyclin, unopposed thromboxane) → <b>rofecoxib &amp; valdecoxib withdrawn</b>; celecoxib/etoricoxib available with CV/renal cautions; renal effects &amp; hypertension as with NSAIDs.</li>
+      <li><b>Uses:</b> osteoarthritis, RA, acute pain, ankylosing spondylitis (esp. high GI-bleed risk); lowest dose, shortest duration.</li>
+    </ul>
+    <div class="recent"><b>Recent (PRECISION trial):</b> moderate-dose celecoxib CV safety comparable to naproxen/ibuprofen — partly rehabilitating the class.</div>
+    <h4>Non-endocrine uses of corticosteroids</h4>
+    <p>Inflammatory/allergic disorders, autoimmune disease (SLE, RA, vasculitis), asthma/COPD, dermatoses, IBD, nephrotic syndrome, transplant immunosuppression, cerebral oedema, anaphylaxis (adjunct), septic/refractory shock, COVID-19 (dexamethasone), and malignancy.</p>
+    <h4>Corticosteroids in malignancy</h4>
+    <p>Lympholytic → apoptosis of lymphoid cells: used in <b>ALL, lymphomas, multiple myeloma, CLL</b> (CHOP, VAD regimens); also antiemetic with chemotherapy, ↓ cerebral oedema (brain tumour/metastasis), hypercalcaemia of malignancy, appetite stimulation &amp; palliation, prevent hypersensitivity reactions to chemotherapy.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Pharmacotherapy with recent advances of: Congestive Heart Failure (ARNI &amp; SGLT-2), Type-2 Diabetes (SGLT-2 &amp; DPP-4), and acid-peptic disease &amp; PPIs (use &amp; misuse).</span></summary>
+  <div class="answer">
+    <h5>1. Congestive Heart Failure</h5>
+    <p><b>Four pillars of HFrEF:</b> <b>ARNI</b> (sacubitril/valsartan — neprilysin inhibition ↑ natriuretic peptides; superior to enalapril, PARADIGM-HF) ≫ ACEi/ARB + β-blocker (carvedilol/bisoprolol/metoprolol) + MRA (spironolactone/eplerenone) + <b>SGLT2 inhibitor</b> (dapagliflozin/empagliflozin — ↓ HF hospitalisation &amp; mortality even without diabetes). Plus loop diuretics (symptoms), ivabradine, vericiguat.</p>
+    <div class="recent"><b>Recent:</b> SGLT2 inhibitors benefit across the EF spectrum (HFpEF — EMPEROR-Preserved, DELIVER); start all four pillars early &amp; together.</div>
+
+    <h5>2. Type-2 Diabetes Mellitus</h5>
+    <p>Metformin first-line; choose add-ons by comorbidity. <b>SGLT2 inhibitors</b> — ↓ renal glucose reabsorption, weight/BP reduction, <b>cardio-renal protection</b> (used in HF/CKD even without diabetes); ADR genital infection, euglycaemic DKA. <b>DPP-4 inhibitors</b> — ↑ incretins, weight-neutral, low hypoglycaemia, CV-neutral (saxagliptin — ↑HF signal). GLP-1 RAs &amp; tirzepatide give potent glucose + weight benefit.</p>
+
+    <h5>3. Acid-peptic disease &amp; PPIs (use &amp; misuse)</h5>
+    <ul>
+      <li><b>PPIs</b> (omeprazole, pantoprazole, esomeprazole) irreversibly inhibit the gastric H⁺/K⁺-ATPase → potent acid suppression. <b>Uses:</b> peptic ulcer, GERD, H. pylori eradication, NSAID-ulcer prophylaxis, Zollinger-Ellison, stress-ulcer prophylaxis.</li>
+      <li><b>Misuse:</b> over-prescription &amp; long-term continuation without indication; lack of de-prescribing.</li>
+      <li><b>Long-term ADRs:</b> ↓ B12/Mg/Ca/iron (fracture risk), <b>C. difficile</b> &amp; pneumonia, hypomagnesaemia, ?CKD/interstitial nephritis, rebound hyperacidity, clopidogrel interaction (omeprazole-CYP2C19).</li>
+    </ul>
+    <div class="recent"><b>Recent:</b> <b>P-CABs</b> (vonoprazan, tegoprazan) — K⁺-competitive acid blockers giving faster, stronger, longer, food-independent acid suppression than PPIs; promising for refractory GERD &amp; H. pylori.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">DMARDs in rheumatoid arthritis — classification, methotrexate pharmacology, biologic &amp; targeted-synthetic agents, treat-to-target strategy.</span></summary>
+  <div class="answer">
+    <h4>Introduction</h4>
+    <p>Disease-modifying antirheumatic drugs (DMARDs), also called slow-acting antirheumatic drugs (SAARDs), suppress the underlying rheumatoid process, induce remission and retard radiographic progression (cartilage damage, bony erosions) — unlike NSAIDs/glucocorticoids, which give only symptomatic relief and do not arrest disease. Onset of benefit is delayed weeks-to-months, and relapse occurs a few months after stopping. Current recommendation is to start a DMARD as soon as RA is diagnosed (early aggressive therapy), because available drugs slow but do not reverse existing joint damage.</p>
+    <h4>Goals of therapy</h4>
+    <p>Ameliorate pain, swelling and stiffness; prevent cartilage damage and bony erosions; preserve joint function and prevent deformity; achieve/maintain remission or low disease activity (treat-to-target).</p>
+    <h4>Classification</h4>
+    <table>
+      <tr><th>Class</th><th>Agents</th><th>Key mechanism</th></tr>
+      <tr><td>Conventional synthetic (csDMARD)</td><td>Methotrexate (anchor), leflunomide, sulfasalazine, hydroxychloroquine</td><td>Small-molecule antiproliferative/immunomodulatory</td></tr>
+      <tr><td>Biologic — TNF inhibitors (bDMARD)</td><td>Etanercept, infliximab, adalimumab, golimumab, certolizumab</td><td>Neutralise TNF-α</td></tr>
+      <tr><td>Biologic — non-TNF</td><td>Rituximab (anti-CD20), abatacept (CTLA4-Ig), tocilizumab/sarilumab (anti-IL-6R), anakinra (IL-1RA)</td><td>Target B cells, T-cell costimulation, IL-6/IL-1</td></tr>
+      <tr><td>Targeted synthetic (tsDMARD)</td><td>JAK inhibitors — tofacitinib, baricitinib, upadacitinib</td><td>Block JAK-STAT cytokine signalling</td></tr>
+    </table>
+    <h4>Methotrexate (MTX) — the anchor drug</h4>
+    <ul>
+      <li>DMARD of first choice for most patients (incl. juvenile RA); used as monotherapy or as the backbone of combination regimens.</li>
+      <li><b>Mechanism:</b> dihydrofolate reductase inhibitor → inhibits DNA synthesis/cellular replication; benefit in RA relates to inhibition of cytokine production, chemotaxis and proliferation of immune-inflammatory cells.</li>
+      <li><b>PK:</b> once-weekly oral/SC/IM; oral bioavailability ~60% and falls at higher doses; ~50% protein-bound; 80–90% excreted renally unchanged — avoid/reduce in renal impairment. SC route gives higher bioavailability, fewer GI effects.</li>
+      <li><b>Dose:</b> low-dose 7.5–15 (up to 20) mg weekly; onset of relief 3–6 weeks; co-prescribe folic acid 1–5 mg/day to reduce toxicity.</li>
+      <li><b>ADRs:</b> oral ulceration, GI upset, hepatotoxicity → cirrhosis, interstitial pneumonitis, myelosuppression, increased infection risk.</li>
+      <li><b>Contraindications:</b> pregnancy/lactation (teratogenic), liver disease/alcoholism, active infection, leucopenia, peptic ulcer, immunodeficiency.</li>
+      <li><b>Interactions:</b> probenecid &amp; aspirin raise MTX levels/toxicity; trimethoprim adds to antifolate marrow suppression.</li>
+    </ul>
+    <h4>Other conventional synthetic DMARDs</h4>
+    <ul>
+      <li><b>Leflunomide:</b> inhibits dihydro-orotate dehydrogenase (pyrimidine synthesis); efficacy ≈ MTX, faster onset (~4 wk); long-lived active metabolite (t½ ~2 wk) → cholestyramine washout needed for toxicity/pregnancy. ADRs: diarrhoea, alopecia, ↑BP, hepatotoxicity; contraindicated in pregnancy.</li>
+      <li><b>Sulfasalazine:</b> splits to sulfapyridine + 5-ASA; second-line/mild disease; neutropenia/thrombocytopenia in 5–10% (monitor CBC); avoid in sulfa/salicylate allergy.</li>
+      <li><b>Hydroxychloroquine:</b> reduces monocyte IL-1; low toxicity but low efficacy (does not prevent erosions) — used in mild non-erosive disease or combinations; major risk = retinal/corneal toxicity (annual ophthalmologic exam); safe in pregnancy.</li>
+    </ul>
+    <h4>Biologic &amp; targeted synthetic DMARDs</h4>
+    <ul>
+      <li><b>TNF inhibitors:</b> neutralise TNF-α, the driver of the inflammatory cascade via TNFR1/TNFR2; usually added to MTX (improves response, reduces immunogenicity). Etanercept (TNF-receptor–Fc fusion, 50 mg SC weekly); infliximab (chimeric mAb, IV q4–8wk, infusion reactions, ~15% anti-drug antibodies); adalimumab (human mAb, 40 mg SC q2wk).</li>
+      <li><b>Abatacept:</b> CTLA4-Ig fusion — binds CD80/CD86, blocking the CD28 costimulatory signal → inhibits T-cell activation.</li>
+      <li><b>Tocilizumab/sarilumab:</b> anti-IL-6 receptor mAbs. <b>Rituximab:</b> anti-CD20 → depletes B cells; used for inadequate response to a TNF inhibitor.</li>
+      <li><b>JAK inhibitors</b> (tofacitinib, baricitinib, upadacitinib): oral; inhibit JAK-STAT signalling, blocking multiple pro-inflammatory cytokines.</li>
+    </ul>
+    <h4>Treat-to-target strategy &amp; monitoring</h4>
+    <p>ACR/EULAR recommend MTX-anchored csDMARD first-line; escalate to combination csDMARDs, a biologic, or a JAK inhibitor (± MTX) if moderate/high activity persists; reassess ≤3 months; taper (not stop) on sustained remission. Glucocorticoids are used short-term as "bridge" therapy for flares only. Monitoring: MTX/leflunomide/sulfasalazine — CBC, ALT/AST, renal function every 2–4 wk ×3 mo, then 8–12 wk, then 12-weekly. Before any biologic/JAK inhibitor, screen for latent TB (TST/IGRA) and hepatitis B; counsel re: serious/opportunistic infection.</p>
+    <div class="recent"><b>Recent advances:</b> The <b>ORAL Surveillance</b> RCT (tofacitinib vs TNF inhibitor) led to an FDA boxed warning (2021) for major cardiovascular events, malignancy and thrombosis with JAK inhibitors, now restricted to patients with inadequate response/intolerance to ≥1 TNF inhibitor. Biosimilars of infliximab, etanercept and adalimumab are now widely available, improving access to biologic therapy.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="scase" style="--sec:#c06a3e;--sec-soft:#c06a3e26">
+  <h2>🩺 Clinical Case Vignettes</h2>
+  <p class="sec-note">Apply the concepts — read the scenario, decide your answer, then open to check. Filter to just these with the 🩺 Cases chip.</p>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient has a wound infection growing methicillin-resistant Staphylococcus aureus. Drug of choice and the resistance mechanism?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Altered penicillin-binding protein.</div>
+    <p><b>MRSA</b> resists beta-lactams via <b>PBP2a (mecA gene)</b>. Treat with <b>vancomycin</b> (or linezolid, daptomycin, ceftaroline); community MRSA may respond to co-trimoxazole/doxycycline/clindamycin.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A ventilated ICU patient develops pneumonia with Pseudomonas. Antibiotic strategy?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Intrinsic resistance.</div>
+    <p><b>Anti-pseudomonal cover</b>, often a <b>combination</b> (e.g. piperacillin-tazobactam or ceftazidime/cefepime/meropenem plus an aminoglycoside or ciprofloxacin); de-escalate per sensitivity. MDR strains → ceftolozane-tazobactam, ceftazidime-avibactam, colistin, cefiderocol.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient has a painful red eye, a fixed mid-dilated pupil and very high intraocular pressure after sitting in a dark cinema. Emergency management?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Lower the IOP fast.</div>
+    <p><b>Acute angle-closure glaucoma.</b> IV <b>acetazolamide + mannitol</b>, topical <b>pilocarpine + timolol</b> (with brimonidine) to lower IOP → definitive <b>laser iridotomy</b>. Avoid mydriatics/anticholinergics.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient on prednisolone for several months stops it abruptly and collapses with hypotension. What happened, and the rule?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> HPA-axis suppression.</div>
+    <p><b>Adrenal crisis from HPA-axis suppression.</b> Long-term steroids must be <b>tapered, not stopped abruptly</b>; give stress doses during illness/surgery; treat a crisis with IV hydrocortisone and fluids. Add bone and gastric protection for chronic use.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient presents 6 hours after a large paracetamol overdose. Antidote and how the need is assessed?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Glutathione replenishment.</div>
+    <p><b>N-acetylcysteine</b> (replenishes glutathione and detoxifies NAPQI) — most effective within 8 hours; plot the level on the <b>Rumack-Matthew nomogram</b>; activated charcoal if the patient presents early.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A child with anaemia, abdominal pain and developmental regression has a high blood-lead level. Treatment?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Chelation.</div>
+    <p><b>Lead poisoning</b> — chelate with <b>DMSA (succimer)</b> or <b>CaNa2-EDTA</b>; add <b>dimercaprol (BAL)</b> for encephalopathy; remove the source of exposure.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">Why was veterinary diclofenac banned in India, and what does this illustrate?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> The vulture collapse.</div>
+    <p>Diclofenac residues in cattle carcasses caused fatal <b>renal failure in vultures</b>, collapsing their populations — a landmark <b>ecopharmacology / One Health</b> example of a drug harming the environment. (Clinically, diclofenac is also nephrotoxic — avoid in CKD and the elderly.)</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">Before starting an anti-TNF biologic for severe psoriasis, which screening is essential, and why?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Latent infection.</div>
+    <p>Screen for <b>latent tuberculosis</b> (and hepatitis B/C). TNF-alpha inhibitors impair granuloma maintenance → <b>reactivation of TB</b>. Treat latent TB before or alongside the biologic.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient develops profuse diarrhoea after broad-spectrum antibiotics; stool tests positive for Clostridioides difficile toxin. Management?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Stop and treat.</div>
+    <p><b>Antibiotic-associated C. difficile colitis.</b> Stop the offending antibiotic; treat with <b>oral vancomycin or fidaxomicin</b> (metronidazole if mild/unavailable); <b>avoid antimotility agents</b>; recurrent disease → faecal microbiota transplant.</p>
+  </div></details>
+</section>
+
+<!-- CONTENT END -->
+  </div>
+
+  <footer>
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman, Katzung, Rang &amp; Dale; WHO/ICMR, GINA, ADA &amp; Indian guidelines.
+  </footer>
+</div>
+
+<script>
+  const search   = document.getElementById('search');
+  const items    = Array.from(document.querySelectorAll('details.q'));
+  const sections = Array.from(document.querySelectorAll('section.sec'));
+  const counter  = document.getElementById('counter');
+  const nohit    = document.getElementById('nohit');
+  const chips    = Array.from(document.querySelectorAll('.chip'));
+  const themeBtn = document.getElementById('theme');
+  const root     = document.documentElement;
+  let activeFilter = 'all';
+  let kbIndex = -1;
+
+  items.forEach(d=>{
+    const s = d.querySelector('.stars');
+    d.dataset.pri  = s ? (s.textContent.match(/★/g)||[]).length : 0;
+    d.dataset.type = d.classList.contains('vignette') ? 'case' : 'q';
+  });
+
+  const visible = ()=> items.filter(d=> d.style.display!=='none');
+
+  function apply(){
+    const q = search.value.trim().toLowerCase();
+    let hits = 0;
+    items.forEach(d=>{
+      const matchSearch = !q || d.textContent.toLowerCase().includes(q);
+      let matchFilter = true;
+      if(activeFilter==='case')      matchFilter = d.dataset.type==='case';
+      else if(activeFilter!=='all')  matchFilter = d.dataset.pri===activeFilter;
+      const show = matchSearch && matchFilter;
+      d.style.display = show ? '' : 'none';
+      if(show){ hits++; if(q.length>2) d.open = true; }
+    });
+    sections.forEach(s=>{
+      const any = Array.from(s.querySelectorAll('details.q')).some(d=> d.style.display!=='none');
+      s.style.display = any ? '' : 'none';
+    });
+    nohit.style.display = hits===0 ? 'block' : 'none';
+    counter.textContent = (q || activeFilter!=='all') ? hits + ' shown' : items.length + ' questions';
+    clearKb();
+  }
+
+  chips.forEach(c=> c.onclick = ()=>{
+    chips.forEach(x=> x.classList.remove('active'));
+    c.classList.add('active');
+    activeFilter = c.dataset.f;
+    apply();
+  });
+
+  let t;
+  search.addEventListener('input', ()=>{ clearTimeout(t); t = setTimeout(apply, 110); });
+
+  document.getElementById('expandAll').onclick  = ()=> visible().forEach(d=> d.open=true);
+  document.getElementById('collapseAll').onclick = ()=> items.forEach(d=> d.open=false);
+
+  function randomQ(){
+    const vis = visible(); if(!vis.length) return;
+    items.forEach(d=> d.open=false);
+    const pick = vis[Math.floor(Math.random()*vis.length)];
+    pick.open = true;
+    setKb(items.indexOf(pick));
+  }
+  document.getElementById('shuffle').onclick = randomQ;
+
+  function setTheme(mode){
+    if(mode==='dark'){ root.setAttribute('data-theme','dark'); themeBtn.textContent='☀️'; }
+    else { root.removeAttribute('data-theme'); themeBtn.textContent='🌙'; }
+    try{ localStorage.setItem('pharm-theme', mode); }catch(e){}
+  }
+  themeBtn.onclick = ()=> setTheme(root.getAttribute('data-theme')==='dark' ? 'light' : 'dark');
+  try{ if(localStorage.getItem('pharm-theme')==='dark') setTheme('dark'); }catch(e){}
+
+  function clearKb(){ items.forEach(d=> d.classList.remove('kbfocus')); kbIndex=-1; }
+  function setKb(i){
+    items.forEach(d=> d.classList.remove('kbfocus'));
+    kbIndex = i;
+    if(i>=0){ items[i].classList.add('kbfocus'); items[i].scrollIntoView({behavior:'smooth', block:'center'}); }
+  }
+  function moveKb(dir){
+    const vis = visible(); if(!vis.length) return;
+    let cur = kbIndex>=0 ? vis.indexOf(items[kbIndex]) : -1;
+    cur = (cur + dir + vis.length) % vis.length;
+    setKb(items.indexOf(vis[cur]));
+  }
+
+  document.addEventListener('keydown', e=>{
+    if(e.target===search){ if(e.key==='Escape'){ search.value=''; apply(); search.blur(); } return; }
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    switch(e.key){
+      case '/': e.preventDefault(); search.focus(); break;
+      case 'r': case 'R': randomQ(); break;
+      case 'e': case 'E': visible().forEach(d=> d.open=true); break;
+      case 'c': case 'C': items.forEach(d=> d.open=false); break;
+      case 'd': case 'D': themeBtn.click(); break;
+      case 'k': case 'K': case 'ArrowDown': e.preventDefault(); moveKb(1); break;
+      case 'j': case 'J': case 'ArrowUp':   e.preventDefault(); moveKb(-1); break;
+      case ' ': case 'Enter':
+        if(kbIndex>=0){ e.preventDefault(); items[kbIndex].open = !items[kbIndex].open; }
+        break;
+    }
+  });
+
+  apply();
+</script>
+</body>
+</html>

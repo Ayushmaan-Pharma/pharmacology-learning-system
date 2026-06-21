@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spaced Repetition · Pharmacology</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f4ef; --surface:#fff; --ink:#15211a; --ink-soft:#3c4a44; --muted:#7a8a82;
+    --border:#ddd7c9; --accent:#6b21a8; --accent-dark:#4c1d95; --accent-light:#9333ea;
+    --again:#c0392b; --hard:#b9791a; --good:#1f7d5e; --easy:#2563eb; --radius:12px;
+  }
+  html[data-theme="dark"]{
+    --bg:#15171a; --surface:#1e2125; --ink:#e7e9ec; --ink-soft:#c4cad0; --muted:#99a2ab;
+    --border:#33373d; --accent:#a855f7; --accent-light:#c084fc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;
+    transition:background .25s,color .25s;padding-bottom:60px}
+  .wrap{max-width:780px;margin:0 auto;padding:0 20px}
+  a{color:var(--accent)}
+
+  header.top{background:var(--accent-dark);color:#fff;padding:1.5rem 0;margin-bottom:1.4rem;position:relative;overflow:hidden}
+  html[data-theme="dark"] header.top{background:#2a1147}
+  header.top h1{font-family:'Fraunces',serif;font-weight:600;font-size:1.6rem}
+  header.top p{color:rgba(255,255,255,.72);font-size:.88rem;margin-top:.2rem}
+  .top-links{margin-top:.7rem;display:flex;gap:14px;font-size:.8rem}
+  .top-links a{color:#fff;opacity:.85;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3)}
+  .theme-btn{position:absolute;top:18px;right:20px;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
+    background:rgba(255,255,255,.1);color:#fff;font-size:17px;cursor:pointer}
+
+  .filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:1.2rem}
+  .filters label{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-right:4px}
+  select{font-family:inherit;font-size:.85rem;padding:.45rem .6rem;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--ink);cursor:pointer}
+
+  .dash{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.3rem}
+  .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:.85rem;text-align:center}
+  .stat .n{font-family:'Fraunces',serif;font-size:1.7rem;font-weight:600;line-height:1}
+  .stat .l{font-size:.64rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-top:.3rem}
+  .stat.due .n{color:var(--good)} .stat.new .n{color:var(--easy)} .stat.learn .n{color:var(--hard)}
+
+  .controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:1.4rem}
+  .btn{font-family:inherit;font-size:.85rem;font-weight:600;padding:.6rem 1.1rem;border-radius:9px;border:1px solid var(--border);
+    background:var(--surface);color:var(--ink);cursor:pointer;transition:transform .1s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.primary{background:var(--accent);color:#fff;border-color:transparent}
+  .btn:disabled{opacity:.45;cursor:default;transform:none}
+
+  .review{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.6rem 1.5rem;min-height:240px;
+    display:flex;flex-direction:column;box-shadow:0 4px 18px rgba(0,0,0,.06);margin-bottom:1.4rem}
+  .rmeta{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:.66rem;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--muted);margin-bottom:.7rem}
+  .rfront{font-size:1.12rem;font-weight:500}
+  .rback{margin-top:1rem;padding-top:1rem;border-top:1px dashed var(--border);font-size:.95rem;color:var(--ink-soft);display:none}
+  .rback.show{display:block}
+  .rback .sr-note{margin-top:.6rem;font-size:.84rem;background:rgba(127,127,127,.10);border-left:3px solid var(--accent);padding:.45rem .75rem;border-radius:0 8px 8px 0}
+  .rspacer{flex:1}
+  .reveal-btn{align-self:center;margin-top:1.2rem}
+  .rate{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:1.2rem}
+  .rate button{border:none;border-radius:9px;padding:.55rem .3rem;color:#fff;font-family:inherit;font-weight:600;font-size:.82rem;cursor:pointer}
+  .rate button .iv{display:block;font-size:.66rem;font-weight:400;opacity:.85;margin-top:2px}
+  .rate .again{background:var(--again)} .rate .hard{background:var(--hard)} .rate .good{background:var(--good)} .rate .easy{background:var(--easy)}
+  .done-msg{text-align:center;color:var(--muted);padding:2.4rem 1rem}
+  .done-msg .big{font-size:2rem;margin-bottom:.4rem}
+  .kbd-hint{text-align:center;font-size:.72rem;color:var(--muted);margin-top:.5rem}
+  .kbd-hint kbd{font-family:'JetBrains Mono',monospace;background:rgba(127,127,127,.16);padding:1px 5px;border-radius:4px}
+
+  h2.sec{font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;margin:1.8rem 0 .7rem}
+  table{width:100%;border-collapse:collapse;font-size:.82rem}
+  th,td{text-align:left;padding:.45rem .6rem;border-bottom:1px solid var(--border)}
+  th{color:var(--muted);font-weight:600;font-size:.68rem;text-transform:uppercase;letter-spacing:.05em}
+  td.num,th.num{text-align:right}
+  .note{font-size:.78rem;color:var(--muted);margin-top:.6rem;line-height:1.7}
+  code{font-family:'JetBrains Mono',monospace;background:rgba(127,127,127,.15);padding:1px 5px;border-radius:4px;font-size:.85em}
+</style>
+</head>
+<body>
+<script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+
+<header class="top">
+  <div class="wrap">
+    <h1>Spaced Repetition</h1>
+    <p>Every flashcard and quiz question from all ten guides — scheduled the Anki way (SM-2).</p>
+    <div class="top-links"><a href="index.html">← Study hub</a><a href="learning.html">Learning guides</a></div>
+  </div>
+  <button class="theme-btn" id="theme" title="Dark mode">🌙</button>
+</header>
+
+<main class="wrap">
+  <div class="filters">
+    <span><label>Deck</label><select id="deck"></select></span>
+    <span><label>Type</label><select id="type">
+      <option value="all">All</option><option value="flashcard">Flashcards</option><option value="quiz">Quiz questions</option>
+    </select></span>
+    <span><label>New / day</label><select id="newlim">
+      <option value="10">10</option><option value="20" selected>20</option><option value="40">40</option><option value="9999">No limit</option>
+    </select></span>
+  </div>
+
+  <div class="dash" id="dash"></div>
+
+  <div class="controls">
+    <button class="btn primary" id="study">▶ Study</button>
+    <button class="btn" id="export">⬇ Export progress</button>
+    <button class="btn" id="import">⬆ Import</button>
+    <button class="btn" id="reset">↺ Reset</button>
+    <input type="file" id="file" accept="application/json" style="display:none">
+  </div>
+
+  <div id="reviewArea" style="display:none">
+    <div class="review" id="review"></div>
+    <div class="kbd-hint"><kbd>Space</kbd> reveal · <kbd>1</kbd> Again <kbd>2</kbd> Hard <kbd>3</kbd> Good <kbd>4</kbd> Easy · <kbd>Esc</kbd> exit</div>
+  </div>
+
+  <h2 class="sec">Decks</h2>
+  <table id="browse"><thead><tr><th>Deck</th><th class="num">Cards</th><th class="num">Due</th><th class="num">New</th><th class="num">Learning</th><th class="num">Scheduled</th></tr></thead><tbody></tbody></table>
+  <p class="note">SM-2 scheduling: <b>Again</b> resets a card to relearn now; correct answers grow the interval via an ease factor (≈1d → 6d → ×ease…), <b>Easy</b> fastest and <b>Hard</b> slowest. Progress is saved in this browser under <code>pharm-sr</code> — use <b>Export</b> to back it up or move it to another device. New cards are introduced up to your "New / day" limit.</p>
+</main>
+
+<script src="sr-cards.js"></script>
+<script>
+(function(){
+  "use strict";
+  var DAY=86400000, KEY="pharm-sr", METAK="pharm-sr-meta";
+  var ALL = window.SR_CARDS || [];
+  var state = load(KEY), meta = load(METAK);
+  function load(k){ try{ return JSON.parse(localStorage.getItem(k))||{}; }catch(e){ return {}; } }
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); localStorage.setItem(METAK,JSON.stringify(meta)); }catch(e){} }
+  function today(){ return new Date().toISOString().slice(0,10); }
+
+  // ---- SM-2 ----
+  function applySM2(c,q){
+    if(c.ef==null){ c.ef=2.5; c.reps=0; c.interval=0; c.lapses=0; }
+    if(q<3){ c.reps=0; c.interval=0; c.lapses=(c.lapses||0)+1; }
+    else{
+      if(c.reps===0) c.interval=(q===5?4:1);
+      else if(c.reps===1) c.interval=(q===3?4:6);
+      else{ var m=q===3?1.2:(q===5?c.ef*1.3:c.ef); c.interval=Math.max(1,Math.round(c.interval*m)); }
+      c.reps+=1;
+    }
+    c.ef=Math.max(1.3,c.ef+(0.1-(5-q)*(0.08+(5-q)*0.02)));
+    c.due=Date.now()+(c.interval>0?c.interval*DAY:0); c.last=Date.now();
+    return c;
+  }
+  function preview(id,q){ var c=Object.assign({ef:2.5,reps:0,interval:0},state[id]||{}); applySM2(c,q); return c.interval===0?"<10m":fmt(c.interval); }
+  function fmt(d){ return d>=30?(Math.round(d/30)+"mo"):d+"d"; }
+
+  // ---- filtering ----
+  function newLimit(){ return parseInt(document.getElementById('newlim').value,10); }
+  function newUsedToday(){ return (meta.d===today()) ? (meta.n||0) : 0; }
+  function bumpNew(){ if(meta.d!==today()){ meta.d=today(); meta.n=0; } meta.n=(meta.n||0)+1; }
+  function pool(){
+    var dk=document.getElementById('deck').value, ty=document.getElementById('type').value;
+    return ALL.filter(function(c){ return (dk==='all'||c.dk===dk) && (ty==='all'||c.type===ty); });
+  }
+  function status(id){
+    var s=state[id];
+    if(!s) return 'new';
+    if((s.interval||0)===0) return 'learn';
+    if((s.due||0)<=Date.now()) return 'due';
+    return 'sched';
+  }
+  function buildQueue(){
+    var p=pool(), now=Date.now();
+    var due=p.filter(function(c){ var s=state[c.id]; return s && (s.due||0)<=now; });
+    var allowed=Math.max(0, newLimit()-newUsedToday());
+    var news=p.filter(function(c){ return !state[c.id]; }).slice(0, allowed);
+    return due.concat(news);
+  }
+
+  // ---- dashboard + deck table ----
+  function renderDash(){
+    var p=pool(), now=Date.now(), due=0,learn=0;
+    p.forEach(function(c){ var st=status(c.id); if(st==='due')due++; else if(st==='learn'){learn++;due++;} });
+    var allowed=Math.max(0,newLimit()-newUsedToday());
+    var newAvail=Math.min(allowed, p.filter(function(c){return !state[c.id];}).length);
+    document.getElementById('dash').innerHTML =
+      st('due',due+newAvail,'Due now')+st('new',newAvail,'New today')+st('learn',learn,'Learning')+st('',p.length,'In deck');
+    var btn=document.getElementById('study'); var total=due+newAvail;
+    btn.disabled=total===0; btn.textContent=total?('▶ Study '+total+' cards'):'✓ Nothing due';
+  }
+  function st(c,n,l){ return '<div class="stat '+c+'"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>'; }
+  function renderTable(){
+    var ty=document.getElementById('type').value, now=Date.now();
+    var byDeck={};
+    ALL.forEach(function(c){ if(ty!=='all'&&c.type!==ty)return;
+      var k=c.deck; byDeck[k]=byDeck[k]||{t:0,due:0,nw:0,ln:0,sc:0};
+      byDeck[k].t++; var s=status(c.id);
+      if(s==='due')byDeck[k].due++; else if(s==='new')byDeck[k].nw++; else if(s==='learn'){byDeck[k].ln++;byDeck[k].due++;} else byDeck[k].sc++;
+    });
+    var rows=Object.keys(byDeck).map(function(k){ var x=byDeck[k];
+      return '<tr><td>'+k+'</td><td class="num">'+x.t+'</td><td class="num">'+x.due+'</td><td class="num">'+x.nw+'</td><td class="num">'+x.ln+'</td><td class="num">'+x.sc+'</td></tr>'; }).join('');
+    document.querySelector('#browse tbody').innerHTML=rows;
+  }
+  function renderAll(){ renderDash(); renderTable(); }
+
+  // ---- study flow ----
+  var q=[], qi=0;
+  function startStudy(){ q=buildQueue(); qi=0; document.getElementById('reviewArea').style.display=q.length?'block':'none'; if(q.length)show(); }
+  function show(){
+    if(qi>=q.length){ end(); return; }
+    var c=q[qi], isNew=!state[c.id];
+    document.getElementById('review').innerHTML=
+      '<div class="rmeta"><span>'+(c.type==='flashcard'?'Flashcard':'Quiz')+' · '+c.deck+'</span><span>'+(isNew?'NEW':'REVIEW')+' · '+(qi+1)+'/'+q.length+'</span></div>'+
+      '<div class="rfront">'+c.front+'</div>'+
+      '<div class="rback" id="rback">'+c.back+'</div><div class="rspacer"></div>'+
+      '<button class="btn primary reveal-btn" id="reveal">Show answer</button>'+
+      '<div class="rate" id="rate" style="display:none">'+
+        rb('again',2,'Again')+rb('hard',3,'Hard')+rb('good',4,'Good')+rb('easy',5,'Easy')+'</div>';
+    document.getElementById('reveal').onclick=reveal;
+  }
+  function rb(cls,qv,lbl){ return '<button class="'+cls+'" data-q="'+qv+'">'+lbl+'<span class="iv">'+preview(q[qi].id,qv)+'</span></button>'; }
+  function reveal(){
+    var r=document.getElementById('rback'); if(!r)return; r.classList.add('show');
+    document.getElementById('reveal').style.display='none';
+    var rt=document.getElementById('rate'); rt.style.display='grid';
+    rt.querySelectorAll('button').forEach(function(b){ b.onclick=function(){ rate(parseInt(b.dataset.q,10)); }; });
+  }
+  function rate(qv){
+    var c=q[qi]; var isNew=!state[c.id];
+    state[c.id]=applySM2(Object.assign({ef:2.5,reps:0,interval:0},state[c.id]||{}),qv);
+    if(isNew) bumpNew();
+    save();
+    if(qv<3) q.push(c);
+    qi++; show();
+  }
+  function end(){ document.getElementById('review').innerHTML='<div class="done-msg"><div class="big">✓</div><b>All caught up.</b><br>No more cards due in this deck right now.</div>'; renderAll(); }
+  function exitStudy(){ document.getElementById('reviewArea').style.display='none'; renderAll(); }
+
+  // ---- controls ----
+  // populate deck select
+  (function(){ var sel=document.getElementById('deck'); var seen={}; var opt='<option value="all">All guides</option>';
+    ALL.forEach(function(c){ if(!seen[c.dk]){ seen[c.dk]=1; opt+='<option value="'+c.dk+'">'+c.deck+'</option>'; } });
+    sel.innerHTML=opt;
+  })();
+  try{ var nl=localStorage.getItem('pharm-sr-newlim'); if(nl) document.getElementById('newlim').value=nl; }catch(e){}
+  document.getElementById('deck').onchange=renderAll;
+  document.getElementById('type').onchange=renderAll;
+  document.getElementById('newlim').onchange=function(){ try{localStorage.setItem('pharm-sr-newlim',this.value);}catch(e){} renderAll(); };
+  document.getElementById('study').onclick=startStudy;
+  document.getElementById('reset').onclick=function(){ if(confirm('Clear ALL review progress for every deck?')){ state={}; meta={}; save(); exitStudy(); } };
+  document.getElementById('export').onclick=function(){ var blob=new Blob([JSON.stringify({state:state,meta:meta},null,2)],{type:'application/json'});
+    var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='pharmacology-sr-progress.json'; a.click(); };
+  document.getElementById('import').onclick=function(){ document.getElementById('file').click(); };
+  document.getElementById('file').onchange=function(e){ var f=e.target.files[0]; if(!f)return; var r=new FileReader();
+    r.onload=function(){ try{ var d=JSON.parse(r.result); state=d.state||d||{}; meta=d.meta||{}; save(); renderAll(); alert('Progress imported.'); }catch(err){ alert('Could not read that file.'); } };
+    r.readAsText(f); };
+
+  (function(){ var root=document.documentElement, b=document.getElementById('theme');
+    function dk(){return root.getAttribute('data-theme')==='dark';} function upd(){ b.innerHTML=dk()?'☀️':'🌙'; } upd();
+    b.onclick=function(){ if(dk())root.removeAttribute('data-theme'); else root.setAttribute('data-theme','dark'); try{localStorage.setItem('pharm-theme',dk()?'dark':'light');}catch(e){} upd(); };
+  })();
+
+  document.addEventListener('keydown',function(e){
+    if(document.getElementById('reviewArea').style.display==='none') return;
+    if(e.key==='Escape'){ exitStudy(); return; }
+    var rv=document.getElementById('reveal');
+    if(e.key===' '){ if(rv&&rv.style.display!=='none'){ e.preventDefault(); reveal(); } return; }
+    if(rv&&rv.style.display==='none'){ // answer revealed → number keys rate
+      var map={'1':2,'2':3,'3':4,'4':5}; if(map[e.key]){ e.preventDefault(); rate(map[e.key]); }
+    }
+  });
+
+  if(!ALL.length){ document.getElementById('dash').innerHTML='<p style="color:var(--muted)">Could not load cards (sr-cards.js missing).</p>'; }
+  else renderAll();
+})();
+</script>
+</body>
+</html>

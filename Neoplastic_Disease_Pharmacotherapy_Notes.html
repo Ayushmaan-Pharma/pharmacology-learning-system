@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neoplastic Disease Pharmacotherapy &amp; Related Topics — PYQ Notes</title>
+<style>
+  :root{
+    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
+    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
+  header.top{margin-bottom:26px}
+  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
+  .sub{color:var(--muted); font-size:.92rem; margin:0}
+  .tools{
+    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
+    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
+    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  }
+  #search{
+    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
+    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
+    outline:none;
+  }
+  #search:focus{border-color:var(--accent)}
+  .btn{
+    border:1px solid var(--line); background:var(--panel); color:var(--ink);
+    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
+    transition:.15s; white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+
+  .toc{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+  }
+  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
+  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
+  .toc a:hover{color:var(--accent)}
+
+  section.sec{margin:34px 0}
+  .sec > h2{
+    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
+    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+  }
+  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+
+  details.q{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+  }
+  details.q[open]{border-color:#d6e6e0}
+  summary.q-head{
+    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
+    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+  }
+  summary.q-head::-webkit-details-marker{display:none}
+  summary.q-head:hover{background:#fcfdfc}
+  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
+  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  .q-text{flex:1}
+  .answer{
+    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
+    font-size:.93rem; color:#33383d;
+  }
+  .answer h4{
+    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
+    margin:18px 0 7px;
+  }
+  .answer h5{font-size:.92rem; color:var(--ink); margin:14px 0 4px; font-weight:640}
+  .answer p{margin:9px 0}
+  .answer ul,.answer ol{margin:8px 0; padding-left:20px}
+  .answer li{margin:4px 0}
+  .answer b{font-weight:620}
+  .answer table{
+    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
+  }
+  .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
+  .answer th{background:var(--accent-soft); font-weight:600}
+  .answer .dia{
+    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
+    margin:12px 0; font-size:.85rem; color:#4a5550;
+  }
+  .answer .dia b{color:var(--accent)}
+  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .recent b{color:#9a7000}
+  .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
+  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
+  mark{background:#fff2a8; padding:0 1px}
+  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+
+  /* ---- v2 interactive additions ---- */
+  body{transition:background .25s, color .25s}
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
+  .chip:hover{border-color:var(--accent); color:var(--accent)}
+  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
+  .iconbtn{font-size:1rem; line-height:1}
+  details.q.vignette{border-left:3px solid #c98a3c}
+  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
+  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
+  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
+  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a; --shadow:0 1px 2px rgba(0,0,0,.35)}
+  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
+  [data-theme="dark"] summary.q-head:hover{background:#23272c}
+  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  [data-theme="dark"] .answer{color:#cfd4d8}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:#2a2519}
+  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] mark{background:#7a6212; color:#fff}
+  [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
+
+  /* ---- per-section colour theming ---- */
+  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
+  .sec > h2{border-bottom:2px solid var(--sec)}
+  .sec details.q{border-left:4px solid var(--sec)}
+  .sec details.q[open]{border-left-color:var(--sec)}
+  .sec details.q[open] .chev{color:var(--sec)}
+  .sec .answer h4{color:var(--sec)}
+  .sec .answer th{background:var(--sec-soft)}
+  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
+  .toc a{display:flex; align-items:center}
+  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
+  [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
+  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Pharmacotherapy of Neoplastic Disease &amp; Related Topics — Consolidated PYQ Notes</h1>
+    <p class="sub">Exam-oriented model answers · Goodman &amp; Gilman, Katzung, Rang &amp; Dale + current guidelines · click any question to open the answer</p>
+  </header>
+
+  <div class="tools">
+    <a class="btn" href="index_pyq.html" title="Back to PYQ Library" style="text-decoration:none">← PYQ Library</a>
+    <a class="btn" href="index.html" title="Back to study hub" style="text-decoration:none">← Hub</a>
+    <input id="search" type="text" placeholder="🔍  Search… ( / )" autocomplete="off">
+    <button class="btn" id="shuffle" title="Random question (R)">🎲 Quiz me</button>
+    <button class="btn" id="expandAll" title="Expand visible (E)">Expand</button>
+    <button class="btn" id="collapseAll" title="Collapse all (C)">Collapse</button>
+    <button class="btn iconbtn" id="theme" title="Dark mode (D)">🌙</button>
+    <span class="count" id="counter"></span>
+  </div>
+  <div class="chips" id="chips">
+    <button class="chip active" data-f="all">All</button>
+    <button class="chip" data-f="3">★★★</button>
+    <button class="chip" data-f="2">★★</button>
+    <button class="chip" data-f="1">★</button>
+    <button class="chip" data-f="case">🩺 Cases</button>
+  </div>
+  <p class="hint">Shortcuts: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K</kbd>/<kbd>J</kbd> next/prev · <kbd>Space</kbd> open · <kbd>E</kbd>/<kbd>C</kbd> expand/collapse · <kbd>D</kbd> dark</p>
+
+  <nav class="toc" id="toc">
+    <h2>Sections</h2>
+    <a href="#s1"><span class="dot" style="background:#2f7d6a"></span>1 · Preclinical Toxicity Studies &amp; Regulatory Aspects</a>
+    <a href="#s2"><span class="dot" style="background:#3f6cb0"></span>2 · General Cancer Chemotherapy &amp; Recent Advances</a>
+    <a href="#s3"><span class="dot" style="background:#845bb0"></span>3 · Targeted Therapy, Monoclonal Antibodies &amp; Immunotherapy</a>
+    <a href="#s4"><span class="dot" style="background:#b15068"></span>4 · Management of Anticancer Drug Toxicity</a>
+    <a href="#s5"><span class="dot" style="background:#b3852f"></span>5 · Hormonal Therapy in Cancer</a>
+    <a href="#s6"><span class="dot" style="background:#2f8696"></span>6 · Fixed Dose Combinations &amp; Drug Interactions</a>
+    <a href="#s7"><span class="dot" style="background:#548a4f"></span>7 · Other Important Pharmacotherapy Topics</a>
+    <a href="#s8"><span class="dot" style="background:#c06a3e"></span>8 · Special Topics (Hypothesis, Clinical Trials)</a>
+    <a href="#scase"><span class="dot" style="background:#7a5bbd"></span>🩺 Clinical Case Vignettes</a>
+  </nav>
+
+  <p class="nohit" id="nohit">No questions match your search.</p>
+
+  <div id="content">
+<!-- CONTENT START -->
+
+<section class="sec" id="s1" style="--sec:#2f7d6a;--sec-soft:#2f7d6a26">
+  <h2>Section 1 · Preclinical Toxicity Studies &amp; Regulatory Aspects</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Aims, methodology &amp; limitations of acute &amp; chronic toxicity studies; battery of safety studies before IND; note on OECD guidelines, CCSEA, 3R/4R, alternatives &amp; rodent euthanasia.</span></summary>
+  <div class="answer">
+    <h4>Acute toxicity</h4>
+    <ul>
+      <li><b>Aim:</b> determine short-term toxicity of a single/24-h dose; approximate lethal dose, target organs, dose range for further studies.</li>
+      <li><b>Method:</b> single escalating doses in ≥2 species (rodent + non-rodent), ≥2 routes incl. clinical route; observe 14 days; gross pathology. Modern OECD methods — <b>fixed-dose (420), up-and-down (425), acute-toxic-class (423)</b> — replace classical LD₅₀ (fewer animals).</li>
+    </ul>
+    <h4>Sub-acute &amp; chronic toxicity</h4>
+    <ul>
+      <li><b>Aim:</b> repeated-dose toxicity → NOAEL, cumulative &amp; target-organ effects, reversibility.</li>
+      <li><b>Method:</b> sub-acute 14–28 days; chronic up to 6–12 months in 2 species, 3 dose levels + control; haematology, clinical chemistry, histopathology; duration matched to intended clinical use.</li>
+    </ul>
+    <h4>Full safety battery before IND</h4>
+    <ul>
+      <li>Acute, sub-acute &amp; chronic toxicity.</li>
+      <li><b>Safety pharmacology</b> (CVS — hERG/QT, CNS, respiratory).</li>
+      <li><b>Genotoxicity</b> (Ames, micronucleus, chromosomal aberration).</li>
+      <li><b>Reproductive/developmental</b> toxicity (Segment I–III, teratogenicity).</li>
+      <li><b>Carcinogenicity</b> (chronic-use drugs), local tolerance, immunotoxicity, toxicokinetics.</li>
+    </ul>
+    <h4>OECD guidelines</h4>
+    <p>Internationally harmonised, validated test methods for chemical/drug toxicity (e.g. TG 423/425 acute oral, repeated-dose, genotoxicity, carcinogenicity), ensuring reproducible, ethical, mutually-accepted data (MAD).</p>
+    <h4>CCSEA, 3R/4R &amp; alternatives</h4>
+    <ul>
+      <li><b>CCSEA</b> (formerly CPCSEA) — statutory body regulating ethical animal experimentation in India via IAEC.</li>
+      <li><b>3R:</b> Replacement (in-vitro, organoids, in-silico), Reduction (better statistics), Refinement (↓ suffering); <b>4th R</b> = Rehabilitation.</li>
+      <li><b>Alternatives:</b> cell lines, organ-on-chip, QSAR/PBPK, zebrafish, reconstructed human epidermis, monocyte activation test.</li>
+    </ul>
+    <h4>Euthanasia methods for rodents</h4>
+    <p>CO₂ inhalation (gradual fill — commonest), anaesthetic overdose (pentobarbital); physical (cervical dislocation/decapitation in small rodents, by trained staff, often after sedation). Must ensure rapid unconsciousness &amp; confirm death (AVMA/CCSEA humane endpoints).</p>
+    <h4>Limitations</h4>
+    <p>Species differences → poor human prediction; high cost/time; ethical concerns; cannot detect idiosyncratic/immune ADRs; high-dose extrapolation issues.</p>
+    <div class="recent"><b>Recent:</b> FDA Modernization Act 2.0 (2022) permits non-animal alternatives for IND data.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Role of animal toxicity studies in new-drug development; compare CCSEA and ARRIVE guidelines.</span></summary>
+  <div class="answer">
+    <h4>Role of animal toxicity studies</h4>
+    <ul>
+      <li>Establish safety profile, target organs, NOAEL → estimate the <b>safe starting dose</b> for first-in-human trials.</li>
+      <li>Detect genotoxicity, teratogenicity, carcinogenicity before human exposure.</li>
+      <li>Provide toxicokinetic &amp; reversibility data; mandatory regulatory requirement (IND/Schedule Y/NDCT Rules).</li>
+    </ul>
+    <h4>CCSEA vs ARRIVE</h4>
+    <table>
+      <tr><th>Feature</th><th>CCSEA (CPCSEA)</th><th>ARRIVE</th></tr>
+      <tr><td>Nature</td><td>Statutory <b>regulatory</b> guideline (India)</td><td>Voluntary <b>reporting</b> guideline (international, NC3Rs)</td></tr>
+      <tr><td>Scope</td><td>Approval, housing, ethics, oversight of experiments</td><td>Transparent reporting of in-vivo research in publications</td></tr>
+      <tr><td>Focus</td><td>Animal welfare &amp; legal compliance</td><td>Reproducibility &amp; quality (design, randomisation, blinding, sample size)</td></tr>
+      <tr><td>Enforced by</td><td>Government/CCSEA &amp; IAEC</td><td>Journals/editors</td></tr>
+    </table>
+  </div></details>
+</section>
+
+<section class="sec" id="s2" style="--sec:#3f6cb0;--sec-soft:#3f6cb026">
+  <h2>Section 2 · General Cancer Chemotherapy &amp; Recent Advances</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacotherapeutic advances in cancer therapy — paradigm shift from cytotoxic to precision/immuno-oncology; mechanistic classification (examples); altered metabolic signature of cancer &amp; mechanisms of drug resistance.</span></summary>
+  <div class="answer">
+    <h4>Conceptual framework — why the shift happened</h4>
+    <p>Cancer pharmacotherapy has shifted over two decades from non-selective cytotoxic chemotherapy (exploits high tumour growth fraction but spares no rapidly-dividing tissue) toward precision/personalised oncology targeting specific molecular vulnerabilities and harnessing host immunity. Expanding knowledge of driver mutations, signal-transduction pathways, angiogenesis, immune checkpoints and tumour antigens has produced targeted small molecules, mAbs, ADCs, checkpoint inhibitors, bispecific antibodies, CAR-T cells and cancer vaccines — increasingly selected by biomarker/companion diagnostic rather than tumour site of origin.</p>
+    <ul>
+      <li><b>Cell-cycle/growth-fraction logic:</b> phase-specific cytotoxics act mainly in S/M; phase-nonspecific agents kill at any point. High-growth-fraction tumours (leukaemia, lymphoma) respond well to cytotoxics; slow-growing solid tumours respond poorly — the ceiling of conventional chemotherapy.</li>
+      <li><b>Apoptosis &amp; checkpoints:</b> drug-induced DNA damage triggers apoptosis only if checkpoint proteins (p53, chk-1/2) are intact; their loss confers resistance.</li>
+      <li><b>Rational combinations:</b> non-cross-resistant drugs with differing mechanisms/toxicities maximise log-kill and delay resistance; targeted drugs also overcome chemoresistance by normalising tumour blood flow and releasing antigens that prime immune responses.</li>
+    </ul>
+    <div class="dia"><b>Diagram (evolution of cancer therapy):</b> Cytotoxic chemotherapy → Hormonal therapy → Targeted small molecules/mAbs → Angiogenesis inhibitors → Immune checkpoint inhibitors → CAR-T/bispecifics → Tumour-agnostic/biomarker-guided therapy.</div>
+    <h4>Mechanistic classification of anticancer drugs</h4>
+    <table>
+      <tr><th>Class</th><th>Mechanism</th><th>Examples</th></tr>
+      <tr><td>Alkylating agents</td><td>Cross-link DNA</td><td>Cyclophosphamide, cisplatin, busulfan, temozolomide</td></tr>
+      <tr><td>Antimetabolites</td><td>Inhibit DNA synthesis (false substrates)</td><td>Methotrexate, 5-FU, 6-MP, gemcitabine, cytarabine</td></tr>
+      <tr><td>Microtubule agents</td><td>Inhibit mitotic spindle</td><td>Vincristine/vinblastine (inhibit assembly), paclitaxel (inhibit disassembly)</td></tr>
+      <tr><td>Topoisomerase inhibitors</td><td>Block DNA unwinding</td><td>Etoposide (II), irinotecan/topotecan (I)</td></tr>
+      <tr><td>Cytotoxic antibiotics</td><td>Intercalate DNA, free radicals</td><td>Doxorubicin, bleomycin, mitomycin, dactinomycin</td></tr>
+      <tr><td>Hormonal agents</td><td>Modify hormone-dependent growth</td><td>Tamoxifen, anastrozole, leuprolide, bicalutamide</td></tr>
+      <tr><td>Targeted small molecule (BCR-ABL/EGFR/multikinase TKI)</td><td>Kinase/pathway inhibition</td><td>Imatinib, gefitinib/erlotinib, sunitinib/sorafenib, lapatinib</td></tr>
+      <tr><td>Proteasome inhibitor</td><td>26S proteasome → NF-κB</td><td>Bortezomib (multiple myeloma)</td></tr>
+      <tr><td>Monoclonal antibodies</td><td>Surface antigen/receptor blockade, ADCC/CDC</td><td>Rituximab (CD20), trastuzumab (HER2), cetuximab (EGFR), bevacizumab (VEGF-A)</td></tr>
+      <tr><td>Antibody-drug conjugates</td><td>Antibody + cytotoxic payload, receptor-mediated endocytosis</td><td>T-DM1, trastuzumab deruxtecan, brentuximab vedotin, gemtuzumab ozogamicin</td></tr>
+      <tr><td>Immune checkpoint inhibitors</td><td>Anti-CTLA-4 (priming) / anti-PD-1/PD-L1 (effector phase)</td><td>Ipilimumab; pembrolizumab, nivolumab; atezolizumab</td></tr>
+      <tr><td>Bispecific T-cell engager</td><td>Bridges T-cell (CD3) to tumour antigen</td><td>Blinatumomab (CD19×CD3)</td></tr>
+      <tr><td>CAR-T cell therapy</td><td>Engineered autologous T-cells, MHC-independent recognition</td><td>Tisagenlecleucel (CD19), idecabtagene vicleucel (BCMA)</td></tr>
+      <tr><td>Cancer vaccine/oncolytic</td><td>Antigen-presenting/oncolytic viral platform</td><td>Sipuleucel-T (prostate); T-VEC (melanoma)</td></tr>
+    </table>
+    <h4>Modality detail — key agents &amp; mechanisms</h4>
+    <ul>
+      <li><b>Imatinib</b> — first selectively-targeted anticancer drug; inhibits BCR-ABL (+ PDGFR, c-KIT); &gt;90% remission in chronic-phase CML, DOC for c-KIT+ GIST; CYP3A4 metabolised, t½ ~18 h; resistance via BCR-ABL point mutations. Dasatinib/nilotinib (2nd-gen) overcome most resistant mutations, can prolong QT.</li>
+      <li><b>EGFR inhibitors</b> (gefitinib, erlotinib) block EGFR autophosphorylation — effective in EGFR-mutant NSCLC; toxicity = acneiform rash, diarrhoea, rare ILD. <b>Lapatinib</b> — oral EGFR/HER2 dual TKI for trastuzumab-refractory HER2+ breast cancer.</li>
+      <li><b>Bortezomib</b> — covalently inhibits the proteasome → prevents IκB degradation → NF-κB not released; prime indication multiple myeloma; dose-limiting peripheral neuropathy + thrombocytopenia.</li>
+      <li><b>Rituximab</b> — anti-CD20; kills B-cells via ADCC + CDC; backbone of NHL/CLL. <b>Trastuzumab</b> — anti-HER2; characteristic ↓LVEF/cardiomyopathy. <b>Cetuximab</b> — anti-EGFR; acneiform rash, hypomagnesaemia. <b>Bevacizumab</b> — anti-VEGF-A; hypertension, thromboembolism, GI perforation.</li>
+      <li><b>ADCs</b> marry antibody selectivity to a potent cytotoxic payload via a linker — binding → receptor-mediated endocytosis → intracellular payload release, sparing antigen-negative cells (T-DM1/T-DXd for HER2; brentuximab vedotin for CD30/Hodgkin; gemtuzumab for CD33/AML).</li>
+      <li><b>Checkpoint inhibitors</b> — CTLA-4 (CD28 homologue, higher B7 affinity) dampens priming, blocked by ipilimumab (first ICI, FDA 2011, melanoma; 2018 Nobel — Allison &amp; Honjo); PD-1/PD-L1 dampens the tumour-microenvironment effector phase, blocked by pembrolizumab/nivolumab (anti-PD-1) and atezolizumab/durvalumab (anti-PD-L1); relatlimab targets the newer LAG-3 checkpoint. ~50% response in metastatic melanoma with anti-PD-1+anti-CTLA-4 combination. <b>irAEs</b> (rash/vitiligo, colitis, hepatitis, hypophysitis, thyroiditis) managed by withholding drug + high-dose steroids; pseudoprogression can mimic treatment failure.</li>
+      <li><b>Blinatumomab</b> — first-in-class CD19×CD3 BiTE bridging T-cell to B-cell, MHC-independent killing; approved for Ph− relapsed/refractory B-ALL; toxicity = cytokine release syndrome (CRS) + neurotoxicity.</li>
+      <li><b>CAR-T cells</b> — scFv (tumour antigen recognition) fused to costimulatory (4-1BB/CD28) + CD3-ζ domains; tisagenlecleucel (first CD19 CAR-T, 2017, &gt;80% remission in refractory B-ALL); idecabtagene vicleucel (anti-BCMA) for myeloma. CRS treated with tocilizumab (anti-IL-6R) ± steroids; resistance via CD19 antigen loss (salvage anti-CD22 CAR-T).</li>
+      <li><b>Sipuleucel-T</b> — autologous APCs pulsed with PAP-GM-CSF for hormone-refractory prostate cancer. <b>T-VEC</b> — oncolytic HSV expressing GM-CSF for melanoma.</li>
+      <li><b>Hormonal therapy</b> — breast (tamoxifen, fulvestrant, aromatase inhibitors); prostate (GnRH agonists ± antiandrogens — flutamide, bicalutamide).</li>
+      <li><b>Angiogenesis inhibitors</b> — bevacizumab + chemo in mCRC/NSCLC/RCC/glioblastoma; sunitinib/sorafenib (oral VEGFR-2 multikinase TKIs) for RCC/HCC/GIST/thyroid Ca; class risk = hypertension, bleeding, perforation, impaired healing.</li>
+      <li><b>Tumour-agnostic/biomarker-guided therapy</b> — pembrolizumab was first approved by tumour genotype (any MSI-H/dMMR solid tumour, later TMB ≥10 mut/Mb) rather than site. Companion diagnostics (HER2, EGFR, MSI/dMMR, TMB) select likely responders. Liquid biopsy (ctDNA) tracks tumour burden, detects resistance mutations, follows clonal evolution non-invasively.</li>
+      <li><i>Also part of the modern armamentarium (universally accepted, brief note):</i> PARP inhibitors (olaparib, niraparib, rucaparib — synthetic lethality in BRCA-mutant ovarian/breast/prostate cancer) and NTRK-fusion tumour-agnostic agents (larotrectinib, entrectinib).</li>
+    </ul>
+    <h4>Altered metabolic signature of cancer</h4>
+    <ul>
+      <li><b>Warburg effect:</b> tumour cells favour aerobic glycolysis over oxidative phosphorylation even with O₂ → rapid ATP &amp; biosynthetic precursors.</li>
+      <li>Glutamine addiction, ↑ lipid &amp; nucleotide synthesis → exploited as drug targets (e.g. IDH inhibitors, glutaminase inhibitors).</li>
+    </ul>
+    <h4>Mechanisms of drug resistance</h4>
+    <ul>
+      <li><b>↑ Efflux</b> (P-glycoprotein/MDR1 — multidrug resistance).</li>
+      <li>↓ Drug uptake/activation; ↑ inactivation (glutathione); poor delivery, target mutation, repair-enzyme overexpression.</li>
+      <li>↑ DNA repair; altered/over-expressed target; ↓ apoptosis (p53 mutation, ↑ Bcl-2, loss of apoptotic pathways).</li>
+      <li>Tumour heterogeneity, mutational load &amp; clonal selection — drives the shift to biomarker-guided, mechanism-specific therapy.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Antibody-drug conjugates are among the fastest-growing classes — trastuzumab deruxtecan has extended benefit to HER2-low breast cancer, broadening the eligible population beyond classic HER2-positive disease. Bispecific antibodies are expanding beyond blinatumomab into lymphoma/myeloma (BCMA/CD3, CD20/CD3 constructs). CAR-T therapy continues to move into earlier treatment lines and solid-tumour research; CRS management with tocilizumab is standard of care. mRNA neoantigen cancer vaccines combined with checkpoint inhibitors are in active clinical development. Practice is increasingly biomarker-first (MSI-H/dMMR, TMB, ctDNA), consolidating the shift from cytotoxic to precision and immuno-oncology. Tumour-agnostic therapy (larotrectinib for NTRK), PARP inhibitors (olaparib — BRCA) and CDK4/6 inhibitors round out the modern precision-oncology toolkit.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Tabulate MOA of anticancer agents (examples); discuss alkylating agents, antimetabolites, plant alkaloids (Vinca &amp; spindle inhibitors) &amp; anticancer antibiotics.</span></summary>
+  <div class="answer">
+    <h4>MOA summary table</h4>
+    <table>
+      <tr><th>Class</th><th>Mechanism</th><th>Cell-cycle</th><th>Example &amp; key toxicity</th></tr>
+      <tr><td>Alkylating</td><td>Cross-link/alkylate DNA guanine</td><td>CCNS</td><td>Cyclophosphamide (haemorrhagic cystitis), cisplatin (nephro/oto)</td></tr>
+      <tr><td>Antimetabolites</td><td>Block nucleotide synthesis</td><td>S-phase</td><td>Methotrexate (mucositis), 5-FU, 6-MP</td></tr>
+      <tr><td>Vinca alkaloids</td><td>Inhibit microtubule assembly</td><td>M-phase</td><td>Vincristine (neuropathy), vinblastine (myelosuppression)</td></tr>
+      <tr><td>Taxanes</td><td>Inhibit microtubule disassembly</td><td>M-phase</td><td>Paclitaxel (hypersensitivity, neuropathy)</td></tr>
+      <tr><td>Antibiotics</td><td>Intercalate DNA, free radicals</td><td>CCNS</td><td>Doxorubicin (cardiotoxicity), bleomycin (pulmonary fibrosis)</td></tr>
+    </table>
+    <h4>Alkylating agents</h4>
+    <p>Transfer alkyl groups to DNA (N7-guanine) → cross-linking → strand breaks → apoptosis; cell-cycle non-specific. Classes: nitrogen mustards (cyclophosphamide, chlorambucil), nitrosoureas (carmustine — cross BBB), platinum compounds (cisplatin), alkyl sulfonates (busulfan). Toxicity: myelosuppression, infertility, secondary malignancy; cyclophosphamide → cystitis (prevent with <b>mesna</b>).</p>
+    <h4>Antimetabolites</h4>
+    <p>Structural analogues of normal metabolites → inhibit DNA/RNA synthesis (S-phase). Methotrexate (dihydrofolate reductase inhibitor — rescue with <b>leucovorin</b>), 5-FU (thymidylate synthase), 6-MP (purine synthesis; ↑ toxicity with allopurinol/TPMT deficiency), cytarabine, gemcitabine.</p>
+    <h4>Plant alkaloids / spindle inhibitors</h4>
+    <ul>
+      <li><b>Vinca alkaloids</b> (vincristine, vinblastine, vinorelbine): bind tubulin → prevent microtubule assembly → metaphase arrest. Vincristine — peripheral neuropathy (little myelosuppression); vinblastine — myelosuppression.</li>
+      <li><b>Taxanes</b> (paclitaxel, docetaxel): stabilise microtubules → prevent disassembly.</li>
+      <li>Etoposide (podophyllotoxin — topoisomerase II); camptothecins (irinotecan/topotecan — topoisomerase I).</li>
+    </ul>
+    <h4>Cytotoxic antibiotics</h4>
+    <p>From <i>Streptomyces</i>. Doxorubicin/daunorubicin (anthracyclines — intercalation + topo-II + free radicals → <b>dose-dependent cardiotoxicity</b>, reduced by dexrazoxane); bleomycin (DNA strand breaks → <b>pulmonary fibrosis</b>, minimal myelosuppression); mitomycin, dactinomycin.</p>
+  </div></details>
+<details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Discuss the log-kill hypothesis (phenomenon) in cancer chemotherapy and its clinical implications.</span></summary>
+  <div class="answer">
+<p><b>Skipper-Schabel log-kill hypothesis:</b> a given dose of an anticancer drug kills a constant <b>fraction</b> (not a constant number) of tumour cells - i.e. first-order kinetics. A regimen giving a "3-log kill" destroys 99.9% of cells <i>regardless of the starting number</i>.</p>
+<h4>Implications</h4>
+<ul><li>Because each cycle kills a fraction, <b>repeated cycles</b> are needed to reduce cell number below 1 (cure); the same logic favours <b>treating when tumour burden is low</b> (adjuvant therapy).</li>
+<li>Intervals allow normal-tissue recovery; rationale for <b>combination chemotherapy</b> and adequate <b>dose intensity</b>.</li></ul>
+<h4>Refinements</h4>
+<ul><li><b>Gompertzian growth:</b> large tumours grow slowly with a small growth fraction → relatively chemo-resistant; smaller tumours are more sensitive.</li>
+<li><b>Goldie-Coldman:</b> resistance arises by spontaneous mutation → start early, combine non-cross-resistant drugs.</li>
+<li><b>Norton-Simon:</b> supports <b>dose-dense</b> scheduling.</li></ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Cell cycle kinetics in cancer chemotherapy — phases, cycle-specific vs cycle-nonspecific drugs, growth fraction &amp; implications for drug scheduling.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Cell cycle kinetics describes how tumour cells transit the proliferative cycle and how this governs the rational, scheduled use of cytotoxic drugs. Because most cytotoxics damage DNA or the mitotic apparatus, efficacy is greatest in proliferating cells; cycle phase, growth fraction and cell-kill kinetics together underpin drug selection, dosing and combination design.</p>
+    <h4>Phases of the cell cycle</h4>
+    <ul>
+      <li><b>G1</b> — pre-DNA-synthesis (gap) interval.</li>
+      <li><b>S</b> — DNA synthesis.</li>
+      <li><b>G2</b> — post-synthetic interval (cell carries double DNA complement).</li>
+      <li><b>M</b> — mitosis; yields two daughter G1 cells that re-enter the cycle or exit to G0.</li>
+      <li><b>G0</b> — quiescent/resting; a clonogenic fraction can be recruited back into cycle later.</li>
+      <li>Transitions are driven by cyclin–CDK complexes (e.g. cyclin D–CDK4/6 for G1→S) and policed by checkpoints (p53, chk-1/2).</li>
+    </ul>
+    <h4>Cycle-specific (CCS) vs cycle-nonspecific (CCNS) drugs</h4>
+    <table>
+      <tr><th>Feature</th><th>CCNS</th><th>CCS</th></tr>
+      <tr><td>Target</td><td>Kill resting + dividing cells</td><td>Kill only actively dividing cells</td></tr>
+      <tr><td>Dose–response</td><td>Linear; ↑kill with ↑dose</td><td>Plateau; better with prolonged exposure/pulses</td></tr>
+      <tr><td>Examples</td><td>Alkylators (cyclophosphamide, melphalan, busulfan), nitrosoureas, cisplatin, procarbazine, anthracyclines, actinomycin D, L-asparaginase</td><td>S-phase: methotrexate, cytarabine, 5-FU, 6-MP, 6-TG, gemcitabine, hydroxyurea; G2: bleomycin, etoposide, topotecan, irinotecan; M: vincristine, vinblastine, paclitaxel, docetaxel; G1: etoposide</td></tr>
+    </table>
+    <h4>Tumour growth kinetics</h4>
+    <ul>
+      <li><b>Log-kill hypothesis:</b> a given dose kills a constant fraction (not number) of cells → first-order kinetics; e.g. each cycle kills ~99% = 2-log reduction. Since a single clonogenic cell can regenerate the tumour, every malignant cell must ultimately be eradicated for cure.</li>
+      <li><b>Growth fraction</b> — proportion of cells actively cycling. High-growth-fraction tumours (leukaemias, lymphomas, large solid tumours) respond best to CCS drugs; small-growth-fraction tumours (colon, NSCLC) are relatively CCS-resistant. Clinically detectable disease ≈ 1 g ≈ 10⁹ cells.</li>
+      <li><b>Gompertzian kinetics</b> — growth fraction is high in small tumours but falls as the tumour enlarges and outgrows its blood supply, so large tumours respond poorly until debulking (surgery/radiation) recruits G0 cells back into cycle.</li>
+    </ul>
+    <h4>Implications for scheduling &amp; combination</h4>
+    <ul>
+      <li>Give CCS drugs in short pulses to let non-cycling cells re-enter the cycle; schedule CCS after CCNS (which recruits G0 cells) to maximise kill.</li>
+      <li>Combine drugs with different mechanisms, non-overlapping toxicities, no cross-resistance; deliver at highest tolerable dose, shortest tolerable interval (first-order kinetics), typically 6–11 cycles.</li>
+    </ul>
+    <div class="dia"><b>Diagram (cell-cycle wheel keyed to drug action):</b> G0, G1, S, G2, M arranged in a wheel — CDK4/6 inhibitors act at G1→S; antimetabolites act in S; bleomycin/etoposide act in G2; vinca alkaloids/taxanes act in M; alkylating agents/cisplatin act CCNS across all phases.</div>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>CCNS kill resting and dividing cells; CCS kill only dividing cells (toxicity usually in S).</li>
+      <li>Antimetabolites = S phase; vinca alkaloids &amp; taxanes = M phase; alkylating agents &amp; cisplatin = CCNS.</li>
+      <li>Log-kill = constant fraction killed/cycle (first-order); 1 log = 90%, ~99% kill/cycle in effective regimens.</li>
+      <li>High growth fraction → CCS-sensitive; low growth fraction → CCS-resistant, CCNS still useful.</li>
+      <li>Gompertzian: debulking small residual disease ↑ growth fraction → chemo more effective (rationale for adjuvant therapy).</li>
+    </ul>
+  </div></details>
+</section>
+
+<section class="sec" id="s3" style="--sec:#845bb0;--sec-soft:#845bb026">
+  <h2>Section 3 · Targeted Therapy, Monoclonal Antibodies &amp; Immunotherapy</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Targeted cancer therapies &amp; pathway-targeted therapy; diagnostic &amp; therapeutic role of monoclonal antibodies (incl. rituximab &amp; immunoscintigraphy); mAbs vs small-molecule kinase inhibitors; note on checkpoint inhibitors &amp; cancer vaccines.</span></summary>
+  <div class="answer">
+    <h4>Targeted cancer therapy — concept</h4>
+    <p>Targeted (molecularly-targeted) cancer therapies are agents directed against specific molecular drivers of malignancy — mutated/overexpressed kinases, growth-factor receptors, signal-transduction proteins or surface antigens — rather than the general machinery of cell division. Unlike conventional cytotoxics (narrow therapeutic index, damage DNA/microtubules of all rapidly-dividing cells), targeted drugs exploit <b>"oncogene addiction"</b>, so are more selective, better tolerated, and need biomarker-guided patient selection. Two broad types: orally-active <b>small molecules</b> (-nib) that penetrate cells and inhibit cancer-specific enzymes/pathways, and parenteral <b>monoclonal antibodies</b> (-mab) that attack cell-surface targets.</p>
+    <h4>Signal-transduction basis (pathway-targeted therapy)</h4>
+    <p>Receptor tyrosine kinases (RTKs) dimerise on ligand binding, autophosphorylate, and recruit downstream effectors via four key pathways:</p>
+    <ul>
+      <li><b>RAS–RAF–MEK–ERK (MAP-kinase)</b> — drives proliferation via cyclin-D→CDK4/6→pRB phosphorylation→E2F-mediated G1→S transition; RAS is membrane-anchored by farnesylation.</li>
+      <li><b>PI3K–AKT–mTOR</b> — promotes growth/translation/survival; negatively regulated by PTEN. Activating PIK3CA and inactivating PTEN mutations are common.</li>
+      <li><b>JAK–STAT</b> — activated by type-I cytokine receptors.</li>
+      <li><b>Ubiquitin–proteasome system</b> — post-translational control of cell-cycle/apoptotic proteins (target of proteasome inhibitors).</li>
+    </ul>
+    <p>Cancers hijack these via receptor overexpression/mutation (EGFR, HER2, ALK), activating kinase mutations (RAS, RAF, MEK, PI3K), fusion oncoproteins (BCR-ABL, EML4-ALK), or loss of inhibitors (PTEN). Pathway-targeted drugs block these nodes.</p>
+    <div class="dia"><b>Diagram (RTK signalling cascade with drug overlay):</b> EGFR/HER2 → RAS → RAF → MEK → ERK, and PI3K ⊣ PTEN → AKT → mTOR — with imatinib (ABL), gefitinib/osimertinib (EGFR), vemurafenib/dabrafenib (RAF), trametinib (MEK), everolimus (mTOR), and olaparib (PARP) marked at their nodes.</div>
+    <h4>Categories with target–drug–tumour</h4>
+    <table>
+      <tr><th>Class</th><th>Drug(s)</th><th>Molecular target</th><th>Tumour/indication</th></tr>
+      <tr><td>BCR-ABL TKI</td><td>Imatinib (1st-gen); dasatinib, nilotinib (2nd-gen)</td><td>BCR-ABL, PDGFR, c-KIT</td><td>CML (Ph+), c-KIT+ GIST, DFSP</td></tr>
+      <tr><td>EGFR (HER1) TKI</td><td>Gefitinib, erlotinib; afatinib (2nd, irreversible); osimertinib (3rd)</td><td>EGFR tyrosine kinase</td><td>EGFR-mutant NSCLC</td></tr>
+      <tr><td>HER2-directed</td><td>Trastuzumab (mAb); lapatinib, tucatinib (TKI)</td><td>HER2/ErbB2</td><td>HER2+ breast, gastric Ca</td></tr>
+      <tr><td>BRAF inhibitor</td><td>Vemurafenib, dabrafenib (+MEK inhibitor)</td><td>Mutated BRAF V600E/K</td><td>BRAF-mutant melanoma, NSCLC</td></tr>
+      <tr><td>MEK inhibitor</td><td>Trametinib, cobimetinib, binimetinib</td><td>MEK1/2</td><td>Melanoma (with BRAF inhibitor)</td></tr>
+      <tr><td>ALK/ROS1 TKI</td><td>Crizotinib, ceritinib, alectinib, lorlatinib</td><td>ALK/ROS1 fusion kinase</td><td>ALK-rearranged NSCLC</td></tr>
+      <tr><td>BTK inhibitor</td><td>Ibrutinib</td><td>Bruton tyrosine kinase</td><td>CLL, mantle-cell lymphoma</td></tr>
+      <tr><td>Multikinase/anti-angiogenic</td><td>Sunitinib, sorafenib, pazopanib, lenvatinib</td><td>VEGFR-2, PDGFR, c-KIT, RET</td><td>RCC, HCC, GIST, thyroid Ca</td></tr>
+      <tr><td>Anti-EGFR mAb</td><td>Cetuximab, panitumumab</td><td>EGFR extracellular domain</td><td>RAS-wild-type colorectal, H&amp;N</td></tr>
+      <tr><td>Anti-CD20 mAb</td><td>Rituximab</td><td>CD20</td><td>NHL, CLL (ADCC+CDC)</td></tr>
+      <tr><td>Anti-VEGF mAb</td><td>Bevacizumab</td><td>VEGF-A</td><td>mCRC, NSCLC, RCC, GBM</td></tr>
+      <tr><td>mTOR inhibitor (rapalog)</td><td>Everolimus, temsirolimus</td><td>mTOR (via FKBP12)</td><td>RCC, breast Ca, post-transplant</td></tr>
+      <tr><td>PI3K inhibitor</td><td>Copanlisib, idelalisib</td><td>PI3K isoforms</td><td>B-cell lymphomas</td></tr>
+      <tr><td>PARP inhibitor</td><td>Olaparib</td><td>PARP1 (synthetic lethality)</td><td>BRCA-mutant ovarian/breast Ca</td></tr>
+      <tr><td>Proteasome inhibitor</td><td>Bortezomib</td><td>26S proteasome → NF-κB</td><td>Multiple myeloma, mantle-cell lymphoma</td></tr>
+    </table>
+    <h4>Key mechanisms (high-yield)</h4>
+    <ul>
+      <li><b>Small-molecule TKIs</b> compete with ATP at the intracellular kinase domain. Imatinib fixes BCR-ABL in the inactive conformation; dasatinib binds both active and inactive states. Afatinib (EGFR) and BRAF inhibitors bind covalently/with higher affinity.</li>
+      <li><b>Monoclonal antibodies</b> bind cell-surface antigens, blocking ligand/signalling and recruiting immune kill — ADCC and CDC (rituximab).</li>
+      <li><b>ADCs</b> marry antibody specificity to a cytotoxic payload delivered intracellularly (ado-trastuzumab emtansine, trastuzumab deruxtecan).</li>
+      <li><b>PARP inhibitors</b> exploit synthetic lethality — blocking base-excision repair is lethal only when homologous recombination is already defective (BRCA-mutant cells).</li>
+    </ul>
+    <h4>Pharmacokinetics &amp; adverse effects</h4>
+    <p>Most oral TKIs are CYP3A4 substrates → interactions with inducers (rifampin, ↓levels) and inhibitors (↑levels); imatinib t½≈18 h, gefitinib t½≈40 h, vemurafenib t½≈57 h, sunitinib t½≈100 h. Class-typical toxicities: EGFR inhibitors → acneiform rash, diarrhoea, ILD; trastuzumab/lapatinib → ↓LVEF; BRAF inhibitors → cutaneous SCC/keratoacanthoma; anti-angiogenics → hypertension, bleeding, thromboembolism, proteinuria, GI perforation; bortezomib → peripheral neuropathy, thrombocytopenia; rapalogs → hyperglycaemia, pneumonitis, mucositis.</p>
+    <h4>Biomarker-driven selection &amp; resistance</h4>
+    <p>Therapy is matched to a predictive biomarker: BCR-ABL (CML), EGFR mutation (NSCLC), HER2 overexpression, BRAF V600E, ALK translocation, RAS-wild-type (cetuximab), BRCA mutation (olaparib) — via companion diagnostics. Resistance arises from secondary "gatekeeper" mutations (BCR-ABL mutations; EGFR T790M → countered by osimertinib) or bypass/parallel-pathway activation (MET amplification, PI3K-AKT-mTOR, NRAS/MEK in BRAF therapy). Rational combinations (BRAF+MEK inhibitor) delay resistance.</p>
+    <h4>Monoclonal antibodies — therapeutic &amp; diagnostic</h4>
+    <ul>
+      <li><b>Therapeutic:</b> block receptors/ligands, flag cells for immune destruction (ADCC/CDC), or deliver payloads (antibody–drug conjugates, e.g. T-DM1).</li>
+      <li><b>Rituximab</b> — anti-CD20 chimeric mAb; depletes B-cells → non-Hodgkin lymphoma, CLL, also RA &amp; autoimmune disease.</li>
+      <li><b>Diagnostic — immunoscintigraphy:</b> radiolabelled mAbs (e.g. ¹¹¹In/⁹⁹ᵐTc-tagged) bind tumour antigens → imaged by gamma camera/SPECT to localise/stage tumours; basis of radioimmunotherapy (⁹⁰Y-ibritumomab).</li>
+    </ul>
+    <h4>mAb vs small-molecule kinase inhibitor</h4>
+    <table>
+      <tr><th>Feature</th><th>Monoclonal antibody</th><th>Kinase inhibitor</th></tr>
+      <tr><td>Size</td><td>Large (~150 kDa)</td><td>Small (&lt;1 kDa)</td></tr>
+      <tr><td>Target site</td><td>Extracellular/cell-surface</td><td>Intracellular ATP-binding site</td></tr>
+      <tr><td>Route</td><td>Parenteral</td><td>Oral</td></tr>
+      <tr><td>Half-life</td><td>Long (days–weeks)</td><td>Short (hours)</td></tr>
+      <tr><td>Selectivity</td><td>High</td><td>Often multi-kinase</td></tr>
+      <tr><td>Immunogenicity</td><td>Possible</td><td>Low</td></tr>
+    </table>
+    <h4>Immune checkpoint inhibitors</h4>
+    <ul>
+      <li>Release the "brakes" on T-cells: <b>anti-CTLA-4</b> (ipilimumab), <b>anti-PD-1</b> (nivolumab, pembrolizumab), <b>anti-PD-L1</b> (atezolizumab, durvalumab).</li>
+      <li>Uses: melanoma, NSCLC, RCC, bladder, Hodgkin, MSI-high tumours. <b>ADR:</b> immune-related adverse events (colitis, pneumonitis, thyroiditis, hepatitis) → managed with steroids.</li>
+    </ul>
+    <h4>Cancer vaccines</h4>
+    <p>Prophylactic — HPV (cervical), HBV (hepatocellular); therapeutic — sipuleucel-T (prostate); emerging <b>personalised mRNA neoantigen vaccines</b> (melanoma trials).</p>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Targeted ≠ cytotoxic: exploits oncogene addiction, needs a predictive biomarker, generally spares marrow/GI mucosa.</li>
+      <li>Imatinib = first targeted drug; DOC for chronic-phase CML and c-KIT+ GIST; binds inactive BCR-ABL.</li>
+      <li>Osimertinib overcomes EGFR T790M gatekeeper resistance.</li>
+      <li>BRAF inhibitor + MEK inhibitor combo (dabrafenib+trametinib) in V600E melanoma delays resistance; watch for cutaneous SCC.</li>
+      <li>Two cardinal class toxicities: trastuzumab → cardiotoxicity (↓LVEF); anti-angiogenics → hypertension/bleeding/perforation.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> <b>KRAS G12C inhibitors</b> (sotorasib, adagrasib) drug the previously "undruggable" KRAS G12C mutation in pre-treated NSCLC; bypass-pathway secondary mutations drive acquired resistance. <b>ADCs expanding indications</b> — trastuzumab deruxtecan extended benefit to HER2-low metastatic breast cancer, redefining HER2 testing thresholds (DESTINY-Breast04). <b>Tumour-agnostic, biomarker-defined approvals</b> (NTRK-fusion inhibitors larotrectinib/entrectinib; BRAF, MSI-high) reflect a shift from organ-based to molecular classification. Trend toward next-generation covalent/allosteric inhibitors and combination blockade to pre-empt resistance.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Role of haematopoietic growth factors &amp; immunomodulators in anticancer chemotherapy; recent advances in immunosuppressive therapy.</span></summary>
+  <div class="answer">
+    <h4>Haematopoietic growth factors (supportive care)</h4>
+    <table>
+      <tr><th>Factor</th><th>Agent</th><th>Use</th></tr>
+      <tr><td>G-CSF</td><td>Filgrastim, pegfilgrastim</td><td>Chemo-induced neutropenia / febrile neutropenia prevention</td></tr>
+      <tr><td>GM-CSF</td><td>Sargramostim</td><td>Myeloid recovery, stem-cell mobilisation</td></tr>
+      <tr><td>Erythropoietin</td><td>Epoetin, darbepoetin</td><td>Chemo-induced anaemia</td></tr>
+      <tr><td>Thrombopoietin agonists</td><td>Romiplostim, eltrombopag</td><td>Thrombocytopenia</td></tr>
+      <tr><td>IL-11</td><td>Oprelvekin</td><td>Thrombocytopenia</td></tr>
+    </table>
+    <h4>Immunomodulators in cancer</h4>
+    <ul>
+      <li><b>Interferon-α</b> (hairy-cell leukaemia, CML, melanoma), <b>IL-2</b> (aldesleukin — RCC, melanoma).</li>
+      <li><b>Thalidomide/lenalidomide/pomalidomide</b> (IMiDs) — multiple myeloma; BCG — bladder cancer.</li>
+      <li>Checkpoint inhibitors &amp; CAR-T (immunotherapy).</li>
+    </ul>
+    <h4>Recent advances in immunosuppressive therapy</h4>
+    <ul>
+      <li>Calcineurin inhibitors (tacrolimus), <b>mTOR inhibitors</b> (sirolimus, everolimus — also anticancer), mycophenolate, biologics (basiliximab — anti-IL2R, belatacept — costimulation blockade), JAK inhibitors.</li>
+      <li>Goal: targeted, organ-selective immunosuppression with fewer infections/malignancy risks.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Antibody-based therapy (monoclonal antibodies) — structure, nomenclature, mechanisms of action &amp; adverse effects.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Monoclonal antibodies (mAbs) are identical immunoglobulins (usually IgG1, ~150 kDa) produced from a single B-cell clone (hybridoma technology, Köhler &amp; Milstein) that bind one specific antigenic epitope. The Fab region (containing 3 CDRs) confers antigen specificity; the Fc region recruits immune effector mechanisms. They are a cornerstone of targeted therapy in oncology, autoimmune disease and transplantation.</p>
+    <h4>Structure, types &amp; nomenclature</h4>
+    <p>The pre-2021 WHO suffix indicates species composition; immunogenicity falls as murine→chimeric→humanised→fully human (WHO revised mAb nomenclature Oct 2021, replacing "-mab" with four new stems).</p>
+    <table>
+      <tr><th>Suffix</th><th>Type</th><th>Composition</th><th>Example</th></tr>
+      <tr><td>-momab</td><td>Murine</td><td>100% mouse (most immunogenic)</td><td>Muromonab-CD3</td></tr>
+      <tr><td>-ximab</td><td>Chimeric</td><td>Human Fc + mouse Fv</td><td>Rituximab, infliximab, cetuximab</td></tr>
+      <tr><td>-zumab</td><td>Humanised</td><td>Mouse CDRs grafted into human IgG</td><td>Trastuzumab, bevacizumab, pembrolizumab</td></tr>
+      <tr><td>-umab</td><td>Fully human</td><td>100% human sequence</td><td>Adalimumab, nivolumab</td></tr>
+    </table>
+    <div class="dia"><b>Diagram (labelled IgG schematic):</b> Fab (with VH, VL, CDR/paratope) — antigen-binding arm; hinge region; Fc — effector arm mediating ADCC/CDC/ADCP.</div>
+    <h4>Mechanisms of action</h4>
+    <ul>
+      <li><b>Receptor/ligand blockade</b> — cetuximab (EGFR), bevacizumab (VEGF), trastuzumab (HER2).</li>
+      <li><b>Fc-mediated effector functions</b> — ADCC, CDC, ADCP; e.g. rituximab (anti-CD20) lyses B-cells via CDC + ADCC.</li>
+      <li><b>Immune checkpoint inhibition</b> — pembrolizumab/nivolumab (PD-1), ipilimumab (CTLA-4) release T-cell anti-tumour responses.</li>
+      <li><b>Antibody-drug conjugates (ADCs)</b> — deliver a cytotoxic payload, e.g. trastuzumab emtansine, gemtuzumab.</li>
+      <li><b>Bispecific/T-cell engagers</b> — blinatumomab links CD3 (T-cell) to CD19 (tumour); related CAR-T cells (tisagenlecleucel, anti-CD19) are engineered autologous T cells.</li>
+    </ul>
+    <h4>Adverse effects</h4>
+    <ul>
+      <li>Infusion/hypersensitivity reactions from cytokine release (~3% with cetuximab).</li>
+      <li>Immunogenicity (HAMA/HACA antibodies) → loss of efficacy and anaphylaxis (highest with murine mAbs).</li>
+      <li>Target-specific: trastuzumab → cardiotoxicity/heart failure (worse with anthracyclines); rituximab → immunosuppression, opportunistic infection, HBV reactivation; anti-TNF agents → infection/TB reactivation; checkpoint inhibitors → immune-related adverse events (colitis, thyroiditis, hepatitis).</li>
+    </ul>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Suffix code: -momab murine, -ximab chimeric, -zumab humanised, -umab fully human.</li>
+      <li>Fab = specificity (CDRs); Fc = ADCC/CDC/ADCP.</li>
+      <li>Rituximab = anti-CD20 (NHL/CLL, RA); trastuzumab = anti-HER2 (breast Ca, cardiotoxic); pembrolizumab = anti-PD-1; adalimumab = anti-TNF (fully human).</li>
+      <li>Immunogenicity decreases murine→fully human; HAMA reduces efficacy.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> ADCs are in a clinical renaissance — over 11 FDA-approved by 2023 (e.g. mirvetuximab, approved Nov 2022); next-generation linker/payload engineering aims to widen the therapeutic index. Bispecific antibodies and T-cell engagers are now entering treatment guidelines alongside checkpoint inhibitors and TKIs in solid tumours such as NSCLC. Biosimilar mAbs (rituximab, trastuzumab, adalimumab) are CDSCO/FDA-approved and improving access.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Proteasome inhibitors — mechanism of action, drugs &amp; adverse effects in multiple myeloma.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>The 26S proteasome is a packaged complex of proteolytic enzymes that degrades ubiquitin-tagged intracellular proteins regulating the cell cycle, apoptosis and survival responses. Proteasome inhibitors are targeted anticancer agents that block this degradation, tipping malignant plasma cells toward apoptosis. They are a cornerstone of multiple myeloma (MM) therapy.</p>
+    <h4>Mechanism of action</h4>
+    <ul>
+      <li>Within the ubiquitin–proteasome pathway, ubiquitin-tagged proteins are degraded by the 26S proteasome (catalytic 20S core).</li>
+      <li><b>Bortezomib</b> binds the β5 subunit of the 20S core and inhibits its chymotrypsin-like activity (a boron-containing compound that binds the proteasome and blocks proteolysis).</li>
+      <li><b>Key consequence — NF-κB suppression:</b> cytosolic NF-κB is normally held inactive by IκB. On stress (hypoxia, chemotherapy, DNA damage), IκB is ubiquitinated and degraded by the proteasome, freeing NF-κB to enter the nucleus and transcribe pro-survival/anti-apoptotic genes (cyclin D1, cIAPs, BCL-2). By blocking IκB degradation, bortezomib traps NF-κB in the cytosol, downregulating survival signalling.</li>
+      <li>Also causes accumulation of pro-apoptotic regulators (Bax, p21, p27, p53) and triggers the unfolded-protein response, committing MM cells to apoptosis.</li>
+    </ul>
+    <h4>Drugs — comparison</h4>
+    <table>
+      <tr><th>Feature</th><th>Bortezomib (1st gen)</th><th>Carfilzomib (2nd gen)</th><th>Ixazomib (2nd gen)</th></tr>
+      <tr><td>Chemistry</td><td>Boronate; binds β5</td><td>Tetrapeptide epoxyketone, selective</td><td>Oral peptide analogue; binds PSMB5 (β5)</td></tr>
+      <tr><td>Route</td><td>IV/subcutaneous</td><td>IV</td><td>Oral</td></tr>
+      <tr><td>Use</td><td>MM (initial+relapsed); relapsed/refractory MCL</td><td>Relapsed/refractory MM (≥1 prior Rx)</td><td>MM (≥1 prior Rx) + lenalidomide + dexamethasone</td></tr>
+      <tr><td>Notable AE</td><td>Peripheral neuropathy, thrombocytopenia</td><td>Cardiac/renal/pulmonary toxicity, HTN</td><td>Diarrhoea, neuropathy, hepatotoxicity</td></tr>
+    </table>
+    <h4>Pharmacokinetics (bortezomib)</h4>
+    <p>Dose 1.3 mg/m² IV bolus on days 1, 4, 8, 11 of a 21-day cycle (≥72 h between doses); plasma t½ ~5.5 h; peak proteasome inhibition ~60% within 1 h. Cleared by deboronation then CYP3A4/2D6 hydroxylation; no renal dose adjustment. Ixazomib t½ ~9.5 days.</p>
+    <h4>Adverse effects</h4>
+    <p>Bortezomib: peripheral sensory neuropathy (~12%, most chronic; worse with prior neuropathy/diabetes; reversible on dose reduction), thrombocytopenia (~28%), fatigue, neutropenia, anaemia, GI upset, orthostatic hypotension; rare CHF, QT prolongation, RPLS.</p>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>β5 subunit/chymotrypsin-like activity inhibition → NF-κB downregulation is the central mechanism.</li>
+      <li>Bortezomib = peripheral neuropathy + thrombocytopenia; ixazomib = first oral proteasome inhibitor.</li>
+      <li>Main indications: multiple myeloma and relapsed/refractory mantle-cell lymphoma.</li>
+      <li>Carfilzomib carries notable cardiac toxicity; bortezomib may be given subcutaneously to reduce neuropathy.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Ixazomib enabled all-oral triplet regimens (ixazomib–lenalidomide–dexamethasone) for MM. Proteasome inhibitor + immunomodulatory drug (IMiD) ± anti-CD38 (daratumumab) triplets/quadruplets are standard MM backbones in current practice.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s4" style="--sec:#b15068;--sec-soft:#b1506826">
+  <h2>Section 4 · Management of Anticancer Drug Toxicity</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Management of toxicity due to anticancer drugs — ameliorative measures, cytoprotective agents &amp; general toxicity of cytotoxic drugs.</span></summary>
+  <div class="answer">
+    <h4>General (common) toxicity of cytotoxic drugs</h4>
+    <ul>
+      <li><b>Bone marrow suppression</b> (commonest, dose-limiting — neutropenia, anaemia, thrombocytopenia).</li>
+      <li><b>GI:</b> nausea/vomiting, mucositis, diarrhoea.</li>
+      <li>Alopecia, infertility/gonadal damage, teratogenicity, secondary malignancy.</li>
+      <li><b>Tumour lysis syndrome</b> (hyperuricaemia, hyperkalaemia).</li>
+      <li>Hyperuricaemic nephropathy, immunosuppression/infection.</li>
+    </ul>
+    <h4>Organ-specific toxicity &amp; cytoprotective / rescue agents</h4>
+    <table>
+      <tr><th>Drug</th><th>Toxicity</th><th>Protective / rescue agent</th></tr>
+      <tr><td>Methotrexate</td><td>Mucositis, marrow</td><td><b>Leucovorin (folinic acid)</b> rescue</td></tr>
+      <tr><td>Cyclophosphamide/ifosfamide</td><td>Haemorrhagic cystitis</td><td><b>Mesna</b> + hydration</td></tr>
+      <tr><td>Cisplatin</td><td>Nephrotoxicity</td><td><b>Amifostine</b>, hydration + mannitol diuresis</td></tr>
+      <tr><td>Doxorubicin (anthracyclines)</td><td>Cardiotoxicity</td><td><b>Dexrazoxane</b> (iron chelator)</td></tr>
+      <tr><td>5-FU / capecitabine overdose</td><td>Severe toxicity</td><td><b>Uridine triacetate</b></td></tr>
+      <tr><td>Vincristine</td><td>Neuropathy</td><td>Dose modification</td></tr>
+      <tr><td>Bleomycin</td><td>Pulmonary fibrosis</td><td>Cumulative dose limit, monitor PFT</td></tr>
+    </table>
+    <h4>Ameliorative measures (supportive care)</h4>
+    <ul>
+      <li><b>Antiemetics:</b> 5-HT3 antagonists (ondansetron) + NK1 antagonist (aprepitant) + dexamethasone (for highly emetogenic chemo).</li>
+      <li><b>Neutropenia:</b> G-CSF, prophylactic antibiotics, neutropenic precautions; <b>anaemia:</b> erythropoietin/transfusion; <b>thrombocytopenia:</b> platelet support/TPO agonists.</li>
+      <li><b>Tumour lysis syndrome:</b> hydration, <b>allopurinol/rasburicase</b>, manage electrolytes.</li>
+      <li>Mucositis care, growth factors, dose individualisation, and pharmacogenomic screening (TPMT, DPYD, UGT1A1).</li>
+    </ul>
+  </div></details>
+</section>
+
+<section class="sec" id="s5" style="--sec:#b3852f;--sec-soft:#b3852f26">
+  <h2>Section 5 · Hormonal Therapy in Cancer</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Drug therapy of breast cancer based on receptor status (ER/PR/HER2); current trends in hormonal management; SERMs, aromatase inhibitors, SERDs &amp; drugs modifying hormonal receptors in malignancy.</span></summary>
+  <div class="answer">
+    <h4>Principle</h4>
+    <p>Breast cancer therapy is dictated by three predictive biomarkers — <b>estrogen receptor (ER)</b>, <b>progesterone receptor (PR)</b> and <b>HER2</b> — which partition disease into three biological/treatment streams: <b>HR-positive</b>, <b>HER2-positive</b>, and <b>triple-negative (TNBC)</b>. The same receptor driving proliferation is exploited as the drug target. HER2 positivity is defined by IHC 3+ or FISH amplification; trastuzumab gives no benefit in IHC 0–1+/FISH-negative tumours.</p>
+    <table>
+      <tr><th>Subtype</th><th>ER/PR</th><th>HER2</th><th>Backbone of therapy</th></tr>
+      <tr><td>HR+/HER2− (~60–70%)</td><td>+</td><td>−</td><td>Endocrine therapy ± CDK4/6 inhibitor; chemo if endocrine-refractory/visceral crisis</td></tr>
+      <tr><td>HER2-positive (HR ±)</td><td>±</td><td>+</td><td>HER2-targeted therapy + chemotherapy (± endocrine therapy if HR+)</td></tr>
+      <tr><td>Triple-negative (~15%)</td><td>−</td><td>−</td><td>Cytotoxic chemo ± immunotherapy (PD-L1+); PARP inhibitor (germline BRCA); Trop-2 ADC</td></tr>
+    </table>
+
+    <h4>1. HR-positive (ER/PR+) disease — estrogen deprivation/blockade</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Mechanism / use</th></tr>
+      <tr><td><b>SERM</b></td><td>Tamoxifen, toremifene</td><td>Competitive ER antagonist in breast (partial agonist in bone/endometrium/liver); prodrug → <b>CYP2D6</b> → endoxifen (highest ER affinity). Adjuvant 5–10 yr; chemoprevention; first-line in HR+ metastatic.</td></tr>
+      <tr><td><b>Aromatase inhibitors</b></td><td>Anastrozole, letrozole (Type 2, nonsteroidal, reversible); exemestane (Type 1, steroidal, irreversible inactivator)</td><td>Block CYP19A1 (aromatase) converting adrenal androgens → estrogen peripherally; standard adjuvant in <b>postmenopausal</b> women; ineffective alone premenopausally (need ovarian suppression).</td></tr>
+      <tr><td><b>SERD</b></td><td>Fulvestrant (monthly IM depot, t½ ~40 d); elacestrant (oral)</td><td>Pure antiestrogen, &gt;100× tamoxifen's ER affinity → blocks dimerisation &amp; degrades ER (no agonism); after AI/tamoxifen progression.</td></tr>
+      <tr><td>Ovarian suppression</td><td>Goserelin, triptorelin, leuprolide (GnRH/LHRH analogues)</td><td>Downregulate pituitary GnRH-R → ↓LH → ↓ovarian estrogen; add to tamoxifen/AI in high-risk premenopausal disease (SOFT/TEXT).</td></tr>
+      <tr><td>CDK4/6 inhibitors</td><td>Palbociclib, ribociclib, abemaciclib</td><td>Block cyclin-D–CDK4/6 → prevent Rb phosphorylation → G1 arrest; combined with AI/fulvestrant, ↑PFS substantially — standard first-line for HR+/HER2− metastatic disease. Neutropenia (palbo/ribo), diarrhoea (abemaciclib), QT prolongation (ribociclib — ECG monitoring).</td></tr>
+      <tr><td>mTOR inhibitor</td><td>Everolimus (+ exemestane/fulvestrant/tamoxifen)</td><td>For progression on endocrine therapy; ADR: stomatitis, pneumonitis, hyperglycaemia.</td></tr>
+      <tr><td>PI3K inhibitor</td><td>Alpelisib (+ fulvestrant)</td><td>PIK3CA-mutated HR+/HER2− disease after endocrine progression; key toxicity hyperglycaemia.</td></tr>
+    </table>
+    <div class="dia"><b>Diagram (estrogen-signalling axis):</b> hypothalamus–GnRH analogue ⊣ pituitary LH ⊣ ovary; adrenal androgen → aromatase (letrozole/anastrozole/exemestane ⊣) → estrogen; tamoxifen/fulvestrant act at ER; downstream, palbociclib blocks cyclin-D–CDK4/6 → Rb → cell-cycle progression.</div>
+
+    <h4>2. HER2-positive disease</h4>
+    <table>
+      <tr><th>Agent</th><th>Class</th><th>Mechanism</th></tr>
+      <tr><td>Trastuzumab</td><td>Humanised anti-HER2 mAb</td><td>Binds HER2 ECD → blocks signalling + ADCC; backbone of all anti-HER2 therapy</td></tr>
+      <tr><td>Pertuzumab</td><td>Anti-HER2 mAb (different epitope)</td><td>Prevents HER2–HER3 dimerisation; complements trastuzumab</td></tr>
+      <tr><td>T-DM1 (ado-trastuzumab emtansine)</td><td>ADC</td><td>Trastuzumab + DM1 (anti-tubulin payload), delivered intracellularly</td></tr>
+      <tr><td>T-DXd (trastuzumab deruxtecan)</td><td>ADC</td><td>Trastuzumab + topoisomerase-I inhibitor payload; strong "bystander" effect</td></tr>
+      <tr><td>Lapatinib, neratinib, tucatinib</td><td>Small-molecule TKIs</td><td>Intracellular HER2(±EGFR) kinase inhibition; tucatinib crosses BBB (CNS metastases)</td></tr>
+      <tr><td>Margetuximab</td><td>Fc-engineered anti-HER2 mAb</td><td>Enhanced ADCC</td></tr>
+    </table>
+    <p><b>Sequencing (metastatic):</b> 1st-line = pertuzumab + trastuzumab + taxane → 2nd-line = T-DM1/T-DXd → later = tucatinib+trastuzumab+capecitabine, neratinib/lapatinib+capecitabine, margetuximab+chemo. <b>Cardiotoxicity</b> (↓LVEF/heart failure) is a class effect — mandatory baseline + serial echocardiography; amplified by concurrent anthracyclines (sequence, don't combine). Adjuvant trastuzumab indicated in early-stage node-positive HER2+ disease even if ER/PR-negative.</p>
+
+    <h4>3. Triple-negative breast cancer (TNBC)</h4>
+    <ul>
+      <li><b>Chemotherapy backbone:</b> anthracyclines + taxanes; platinum, capecitabine, eribulin.</li>
+      <li><b>Immunotherapy:</b> pembrolizumab (anti-PD-1) or atezolizumab (anti-PD-L1) + chemo in PD-L1-positive metastatic disease; must combine with chemo (poor single-agent activity); irAEs (colitis, hepatitis, pneumonitis, thyroiditis).</li>
+      <li><b>PARP inhibitors</b> (olaparib, talazoparib): inhibit single-strand-break repair → synthetic lethality in germline <b>BRCA1/2</b>-mutated, HER2-negative metastatic disease.</li>
+      <li><b>Sacituzumab govitecan</b>: Trop-2 ADC delivering SN-38 (irinotecan's active metabolite, topo-I inhibitor); metastatic TNBC after ≥2 prior lines; ADR neutropenia, diarrhoea.</li>
+    </ul>
+
+    <h4>Current trends in hormonal management</h4>
+    <ul>
+      <li>Aromatase inhibitors preferred over tamoxifen in postmenopausal women; extended adjuvant therapy (up to 10 yr).</li>
+      <li><b>Endocrine therapy + CDK4/6 inhibitor</b> is the standard for HR+/HER2− metastatic disease.</li>
+      <li>Ovarian suppression + AI in high-risk premenopausal women; oral SERDs (elacestrant) &amp; PI3K/AKT inhibitors (alpelisib, capivasertib) for endocrine resistance.</li>
+    </ul>
+    <h4>Female sex hormones &amp; analogues (pharmacology note)</h4>
+    <p>Estrogens (nuclear ER → transcription) &amp; progestins; high-dose progestins (megestrol) used in endometrial/breast cancer &amp; cancer cachexia. SERMs/SERDs/AIs modify this receptor pathway selectively. <b>ADR of endocrine therapy:</b> hot flushes, VTE &amp; endometrial cancer (tamoxifen), osteoporosis &amp; arthralgia (aromatase inhibitors).</p>
+    <div class="recent"><b>Recent advances:</b> <b>HER2-low</b> is now a treatable category — T-DXd improved PFS/OS vs chemo in previously-treated HER2-low (IHC 1+ or 2+/ISH−) metastatic disease (DESTINY-Breast04), extending ADC benefit beyond classic HER2+ disease (watch for interstitial lung disease). <b>Trop-2 ADC in HR+ disease</b> — sacituzumab govitecan improved OS vs chemo in endocrine-refractory HR+/HER2− disease (TROPiCS-02). <b>Immunotherapy in early TNBC</b> — neoadjuvant pembrolizumab + chemo raised pathological complete response &amp; event-free survival in high-risk early TNBC (KEYNOTE-522). <b>Oral SERDs</b> — elacestrant approved for ESR1-mutated HR+/HER2− advanced disease after endocrine progression. Emerging: AKT inhibitor capivasertib + fulvestrant (AGC/PIK3CA/PTEN-altered); next-gen anti-HER2 ADCs/TKIs; India — trastuzumab biosimilars have markedly improved access.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s6" style="--sec:#2f8696;--sec-soft:#2f869626">
+  <h2>Section 6 · Fixed Dose Combinations &amp; Drug Interactions</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Compare FDCs and co-formulations — advantages, disadvantages, clinical significance &amp; rationale for antimicrobial combinations.</span></summary>
+  <div class="answer">
+    <h4>Definitions</h4>
+    <ul>
+      <li><b>Fixed-Dose Combination (FDC):</b> two or more drugs combined in a single dosage form in fixed ratio (e.g. amoxicillin + clavulanate).</li>
+      <li><b>Co-formulation:</b> drugs formulated/packaged together (often used interchangeably with FDC; may also mean co-packaged units) — combined for concurrent administration.</li>
+    </ul>
+    <h4>Advantages</h4>
+    <ul>
+      <li>Improved <b>compliance</b> (fewer pills), synergy, ↓ pill burden &amp; cost, ↓ resistance (TB, HIV, malaria), convenience.</li>
+    </ul>
+    <h4>Disadvantages</h4>
+    <ul>
+      <li>Cannot titrate individual doses; ADR of one component hard to attribute; risk of <b>irrational FDCs</b>; pharmacokinetic mismatch (different half-lives); inflexible.</li>
+    </ul>
+    <h4>Clinical significance / Indian context</h4>
+    <p>Useful for chronic, multi-drug conditions (HTN, diabetes, TB, HIV). India banned hundreds of <b>irrational FDCs</b> lacking therapeutic justification (CDSCO). Rational FDCs must show that the combination is more effective/safer than components alone.</p>
+    <h4>Rationale for antimicrobial combinations</h4>
+    <ul>
+      <li>Prevent/delay <b>resistance</b> (TB — HRZE; HIV — ART; malaria — ACT).</li>
+      <li>Achieve <b>synergy</b> (β-lactam + aminoglycoside; amoxicillin + clavulanate β-lactamase inhibition; cotrimoxazole sequential blockade).</li>
+      <li>Broaden spectrum in mixed/empirical infections; ↓ toxicity of individual agents.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section class="sec" id="s7" style="--sec:#548a4f;--sec-soft:#548a4f26">
+  <h2>Section 7 · Other Important Pharmacotherapy Topics</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacotherapy (rationale &amp; recent advances) of: RA, osteoporosis, gout, BPH, obesity, glaucoma, asthma (GINA), migraine, acid-peptic disease &amp; H. pylori, IBD, IBS, PAH, CHF.</span></summary>
+  <div class="answer">
+    <p>A consolidated revision of major disease pharmacotherapy — each with key drugs, rationale &amp; recent advances.</p>
+
+    <h5>1. Rheumatoid arthritis</h5>
+    <p>NSAIDs/steroids (symptom) → <b>csDMARDs</b> (methotrexate anchor, sulfasalazine, leflunomide, HCQ) → <b>biologics</b> (TNF-α: infliximab, adalimumab, etanercept; IL-6: tocilizumab; anti-CD20: rituximab; abatacept) → <b>JAK inhibitors</b> (tofacitinib, baricitinib). Treat-to-target; screen latent TB before biologics.</p>
+
+    <h5>2. Osteoporosis</h5>
+    <p><b>Antiresorptive:</b> bisphosphonates (alendronate, zoledronate), denosumab (anti-RANKL), SERM (raloxifene), calcitonin. <b>Anabolic:</b> teriparatide/abaloparatide (PTH analogues), <b>romosozumab</b> (anti-sclerostin). Plus calcium + vitamin D. Recent: romosozumab dual action.</p>
+
+    <h5>3. Gout</h5>
+    <p><b>Acute:</b> NSAIDs, colchicine, steroids. <b>Urate-lowering (chronic):</b> allopurinol/febuxostat (xanthine oxidase inhibitors), probenecid (uricosuric), pegloticase (uricase). Recent: IL-1 blockers (canakinumab) for refractory flares.</p>
+
+    <h5>4. Benign prostatic hyperplasia</h5>
+    <p><b>α1-blockers</b> (tamsulosin, silodosin — relax dynamic component), <b>5α-reductase inhibitors</b> (finasteride, dutasteride — shrink gland), PDE5 inhibitor (tadalafil), combination therapy; anticholinergics for OAB symptoms.</p>
+
+    <h5>5. Obesity</h5>
+    <p>Orlistat (lipase inhibitor); <b>GLP-1 agonists</b> (liraglutide, <b>semaglutide</b>); <b>tirzepatide</b> (GIP/GLP-1); phentermine-topiramate, naltrexone-bupropion. Recent: semaglutide &amp; tirzepatide give 15–22% weight loss — transformative.</p>
+
+    <h5>6. Glaucoma</h5>
+    <p>Prostaglandin analogues (latanoprost — first-line, ↑ outflow), β-blockers (timolol), α2-agonists (brimonidine), carbonic anhydrase inhibitors (dorzolamide), pilocarpine; <b>Rho-kinase inhibitor</b> (netarsudil). Acute angle-closure: IV acetazolamide + mannitol + pilocarpine.</p>
+
+    <h5>7. Bronchial asthma (GINA)</h5>
+    <p>No SABA-only therapy; all use ICS-containing treatment; preferred reliever <b>ICS-formoterol</b>. Stepwise ICS-formoterol (MART) → add LAMA → biologics (omalizumab, mepolizumab, dupilumab, tezepelumab). Acute: O₂ + SABA ± ipratropium + systemic steroids ± IV Mg.</p>
+
+    <h5>8. Migraine</h5>
+    <p><b>Acute:</b> NSAIDs, triptans (5-HT1B/1D), <b>gepants</b> (rimegepant, ubrogepant), lasmiditan. <b>Prophylaxis:</b> β-blockers, topiramate, amitriptyline, valproate, <b>anti-CGRP mAbs</b> (erenumab, fremanezumab, galcanezumab). Recent: CGRP-targeted therapy.</p>
+
+    <h5>9. Acid-peptic disease &amp; H. pylori</h5>
+    <p>PPIs (omeprazole) / H2-blockers; mucosal protectants (sucralfate, misoprostol). <b>H. pylori:</b> triple therapy (PPI + amoxicillin + clarithromycin) or bismuth quadruple. Recent: <b>P-CABs</b> (vonoprazan) — faster, stronger acid suppression.</p>
+
+    <h5>10. Inflammatory bowel disease (UC &amp; Crohn's)</h5>
+    <p><b>5-ASA</b> (mesalamine — esp. UC), corticosteroids (induction, incl. budesonide), immunomodulators (azathioprine, methotrexate), <b>biologics</b> (anti-TNF: infliximab, adalimumab; anti-integrin: vedolizumab; anti-IL-12/23: ustekinumab; anti-IL-23: risankizumab), JAK inhibitors (tofacitinib, upadacitinib — UC).</p>
+
+    <h5>11. Irritable bowel syndrome</h5>
+    <p>Antispasmodics, low-dose TCAs; <b>IBS-C:</b> lubiprostone, linaclotide, prucalopride; <b>IBS-D:</b> loperamide, rifaximin, eluxadoline, alosetron; low-FODMAP diet, probiotics.</p>
+
+    <h5>12. Pulmonary arterial hypertension</h5>
+    <p>Three pathways: <b>ERAs</b> (bosentan, ambrisentan, macitentan), <b>PDE5 inhibitors</b>/riociguat (NO-cGMP), <b>prostacyclins</b> (epoprostenol, treprostinil, selexipag). Upfront combination standard. Recent: <b>sotatercept</b> (anti-remodelling).</p>
+
+    <h5>13. Congestive heart failure</h5>
+    <p><b>Four pillars (HFrEF):</b> <b>ARNI</b> (sacubitril/valsartan) > ACEi/ARB + β-blocker + MRA + <b>SGLT2 inhibitor</b>; plus loop diuretics (symptoms), ivabradine, vericiguat. SGLT2i benefit across EF spectrum (HFpEF too). Start all pillars early.</p>
+    <div class="recent"><b>Cross-cutting recent advances:</b> CGRP drugs (migraine), GLP-1/GIP agonists (obesity/diabetes), SGLT2 inhibitors (HF/CKD), biologics across RA/IBD/asthma, P-CABs (acid-peptic), sotatercept (PAH).</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Pharmacotherapy of HIV (current trends, first-line regimens, future prospects); note on COVID-19 pharmacotherapy.</span></summary>
+  <div class="answer">
+    <h4>Classes of antiretrovirals (ART)</h4>
+    <table>
+      <tr><th>Class</th><th>Examples</th></tr>
+      <tr><td>NRTIs</td><td>Tenofovir (TDF/TAF), lamivudine, emtricitabine, abacavir, zidovudine</td></tr>
+      <tr><td>NNRTIs</td><td>Efavirenz, nevirapine, rilpivirine, doravirine</td></tr>
+      <tr><td>Integrase inhibitors (INSTI)</td><td>Dolutegravir, bictegravir, raltegravir</td></tr>
+      <tr><td>Protease inhibitors</td><td>Atazanavir, darunavir (ritonavir/cobicistat-boosted)</td></tr>
+      <tr><td>Entry/fusion &amp; CCR5</td><td>Maraviroc, enfuvirtide; CD4 — ibalizumab</td></tr>
+    </table>
+    <h4>Current first-line regimen</h4>
+    <p>Two NRTIs + an <b>INSTI</b> — e.g. <b>Tenofovir + Lamivudine/Emtricitabine + Dolutegravir (TLD)</b> — WHO-preferred (potent, high barrier to resistance, well tolerated). Goal: undetectable viral load (U=U).</p>
+    <h4>Prevention</h4>
+    <p><b>PrEP</b> (tenofovir/emtricitabine; long-acting injectable cabotegravir), PEP, prevention of mother-to-child transmission.</p>
+    <h4>Future prospects</h4>
+    <ul><li>Long-acting injectables (cabotegravir + rilpivirine, lenacapavir 6-monthly), broadly neutralising antibodies, capsid inhibitors, and cure research (latency reversal, gene therapy).</li></ul>
+    <h4>COVID-19 pharmacotherapy (note)</h4>
+    <ul>
+      <li><b>Antivirals:</b> nirmatrelvir/ritonavir (Paxlovid), remdesivir, molnupiravir.</li>
+      <li><b>Immunomodulators (severe):</b> dexamethasone, tocilizumab/baricitinib.</li>
+      <li>Anticoagulation as indicated; monoclonal antibodies (variant-dependent); vaccines (mRNA, vector, inactivated — Covaxin).</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Pharmacotherapy of malaria (chloroquine-resistant malaria &amp; ACT); note on rational chemoprophylaxis.</span></summary>
+  <div class="answer">
+    <h4>Antimalarial drug classes</h4>
+    <table>
+      <tr><th>Group</th><th>Drugs</th></tr>
+      <tr><td>4-Aminoquinolines</td><td>Chloroquine, amodiaquine</td></tr>
+      <tr><td>Artemisinins</td><td>Artesunate, artemether, arteether</td></tr>
+      <tr><td>Aryl-amino alcohols</td><td>Quinine, mefloquine, lumefantrine, halofantrine</td></tr>
+      <tr><td>Antifolates</td><td>Sulfadoxine-pyrimethamine, proguanil</td></tr>
+      <tr><td>8-Aminoquinolines (radical cure)</td><td>Primaquine, tafenoquine</td></tr>
+      <tr><td>Others</td><td>Atovaquone-proguanil, doxycycline</td></tr>
+    </table>
+    <h4>Treatment</h4>
+    <ul>
+      <li><b>Uncomplicated P. falciparum / chloroquine-resistant:</b> <b>ACT</b> (Artemisinin-based Combination Therapy) — e.g. artemether-lumefantrine, or artesunate + sulfadoxine-pyrimethamine (India for falciparum, except NE). Rationale: rapid artemisinin clearance + long-acting partner drug → prevent recrudescence &amp; resistance.</li>
+      <li><b>Severe/complicated malaria:</b> <b>IV artesunate</b> (drug of choice) → complete with ACT.</li>
+      <li><b>P. vivax:</b> chloroquine (still largely sensitive) + <b>primaquine</b> (radical cure of hypnozoites — check G6PD).</li>
+    </ul>
+    <h4>Rational chemoprophylaxis</h4>
+    <ul>
+      <li>Choice based on destination resistance pattern, duration, drug tolerance &amp; contraindications.</li>
+      <li>Options: atovaquone-proguanil, doxycycline, mefloquine (start before, continue during &amp; after exposure); chloroquine only in sensitive areas.</li>
+      <li>Combine with personal protection (nets, repellents); causal vs suppressive prophylaxis; tafenoquine — single-dose options.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Pharmacotherapy of Type-2 DM with emphasis on SGLT-2 &amp; DPP-4 inhibitors; role in heart failure.</span></summary>
+  <div class="answer">
+    <h4>Overview</h4>
+    <p>Metformin first-line; add agents based on comorbidity (CV/renal disease → SGLT2i or GLP-1 RA), weight, hypoglycaemia risk &amp; cost.</p>
+    <table>
+      <tr><th>Class</th><th>Example</th><th>Mechanism</th></tr>
+      <tr><td>SGLT2 inhibitors</td><td>Dapagliflozin, empagliflozin</td><td>↓ renal glucose reabsorption → glucosuria</td></tr>
+      <tr><td>DPP-4 inhibitors</td><td>Sitagliptin, linagliptin</td><td>↑ incretin (GLP-1/GIP) levels</td></tr>
+      <tr><td>GLP-1 agonists</td><td>Semaglutide, liraglutide</td><td>↑ insulin, ↓ glucagon/appetite, weight loss</td></tr>
+      <tr><td>Others</td><td>Metformin, SU, pioglitazone, tirzepatide</td><td>Various</td></tr>
+    </table>
+    <h4>SGLT2 inhibitors</h4>
+    <ul>
+      <li>Insulin-independent glucose lowering + weight &amp; BP reduction.</li>
+      <li><b>Cardio-renal protection:</b> ↓ HF hospitalisation &amp; CV death (DAPA-HF, EMPEROR), ↓ CKD progression (DAPA-CKD, CREDENCE) — used in HF/CKD <b>even without diabetes</b>.</li>
+      <li>ADR: genital infections, euglycaemic DKA, volume depletion.</li>
+    </ul>
+    <h4>DPP-4 inhibitors</h4>
+    <ul><li>Weight-neutral, low hypoglycaemia, oral, CV-neutral; saxagliptin — ↑ HF hospitalisation signal (avoid in HF).</li></ul>
+    <h4>Role in heart failure</h4>
+    <p><b>SGLT2 inhibitors are now a "pillar" of HFrEF and beneficial in HFpEF</b>; DPP-4 inhibitors are not protective (saxagliptin even cautioned). GLP-1 RAs are CV-protective (atherosclerotic events) but neutral-to-cautious in HF.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Classification &amp; current status of hypolipidemic agents with emphasis on statins &amp; PCSK9 inhibitors.</span></summary>
+  <div class="answer">
+    <h4>Classification</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Effect</th></tr>
+      <tr><td>Statins</td><td>Atorvastatin, rosuvastatin</td><td>↓↓ LDL</td></tr>
+      <tr><td>Absorption inhibitor</td><td>Ezetimibe</td><td>↓ LDL</td></tr>
+      <tr><td>PCSK9 inhibitors</td><td>Alirocumab, evolocumab; inclisiran (siRNA)</td><td>↓↓ LDL</td></tr>
+      <tr><td>Bile-acid sequestrants</td><td>Cholestyramine, colesevelam</td><td>↓ LDL</td></tr>
+      <tr><td>Fibrates</td><td>Fenofibrate, gemfibrozil</td><td>↓↓ TG, ↑ HDL</td></tr>
+      <tr><td>Others</td><td>Niacin; bempedoic acid; icosapent ethyl</td><td>Various</td></tr>
+    </table>
+    <h4>Statins</h4>
+    <ul>
+      <li><b>MOA:</b> inhibit HMG-CoA reductase → ↑ hepatic LDL receptors → ↓ LDL; <b>pleiotropic effects</b> (plaque stabilisation, anti-inflammatory, endothelial).</li>
+      <li><b>Use:</b> primary &amp; secondary CV prevention. <b>ADR:</b> myopathy/rhabdomyolysis, ↑ transaminases, new-onset diabetes; avoid in pregnancy.</li>
+    </ul>
+    <h4>PCSK9 inhibitors &amp; current status</h4>
+    <ul>
+      <li>↑ LDL-receptor recycling → LDL ↓ 50–60%; for familial hypercholesterolaemia, statin-intolerant, very-high-risk not at goal; reduce CV events.</li>
+      <li><b>Inclisiran</b> (siRNA) — twice-yearly dosing. Newer: bempedoic acid (oral, ATP-citrate lyase), and emerging ANGPTL3/Lp(a) therapies.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Active vs passive immunisation — basis, comparison &amp; rationale for clinical use; types of vaccines &amp; passive immunising agents; combined active+passive regimens.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p><b>Active immunisation</b> uses vaccines (antigenic material) to make the recipient mount his/her own antibody and/or cell-mediated response, with immunological memory. <b>Passive immunisation</b> transfers ready-made antibodies (antisera, immune globulins, mAbs) from another person/animal/laboratory — immediate but temporary, with no memory. Active immunity is durable but needs a latent period of 1 to several weeks; passive immunity is instantaneous and is the only modality that is truly <b>curative</b>, while vaccines are essentially <b>prophylactic</b>.</p>
+    <h4>Mechanism</h4>
+    <ul>
+      <li><b>Active:</b> antigen processed/presented to B &amp; T cells → clonal expansion, affinity maturation/class-switch (IgM→IgG), and long-lived memory B/T cells; recapitulates natural infection without disease.</li>
+      <li><b>Passive:</b> preformed antibody directly binds/neutralises free toxin or organism (e.g. antivenom binds venom) — works only on free/circulating antigen, cannot reverse damage already fixed to tissue; protection wanes as transferred IgG is catabolised.</li>
+      <li><b>Natural counterparts:</b> natural active = recovery from clinical infection; natural passive = transplacental/colostral IgG/IgA transfer.</li>
+    </ul>
+    <div class="dia"><b>Diagram (antibody titre vs time):</b> Passive — rapid rise to protective threshold, rapid decline, no memory. Active primary response — latent period (1–many weeks), slow rise. Active booster/secondary response — rapid, high anamnestic rise.</div>
+    <h4>Point-by-point comparison</h4>
+    <table>
+      <tr><th>Feature</th><th>Active (vaccines)</th><th>Passive (antisera/Ig/mAb)</th></tr>
+      <tr><td>Agent given</td><td>Antigen</td><td>Preformed antibody</td></tr>
+      <tr><td>Source of antibody</td><td>Recipient's own immune system</td><td>Donor or laboratory (mAb)</td></tr>
+      <tr><td>Onset</td><td>Slow — latent 1 to many weeks</td><td>Immediate (hours)</td></tr>
+      <tr><td>Duration</td><td>Long — months to lifelong</td><td>Short — weeks (until catabolised)</td></tr>
+      <tr><td>Memory</td><td>Present; booster → anamnestic response</td><td>Absent</td></tr>
+      <tr><td>Role</td><td>Prophylactic</td><td>Therapeutic/curative + immediate prophylaxis</td></tr>
+      <tr><td>Immunocompromised</td><td>May fail to "take"; live vaccines contraindicated</td><td>Preferred — no host response needed</td></tr>
+      <tr><td>Main hazard</td><td>Vaccine-associated disease (live), allergy</td><td>Serum sickness, anaphylaxis (animal sera)</td></tr>
+      <tr><td>Examples</td><td>OPV/IPV, BCG, MMR, DPT, toxoids, mRNA COVID vaccine</td><td>ATS, antivenom (ASV), HRIG, anti-D, palivizumab</td></tr>
+    </table>
+    <p><i>Mnemonic:</i> Active = slow, strong, durable, "self-made," prophylactic; Passive = fast, borrowed, transient, no memory, curative.</p>
+    <h4>Types of vaccines (active immunisation)</h4>
+    <table>
+      <tr><th>Type</th><th>Basis</th><th>Examples</th><th>Key points</th></tr>
+      <tr><td>Live attenuated</td><td>Avirulent organism, limited multiplication</td><td>OPV, BCG, MMR, varicella, yellow fever, rotavirus</td><td>Strong, long humoral+CMI; 1–2 doses; cold chain; contraindicated in immunodeficiency/pregnancy; reversion risk (e.g. OPV)</td></tr>
+      <tr><td>Killed/inactivated</td><td>Organism killed by heat/chemicals</td><td>IPV, whole-cell pertussis, rabies (PCEV/HDCV), cholera</td><td>Safer; weaker response → multiple doses + boosters; heat-stable</td></tr>
+      <tr><td>Toxoid</td><td>Detoxified exotoxin, antigenic</td><td>Tetanus toxoid, diphtheria toxoid</td><td>Neutralises toxin; alum-adsorbed toxoid superior</td></tr>
+      <tr><td>Subunit — polysaccharide</td><td>Purified capsular sugar</td><td>Vi typhoid, PPSV, meningococcal A/C</td><td>T-independent → poor/short response &lt;2 yr, no memory</td></tr>
+      <tr><td>Subunit — conjugate</td><td>Polysaccharide + carrier protein</td><td>Hib conjugate, PCV-13/20, MenACWY</td><td>T-dependent → memory &amp; infant protection</td></tr>
+      <tr><td>Subunit — recombinant</td><td>Purified/recombinant antigen</td><td>Hep-B (HBsAg), HPV, recombinant zoster</td><td>No live pathogen → very safe</td></tr>
+      <tr><td>Vectored viral</td><td>Viral vector carrying pathogen gene</td><td>Ebola Zaire, adenovirus-vectored COVID vaccines</td><td>Vector expresses antigen in vaccinee</td></tr>
+      <tr><td>mRNA</td><td>Lipid-nanoparticle mRNA encoding antigen</td><td>SARS-CoV-2 mRNA vaccines</td><td>Cytoplasmic delivery; rapid design; cold-chain dependent</td></tr>
+    </table>
+    <p>Combination vaccines reduce injections: DT, DPT, Pentavalent (DPT+Hep-B+Hib — India's UIP). Adjuvants (alum) boost/prolong response.</p>
+    <h4>Passive immunising agents</h4>
+    <table>
+      <tr><th>Class</th><th>Examples</th><th>Notes</th></tr>
+      <tr><td>Animal antisera (equine)</td><td>Tetanus antitoxin (ATS), diphtheria antitoxin (ADS), antirabies serum (ERIG), antisnake venom (ASV), gas-gangrene antitoxin</td><td>Cheap, available; foreign protein → serum sickness (5–10%), anaphylaxis; skin test before use; keep adrenaline ready</td></tr>
+      <tr><td>Human normal Ig (pooled IgG)</td><td>Hep-A/measles/polio/varicella prophylaxis; agammaglobulinaemia</td><td>More efficacious than equine sera, longer t½, no serum sickness, no skin test needed</td></tr>
+      <tr><td>Human hyperimmune globulins</td><td>HTIG, HRIG, HBIG, anti-D Ig, VZIG, CMV-Ig</td><td>High specific titre; superior to equine equivalent (HRIG&gt;ERIG)</td></tr>
+      <tr><td>Monoclonal antibodies</td><td>Palivizumab (RSV), ansuvimab (Ebola), anti-SARS-CoV-2 mAbs</td><td>Defined epitope, high purity; emerging major passive-immunisation class</td></tr>
+    </table>
+    <p><b>Antivenom</b> is the prototype animal-derived passive agent (monovalent/polyvalent); halts but cannot reverse already-fixed venom damage — give IV early; local infiltration limits venom-induced gangrene in viper bite.</p>
+    <h4>Rationale of clinical use</h4>
+    <ul>
+      <li><b>Active preferred when:</b> time available for prophylaxis (UIP schedule, travel/occupational vaccination, pre-exposure rabies prophylaxis); population/herd protection (pulse polio).</li>
+      <li><b>Passive preferred when:</b> immediate protection needed with no time for vaccine to act (post-exposure prophylaxis); therapy of established disease/toxaemia (diphtheria antitoxin, ASV, botulism/gas-gangrene antitoxin, clinical tetanus — give early, antibody neutralises only free toxin); host cannot mount a response (immunodeficiency, neonates, cytotoxic chemotherapy/immunosuppression — live vaccines also contraindicated here).</li>
+      <li><b>Combined active+passive</b> (different sites; passive covers the latent period): Category III animal bite (rabies vaccine + RIG/HRIG); tetanus-prone wound in unimmunised person (toxoid + HTIG/ATS); Hep-B exposure (HBIG + vaccine); neonatal Rh prophylaxis (anti-D Ig prevents maternal active sensitisation).</li>
+    </ul>
+    <h4>Adverse effects</h4>
+    <ul>
+      <li><b>Vaccines:</b> local pain/fever; live vaccines contraindicated in immunocompromised states &amp; pregnancy; space two live vaccines by ~1 month if not co-administered; egg-protein/antibiotic-trace allergy.</li>
+      <li><b>Animal antisera:</b> immediate hypersensitivity + delayed serum sickness (7–12 days, 5–10%); negative skin test does not fully exclude reaction.</li>
+      <li><b>Human Ig:</b> much safer — serum sickness does not occur, skin testing not required.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Monoclonal antibodies are a mainstream passive-immunisation platform for infectious disease (RSV, Ebola, SARS-CoV-2, <i>C. difficile</i>). <b>Nirsevimab</b> (long-acting anti-RSV mAb) approved for passive immunisation of infants against RSV — recommended for all infants &lt;8 months entering their first RSV season. <b>RSVpreF maternal vaccine</b> (Abrysvo) at 32–36 weeks transfers protective antibody transplacentally — active maternal immunisation conferring passive infant protection (either maternal vaccine or infant nirsevimab, not both). mRNA platform extending beyond COVID-19 to influenza/HIV-1. Newer higher-valency pneumococcal conjugates (PCV-15/20) &amp; recombinant adjuvanted zoster vaccine extend durable active immunity to older/immunocompromised populations.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Management of organ transplant rejection — types of rejection, immunosuppressive regimens (induction, maintenance, antirejection) &amp; drug classification.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Allograft rejection is the host immune attack on a transplanted organ, driven by recipient T-cell recognition of donor MHC/HLA antigens (cell-mediated) and by donor-specific antibodies (humoral). Successful transplantation requires lifelong, carefully titrated immunosuppression; because agents act at different cascade steps, combination therapy is synergistic and allows lower, less-toxic doses of each drug.</p>
+    <h4>Types of rejection</h4>
+    <table>
+      <tr><th>Type</th><th>Onset</th><th>Mechanism</th><th>Management</th></tr>
+      <tr><td>Hyperacute</td><td>Minutes–hours</td><td>Pre-formed anti-HLA/anti-ABO antibodies + complement → microvascular thrombosis</td><td>Prevented by ABO matching + crossmatch; no drug therapy once established</td></tr>
+      <tr><td>Acute cellular (commonest)</td><td>Weeks–months</td><td>Alloreactive cytotoxic T-cells + macrophages</td><td>Steroid pulse; intensify agents; lymphocyte-depleting Ab if steroid-resistant</td></tr>
+      <tr><td>Antibody-mediated (AMR)</td><td>~3 months</td><td>Donor-specific antibodies + complement → microvascular injury</td><td>Plasmapheresis + IVIg, high-dose steroids, rituximab, proteasome inhibitor</td></tr>
+      <tr><td>Chronic</td><td>Months–years</td><td>Immunologic + non-immunologic fibrosis/vasculopathy</td><td>Largely irreversible; mTOR inhibitors + statins slow vasculopathy</td></tr>
+    </table>
+    <h4>Three sequential regimens</h4>
+    <ol>
+      <li><b>Induction</b> (peri-operative–12 wk): intensive cover for the highest-risk window — typically triple therapy (calcineurin inhibitor or sirolimus + prednisolone + MMF/azathioprine); biologicals (basiliximab, ATG) often added, partly to delay nephrotoxic CNI start.</li>
+      <li><b>Maintenance</b> (lifelong): lower-dose triple regimen (any 3 of CNI, sirolimus, prednisolone, azathioprine/MMF); steroids often tapered after year 1.</li>
+      <li><b>Antirejection</b> (treats established acute episode): methylprednisolone pulse 0.5–1 g IV daily ×3–5 days; non-responders → ATG/muromonab-CD3 rescue.</li>
+    </ol>
+    <h4>Classification of immunosuppressants</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Molecular target</th></tr>
+      <tr><td>Calcineurin inhibitors</td><td>Ciclosporin (→cyclophilin), tacrolimus (→FKBP-12)</td><td>Inhibit calcineurin → block NFAT translocation → ↓IL-2</td></tr>
+      <tr><td>mTOR inhibitors</td><td>Sirolimus, everolimus, temsirolimus</td><td>Sirolimus–FKBP complex inhibits mTOR → arrest IL-2-driven proliferation</td></tr>
+      <tr><td>Antiproliferatives</td><td>MMF (→mycophenolic acid, inhibits IMPDH), azathioprine (→6-MP), cyclophosphamide, methotrexate</td><td>Block de-novo purine/DNA synthesis in T &amp; B cells</td></tr>
+      <tr><td>Glucocorticoids</td><td>Prednisolone, methylprednisolone</td><td>↓MHC/IL-1, IL-2, IL-6; lymphocyte sequestration</td></tr>
+      <tr><td>Biologicals</td><td>Basiliximab (anti-CD25), ATG, muromonab-CD3, alemtuzumab (anti-CD52), belatacept (CD80/86–CD28 blocker), rituximab (anti-CD20)</td><td>Block costimulation, deplete/mask lymphocytes</td></tr>
+    </table>
+    <p><b>Tacrolimus</b> is ~100× more potent than ciclosporin, the preferred CNI (bile-independent absorption, valuable in liver transplant); both need therapeutic drug-level monitoring (CYP3A4). <b>Sirolimus</b> is NOT nephrotoxic — useful when CNIs cause renal toxicity (not for liver transplant). <b>Basiliximab</b> (anti-CD25, t½ ~1 wk) is for induction only, not for treating established rejection. <b>ATG/muromonab-CD3</b> deplete T-cells, reserved for steroid-resistant rejection.</p>
+    <div class="dia"><b>Diagram (T-cell activation pathway with drug sites):</b> APC–MHC/antigen–TCR → CD80/86–CD28 (belatacept blocks) → calcineurin–NFAT (ciclosporin/tacrolimus blocks) → IL-2→IL-2R/CD25 (basiliximab blocks) → mTOR (sirolimus blocks) → purine synthesis (MMF/azathioprine blocks) → CD3 (muromonab blocks).</div>
+    <h4>Adverse effects</h4>
+    <table>
+      <tr><th>Agent</th><th>Key toxicities</th></tr>
+      <tr><td>Ciclosporin</td><td>Nephrotoxicity, hypertension, hyperkalaemia, hyperuricaemia, gum hyperplasia, hirsutism, tremor, diabetes</td></tr>
+      <tr><td>Tacrolimus</td><td>Nephrotoxic; more diabetogenic/neurotoxic, alopecia, diarrhoea</td></tr>
+      <tr><td>Sirolimus</td><td>Hyperlipidaemia, thrombocytopenia, impaired wound healing, pneumonitis</td></tr>
+      <tr><td>MMF/azathioprine</td><td>Leucopenia, diarrhoea/GI bleed, CMV reactivation; marrow suppression</td></tr>
+      <tr><td>Corticosteroids</td><td>Cushingoid effects, infection, osteoporosis, hyperglycaemia</td></tr>
+      <tr><td>ATG/muromonab-CD3</td><td>Cytokine-release syndrome, serum sickness, anaphylaxis</td></tr>
+    </table>
+    <p>Class-wide: opportunistic infections (CMV, fungal) and increased malignancy (skin, PTLD) from over-immunosuppression.</p>
+    <div class="recent"><b>Recent advances:</b> <b>Belatacept</b> (selective CD80/86–CD28 costimulation blocker) offers a calcineurin-inhibitor-sparing, non-nephrotoxic maintenance option in renal transplant. <b>Voclosporin</b>, a newer ciclosporin analogue with superior immunosuppressive activity, FDA-approved 2021, reflects continued CNI optimisation. AMR therapy is evolving: plasmapheresis + IVIg, rituximab and proteasome inhibitors (bortezomib) target the antibody/plasma-cell arm. Drug-level monitoring and individualised, centre-specific protocols remain standard of care.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Immunosuppressant role of corticosteroids — mechanism, effects on immune cells, clinical uses, HPA-axis suppression &amp; tapering.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Glucocorticoids (prednisolone, methylprednisolone, dexamethasone) are the oldest, cheapest and most widely used immunosuppressants. They suppress both innate and adaptive immunity, with <b>cell-mediated immunity (CMI) suppressed more than humoral immunity</b>, forming the backbone of induction/maintenance regimens in transplantation and of remission-induction in autoimmune/severe allergic disease. Their immunosuppressive and anti-inflammatory actions are inextricably linked — both reflect inhibition of leukocyte function.</p>
+    <h4>Mechanism of immunosuppression</h4>
+    <p>The lipophilic steroid penetrates the cell, binds the cytosolic glucocorticoid receptor (GR); the activated GR complex translocates to the nucleus (genomic, 30–60 min — delayed but outlasting onset effects).</p>
+    <ul>
+      <li><b>Transactivation:</b> GR dimer binds glucocorticoid response elements (GREs) → induces annexins/lipocortin → inhibits phospholipase A₂ → ↓arachidonic-acid-derived PGs, LTs, PAF.</li>
+      <li><b>Transrepression:</b> GR antagonises NF-κB and AP-1 (↓histone acetylation, ↓MAPK) → downregulates IL-1, IL-2, IL-3, IL-6, TNF-α, GM-CSF, IFN-γ, plus COX-2 and iNOS.</li>
+      <li><b>Net immune effects:</b> ↓IL-1 from macrophages and ↓IL-2 → T-cell proliferation not stimulated; ↓NK-cell activity; ↓endothelial ELAM-1/ICAM-1 impairs leukocyte adhesion/migration; impaired macrophage phagocytosis/microbicidal activity; interference with complement.</li>
+    </ul>
+    <div class="dia"><b>Diagram (GR genomic action):</b> cortisol → cytosolic GR → nuclear translocation → GRE (transactivation → annexin/lipocortin) and NF-κB/AP-1 antagonism (transrepression → ↓cytokines).</div>
+    <h4>Effects on immune cells/blood</h4>
+    <ul>
+      <li>Lymphopenia, eosinopenia, monocytopenia, basopenia within 4–6 h, lasting ~24 h — chiefly by <b>redistribution</b> into tissues, not destruction.</li>
+      <li>Potent inducer of lymphocyte <b>apoptosis</b> (T&gt;B cells) — basis of lympholytic use in ALL/lymphomas.</li>
+      <li>Conversely, neutrophilia (↑marrow release, ↓margination/adherence).</li>
+      <li>CMI (delayed hypersensitivity, graft rejection) suppressed more than antibody production, which is relatively spared at therapeutic doses.</li>
+    </ul>
+    <h4>Clinical uses (immunosuppressive)</h4>
+    <table>
+      <tr><th>Setting</th><th>Role/examples</th></tr>
+      <tr><td>Organ transplantation</td><td>High-dose with other immunosuppressants to prevent rejection; low maintenance long-term</td></tr>
+      <tr><td>Autoimmune/collagen disease</td><td>SLE, polyarteritis nodosa, dermatomyositis, nephrotic syndrome, glomerulonephritis, severe RA, AIHA, ITP, chronic active hepatitis — high dose to remission, then taper</td></tr>
+      <tr><td>Severe allergic states</td><td>Anaphylaxis (adjunct, not substitute for adrenaline), angioedema, urticaria, serum sickness</td></tr>
+      <tr><td>Other</td><td>Asthma/IBD/pemphigus, cerebral oedema, lymphoid malignancies</td></tr>
+    </table>
+    <h4>Adverse effects of chronic use</h4>
+    <p>Cushingoid habitus, fragile skin/striae, easy bruising, hirsutism, hyperglycaemia/diabetes, proximal myopathy, osteoporosis with vertebral fractures, avascular necrosis of femoral head, posterior subcapsular cataract, glaucoma, growth retardation in children, peptic ulceration, psychiatric disturbance, delayed wound healing, and increased infection susceptibility (latent TB flare, opportunistic Candida — microbicidal capacity impaired and inflammation masked).</p>
+    <h4>HPA-axis suppression &amp; tapering</h4>
+    <ul>
+      <li>Dose- and duration-dependent HPA suppression → adrenocortical atrophy.</li>
+      <li>Abrupt withdrawal after &gt;2–3 weeks → withdrawal syndrome (malaise, fever, anorexia, postural hypotension, electrolyte imbalance, myalgia, disease relapse) and, under stress, acute adrenal insufficiency/cardiovascular collapse.</li>
+      <li>Taper slowly — hypothalamus/pituitary need weeks–months to recover; exogenous ACTH does not hasten recovery (pituitary recovers before adrenals do).</li>
+      <li>HPA-sparing measures: shorter-acting steroid at lowest dose/shortest duration, single morning dose, alternate-day therapy (less immunosuppression too); long-acting dexamethasone unsuitable for alternate-day use.</li>
+      <li><b>Stress cover:</b> during infection/trauma/surgery, do not stop the steroid — increase dose/give IV hydrocortisone.</li>
+    </ul>
+    <h4>Contraindications (relative)</h4>
+    <p>Peptic ulcer, diabetes, hypertension, viral/fungal infections, TB, osteoporosis, herpes simplex keratitis, psychosis, epilepsy, CHF, renal failure.</p>
+    <div class="recent"><b>Recent advances:</b> Steroid-sparing strategies dominate modern practice — glucocorticoids increasingly used only for induction, with calcineurin inhibitors, mycophenolate and biologics maintaining remission to limit cumulative toxicity. Selective GR agonists/modulators (SEGRMs/SEGRAs), which favour transrepression over transactivation, are under investigation to dissociate anti-inflammatory benefit from metabolic adverse effects.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Stem cell research and therapy — classification, properties, therapeutic applications, limitations &amp; ethical/regulatory issues.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Stem cells are unspecialised cells with two defining properties: <b>self-renewal</b> (indefinite division while remaining undifferentiated) and <b>potency</b> (capacity to differentiate into specialised cell types). They offer a regenerative strategy for diseases with limited innate repair capacity — heart disease, diabetes, cancer and neurodegenerative disorders. Stem-cell therapy aims to replace/repair/support damaged tissue; stem-cell research additionally exploits these cells for disease modelling and drug discovery.</p>
+    <h4>Classification by potency</h4>
+    <table>
+      <tr><th>Class</th><th>Capacity</th><th>Example</th></tr>
+      <tr><td>Totipotent</td><td>Whole organism + extra-embryonic tissue</td><td>Zygote, early blastomeres</td></tr>
+      <tr><td>Pluripotent</td><td>All 3 germ layers, not placenta</td><td>Embryonic stem cells (ESCs); iPSCs</td></tr>
+      <tr><td>Multipotent</td><td>Multiple lineages within one tissue family</td><td>Mesenchymal (MSC), haematopoietic (HSC), neural stem cells</td></tr>
+      <tr><td>Unipotent</td><td>Single cell type</td><td>Spermatogonial, epidermal progenitors</td></tr>
+    </table>
+    <h4>Classification by source</h4>
+    <table>
+      <tr><th>Source</th><th>Key features</th></tr>
+      <tr><td>Embryonic (ESC)</td><td>Pluripotent, from blastocyst inner cell mass; inexhaustible but ethically fraught, allogeneic, teratoma risk</td></tr>
+      <tr><td>Fetal/adult neural stem cells</td><td>Generate neurons + glia; adult brain retains NSC populations</td></tr>
+      <tr><td>Mesenchymal (MSC/marrow stromal)</td><td>Multilineage; immune-evasive (lack CD80/CD86/CD40 costimulation) → poorly trigger T-cell proliferation</td></tr>
+      <tr><td>Umbilical cord blood (UCBSC)</td><td>Multipotent-rich; lower rejection risk (immature immune antigens)</td></tr>
+      <tr><td>Adipose tissue</td><td>Stromal cells with MSC surface markers</td></tr>
+      <tr><td>Induced pluripotent (iPSC)</td><td>Adult somatic cells reprogrammed to pluripotency (Yamanaka)</td></tr>
+    </table>
+    <h4>Applications</h4>
+    <ul>
+      <li><b>Regenerative/cell-replacement therapy</b> — replacing scarred/degenerated tissue (myocardium, neurons).</li>
+      <li><b>Haematopoietic stem cell transplantation (HSCT)</b> — long-established for leukaemia and other haematological disease (the only established stem-cell therapy in routine practice).</li>
+      <li><b>Disease modelling &amp; drug/toxicity screening</b> — patient-derived pluripotent cells yield human cell types (cardiomyocytes, neurons) for in-vitro screening.</li>
+      <li><b>Gene-therapy vehicle</b> — genetically modified stem cells stably express a therapeutic gene in daughter cells.</li>
+    </ul>
+    <table>
+      <tr><th>System</th><th>Application</th></tr>
+      <tr><td>Haematology/oncology</td><td>HSCT for leukaemia and other cancers</td></tr>
+      <tr><td>Neurology</td><td>Cell replacement/mobilisation in Parkinson's, Huntington's, ALS, Alzheimer's, stroke</td></tr>
+      <tr><td>Cardiology</td><td>Intracardiac autologous stem-cell injection post-MI/CHF; angiogenic support (VEGF/bFGF)</td></tr>
+      <tr><td>Ophthalmology</td><td>Ex-vivo expanded limbal epithelial stem cells for ocular-surface disease</td></tr>
+      <tr><td>Endocrine</td><td>ESC-derived insulin-secreting cells in diabetic models</td></tr>
+    </table>
+    <h4>Limitations / adverse effects</h4>
+    <ul>
+      <li><b>Tumorigenicity</b> — ESCs form teratomas in immunocompromised hosts.</li>
+      <li><b>Immune rejection</b> — ESCs are allogeneic, need immunosuppression (mitigated by HLA-matched banks, MSC immune evasion, UCBSC, autologous cells).</li>
+      <li>Ischaemic graft cell death; incomplete functional/anatomical integration; need to isolate pure desired lineage from mixed populations.</li>
+    </ul>
+    <h4>Ethical &amp; regulatory issues</h4>
+    <p>Embryonic source raises ethical/religious/legal objections (destruction of human embryos). <b>India:</b> ICMR–DBT National Guidelines for Stem Cell Research, 2017 — currently no approved stem-cell indication other than HSCT for haematological disorders; all other uses are investigational, permissible only as approved clinical trials; no evidence supports cord-tissue/placenta/adipose/dental-pulp "stem-cell" treatments outside trials.</p>
+    <div class="dia"><b>Diagrams:</b> (1) Potency ladder — Totipotent (zygote) → Pluripotent (ESC/iPSC) → Multipotent (HSC/MSC/NSC) → Unipotent, with a side arrow for "self-renewal." (2) Source-to-therapy schematic — ESC, iPSC, MSC, HSC, cord blood → differentiation → cardiomyocyte/dopaminergic neuron/β-cell/blood lineages.</div>
+    <div class="recent"><b>Recent advances:</b> <b>Remestemcel-L (Ryoncil)</b> — first FDA-approved mesenchymal stromal-cell product (Dec 2024), for paediatric steroid-refractory acute GVHD post-allogeneic HSCT — landmark first licensed MSC therapy in the US. <b>iPSC/ESC-derived dopaminergic precursors</b> are now in first-in-human Parkinson's-disease cell-replacement trials (US, Europe, Japan) using allogeneic/autologous strategies with genomic quality control against tumorigenicity. <b>Cell-free "stem-cell" therapeutics</b> — stem-cell-derived exosomes are emerging as a non-tumorigenic, non-immunogenic alternative carrying parental therapeutic effects. iPSC technology increasingly supplies patient-specific cells for disease modelling, sidestepping ESC ethical issues.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Therapies for chronic graft-versus-host disease (cGVHD) — pathophysiology, first-line &amp; steroid-refractory salvage therapy.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Chronic GVHD is the major determinant of late, non-relapse morbidity/mortality after allogeneic haematopoietic cell transplantation (allo-HCT), occurring in ~30–70% of recipients. It is an alloimmune/autoimmune-like syndrome where donor T cells (with dysregulated B-cell help) react against host antigens, producing chronic inflammation and fibrosis of multiple organs; it classically presents beyond day +100 and resembles a multisystem autoimmune disorder. Therapy aims to control disease activity, preserve organ function and the graft-versus-tumour effect, and minimise corticosteroid exposure.</p>
+    <h4>Pathophysiology (basis for therapy)</h4>
+    <p><b>Three-phase model:</b> (1) tissue injury/inflammation (conditioning toxicity, infection, prior acute GVHD, sun exposure) → (2) chronic inflammation with dysregulated B- and T-cell immunity and loss of tolerance → (3) tissue repair with fibrosis. Each phase is a drug target. <b>Target organs:</b> skin (sclerosis), mouth (lichenoid), eyes (sicca), liver, GI tract/oesophagus, genitalia, joints/fascia, lung (bronchiolitis obliterans). NIH severity score (mild/moderate/severe) guides whether topical or systemic therapy starts.</p>
+    <div class="dia"><b>Diagram:</b> Phase 1 tissue injury → Phase 2 B/T-cell dysregulation (targeted by ibrutinib–BTK, ruxolitinib–JAK1/2) → Phase 3 fibrosis (targeted by belumosudil–ROCK2, axatilimab–CSF1R).</div>
+    <h4>First-line therapy</h4>
+    <ul>
+      <li><b>Mild, skin/mucosa-limited:</b> topical therapy only — topical corticosteroids, topical calcineurin inhibitors (tacrolimus, pimecrolimus), steroid mouth rinses, artificial tears/ciclosporin eye drops.</li>
+      <li><b>Moderate–severe:</b> systemic prednisone 0.5–1 mg/kg/day ± calcineurin inhibitor (ciclosporin/tacrolimus) or sirolimus (steroid-sparing, not clearly more effective). Adding MMF to first-line prednisone shows no added benefit. Taper after 1–2 weeks if stable; ~⅓ respond to initial steroids; many need multiple lines over years.</li>
+    </ul>
+    <h4>Steroid-refractory cGVHD — definition</h4>
+    <p>Progression on prednisone 1 mg/kg/day ×2 weeks, stable disease on ≥0.5 mg/kg/day ×4–8 weeks, or inability to taper below 0.5 mg/kg/day due to flares.</p>
+    <h4>Second-line / steroid-refractory agents</h4>
+    <table>
+      <tr><th>Agent</th><th>Class/mechanism</th><th>FDA status</th></tr>
+      <tr><td>Ibrutinib</td><td>BTK (±ITK) inhibitor — blocks B-cell receptor &amp; Th2 signalling</td><td>Approved 2017 — first agent approved for cGVHD</td></tr>
+      <tr><td>Ruxolitinib</td><td>JAK1/JAK2 inhibitor — blocks cytokine→JAK-STAT signalling of alloreactive T cells</td><td>Approved 2021 — steroid-refractory (REACH3)</td></tr>
+      <tr><td>Belumosudil</td><td>ROCK2 inhibitor — shifts Th17/Treg balance, reduces profibrotic signalling</td><td>Approved 2021 — after ≥2 prior lines</td></tr>
+      <tr><td>Axatilimab</td><td>Anti-CSF1R mAb — depletes profibrotic monocyte-derived macrophages</td><td>Approved Aug 2024 — after ≥2 prior lines</td></tr>
+      <tr><td>ECP (extracorporeal photopheresis)</td><td>8-MOP + UVA ex vivo → suppresses T-cell reactivity, induces Tregs</td><td>Established, esp. skin/sclerotic disease</td></tr>
+      <tr><td>MMF/sirolimus/MTX/rituximab/low-dose IL-2/imatinib/bortezomib</td><td>Various (antiproliferative, anti-CD20, Treg-expansion, anti-fibrosis)</td><td>Off-label salvage</td></tr>
+    </table>
+    <p>Ruxolitinib is hepatically metabolised by CYP3A4 (azoles raise, rifampin lowers exposure) — monitor cytopenias and CMV reactivation. Belumosudil — monitor LFTs, hypertension, oedema. Ibrutinib — bleeding/bruising, diarrhoea, fatigue. No consensus on optimal salvage sequence — individualise by organ pattern, toxicity, interactions, cost.</p>
+    <h4>Ancillary/supportive care</h4>
+    <p>Sun protection/emollients, oral hygiene/saliva substitutes, ocular lubricants, physical therapy for fasciitis/contractures. <b>Infection prophylaxis essential:</b> co-trimoxazole (PCP), penicillin (encapsulated organisms), azole antifungal, aciclovir; CMV monitoring; IVIG if hypogammaglobulinaemic. Monitor chronic steroid toxicity (osteoporosis, cataract, hypertension, hyperglycaemia, myopathy).</p>
+    <div class="recent"><b>Recent advances:</b> <b>Ruxolitinib</b> — REACH3 phase 3 trial established superiority over best available therapy in steroid-refractory/dependent cGVHD, underpinning 2021 FDA approval. <b>Belumosudil</b> — ROCKstar phase 2 trial showed durable responses (~75% ORR) across heavily pre-treated, multi-organ (incl. fibrotic/lung) cGVHD. <b>Axatilimab</b> — newest mechanism (anti-CSF1R targeting profibrotic macrophages); AGAVE-201 phase 2 trial showed ORR ~75% at approved dose after ≥2 prior lines, leading to FDA approval (Niktimvo, Aug 2024) for patients ≥40 kg. Practice now has four mechanistically distinct, organ-complementary agents (BTK, JAK1/2, ROCK2, CSF1R), shifting steroid-refractory cGVHD from empiric salvage toward targeted, steroid-sparing therapy.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s8" style="--sec:#c06a3e;--sec-soft:#c06a3e26">
+  <h2>Section 8 · Special Topics (Hypothesis, Clinical Trials)</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Define null &amp; alternate hypothesis; significance in clinical trials; Type I &amp; Type II errors (examples); note on p-value.</span></summary>
+  <div class="answer">
+    <h4>Hypotheses</h4>
+    <ul>
+      <li><b>Null hypothesis (H₀):</b> no difference/effect between groups (e.g. "drug A = placebo"). The default assumed true until disproven.</li>
+      <li><b>Alternate hypothesis (H₁/Hₐ):</b> there is a true difference/effect (e.g. "drug A ≠ placebo"). Accepted if H₀ is rejected.</li>
+    </ul>
+    <h4>Significance in clinical trials</h4>
+    <p>Statistical testing aims to <b>reject or fail to reject H₀</b> using sample data; trials are designed to detect a clinically meaningful effect with adequate power, controlling error rates.</p>
+    <h4>Type I and Type II errors</h4>
+    <table>
+      <tr><th></th><th>H₀ true</th><th>H₀ false</th></tr>
+      <tr><td>Reject H₀</td><td><b>Type I error (α)</b> — false positive</td><td>Correct (power)</td></tr>
+      <tr><td>Fail to reject H₀</td><td>Correct</td><td><b>Type II error (β)</b> — false negative</td></tr>
+    </table>
+    <ul>
+      <li><b>Type I (α):</b> concluding a drug works when it doesn't (e.g. approving an ineffective drug). Conventionally α = 0.05.</li>
+      <li><b>Type II (β):</b> missing a real effect (e.g. rejecting an effective drug). <b>Power = 1 − β</b> (usually ≥80%).</li>
+    </ul>
+    <h4>p-value</h4>
+    <p>Probability of obtaining the observed (or more extreme) result <b>if H₀ were true</b>. <b>p &lt; 0.05</b> → statistically significant → reject H₀. It is <b>not</b> the probability that H₀ is true or the effect size; interpret alongside confidence intervals &amp; clinical relevance.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Fixed-dose combinations, drug antagonism, and the rationale behind combination drug therapy in hypertension &amp; other diseases.</span></summary>
+  <div class="answer">
+    <h4>Fixed-dose combinations</h4>
+    <p>See Section 6 — two+ drugs in fixed ratio in one form; ↑ compliance, synergy, ↓ resistance, but inflexible dosing; irrational FDCs are a regulatory concern.</p>
+    <h4>Drug antagonism (types)</h4>
+    <table>
+      <tr><th>Type</th><th>Mechanism / example</th></tr>
+      <tr><td>Pharmacological (receptor)</td><td>Competitive (atropine vs ACh), non-competitive</td></tr>
+      <tr><td>Physiological/functional</td><td>Opposite effects via different receptors (adrenaline vs histamine)</td></tr>
+      <tr><td>Chemical</td><td>Direct chemical inactivation (protamine + heparin; chelators + metals)</td></tr>
+      <tr><td>Pharmacokinetic</td><td>One drug alters ADME of another (↓ absorption, enzyme induction)</td></tr>
+    </table>
+    <h4>Rationale for combination therapy</h4>
+    <ul>
+      <li><b>Synergy/additive effect</b> with lower individual doses → fewer dose-related ADRs.</li>
+      <li>Target multiple mechanisms of a multifactorial disease; prevent resistance; treat comorbidities.</li>
+    </ul>
+    <h4>In hypertension</h4>
+    <ul>
+      <li>Preferred: ACEi/ARB + CCB, ACEi/ARB + thiazide, CCB + thiazide; <b>avoid ACEi + ARB</b> together.</li>
+      <li>Single-pill combinations improve adherence; start two drugs if BP ≥20/10 mmHg above target; add spironolactone for resistant HTN.</li>
+    </ul>
+    <h4>In other diseases</h4>
+    <p>TB (HRZE), HIV (ART), malaria (ACT), H. pylori (PPI + 2 antibiotics), diabetes (metformin + SGLT2i/DPP-4i), cancer (combination chemotherapy), Parkinson's (levodopa + carbidopa).</p>
+  </div></details>
+</section>
+
+<section class="sec" id="scase" style="--sec:#7a5bbd;--sec-soft:#7a5bbd26">
+  <h2>🩺 Clinical Case Vignettes</h2>
+  <p class="sec-note">Apply the concepts — read the scenario, decide your answer, then open to check. Filter to just these with the 🩺 Cases chip.</p>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">48 hours after starting chemotherapy for high-grade lymphoma, a patient has high potassium, high phosphate, high uric acid and acute kidney injury. Diagnosis and prevention?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Massive cell lysis.</div>
+    <p><b>Tumour lysis syndrome.</b> Prevent/treat with aggressive <b>IV hydration</b>, <b>allopurinol</b> (prophylaxis) or <b>rasburicase</b> (high-risk/established hyperuricaemia), and electrolyte management; dialysis if severe.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A breast-cancer patient on doxorubicin develops a falling ejection fraction. Mechanism and protection?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Cumulative dose, free radicals.</div>
+    <p><b>Anthracycline cardiotoxicity</b> — dose-dependent, free-radical/iron-mediated. Limit cumulative dose, monitor LVEF; <b>dexrazoxane</b> (iron chelator) is cardioprotective; liposomal doxorubicin lowers risk.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient on high-dose cyclophosphamide develops haematuria. Cause and prevention?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> The acrolein metabolite.</div>
+    <p><b>Haemorrhagic cystitis</b> from the metabolite <b>acrolein</b>. Prevent with <b>mesna</b> (binds acrolein) plus vigorous hydration.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">After high-dose methotrexate, what is given to protect normal cells, and what must be avoided?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Folate rescue.</div>
+    <p><b>Leucovorin (folinic acid) rescue</b> bypasses the DHFR blockade in normal cells; ensure <b>urine alkalinisation and hydration</b> (methotrexate is nephrotoxic if it precipitates). <b>Avoid NSAIDs/aspirin and probenecid</b> (they reduce methotrexate excretion → toxicity).</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient on cisplatin develops rising creatinine and hearing loss. Mechanism and prevention?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Tubular toxicity.</div>
+    <p><b>Cisplatin</b> causes dose-limiting <b>nephrotoxicity and ototoxicity</b>. Prevent with <b>vigorous hydration and forced diuresis (mannitol)</b>, amifostine; monitor renal function and electrolytes (magnesium wasting); consider carboplatin.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient on chemotherapy presents with fever and a neutrophil count of 0.4. Immediate action?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> An oncological emergency.</div>
+    <p><b>Febrile neutropenia is an emergency.</b> Take cultures, then give <b>empirical broad-spectrum antibiotics</b> (an anti-pseudomonal beta-lactam, e.g. piperacillin-tazobactam) within an hour; <b>G-CSF</b> support; neutropenic precautions.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A melanoma patient on pembrolizumab develops severe diarrhoea and abdominal pain. Cause and treatment?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Immune-related adverse event.</div>
+    <p><b>Immune-related colitis</b> from checkpoint inhibition. Treat with <b>corticosteroids</b> (add infliximab if refractory) and withhold the checkpoint inhibitor.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A woman has HER2-positive breast cancer. Which targeted drug, what monitoring, and how is the endocrine choice decided?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> HER2 antibody plus cardiac monitoring.</div>
+    <p><b>Trastuzumab</b> (anti-HER2 monoclonal antibody) — monitor <b>LVEF</b> (cardiotoxicity, especially with anthracyclines). For hormone-receptor-positive disease: <b>tamoxifen</b> (premenopausal) versus an <b>aromatase inhibitor</b> (postmenopausal); add a CDK4/6 inhibitor in advanced HR-positive/HER2-negative disease.</p>
+  </div></details>
+</section>
+
+<!-- CONTENT END -->
+  </div>
+
+  <footer>
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman, Katzung, Rang &amp; Dale; NCCN/ESMO, GINA, ADA, WHO &amp; Indian guidelines.
+  </footer>
+</div>
+
+<script>
+  const search   = document.getElementById('search');
+  const items    = Array.from(document.querySelectorAll('details.q'));
+  const sections = Array.from(document.querySelectorAll('section.sec'));
+  const counter  = document.getElementById('counter');
+  const nohit    = document.getElementById('nohit');
+  const chips    = Array.from(document.querySelectorAll('.chip'));
+  const themeBtn = document.getElementById('theme');
+  const root     = document.documentElement;
+  let activeFilter = 'all';
+  let kbIndex = -1;
+
+  items.forEach(d=>{
+    const s = d.querySelector('.stars');
+    d.dataset.pri  = s ? (s.textContent.match(/★/g)||[]).length : 0;
+    d.dataset.type = d.classList.contains('vignette') ? 'case' : 'q';
+  });
+
+  const visible = ()=> items.filter(d=> d.style.display!=='none');
+
+  function apply(){
+    const q = search.value.trim().toLowerCase();
+    let hits = 0;
+    items.forEach(d=>{
+      const matchSearch = !q || d.textContent.toLowerCase().includes(q);
+      let matchFilter = true;
+      if(activeFilter==='case')      matchFilter = d.dataset.type==='case';
+      else if(activeFilter!=='all')  matchFilter = d.dataset.pri===activeFilter;
+      const show = matchSearch && matchFilter;
+      d.style.display = show ? '' : 'none';
+      if(show){ hits++; if(q.length>2) d.open = true; }
+    });
+    sections.forEach(s=>{
+      const any = Array.from(s.querySelectorAll('details.q')).some(d=> d.style.display!=='none');
+      s.style.display = any ? '' : 'none';
+    });
+    nohit.style.display = hits===0 ? 'block' : 'none';
+    counter.textContent = (q || activeFilter!=='all') ? hits + ' shown' : items.length + ' questions';
+    clearKb();
+  }
+
+  chips.forEach(c=> c.onclick = ()=>{
+    chips.forEach(x=> x.classList.remove('active'));
+    c.classList.add('active');
+    activeFilter = c.dataset.f;
+    apply();
+  });
+
+  let t;
+  search.addEventListener('input', ()=>{ clearTimeout(t); t = setTimeout(apply, 110); });
+
+  document.getElementById('expandAll').onclick  = ()=> visible().forEach(d=> d.open=true);
+  document.getElementById('collapseAll').onclick = ()=> items.forEach(d=> d.open=false);
+
+  function randomQ(){
+    const vis = visible(); if(!vis.length) return;
+    items.forEach(d=> d.open=false);
+    const pick = vis[Math.floor(Math.random()*vis.length)];
+    pick.open = true;
+    setKb(items.indexOf(pick));
+  }
+  document.getElementById('shuffle').onclick = randomQ;
+
+  function setTheme(mode){
+    if(mode==='dark'){ root.setAttribute('data-theme','dark'); themeBtn.textContent='☀️'; }
+    else { root.removeAttribute('data-theme'); themeBtn.textContent='🌙'; }
+    try{ localStorage.setItem('pharm-theme', mode); }catch(e){}
+  }
+  themeBtn.onclick = ()=> setTheme(root.getAttribute('data-theme')==='dark' ? 'light' : 'dark');
+  try{ if(localStorage.getItem('pharm-theme')==='dark') setTheme('dark'); }catch(e){}
+
+  function clearKb(){ items.forEach(d=> d.classList.remove('kbfocus')); kbIndex=-1; }
+  function setKb(i){
+    items.forEach(d=> d.classList.remove('kbfocus'));
+    kbIndex = i;
+    if(i>=0){ items[i].classList.add('kbfocus'); items[i].scrollIntoView({behavior:'smooth', block:'center'}); }
+  }
+  function moveKb(dir){
+    const vis = visible(); if(!vis.length) return;
+    let cur = kbIndex>=0 ? vis.indexOf(items[kbIndex]) : -1;
+    cur = (cur + dir + vis.length) % vis.length;
+    setKb(items.indexOf(vis[cur]));
+  }
+
+  document.addEventListener('keydown', e=>{
+    if(e.target===search){ if(e.key==='Escape'){ search.value=''; apply(); search.blur(); } return; }
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    switch(e.key){
+      case '/': e.preventDefault(); search.focus(); break;
+      case 'r': case 'R': randomQ(); break;
+      case 'e': case 'E': visible().forEach(d=> d.open=true); break;
+      case 'c': case 'C': items.forEach(d=> d.open=false); break;
+      case 'd': case 'D': themeBtn.click(); break;
+      case 'k': case 'K': case 'ArrowDown': e.preventDefault(); moveKb(1); break;
+      case 'j': case 'J': case 'ArrowUp':   e.preventDefault(); moveKb(-1); break;
+      case ' ': case 'Enter':
+        if(kbIndex>=0){ e.preventDefault(); items[kbIndex].open = !items[kbIndex].open; }
+        break;
+    }
+  });
+
+  apply();
+</script>
+</body>
+</html>

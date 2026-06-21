@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Systems Pharmacology — G&G 14th ed.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ═══════════════════════════════════════════
+     TOKEN SYSTEM — SAFFRON × RUST × DEEP TEAL
+     Distinct from: navy/teal (General), 
+     indigo/cyan/magenta (Neuro), 
+     wine/crimson (CV-Renal), emerald/plum (Inflammation)
+  ═══════════════════════════════════════════ */
+  :root {
+    --saffron: #E8A020;
+    --saffron-light: #F5C864;
+    --saffron-pale: #FEF3DC;
+    --rust: #B8450A;
+    --rust-dark: #7D2E05;
+    --teal: #0D5C63;
+    --teal-light: #1B8A95;
+    --teal-pale: #D6F0F3;
+    --cream: #FBF6EE;
+    --ink: #1A1A2E;
+    --ink-soft: #3D3D55;
+    --muted: #7B7B99;
+    --border: #E2D8C8;
+    --white: #FFFFFF;
+
+    /* Semantic roles */
+    --accent: var(--saffron);
+    --accent-dark: var(--rust);
+    --accent-pale: var(--saffron-pale);
+    --cool: var(--teal);
+    --cool-pale: var(--teal-pale);
+    --bg: var(--cream);
+    --surface: var(--white);
+    --text: var(--ink);
+    --text-soft: var(--ink-soft);
+    --highlight-bg: var(--saffron-pale);
+    --cog-bg: var(--teal-pale);
+    --cog-border: var(--teal);
+
+    /* Typography scale */
+    --fs-xs: 0.72rem;
+    --fs-sm: 0.85rem;
+    --fs-base: 1rem;
+    --fs-md: 1.125rem;
+    --fs-lg: 1.35rem;
+    --fs-xl: 1.7rem;
+    --fs-2xl: 2.2rem;
+    --fs-3xl: 3rem;
+
+    --radius: 10px;
+    --radius-sm: 6px;
+    --shadow: 0 2px 12px rgba(26,26,46,0.08);
+    --shadow-lg: 0 8px 32px rgba(26,26,46,0.14);
+  }
+
+  /* ═══ RESET & BASE ═══ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-base);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.7;
+  }
+
+  /* ═══ HERO ═══ */
+  .hero {
+    background: linear-gradient(135deg, var(--rust-dark) 0%, var(--teal) 55%, var(--rust) 100%);
+    color: white;
+    padding: 2.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(232,160,32,0.25) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-size: var(--fs-sm);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--saffron-light);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2rem, 5vw, var(--fs-3xl));
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+    position: relative;
+  }
+  .hero-sub {
+    color: rgba(255,255,255,0.78);
+    font-size: var(--fs-md);
+    margin-bottom: 1.8rem;
+    position: relative;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    position: relative;
+  }
+  .chip {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 0.25rem 0.85rem;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    color: white;
+  }
+  .chip.tier1 { background: rgba(232,160,32,0.35); border-color: var(--saffron-light); }
+  .chip.tier2 { background: rgba(13,92,99,0.45); border-color: #5DD9E2; }
+  .chip.tier3 { background: rgba(184,69,10,0.3); border-color: rgba(255,180,130,0.5); }
+
+  /* ═══ METHOD STRIP ═══ */
+  .method-strip {
+    background: var(--ink);
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+  }
+  .method-item {
+    padding: 1.2rem 1.4rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+  .method-item:last-child { border-right: none; }
+  .method-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--saffron);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+  .method-name {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin: 0.1rem 0;
+  }
+  .method-desc { font-size: var(--fs-xs); color: rgba(255,255,255,0.55); }
+
+  /* ═══ STICKY NAV ═══ */
+  .sticky-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(251,246,238,0.94);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--saffron);
+    padding: 0.6rem 2rem;
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .sticky-nav::-webkit-scrollbar { display: none; }
+  .nav-link {
+    color: var(--text-soft);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    white-space: nowrap;
+    padding: 0.2rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .nav-link:hover { color: var(--rust); border-bottom-color: var(--rust); }
+
+  /* ═══ LAYOUT ═══ */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ═══ MODULE CARD ═══ */
+  .module {
+    background: var(--surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .module-header {
+    background: linear-gradient(90deg, var(--rust-dark), var(--teal));
+    color: white;
+    padding: 1.5rem 1.8rem;
+  }
+  .module-tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--saffron-light);
+    margin-bottom: 0.3rem;
+  }
+  .module-header h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-xl);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .module-header p { color: rgba(255,255,255,0.72); font-size: var(--fs-sm); margin-top: 0.3rem; }
+
+  /* ═══ STAGE BLOCKS ═══ */
+  .stage { padding: 1.6rem 1.8rem; border-bottom: 1px solid var(--border); }
+  .stage:last-child { border-bottom: none; }
+
+  .stage-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .stage-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Stage 1: Map */
+  .cog { background: var(--cog-bg); border-left: 4px solid var(--teal); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 1.2rem 1.4rem; margin-bottom: 1rem; }
+  .cog .stage-label { color: var(--teal); }
+  .pillar {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--teal);
+    border-bottom: 2px solid var(--teal-light);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .cog ul, .cog ol { padding-left: 1.4rem; }
+  .cog li { margin-bottom: 0.4rem; font-size: var(--fs-sm); }
+  .cog li strong { color: var(--rust); }
+
+  /* Stage 2: Recall */
+  .blurt-stage { background: var(--highlight-bg); border-left: 4px solid var(--saffron); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 1.2rem 1.4rem; }
+  .blurt-stage .stage-label { color: var(--rust); }
+  .blurt-prompt {
+    font-style: italic;
+    background: white;
+    border: 1px solid var(--saffron);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.1rem;
+    font-size: var(--fs-sm);
+    margin-bottom: 1rem;
+    color: var(--ink-soft);
+  }
+  .primers { list-style: none; padding: 0; }
+  .primers li {
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    padding: 0.5rem 0.7rem;
+    border-bottom: 1px solid rgba(232,160,32,0.2);
+    color: var(--rust-dark);
+  }
+  .primers li::before { content: 'Q: '; color: var(--saffron); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+  /* Stage 3: Notes Gate */
+  details.gate summary {
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--teal), var(--rust));
+    color: white;
+    padding: 0.85rem 1.3rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    list-style: none;
+    user-select: none;
+    transition: opacity 0.2s;
+    margin-bottom: 0;
+  }
+  details.gate summary::-webkit-details-marker { display: none; }
+  details.gate summary:hover { opacity: 0.88; }
+  details.gate summary::before { content: '🔒 '; }
+  details.gate[open] summary::before { content: '🔓 '; }
+  .feynman-content { padding: 1.2rem 0 0.4rem; }
+  .feynman-content h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--teal);
+    margin: 1.2rem 0 0.5rem;
+  }
+  .feynman-content h4:first-child { margin-top: 0; }
+  .feynman-content p, .feynman-content li { font-size: var(--fs-sm); }
+  .feynman-content ul, .feynman-content ol { padding-left: 1.4rem; margin-bottom: 0.7rem; }
+  .feynman-content li { margin-bottom: 0.35rem; }
+  .analogy {
+    background: var(--saffron-pale);
+    border: 1px solid var(--saffron);
+    border-radius: var(--radius-sm);
+    padding: 0.9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  .analogy::before { content: '💡 Analogy — '; font-weight: 700; color: var(--rust); }
+  blockquote.warn {
+    background: #FFF3F0;
+    border-left: 4px solid var(--rust);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 0.85rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  blockquote.warn::before { content: '⚠️ Exam Trap — '; font-weight: 700; color: var(--rust); }
+
+  /* Stage 4: Spaced Rep */
+  .sched-stage { background: #F4FAF5; border-left: 4px solid #2E7D52; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 1.2rem 1.4rem; }
+  .sched-stage .stage-label { color: #2E7D52; }
+  .sched {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .sched-day {
+    background: white;
+    border: 1px solid #C3E6D0;
+    border-radius: var(--radius-sm);
+    padding: 0.7rem 0.9rem;
+    font-size: var(--fs-xs);
+  }
+  .sched-day strong { display: block; color: #2E7D52; font-size: var(--fs-sm); margin-bottom: 0.2rem; }
+  .bridge {
+    background: white;
+    border: 1px dashed var(--saffron);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--rust-dark);
+  }
+  .bridge::before { content: '🌉 Bridge — '; font-weight: 700; }
+
+  /* ═══ TABLES ═══ */
+  .tbl-wrap { overflow-x: auto; margin: 1rem 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-xs);
+  }
+  th {
+    background: var(--teal);
+    color: white;
+    padding: 0.5rem 0.7rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: var(--fs-xs);
+  }
+  td {
+    padding: 0.45rem 0.7rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: var(--cream); }
+  tr:hover td { background: var(--saffron-pale); }
+  td strong { color: var(--rust); }
+
+  /* ═══ SVG DIAGRAMS ═══ */
+  .diagram-wrap {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.8rem;
+    margin: 1rem 0;
+    text-align: center;
+    overflow-x: auto;
+  }
+  .diagram-caption {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    margin-top: 0.4rem;
+    font-style: italic;
+  }
+
+  /* ═══ QUIZ SECTION ═══ */
+  .quizset { margin-top: 1.4rem; }
+  .quizset-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--ink);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--saffron);
+    padding-bottom: 0.3rem;
+  }
+  .quiz-item { margin-bottom: 0.8rem; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+  .quiz-q {
+    padding: 0.75rem 1rem;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .quiz-q:hover { background: var(--highlight-bg); }
+  .quiz-q::after { content: '▼'; font-size: var(--fs-xs); color: var(--muted); flex-shrink: 0; margin-top: 0.1rem; }
+  .quiz-item.open .quiz-q::after { content: '▲'; }
+  .quiz-a {
+    display: none;
+    padding: 0.75rem 1rem;
+    font-size: var(--fs-sm);
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0;
+    color: var(--ink-soft);
+  }
+  .quiz-item.open .quiz-a { display: block; }
+  .quiz-a strong { color: #2E7D52; }
+
+  /* ═══ UTILITIES ═══ */
+  .badge {
+    display: inline-block;
+    font-size: var(--fs-xs);
+    font-family: 'JetBrains Mono', monospace;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    vertical-align: middle;
+  }
+  .badge-saffron { background: var(--saffron-pale); color: var(--rust-dark); border: 1px solid var(--saffron); }
+  .badge-teal { background: var(--teal-pale); color: var(--teal); border: 1px solid var(--teal-light); }
+  .badge-rust { background: #FFF0EB; color: var(--rust-dark); border: 1px solid #F4B89A; }
+
+  p { margin-bottom: 0.7rem; font-size: var(--fs-sm); }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--rust-dark); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  /* Print */
+  @media print {
+    .sticky-nav, .method-strip { display: none; }
+    details.gate[open] { break-inside: avoid; }
+  }
+
+  /* ── FLASHCARDS ─────────────────────────────────────── */
+  #flashcards { margin-top: 3rem; margin-bottom: 2rem; }
+  #flashcards > h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md); color: var(--ink);
+    margin-bottom: .4rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: .3rem;
+  }
+  #flashcards > .fc-lead {
+    font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: 1.5rem;
+  }
+  .flashcards { display: flex; flex-direction: column; gap: .75rem; }
+  .flashcard {
+    border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; background: var(--cream); transition: box-shadow .2s;
+  }
+  .flashcard:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+  .flashcard > summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: flex-start; gap: .9rem;
+    padding: .9rem 1.1rem; background: var(--accent-pale); user-select: none;
+  }
+  .flashcard > summary::-webkit-details-marker { display: none; }
+  .flashcard > summary::after {
+    content: '▶'; color: var(--accent); font-size: .75rem;
+    margin-left: auto; margin-top: .25rem; flex-shrink: 0; transition: transform .2s;
+  }
+  .flashcard[open] > summary::after { transform: rotate(90deg); }
+  .fc-num {
+    font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+    font-weight: 500; color: var(--muted); flex-shrink: 0;
+    margin-top: .2rem; min-width: 2rem;
+  }
+  .fc-q { font-size: var(--fs-sm); color: var(--ink); line-height: 1.55; font-weight: 500; }
+  .fc-back {
+    padding: 1.1rem 1.2rem; border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: .75rem; background: #fff;
+  }
+  .fc-answer {
+    border-left: 3px solid var(--accent); padding: .7rem 1rem;
+    border-radius: 0 8px 8px 0; font-size: var(--fs-sm);
+    color: var(--ink); line-height: 1.65; background: var(--accent-pale);
+  }
+  .fc-answer strong { color: var(--accent-dark, var(--accent)); }
+  .fc-pearl {
+    border-left: 3px solid var(--cool); padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: var(--cool-pale); line-height: 1.5;
+  }
+  .fc-trap {
+    border-left: 3px solid #d97706; padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: #fffbeb; line-height: 1.5;
+  }
+  .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
+
+</style>
+  <link rel="stylesheet" href="learning-interactive.css">
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<header class="hero">
+  <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
+    <a href="learning.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">← Learning Hub</a>
+    <a href="index.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">🏠 Study Hub</a>
+  </div>
+  <div class="eyebrow">Goodman &amp; Gilman 14th Edition — Section IX</div>
+  <h1>Special Systems Pharmacology</h1>
+  <p class="hero-sub">Ocular · Dermatological · Environmental — Three Chapters, One Visual Logic</p>
+  <div class="chips">
+    <span class="chip tier1">⭐ Tier 1 — Ch.74 Ocular</span>
+    <span class="chip tier2">⭐⭐ Tier 2 — Ch.75 Dermatological</span>
+    <span class="chip tier3">📐 Tier 3 — Ch.76 Environmental</span>
+    <span class="chip">3 Modules · 45 Quiz Q&amp;As · 4 SVG Diagrams</span>
+    <span class="chip">🎨 Saffron × Rust × Deep Teal Palette</span>
+  </div>
+</header>
+
+<!-- ═══════════════ METHOD STRIP ═══════════════ -->
+<div class="method-strip">
+  <div class="method-item">
+    <div class="method-num">01</div>
+    <div class="method-name">🧭 80/20 Map</div>
+    <div class="method-desc">Core Pillar + high-yield bullets + SVG pathway diagrams</div>
+  </div>
+  <div class="method-item">
+    <div class="method-num">02</div>
+    <div class="method-name">🧠 Active Recall Gate</div>
+    <div class="method-desc">Blurt your knowledge before opening plain-language notes</div>
+  </div>
+  <div class="method-item">
+    <div class="method-num">03</div>
+    <div class="method-name">📝 Plain-Language Notes</div>
+    <div class="method-desc">Hidden until you've blurted — analogy + exam trap</div>
+  </div>
+  <div class="method-item">
+    <div class="method-num">04</div>
+    <div class="method-name">🔄 Spaced Repetition</div>
+    <div class="method-desc">Day 1/3/7/21 review plan + interleaving bridge question</div>
+  </div>
+</div>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="sticky-nav">
+  <a class="nav-link" href="#ch74">Ch.74 Ocular</a>
+  <a class="nav-link" href="#ch75">Ch.75 Dermatological</a>
+  <a class="nav-link" href="#ch76">Ch.76 Environmental</a>
+  <a class="nav-link" href="#flashcards">🃏 Flashcards</a>
+  <a class="nav-link" href="#quiz74">Quiz Ocular</a>
+  <a class="nav-link" href="#quiz75">Quiz Derm</a>
+  <a class="nav-link" href="#quiz76">Quiz Environ</a>
+</nav>
+
+<main class="container">
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 — CHAPTER 74: OCULAR PHARMACOLOGY
+     TIER 1 (HIGHEST YIELD)
+═══════════════════════════════════════════ -->
+<section class="module" id="ch74">
+  <div class="module-header">
+    <div class="module-tier">Tier 1 — Highest Exam Yield</div>
+    <h2>Chapter 74: Ocular Pharmacology</h2>
+    <p>Autonomic pharmacology of the eye, glaucoma therapy, antimicrobials, anti-VEGF agents, the visual cycle</p>
+  </div>
+
+  <!-- STAGE 1: MAP -->
+  <div class="stage">
+    <div class="cog">
+      <div class="stage-label">🧭 80/20 High-Yield Map</div>
+      <div class="pillar">The eye's autonomic pharmacology is a direct read-off of the peripheral ANS — every drug that dilates, constricts, or changes IOP does so through the same α, β, or M receptors you already know.</div>
+
+      <!-- SVG 1: Autonomic Eye Pathways -->
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px">
+          <!-- Background -->
+          <rect width="700" height="320" fill="#F8F4EE" rx="10"/>
+          <text x="350" y="28" text-anchor="middle" font-family="Fraunces,serif" font-size="16" font-weight="700" fill="#1A1A2E">Autonomic Pharmacology of the Eye</text>
+          <!-- Sympathetic side -->
+          <rect x="20" y="50" width="300" height="240" fill="#D6F0F3" rx="8" opacity="0.6"/>
+          <text x="170" y="72" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#0D5C63">SYMPATHETIC (α₁, β₂)</text>
+          <!-- Dilator muscle -->
+          <rect x="40" y="85" width="260" height="45" fill="white" rx="6" stroke="#0D5C63" stroke-width="1.5"/>
+          <text x="170" y="104" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">Iris Dilator Muscle — α₁</text>
+          <text x="170" y="120" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Phenylephrine / Apraclonidine → MYDRIASIS</text>
+          <!-- Ciliary epithelium -->
+          <rect x="40" y="145" width="260" height="45" fill="white" rx="6" stroke="#0D5C63" stroke-width="1.5"/>
+          <text x="170" y="163" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">Ciliary Epithelium — α₂/β₂</text>
+          <text x="170" y="179" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">β-blockers / α₂ agonists → ↓ Aqueous</text>
+          <!-- Lacrimal -->
+          <rect x="40" y="205" width="260" height="45" fill="white" rx="6" stroke="#0D5C63" stroke-width="1.5"/>
+          <text x="170" y="223" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">Lacrimal Gland — α₁</text>
+          <text x="170" y="239" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Secretion; anticholinergics → dry eye</text>
+
+          <!-- Parasympathetic side -->
+          <rect x="380" y="50" width="300" height="240" fill="#FEF3DC" rx="8" opacity="0.6"/>
+          <text x="530" y="72" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#B8450A">PARASYMPATHETIC (M₃)</text>
+          <!-- Sphincter -->
+          <rect x="400" y="85" width="260" height="45" fill="white" rx="6" stroke="#B8450A" stroke-width="1.5"/>
+          <text x="530" y="104" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">Iris Sphincter — M₃</text>
+          <text x="530" y="120" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Pilocarpine → MIOSIS; Atropine → MYDRIASIS</text>
+          <!-- Ciliary muscle -->
+          <rect x="400" y="145" width="260" height="45" fill="white" rx="6" stroke="#B8450A" stroke-width="1.5"/>
+          <text x="530" y="163" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">Ciliary Muscle — M₃</text>
+          <text x="530" y="179" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Contraction = Accommodation; Block = Cycloplegia</text>
+          <!-- Trabecular note -->
+          <rect x="400" y="205" width="260" height="45" fill="white" rx="6" stroke="#B8450A" stroke-width="1.5"/>
+          <text x="530" y="223" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">Trabecular Meshwork (indirect)</text>
+          <text x="530" y="239" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Ciliary contraction widens meshwork → ↑ Outflow</text>
+          <!-- Central arrow -->
+          <text x="350" y="180" text-anchor="middle" font-family="Inter" font-size="22" fill="#1A1A2E">⇔</text>
+          <text x="350" y="270" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#7B7B99">BALANCE GOVERNS IOP</text>
+        </svg>
+        <div class="diagram-caption">Figure 74-A: Autonomic receptor map of the eye. Receptor subtype determines pharmacological response.</div>
+      </div>
+
+      <p><strong>Key high-yield points:</strong></p>
+      <ul>
+        <li><strong>Aqueous humor pathway:</strong> Ciliary processes → posterior chamber → pupil → anterior chamber → trabecular meshwork (80–95%) + uveoscleral route → episcleral veins. <em>Cholinergic drugs target the trabecular pathway; PG analogues target the uveoscleral route.</em></li>
+        <li><strong>Drug-melanin binding:</strong> Dark irides have slower mydriatic onset with α-agonists; chloroquine accumulates in RPE → "bull's-eye" maculopathy.</li>
+        <li><strong>Amphipathic drugs penetrate cornea best</strong> — needs to cross hydrophobic epithelium, hydrophilic stroma, hydrophobic endothelium ("fat-water-fat").</li>
+        <li><strong>Nasolacrimal drainage → systemic absorption bypasses first-pass metabolism</strong> → significant systemic side effects from eye drops (β-blockers → bradycardia; brimonidine → apnea in neonates).</li>
+      </ul>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px">
+          <rect width="700" height="260" fill="#F8F4EE" rx="10"/>
+          <text x="350" y="26" text-anchor="middle" font-family="Fraunces,serif" font-size="15" font-weight="700" fill="#1A1A2E">Glaucoma Pharmacotherapy — Stepwise Approach</text>
+          <!-- Step boxes -->
+          <!-- PG analogues -->
+          <rect x="20" y="45" width="190" height="95" fill="#D6F0F3" rx="8" stroke="#0D5C63" stroke-width="2"/>
+          <text x="115" y="63" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#0D5C63">1st LINE</text>
+          <text x="115" y="80" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#1A1A2E">PG Analogues</text>
+          <text x="115" y="97" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Latanoprost, Travoprost</text>
+          <text x="115" y="111" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Bimatoprost, Tafluprost</text>
+          <text x="115" y="127" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">FP-R → ↑ Uveoscleral outflow</text>
+          <!-- β blockers -->
+          <rect x="230" y="45" width="170" height="95" fill="#FEF3DC" rx="8" stroke="#E8A020" stroke-width="2"/>
+          <text x="315" y="63" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#B8450A">2nd LINE</text>
+          <text x="315" y="80" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#1A1A2E">β-Blockers</text>
+          <text x="315" y="97" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Timolol, Levobunolol</text>
+          <text x="315" y="113" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Betaxolol (β₁-selective)</text>
+          <text x="315" y="129" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">↓ Aqueous production</text>
+          <!-- α2 agonists -->
+          <rect x="420" y="45" width="120" height="95" fill="#FFF0EB" rx="8" stroke="#B8450A" stroke-width="2"/>
+          <text x="480" y="63" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#B8450A">ALTERNATE</text>
+          <text x="480" y="79" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">α₂ Agonists</text>
+          <text x="480" y="95" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#3D3D55">Brimonidine</text>
+          <text x="480" y="109" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#3D3D55">Apraclonidine</text>
+          <text x="480" y="124" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">↓ prod + ↑ outflow</text>
+          <!-- CAI -->
+          <rect x="558" y="45" width="120" height="95" fill="#F4FAF5" rx="8" stroke="#2E7D52" stroke-width="2"/>
+          <text x="618" y="63" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#2E7D52">ALTERNATE</text>
+          <text x="618" y="79" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">CAIs</text>
+          <text x="618" y="95" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#3D3D55">Dorzolamide</text>
+          <text x="618" y="110" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#3D3D55">Brinzolamide</text>
+          <text x="618" y="125" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">CA II → ↓ HCO₃⁻ → ↓ aqueous</text>
+          <!-- Newer agents below -->
+          <rect x="20" y="160" width="200" height="70" fill="white" rx="8" stroke="#7B7B99" stroke-width="1.5"/>
+          <text x="120" y="178" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">Rho Kinase Inhibitors</text>
+          <text x="120" y="193" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Netarsudil (+ latanoprost combo)</text>
+          <text x="120" y="207" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">↓ Actin stress fibers → ↑ TM outflow</text>
+          <text x="120" y="220" text-anchor="middle" font-family="Inter" font-size="9" fill="#B8450A">SE: cornea verticillata (gold-brown deposits)</text>
+          <!-- Miotics -->
+          <rect x="240" y="160" width="200" height="70" fill="white" rx="8" stroke="#7B7B99" stroke-width="1.5"/>
+          <text x="340" y="178" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">Miotics (less used now)</text>
+          <text x="340" y="193" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Pilocarpine, Carbachol, Echothiophate</text>
+          <text x="340" y="207" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">M-receptor → ciliary contraction → ↑ TM outflow</text>
+          <text x="340" y="221" text-anchor="middle" font-family="Inter" font-size="9" fill="#B8450A">SE: induced myopia, cataract (echothiophate)</text>
+          <!-- Osmotic -->
+          <rect x="460" y="160" width="210" height="70" fill="white" rx="8" stroke="#7B7B99" stroke-width="1.5"/>
+          <text x="565" y="178" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#1A1A2E">Osmotic Agents (acute)</text>
+          <text x="565" y="193" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Mannitol IV, Glycerin PO</text>
+          <text x="565" y="207" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">Acute IOP crisis — use with caution in CHF/renal failure</text>
+        </svg>
+        <div class="diagram-caption">Figure 74-B: Stepwise glaucoma pharmacotherapy. PG analogues replaced β-blockers as first-line due to once-daily dosing and minimal systemic effects.</div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr><th>Drug Class</th><th>Examples</th><th>Mechanism / Target</th><th>Key Side Effects</th><th>Contraindications</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>PG Analogues</strong></td><td>Latanoprost, Travoprost, Bimatoprost, Tafluprost</td><td>FP-R → ↑ Uveoscleral outflow; prodrugs hydrolyzed by esterases</td><td>Iris pigmentation (permanent), lash growth, orbital fat atrophy, conjunctival hyperemia</td><td>Uveitis (relative)</td></tr>
+            <tr><td><strong>β-Blockers</strong></td><td>Timolol (non-selective), Betaxolol (β₁)</td><td>Ciliary epithelium β₂-R → ↓ cAMP → ↓ aqueous production</td><td>Bradycardia, bronchospasm, depression, impotence (systemic absorption)</td><td>Asthma, COPD, heart block</td></tr>
+            <tr><td><strong>α₂ Agonists</strong></td><td>Brimonidine, Apraclonidine</td><td>Pre-/postsynaptic α₂ → ↓ aqueous; ↑ uveoscleral outflow</td><td>Allergy (apraclonidine > brimonidine), dry mouth, CNS depression/apnea (neonates)</td><td>Children &lt;2 yr (apnea risk)</td></tr>
+            <tr><td><strong>CAIs (topical)</strong></td><td>Dorzolamide, Brinzolamide</td><td>Inhibit CA II in ciliary epithelium → ↓ HCO₃⁻ → ↓ fluid transport</td><td>Burning/stinging, metallic taste (dorzolamide)</td><td>Sulfa allergy (relative)</td></tr>
+            <tr><td><strong>Rho Kinase Inhibitors</strong></td><td>Netarsudil</td><td>↓ Actin stress fibers in TM → ↑ conventional outflow</td><td>Conjunctival hyperemia, cornea verticillata (gold-brown deposits), subconjunctival hemorrhage</td><td>—</td></tr>
+            <tr><td><strong>Cholinomimetics</strong></td><td>Pilocarpine, Carbachol, Echothiophate</td><td>M₃ → ciliary muscle contraction → ↑ TM outflow; NOT ↓ production</td><td>Induced myopia, miosis, headache; echothiophate → cataracts, iris cysts</td><td>Uveitis, anterior lens displacement</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Anti-VEGF agents for wet AMD:</strong></p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Agent</th><th>Type</th><th>Target</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Bevacizumab</strong></td><td>Full mAb (off-label)</td><td>VEGF-A</td><td>Cheapest option; same visual acuity as ranibizumab</td></tr>
+            <tr><td><strong>Ranibizumab</strong></td><td>Fab fragment (matured)</td><td>VEGF-A</td><td>Variant of bevacizumab</td></tr>
+            <tr><td><strong>Aflibercept</strong></td><td>Decoy receptor fusion protein</td><td>VEGF-A, B + PlGF</td><td>Binds VEGFR1 + VEGFR2 — broadest coverage</td></tr>
+            <tr><td><strong>Brolucizumab</strong></td><td>Single-chain antibody fragment</td><td>VEGF-A</td><td>Longer duration, less frequent dosing; ↑ risk uveitis</td></tr>
+            <tr><td><strong>Pegaptanib</strong></td><td>Aptamer</td><td>VEGF₁₆₅ only</td><td>Selective — less potent; q6-week intravitreal</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Pupillary diagnostics — know this table cold:</strong></p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Setting</th><th>Drug Used</th><th>Response</th><th>Interpretation</th></tr></thead>
+          <tbody>
+            <tr><td>Normal</td><td>Cocaine 4–10%</td><td>Dilation</td><td>Blocks NE reuptake → intact sympathetic pathway</td></tr>
+            <tr><td>Horner syndrome</td><td>Cocaine 4–10%</td><td><strong>No dilation</strong></td><td>Confirms Horner (sympathetic defect)</td></tr>
+            <tr><td>Horner syndrome</td><td>Apraclonidine 0.5%</td><td><strong>Marked dilation</strong></td><td>Denervation supersensitivity → α₁ dominant</td></tr>
+            <tr><td>Preganglionic Horner</td><td>Hydroxyamphetamine 1%</td><td>Dilation</td><td>Post-ganglionic neuron intact → releases NE</td></tr>
+            <tr><td>Postganglionic Horner</td><td>Hydroxyamphetamine 1%</td><td><strong>No dilation</strong></td><td>Post-ganglionic neuron damaged → no NE to release</td></tr>
+            <tr><td>Adie's pupil</td><td>Pilocarpine 0.05–0.1%</td><td>Constriction</td><td>Denervation supersensitivity at M₃ (dilute pilocarpine works)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Vitamin A & Visual cycle key points:</strong></p>
+      <ul>
+        <li><strong>11-cis-retinal</strong> is the chromophore for both rods and cones. Photon → 11-cis → all-trans → transducin activation → PDE6 activation → ↓ cGMP → CNG channels close → hyperpolarization → ↓ transmitter release.</li>
+        <li><strong>PDE5 inhibitors (sildenafil)</strong> mildly inhibit PDE6 → blue haze / light sensitivity at high doses.</li>
+        <li><strong>Vitamin A deficiency:</strong> Night blindness → xerophthalmia (Bitot spots, keratomalacia) → corneal perforation (irreversible blindness).</li>
+        <li><strong>Hydroxychloroquine toxicity:</strong> Accumulates in RPE → "bull's-eye" maculopathy; max dose 5 mg/kg/day; requires annual eye exams after 5 years.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 2: RECALL -->
+  <div class="stage">
+    <div class="blurt-stage">
+      <div class="stage-label">🧠 Active Recall Gate</div>
+      <div class="blurt-prompt">
+        <strong>Clinical scenario:</strong> You are a pharmacology examiner. Close this guide. On paper, dump everything you know about: (1) Why PG analogues replaced β-blockers as first-line glaucoma therapy; (2) How a topical eye drop can cause systemic bradycardia; (3) The drugs used to diagnose Horner syndrome and the principle behind each. Write for 5 minutes before reading the plain-language notes.
+      </div>
+      <ul class="primers">
+        <li>Why does an amphipathic drug penetrate the cornea better than a purely lipophilic or purely hydrophilic one?</li>
+        <li>Why does brimonidine cause apnea in neonates but is relatively safe in adults?</li>
+        <li>Why does echothiophate (an irreversible AChE inhibitor) cause cataracts, while pilocarpine (a direct agonist) does not?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 3: FEYNMAN (GATED) -->
+  <div class="stage">
+    <details class="gate">
+      <summary>✓ I've blurted — reveal the Plain-Language Notes for Ch.74 Ocular Pharmacology</summary>
+      <div class="feynman-content">
+        <h4>Why PG Analogues Won the First-Line Battle</h4>
+        <p>Prostaglandin F₂α analogues (latanoprost, travoprost, bimatoprost, tafluprost) work by a completely different mechanism from everything else — they activate <strong>FP receptors</strong> (Gq/11-PLC-IP3-Ca²⁺ pathway) in the ciliary muscle, ultimately increasing <strong>uveoscleral outflow</strong>. This is the secondary outflow pathway (normally 5–20%) through the ciliary muscle into the suprachoroidal space. Matrix metalloproteinases are released, digesting extracellular matrix, essentially enlarging the drainage channel. The payoff is <strong>once-daily dosing, minimal systemic effects</strong> (prodrug hydrolyzed locally by corneal esterases), and 25–35% IOP reduction.</p>
+        <p>β-blockers reduce aqueous production (b₂ blockade → ↓ cAMP → ↓ secretion), but timolol is absorbed nasally, causes systemic bradycardia and bronchospasm, and is poorly tolerated in asthmatics. PG analogues won.</p>
+
+        <div class="analogy">
+          PG analogues are like opening a second drain in a bathtub that's overflowing — instead of just turning down the tap (as β-blockers do), you widen the uveoscleral drain. More outflow pathways = better IOP control.
+        </div>
+
+        <h4>Nasolacrimal Systemic Absorption — The Hidden Route</h4>
+        <p>When you instil an eye drop, most of it drains through the nasolacrimal duct into the nose. The nasal mucosa is <strong>highly vascular</strong> and absorption here bypasses hepatic first-pass metabolism. So a single timolol eye drop can deliver bioavailable β-blocker systemically. This is why: (a) patients on β-blocker eye drops should have pulse checked; (b) brimonidine (lipophilic, CNS-penetrant α₂ agonist) causes respiratory depression and apnea in neonates — they are actually <em>receiving a systemic CNS depressant</em>.</p>
+
+        <h4>Corneal Drug Penetration — The "Fat-Water-Fat" Rule</h4>
+        <p>The cornea has three barriers: hydrophobic epithelium, hydrophilic stroma, hydrophobic endothelium. A purely lipophilic drug gets stuck in the epithelium. A purely hydrophilic drug can't enter the epithelium. An <strong>amphipathic drug</strong> (has both properties) sails through all three. Latanoprost is designed as an isopropyl ester prodrug (lipophilic enough to penetrate) that esterases convert to PGF₂α (active acid form) inside the eye.</p>
+
+        <h4>Echothiophate → Cataracts: The Mechanism</h4>
+        <p>Echothiophate is an irreversible organophosphate AChE inhibitor. Its quaternary ammonium structure keeps it charged → it stays in the anterior chamber. Chronic intense parasympathetic stimulation causes miosis. The chronic miotic tension on the zonular apparatus and lens may alter lens metabolism, causing posterior subcapsular cataracts. Pilocarpine causes miosis too, but as a reversible direct agonist its intensity is lower and offset by natural variation between doses. Echothiophate's irreversibility means continuous supersaturation of receptors.</p>
+
+        <h4>The Horner Diagnostic Logic</h4>
+        <p>Horner = loss of sympathetic tone (ptosis, miosis, anhidrosis). The three-neuron chain (hypothalamus → cilio-spinal center → superior cervical ganglion → iris dilator) is tested pharmacologically:</p>
+        <ul>
+          <li><strong>Cocaine 10%</strong> → normally dilates (blocks NE reuptake). In Horner, <em>no dilation</em> because the terminal neuron isn't releasing NE to reuptake.</li>
+          <li><strong>Apraclonidine 0.5%</strong> → α₂ dominant normally → minimal dilation. In Horner, <em>denervation supersensitivity</em> upregulates α₁ → marked dilation. Now commonly replaces cocaine.</li>
+          <li><strong>Hydroxyamphetamine 1%</strong> → releases NE from postganglionic terminal. Dilates if postganglionic is intact (1st/2nd order Horner). <em>No dilation</em> = postganglionic lesion (3rd order Horner) — the neuron has no NE to release.</li>
+          <li><strong>Pilocarpine 0.05–0.1%</strong> → only dilute enough to stimulate <em>supersensitive</em> M receptors (Adie's pupil has parasympathetic denervation → supersensitive M₃). Normal pupils don't respond.</li>
+        </ul>
+
+        <blockquote class="warn">
+          Betaxolol is β₁-selective and less efficacious for glaucoma because ocular β receptors are predominantly β₂. But betaxolol is preferred if the patient has asthma — less pulmonary β₂ blockade. Don't confuse selectivity with efficacy in the eye.
+        </blockquote>
+        <blockquote class="warn">
+          Iris pigmentation from PG analogues (especially in hazel/mixed irides) is PERMANENT — melanocytes in the stroma produce more melanin. Differentiate this from conjunctival hyperemia (reversible) and orbital fat atrophy (structural, not pigmentary).
+        </blockquote>
+        <blockquote class="warn">
+          Topical steroids cause THREE classic complications: posterior subcapsular cataracts, secondary open-angle glaucoma (with positive family history, up to 90% of patients develop marked IOP elevation), and opportunistic infections. Loteprednol was engineered to reduce (NOT eliminate) IOP risk — it undergoes rapid inactivation by the eye's own 11β-HSD.
+        </blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- STAGE 4: SPACED REP -->
+  <div class="stage">
+    <div class="sched-stage">
+      <div class="stage-label">🔄 Spaced Repetition Schedule</div>
+      <div class="sched">
+        <div class="sched-day"><strong>Day 1</strong> Redraw the autonomic receptor map from memory. Recall the 6-class glaucoma table with mechanisms.</div>
+        <div class="sched-day"><strong>Day 3</strong> Name the 5 anti-VEGF agents and their structural class. Explain the Horner diagnostic sequence.</div>
+        <div class="sched-day"><strong>Day 7</strong> Explain transocular drug penetration. When would you choose betaxolol over timolol and why?</div>
+        <div class="sched-day"><strong>Day 21</strong> Integrate: patient on 25 years HCQ for SLE — what monitoring? Neonate given eye drops — what systemic risk and why?</div>
+      </div>
+      <div class="bridge">
+        <strong>Clinical Bridge:</strong> Furosemide (like latanoprost) is a prodrug-like molecule with site-specific activation — furosemide acts from the tubular lumen side (urinary concentration is the pharmacologically relevant measure). Similarly, latanoprost prodrug is activated at the corneal surface. Both illustrate how the <em>site of bioactivation determines the pharmacokinetically relevant compartment</em>. Measuring urinary furosemide samples the pharmacologically active compartment directly — exactly analogous to measuring intraocular PGF₂α rather than plasma latanoprost.
+      </div>
+    </div>
+  </div>
+
+  
+
+<!-- ============ FLASHCARDS ============ -->
+<section id="flashcards">
+  <div class="wrap">
+    <h2>🃏 Clinical Vignette Flashcards</h2>
+    <p class="fc-lead">Tap a card to reveal the answer, mechanism, clinical pearl, and exam trap. Twenty high-yield scenarios spanning ocular, dermatological, and environmental/toxicology pharmacology.</p>
+    <div class="flashcards">
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">01</span>
+          <span class="fc-q">A 65-year-old man with open-angle glaucoma is started on latanoprost eye drops. After 6 weeks he notices his iris has turned from grey-green to brown, and his eyelashes are longer and darker. Explain.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Latanoprost is a <strong>prostaglandin F2α (PGF2α) analogue</strong> — it increases uveoscleral outflow (the non-conventional aqueous humour drainage pathway) → reduces intraocular pressure (IOP). Melanocyte stimulation: PGF2α receptors (FP receptors) on iris melanocytes → upregulate melanin synthesis in iris stromal melanocytes → <strong>irreversible iris colour darkening</strong> (heterochromia if one eye treated). Eyelash effects: FP receptors on follicular melanocytes and dermal papilla cells → increased melanogenesis + follicle anagen extension → <strong>hypertrichosis</strong> (longer, thicker, darker lashes — eyelash growth is actually a cosmetic application of bimatoprost, a related prostamide). Both effects are permanent even after stopping the drug.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> First-line IOP-lowering agents for glaucoma: <strong>prostaglandin analogues</strong> (latanoprost, bimatoprost, travoprost — once daily, excellent efficacy) > beta-blockers (timolol) > alpha-2 agonists (brimonidine) > carbonic anhydrase inhibitors (dorzolamide). Prostaglandins are first-line because of once-daily dosing, highest efficacy, and no systemic cardiovascular or pulmonary effects.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Prostaglandin analogues are <strong>contraindicated in uveitis and cystoid macular oedema</strong> — FP receptor stimulation promotes prostaglandin-mediated inflammation. Also contraindicated in aphakic/pseudophakic eyes at risk of CMO. In these patients, use beta-blockers or carbonic anhydrase inhibitors as first-line alternatives.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">02</span>
+          <span class="fc-q">Timolol eye drops are prescribed for glaucoma in a 70-year-old man with mild COPD. Two weeks later he is admitted with acute bronchospasm. How did topical timolol cause systemic effects?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Timolol is a non-selective <strong>beta-blocker (β1 + β2 blockade)</strong>. Topical eye drops drain via the nasolacrimal duct into the nasal cavity → absorbed via nasal mucosa → enters systemic circulation, <strong>bypassing first-pass hepatic metabolism</strong> → systemic bioavailability ~80% of topical dose. β2 blockade in bronchial smooth muscle → bronchoconstriction → acute bronchospasm in susceptible patients (COPD, asthma). Systemic effects also include: bradycardia, heart block, hypotension, masking hypoglycaemia, fatigue. Prevention: nasolacrimal occlusion (press the inner corner of the eye after instillation × 1–2 minutes) reduces systemic absorption by ~50%.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Timolol reduces aqueous humour <strong>production</strong> (β2 receptors on ciliary body epithelium → reduced cAMP → reduced aqueous secretion). It lowers IOP but does NOT affect outflow. Contraindications: asthma, severe COPD, heart block, bradycardia, decompensated heart failure. Use betaxolol (β1-selective) as an alternative in mild COPD — lower bronchospasm risk.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Systemic side effects from eye drops are commonly underestimated and under-reported. Always check for eye drop use when evaluating bradycardia, bronchospasm, or fatigue — patients often forget to mention 'just eye drops.' The nasolacrimal drainage route means topical ocular drugs can achieve significant systemic drug levels.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">03</span>
+          <span class="fc-q">A patient with acute angle-closure glaucoma presents with severe eye pain, vomiting, and IOP of 58 mmHg. After pilocarpine and IV acetazolamide, IOP falls to 35 mmHg. Explain the mechanisms of both drugs.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Pilocarpine</strong> (direct M3 muscarinic agonist): stimulates ciliary muscle contraction → pulls on trabecular meshwork → opens Schlemm's canal → increases conventional (trabecular) aqueous outflow. Also causes miosis (sphincter pupillae contraction) → in acute angle-closure, miosis pulls the iris away from the trabecular meshwork → opens the drainage angle. <strong>Acetazolamide IV</strong> (carbonic anhydrase inhibitor): inhibits CA-II and CA-IV in ciliary body epithelium → reduces HCO₃⁻ production → reduces Na⁺ and water secretion into posterior chamber → dramatically reduces aqueous humour formation (→ IOP reduction within 30 minutes). Definitive treatment: <strong>Nd:YAG laser peripheral iridotomy</strong> — creates a hole in the peripheral iris → equalises pressure between posterior and anterior chambers → eliminates pupillary block.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Systemic acetazolamide causes metabolic acidosis (inhibits renal tubular CA → impaired HCO₃⁻ reabsorption → bicarbonate wasting → non-anion gap metabolic acidosis). Also causes sulfonamide-type side effects (nephrolithiasis, paraesthesiae, hypokalaemia). Contraindicated in sulfonamide allergy and severe renal failure.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Pilocarpine causes <strong>miosis</strong> (pupil constriction) — do NOT use in open-angle glaucoma as monotherapy (miosis reduces vision in dim light, causes headache from ciliary spasm). Also: systemic pilocarpine effects (DUMBELS — cholinergic stimulation) — avoid in asthma, bowel obstruction, urinary obstruction. In ACUTE angle-closure, pilocarpine is appropriate; in CHRONIC open-angle glaucoma, prostaglandins and beta-blockers are preferred.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">04</span>
+          <span class="fc-q">A dermatology patient with severe plaque psoriasis on cyclosporin develops new hypertension and rising creatinine. What is the mechanism, and what topical immunosuppressant avoids these systemic effects?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Cyclosporin inhibits calcineurin → blocks NFAT → reduces IL-2 → suppresses T-cell activation → reduces the Th1/Th17-driven keratinocyte hyperproliferation in psoriasis. Systemic toxicity: <strong>nephrotoxicity</strong> — cyclosporin causes afferent arteriolar vasoconstriction (via TXA2, ET-1 upregulation, reduced NO/PGI2) → reduced GFR → progressive CKD with chronic use. Also causes hypertension (same vascular mechanism), hyperkalaemia, hypomagnesaemia, gingival hyperplasia, hirsutism. Topical alternative: <strong>tacrolimus</strong> (Protopic) or <strong>pimecrolimus</strong> (Elidel) — topical calcineurin inhibitors. Applied to skin → inhibit T-cell calcineurin locally → reduce cytokine production → reduce inflammation. Negligible systemic absorption from intact skin → minimal nephrotoxicity or immunosuppression.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Topical tacrolimus/pimecrolimus carry a black-box warning about theoretical malignancy risk (lymphoma, skin cancer) — based on systemic immunosuppressive experience. However, topical levels are far below systemic levels achieved with oral tacrolimus, and evidence for actual malignancy risk from topical use is weak. Still, avoid use on malignant/pre-malignant skin lesions.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Cyclosporin nephrotoxicity is <strong>dose-dependent and partially reversible</strong> on dose reduction, but chronic use causes irreversible interstitial fibrosis. Distinguish from tacrolimus nephrotoxicity (same mechanism, same monitoring required). Cyclosporin maximum duration for psoriasis: 2 years (due to cumulative nephrotoxicity). Monitor creatinine, BP, and drug levels throughout.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">05</span>
+          <span class="fc-q">A 28-year-old woman with acne vulgaris is prescribed isotretinoin. Before dispensing, what pregnancy-related obligations must be fulfilled, and what monitoring is required during therapy?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Isotretinoin (13-cis-retinoic acid) is <strong>highly teratogenic</strong> — retinoic acid is essential for embryonic development; excess causes characteristic defects: <strong>craniofacial abnormalities, cardiac defects, CNS malformations (hydrocephalus), thymic hypoplasia</strong> — fetal retinoid syndrome. Obligations before dispensing: (1) Two negative pregnancy tests (one at initiation, one 19–37 days later, on day 2–3 of next menstrual cycle); (2) Two forms of contraception for 1 month before, throughout, and 1 month after therapy (UK: iPLEDGE equivalent — Pregnancy Prevention Programme); (3) Signed informed consent; (4) Written prescription valid for 7 days only, no repeat dispensing without re-assessment. Monitoring during therapy: monthly pregnancy tests, LFTs (hepatotoxicity), fasting lipids (triglyceridaemia — severe hypertriglyceridaemia can cause pancreatitis), FBC (leucopenia).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Isotretinoin works by multiple mechanisms: (1) Reduces sebaceous gland size and sebum production (most important — sebum is the substrate for <em>C. acnes</em>); (2) Normalises follicular keratinisation (reduces comedone formation); (3) Anti-inflammatory; (4) Reduces <em>C. acnes</em> colonisation indirectly. The only acne treatment with the potential for <strong>permanent remission</strong> (~80% never need retreatment).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Isotretinoin causes <strong>night blindness</strong> (vitamin A analogue → impairs rhodopsin regeneration) — warn patients before starting. Also causes <strong>cheilitis</strong> (most common side effect — dry, cracked lips), dry eyes, myalgia, epistaxis. Tetracyclines + isotretinoin → <strong>benign intracranial hypertension</strong> (pseudotumour cerebri) — this combination is absolutely contraindicated.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">06</span>
+          <span class="fc-q">A farmer presents with pinpoint pupils, bradycardia, copious secretions, bronchospasm, urinary incontinence, and muscle fasciculations. He has been spraying organophosphate pesticides. What is the treatment sequence?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Organophosphate (OP) toxidrome — <strong>irreversible acetylcholinesterase inhibition</strong> → ACh accumulates at all cholinergic synapses. Muscarinic effects (DUMBELS): Diarrhoea/Defaecation, Urination, Miosis, Bradycardia/Bronchospasm/Bronchorrhoea, Emesis, Lacrimation, Salivation/Sweating. Nicotinic effects (NMJ): muscle fasciculations → paralysis (including respiratory muscles — the main cause of death). CNS: seizures, coma. Treatment sequence: (1) <strong>Atropine IV</strong> (large doses, titrated to dry secretions — NOT to pupil size) — blocks muscarinic receptors, reverses bronchospasm and secretions; (2) <strong>Pralidoxime (2-PAM) IV</strong> — reactivates AChE by displacing the phosphate group before 'ageing' (irreversible covalent bond maturation) — must be given within hours; (3) Benzodiazepines for seizures; (4) Supportive care, mechanical ventilation if respiratory failure.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Pralidoxime has a narrow time window — OP-AChE bond undergoes 'ageing' (oxime-resistant conformation) within hours (nerve agents: minutes; malathion: hours; chlorpyrifos: days). After ageing, pralidoxime is ineffective — only atropine for muscarinic control. Nerve agents (sarin, VX, novichok) cause the same toxidrome but with faster ageing times.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Atropine dosing in OP poisoning: <strong>massive doses</strong> are required (2–4 mg IV bolus repeated every 5–10 min until secretions dry — total doses of 20–100 mg may be needed). The endpoint is drying of secretions and improving bronchospasm, NOT pupil dilation or tachycardia. Inadequate atropine dosing is a leading cause of death in OP poisoning.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">07</span>
+          <span class="fc-q">A patient ingests a large quantity of paracetamol (acetaminophen) 4 hours ago. LFTs are normal, INR is 1.0. Should you start N-acetylcysteine (NAC) now, or wait for toxicity?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Start NAC <strong>immediately</strong> if the paracetamol level at 4 hours is above the treatment threshold on the Rumack-Matthew nomogram (or the UK risk assessment line). Do NOT wait for liver injury — NAC is most effective when given before hepatotoxicity develops. Mechanism of paracetamol toxicity: CYP2E1/CYP3A4 convert paracetamol to <strong>NAPQI</strong> (N-acetyl-p-benzoquinone imine) — a highly reactive hepatotoxic metabolite. Normally conjugated by hepatic glutathione (GSH) → non-toxic mercapturate. Overdose overwhelms GSH stores → free NAPQI → covalent binding to hepatocyte proteins → necrosis (centrilobular — zone 3, highest CYP2E1 activity). NAC mechanism: replenishes cysteine → GSH synthesis → scavenges NAPQI. Also donates cysteine/GSH directly, improves microvascular circulation.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Risk factors that lower the threshold for treatment (shift the nomogram line): enzyme inducers (rifampin, carbamazepine, alcohol — chronic use → more CYP2E1 induction → more NAPQI); malnutrition/anorexia/fasting (depleted baseline GSH stores). These factors increase paracetamol hepatotoxicity at lower doses. UK guidelines now use a single treatment line without risk stratification.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> NAC itself can cause anaphylactoid reactions (flushing, urticaria, bronchospasm — particularly at the start of the IV loading dose) — NOT IgE-mediated. Manage by temporarily stopping infusion and giving antihistamine; restart at slower rate. The reaction is more common in asthmatics. This is NOT a reason to withhold NAC — benefit far outweighs risk of the reaction.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">08</span>
+          <span class="fc-q">Carbon monoxide poisoning is suspected in a family found unconscious at home. What is the treatment and why is high-flow 100% O₂ the key intervention?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">CO poisoning mechanism: CO binds haemoglobin with 240× the affinity of O₂ → carboxyhaemoglobin (COHb) cannot carry O₂ → functional anaemia. Also binds myoglobin and cytochrome c oxidase (Complex IV) → inhibits cellular respiration → histotoxic hypoxia. SpO₂ pulse oximetry reads COHb as oxyhaemoglobin → falsely normal SpO₂ — measure COHb by co-oximetry (ABG). Treatment: <strong>high-flow 100% O₂ via non-rebreather mask</strong>. Rationale: competitive displacement of CO from haemoglobin. Half-life of COHb: ~5 hours on room air (21% O₂) → ~90 minutes on 100% O₂ → ~20–30 minutes in <strong>hyperbaric O₂ (HBO)</strong> (3 atm). HBO indications: loss of consciousness, neurological deficit, COHb &gt;25%, pregnancy (fetus especially sensitive), cardiac involvement.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> CO poisoning causes a characteristic <strong>cherry-red skin</strong> (COHb is bright red) — but this is a late/post-mortem finding. In acute presentation, patients appear pale or cyanotic. Classic history: multiple family members affected (from a faulty boiler/enclosed car), headache, nausea, confusion (CO causes selective white matter and basal ganglia injury).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Cyanide toxicity can co-occur with CO in smoke inhalation (burning plastics/upholstery release HCN). Presentation: profound lactic acidosis disproportionate to haemodynamic status + cellular hypoxia despite adequate O₂ delivery. Treatment: <strong>hydroxocobalamin</strong> (binds CN⁻ → cyanocobalamin, excreted renally) — preferred over dicobalt edetate (toxic, causes vomiting/hypotension) or sodium thiosulfate + sodium nitrite regimen.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">09</span>
+          <span class="fc-q">A patient presents with acute opioid overdose — pinpoint pupils, respiratory rate 4/min, GCS 6. What is given, and what problem arises if the patient is opioid-dependent?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Naloxone IV</strong> (or IM/intranasal) — competitive antagonist at μ, κ, δ opioid receptors. Rapid reversal of opioid-induced respiratory depression, sedation, and miosis. Onset within 2 minutes IV. Dose: 0.4–2 mg IV, repeat every 2–3 minutes as needed up to 10 mg. Problem in opioid-dependent patients: naloxone's half-life is <strong>60–90 minutes</strong> — much shorter than most opioids (morphine ~4–6 h, methadone ~24–36 h, buprenorphine ~24–72 h). Reversal wears off → re-narcotisation → patient may re-arrest. Additionally, in opioid-dependent patients, naloxone precipitates <strong>acute opioid withdrawal</strong> — agitation, vomiting, diarrhoea, tachycardia, severe distress. Management: titrate naloxone to restore adequate ventilation (NOT to full wakefulness) — use small incremental doses to avoid precipitating withdrawal.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> <strong>Naltrexone</strong> is a long-acting oral opioid antagonist (half-life ~13 hours, metabolite 6-β-naltrexol active for ~24 hours) — used for opioid use disorder (relapse prevention after detox) and alcohol use disorder (reduces craving/reward). Extended-release IM naltrexone (Vivitrol, monthly injection) improves adherence. Naltrexone + bupropion (Contrave) is an FDA-approved anti-obesity combination.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Buprenorphine (partial μ-agonist, κ-antagonist) used in opioid substitution therapy has a <strong>ceiling effect on respiratory depression</strong> — safer in overdose than full agonists. However, high doses of buprenorphine + benzodiazepines or alcohol → can still cause fatal respiratory depression. Naloxone partially reverses buprenorphine (partial agonist properties mean it is harder to displace than full agonists — may need higher naloxone doses).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">10</span>
+          <span class="fc-q">A 30-year-old with alcohol use disorder is prescribed disulfiram. He drinks wine at a party and develops severe flushing, nausea, vomiting, hypotension, and palpitations within 10 minutes. Explain the pharmacology.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Disulfiram irreversibly inhibits <strong>aldehyde dehydrogenase (ALDH)</strong> — the enzyme that converts acetaldehyde → acetic acid. Ethanol → (alcohol dehydrogenase) → <strong>acetaldehyde</strong> → (ALDH — BLOCKED) → acetaldehyde accumulates → <strong>disulfiram-ethanol reaction (DER)</strong>: vasodilation (flushing, hypotension), tachycardia, nausea/vomiting, headache, sweating. Aversion therapy — the unpleasant reaction deters drinking. Duration of inhibition: disulfiram irreversibly inhibits ALDH → effect lasts <strong>1–2 weeks</strong> after stopping the drug (new enzyme must be synthesised). Warn patients to avoid all alcohol-containing products (mouthwash, cooking wine, certain medicines).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Other pharmacological treatments for alcohol use disorder: <strong>acamprosate</strong> (GABA-A agonist + NMDA antagonist — reduces craving/withdrawal symptoms, best started after detox); <strong>naltrexone</strong> (reduces opioid-mediated reward from alcohol — reduces pleasure and craving); <strong>nalmefene</strong> (opioid partial agonist/antagonist — reduces drinking intensity in non-abstinent patients). Combination naltrexone + acamprosate may be superior to monotherapy.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Disulfiram inhibits multiple enzymes beyond ALDH: also inhibits <strong>dopamine-β-hydroxylase</strong> (reduces conversion of dopamine → noradrenaline), <strong>CYP2E1</strong> (raises blood alcohol levels), and <strong>CYP2C9</strong> (raises warfarin levels → increased INR). Multiple drug interactions — check all concurrent medications. Contraindicated in psychosis (dopamine effects), severe hepatic disease, cardiac disease.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">11</span>
+          <span class="fc-q">A patient with severe sepsis has lactic acidosis (pH 7.18, lactate 8 mmol/L). The ICU team considers sodium bicarbonate infusion. What does the pharmacology say about this practice?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Sodium bicarbonate for lactic acidosis is <strong>controversial and generally not recommended</strong> as routine practice. Rationale for NaHCO₃: provides exogenous bicarbonate → buffers H⁺ → raises pH. Problems: (1) Paradoxical intracellular acidosis — HCO₃⁻ + H⁺ → CO₂ + H₂O; CO₂ freely diffuses into cells and mitochondria → intracellular pH may actually fall; (2) Hypokalaemia (H⁺/K⁺ shift — alkalosis drives K⁺ into cells); (3) Hypocalcaemia (alkalosis increases albumin binding of Ca²⁺); (4) Hypernatraemia (sodium load); (5) Does NOT improve haemodynamics or mortality in trials (BICAR-ICU). Exception: bicarbonate indicated in lactic acidosis with severe acidaemia (pH &lt;7.1) AND <strong>AKI</strong> requiring renal replacement — improves haemodynamics in this specific context (BICAR-ICU subgroup).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Treating the underlying cause of lactic acidosis is the only evidence-based intervention: source control in sepsis (antibiotics, drainage), optimise cardiac output, correct hypovolaemia, stop causative drugs (metformin, linezolid, NRTIs). Dichloroacetate (activates pyruvate dehydrogenase → reduces lactate production) — lowers lactate in trials but does NOT improve mortality.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Type A lactic acidosis (tissue hypoxia — sepsis, cardiogenic shock, ischaemia) vs Type B (no hypoxia — metformin, linezolid, NRTIs, thiamine deficiency, malignancy). Both cause elevated lactate but management differs. Metformin lactic acidosis (MALA) in the context of AKI → withhold metformin, haemodialysis (clears metformin AND corrects acidosis).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">12</span>
+          <span class="fc-q">A 45-year-old nurse is found to have regular exposure to hazardous chemotherapy drugs without adequate PPE. She asks which chemotherapy agents pose the highest dermal absorption and reproductive toxicity risk.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Most hazardous chemotherapy drugs for occupational exposure (NIOSH Table 1 hazardous drugs): highest risk drugs include alkylating agents (<strong>cyclophosphamide, ifosfamide, melphalan, busulfan</strong> — direct DNA alkylators, skin absorption, teratogenic, carcinogenic), antimetabolites (<strong>methotrexate, 5-FU</strong> — dermal absorption, reproductive toxicity), anthracyclines (<strong>doxorubicin</strong> — skin sensitiser, vesicant). Reproductive risks: <strong>cyclophosphamide</strong> causes premature ovarian failure and is teratogenic; <strong>methotrexate</strong> is abortifacient. PPE requirements: closed-system drug-transfer devices (CSTDs), double gloves (chemotherapy-rated nitrile, not latex), low-permeability gown, eye/face protection, preparation in certified biological safety cabinet (class II B2 exhaust).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Vesicant chemotherapy agents (cause tissue necrosis on extravasation): <strong>anthracyclines</strong> (doxorubicin, epirubicin — most severe; treat with dexrazoxane IV within 6 hours), vinca alkaloids (vincristine, vinblastine — treat with warm compresses + hyaluronidase), mechlorethamine. Irritant agents (cause inflammation but not necrosis): oxaliplatin, etoposide, paclitaxel.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Cyclophosphamide for cancer requires <strong>MESNA</strong> to prevent haemorrhagic cystitis (acrolein metabolite). Ifosfamide additionally causes <strong>encephalopathy</strong> (ifosfamide CNS toxicity — confusion, hallucinations, seizures) — treat with methylene blue (alternative electron acceptor — reverses ifosfamide-induced inhibition of mitochondrial electron transport) or supportive care.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">13</span>
+          <span class="fc-q">A patient is brought in after intentional iron tablet overdose. He has vomiting, diarrhoea, haematemesis, and abdominal X-ray shows radio-opaque tablets. What is the specific chelating antidote and its mechanism?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Desferrioxamine (deferoxamine)</strong> — a hexadentate siderophore chelator produced by <em>Streptomyces pilosus</em>. It binds free iron (Fe³⁺) with extremely high affinity → forms <strong>ferrioxamine</strong> complex → renally excreted (produces 'vin rosé' pink-orange urine — indicating chelation is occurring). Desferrioxamine specifically chelates free iron and iron in ferritin/haemosiderin — it does NOT chelate iron in haemoglobin or transferrin (too tightly bound). Iron toxicity phases: GI phase (0–6h, direct GI corrosion) → latent phase (6–24h, apparent improvement) → systemic toxicity (24–72h, acidosis, hepatic failure, coagulopathy, cardiovascular collapse) → late sequelae (2–8 weeks, GI stricture). Treat in ICU with IV desferrioxamine if serum iron &gt;90 µmol/L or severe symptoms.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Other chelating antidotes: <strong>EDTA</strong> (ethylenediaminetetraacetic acid) — lead, heavy metals; <strong>dimercaprol (BAL)</strong> — arsenic, mercury, lead; <strong>DMSA (succimer)</strong> — lead, mercury (oral, safer than BAL); <strong>penicillamine</strong> — Wilson's disease (copper), lead; <strong>prussian blue</strong> — thallium, caesium; <strong>hydroxocobalamin</strong> — cyanide (binds CN⁻ → cyanocobalamin).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Whole-bowel irrigation (polyethylene glycol at 1–2 L/hour) is used for iron tablet overdose to mechanically flush unabsorbed tablets from the GI tract — particularly if tablets are visible on X-ray. Activated charcoal does NOT bind iron (or lithium, alcohols, acids, bases) — do NOT give activated charcoal in iron overdose.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">14</span>
+          <span class="fc-q">A 25-year-old with recreational drug use has taken MDMA (ecstasy) at a party. He presents confused, with hyperthermia (40.2°C), tachycardia, and hyponatraemia (Na 121 mmol/L). What is the mechanism of hyponatraemia?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">MDMA causes hyponatraemia via two mechanisms: (1) <strong>SIADH</strong> — MDMA massively releases serotonin from raphe nuclei and serotonergic terminals → serotonin stimulates ADH (AVP) release from hypothalamus → water retention → dilutional hyponatraemia. (2) <strong>Compulsive water drinking</strong> (hyperdipsia) — MDMA users drink excess water to prevent hyperthermia/dehydration, often dramatically overcorrecting → dilutional hyponatraemia. Both mechanisms combine → severe hyponatraemia → cerebral oedema → confusion, seizures, cerebral herniation (particularly in young women — more susceptible due to hormonal effects on brain AQP4 channels). Treatment: controlled hypertonic saline (3%) for symptomatic hyponatraemia; correct at ≤10 mmol/L/day to avoid osmotic demyelination syndrome.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> MDMA toxicity triad: hyperthermia + hyponatraemia + serotonin syndrome features (hyperthermia, clonus, agitation). Management: active cooling, benzodiazepines for agitation/seizures, correct Na⁺ carefully. Avoid dantrolene (used for malignant hyperthermia/NMS — does not address serotonin mechanism). Cyproheptadine (5-HT antagonist) for serotonin syndrome if severe.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Hyponatraemia correction: correct too slowly → ongoing cerebral oedema and death; correct too fast → <strong>osmotic demyelination syndrome (ODS)</strong> — central pontine myelinolysis → quadriplegia, dysarthria, locked-in syndrome. Maximum safe correction rate: 10 mmol/L in first 24 hours, 18 mmol/L in 48 hours. Exception: in acute symptomatic hyponatraemia (&lt;48h), faster initial correction (1–2 mmol/L/hour for first few hours) is safe to stop seizures before slowing.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">15</span>
+          <span class="fc-q">A 55-year-old taking warfarin for AF is also prescribed broad-spectrum antibiotics for 10 days. Her INR rises to 6.2. Why?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Broad-spectrum antibiotics (especially those with poor GI absorption — cephalosporins, fluoroquinolones, metronidazole) disrupt gut flora → reduce intestinal bacterial synthesis of <strong>vitamin K2 (menaquinone)</strong> → reduced vitamin K available for hepatic carboxylation of clotting factors (II, VII, IX, X, protein C and S) → enhanced warfarin anticoagulant effect → INR rise. Additionally: some antibiotics (metronidazole, fluconazole) inhibit CYP2C9 → reduced warfarin (S-enantiomer) metabolism → pharmacokinetic interaction also contributes. Management: hold 1–2 warfarin doses, recheck INR, restart at lower dose; if INR &gt;8 or bleeding → vitamin K1 (phytomenadione) orally or IV.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Vitamin K1 (phytomenadione/phytonadione) reverses warfarin anticoagulation. Oral route takes 12–24 hours (wait for hepatic factor synthesis). IV route: faster onset (~6–8h) but risk of anaphylactoid reaction — use slow IV infusion. For life-threatening bleeding: <strong>4-factor prothrombin complex concentrate (4F-PCC)</strong> provides immediate factor replacement (fastest reversal). FFP is second-line (large volume, incomplete reversal).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> The <strong>hepatic vitamin K cycle</strong>: dietary K1 → reduced by VKOR (vitamin K epoxide reductase) → active form → γ-carboxylation of Glu residues on clotting factors. Warfarin inhibits VKOR → factors produced without γ-carboxylation → non-functional (cannot bind Ca²⁺/phospholipid). This is also why warfarin has a <strong>delayed onset</strong> (~5 days) — must wait for existing carboxylated factors to clear (factor VII shortest half-life, ~6h → INR rises first).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">16</span>
+          <span class="fc-q">A 70-year-old man taking multiple medications for hypertension, gout, and depression is found confused with a Na⁺ of 118 mmol/L. Review of his medication list reveals hydrochlorothiazide, allopurinol, sertraline, and ramipril. Which drug is most likely responsible?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Most likely: <strong>SIADH from sertraline</strong> (SSRI) — SSRIs cause SIADH in elderly patients (~0.5–1%), mechanism unclear but involves serotonin-stimulated ADH release and/or direct effect on renal collecting duct aquaporins. However, <strong>hydrochlorothiazide</strong> is also a major cause — thiazides cause hyponatraemia via: (1) Inhibiting distal tubule NaCl cotransporter → impaired diluting ability in the kidney; (2) Indirect ADH stimulation from volume depletion. In elderly patients, thiazide-induced hyponatraemia can be severe. Ramipril rarely causes hyponatraemia. Allopurinol does not. Management: identify culprit drug (stop if possible), fluid restriction for SIADH, demeclocycline or vaptans (tolvaptan — V2 receptor antagonist, aquaretic) for persistent SIADH.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Tolvaptan (and conivaptan) are <strong>vasopressin V2 receptor antagonists</strong> — block ADH action at renal collecting duct → free water excretion (aquaresis — water without Na⁺ → raises serum Na⁺). Used for euvolaemic SIADH and hypervolaemic hyponatraemia (HF, cirrhosis). Risk: overly rapid Na⁺ correction → ODS. Monitoring required; start in hospital.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Hyponatraemia from thiazides is <strong>hypotonic hyponatraemia with low urine Na⁺ if early</strong> (urinary Na⁺ may be high initially then falls as volume depletion activates aldosterone). SIADH has high urine Na⁺ (&gt;40 mmol/L) and concentrated urine. Distinguishing features: thiazide → volume depletion + metabolic alkalosis + hypokalaemia; SIADH → euvolaemia, normal acid-base, variable K⁺.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">17</span>
+          <span class="fc-q">A patient in a burns unit needs nutritional support. What drug given to burn patients reduces catabolism, and why is glutamine supplementation specifically recommended in critical illness?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Oxandrolone</strong> (anabolic steroid, synthetic testosterone analogue) — used in severe burns to counter the massive hypermetabolism and muscle catabolism (cortisol and catecholamine surge → protein breakdown, negative nitrogen balance). Oxandrolone stimulates androgen receptors → enhances nitrogen retention, muscle protein synthesis, wound healing, lean mass preservation. Standard in major burns (&gt;40% TBSA) for 6–12 months. <strong>Glutamine</strong> in critical illness: glutamine is normally a non-essential amino acid but becomes <strong>conditionally essential</strong> in critical illness (endogenous synthesis cannot meet demand). Functions: primary fuel for enterocytes and lymphocytes → maintains gut mucosal integrity (reduces bacterial translocation) and immune function. Supplementation recommended for burns, trauma, and ICU patients on TPN (parenteral glutamine — gut cannot absorb enteral glutamine effectively in severe illness).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Insulin infusion (targeting glucose 6–10 mmol/L) is used in burns/critical illness ICUs — insulin has anabolic effects beyond glucose control: promotes amino acid uptake into muscle, reduces muscle proteolysis, stimulates GH axis. Tight glucose control (4–6 mmol/L) is no longer recommended after NICE-SUGAR trial — increased mortality from hypoglycaemia.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Enteral nutrition is always preferred over parenteral in critical illness (including burns) — preserves gut mucosal integrity, reduces infection rate, maintains gut-associated lymphoid tissue (GALT). Start enteral nutrition within 24–48 hours. TPN only if enteral route is impossible or contraindicated (high-output fistula, ileus, bowel obstruction).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">18</span>
+          <span class="fc-q">A patient develops hyperkalaemia (K⁺ 7.1 mmol/L) with peaked T waves and widened QRS on ECG. List the emergency treatment sequence in the correct order with mechanisms.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Emergency treatment of severe hyperkalaemia (ECG changes): (1) <strong>IV calcium gluconate 10 mL 10%</strong> (or calcium chloride) — immediately stabilises cardiomyocyte membrane potential by raising threshold potential → reduces cardiac excitability. Onset: 1–3 minutes. Does NOT lower K⁺ level — cardiac membrane protection only. (2) <strong>IV insulin (10 units actrapid) + 50 mL 50% dextrose</strong> — insulin activates Na⁺/K⁺-ATPase → drives K⁺ into cells. Onset 20–30 min, lasts 4–6h. (3) <strong>Nebulised salbutamol 10–20 mg</strong> — β2 agonist → activates Na⁺/K⁺-ATPase in muscle → additional K⁺ shift into cells. Additive with insulin. (4) <strong>Calcium resonium (sodium polystyrene sulfonate) or patiromer</strong> — GI K⁺ binders → remove K⁺ from body. Onset hours. (5) <strong>Haemodialysis</strong> — fastest K⁺ removal in refractory cases or oliguria.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Sodium bicarbonate (IV) for hyperkalaemia — causes K⁺ shift via H⁺/K⁺ exchange only in the context of metabolic acidosis. It is NOT reliable as monotherapy for hyperkalaemia without acidosis, and its role in the treatment sequence is now de-emphasised by most guidelines (NICE).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Calcium gluconate does NOT lower K⁺ — students confuse it with 'treating' the hyperkalaemia. It only protects the heart for ~30–60 minutes. Definitive K⁺ lowering requires insulin-glucose, salbutamol, K⁺ binders, or dialysis. If calcium is given but no K⁺-lowering treatment follows, the patient will deteriorate as the calcium effect wears off.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">19</span>
+          <span class="fc-q">A 40-year-old woman on long-term phenytoin for epilepsy develops macrocytic anaemia. Her folate level is low. Explain the mechanism and treatment.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Phenytoin causes folate deficiency via two mechanisms: (1) <strong>Impairs intestinal folate absorption</strong> — phenytoin inhibits intestinal conjugase (pteroylpolyglutamate hydrolase) → dietary polyglutamate folate cannot be hydrolysed to absorbable monoglutamate form → folate malabsorption. (2) Increases folate catabolism. Result: low serum folate → impaired thymidylate synthesis → megaloblastic erythropoiesis → macrocytic anaemia. Treatment: <strong>folic acid supplementation</strong> (5 mg/day). Important caveat: folic acid supplementation in epilepsy can <strong>lower phenytoin levels</strong> (folate may induce CYP2C9/2C19, or compete for enterohepatic recycling) → may increase seizure frequency. Monitor phenytoin levels closely when starting folate.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Other phenytoin-related metabolic effects: <strong>osteomalacia/osteoporosis</strong> — phenytoin induces CYP3A4 → accelerates vitamin D catabolism → reduced 25-OH-D → impaired calcium absorption → secondary hyperparathyroidism → bone demineralisation. Supplement calcium + vitamin D in long-term phenytoin users. Also causes gingival hyperplasia, hirsutism, coarsening of facies (cosmetically distressing, particularly in young women).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Macrocytic anaemia from phenytoin is <strong>folate-deficiency megaloblastic anaemia</strong> — do NOT confuse with vitamin B12 deficiency (different mechanism, though both cause macrocytosis and megaloblastic changes). Check both folate AND B12 in macrocytosis. Phenytoin also causes a lupus-like syndrome (anti-histone antibodies) — reversible on stopping the drug.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">20</span>
+          <span class="fc-q">A patient is prescribed warfarin for mechanical heart valve. She is also started on amiodarone for paroxysmal AF. One week later her INR is 7.8. What is the interaction and how should it be managed?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Amiodarone is a potent inhibitor of <strong>CYP2C9</strong> (the major enzyme metabolising the active S-warfarin enantiomer) and also inhibits CYP3A4 (R-warfarin). Result: dramatically reduced warfarin metabolism → warfarin accumulates → excessive anticoagulation → INR rises. Importantly, amiodarone has a half-life of <strong>40–55 days</strong> (due to massive tissue distribution — adipose tissue, liver, lungs) — the CYP2C9 inhibition PERSISTS for months after stopping amiodarone. Management: (1) Hold 1–2 warfarin doses; (2) Reduce warfarin dose by 30–50% when amiodarone is started; (3) Monitor INR weekly until stable; (4) Remember that warfarin dose requirements will gradually increase again over months if amiodarone is stopped (as CYP2C9 inhibition wanes).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Amiodarone's extraordinary half-life (40–55 days) means: (1) Weeks to reach therapeutic antiarrhythmic levels (IV loading used for acute arrhythmias); (2) Drug interactions and adverse effects persist long after cessation; (3) Amiodarone pulmonary toxicity, thyroid dysfunction, and hepatotoxicity may appear or worsen months after stopping. Monitor TFTs, LFTs, CXR every 6 months during treatment.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Amiodarone is an iodine-rich drug (~37% iodine by weight) → can cause both <strong>hypo- and hyperthyroidism</strong>. Type 1 amiodarone-induced thyrotoxicosis (AIT) — iodine-induced excess thyroid hormone synthesis in pre-existing thyroid disease (treat with thionamides). Type 2 AIT — destructive thyroiditis from iodine toxicity (treat with corticosteroids). Distinguishing the two requires thyroid imaging and colour flow Doppler.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+<!-- QUIZ CH74 -->
+  <div class="stage" id="quiz74">
+    <div class="quizset">
+      <div class="quizset-title">📝 Quiz — Chapter 74 Ocular Pharmacology (15 Questions)</div>
+      <div class="quiz-item"><div class="quiz-q">1. Which outflow pathway do prostaglandin analogues primarily enhance, and what receptor mediates this?</div><div class="quiz-a"><strong>Uveoscleral outflow</strong> (fluid flows through ciliary muscle into suprachoroidal space). Mediated by FP receptors (PGF₂α receptor), linked to Gq/11-PLC-IP3-Ca²⁺ pathway. This is the target exploited because it bypasses the trabecular meshwork.</div></div>
+      <div class="quiz-item"><div class="quiz-q">2. Why is betaxolol less efficacious than timolol for glaucoma, yet preferred in asthma?</div><div class="quiz-a">Ocular β receptors (ciliary epithelium/blood vessels) are predominantly <strong>β₂ subtype</strong> (75–90%). Betaxolol is β₁-selective → less blockade of the target receptors → less IOP reduction. However, because it doesn't block pulmonary β₂ receptors, it is safer in asthma.</div></div>
+      <div class="quiz-item"><div class="quiz-q">3. A patient with hazel eyes on latanoprost notes one iris is now brown. Is this reversible?</div><div class="quiz-a"><strong>No — it is permanent.</strong> Latanoprost (via FP receptor stimulation) increases melanin production in iris stromal melanocytes. This is a structural change, not a vascular or edematous one. Patients should be warned before starting therapy.</div></div>
+      <div class="quiz-item"><div class="quiz-q">4. Cocaine eye drops fail to dilate a patient's left pupil (right dilates normally). What does this confirm and what drug would localise the lesion?</div><div class="quiz-a"><strong>Confirms left Horner syndrome</strong> (sympathetic denervation — no NE to block reuptake, so cocaine can't dilate). Use <strong>hydroxyamphetamine 1%</strong>: if it dilates, the postganglionic neuron is intact (1st/2nd order Horner); if it fails to dilate, the 3rd-order (postganglionic) neuron is damaged.</div></div>
+      <div class="quiz-item"><div class="quiz-q">5. What is the mechanism by which timolol eye drops can cause systemic bradycardia?</div><div class="quiz-a">Drainage via nasolacrimal duct → nasal mucosa (highly vascular) → absorption bypasses hepatic first-pass metabolism → <strong>systemically bioavailable timolol</strong> blocks cardiac β₁ receptors → bradycardia. Nasolacrimal occlusion after instillation reduces systemic absorption.</div></div>
+      <div class="quiz-item"><div class="quiz-q">6. What corneal layer structure makes an amphipathic drug ideal for transcorneal penetration?</div><div class="quiz-a">The cornea is a <strong>"fat-water-fat" trilaminar structure</strong>: hydrophobic epithelium (barrier for hydrophilic drugs) → hydrophilic stroma (barrier for lipophilic drugs) → hydrophobic endothelium. An amphipathic molecule with both lipophilic and hydrophilic properties traverses all three layers. Drug penetration is approximately linearly related to tear film concentration.</div></div>
+      <div class="quiz-item"><div class="quiz-q">7. Echothiophate is an irreversible AChE inhibitor used for glaucoma. Name two serious adverse effects unique to its long-term use.</div><div class="quiz-a"><strong>Posterior subcapsular cataracts</strong> (chronic ciliary spasm/zonular tension alters lens metabolism) and <strong>iris cysts</strong>. Also: retinal detachment (risk), punctal stenosis. Systemic toxicity risk exists because organophosphates can be absorbed. Often used with mydriatic to reduce iris cysts.</div></div>
+      <div class="quiz-item"><div class="quiz-q">8. Aflibercept differs structurally from bevacizumab. How, and what is the clinical significance?</div><div class="quiz-a">Aflibercept is a <strong>recombinant fusion protein</strong> (decoy receptor: portions of human VEGFR-1 and VEGFR-2 fused to IgG1 Fc). It binds VEGF-A, VEGF-B, AND placental growth factor (PlGF) — broader coverage than bevacizumab (anti-VEGF-A only mAb). Given every 2 months after loading. CATT trial showed similar visual acuity outcomes between aflibercept, ranibizumab, and bevacizumab.</div></div>
+      <div class="quiz-item"><div class="quiz-q">9. A patient on hydroxychloroquine for lupus asks about eye side effects. What is the mechanism, what does it look like, and when does it appear?</div><div class="quiz-a">Chloroquine/HCQ accumulates in <strong>retinal pigment epithelium</strong> (melanin binding) → toxic maculopathy called <strong>"bull's-eye maculopathy"</strong> (ring of hyperpigmentation around fovea) → central visual acuity loss. Typically requires 5–7 years at therapeutic doses (risk appears after ~6 years with normal dosing of ≤5 mg/kg/day). Annual ophthalmology screening after 5 years. Stopping does NOT reverse damage but prevents further progression.</div></div>
+      <div class="quiz-item"><div class="quiz-q">10. What photoreceptor types exist and what visual function does each serve? What molecule is the chromophore for both?</div><div class="quiz-a"><strong>Rods</strong> → dim light vision (low intensity); <strong>Cones</strong> (3 types: red/green/blue) → high-intensity light, colour vision. Both use <strong>11-cis-retinal</strong> as chromophore (bound to opsin proteins — rhodopsin in rods). Photon isomerises 11-cis → all-trans → activates transducin → PDE6 → ↓ cGMP → CNG channels close → hyperpolarisation.</div></div>
+      <div class="quiz-item"><div class="quiz-q">11. Why does PDE5 inhibitor use (sildenafil) sometimes cause visual disturbance?</div><div class="quiz-a">PDE5 inhibitors have mild cross-inhibition of <strong>PDE6</strong> (controls cGMP levels in photoreceptors). Inhibiting PDE6 → elevated retinal cGMP → altered photoreceptor signalling → transient bluish haze or light sensitivity (altered colour discrimination). This is why pilots are warned against sildenafil use before flying.</div></div>
+      <div class="quiz-item"><div class="quiz-q">12. What is the preferred route for ocular antifungal therapy and why is treatment prolonged?</div><div class="quiz-a">Topical natamycin (5% suspension, only commercially available topical antifungal) is first-line for fungal keratitis. <strong>Treatment is prolonged</strong> because: (1) poor ocular penetration of antifungal drugs through intact/scarred cornea; (2) fungi are intrinsically more resistant than bacteria. Often supplemented with systemic antifungals (e.g. voriconazole) for deep infections.</div></div>
+      <div class="quiz-item"><div class="quiz-q">13. What distinguishes open-angle glaucoma from angle-closure glaucoma anatomically and pharmacologically?</div><div class="quiz-a"><strong>Open-angle</strong>: Trabecular meshwork is accessible but dysfunctional (unknown mechanism); 80–95% of cases. Treated with drugs ↓ production or ↑ outflow. <strong>Angle-closure</strong>: Iris physically occludes the trabecular meshwork (pupillary block). Pharmacological dilation (anticholinergics, sympathomimetics, antihistamines) can precipitate acute attack in susceptible eyes. Definitive treatment = laser iridotomy (creates alternate channel).</div></div>
+      <div class="quiz-item"><div class="quiz-q">14. Rho kinase inhibitors have a unique and distinctive side effect on the cornea. What is it and what is the underlying reason?</div><div class="quiz-a"><strong>Cornea verticillata</strong>: gold-brown pigment deposits in the corneal epithelium in a whorl-like pattern. The underlying mechanism is incompletely understood but thought to relate to phospholipidosis or altered lysosomal function in corneal epithelial cells. Also causes subconjunctival hemorrhage (vasodilatory effect). Compare with amiodarone (cardiac drug) which also causes cornea verticillata — a classic shared adverse effect.</div></div>
+      <div class="quiz-item"><div class="quiz-q">15. A neonate is given brimonidine eye drops. What systemic emergency may occur and why?</div><div class="quiz-a"><strong>CNS depression and apnea.</strong> Brimonidine is lipophilic (penetrates blood-brain barrier) and a selective α₂ agonist. Nasolacrimal absorption bypasses first-pass → systemically active drug reaches immature CNS. α₂ receptors in brainstem → central hypnotic/apnoeic effect. Brimonidine is absolutely <strong>contraindicated in children under 2 years</strong> of age for this reason.</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 — CHAPTER 75: DERMATOLOGICAL PHARMACOLOGY
+     TIER 2
+═══════════════════════════════════════════ -->
+<section class="module" id="ch75">
+  <div class="module-header">
+    <div class="module-tier">Tier 2 — High Exam Yield</div>
+    <h2>Chapter 75: Dermatological Pharmacology</h2>
+    <p>Retinoids, glucocorticoids, biologics for psoriasis/atopic dermatitis, phototherapy, targeted antineoplastics</p>
+  </div>
+
+  <!-- STAGE 1: MAP -->
+  <div class="stage">
+    <div class="cog">
+      <div class="stage-label">🧭 80/20 High-Yield Map</div>
+      <div class="pillar">Dermatological pharmacology is dominated by THREE paradigms: (1) retinoids that reprogram keratinocyte differentiation via RAR/RXR nuclear receptors; (2) biologics that selectively block cytokine axes driving psoriasis (IL-17/IL-23/TNFα) or atopic dermatitis (IL-4/IL-13); and (3) percutaneous pharmacokinetics that make dose = vehicle × site × disease state.</div>
+
+      <!-- SVG 3: Retinoid Receptor Classification -->
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px">
+          <rect width="700" height="290" fill="#F8F4EE" rx="10"/>
+          <text x="350" y="25" text-anchor="middle" font-family="Fraunces,serif" font-size="15" font-weight="700" fill="#1A1A2E">Retinoid Classification Tree</text>
+          <!-- Root -->
+          <rect x="270" y="38" width="160" height="36" fill="#0D5C63" rx="6"/>
+          <text x="350" y="61" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="white">RETINOIDS</text>
+          <line x1="350" y1="74" x2="350" y2="90" stroke="#7B7B99" stroke-width="1.5"/>
+          <!-- Generation split -->
+          <line x1="160" y1="90" x2="540" y2="90" stroke="#7B7B99" stroke-width="1.5"/>
+          <!-- Gen 1 -->
+          <line x1="160" y1="90" x2="160" y2="108" stroke="#7B7B99" stroke-width="1.5"/>
+          <rect x="70" y="108" width="180" height="50" fill="#FEF3DC" rx="6" stroke="#E8A020" stroke-width="1.5"/>
+          <text x="160" y="126" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#B8450A">Gen 1 (RAR α,β,γ)</text>
+          <text x="160" y="140" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#3D3D55">Tretinoin, Isotretinoin</text>
+          <text x="160" y="153" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">Alitretinoin, Retinol</text>
+          <!-- Gen 2 -->
+          <line x1="300" y1="90" x2="300" y2="108" stroke="#7B7B99" stroke-width="1.5"/>
+          <rect x="220" y="108" width="160" height="50" fill="#D6F0F3" rx="6" stroke="#0D5C63" stroke-width="1.5"/>
+          <text x="300" y="126" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#0D5C63">Gen 2 (Aromatic)</text>
+          <text x="300" y="140" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#3D3D55">Acitretin, Etretinate</text>
+          <text x="300" y="153" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">RAR-selective</text>
+          <!-- Gen 3 -->
+          <line x1="470" y1="90" x2="470" y2="108" stroke="#7B7B99" stroke-width="1.5"/>
+          <rect x="390" y="108" width="160" height="50" fill="#F4FAF5" rx="6" stroke="#2E7D52" stroke-width="1.5"/>
+          <text x="470" y="126" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#2E7D52">Gen 3 (Receptor-Selective)</text>
+          <text x="470" y="140" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#3D3D55">Tazarotene (RAR), Bexarotene (RXR)</text>
+          <text x="470" y="153" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">Adapalene (RAR-β/γ), Trifarotene (RAR-γ)</text>
+          <!-- Indications below gen 1 -->
+          <line x1="90" y1="158" x2="90" y2="178" stroke="#7B7B99" stroke-width="1"/>
+          <rect x="30" y="178" width="120" height="40" fill="white" rx="4" stroke="#E8A020" stroke-width="1"/>
+          <text x="90" y="193" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Isotretinoin</text>
+          <text x="90" y="207" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#B8450A">Severe nodular acne</text>
+          <line x1="200" y1="158" x2="200" y2="178" stroke="#7B7B99" stroke-width="1"/>
+          <rect x="150" y="178" width="100" height="40" fill="white" rx="4" stroke="#E8A020" stroke-width="1"/>
+          <text x="200" y="193" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Alitretinoin</text>
+          <text x="200" y="207" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#B8450A">Kaposi Sarcoma</text>
+          <!-- Acitretin -->
+          <line x1="300" y1="158" x2="300" y2="178" stroke="#7B7B99" stroke-width="1"/>
+          <rect x="250" y="178" width="100" height="40" fill="white" rx="4" stroke="#0D5C63" stroke-width="1"/>
+          <text x="300" y="193" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Acitretin</text>
+          <text x="300" y="207" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#0D5C63">Psoriasis (systemic)</text>
+          <!-- Bexarotene -->
+          <line x1="440" y1="158" x2="440" y2="178" stroke="#7B7B99" stroke-width="1"/>
+          <rect x="390" y="178" width="100" height="40" fill="white" rx="4" stroke="#2E7D52" stroke-width="1"/>
+          <text x="440" y="193" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Bexarotene (RXR)</text>
+          <text x="440" y="207" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#2E7D52">CTCL</text>
+          <!-- Tazarotene -->
+          <line x1="540" y1="158" x2="540" y2="178" stroke="#7B7B99" stroke-width="1"/>
+          <rect x="490" y="178" width="120" height="40" fill="white" rx="4" stroke="#2E7D52" stroke-width="1"/>
+          <text x="550" y="193" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Tazarotene (RAR)</text>
+          <text x="550" y="207" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#2E7D52">Psoriasis, Acne, Photoaging</text>
+          <!-- Key note -->
+          <rect x="30" y="235" width="640" height="40" fill="white" rx="6" stroke="#B8450A" stroke-width="1.5"/>
+          <text x="350" y="252" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#B8450A">⚠️ ALL systemic retinoids are TERATOGENIC — absolutely contraindicated in pregnancy</text>
+          <text x="350" y="267" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Isotretinoin: avoid pregnancy 1 month after; Acitretin: 3 YEARS after (converts to etretinate with alcohol — t½ 80-160 days)</text>
+        </svg>
+        <div class="diagram-caption">Figure 75-A: Retinoid classification by receptor specificity and clinical indication. Receptor selectivity determines therapeutic application.</div>
+      </div>
+
+      <p><strong>Percutaneous absorption factors — the pharmacokinetic backbone of this chapter:</strong></p>
+      <ul>
+        <li><strong>Stratum corneum</strong> is the rate-limiting barrier. Thickness varies: palms/soles (thickest) &gt; trunk &gt; face/postauricular &gt; eyelid/scrotum (thinnest — highest absorption).</li>
+        <li><strong>Ideal topical drug:</strong> MW ≤500 Da, amphipathic (oil + water soluble), high partition coefficient into stratum corneum.</li>
+        <li><strong>Hydration dramatically ↑ absorption</strong> — occlusion (ointments, plastic wrap) can cause hypothalamic-pituitary-adrenal suppression with topical steroids.</li>
+        <li><strong>Children:</strong> greater surface area-to-mass ratio → higher systemic exposure from same dose. Neonates have impaired barrier until keratinisation is complete.</li>
+      </ul>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Vehicle</th><th>Physical Basis</th><th>Occlusion</th><th>Best For</th><th>Avoid</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Ointment</strong></td><td>Oil/grease base, anhydrous</td><td>High</td><td>Dry, lichenified lesions</td><td>Intertriginous areas (maceration, infection)</td></tr>
+            <tr><td><strong>Cream</strong></td><td>Oil-in-water emulsion</td><td>Low</td><td>Most locations</td><td>Nothing specific — most versatile</td></tr>
+            <tr><td><strong>Gel</strong></td><td>Water-soluble gelling agent</td><td>None</td><td>Scalp, hairy areas, acne</td><td>Dry or eczematous skin (can dehydrate)</td></tr>
+            <tr><td><strong>Lotion/Foam</strong></td><td>Suspension or alcohol base</td><td>None</td><td>Scalp, intertriginous</td><td>Desiccated skin</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Topical glucocorticoid potency classification (7 classes):</strong></p>
+      <ul>
+        <li><strong>Class 1 (most potent):</strong> Clobetasol propionate 0.05%, augmented betamethasone dipropionate — for severe palmoplantar psoriasis, lichenified dermatoses</li>
+        <li><strong>Classes 2–4 (high-mid potency):</strong> Fluocinonide, betamethasone, mometasone furoate — body psoriasis, atopic dermatitis</li>
+        <li><strong>Classes 5–6:</strong> Hydrocortisone valerate, desonide — face, intertriginous, maintenance</li>
+        <li><strong>Class 7 (least potent):</strong> Hydrocortisone 0.5–2.5% — face, eyelids, children</li>
+        <li><strong>Rule: Only non-fluorinated steroids on the face</strong> (fluorinated → perioral dermatitis, rosacea)</li>
+        <li><strong>Toxicities:</strong> skin atrophy, striae, telangiectasia, HPA suppression (with class 1–2 + occlusion), cataracts/glaucoma (chronic use near eye)</li>
+      </ul>
+
+      <p><strong>Biologics for Psoriasis — IL pathway logic:</strong></p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Target</th><th>Agents</th><th>Structure</th><th>Key SEs / Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>TNFα</strong></td><td>Etanercept, Infliximab, Adalimumab, Certolizumab</td><td>Etanercept = soluble receptor; others = mAbs</td><td>↑ TB/infection risk; screen TB before starting; CI in demyelinating disease, severe CHF</td></tr>
+            <tr><td><strong>IL-12/23 p40</strong></td><td>Ustekinumab</td><td>Human IgG1κ mAb</td><td>q12-week maintenance — longest interval; also approved for Crohn's disease</td></tr>
+            <tr><td><strong>IL-23 p19</strong></td><td>Guselkumab, Risankizumab, Tildrakizumab</td><td>Human/humanized mAbs</td><td>Most selective — target IL-23 only; Risankizumab q12 weeks</td></tr>
+            <tr><td><strong>IL-17A</strong></td><td>Secukinumab, Ixekizumab</td><td>IgG1κ / IgG4</td><td>↑ mucocutaneous candidiasis, ↑ IBD risk</td></tr>
+            <tr><td><strong>IL-17A + F</strong></td><td>Bimekizumab</td><td>Humanized IgG1</td><td>Dual inhibition — may be more effective</td></tr>
+            <tr><td><strong>IL-17 receptor A</strong></td><td>Brodalumab</td><td>Human IgG2κ</td><td>REMS required — boxed warning for suicidal ideation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Atopic Dermatitis Pharmacology:</strong></p>
+      <ul>
+        <li><strong>Dupilumab</strong> (IL-4Rα mAb → blocks both IL-4 AND IL-13): First-line biologic for moderate-severe AD. Key SE: conjunctivitis (most common), injection site reactions, facial redness.</li>
+        <li><strong>Tralokinumab</strong> (IL-13-specific mAb): Less conjunctivitis than dupilumab.</li>
+        <li><strong>Topical calcineurin inhibitors:</strong> Tacrolimus 0.03/0.1% ointment, Pimecrolimus 1% cream — no skin atrophy (unlike steroids); approved as second-line; useful on face and skin folds.</li>
+        <li><strong>Crisaborole</strong> (PDE4B inhibitor, topical): Mild-moderate AD; low MW boron compound penetrates skin well.</li>
+        <li><strong>JAK inhibitors:</strong> Abrocitinib (JAK1), Upadacitinib (JAK1), Ruxolitinib (topical JAK1/2), Baricitinib (JAK1/2 — EMA approved AD). Boxed warning class-wide for serious infection, malignancy, CV death, thrombosis.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 2: RECALL -->
+  <div class="stage">
+    <div class="blurt-stage">
+      <div class="stage-label">🧠 Active Recall Gate</div>
+      <div class="blurt-prompt">
+        <strong>Clinical scenario:</strong> Close this guide. Dump everything you know about: (1) Why isotretinoin requires the iPLEDGE program; (2) The difference in mechanism between psoriasis biologics targeting TNFα vs. IL-17 vs. IL-23; (3) Why topical steroids should not be used on the face long-term. Write for 5 minutes.
+      </div>
+      <ul class="primers">
+        <li>Why does acitretin require 3 years of contraception after stopping, while isotretinoin requires only 1 month?</li>
+        <li>Why do IL-17 inhibitors increase the risk of Candida infections but IL-23 inhibitors do not, despite both targeting the Th17 pathway?</li>
+        <li>Why is Brodalumab (anti-IL-17RA) in a REMS program while other IL-17 pathway biologics are not?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 3: FEYNMAN (GATED) -->
+  <div class="stage">
+    <details class="gate">
+      <summary>✓ I've blurted — reveal the Plain-Language Notes for Ch.75 Dermatological Pharmacology</summary>
+      <div class="feynman-content">
+        <h4>Retinoids: Nuclear Receptor Logic</h4>
+        <p>Retinoids work by binding nuclear receptors (RARs = retinoic acid receptors; RXRs = retinoid X receptors) which heterodimerize and bind specific DNA sequences (RAREs = retinoic acid response elements) to activate transcription. The key therapeutic split:</p>
+        <ul>
+          <li><strong>RAR agonists</strong> (tretinoin, adapalene, tazarotene, acitretin) → primarily affect <em>differentiation and proliferation</em> → used for acne, psoriasis, photoaging.</li>
+          <li><strong>RXR agonists</strong> (bexarotene, alitretinoin) → primarily induce <em>apoptosis of malignant cells</em> → used for CTCL, Kaposi sarcoma.</li>
+        </ul>
+        <p><strong>Isotretinoin's uniqueness:</strong> It has NO clear receptor affinity — likely works indirectly via metabolic conversion to active retinoids within skin. Its effect on sebaceous glands (marked sebum reduction, normalising follicular keratinisation, reducing C. acnes) is unmatched, explaining its curative potential for severe acne. Single course achieves remission in ~70% of patients; ~30% relapse within 3 years.</p>
+
+        <div class="analogy">
+          Retinoids are like software updates for keratinocytes — they reprogram the default "abnormal differentiation and proliferation" seen in acne and psoriasis back to normal. RAR agonists update the "growth program"; RXR agonists install the "self-destruct protocol" in malignant cells.
+        </div>
+
+        <h4>Acitretin's 3-Year Contraception Requirement — The Alcohol Trap</h4>
+        <p>Acitretin has a t½ of ~50 hours — normally fine. BUT: in the presence of <strong>alcohol</strong>, acitretin undergoes esterification in vivo to form <strong>etretinate</strong>, which is stored in adipose tissue and has a t½ of <em>80–160 days</em>. Since etretinate is also highly teratogenic, the teratogenicity risk persists long after stopping acitretin if the patient consumed alcohol during therapy. Hence the 3-year rule. (Alcohol here includes mouthwash, cough syrups — any source.)</p>
+
+        <h4>Why Facial Steroids Cause Perioral Dermatitis and Rosacea</h4>
+        <p>Fluorinated topical steroids (e.g. fluocinonide, betamethasone valerate) suppress the skin's normal immune surveillance. On the thin facial skin (high absorption) with sebaceous follicles, prolonged use disrupts the follicular microenvironment → dysbiosis, inflammatory follicular papules around the mouth (perioral dermatitis) and telangiectasia/flushing (rosacea-like). The damage worsens on withdrawal — a "rebound" phenomenon. Use only non-fluorinated agents (hydrocortisone, desonide) on the face, if at all.</p>
+
+        <h4>IL-17 vs. IL-23 Biologics — Why Candida Risk Differs</h4>
+        <p>IL-17 (secreted by Th17 cells) directly stimulates neutrophil migration and promotes epithelial defense against <em>Candida</em>. Blocking IL-17 directly (secukinumab, ixekizumab, bimekizumab, brodalumab) removes this mucocutaneous defense → ↑ candidal infections. IL-23 is <em>upstream</em> of IL-17 (drives Th17 differentiation), but blocking IL-23 does not completely abolish existing Th17 activity — residual IL-17 maintains partial mucosal defense. Hence IL-23 inhibitors (guselkumab, risankizumab, tildrakizumab) have fewer Candida infections.</p>
+
+        <h4>Brodalumab REMS — Suicidal Ideation</h4>
+        <p>Brodalumab blocks IL-17RA (the receptor for IL-17A, C, D, E, and F). Clinical trials noted a signal of suicidal ideation and completed suicides. The proposed mechanism relates to IL-17's role in neuroinflammation — patients with psoriasis have high baseline psychiatric comorbidity (depression). Trials have NOT established causality (no difference from comparators in analysis), but the FDA issued a boxed warning and requires REMS certification. This is a regulatory/risk management decision, not confirmed pharmacological causation.</p>
+
+        <blockquote class="warn">
+          PUVA (psoralen + UVA) and isotretinoin should NOT be combined — additive photosensitivity risk. Similarly, tetracyclines + systemic retinoids → risk of pseudotumor cerebri (both independently cause this). Never combine.
+        </blockquote>
+        <blockquote class="warn">
+          Calcipotriene (topical vitamin D analogue for psoriasis) is inactivated by concurrent use of ACIDIC topical agents (salicylic acid, lactic acid). Don't prescribe them together. Also: maximum 100 g/week limit → risk of hypercalcemia/hypercalciuria if exceeded.
+        </blockquote>
+        <blockquote class="warn">
+          Dupilumab's most common adverse effect is CONJUNCTIVITIS — this is paradoxical for an immunosuppressant but is thought to relate to IL-4/IL-13 blocking disrupting conjunctival goblet cell function and tear film. Tralokinumab may cause less conjunctivitis. Expect this in MCQs.
+        </blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- STAGE 4: SPACED REP -->
+  <div class="stage">
+    <div class="sched-stage">
+      <div class="stage-label">🔄 Spaced Repetition Schedule</div>
+      <div class="sched">
+        <div class="sched-day"><strong>Day 1</strong> Draw the retinoid classification tree from memory (receptor, generation, drug, indication).</div>
+        <div class="sched-day"><strong>Day 3</strong> Recall the 7-class steroid potency system. Name a drug from classes 1, 3, 5, and 7.</div>
+        <div class="sched-day"><strong>Day 7</strong> Explain why acitretin requires 3-year contraception but isotretinoin only 1 month. Explain Candida risk with IL-17 vs IL-23 inhibitors.</div>
+        <div class="sched-day"><strong>Day 21</strong> Integrate: psoriasis patient on PUVA wants isotretinoin — counsel them. AD patient on dupilumab develops bilateral conjunctivitis — mechanism and management.</div>
+      </div>
+      <div class="bridge">
+        <strong>Clinical Bridge:</strong> Photodynamic therapy in dermatology (aminolevulinic acid → protoporphyrin IX → reactive oxygen species when activated by light) follows the same reactive-oxygen-species-mediated tissue injury logic as oxidative stress in furosemide-resistant AHF. In furosemide-resistant acute heart failure, elevated reactive oxygen species from cardiomyocyte stress can alter furosemide's tubular secretion (via OAT1/3 transporters). Both contexts involve ROS as a central pathological mediator — one therapeutically exploited, one pathologically encountered.
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ CH75 -->
+  <div class="stage" id="quiz75">
+    <div class="quizset">
+      <div class="quizset-title">📝 Quiz — Chapter 75 Dermatological Pharmacology (15 Questions)</div>
+      <div class="quiz-item"><div class="quiz-q">1. What is the rate-limiting step for percutaneous drug absorption and which body site has the thinnest stratum corneum?</div><div class="quiz-a">The <strong>stratum corneum</strong> is the rate-limiting step. Thinnest at eyelid and scrotum (hence highest absorption). Thickest at palms and soles. Thin SC = higher absorption = higher systemic exposure = ↑ HPA suppression risk with potent steroids.</div></div>
+      <div class="quiz-item"><div class="quiz-q">2. What are the two nuclear receptor families that retinoids activate, and which disorders does each treat?</div><div class="quiz-a"><strong>RARs (retinoic acid receptors)</strong>: mediate differentiation/proliferation effects → acne, psoriasis, photoaging. <strong>RXRs (retinoid X receptors)</strong>: mediate apoptosis in malignant cells → CTCL (bexarotene), Kaposi sarcoma (alitretinoin). Isotretinoin has no clear receptor affinity.</div></div>
+      <div class="quiz-item"><div class="quiz-q">3. Why does acitretin require 3 years of contraception after stopping, but isotretinoin only 1 month?</div><div class="quiz-a">Acitretin + alcohol → esterification in vivo → <strong>etretinate</strong> (stored in adipose tissue, t½ 80–160 days). Etretinate is teratogenic and persists long after acitretin is stopped. Isotretinoin has a t½ of 10–20 hours and no such long-acting metabolite is formed.</div></div>
+      <div class="quiz-item"><div class="quiz-q">4. Name the first-line biologic for moderate-to-severe psoriasis according to most guidelines, and explain its mechanism.</div><div class="quiz-a"><strong>Secukinumab or Ixekizumab (IL-17A mAbs)</strong> or IL-23 inhibitors (guselkumab, risankizumab) are now first-line in many guidelines due to high efficacy. PG analogues in ophthalmology correspond here — both displaced older agents by superior efficacy. Secukinumab is human IgG1κ → binds free IL-17A → prevents keratinocyte stimulation → reduces hyperproliferation, barrier dysfunction, and neutrophil recruitment.</div></div>
+      <div class="quiz-item"><div class="quiz-q">5. What is the signature adverse effect of dupilumab and what is its proposed mechanism?</div><div class="quiz-a"><strong>Conjunctivitis</strong> (most frequent adverse effect). Proposed mechanism: IL-4 and IL-13 signalling normally maintains conjunctival goblet cell function and tear film mucins. Blocking IL-4Rα with dupilumab disrupts this → goblet cell dysfunction → reduced tear film → conjunctival inflammation. Tralokinumab (IL-13 selective) appears to cause less conjunctivitis.</div></div>
+      <div class="quiz-item"><div class="quiz-q">6. Which topical retinoid is the most irritating and which is the least irritating?</div><div class="quiz-a">Most irritating: <strong>Tazarotene (++++ irritancy)</strong>. Least irritating: <strong>Adapalene (+ irritancy)</strong> and Trifarotene (+). Tretinoin is intermediate (++). Irritancy correlates with receptor affinity — tazarotene is pan-RAR, highly potent. This determines patient tolerability and compliance.</div></div>
+      <div class="quiz-item"><div class="quiz-q">7. Why are fluorinated topical steroids contraindicated on the face?</div><div class="quiz-a">Face has thin, sebaceous skin with high percutaneous absorption. Fluorinated steroids at this site cause: (1) <strong>perioral dermatitis</strong> (inflammatory follicular eruption), (2) <strong>rosacea-like eruptions</strong>, (3) skin atrophy, telangiectasia. Non-fluorinated agents (hydrocortisone, desonide, alclometasone) are preferred for facial use.</div></div>
+      <div class="quiz-item"><div class="quiz-q">8. What boxed warning is unique to brodalumab (not shared by other IL-17/IL-23 biologics) and why was it added?</div><div class="quiz-a"><strong>Suicidal ideation and behaviour</strong>. A signal was detected in phase III trials. Mechanistically: IL-17RA is also expressed in the CNS; blocking all IL-17 isoforms (A, C, D, E, F) may have neuroinflammatory effects. Note: causality has NOT been established — the signal may reflect high baseline depression prevalence in psoriasis. REMS program required before dispensing.</div></div>
+      <div class="quiz-item"><div class="quiz-q">9. Describe the mechanism of action of calcipotriene (a vitamin D analogue) for psoriasis.</div><div class="quiz-a">Calcipotriene binds the <strong>vitamin D receptor (VDR)</strong>. The drug-VDR complex associates with RXR-α and binds vitamin D response elements in DNA → increases expression of genes modulating epidermal differentiation and suppressing inflammation → reduces keratinocyte proliferation and normalises differentiation in psoriatic plaques. Limit: 100 g/week → hypercalcemia/hypercalciuria risk if exceeded.</div></div>
+      <div class="quiz-item"><div class="quiz-q">10. What is the mechanism of action of crisaborole for atopic dermatitis, and what is its pharmacokinetic advantage?</div><div class="quiz-a">Crisaborole is a <strong>PDE4B inhibitor</strong> (topical) — inhibits phosphodiesterase 4B → ↑ intracellular cAMP → ↓ inflammatory cytokines (TNFα, IFNγ, IL-17, IL-23). Its pharmacokinetic advantage: low molecular weight (251 Da, due to boron-containing benzoxaborole structure) → effective skin penetration despite topical application. This allows effective PDE4 inhibition in the epidermis without significant systemic exposure.</div></div>
+      <div class="quiz-item"><div class="quiz-q">11. Compare the mechanism of isotretinoin vs. topical tretinoin for acne.</div><div class="quiz-a">Both are retinoids but differ markedly: <strong>Tretinoin (topical)</strong> → RAR activation in the epidermis → normalises follicular keratinisation, reduces comedones, anti-inflammatory. <strong>Isotretinoin (systemic)</strong> → no clear receptor affinity; markedly suppresses sebaceous gland activity (↓ gland size, ↓ sebum production), normalises follicular keratinisation, reduces C. acnes via hostile follicular environment. Isotretinoin is curative (70%) while tretinoin is suppressive (disease returns on stopping).</div></div>
+      <div class="quiz-item"><div class="quiz-q">12. A patient using PUVA (psoralen + UVA) asks about combining with isotretinoin for psoriasis. What is your advice?</div><div class="quiz-a"><strong>Contraindicated</strong>. Both psoralens and retinoids cause <strong>photosensitivity</strong> (retinoids induce epidermal thinning and reduce the protective keratinised layer). The combination markedly increases the risk of severe phototoxic reactions and sunburn. Additionally, systemic retinoids + tetracyclines (which may be prescribed concurrently for acne) risk pseudotumor cerebri — another combination to avoid.</div></div>
+      <div class="quiz-item"><div class="quiz-q">13. What distinguishes etanercept from other anti-TNFα biologics structurally and functionally?</div><div class="quiz-a">Etanercept is a <strong>soluble recombinant TNF receptor fusion protein</strong> (p75 TNF receptor Fc IgG1 fusion) — NOT a monoclonal antibody. It binds both TNFα AND TNFβ. Unlike infliximab/adalimumab/certolizumab (IgG1 mAbs), etanercept lacks complement-dependent cytotoxicity activity because it doesn't bind membrane-bound TNFα as effectively. This explains its lower efficacy in granulomatous conditions (like Crohn's disease) vs. monoclonal antibody TNFα inhibitors, and potentially lower infection risk.</div></div>
+      <div class="quiz-item"><div class="quiz-q">14. Calcipotriene is inactivated by a commonly co-prescribed topical agent. Name it and explain the interaction.</div><div class="quiz-a"><strong>Salicylic acid and lactic acid</strong> (acidic topical agents). Calcipotriene is chemically unstable in acidic conditions → inactivated. Since salicylic acid is commonly prescribed for its keratolytic properties in psoriasis, this is a clinically important incompatibility. Space application times or choose different keratolytic.</div></div>
+      <div class="quiz-item"><div class="quiz-q">15. Name the JAK inhibitor approved for alopecia areata and one for atopic dermatitis; what class-wide boxed warning do all oral JAK inhibitors share?</div><div class="quiz-a"><strong>Baricitinib (JAK1/2)</strong> is FDA-approved for severe alopecia areata and moderate-severe rheumatoid arthritis. <strong>Abrocitinib (JAK1)</strong> and upadacitinib (JAK1) are approved for atopic dermatitis. Class-wide boxed warning: ↑ risk of serious infections, malignancy, ↑ all-cause mortality (including cardiovascular death), MI, stroke, and thrombosis (DVT/PE). Based on ORAL-SURVEILLANCE study comparing tofacitinib vs. anti-TNF in RA patients ≥50 years with CV risk factors.</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 — CHAPTER 76: ENVIRONMENTAL TOXICOLOGY
+     TIER 3 (FRAMEWORK)
+═══════════════════════════════════════════ -->
+<section class="module" id="ch76">
+  <div class="module-header">
+    <div class="module-tier">Tier 3 — Framework / Conceptual</div>
+    <h2>Chapter 76: Environmental Toxicology</h2>
+    <p>Carcinogens, heavy metal poisoning, chelation therapy, endocrine disruptors, immunotoxicants</p>
+  </div>
+
+  <!-- STAGE 1: MAP -->
+  <div class="stage">
+    <div class="cog">
+      <div class="stage-label">🧭 80/20 High-Yield Map</div>
+      <div class="pillar">Environmental toxicology has two clinical clusters that appear in pharmacology exams: (1) heavy metal poisoning with its specific chelation treatments; and (2) carcinogenesis mechanisms (genotoxic vs. non-genotoxic) that predict tumour type and therapeutic strategy.</div>
+
+      <!-- SVG 4: Heavy Metal Chelation Map -->
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px">
+          <rect width="700" height="300" fill="#F8F4EE" rx="10"/>
+          <text x="350" y="25" text-anchor="middle" font-family="Fraunces,serif" font-size="15" font-weight="700" fill="#1A1A2E">Heavy Metal Poisoning: Chelation Strategy Guide</text>
+          <!-- LEAD -->
+          <rect x="15" y="40" width="155" height="130" fill="#D6F0F3" rx="8" stroke="#0D5C63" stroke-width="2"/>
+          <text x="92" y="58" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#0D5C63">LEAD (Pb)</text>
+          <text x="92" y="73" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#1A1A2E">Children: BLL &gt;45 μg/dL</text>
+          <text x="92" y="86" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#1A1A2E">Adults: BLL &gt;60 μg/dL</text>
+          <line x1="30" y1="95" x2="160" y2="95" stroke="#0D5C63" stroke-width="0.8"/>
+          <text x="92" y="109" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#B8450A">1st: Succimer (oral)</text>
+          <text x="92" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">BLL 45-70: oral succimer</text>
+          <text x="92" y="135" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">BLL &gt;70: CaNa₂EDTA IV</text>
+          <text x="92" y="148" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">+ dimercaprol IM (severe)</text>
+          <text x="92" y="162" text-anchor="middle" font-family="Inter" font-size="8" fill="#B8450A">⚠️ Dimercaprol → mobilises Pb to brain</text>
+          <!-- ARSENIC -->
+          <rect x="185" y="40" width="155" height="130" fill="#FEF3DC" rx="8" stroke="#E8A020" stroke-width="2"/>
+          <text x="262" y="58" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#B8450A">ARSENIC (As)</text>
+          <text x="262" y="73" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#1A1A2E">Acute: GI, CVS</text>
+          <text x="262" y="86" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#1A1A2E">Chronic: skin, neuro, cancer</text>
+          <line x1="195" y1="95" x2="330" y2="95" stroke="#E8A020" stroke-width="0.8"/>
+          <text x="262" y="109" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#B8450A">1st: Dimercaprol (BAL)</text>
+          <text x="262" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Acute: dimercaprol IM</text>
+          <text x="262" y="135" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Alternative: succimer, DMPS</text>
+          <text x="262" y="148" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Chronic: no proven benefit</text>
+          <text x="262" y="162" text-anchor="middle" font-family="Inter" font-size="8" fill="#B8450A">Arsine gas: exchange transfusion</text>
+          <!-- MERCURY -->
+          <rect x="355" y="40" width="155" height="130" fill="#F4FAF5" rx="8" stroke="#2E7D52" stroke-width="2"/>
+          <text x="432" y="58" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#2E7D52">MERCURY (Hg)</text>
+          <text x="432" y="73" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#1A1A2E">Hg⁰: CNS tremors</text>
+          <text x="432" y="86" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#1A1A2E">MeHg⁺: CNS, fetal damage</text>
+          <line x1="365" y1="95" x2="500" y2="95" stroke="#2E7D52" stroke-width="0.8"/>
+          <text x="432" y="109" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#2E7D52">Dimercaprol (inorganic)</text>
+          <text x="432" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Inorganic Hg: dimercaprol</text>
+          <text x="432" y="135" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">MeHg⁺: chelation NOT helpful</text>
+          <text x="432" y="148" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Non-absorbable thiol resins</text>
+          <text x="432" y="162" text-anchor="middle" font-family="Inter" font-size="8" fill="#B8450A">⚠️ MeHg: fetal CNS damage with no maternal symptoms</text>
+          <!-- IRON -->
+          <rect x="525" y="40" width="155" height="130" fill="#FFF0EB" rx="8" stroke="#B8450A" stroke-width="2"/>
+          <text x="602" y="58" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#B8450A">IRON (Fe)</text>
+          <text x="602" y="73" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#1A1A2E">Acute: GI necrosis, shock</text>
+          <text x="602" y="86" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#1A1A2E">Chronic: haemochromatosis</text>
+          <line x1="535" y1="95" x2="670" y2="95" stroke="#B8450A" stroke-width="0.8"/>
+          <text x="602" y="109" text-anchor="middle" font-family="Inter" font-size="9" font-weight="700" fill="#B8450A">Deferoxamine</text>
+          <text x="602" y="122" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Acute: IM (IV if shock)</text>
+          <text x="602" y="135" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Chronic: deferoxamine SC</text>
+          <text x="602" y="148" text-anchor="middle" font-family="Inter" font-size="9" fill="#3D3D55">Oral: deferasirox, deferiprone</text>
+          <text x="602" y="162" text-anchor="middle" font-family="Inter" font-size="8" fill="#B8450A">Does NOT chelate Hb or cytochrome iron</text>
+          <!-- Bottom notes -->
+          <rect x="15" y="185" width="665" height="45" fill="white" rx="6" stroke="#7B7B99" stroke-width="1"/>
+          <text x="350" y="202" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#1A1A2E">COPPER (Wilson Disease): Penicillamine (1st line) or Trientine (if penicillamine-intolerant)</text>
+          <text x="350" y="220" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">CADMIUM: No effective chelation — supportive care only (chelation may increase nephrotoxicity)</text>
+          <rect x="15" y="245" width="665" height="40" fill="#FEF3DC" rx="6" stroke="#E8A020" stroke-width="1"/>
+          <text x="350" y="262" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#B8450A">General Principle: Chelation is only beneficial for ACUTE exposures. For chronic exposures, chelation does not improve outcomes and may worsen neurotoxicity (mobilises metals to CNS).</text>
+        </svg>
+        <div class="diagram-caption">Figure 76-A: Heavy metal poisoning — chelation treatment guide. The "correct chelator" is a high-yield MCQ topic.</div>
+      </div>
+
+      <p><strong>Lead Toxicology — No Safe Level for Children:</strong></p>
+      <ul>
+        <li>Lead mimics <strong>divalent metals (Ca²⁺, Zn²⁺)</strong> → disrupts Ca²⁺ transporters, PKC, calmodulin, zinc-finger proteins (including DNA repair proteins).</li>
+        <li><strong>BLL &lt;10 μg/dL in children</strong>: ↓ IQ (no threshold), ↑ blood pressure, hearing loss, inhibition of haem synthesis enzymes (ALAD is most sensitive enzyme inhibited). The dose-response is non-linear — steeper at low levels.</li>
+        <li><strong>Heme biosynthesis:</strong> Lead inhibits ALAD (δ-aminolevulinate dehydratase) and ferrochelatase (most sensitive) → ↑ protoporphyrin IX, ↑ urinary ALA → microcytic anaemia similar to iron deficiency.</li>
+        <li><strong>Chelation caveats:</strong> CaNa₂EDTA mobilises lead from soft tissues → can redistribute to brain (especially with dimercaprol). Succimer is hydrophilic → does NOT enter CNS → preferred for outpatient treatment of children (BLL 45–70 μg/dL).</li>
+      </ul>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Chelator</th><th>Route</th><th>Key Metals</th><th>Unique Properties</th><th>Key Toxicities</th></tr></thead>
+          <tbody>
+            <tr><td><strong>CaNa₂EDTA</strong></td><td>IV or IM</td><td>Pb (primary), also Mn, Zn, Fe (non-selective)</td><td>Does NOT penetrate cells (charged at pH 7.4); zinc supplementation may be needed; use calcium salt (not Na₂EDTA → hypocalcaemic tetany)</td><td>Nephrotoxicity (main); ↑ intracranial pressure if IV in encephalopathy</td></tr>
+            <tr><td><strong>Dimercaprol (BAL)</strong></td><td>IM only (oil)</td><td>As, Au, Hg (inorganic), Pb (+ EDTA)</td><td>Lipophilic → distributes to brain (RISK for redistribution); t½ 4h; DO NOT use for Fe, Cd, Se (more toxic complexes)</td><td>↑ BP, tachycardia, nausea, painful abscesses; CI in liver failure (except if As poisoning)</td></tr>
+            <tr><td><strong>Succimer (DMSA)</strong></td><td>Oral</td><td>Pb (first-line oral), As, Hg</td><td>Hydrophilic → does NOT cross into CNS; most selective; does not chelate Fe, Cu, Zn significantly</td><td>GI upset, rash, transient ↑ LFTs — best safety profile</td></tr>
+            <tr><td><strong>DMPS</strong></td><td>Oral/IV</td><td>Hg (especially), As, Pb</td><td>Best for mercury; available in Germany; compounded in US</td><td>Mobilises Zn and Cu; more toxic than succimer</td></tr>
+            <tr><td><strong>Penicillamine</strong></td><td>Oral</td><td>Cu (Wilson), Hg, Zn, Pb</td><td>Drug of choice for Wilson disease; more toxic than other chelators</td><td>Allergic reactions (cross-react with penicillin), nephrotic syndrome, leukopenia, aplastic anaemia, myasthenia</td></tr>
+            <tr><td><strong>Trientine</strong></td><td>Oral</td><td>Cu only</td><td>Alternative to penicillamine in Wilson disease (intolerant patients); less effective</td><td>Iron deficiency (space iron administration 2h apart)</td></tr>
+            <tr><td><strong>Deferoxamine</strong></td><td>IV/IM/SC</td><td>Fe³⁺ (high specificity), Al</td><td>Ka for Fe = 10³¹ vs Ca = 10² — extraordinarily selective. Does NOT remove Fe from Hb or cytochromes. Off-label: Al in dialysis patients</td><td>Ocular/auditory neurotoxicity (long-term), pulmonary syndrome (high-dose), hypotension (rapid IV)</td></tr>
+            <tr><td><strong>Deferasirox / Deferiprone</strong></td><td>Oral</td><td>Fe (chronic overload)</td><td>Better cardiac iron removal than deferoxamine; oral — better compliance for thalassaemia</td><td>Deferasirox: renal/hepatic failure, GI haemorrhage (boxed warning). Deferiprone: agranulocytosis, neutropenia (boxed warning)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Carcinogenesis concepts (high-yield for exam reasoning):</strong></p>
+      <ul>
+        <li><strong>Genotoxic carcinogens:</strong> Form DNA adducts (direct) or ROS (indirect). Example: Benzo[a]pyrene (tobacco smoke) → metabolised by CYP → 7,8-diol → diol epoxide → DNA adduct OR aldo-keto reductase → catechol → ROS. Aflatoxin B₁ → N7-guanine adduct → G→T transversion → p53 codon 249 mutation → hepatocellular carcinoma.</li>
+        <li><strong>Non-genotoxic carcinogens:</strong> Tumour promotion without DNA damage. Mechanisms: phorbol esters (PKC activation), oestrogens (ERα proliferation), chronic inflammation (asbestos), hepatotoxicity/compensatory proliferation (ethanol), epigenetic silencing (arsenic). Lead = non-genotoxic (inhibits zinc-finger DNA repair proteins).</li>
+        <li><strong>Complete carcinogens:</strong> Benzo[a]pyrene, UV radiation — can initiate AND promote.</li>
+        <li><strong>Aflatoxin B₁ + Hepatitis B = 59-fold ↑ risk</strong> (synergistic, not additive) — HBx protein inhibits p53 → impairs nucleotide excision repair of aflatoxin adducts.</li>
+      </ul>
+
+      <p><strong>Endocrine disruptors (EDCs) — summary:</strong></p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>EDC</th><th>Source</th><th>Mechanism</th><th>Key Health Effects</th></tr></thead>
+          <tbody>
+            <tr><td><strong>DDT/DDE</strong></td><td>Organochlorine pesticide; persists in fat; banned US 1972</td><td>o,p'-DDT: ERα/β agonist; p,p'-DDE: AR antagonist; p,p'-DDT: modulates FSHR</td><td>↑ abortion/preterm birth; reproductive effects in animals; ↑ type 2 DM, obesity, liver cancer (developmental exposure)</td></tr>
+            <tr><td><strong>Phthalates</strong></td><td>PVC plasticizers, personal care products</td><td>Directly bind NRs (AR, ER, PPAR); modulate hormone levels; epigenetic effects</td><td>↓ semen quality, ↑ pregnancy loss, thyroid dysfunction, precocious puberty in children</td></tr>
+            <tr><td><strong>Bisphenol A (BPA)</strong></td><td>Polycarbonate plastics, food can liners</td><td>ERα agonist/ERβ antagonist → selective ER modulator; also non-genomic ER effects</td><td>↑ implantation failure, ↓ sperm count; ↑ type 2 DM, thyroid dysfunction; developmental effects in offspring</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 2: RECALL -->
+  <div class="stage">
+    <div class="blurt-stage">
+      <div class="stage-label">🧠 Active Recall Gate</div>
+      <div class="blurt-prompt">
+        <strong>Clinical scenario:</strong> Close this guide. Dump everything you know about: (1) Which chelator to use for each of: lead in a child (BLL 55), arsenic poisoning, iron overdose, Wilson disease; (2) Why dimercaprol should NOT be used in cadmium poisoning; (3) The synergistic carcinogenicity of aflatoxin B₁ and hepatitis B virus. Write for 5 minutes.
+      </div>
+      <ul class="primers">
+        <li>Why does the NOAEL from an animal study require division by 100 (NOAEL/100 = RfD) rather than a smaller safety factor?</li>
+        <li>Why is succimer preferred over CaNa₂EDTA for outpatient treatment of childhood lead poisoning, given that EDTA is more potent?</li>
+        <li>Why does methyl mercury (MeHg⁺) cause severe fetal CNS damage even in mothers who appear asymptomatic?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 3: FEYNMAN (GATED) -->
+  <div class="stage">
+    <details class="gate">
+      <summary>✓ I've blurted — reveal the Plain-Language Notes for Ch.76 Environmental Toxicology</summary>
+      <div class="feynman-content">
+        <h4>Chelation: Why "More Potent" Doesn't Mean Better</h4>
+        <p>CaNa₂EDTA is highly effective at chelating lead — it forms a stable complex and promotes urinary excretion. But it has a critical flaw: it mobilises lead from soft tissues (bone, soft organs) and, because it can redistribute metal to the brain, worsen neurotoxicity. It also doesn't penetrate cells (charged molecule at pH 7.4).</p>
+        <p>Succimer (DMSA) is hydrophilic, also charged, also doesn't cross cell membranes — but it is <strong>highly selective</strong> for heavy metals and does NOT effectively chelate essential metals (Zn, Cu, Fe). This means: (1) less redistribution to brain, (2) fewer essential metal deficiencies, (3) oral bioavailability. For a child with BLL 45–70 μg/dL who is ambulatory, succimer wins hands-down for outpatient management.</p>
+
+        <div class="analogy">
+          Think of chelators like different fishing nets: EDTA is a large trawl net — catches lots of fish (metals) including the ones you want to keep (Ca, Zn), and stirs up everything in the water including sending some fish (lead) into protected areas (brain). Succimer is a selective line with lead-specific bait — catches mostly what you want, doesn't disturb the rest, and doesn't stir up the pond bed.
+        </div>
+
+        <h4>Dimercaprol (BAL) Contraindications — the Logic</h4>
+        <p>Dimercaprol works by two sulfhydryl groups forming a stable ring with metals. For iron, cadmium, and selenium: the dimercaprol-metal complex is actually <strong>MORE toxic than the free metal</strong> — it is less stable, redox-reactive, and concentrates in the kidney. For cadmium specifically, chelation therapy with any agent increases nephrotoxicity — hence "supportive care only" for cadmium. Dimercaprol is also <strong>oil-based (peanut oil)</strong> — contraindicated in peanut allergy. Given IM only — painful sterile abscesses are common.</p>
+
+        <h4>Methyl Mercury Fetal Toxicity — The Molecular Mimicry Trap</h4>
+        <p>MeHg⁺ forms complexes with cysteine that structurally resemble methionine → recognised by methionine transporters → actively transported across membranes including placenta and blood-brain barrier. In the fetal brain, microtubules are extremely sensitive to mercury (disrupts tubulin polymerisation). Fetal developing neurons (migrating, forming synapses) are in a state of maximum vulnerability. The mother has mature adult CNS with completed myelination and synaptic stabilisation → far more tolerant. Hence, a mother can consume MeHg-contaminated fish at levels causing only mild symptoms while her fetus develops Minamata disease (profound CNS damage, intellectual disability, cerebral palsy).</p>
+
+        <h4>Aflatoxin B₁ + Hepatitis B: Synergy Mechanism</h4>
+        <p>Three synergistic pathways:</p>
+        <ul>
+          <li><strong>HBx protein</strong> (encoded by HBV X gene) binds and inhibits p53 → impairs nucleotide excision repair of aflatoxin-induced N7-guanine adducts → mutations propagate.</li>
+          <li><strong>HBV upregulates CYP3A4</strong> → more activation of aflatoxin B₁ to its carcinogenic 8,9-epoxide; simultaneously decreases GSH S-transferase → less detoxification.</li>
+          <li>HBV causes hepatocyte death → compensatory proliferation → any aflatoxin-induced mutations that survive are rapidly expanded into clones. This is non-genotoxic promotion.</li>
+        </ul>
+        <p>Result: Aflatoxin alone = 3.4× ↑ HCC risk; HBV alone = 7.3× ↑ risk; Both together = <strong>59×</strong> ↑ risk. Vaccination against HBV is therefore a chemoprevention strategy against aflatoxin-mediated HCC.</p>
+
+        <blockquote class="warn">
+          Penicillamine is cross-reactive with penicillin — up to 1/3 of patients develop allergic reactions (urticaria, maculopapular rash). More importantly: it causes <em>nephrotoxicity (membranous glomerulonephritis → nephrotic syndrome)</em>, leukopenia, aplastic anaemia, and can induce myasthenia gravis with long-term use. Despite its name, it is NOT an antibiotic. Contraindicated in pregnancy (without Wilson disease — risk-benefit favours therapy in Wilson disease).
+        </blockquote>
+        <blockquote class="warn">
+          The NOAEL/100 formula for RfD: factor of 10 for interspecies variability (animal → human) and factor of 10 for interindividual human variability (human → human). Additional factors of 10 can be added for database uncertainties. This is called the "precautionary principle" — assumes worst-case for each uncertainty. An MCQ may ask you to calculate RfD given NOAEL — divide by 100 in the standard case.
+        </blockquote>
+        <blockquote class="warn">
+          Deferoxamine has extraordinarily high affinity for ferric iron (Fe³⁺, Ka = 10³¹) vs calcium (Ka = 10²) — this selectivity is its major advantage. BUT: it does NOT remove iron from haemoglobin, myoglobin, or cytochromes (the iron in these is protein-bound in a specific coordination environment). It chelates free and storage iron (ferritin, haemosiderin). Also: rapid IV infusion → hypotension. Chronic high-dose → ocular/auditory neurotoxicity.
+        </blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- STAGE 4: SPACED REP -->
+  <div class="stage">
+    <div class="sched-stage">
+      <div class="stage-label">🔄 Spaced Repetition Schedule</div>
+      <div class="sched">
+        <div class="sched-day"><strong>Day 1</strong> Recall the chelator-metal pairing table from memory. Remember the two absolute contraindications for dimercaprol (cadmium, iron, selenium + peanut oil in peanut allergy).</div>
+        <div class="sched-day"><strong>Day 3</strong> Explain aflatoxin metabolism and its three pathways. Name two chemopreventive agents that modify aflatoxin metabolism and their mechanisms.</div>
+        <div class="sched-day"><strong>Day 7</strong> Why is chelation ineffective (and possibly harmful) for chronic metal poisoning? What is the evidence basis? Explain the NOAEL/RfD calculation.</div>
+        <div class="sched-day"><strong>Day 21</strong> Integrate: a pregnant patient from Bangladesh with chronic arsenic exposure presents with skin hyperkeratosis. What is her cancer risk (explain synergy concept), and why is chelation therapy not recommended?</div>
+      </div>
+      <div class="bridge">
+        <strong>Clinical Bridge:</strong> In loop diuretic resistance, a key distinction is pharmacokinetic failure (insufficient urinary furosemide concentration) vs. pharmacodynamic failure (tubular resistance despite adequate drug). This mirrors the carcinogenesis model: exposure (pharmacokinetic step = absorption/activation) vs. DNA repair capacity (pharmacodynamic resistance = cellular defence). HPLC measurement of urinary furosemide is analogous to measuring aflatoxin N7-guanine adducts in urine — both are <em>biomarkers of effective drug delivery to the target compartment</em>, allowing one to distinguish PK failure from PD resistance.
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ CH76 -->
+  <div class="stage" id="quiz76">
+    <div class="quizset">
+      <div class="quizset-title">📝 Quiz — Chapter 76 Environmental Toxicology (15 Questions)</div>
+      <div class="quiz-item"><div class="quiz-q">1. What is the Reference Dose (RfD) and how is it calculated from animal data?</div><div class="quiz-a"><strong>RfD = NOAEL / 100</strong> (standard case). NOAEL = highest dose with no statistically significant adverse effect. Divided by 10 for interspecies variability (animal→human) and 10 for interindividual human variability. Additional uncertainty factors (10 each) may be added for database limitations. This reflects the "precautionary principle" — assumes worst-case for each unknown.</div></div>
+      <div class="quiz-item"><div class="quiz-q">2. A child has a blood lead level of 55 μg/dL. What treatment is indicated and what route?</div><div class="quiz-a"><strong>Oral succimer (DMSA)</strong> — indicated for children with BLL 45–70 μg/dL as outpatient therapy. Succimer is orally bioavailable, hydrophilic (does not enter CNS → no lead redistribution to brain), selective for heavy metals. BLL &gt;70 μg/dL = medical emergency → IV CaNa₂EDTA ± IM dimercaprol (inpatient).</div></div>
+      <div class="quiz-item"><div class="quiz-q">3. Why is chelation therapy contraindicated for cadmium poisoning?</div><div class="quiz-a">The dimercaprol-cadmium complex (and complexes with other chelators) is <strong>more toxic than free cadmium itself</strong>, particularly to the kidneys. Cadmium's primary target is the renal tubule — chelation redistributes cadmium to the kidney and increases nephrotoxicity. No chelator has demonstrated clinical benefit for cadmium; treatment is supportive only.</div></div>
+      <div class="quiz-item"><div class="quiz-q">4. What is the mechanism of aflatoxin B₁ carcinogenesis and why does co-infection with HBV increase risk 59-fold?</div><div class="quiz-a">AFB₁ → CYP1A2/3A4 → 8,9-epoxide → N7-guanine adduct → G→T transversion → <strong>p53 codon 249 mutation</strong> (Arg→Cys) → uncontrolled hepatocyte proliferation. HBV synergy via: (1) HBx protein inhibits p53 → impairs NER of AFB₁ adducts; (2) HBV upregulates CYP3A4 → more AFB₁ activation; (3) HBV causes hepatocyte death → compensatory proliferation → initiated cells expand. Individual risks: AFB₁ = 3.4×, HBV = 7.3×, combined = <strong>59×</strong> (synergistic, not additive).</div></div>
+      <div class="quiz-item"><div class="quiz-q">5. What enzyme is most sensitive to lead inhibition in heme biosynthesis and what are the downstream effects?</div><div class="quiz-a"><strong>Ferrochelatase</strong> (which inserts Fe²⁺ into protoporphyrin IX to form haem) and <strong>ALAD</strong> (δ-aminolevulinate dehydratase, very sensitive at BLL &lt;10 μg/dL). Effects: ↑ erythrocyte protoporphyrin IX (zinc protoporphyrin), ↑ urinary ALA, hypochromic microcytic anaemia morphologically similar to iron deficiency.</div></div>
+      <div class="quiz-item"><div class="quiz-q">6. Why should sodium EDTA (Na₂EDTA) NOT be used instead of calcium EDTA (CaNa₂EDTA) for lead poisoning?</div><div class="quiz-a">Na₂EDTA lacks the calcium — it will chelate endogenous Ca²⁺ from the blood → <strong>hypocalcaemic tetany</strong> if administered rapidly IV. CaNa₂EDTA exchanges its calcium for metals with higher EDTA affinity (Pb &gt; Ca) without causing hypocalcaemia — the calcium released is physiologically inconsequential at therapeutic doses.</div></div>
+      <div class="quiz-item"><div class="quiz-q">7. Methyl mercury causes severe fetal brain damage even in asymptomatic mothers. Explain the molecular and physiological basis.</div><div class="quiz-a">MeHg⁺-cysteine complex mimics methionine → transported across placenta and blood-brain barrier via amino acid transporters (molecular mimicry). Fetal brain is maximally vulnerable (neurons actively migrating, forming synapses — microtubule-dependent processes). Mercury disrupts tubulin polymerisation → impairs neuronal migration. Adult CNS is mature and far more tolerant. Hence, maternal intake causes fetal Minamata disease (severe CNS damage, cerebral palsy, ID) with only mild maternal symptoms.</div></div>
+      <div class="quiz-item"><div class="quiz-q">8. What distinguishes genotoxic from non-genotoxic carcinogens? Give one example of each.</div><div class="quiz-a"><strong>Genotoxic</strong>: directly damage DNA (adducts, strand breaks, oxidation via ROS). Example: benzo[a]pyrene (tobacco) → diol epoxide → DNA adducts. The Ames test detects genotoxins. <strong>Non-genotoxic</strong>: increase cancer incidence without directly damaging DNA; act via receptor-mediated proliferation (phorbol esters → PKC), inflammation (asbestos), compensatory regeneration (ethanol → hepatotoxicity), or epigenetic silencing (arsenic → DNA methylation changes). Lead is a classic non-genotoxic carcinogen (inhibits zinc-finger DNA repair proteins).</div></div>
+      <div class="quiz-item"><div class="quiz-q">9. A patient with Wilson disease is allergic to penicillin. Can they still take penicillamine?</div><div class="quiz-a">Penicillamine cross-reacts with penicillin → up to 1/3 of patients develop allergic reactions (urticaria, maculopapular rash, fever). Penicillin allergy is therefore a relative contraindication. The preferred alternative is <strong>trientine</strong> (triethylenetetramine dihydrochloride) — orally effective copper chelator with a safer profile, though less potent than penicillamine.</div></div>
+      <div class="quiz-item"><div class="quiz-q">10. What is the main route of arsenic excretion and how does biotransformation affect its toxicity?</div><div class="quiz-a">Arsenic is excreted primarily in urine (t½ ~1–3 days — faster than most toxic metals). Biotransformation: inorganic arsenate (As⁵⁺) → arsenite (As³⁺) → methylated forms (MMA, DMA) via AS3MT enzyme using SAM as methyl donor. Previously thought to be detoxification; now known that <strong>trivalent methylated intermediates (MMA³⁺)</strong> are actually MORE toxic than inorganic arsenite (higher sulfhydryl affinity). So methylation is a bioactivation pathway, not purely detoxification.</div></div>
+      <div class="quiz-item"><div class="quiz-q">11. Name three IARC Group 1 carcinogens with their target organs and mechanisms.</div><div class="quiz-a">(1) <strong>Aflatoxin B₁</strong> → liver (HCC) → metabolic activation (CYP→8,9-epoxide) → N7-guanine adducts → p53 mutation. (2) <strong>Arsenic (inorganic)</strong> → liver, bladder, lung, skin → inhibition of DNA repair, epigenetic changes, oxidative stress. (3) <strong>Hexavalent chromium (Cr⁶⁺)</strong> → lung → absorbed via anion transporters → reduced intracellularly to Cr³⁺ → DNA adducts, oxidative DNA damage, inflammation. Bonus: benzene → leukaemia; asbestos → mesothelioma (non-genotoxic via inflammation).</div></div>
+      <div class="quiz-item"><div class="quiz-q">12. What is BPA's mechanism of action as an endocrine disruptor and which phase of development is most critical?</div><div class="quiz-a">BPA is structurally similar to oestrogen → binds ERα (agonist) and ERβ (antagonist) → acts as a selective oestrogen receptor modulator. At low concentrations: interferes with non-genomic ER signalling (extranuclear complexes, Ca²⁺ release). Also metabolised to BPA-glucuronide (inactive) by CYP2C subfamily. Most critical windows: <strong>embryonic development, gestational stages, neonatal period, peripubertal period</strong>. Developmental exposure (in utero) programs adult metabolic and reproductive outcomes (decreased insulin secretion in offspring of BPA-exposed dams).</div></div>
+      <div class="quiz-item"><div class="quiz-q">13. Deferoxamine is described as having "extraordinarily high" affinity for iron. Quantify this and explain why it doesn't remove iron from haemoglobin.</div><div class="quiz-a">Deferoxamine Ka for Fe³⁺ = <strong>10³¹ M⁻¹</strong> vs. Ca²⁺ = 10² M⁻¹ — approximately 10²⁹ greater selectivity for iron. It does NOT remove iron from haemoglobin or cytochromes because these proteins coordinate iron within a specific protein tertiary structure (porphyrin + protein coordination) that is thermodynamically and kinetically stable — haem iron is not "free" iron accessible to the chelator. Deferoxamine chelates only iron in its free, transferrin, ferritin, and haemosiderin forms.</div></div>
+      <div class="quiz-item"><div class="quiz-q">14. Describe the immunotoxic mechanism of TCDD and its primary cellular target.</div><div class="quiz-a">TCDD (2,3,7,8-tetrachlorodibenzo-p-dioxin) binds the <strong>aryl hydrocarbon receptor (AhR)</strong> with extremely high affinity and is resistant to CYP-mediated metabolism → sustained AhR activation (unlike other AhR ligands). In T cells: promotes newly activated CD4⁺ T cells → regulatory T cell phenotype (immunosuppression). Also inhibits B cell antibody production, induces tolerogenic dendritic cells, alters CD8⁺ antiviral responses. Most consistent human finding: ↓ CD4⁺ T helper cell subsets. TCDD has human half-life of 7–11 years (extremely persistent).</div></div>
+      <div class="quiz-item"><div class="quiz-q">15. A chemopreventive strategy uses chlorophyllin for aflatoxin-exposed populations. What is its mechanism?</div><div class="quiz-a">Chlorophyllin (water-soluble chlorophyll salts) acts as an <strong>"interceptor molecule"</strong> — it tightly binds aflatoxin B₁ in the GI tract, forming a complex that is not absorbed (reduces bioavailability of aflatoxin). Additionally: inhibits CYP activity → less metabolic activation; acts as antioxidant (↓ ROS). Phase II clinical trial: 100 mg chlorophyllin with each meal → significant ↓ in urinary aflatoxin-N7-guanine adducts (direct measure of DNA damage reduced). This is a primary prevention strategy for HCC in aflatoxin-endemic regions.</div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <p><strong>Special Systems Pharmacology · Accelerated Learning System</strong> — 3 modules (Ch. 74–76), note blocks, inline SVG diagrams, and 45 quiz Q&amp;As.</p>
+  <p style="margin-top:0.5rem">Source: Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics, 14th Edition — Section IX (Chapters 74–76). Verify all drug dosing against current local protocols before clinical use.</p>
+</footer>
+
+<script>
+  // Quiz toggle
+  document.querySelectorAll('.quiz-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const wasOpen = item.classList.contains('open');
+      // close all
+      document.querySelectorAll('.quiz-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+<script src="learning-interactive.js"></script>
+</body>
+</html>

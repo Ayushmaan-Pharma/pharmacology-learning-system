@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pharmacology PYQ Notes — Library</title>
+<style>
+  :root{
+    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328; --muted:#6b7280;
+    --line:#e7e7e4; --accent:#2f6f5e; --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 18px rgba(0,0,0,.05);
+  }
+  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 18px rgba(0,0,0,.35)}
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink); transition:background .25s,color .25s;
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px; margin:0 auto; padding:48px 22px 100px}
+  .top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:6px}
+  h1{font-size:1.85rem; font-weight:650; letter-spacing:-.02em; margin:0}
+  .sub{color:var(--muted); font-size:.95rem; margin:6px 0 0}
+  .theme{border:1px solid var(--line); background:var(--panel); color:var(--ink); width:40px; height:40px;
+    border-radius:10px; font-size:1.1rem; cursor:pointer; flex-shrink:0; transition:.15s}
+  .theme:hover{border-color:var(--accent)}
+  .stats{color:var(--muted); font-size:.85rem; margin:18px 0 26px}
+  .stats b{color:var(--ink)}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:16px}
+  a.card{display:block; text-decoration:none; color:inherit; background:var(--panel);
+    border:1px solid var(--line); border-left:5px solid var(--sec,var(--accent)); border-radius:12px;
+    padding:18px 20px; box-shadow:var(--shadow); transition:transform .15s, box-shadow .15s, border-color .15s}
+  a.card:hover{transform:translateY(-3px); box-shadow:0 6px 24px rgba(0,0,0,.10)}
+  .num{font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--sec,var(--accent))}
+  .card h2{font-size:1.06rem; font-weight:640; margin:6px 0 6px; letter-spacing:-.01em}
+  .card p{font-size:.86rem; color:var(--muted); margin:0 0 14px; min-height:38px}
+  .meta{display:flex; gap:8px; flex-wrap:wrap}
+  .pill{font-size:.72rem; padding:3px 9px; border-radius:999px; background:var(--bg); border:1px solid var(--line); color:var(--muted)}
+  .pill.case{color:#9a6b1e}
+  [data-theme="dark"] .pill.case{color:#e0a93a}
+  footer{margin-top:40px; color:var(--muted); font-size:.8rem; text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a href="index.html" style="display:inline-block;margin-bottom:14px;font-size:.85rem;font-weight:600;color:var(--accent);text-decoration:none">← Study hub</a>
+  <div class="top">
+    <div>
+      <h1>Pharmacology — PYQ Notes Library</h1>
+      <p class="sub">Consolidated, exam-oriented question banks · click a subject to open its interactive notes</p>
+    </div>
+    <button class="theme" id="theme" title="Toggle dark mode">🌙</button>
+  </div>
+
+  <p class="stats"><b>6</b> subjects · <b>240</b> exam questions · <b>53</b> clinical case vignettes · <b>293</b> total cards</p>
+
+  <a class="card" href="Pharmacology_Flashcards.html" style="--sec:#3f6cb0; display:flex; align-items:center; gap:16px; margin-bottom:22px; border-left-width:5px">
+    <div style="font-size:2rem; line-height:1">🃏</div>
+    <div style="flex:1">
+      <h2 style="margin:0 0 4px">Spaced-Repetition Flashcards</h2>
+      <p style="margin:0; min-height:0">Review all 293 cards (240 questions + 53 case vignettes) with an Anki-style spaced-repetition study mode — tracks due dates, ease, and progress per card.</p>
+    </div>
+    <div class="meta" style="flex-shrink:0"><span class="pill">293 cards</span><span class="pill">SM-2 algorithm</span></div>
+  </a>
+
+  <div class="grid">
+    <a class="card" href="General_Pharmacology_Notes.html" style="--sec:#2f7d6a">
+      <div class="num">01</div>
+      <h2>General Pharmacology</h2>
+      <p>Drug discovery, pharmacokinetics, pharmacodynamics, NDDS, rational use, pharmacovigilance, ethics.</p>
+      <div class="meta"><span class="pill">61 questions</span><span class="pill case">🩺 10 cases</span></div>
+    </a>
+
+    <a class="card" href="Autonomic_Receptor_Pharmacology_Notes.html" style="--sec:#3f6cb0">
+      <div class="num">02</div>
+      <h2>Autonomic, Receptor &amp; Neuro</h2>
+      <p>ANS &amp; neurotransmission, adrenergic &amp; cholinergic systems, GPCRs, receptor families.</p>
+      <div class="meta"><span class="pill">53 questions</span><span class="pill case">🩺 9 cases</span></div>
+    </a>
+
+    <a class="card" href="Pulmonary_Renal_Cardiovascular_Notes.html" style="--sec:#845bb0">
+      <div class="num">03</div>
+      <h2>Pulmonary, Renal &amp; Cardiovascular</h2>
+      <p>Diuretics, RAAS &amp; heart failure, antianginals, anticoagulants, asthma/PAH, diabetes, lipids.</p>
+      <div class="meta"><span class="pill">33 questions</span><span class="pill case">🩺 10 cases</span></div>
+    </a>
+
+    <a class="card" href="Neoplastic_Disease_Pharmacotherapy_Notes.html" style="--sec:#b15068">
+      <div class="num">04</div>
+      <h2>Neoplastic Disease &amp; Related</h2>
+      <p>Cancer chemotherapy, targeted &amp; immunotherapy, toxicity management, hormonal therapy, FDCs.</p>
+      <div class="meta"><span class="pill">25 questions</span><span class="pill case">🩺 8 cases</span></div>
+    </a>
+
+    <a class="card" href="Special_Systems_Pharmacology_Notes.html" style="--sec:#b3852f">
+      <div class="num">05</div>
+      <h2>Special Systems</h2>
+      <p>Antibiotic stewardship &amp; resistance, ocular &amp; dermato-pharmacology, corticosteroids, poisoning.</p>
+      <div class="meta"><span class="pill">23 questions</span><span class="pill case">🩺 9 cases</span></div>
+    </a>
+
+    <a class="card" href="Miscellaneous_Pharmacology_Notes.html" style="--sec:#2f8696">
+      <div class="num">06</div>
+      <h2>Miscellaneous</h2>
+      <p>Experimental methods, biostatistics, clinical trials, ethics, regulatory affairs, emerging topics.</p>
+      <div class="meta"><span class="pill">45 questions</span><span class="pill case">🩺 7 cases</span></div>
+    </a>
+  </div>
+
+  <footer>
+    Tip: inside each file use 🎲 Quiz me, the ★ / 🩺 filter chips, and keyboard shortcuts ( / R J K Space D ).
+    &nbsp;|&nbsp; Sources: Goodman &amp; Gilman, Katzung, Rang &amp; Dale + current clinical guidelines.
+  </footer>
+</div>
+
+<script>
+  const root=document.documentElement, btn=document.getElementById('theme');
+  function set(m){ if(m==='dark'){root.setAttribute('data-theme','dark');btn.textContent='☀️';} else {root.removeAttribute('data-theme');btn.textContent='🌙';} try{localStorage.setItem('pharm-theme',m);}catch(e){} }
+  btn.onclick=()=> set(root.getAttribute('data-theme')==='dark'?'light':'dark');
+  try{ if(localStorage.getItem('pharm-theme')==='dark') set('dark'); }catch(e){}
+</script>
+</body>
+</html>

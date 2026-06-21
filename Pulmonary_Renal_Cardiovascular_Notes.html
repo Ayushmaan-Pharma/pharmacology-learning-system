@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pulmonary, Renal &amp; Cardiovascular Pharmacology — PYQ Notes</title>
+<style>
+  :root{
+    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
+    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
+  header.top{margin-bottom:26px}
+  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
+  .sub{color:var(--muted); font-size:.92rem; margin:0}
+  .tools{
+    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
+    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
+    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+  }
+  #search{
+    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
+    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
+    outline:none;
+  }
+  #search:focus{border-color:var(--accent)}
+  .btn{
+    border:1px solid var(--line); background:var(--panel); color:var(--ink);
+    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
+    transition:.15s; white-space:nowrap;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--accent)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+
+  .toc{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+  }
+  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
+  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
+  .toc a:hover{color:var(--accent)}
+
+  section.sec{margin:34px 0}
+  .sec > h2{
+    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
+    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+  }
+  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+
+  details.q{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+  }
+  details.q[open]{border-color:#d6e6e0}
+  summary.q-head{
+    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
+    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+  }
+  summary.q-head::-webkit-details-marker{display:none}
+  summary.q-head:hover{background:#fcfdfc}
+  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
+  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  .q-text{flex:1}
+  .answer{
+    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
+    font-size:.93rem; color:#33383d;
+  }
+  .answer h4{
+    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
+    margin:18px 0 7px;
+  }
+  .answer p{margin:9px 0}
+  .answer ul,.answer ol{margin:8px 0; padding-left:20px}
+  .answer li{margin:4px 0}
+  .answer b{font-weight:620}
+  .answer table{
+    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
+  }
+  .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
+  .answer th{background:var(--accent-soft); font-weight:600}
+  .answer .dia{
+    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
+    margin:12px 0; font-size:.85rem; color:#4a5550;
+  }
+  .answer .dia b{color:var(--accent)}
+  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .recent b{color:#9a7000}
+  .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
+  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
+  mark{background:#fff2a8; padding:0 1px}
+  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+
+  /* ---- v2 interactive additions ---- */
+  body{transition:background .25s, color .25s}
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
+  .chip:hover{border-color:var(--accent); color:var(--accent)}
+  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
+  .iconbtn{font-size:1rem; line-height:1}
+  details.q.vignette{border-left:3px solid #c98a3c}
+  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
+  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
+  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
+  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a; --shadow:0 1px 2px rgba(0,0,0,.35)}
+  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
+  [data-theme="dark"] summary.q-head:hover{background:#23272c}
+  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  [data-theme="dark"] .answer{color:#cfd4d8}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:#2a2519}
+  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] mark{background:#7a6212; color:#fff}
+  [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
+
+  /* ---- per-section colour theming ---- */
+  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
+  .sec > h2{border-bottom:2px solid var(--sec)}
+  .sec details.q{border-left:4px solid var(--sec)}
+  .sec details.q[open]{border-left-color:var(--sec)}
+  .sec details.q[open] .chev{color:var(--sec)}
+  .sec .answer h4{color:var(--sec)}
+  .sec .answer th{background:var(--sec-soft)}
+  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
+  .toc a{display:flex; align-items:center}
+  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
+  [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
+  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1>Pulmonary, Renal &amp; Cardiovascular Pharmacology — Consolidated PYQ Notes</h1>
+    <p class="sub">Exam-oriented model answers · Goodman &amp; Gilman, Katzung, Rang &amp; Dale + current guidelines (GINA, ESC, ADA) · click any question to open the answer</p>
+  </header>
+
+  <div class="tools">
+    <a class="btn" href="index_pyq.html" title="Back to PYQ Library" style="text-decoration:none">← PYQ Library</a>
+    <a class="btn" href="index.html" title="Back to study hub" style="text-decoration:none">← Hub</a>
+    <input id="search" type="text" placeholder="🔍  Search… ( / )" autocomplete="off">
+    <button class="btn" id="shuffle" title="Random question (R)">🎲 Quiz me</button>
+    <button class="btn" id="expandAll" title="Expand visible (E)">Expand</button>
+    <button class="btn" id="collapseAll" title="Collapse all (C)">Collapse</button>
+    <button class="btn iconbtn" id="theme" title="Dark mode (D)">🌙</button>
+    <span class="count" id="counter"></span>
+  </div>
+  <div class="chips" id="chips">
+    <button class="chip active" data-f="all">All</button>
+    <button class="chip" data-f="3">★★★</button>
+    <button class="chip" data-f="2">★★</button>
+    <button class="chip" data-f="1">★</button>
+    <button class="chip" data-f="case">🩺 Cases</button>
+  </div>
+  <p class="hint">Shortcuts: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K</kbd>/<kbd>J</kbd> next/prev · <kbd>Space</kbd> open · <kbd>E</kbd>/<kbd>C</kbd> expand/collapse · <kbd>D</kbd> dark</p>
+
+  <nav class="toc" id="toc">
+    <h2>Sections</h2>
+    <a href="#s1"><span class="dot" style="background:#2f7d6a"></span>1 · Diuretics &amp; Renal Pharmacology</a>
+    <a href="#s2"><span class="dot" style="background:#3f6cb0"></span>2 · RAAS Modifiers, Antihypertensives &amp; Heart Failure</a>
+    <a href="#s3"><span class="dot" style="background:#845bb0"></span>3 · Antianginal Drugs &amp; Ischemic Heart Disease</a>
+    <a href="#s4"><span class="dot" style="background:#b15068"></span>4 · Anticoagulants, Antiplatelets &amp; Fibrinolytics</a>
+    <a href="#s5"><span class="dot" style="background:#b3852f"></span>5 · Respiratory Pharmacology (Asthma, Allergy &amp; PAH)</a>
+    <a href="#s6"><span class="dot" style="background:#2f8696"></span>6 · Metabolic, Endocrine &amp; Dyslipidemia</a>
+    <a href="#s7"><span class="dot" style="background:#548a4f"></span>7 · Gastrointestinal Pharmacology</a>
+    <a href="#s8"><span class="dot" style="background:#c06a3e"></span>8 · Erectile Dysfunction &amp; Other Special Topics</a>
+    <a href="#s9"><span class="dot" style="background:#7a5bbd"></span>9 · Special &amp; Regulatory Topics</a>
+    <a href="#scase"><span class="dot" style="background:#aa5590"></span>🩺 Clinical Case Vignettes</a>
+  </nav>
+
+  <p class="nohit" id="nohit">No questions match your search.</p>
+
+  <div id="content">
+<!-- CONTENT START -->
+
+<section class="sec" id="s1" style="--sec:#2f7d6a;--sec-soft:#2f7d6a26">
+  <h2>Section 1 · Diuretics &amp; Renal Pharmacology</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Classify diuretics (sites &amp; mechanisms). Pharmacological basis, indications, ADRs &amp; rationale of potassium-sparing diuretics; note on diuretic resistance &amp; non-diuretic uses.</span></summary>
+  <div class="answer">
+    <h4>Classification by site of action (nephron)</h4>
+    <table>
+      <tr><th>Class</th><th>Site</th><th>Mechanism</th><th>Example</th></tr>
+      <tr><td>Carbonic anhydrase inhibitors</td><td>PCT</td><td>Block CA → ↓ Na⁺/HCO₃⁻ reabsorption</td><td>Acetazolamide</td></tr>
+      <tr><td>Osmotic diuretics</td><td>PCT, loop, collecting duct</td><td>Osmotically hold water</td><td>Mannitol</td></tr>
+      <tr><td><b>Loop (high-ceiling)</b></td><td>Thick ascending limb</td><td>Inhibit Na⁺-K⁺-2Cl⁻ (NKCC2)</td><td>Furosemide, torsemide, bumetanide</td></tr>
+      <tr><td>Thiazides</td><td>DCT</td><td>Inhibit Na⁺-Cl⁻ (NCC) cotransporter</td><td>Hydrochlorothiazide, chlorthalidone, indapamide</td></tr>
+      <tr><td><b>K⁺-sparing</b></td><td>Collecting duct</td><td>(a) Aldosterone antagonist; (b) ENaC blocker</td><td>(a) Spironolactone, eplerenone; (b) amiloride, triamterene</td></tr>
+      <tr><td>SGLT2 inhibitors / ADH antagonists</td><td>PCT / collecting duct</td><td>Block glucose-Na / V2 receptor</td><td>Dapagliflozin / tolvaptan</td></tr>
+    </table>
+    <h4>Potassium-sparing diuretics — basis &amp; rationale</h4>
+    <ul>
+      <li><b>Aldosterone antagonists</b> (spironolactone, eplerenone): block mineralocorticoid receptor in collecting duct → ↓ Na⁺ reabsorption, K⁺ retention.</li>
+      <li><b>ENaC blockers</b> (amiloride, triamterene): directly block epithelial Na⁺ channel.</li>
+      <li><b>Rationale:</b> weak diuretics alone, but <b>conserve K⁺</b> → used <b>with</b> K⁺-wasting loop/thiazide to offset hypokalaemia; spironolactone gives mortality benefit in HF (RALES) &amp; treats resistant HTN, primary hyperaldosteronism, ascites.</li>
+    </ul>
+    <h4>Indications</h4>
+    <p>Heart failure, ascites/cirrhosis, hyperaldosteronism (Conn's), resistant hypertension, hirsutism/PCOS (spironolactone anti-androgen), Liddle's syndrome (amiloride).</p>
+    <h4>Adverse effects</h4>
+    <ul><li><b>Hyperkalaemia</b> (key danger — esp. with ACEi/ARB/renal failure), metabolic acidosis.</li><li>Spironolactone: gynaecomastia, menstrual irregularity (eplerenone more selective → fewer).</li></ul>
+    <h4>Diuretic resistance</h4>
+    <p>Failure to achieve adequate diuresis despite full dose. Causes: poor adherence/excess Na intake, ↓ absorption (gut oedema), ↓ renal perfusion, nephron remodelling/distal hypertrophy, NSAIDs, hypoalbuminaemia, CKD. <b>Management:</b> IV/continuous infusion, ↑ dose, <b>sequential nephron blockade</b> (add thiazide/metolazone to loop), treat cause, restrict salt.</p>
+    <h4>Non-diuretic uses</h4>
+    <p>Acetazolamide — glaucoma, altitude sickness, epilepsy, alkalinise urine; mannitol — ↑ICP/cerebral oedema, acute glaucoma; thiazides — nephrogenic diabetes insipidus, idiopathic hypercalciuria/renal stones; loop — hypercalcaemia, hyperkalaemia.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Physiology of urine formation &amp; drugs affecting it; inhibitors of renal epithelial Na⁺ channels &amp; high-ceiling (loop) diuretics with clinical applications.</span></summary>
+  <div class="answer">
+    <h4>Physiology of urine formation</h4>
+    <ol>
+      <li><b>Glomerular filtration</b> (~180 L/day) of plasma.</li>
+      <li><b>Tubular reabsorption:</b> PCT (~65% Na, via Na/H, glucose, CA), thin/thick loop of Henle (NKCC2, countercurrent multiplier → medullary hypertonicity), DCT (NCC), collecting duct (ENaC, aquaporins under ADH, aldosterone).</li>
+      <li><b>Tubular secretion</b> (K⁺, H⁺, organic acids/bases).</li>
+    </ol>
+    <p>Diuretics act at each segment (see Q1 table).</p>
+    <h4>Renal epithelial Na⁺ channel (ENaC) inhibitors</h4>
+    <ul>
+      <li><b>Amiloride, triamterene</b> — block luminal ENaC in late DCT/collecting duct → ↓ Na⁺ reabsorption &amp; ↓ K⁺ secretion (K⁺-sparing).</li>
+      <li>Weak diuretics; uses: with thiazide/loop to prevent hypokalaemia, Liddle's syndrome, lithium-induced nephrogenic DI (amiloride).</li>
+    </ul>
+    <h4>High-ceiling (loop) diuretics</h4>
+    <ul>
+      <li><b>Mechanism:</b> inhibit <b>NKCC2</b> in thick ascending limb → most efficacious (up to 20–25% of filtered Na); abolish medullary gradient; ↑ Ca²⁺ &amp; Mg²⁺ excretion; venodilation (acute pulmonary oedema).</li>
+      <li><b>Clinical use:</b> acute pulmonary oedema/HF, oedema (renal/hepatic), hypertension with renal failure, hypercalcaemia, hyperkalaemia, forced diuresis.</li>
+      <li><b>ADR:</b> hypokalaemia, hypocalcaemia, hypomagnesaemia, metabolic alkalosis, ototoxicity (esp. with aminoglycosides), hyperuricaemia, dehydration.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section class="sec" id="s2" style="--sec:#3f6cb0;--sec-soft:#3f6cb026">
+  <h2>Section 2 · RAAS Modifiers, Antihypertensives &amp; Heart Failure</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Drugs modulating RAAS — basis, MOA, uses, ADRs, rationale of ACEi+ARB / ARNI in HF &amp; HTN; note on direct renin inhibitors &amp; triphasic response to angiotensin-II.</span></summary>
+  <div class="answer">
+    <h4>The RAAS cascade &amp; drug targets</h4>
+    <div class="dia"><b>Cascade:</b> Angiotensinogen →(<b>renin</b>)→ Ang I →(<b>ACE</b>)→ Ang II → AT1 receptor (vasoconstriction, aldosterone, Na/water retention, remodelling) + stimulates aldosterone. Drug targets: renin (aliskiren), ACE (ACEi), AT1 (ARB), aldosterone (MRA), neprilysin (sacubitril ↑ natriuretic peptides).</div>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Mechanism</th></tr>
+      <tr><td>ACE inhibitors</td><td>Enalapril, ramipril, lisinopril, perindopril</td><td>↓ Ang II, ↑ bradykinin</td></tr>
+      <tr><td>ARBs</td><td>Losartan, telmisartan, valsartan, olmesartan</td><td>Block AT1 receptor</td></tr>
+      <tr><td>Direct renin inhibitor</td><td>Aliskiren</td><td>Inhibit renin (first step)</td></tr>
+      <tr><td>MRA</td><td>Spironolactone, eplerenone</td><td>Block aldosterone</td></tr>
+      <tr><td>ARNI</td><td>Sacubitril/valsartan</td><td>Neprilysin inhibition + ARB</td></tr>
+    </table>
+    <h4>Uses</h4>
+    <p>Hypertension, heart failure (HFrEF), post-MI, diabetic nephropathy/proteinuric CKD, LV dysfunction.</p>
+    <h4>Adverse effects</h4>
+    <ul><li>ACEi: <b>dry cough</b> &amp; <b>angioedema</b> (bradykinin), hyperkalaemia, ↑ creatinine, first-dose hypotension, <b>teratogenic</b> (avoid in pregnancy). ARBs: similar but no cough.</li></ul>
+    <h4>Rationale: ACEi + ARB and ARNI</h4>
+    <ul>
+      <li><b>ACEi + ARB combination:</b> dual RAAS blockade — <b>generally avoided</b> (ONTARGET) due to ↑ hyperkalaemia, hypotension &amp; renal dysfunction without survival benefit.</li>
+      <li><b>ARNI (sacubitril/valsartan):</b> neprilysin inhibition ↑ natriuretic peptides (vasodilation, natriuresis, anti-remodelling) + AT1 blockade → <b>superior to enalapril</b> in HFrEF (PARADIGM-HF). Do <b>not</b> combine with ACEi (angioedema; 36-h washout).</li>
+    </ul>
+    <h4>Direct renin inhibitor</h4>
+    <p>Aliskiren blocks RAAS at the rate-limiting step; modest antihypertensive; limited use; not combined with ACEi/ARB in diabetics (ALTITUDE — harm).</p>
+    <h4>Triphasic response to angiotensin-II</h4>
+    <p>IV Ang II classically gives: (1) <b>rapid pressor rise</b> (direct vasoconstriction via AT1); (2) a <b>brief secondary rise/plateau</b> from sympathetic facilitation &amp; catecholamine release; (3) a <b>delayed sustained pressor</b> via aldosterone-mediated Na/water retention. (Demonstrates Ang II's vascular, neural &amp; renal actions.)</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacotherapy of CHF — role of ARNI, SGLT2 inhibitors, β-blockers &amp; newer targets; recent advances &amp; current guidelines. Detailed pharmacology of β-blockers in CHF.</span></summary>
+  <div class="answer">
+    <h4>Goals</h4>
+    <p>Relieve symptoms, slow remodelling, reduce hospitalisation &amp; mortality.</p>
+    <h4>"Four pillars" of HFrEF (guideline-directed medical therapy, GDMT)</h4>
+    <table>
+      <tr><th>Pillar</th><th>Drugs</th><th>Mechanism / key trial</th><th>Key caution</th></tr>
+      <tr><td>1. ARNI / ACEi / ARB</td><td>Sacubitril-valsartan (preferred)</td><td>Neprilysin inhibition ↑ natriuretic peptides + AT1 blockade — superior to enalapril (PARADIGM-HF)</td><td>36-h ACEi washout (angioedema risk)</td></tr>
+      <tr><td>2. β-blocker</td><td>Carvedilol, bisoprolol, metoprolol succinate</td><td>↓ sympathetic/catecholamine-driven remodelling &amp; arrhythmia; mortality ↓ (MERIT-HF, CONSENSUS-era evidence base)</td><td>Start low, titrate slowly; avoid in decompensated/wet HF</td></tr>
+      <tr><td>3. MRA</td><td>Spironolactone, eplerenone</td><td>Anti-fibrotic, blocks aldosterone-mediated remodelling — mortality ↓ (RALES)</td><td>Hyperkalaemia, gynaecomastia (spironolactone)</td></tr>
+      <tr><td>4. SGLT2 inhibitor</td><td>Dapagliflozin, empagliflozin</td><td>Natriuresis, ↓ preload/afterload &amp; cardiac workload — ↓ HF hospitalisation &amp; mortality regardless of diabetes (DAPA-HF)</td><td>Genital mycotic infection, euglycaemic DKA</td></tr>
+    </table>
+    <h4>β-blockers in CHF — pharmacology in depth</h4>
+    <ul>
+      <li><b>Rationale:</b> chronic sympathetic activation in HF is initially compensatory but ultimately maladaptive — ↑ HR/contractility raises myocardial O₂ demand, promotes arrhythmia, down-regulates β1-receptors, and drives fibrosis/remodelling via catecholamine &amp; renin-angiotensin cross-talk. β-blockade interrupts this vicious cycle.</li>
+      <li><b>Only 3 agents proven to reduce mortality in HFrEF</b> — <b>carvedilol</b> (non-selective β1/β2 + α1-blocker; additional antioxidant/vasodilator effect — COPERNICUS), <b>bisoprolol</b> (β1-selective — CIBIS-II), <b>metoprolol succinate ER</b> (β1-selective — MERIT-HF). Short-acting metoprolol tartrate is NOT validated for HF.</li>
+      <li><b>Titration protocol:</b> start at a very low dose only once the patient is euvolaemic/compensated; double the dose every 2 weeks as tolerated, to the maximum-tolerated or target dose; do not initiate during acute decompensation.</li>
+      <li><b>Contraindications/cautions:</b> decompensated/wet HF, symptomatic bradycardia, 2nd/3rd-degree heart block without pacemaker, severe reactive airway disease (relative — cardioselective agents preferred).</li>
+      <li><b>Drug interactions:</b> avoid combination with non-dihydropyridine CCBs (verapamil/diltiazem) — additive negative inotropy/bradycardia; caution with digoxin (additive AV-nodal block); NSAIDs blunt benefit (Na/water retention).</li>
+    </ul>
+    <h4>Other agents</h4>
+    <ul>
+      <li><b>Diuretics</b> (loop) — symptomatic congestion relief; no proven mortality benefit, used for euvolaemia.</li>
+      <li><b>Ivabradine</b> — If-channel blocker, if HR &gt;70 in sinus rhythm despite max β-blocker (SHIFT).</li>
+      <li><b>Vericiguat</b> — soluble guanylate-cyclase stimulator, ↑ cGMP-mediated vasodilation/anti-fibrotic effect; reduced the composite of CV death/HF hospitalisation in worsening HFrEF (VICTORIA).</li>
+      <li><b>Digoxin</b> — symptom/rate control. <b>Hydralazine + ISDN</b> — esp. African-Americans or ACEi/ARNI-intolerant (V-HeFT).</li>
+      <li><b>Omecamtiv mecarbil</b> — cardiac myosin activator, ↑ systolic ejection time without ↑ O₂ demand (investigational/modest benefit in GALACTIC-HF).</li>
+    </ul>
+    <h4>Landmark trial summary</h4>
+    <table>
+      <tr><th>Trial</th><th>Drug class</th><th>Key result</th></tr>
+      <tr><td>CONSENSUS</td><td>ACEi (enalapril)</td><td>First mortality benefit shown in severe HF</td></tr>
+      <tr><td>MERIT-HF / CIBIS-II / COPERNICUS</td><td>β-blockers</td><td>~34% mortality reduction added on top of ACEi</td></tr>
+      <tr><td>RALES</td><td>MRA (spironolactone)</td><td>30% mortality reduction in severe HFrEF</td></tr>
+      <tr><td>PARADIGM-HF</td><td>ARNI</td><td>Superior to enalapril — ↓ CV death &amp; HF hospitalisation</td></tr>
+      <tr><td>DAPA-HF / EMPEROR-Reduced</td><td>SGLT2 inhibitors</td><td>↓ HF hospitalisation &amp; CV death, independent of diabetes status</td></tr>
+    </table>
+    <h4>HFpEF</h4>
+    <p>Long a therapeutic blind spot — neither ACEi/ARB nor β-blockers consistently improve outcomes. <b>SGLT2 inhibitors are now the only drug class with proven mortality/hospitalisation benefit across the full EF spectrum</b> (EMPEROR-Preserved — empagliflozin; DELIVER — dapagliflozin), making them first-line GDMT in HFpEF as well as HFrEF. Otherwise: manage comorbidities (HTN, AF, obesity), diuretics for congestion, MRA may have modest benefit.</p>
+    <div class="recent"><b>Recent advances &amp; guidelines (ESC 2021/2023, ACC/AHA 2022):</b> start all four GDMT pillars early &amp; in parallel (not sequentially titrated one at a time) — "four pillars together" approach shortens time to benefit; SGLT2 inhibitors now indicated across the entire EF spectrum (HFrEF, HFmrEF, HFpEF) regardless of diabetes status (EMPEROR-Preserved, DELIVER); finerenone (non-steroidal MRA) for HF with CKD/diabetes; vericiguat added for worsening HFrEF; omecamtiv mecarbil and other myotropes remain investigational.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Classify antihypertensives; MOA, uses &amp; ADRs of ACEi &amp; ARBs; combination therapy, resistant HTN, hypertensive emergencies &amp; HTN in renal failure.</span></summary>
+  <div class="answer">
+    <h4>Classification of antihypertensives</h4>
+    <ul>
+      <li><b>Diuretics:</b> thiazides, loop, K⁺-sparing.</li>
+      <li><b>RAAS blockers:</b> ACEi, ARB, renin inhibitor, ARNI.</li>
+      <li><b>Calcium channel blockers:</b> amlodipine (DHP), verapamil/diltiazem (non-DHP).</li>
+      <li><b>Sympatholytics:</b> β-blockers, α1-blockers, central α2-agonists (clonidine, methyldopa).</li>
+      <li><b>Vasodilators:</b> hydralazine, minoxidil, nitroprusside.</li>
+    </ul>
+    <h4>ACEi &amp; ARBs (MOA/uses/ADRs)</h4>
+    <p>See Section 2 Q1. Key: ACEi cause cough/angioedema; both contraindicated in pregnancy &amp; bilateral renal artery stenosis; renoprotective in proteinuric CKD/diabetes.</p>
+    <h4>Combination therapy principles</h4>
+    <ul>
+      <li>Preferred: ACEi/ARB + CCB, ACEi/ARB + thiazide, CCB + thiazide.</li>
+      <li>Avoid ACEi + ARB together; single-pill combinations improve adherence; start 2 drugs if BP ≥20/10 above target.</li>
+    </ul>
+    <h4>Resistant hypertension</h4>
+    <p>BP uncontrolled on ≥3 drugs (incl. a diuretic) at optimal doses. Confirm adherence, exclude white-coat &amp; secondary causes; add <b>spironolactone</b> (4th-line, PATHWAY-2); consider device therapy (renal denervation).</p>
+    <h4>Hypertensive emergency</h4>
+    <p>Severe BP + acute target-organ damage → IV agents, controlled lowering (~25% in first hour): <b>labetalol, nicardipine, nitroprusside, GTN, esmolol, clevidipine</b>; fenoldopam (renal-sparing).</p>
+    <h4>HTN in renal failure</h4>
+    <p>ACEi/ARB renoprotective (monitor K⁺/creatinine; loop diuretic preferred over thiazide at low GFR); CCBs effective &amp; safe; salt restriction; often need multiple drugs.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Present status &amp; recent advances in management of hypertension; experimental &amp; clinical methods for evaluation of antihypertensive agents; current treatment guidelines.</span></summary>
+  <div class="answer">
+    <h4>Classification recap</h4>
+    <table>
+      <tr><th>Class</th><th>Examples</th></tr>
+      <tr><td>Diuretics</td><td>Thiazides (chlorthalidone, hydrochlorothiazide), loop, K⁺-sparing</td></tr>
+      <tr><td>RAAS blockers</td><td>ACEi, ARB, direct renin inhibitor (aliskiren), ARNI</td></tr>
+      <tr><td>Calcium channel blockers</td><td>Amlodipine (DHP), verapamil/diltiazem (non-DHP)</td></tr>
+      <tr><td>Sympatholytics</td><td>β-blockers, α1-blockers, central α2-agonists</td></tr>
+      <tr><td>Vasodilators</td><td>Hydralazine, minoxidil, nitroprusside</td></tr>
+    </table>
+    <h4>Guideline BP thresholds &amp; targets — comparison</h4>
+    <table>
+      <tr><th>Guideline</th><th>Diagnostic threshold</th><th>Treatment target</th></tr>
+      <tr><td>ACC/AHA 2017</td><td>≥130/80 (Stage 1)</td><td>&lt;130/80 for most adults</td></tr>
+      <tr><td>ESC/ESH 2018/2023</td><td>≥140/90</td><td>&lt;130/80 if tolerated (≥65 yr: &lt;140/80)</td></tr>
+      <tr><td>JNC 8 (legacy)</td><td>≥140/90 (≥150/90 if age ≥60)</td><td>&lt;140/90 (&lt;150/90 if age ≥60)</td></tr>
+    </table>
+    <h4>Compelling indications (drug choice by comorbidity)</h4>
+    <table>
+      <tr><th>Comorbidity</th><th>Preferred agent</th></tr>
+      <tr><td>Diabetes / proteinuric CKD</td><td>ACEi or ARB</td></tr>
+      <tr><td>HFrEF</td><td>ARNI/ACEi/ARB + β-blocker + MRA + SGLT2i</td></tr>
+      <tr><td>Post-MI / CAD</td><td>β-blocker + ACEi</td></tr>
+      <tr><td>Isolated systolic HTN (elderly)</td><td>CCB or thiazide</td></tr>
+      <tr><td>Pregnancy</td><td>Labetalol, methyldopa, nifedipine (avoid ACEi/ARB/ARNI/aliskiren)</td></tr>
+    </table>
+    <h4>Stepped-care &amp; single-pill combination algorithm</h4>
+    <p>Start 2-drug single-pill combination if BP ≥20/10 mmHg above target (ACEi/ARB + CCB, or ACEi/ARB + thiazide); add a third agent (CCB + ACEi/ARB + thiazide) if uncontrolled; resistant cases add spironolactone as 4th-line. Single-pill combinations improve adherence and are now preferred over monotherapy up-titration as first step.</p>
+    <h4>Resistant hypertension</h4>
+    <p>BP uncontrolled on ≥3 optimally-dosed drugs (including a diuretic), or controlled only on ≥4 drugs. Workup: confirm adherence, exclude white-coat effect (ABPM) &amp; secondary causes (renal artery stenosis, primary aldosteronism, OSA, renal disease); add spironolactone (PATHWAY-2); consider device therapy (catheter-based renal denervation).</p>
+    <h4>Present status &amp; recent advances</h4>
+    <ul>
+      <li>Earlier &amp; lower BP targets (ACC/AHA &lt;130/80; SPRINT trial — intensive control ↓ CV events).</li>
+      <li><b>Single-pill combinations</b> first-line; emphasis on out-of-office (home/ABPM) monitoring over clinic BP alone.</li>
+      <li><b>Renal denervation</b> (catheter-based) — device therapy for resistant HTN.</li>
+      <li><b>Aprocitentan</b> — dual endothelin (ETA/ETB) receptor antagonist; FDA-approved 2024 (Tryvio) for resistant hypertension as add-on therapy [PMID 36356632].</li>
+      <li><b>Baxdrostat</b> — selective aldosterone synthase inhibitor, lowers aldosterone without affecting cortisol; reduces BP in resistant/uncontrolled HTN in trials [PMID 36342143, 37548462].</li>
+      <li><b>Zilebesiran</b> — siRNA against hepatic angiotensinogen synthesis; subcutaneous, sustained BP lowering with twice-yearly (or less frequent) dosing in trials [PMID 39494631].</li>
+      <li>Finerenone (non-steroidal MRA) and sacubitril-based combinations extending into hypertension management beyond HF.</li>
+    </ul>
+    <h4>Evaluation of antihypertensive agents</h4>
+    <table>
+      <tr><th>Experimental (preclinical)</th><th>Clinical</th></tr>
+      <tr><td>Spontaneously hypertensive rats (SHR); renal artery clamp (Goldblatt — 2K1C/1K1C); DOCA-salt model; tail-cuff/telemetry BP; isolated aortic ring; anaesthetised normotensive dog/cat BP</td><td>Sphygmomanometry, ambulatory BP monitoring (ABPM); randomised controlled trials with hard endpoints (stroke, MI, mortality); surrogate markers (LVH regression, proteinuria); dose-ranging &amp; comparative trials</td></tr>
+    </table>
+    <div class="recent"><b>Recent advances:</b> aprocitentan (Tryvio, FDA 2024), baxdrostat (aldosterone synthase inhibitor, trials), and zilebesiran (siRNA angiotensinogen silencer, trials) represent three novel non-RAAS-classical mechanisms entering resistant-hypertension therapy.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">RAAS drugs (ACEi/ARB) and their use in COVID-19 patients — the controversy &amp; its resolution.</span></summary>
+  <div class="answer">
+    <h4>Background</h4>
+    <p>ACE2 — the chief counter-regulatory enzyme of the RAAS — is also the cellular receptor for SARS-CoV-2. This raised an early (2020) but ultimately refuted concern that RAAS inhibitors might worsen COVID-19 by upregulating viral receptors.</p>
+    <h4>RAAS — two arms relevant to COVID</h4>
+    <div class="dia"><b>Classical (injurious) arm:</b> ACE → Ang II → AT1 receptor = vasoconstriction, Na⁺ retention, inflammation, fibrosis, ROS, alveolar/endothelial injury.<br><b>Counter-regulatory (protective) arm:</b> ACE2 → Ang-(1–7) → Mas receptor = vasodilatation, anti-inflammatory, anti-fibrotic, anti-proliferative. ACE2 degrades Ang II to Ang-(1–7), limiting AT1 signalling; it is NOT inhibited by ACEi and has no effect on bradykinin.<br><b>Viral entry:</b> SARS-CoV-2 spike protein binds ACE2 on respiratory epithelium/endothelium; TMPRSS2 primes the spike, enabling fusion and endocytosis of the virion-ACE2 complex → ACE2 downregulation → unopposed Ang II/AT1 → apoptosis, IL-6 release, "thromboinflammation," ARDS.</div>
+    <h4>The ACEi/ARB controversy</h4>
+    <ul>
+      <li><b>"Harm" hypothesis:</b> RAAS inhibitors upregulate ACE2 expression → more viral receptors → greater susceptibility/severity → prompted calls to stop these drugs early in 2020.</li>
+      <li><b>"Benefit" hypothesis:</b> by reducing Ang II/AT1 signalling and preserving the ACE2–Ang-(1–7)–Mas axis, RAAS inhibitors could be protective against COVID lung injury.</li>
+      <li><b>Resolution:</b> analyses of ACE2 expression in animals/humans on RAAS inhibitors did not validate the harm hypothesis; epidemiological studies showed no effect or benefit. Major societies (ACC/AHA/HFSA, ESC, ESH) advised continuing ACEi/ARB unless otherwise contraindicated.</li>
+    </ul>
+    <h4>Key evidence</h4>
+    <table>
+      <tr><th>Study</th><th>Design</th><th>Key finding</th></tr>
+      <tr><td>BRACE CORONA</td><td>RCT, hospitalised COVID-19 on ACEi/ARB; continue vs suspend ×30 days</td><td>No difference in days alive &amp; out of hospital → routine discontinuation not justified</td></tr>
+      <tr><td>BRACE CORONA — severity sub-analysis</td><td>659 patients, mild vs moderate disease</td><td>In moderate disease, continuation gave more days alive/out of hospital → continue</td></tr>
+      <tr><td>Meta-analyses (Baral 2020; Zhang 2022)</td><td>~28,872 and pooled propensity-matched studies</td><td>RAAS inhibitors not associated with severe illness/mortality; signal of benefit in hypertensives</td></tr>
+    </table>
+    <h4>Practical recommendations</h4>
+    <ul>
+      <li><b>Continue</b> ACEi/ARB in COVID-19 per standard indications — do not stop for COVID alone.</li>
+      <li>Stop only for the usual reasons: hypotension, hyperkalaemia, AKI.</li>
+      <li>ACEi/ARB/ARNI/aliskiren remain contraindicated in pregnancy regardless of COVID status.</li>
+      <li>Recombinant/soluble human ACE2 (decoy receptor, degrades excess Ang II) and Ang-(1–7)/Mas agonists remain investigational, not standard therapy.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> BRACE CORONA confirmed no benefit from suspending ACEi/ARB in hospitalised COVID-19, with its severity sub-analysis favouring continuation in moderate disease; meta-analyses (RCT + propensity-matched) found no link between RAAS inhibitor use and severe illness/mortality, supporting guideline advice to continue. Bottom line (2024–25): RAAS inhibition is continued in COVID-19 per standard indications; recombinant soluble ACE2/Ang-(1–7) axis modulation remain investigational.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s3" style="--sec:#845bb0;--sec-soft:#845bb026">
+  <h2>Section 3 · Antianginal Drugs &amp; Ischemic Heart Disease</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Classify antianginals; pathophysiology &amp; pharmacotherapy of stable &amp; variant angina; MOA/uses/limitations of nitrates, β-blockers, CCBs &amp; newer agents (metabolic modulators, K⁺-channel openers); recent advances.</span></summary>
+  <div class="answer">
+    <h4>Pathophysiology</h4>
+    <p>Angina = myocardial O₂ demand &gt; supply. <b>Stable (exertional):</b> fixed atheromatous stenosis. <b>Variant (Prinzmetal):</b> coronary vasospasm. Treatment aims to ↓ demand and/or ↑ supply.</p>
+    <h4>Classification &amp; mechanisms</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Mechanism</th></tr>
+      <tr><td>Organic nitrates</td><td>GTN, isosorbide di/mononitrate</td><td>↑NO→↑cGMP→venodilation→↓preload→↓O₂ demand; coronary dilation</td></tr>
+      <tr><td>β-blockers</td><td>Metoprolol, atenolol, bisoprolol</td><td>↓HR, contractility → ↓demand (first-line stable angina; NOT in variant)</td></tr>
+      <tr><td>CCBs</td><td>Amlodipine, diltiazem, verapamil</td><td>Coronary &amp; peripheral vasodilation, ↓afterload; drug of choice in variant</td></tr>
+      <tr><td>K⁺-channel opener</td><td>Nicorandil</td><td>Opens K-ATP + nitrate-like → arterial &amp; venodilation</td></tr>
+      <tr><td>Metabolic modulator</td><td>Trimetazidine, ranolazine</td><td>Shift metabolism to glucose oxidation; ranolazine inhibits late Na⁺ current</td></tr>
+      <tr><td>If-channel inhibitor</td><td>Ivabradine</td><td>↓HR (sinus) without inotropy</td></tr>
+    </table>
+    <h4>Therapy by type</h4>
+    <ul>
+      <li><b>Stable angina:</b> acute relief — sublingual GTN; prophylaxis — β-blocker and/or CCB ± long-acting nitrate; add ranolazine/ivabradine/nicorandil if needed; <b>plus</b> aspirin + statin + risk-factor control.</li>
+      <li><b>Variant angina:</b> <b>CCBs + nitrates</b> (avoid non-selective β-blockers — may worsen spasm).</li>
+    </ul>
+    <h4>Limitations</h4>
+    <p>Nitrates — tolerance (need nitrate-free interval), headache, hypotension, reflex tachycardia. β-blockers — bradycardia, bronchospasm, fatigue. CCBs — oedema, constipation (verapamil), reflex tachycardia (DHP).</p>
+    <div class="recent"><b>Recent:</b> Ranolazine &amp; trimetazidine for refractory angina without haemodynamic effects; combination metabolic + haemodynamic therapy; aggressive LDL lowering (PCSK9i).</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Treatment of unstable angina (acute coronary syndrome, NSTE-ACS).</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Unstable angina (UA) is a non-ST-elevation acute coronary syndrome (NSTE-ACS), grouped with NSTEMI, caused by disruption of an atherosclerotic plaque with platelet-rich thrombus and partial coronary occlusion. UA is distinguished from NSTEMI by the <b>absence of a troponin rise</b>. Therapy aims to relieve ischaemia and prevent progression to MI.</p>
+    <h4>Immediate measures — "MONA(C)"</h4>
+    <p><b>M</b>orphine 1–5 mg IV for refractory pain (class IIb; may delay P2Y12 absorption); <b>O</b>xygen only if SpO₂ &lt;90%; <b>N</b>itroglycerin SL 0.3–0.4 mg q5min ×3 then IV for ongoing angina/HTN/HF; <b>A</b>spirin; <b>C</b>lopidogrel/P2Y12 inhibitor. Plus bed rest, continuous ECG monitoring, and risk stratification (TIMI/GRACE/HEART score).</p>
+    <h4>Dual antiplatelet therapy (DAPT)</h4>
+    <ul>
+      <li><b>Aspirin</b> — loading 162–325 mg (non-enteric, chewed), then 81 mg/day indefinitely; irreversible COX-1 inhibition → ↓TXA₂.</li>
+      <li><b>P2Y12 inhibitor added to aspirin:</b> clopidogrel (600 mg LD/75 mg OD), ticagrelor (180 mg/90 mg BD, reversible), prasugrel (60 mg/10 mg OD). Guidelines favour ticagrelor/prasugrel; clopidogrel as alternative.</li>
+      <li><b>GP IIb/IIIa inhibitors</b> (eptifibatide, tirofiban, abciximab) — reserved for high-risk/bailout during PCI.</li>
+    </ul>
+    <h4>Anticoagulation (added to antiplatelet therapy)</h4>
+    <p>UFH, LMWH (enoxaparin), fondaparinux 2.5 mg SC OD (factor Xa inhibitor — least bleeding), or bivalirudin during hospitalisation.</p>
+    <h4>Anti-ischaemic &amp; secondary prevention</h4>
+    <ul>
+      <li><b>β-blockers</b> (oral metoprolol/carvedilol within 24 h) — mainstay; ↓HR, contractility, O₂ demand. Avoid in HF/shock, bradycardia, high-grade AV block, asthma.</li>
+      <li><b>Nitrates</b> — symptom relief; avoid if SBP &lt;90 mmHg or recent PDE5-inhibitor use.</li>
+      <li><b>CCBs</b> (diltiazem/verapamil) if β-blocker contraindicated or coronary vasospasm; avoid short-acting nifedipine (reflex sympathetic activation).</li>
+      <li>High-intensity statin; ACE inhibitor if HFrEF/HTN/DM.</li>
+    </ul>
+    <h4>Reperfusion strategy</h4>
+    <p>Early invasive strategy (angiography ± PCI/CABG within ~24 h) for intermediate-to-high-risk patients (↑troponin, ST changes, refractory angina). Ischaemia-guided conservative strategy for low-risk patients.</p>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>UA = NSTE-ACS with no troponin elevation (distinguishes from NSTEMI); partial occlusion → no immediate fibrinolysis.</li>
+      <li><b>Fibrinolytics are NOT used in UA/NSTE-ACS</b> (no proven benefit, only for STEMI).</li>
+      <li>DAPT (aspirin + P2Y12 inhibitor) is the cornerstone; ticagrelor/prasugrel preferred over clopidogrel where available.</li>
+      <li>Fondaparinux offers the best efficacy-safety balance (least major bleeding) among the anticoagulant options.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Experimental &amp; clinical methods for evaluation of antianginal drugs; cytoprotective (metabolic) agents in angina.</span></summary>
+  <div class="answer">
+    <h4>Experimental methods</h4>
+    <ul>
+      <li>Coronary artery ligation (occlusion/reperfusion) in dogs/rats → infarct-size estimation.</li>
+      <li>Isolated heart (Langendorff) — coronary flow &amp; contractility.</li>
+      <li>Isolated coronary artery strips for vasodilation; ischaemia-reperfusion models; pacing-induced ischaemia.</li>
+    </ul>
+    <h4>Clinical methods</h4>
+    <ul>
+      <li><b>Exercise/treadmill ECG stress test</b> — time to ST-depression/angina, exercise duration.</li>
+      <li>Ambulatory ECG (Holter) for ischaemic episodes; frequency of anginal attacks &amp; GTN consumption.</li>
+      <li>Stress echo, myocardial perfusion imaging; RCTs with endpoints (MI, mortality).</li>
+    </ul>
+    <h4>Cytoprotective / metabolic agents</h4>
+    <p>Improve myocardial energy efficiency without altering haemodynamics: <b>trimetazidine</b> (inhibits fatty-acid β-oxidation → shifts to glucose oxidation), <b>ranolazine</b> (late Na⁺ current inhibition → ↓ Ca²⁺ overload), perhexiline. Useful as add-on in refractory/microvascular angina.</p>
+  </div></details>
+</section>
+
+<section class="sec" id="s4" style="--sec:#b15068;--sec-soft:#b1506826">
+  <h2>Section 4 · Anticoagulants, Antiplatelets &amp; Fibrinolytics</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacology of drugs maintaining blood fluidity. Classify anticoagulants, antiplatelets &amp; fibrinolytics; MOA/uses/ADRs/status of heparin, LMWH, DTIs, factor Xa inhibitors &amp; NOACs; note on reversal agents &amp; recent advances.</span></summary>
+  <div class="answer">
+    <h4>Classification</h4>
+    <table>
+      <tr><th>Group</th><th>Subclasses &amp; examples</th></tr>
+      <tr><td><b>Anticoagulants</b></td><td>Parenteral: UFH, LMWH (enoxaparin), fondaparinux, DTIs (bivalirudin, argatroban). Oral: warfarin (vit-K antagonist), DOACs — dabigatran (DTI), rivaroxaban/apixaban/edoxaban (Xa)</td></tr>
+      <tr><td><b>Antiplatelets</b></td><td>Aspirin (COX-1), P2Y12 inhibitors (clopidogrel, prasugrel, ticagrelor), GpIIb/IIIa (abciximab, eptifibatide), dipyridamole, cilostazol, vorapaxar (PAR-1)</td></tr>
+      <tr><td><b>Fibrinolytics</b></td><td>Streptokinase, alteplase, reteplase, tenecteplase</td></tr>
+    </table>
+    <h4>Heparin (UFH)</h4>
+    <p><b>MOA:</b> activates antithrombin III → inactivates thrombin (IIa) &amp; Xa. Parenteral, immediate, monitored by <b>aPTT</b>. <b>ADR:</b> bleeding, <b>HIT</b> (heparin-induced thrombocytopenia), osteoporosis. <b>Reversal: protamine sulfate.</b></p>
+    <h4>LMWH (enoxaparin, dalteparin)</h4>
+    <p>Mainly anti-<b>Xa</b>; SC, predictable kinetics, no routine monitoring (anti-Xa if needed), less HIT. Partly reversed by protamine. Fondaparinux = pure anti-Xa pentasaccharide.</p>
+    <h4>Direct thrombin inhibitors</h4>
+    <p>Dabigatran (oral), bivalirudin/argatroban (IV) — directly inhibit IIa; used in AF, VTE, PCI, HIT. <b>Reversal of dabigatran: idarucizumab.</b></p>
+    <h4>Factor Xa inhibitors / NOACs (DOACs)</h4>
+    <p>Rivaroxaban, apixaban, edoxaban — oral, fixed dose, no routine monitoring, fewer interactions/bleeds than warfarin. Uses: AF stroke prevention, VTE treatment/prophylaxis. <b>Reversal: andexanet alfa</b> (or PCC).</p>
+    <table>
+      <tr><th>Feature</th><th>Warfarin</th><th>DOACs</th></tr>
+      <tr><td>Monitoring</td><td>INR required</td><td>None routine</td></tr>
+      <tr><td>Onset</td><td>Slow (need bridging)</td><td>Rapid</td></tr>
+      <tr><td>Interactions</td><td>Many (diet/CYP)</td><td>Fewer</td></tr>
+      <tr><td>Reversal</td><td>Vitamin K, FFP/PCC</td><td>Idarucizumab / andexanet</td></tr>
+    </table>
+    <h4>Reversal agents (summary)</h4>
+    <p>Protamine (heparin/LMWH), vitamin K + PCC/FFP (warfarin), idarucizumab (dabigatran), andexanet alfa (Xa inhibitors), platelet transfusion ± desmopressin (antiplatelets).</p>
+    <div class="recent"><b>Recent:</b> DOACs preferred over warfarin for non-valvular AF/VTE; <b>Factor XIa inhibitors</b> (asundexian, milvexian — trials) promise anticoagulation with less bleeding.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Recent advances in anticoagulation &amp; antiplatelet drugs; role in various cardiovascular disorders.</span></summary>
+  <div class="answer">
+    <h4>Recent advances</h4>
+    <ul>
+      <li><b>DOACs</b> replacing warfarin (predictable, safer, no monitoring) for AF &amp; VTE.</li>
+      <li>Specific reversal agents (idarucizumab, andexanet alfa).</li>
+      <li><b>Factor XI/XIa inhibitors</b> (asundexian, milvexian, abelacimab) — uncouple thrombosis from bleeding (trials).</li>
+      <li>Ticagrelor &amp; prasugrel (faster, more potent P2Y12); <b>de-escalation &amp; shorter DAPT</b> strategies; vorapaxar (PAR-1).</li>
+    </ul>
+    <h4>Role in CV disorders</h4>
+    <table>
+      <tr><th>Disorder</th><th>Agents</th></tr>
+      <tr><td>ACS / STEMI</td><td>Aspirin + P2Y12 (DAPT) + anticoagulant; fibrinolytic if no PCI</td></tr>
+      <tr><td>Atrial fibrillation</td><td>DOAC (or warfarin) for stroke prevention (CHA₂DS₂-VASc)</td></tr>
+      <tr><td>VTE (DVT/PE)</td><td>LMWH→DOAC/warfarin</td></tr>
+      <tr><td>Mechanical valves</td><td>Warfarin (DOACs contraindicated)</td></tr>
+      <tr><td>Secondary prevention/stroke</td><td>Aspirin ± clopidogrel</td></tr>
+      <tr><td>Stable CAD/PAD</td><td>Aspirin ± low-dose rivaroxaban (COMPASS)</td></tr>
+    </table>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Fibrinolytic (thrombolytic) agents — classification, mechanism, uses &amp; ADRs.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Fibrinolytics lyse an already-formed thrombus and recanalize an occluded vessel (chiefly coronary) by activating the body's natural fibrinolytic system — <b>therapeutic, not prophylactic</b>. They convert inactive plasminogen to active plasmin, which digests fibrin, unlike anticoagulants/antiplatelets that only prevent thrombus growth.</p>
+    <div class="dia"><b>Plasminogen-plasmin system:</b> Plasminogen → (t-PA / streptokinase / urokinase) → Plasmin → digests fibrin → fibrin degradation products. Circulating plasmin is neutralised by α2-antiplasmin (fibrin-bound plasmin is protected — shared fibrin/antiplasmin binding site); t-PA itself is inactivated by PAI-1/PAI-2.</div>
+    <h4>Classification by generation</h4>
+    <table>
+      <tr><th>Generation</th><th>Agents</th><th>Fibrin specificity</th><th>Nature</th></tr>
+      <tr><td>First</td><td>Streptokinase, urokinase</td><td>Non-fibrin-specific (activate circulating + bound plasminogen)</td><td>Streptokinase — bacterial; urokinase — human kidney/urine</td></tr>
+      <tr><td>Second</td><td>Alteplase (rt-PA)</td><td>Moderately fibrin-specific</td><td>Recombinant human t-PA</td></tr>
+      <tr><td>Third</td><td>Reteplase, tenecteplase</td><td>Reteplase less selective; tenecteplase highest fibrin selectivity</td><td>Recombinant t-PA mutants</td></tr>
+    </table>
+    <h4>Individual agents — key features</h4>
+    <ul>
+      <li><b>Streptokinase:</b> not an enzyme itself — forms an activator complex with plasminogen. Non-fibrin-specific → depletes circulating fibrinogen (lytic state). Antigenic (anaphylaxis 1–2%), needs a loading dose, cannot be re-used. Largely superseded.</li>
+      <li><b>Urokinase:</b> human enzyme, directly converts plasminogen → plasmin; non-antigenic; largely out of use.</li>
+      <li><b>Alteplase (rt-PA):</b> selectively activates fibrin-bound plasminogen; t½ 4–8 min → infusion ± heparin.</li>
+      <li><b>Reteplase:</b> longer t½ (13–16 min) but less fibrin-selective → double bolus 10 U, 30 min apart.</li>
+      <li><b>Tenecteplase:</b> highest fibrin selectivity, PAI-1 resistant; only agent given as a single IV bolus (0.5 mg/kg over ~10 s) — enables pre-hospital lysis; ASSENT-2 showed efficacy ≥ alteplase with less non-cerebral bleeding.</li>
+    </ul>
+    <h4>Clinical uses &amp; time window</h4>
+    <ul>
+      <li><b>Acute STEMI</b> — chief indication, alternative to primary PCI when unavailable/delayed; "golden hour," little benefit beyond ~6 h; not used in unstable angina/low-risk NSTEMI.</li>
+      <li><b>Massive/haemodynamically unstable PE.</b></li>
+      <li><b>Acute ischaemic stroke</b> — IV alteplase only within 3–4.5 h after excluding intracranial haemorrhage.</li>
+      <li><b>DVT</b> (extensive/proximal) and <b>peripheral arterial occlusion</b> (intra-arterial, within 72 h) — no role in chronic PVD.</li>
+    </ul>
+    <h4>Adverse effects &amp; contraindications</h4>
+    <p><b>Haemorrhage</b> (including ICH) is the major toxicity; streptokinase additionally causes allergy/anaphylaxis, fever, hypotension. <b>Antidote:</b> tranexamic acid/EACA. <b>Contraindicated</b> in prior ICH, stroke/head injury within 3 months, active bleeding, recent major surgery/trauma, uncontrolled HTN, pregnancy.</p>
+    <div class="recent"><b>Recent advances:</b> primary PCI is preferred for STEMI where promptly available; fibrinolysis remains vital where PCI is unavailable, with rescue PCI if lysis fails ("pharmaco-invasive" strategy). Tenecteplase is increasingly the agent of choice (single weight-based bolus) and is being adopted for acute ischaemic stroke in many centres; streptokinase/urokinase are now rarely used, displaced by recombinant fibrin-specific agents.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Classify antiplatelet drugs; mechanism, uses &amp; ADRs.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Antiplatelet drugs inhibit platelet activation, adhesion or aggregation, blunting formation of the arterial platelet ("white") thrombus — more useful in arterial thrombosis (anticoagulants suit venous thrombosis). Acting at discrete sites allows additive/synergistic combinations.</p>
+    <h4>Classification by mechanism</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Target / action</th></tr>
+      <tr><td>COX-1 inhibitor</td><td>Aspirin</td><td>Irreversibly acetylates platelet COX-1 → ↓TXA₂</td></tr>
+      <tr><td>P2Y12 blockers — thienopyridine prodrugs</td><td>Clopidogrel, prasugrel, ticlopidine</td><td>Irreversible P2Y12 block</td></tr>
+      <tr><td>P2Y12 blockers — reversible/direct</td><td>Ticagrelor (oral), cangrelor (IV)</td><td>Reversible P2Y12 block</td></tr>
+      <tr><td>GP IIb/IIIa inhibitors</td><td>Abciximab, eptifibatide, tirofiban</td><td>Block fibrinogen/vWF binding (final common pathway)</td></tr>
+      <tr><td>PDE inhibitors</td><td>Dipyridamole, cilostazol</td><td>↑cAMP (PDE inhibition + ↑adenosine)</td></tr>
+      <tr><td>PAR-1 antagonist</td><td>Vorapaxar</td><td>Blocks thrombin-mediated activation</td></tr>
+    </table>
+    <h4>Mechanism detail</h4>
+    <ul>
+      <li><b>Aspirin:</b> low doses (75–150 mg/day) selectively suppress platelet TXA₂; effect lasts the platelet lifespan (5–7 days) since platelets are anucleate.</li>
+      <li><b>P2Y12 block:</b> prevents ADP-induced inhibition of adenylyl cyclase (Gi-coupled) → maintains cAMP → blocks aggregation. Clopidogrel/prasugrel need hepatic CYP activation (clopidogrel response variable — CYP2C19 polymorphism, PPI interaction); ticagrelor/cangrelor act directly with faster on/offset.</li>
+      <li><b>GP IIb/IIIa antagonists</b> block aggregation triggered by all agonists (final common pathway).</li>
+    </ul>
+    <h4>Clinical uses</h4>
+    <p>ACS (UA/NSTEMI, STEMI), secondary prevention of MI and ischaemic stroke/TIA, peripheral arterial disease, post-PCI/stent. <b>DAPT</b> = aspirin + a P2Y12 blocker (CURE/PLATO/TRITON evidence) prevents stent thrombosis. GP IIb/IIIa inhibitors are IV-only, reserved for ACS/PCI cover.</p>
+    <h4>Adverse effects</h4>
+    <p>Bleeding (chief, dose-related); GI upset with aspirin; ticlopidine — neutropenia, TTP; clopidogrel/prasugrel — rare TTP; ticagrelor — dyspnoea, bradyarrhythmia; abciximab — thrombocytopenia. Prasugrel/ticagrelor/vorapaxar contraindicated after intracranial bleed or prior stroke/TIA.</p>
+    <div class="recent"><b>Recent advances:</b> ticagrelor and prasugrel are now preferred over clopidogrel in ACS-PCI per current guidelines. Bentracimab (PB2452), an antibody-fragment reversal agent for ticagrelor, is under investigation for life-threatening bleeding/urgent surgery.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Aspirin resistance — definitions, mechanisms, detection &amp; management.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Aspirin acts by irreversible acetylation of platelet COX-1, abolishing TXA₂ synthesis for the platelet's lifespan (~7–10 days). <b>Aspirin resistance</b> is the failure of aspirin to produce its expected antiplatelet effect, used in two distinct senses: <b>clinical resistance</b> (a recurrent atherothrombotic event despite regular aspirin — better termed "treatment failure") and <b>laboratory/biochemical resistance</b> (inadequate suppression of TXA₂-dependent platelet function on testing). Reported incidence varies widely (5–75%), reflecting differing definitions/assays.</p>
+    <h4>Mechanisms / causes</h4>
+    <table>
+      <tr><th>Type</th><th>Mechanism</th></tr>
+      <tr><td>Pseudoresistance (commonest, reversible)</td><td>Poor compliance; erratic/reduced absorption of enteric-coated aspirin; under-dosing</td></tr>
+      <tr><td>Drug interaction</td><td>Concurrent ibuprofen/naproxen competitively occupy the COX-1 channel, blocking aspirin's access to Ser529 and preventing irreversible acetylation</td></tr>
+      <tr><td>Increased platelet turnover</td><td>Diabetes, ACS, post-CABG, systemic inflammation → newly formed uninhibited platelets appear within the once-daily dosing interval</td></tr>
+      <tr><td>Genetic / COX variants</td><td>COX-1 (PTGS1) polymorphisms; true heritable pharmacological resistance is rare</td></tr>
+      <tr><td>Alternative TXA₂ sources</td><td>COX-2 upregulation in monocytes/endothelium and non-enzymatic isoprostane generation regenerate TXA₂ that low-dose aspirin spares</td></tr>
+    </table>
+    <h4>Detection (no gold standard)</h4>
+    <ul>
+      <li>Light-transmission aggregometry (arachidonic-acid induced) — reference method.</li>
+      <li>Point-of-care: VerifyNow Aspirin (Aspirin Reaction Units), PFA-100 closure time.</li>
+      <li>Biochemical: urinary 11-dehydro-thromboxane B2 and serum TXB2 — direct markers of in-vivo TXA₂ generation.</li>
+    </ul>
+    <h4>Clinical relevance &amp; management</h4>
+    <p>Elevated urinary 11-dehydro-TXB2 correlates with higher risk of MI, stroke and CV death. <b>Routine platelet-function testing is NOT recommended</b> — tailoring therapy to test results has shown no proven outcome benefit; assays are useful mainly to check compliance. <b>Stepwise management:</b> confirm adherence → switch enteric-coated to plain/soluble aspirin → time-separate ibuprofen (give aspirin first) → twice-daily aspirin in high-turnover states (diabetes) → for true treatment failure, add/switch to a P2Y12 inhibitor (clopidogrel/ticagrelor).</p>
+    <div class="dia"><b>True resistance vs pseudoresistance:</b> Non-compliance → Enteric-coat malabsorption → Ibuprofen interaction → Platelet turnover → COX-1 polymorphism → COX-2/isoprostane TXA₂ regeneration — most cases fall on the pseudoresistance end of this spectrum.</div>
+    <div class="recent"><b>Recent advances:</b> a 400-volunteer crossover study found apparent resistance reached up to 49% with a single dose of enteric-coated aspirin but 0% with immediate-release aspirin, and no case of true pharmacological resistance was found — confirming pseudoresistance (delayed/variable absorption) as the dominant phenomenon. Contemporary reviews attribute most post-stroke antiplatelet "treatment failure" to poor adherence and genetic polymorphisms, supporting adherence checks over blanket dose-escalation. ACC/AHA and ESC guidelines continue to advise against routine platelet-function/aspirin-resistance testing in stable patients.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Therapeutic uses of anticoagulants — classification, mechanism, monitoring &amp; indications.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Anticoagulants retard or prevent blood coagulation by reducing the rate of fibrin formation, aiming to prevent thrombus extension and embolic complications. They do <b>not</b> dissolve an already-formed clot (cf. fibrinolytics) but prevent recurrence/extension. Parenteral agents (rapid, short-term) and oral agents (maintenance) are typically used together.</p>
+    <h4>Classification, mechanism &amp; monitoring</h4>
+    <table>
+      <tr><th>Class / drug</th><th>Mechanism</th><th>Monitoring</th></tr>
+      <tr><td>UFH</td><td>Activates antithrombin → inhibits factor IIa &amp; Xa</td><td>aPTT</td></tr>
+      <tr><td>LMWH (enoxaparin, dalteparin)</td><td>Mainly anti-Xa</td><td>None routine (anti-Xa if needed)</td></tr>
+      <tr><td>Fondaparinux</td><td>AT-mediated selective factor Xa inhibition</td><td>None (weight-based dose)</td></tr>
+      <tr><td>Bivalirudin</td><td>Direct thrombin inhibitor — useful in HIT</td><td>aPTT/ACT</td></tr>
+      <tr><td>Warfarin / acenocoumarol</td><td>Vitamin-K antagonist → ↓ factors II, VII, IX, X</td><td>INR (target 2–3)</td></tr>
+      <tr><td>Dabigatran</td><td>Oral direct thrombin inhibitor</td><td>None routine</td></tr>
+      <tr><td>Rivaroxaban, apixaban, edoxaban</td><td>Oral direct factor Xa inhibitors</td><td>None routine</td></tr>
+    </table>
+    <h4>Therapeutic uses by indication</h4>
+    <table>
+      <tr><th>Clinical indication</th><th>Drugs used</th></tr>
+      <tr><td>VTE prophylaxis after hip/knee replacement</td><td>Rivaroxaban/apixaban/dabigatran, LMWH, fondaparinux, low-dose SC UFH</td></tr>
+      <tr><td>VTE prophylaxis in high-risk bedridden medical/surgical patients</td><td>Fondaparinux/LMWH/rivaroxaban; UFH → warfarin</td></tr>
+      <tr><td>Treatment of DVT/PE</td><td>LMWH/fondaparinux/UFH (renal disease)/bivalirudin (if HIT) → warfarin or rivaroxaban</td></tr>
+      <tr><td>Stroke &amp; systemic embolism prevention in nonvalvular AF</td><td>Rivaroxaban/apixaban/dabigatran/warfarin</td></tr>
+      <tr><td>Primary PCI in STEMI / high-risk NSTEMI-UA</td><td>LMWH/UFH/bivalirudin (if HIT)</td></tr>
+      <tr><td>Prevent reocclusion after fibrinolysis</td><td>UFH → warfarin (with aspirin ± clopidogrel)</td></tr>
+      <tr><td>DIC (defibrination syndrome) — preserve clotting factors</td><td>UFH</td></tr>
+      <tr><td>Maintain patency of cannulae/catheters, dialysis circuits</td><td>Heparin flushes</td></tr>
+      <tr><td>Mechanical prosthetic valves; pregnancy</td><td>Warfarin (valves); UFH/LMWH in pregnancy — DOACs/warfarin avoided</td></tr>
+    </table>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Heparin acts immediately; warfarin has 2–5 day latency → always overlap parenteral agent with warfarin until INR therapeutic.</li>
+      <li>UFH preferred in renal failure, pregnancy, cardiopulmonary bypass; LMWH not fully reversed by protamine, fondaparinux not at all.</li>
+      <li>DOACs are first-line in nonvalvular AF and VTE; contraindicated in mechanical valves and pregnancy.</li>
+      <li>Bivalirudin/fondaparinux/danaparoid are the agents of choice for HIT.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> DOACs (apixaban, rivaroxaban, dabigatran, edoxaban) are now preferred over warfarin in nonvalvular AF and VTE for comparable/better efficacy with less intracranial bleeding; idarucizumab (dabigatran) and andexanet alfa (factor Xa inhibitors) are specific reversal agents.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s5" style="--sec:#b3852f;--sec-soft:#b3852f26">
+  <h2>Section 5 · Respiratory Pharmacology (Asthma, Allergy &amp; PAH)</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Drugs in bronchial asthma; pharmacotherapy of acute exacerbation &amp; chronic asthma per latest GINA; role of LABA, leukotriene modifiers &amp; newer targets.</span></summary>
+  <div class="answer">
+    <h4>Classification of anti-asthma drugs</h4>
+    <table>
+      <tr><th>Group</th><th>Examples</th></tr>
+      <tr><td>Bronchodilators — β2-agonists</td><td>SABA: salbutamol, terbutaline; LABA: salmeterol, formoterol</td></tr>
+      <tr><td>Anticholinergics</td><td>Ipratropium (SAMA), tiotropium (LAMA)</td></tr>
+      <tr><td>Methylxanthines</td><td>Theophylline</td></tr>
+      <tr><td>Anti-inflammatory — ICS</td><td>Budesonide, fluticasone, beclomethasone</td></tr>
+      <tr><td>Leukotriene modifiers</td><td>Montelukast, zafirlukast; zileuton</td></tr>
+      <tr><td>Mast-cell stabilisers</td><td>Sodium cromoglicate, nedocromil</td></tr>
+      <tr><td>Biologics</td><td>Omalizumab, mepolizumab, benralizumab, dupilumab, tezepelumab</td></tr>
+    </table>
+    <h4>Chronic asthma — GINA approach (stepwise)</h4>
+    <ul>
+      <li><b>Key GINA shift:</b> no SABA-only treatment. All adults/adolescents use ICS-containing therapy. Preferred reliever = <b>ICS-formoterol</b>.</li>
+      <li><b>Track 1 (preferred):</b> as-needed low-dose ICS-formoterol (Steps 1–2) → low then medium-dose ICS-formoterol maintenance + reliever (MART, Steps 3–4) → add-on LAMA / refer for biologic (Step 5).</li>
+      <li>LABA must <b>never</b> be used without ICS.</li>
+    </ul>
+    <h4>Acute exacerbation</h4>
+    <p>Oxygen (target SpO₂ 93–95%), repeated <b>SABA</b> (± ipratropium) via nebuliser/MDI-spacer, <b>systemic corticosteroids</b> (oral/IV early), IV magnesium sulfate in severe cases, consider ICS; monitor &amp; escalate to ICU/ventilation if life-threatening.</p>
+    <h4>Newer targets / biologics</h4>
+    <table>
+      <tr><th>Biologic</th><th>Target</th><th>Phenotype</th></tr>
+      <tr><td>Omalizumab</td><td>Anti-IgE</td><td>Allergic asthma</td></tr>
+      <tr><td>Mepolizumab/reslizumab; benralizumab</td><td>Anti-IL-5 / IL-5Rα</td><td>Eosinophilic</td></tr>
+      <tr><td>Dupilumab</td><td>Anti-IL-4Rα (IL-4/13)</td><td>Type-2 high</td></tr>
+      <tr><td>Tezepelumab</td><td>Anti-TSLP</td><td>Broad/severe</td></tr>
+    </table>
+    <p><b>Leukotriene modifiers:</b> oral add-on/alternative controller; useful in aspirin-exacerbated respiratory disease, exercise-induced asthma, allergic rhinitis (montelukast — neuropsychiatric warning).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Corticosteroids in COVID-19 management — rationale, evidence &amp; dosing.</span></summary>
+  <div class="answer">
+    <h4>Rationale</h4>
+    <p>Severe COVID-19 is driven not by viral cytopathic effect alone but by a dysregulated host hyperinflammatory response ("cytokine storm") causing diffuse alveolar damage and ARDS. Systemic glucocorticoids (dexamethasone) are the cornerstone immunomodulatory therapy that improves survival in hospitalised, oxygen-requiring patients — they are <b>anti-inflammatory, not antiviral</b>, so benefit is confined to the inflammatory phase.</p>
+    <h4>Mechanism</h4>
+    <ul>
+      <li>Glucocorticoid-receptor complex modulates gene transcription: induces annexin-1 (inhibits phospholipase A₂ → ↓ prostaglandins, leukotrienes, PAF) and negatively regulates NF-κB/AP-1.</li>
+      <li>Suppresses pro-inflammatory cytokine genes — ↓ IL-1, IL-2, IL-6, TNF-α, GM-CSF — blunting the cytokine storm; ↓ acute-phase reactants, ↓ ELAM-1/ICAM-1 (impaired leukocyte adhesion/chemotaxis).</li>
+    </ul>
+    <h4>Evidence — RECOVERY trial</h4>
+    <p>Landmark open-label RCT (Horby et al., 2021): dexamethasone 6 mg PO/IV once daily for up to 10 days lowered 28-day mortality (22.9% vs 25.7%, RR 0.83, 95% CI 0.75–0.93). Largest benefit in invasively ventilated patients; benefit also in those on supplemental O₂; <b>no benefit — and potential harm — in patients NOT requiring oxygen</b>. Meta-analysis confirmed mortality benefit regardless of specific steroid, dose or oxygen level.</p>
+    <h4>Indications &amp; dosing</h4>
+    <p>Use in hospitalised, hypoxic (moderate-severe/critical) disease — supplemental O₂, NIV/HFNC, or mechanical ventilation; avoid in mild/outpatient disease. <b>Dexamethasone 6 mg/day × up to 10 days</b>; equivalents = hydrocortisone, prednisolone, methylprednisolone. Higher doses (10–20 mg) gave no extra benefit. Combine with tocilizumab (IL-6R antagonist) or baricitinib (JAK1/2 inhibitor) when oxygen needs/inflammatory markers escalate.</p>
+    <h4>Adverse effects</h4>
+    <p>Hyperglycaemia (key in diabetics), fluid retention, leukocytosis, secondary bacterial &amp; fungal infection, GI haemorrhage, adrenal suppression, myopathy.</p>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Dexamethasone 6 mg × 10 days = mortality benefit only in oxygen-requiring COVID-19 — memorise the RECOVERY numbers.</li>
+      <li>Anti-inflammatory, NOT antiviral → harmful if given too early/in mild disease.</li>
+      <li>India: steroid overuse + uncontrolled hyperglycaemia → COVID-associated mucormycosis ("black fungus," 2021 wave).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> WHO living guideline and NIH/IDSA recommend systemic corticosteroids for severe/critical COVID-19, with a conditional recommendation against use in non-severe disease. Rational steroid stewardship (right patient, 6 mg, ≤10 days, glycaemic monitoring) was reinforced post-2021 to curb the mucormycosis epidemic.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Routes of drug delivery to the lungs — factors governing pulmonary deposition &amp; inhalational devices.</span></summary>
+  <div class="answer">
+    <h4>Rationale for the inhaled route</h4>
+    <p>The lung offers a large, highly vascular absorptive surface with direct access to airway target cells, allowing topical (inhaled) delivery for airway disease (asthma, COPD) as well as systemic delivery of peptides. Inhalation places drug directly at the site of action, so a lower dose achieves the effect with faster onset and fewer systemic side effects than the oral route — for β2-agonists/corticosteroids the inhaled route is always preferred.</p>
+    <h4>Factors governing pulmonary deposition</h4>
+    <ul>
+      <li><b>Particle size (MMAD)</b> is critical: optimum 2–5 µm. Larger particles impact in the upper airways/oropharynx; smaller particles stay suspended and are exhaled. Drugs targeting small airways need ~1 µm particles (HFA formulation).</li>
+      <li><b>Technique/coordination:</b> with a conventional pMDI only ~10–20% of the dose reaches the lower airways; 80–90% is swallowed, absorbed from the GI tract and undergoes first-pass metabolism.</li>
+    </ul>
+    <h4>Inhalational devices</h4>
+    <table>
+      <tr><th>Device</th><th>Mechanism / features</th><th>Notes</th></tr>
+      <tr><td>pMDI (pressurised metered-dose inhaler)</td><td>Drug expelled by HFA propellant; 50–200 metered doses</td><td>Needs actuation-inspiration coordination</td></tr>
+      <tr><td>Spacer</td><td>Chamber between pMDI and mouth</td><td>Removes need for coordination; ↓ oropharyngeal deposition → less candidiasis/systemic exposure; face-mask for children ≥3 yr</td></tr>
+      <tr><td>DPI (dry-powder inhaler)</td><td>Breath-actuated micronised powder</td><td>Needs minimum inspiratory flow; hard for children &lt;7 yr</td></tr>
+      <tr><td>Nebuliser</td><td>Jet (gas-driven) or ultrasonic (piezoelectric)</td><td>Tidal breathing, high doses; acute severe asthma/COPD, infants, bedside</td></tr>
+      <tr><td>Soft-mist inhaler</td><td>Slow-moving fine mist (e.g. tiotropium Respimat)</td><td>High lung deposition, low coordination demand</td></tr>
+    </table>
+    <h4>Other routes</h4>
+    <p><b>Oral</b> — dose ~20:1 vs inhaled → more systemic effects; reserved for those unable to use inhalers (theophylline is given only systemically). <b>Parenteral/IV</b> — severely ill, acute exacerbations. Examples: bronchodilators (salbutamol, formoterol, ipratropium, tiotropium); ICS (beclometasone, budesonide, fluticasone, ciclesonide); cromones; inhaled insulin (DPI, for systemic peptide delivery).</p>
+    <div class="dia"><b>Inhaled-drug deposition:</b> pMDI → mouth/pharynx (~80–90% swallowed) → GI tract → liver (first-pass) → systemic circulation; only ~10–20% reaches the lungs directly; a spacer shifts this balance toward the lungs.</div>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Optimum particle size 2–5 µm MMAD; &lt;1–2 µm exhaled, &gt;5 µm impacts oropharynx.</li>
+      <li>pMDI delivers only 10–20% to lower airways; spacer ↑ lung dose, ↓ oropharyngeal deposition.</li>
+      <li>Soft-mist inhalers and DPIs reduce the coordination burden of conventional pMDIs.</li>
+    </ul>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Pharmacotherapy of pulmonary arterial hypertension; role of endothelin receptor antagonists &amp; other targeted therapies.</span></summary>
+  <div class="answer">
+    <p><b>PAH</b> = ↑ pulmonary arterial pressure from vasoconstriction &amp; remodelling. Therapy targets three pathways:</p>
+    <table>
+      <tr><th>Pathway</th><th>Drug class</th><th>Examples</th></tr>
+      <tr><td>Endothelin</td><td><b>ERAs</b></td><td>Bosentan, macitentan (non-selective); ambrisentan (ETA)</td></tr>
+      <tr><td>Nitric oxide / cGMP</td><td>PDE5 inhibitors; sGC stimulator</td><td>Sildenafil, tadalafil; riociguat</td></tr>
+      <tr><td>Prostacyclin</td><td>Prostacyclin analogues / IP agonist</td><td>Epoprostenol, iloprost, treprostinil; selexipag</td></tr>
+    </table>
+    <h4>Endothelin receptor antagonists</h4>
+    <p>Block ET<sub>A</sub> (±ET<sub>B</sub>) → ↓ vasoconstriction &amp; proliferation. <b>Hepatotoxic &amp; teratogenic</b> → monthly LFTs &amp; pregnancy tests (REMS). Improve symptoms, exercise capacity &amp; delay clinical worsening.</p>
+    <h4>General &amp; supportive</h4>
+    <ul><li>High-dose CCBs only if vasoreactivity-test positive (minority).</li><li>Diuretics, oxygen, anticoagulation (selected), treat underlying cause.</li><li>Combination/upfront therapy now standard (e.g. ambrisentan + tadalafil — AMBITION).</li></ul>
+    <div class="recent"><b>Recent:</b> <b>Sotatercept</b> (activin-signalling inhibitor, 2024) — first disease-modifying agent targeting pulmonary vascular remodelling.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s6" style="--sec:#2f8696;--sec-soft:#2f869626">
+  <h2>Section 6 · Metabolic, Endocrine &amp; Dyslipidemia</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Recent drug therapy for Type 2 DM; pharmacology, current status &amp; therapeutic potential of SGLT-2 inhibitors (incl. role in HF) &amp; DPP-4 inhibitors.</span></summary>
+  <div class="answer">
+    <h4>Overview of T2DM drug classes</h4>
+    <table>
+      <tr><th>Class</th><th>Example</th><th>Mechanism</th></tr>
+      <tr><td>Biguanide</td><td>Metformin (first-line)</td><td>↓ hepatic gluconeogenesis, ↑ insulin sensitivity</td></tr>
+      <tr><td>SGLT2 inhibitors</td><td>Dapagliflozin, empagliflozin, canagliflozin</td><td>↓ renal glucose reabsorption → glucosuria</td></tr>
+      <tr><td>GLP-1 receptor agonists</td><td>Liraglutide, semaglutide, dulaglutide</td><td>↑ insulin, ↓ glucagon, ↓ appetite, ↓ weight</td></tr>
+      <tr><td>DPP-4 inhibitors</td><td>Sitagliptin, vildagliptin, linagliptin</td><td>↑ endogenous incretins (GLP-1/GIP)</td></tr>
+      <tr><td>Sulfonylureas / glinides</td><td>Glimepiride / repaglinide</td><td>↑ insulin secretion (K-ATP block)</td></tr>
+      <tr><td>Thiazolidinedione</td><td>Pioglitazone</td><td>PPAR-γ → insulin sensitisation</td></tr>
+      <tr><td>Dual GIP/GLP-1</td><td>Tirzepatide</td><td>Twincretin — potent glucose &amp; weight reduction</td></tr>
+    </table>
+    <h4>SGLT2 inhibitors — detail</h4>
+    <ul>
+      <li><b>Mechanism:</b> block SGLT2 in proximal tubule → glucosuria + natriuresis → ↓ glucose, BP, weight; insulin-independent.</li>
+      <li><b>Cardio-renal benefit:</b> ↓ HF hospitalisation &amp; CV death (EMPA-REG, DAPA-HF, EMPEROR), ↓ CKD progression (DAPA-CKD, CREDENCE) — <b>now used in HF &amp; CKD even without diabetes</b>.</li>
+      <li><b>ADR:</b> genital/UTI mycotic infections, volume depletion, <b>euglycaemic DKA</b>, (canagliflozin — amputation/fracture signal).</li>
+    </ul>
+    <h4>DPP-4 inhibitors — detail</h4>
+    <ul>
+      <li><b>Mechanism:</b> inhibit DPP-4 → prolong incretin action → glucose-dependent insulin ↑, glucagon ↓.</li>
+      <li><b>Profile:</b> weight-neutral, low hypoglycaemia, oral, well tolerated; modest HbA1c drop; CV-safe (neutral). Caution: pancreatitis; saxagliptin — ↑ HF hospitalisation signal.</li>
+    </ul>
+    <div class="recent"><b>Recent:</b> GLP-1 RAs &amp; tirzepatide transforming diabetes + obesity care; SGLT2i are now cardio-renal protective drugs; oral semaglutide available.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Classify hypolipidemic agents; MOA, pleiotropic effects, indications &amp; ADRs of statins; role of PCSK9 inhibitors &amp; newer LDL-lowering agents; controversies regarding the use of statins; note on newer targets.</span></summary>
+  <div class="answer">
+    <h4>Classification</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Main effect</th></tr>
+      <tr><td>Statins (HMG-CoA reductase inhibitors)</td><td>Atorvastatin, rosuvastatin, simvastatin</td><td>↓↓ LDL</td></tr>
+      <tr><td>Cholesterol absorption inhibitor</td><td>Ezetimibe</td><td>↓ LDL</td></tr>
+      <tr><td>PCSK9 inhibitors</td><td>Alirocumab, evolocumab (mAb); inclisiran (siRNA)</td><td>↓↓ LDL</td></tr>
+      <tr><td>Bile acid sequestrants</td><td>Cholestyramine, colesevelam</td><td>↓ LDL</td></tr>
+      <tr><td>Fibrates (PPAR-α)</td><td>Fenofibrate, gemfibrozil</td><td>↓↓ TG, ↑ HDL</td></tr>
+      <tr><td>Niacin</td><td>Nicotinic acid</td><td>↓ TG, ↑ HDL</td></tr>
+      <tr><td>Others / newer</td><td>Bempedoic acid; omega-3 (icosapent ethyl)</td><td>↓ LDL / ↓ TG</td></tr>
+    </table>
+    <h4>Statins — MOA</h4>
+    <p>Competitive inhibition of <b>HMG-CoA reductase</b>, the rate-limiting enzyme converting HMG-CoA → mevalonate in hepatic cholesterol synthesis (statins are structural analogues of the HMG-CoA intermediate). Reduced intracellular cholesterol → upregulation of hepatic LDL receptors → ↑ clearance of LDL, IDL and VLDL remnants from plasma. LDL-lowering is log-linear: LDL-C falls ~6% with each doubling of dose; high-intensity statins (atorvastatin 40–80 mg, rosuvastatin 20–40 mg) lower LDL ≥50%; maximal effect in 7–10 days.</p>
+    <h4>Pleiotropic (lipid-independent) effects — mechanism &amp; spectrum</h4>
+    <div class="dia"><b>Mevalonate pathway:</b> Acetyl-CoA → HMG-CoA → (HMG-CoA reductase — statin block) → Mevalonate → Isoprenoids (farnesyl-PP/geranylgeranyl-PP) → Rho/Rab GTPase prenylation; Mevalonate also feeds Ubiquinone (CoQ10) and Dolichol synthesis. Loss of isoprenoids (not the LDL fall) is the basis of pleiotropy — effects appear within 2–3 months, faster than plaque regression, which is the classic exam proof that pleiotropy is LDL-independent.</div>
+    <table>
+      <tr><th>Effect</th><th>Mechanism</th></tr>
+      <tr><td>Endothelial</td><td>↓ Rho/ROCK activity → ↑ eNOS expression/activity → ↑ NO bioavailability → vasodilation</td></tr>
+      <tr><td>Anti-inflammatory</td><td>↓ CRP, ↓ adhesion molecule expression, ↓ leukocyte-endothelial interaction</td></tr>
+      <tr><td>Antioxidant</td><td>↓ LDL oxidation, ↓ ROS generation</td></tr>
+      <tr><td>Plaque-stabilising</td><td>↓ macrophage/lipid content, thickens fibrous cap, ↓ matrix metalloproteinase activity</td></tr>
+      <tr><td>Antithrombotic</td><td>↓ platelet aggregation/tissue factor, ↑ fibrinolysis</td></tr>
+      <tr><td>Anti-proliferative / immunomodulatory</td><td>↓ vascular smooth-muscle proliferation; modulates T-cell activation</td></tr>
+    </table>
+    <p>Clinical proof-of-concept: high-dose statin started immediately after ACS regardless of baseline lipid level (benefit appears before lipid-driven plaque regression could explain it); rosuvastatin reduces VTE post-orthopaedic surgery; JUPITER used hs-CRP-guided primary prevention (rosuvastatin 20 mg in normolipidaemic adults with hs-CRP ≥2 mg/L cut major CV events, HR 0.56) as a clinical realisation of pleiotropy. The same pathway also explains <b>adverse</b> pleiotropy — CoQ10-related myopathy and new-onset diabetes (see controversies below). Current consensus: pleiotropy is biologically real, but the dominant, proven benefit of statins remains LDL lowering.</p>
+    <h4>Indications &amp; ADRs</h4>
+    <p><b>Indications:</b> hypercholesterolaemia, primary &amp; secondary CV prevention, ACS, diabetes with risk factors. <b>ADR:</b> myalgia/<b>myopathy-rhabdomyolysis</b>, ↑ transaminases, new-onset diabetes, drug interactions (CYP3A4 — simvastatin). Contraindicated in pregnancy.</p>
+    <h4>Controversies regarding the use of statins</h4>
+    <p>Despite firmly established CV-mortality benefit (CTT meta-analyses; HPS, JUPITER, CARDS, TNT, PROSPER), repeated controversies surround statin safety/over-prescription. The examiner's task is to weigh each alleged harm against proven benefit and separate true pharmacological effects from the <b>nocebo effect</b>.</p>
+    <table>
+      <tr><th>Controversy</th><th>The concern</th><th>Counter-evidence / current view</th></tr>
+      <tr><td>Muscle symptoms (SAMS)</td><td>Myalgia-myopathy-rhabdomyolysis; reported by 10–25% of users, leading cause of discontinuation</td><td>True myopathy &lt;1/1000; rhabdomyolysis 0.1% (statin) vs 0.04% (placebo); &gt;90% of muscle reports are nocebo (SAMSON trial, CTT 2022 meta-analysis)</td></tr>
+      <tr><td>New-onset diabetes</td><td>~10% relative ↑ in incident T2DM, dose-related</td><td>Absolute risk increase &lt;1%; ~3 ASCVD events prevented per 1 new diabetes case — benefit outweighs risk</td></tr>
+      <tr><td>Hepatotoxicity</td><td>Transaminase rise; "liver damage"</td><td>Serious injury ~1 per million person-years; FDA (2012) withdrew routine LFT monitoring</td></tr>
+      <tr><td>Cognition</td><td>Memory loss/dementia (FDA 2012 label)</td><td>Meta-analyses show no adverse cognitive effect; some data suggest dementia protection</td></tr>
+      <tr><td>Primary prevention / over-prescription</td><td>Treating low-risk people; polypharmacy risk</td><td>Statin-benefit groups defined by threshold; debated, not the principle</td></tr>
+      <tr><td>Elderly &gt;75 / very-low-LDL safety</td><td>Sparse RCT data; "lower-is-better" vs J-curve</td><td>Secondary prevention benefit clear; primary prevention in &gt;75 y uncertain (STAREE awaited)</td></tr>
+    </table>
+    <ul>
+      <li><b>Muscle symptoms — risk factors:</b> ↑ dose/plasma level, age &gt;80 y, small body size, renal/hepatic impairment, untreated hypothyroidism, drug interactions (gemfibrozil via OATP1B1; CYP3A4 inhibitors — macrolides, azoles, ciclosporin, HIV protease inhibitors, amiodarone, verapamil/diltiazem). FDA caps simvastatin at 80 mg; SLCO1B1 (OATP1B1) polymorphism predisposes. Routine CK not needed unless an interacting drug is co-prescribed or symptoms occur.</li>
+      <li><b>CoQ10 debate:</b> statins block the mevalonate pathway upstream of ubiquinone, proposed as a SAMS mechanism — but controlled trials show no consistent benefit of CoQ10 supplementation; not guideline-recommended.</li>
+      <li><b>Genuine intolerance</b> (diagnosed only after rechallenge, excluding nocebo/hypothyroidism/vitamin-D deficiency): switch statin, lower dose, hydrophilic statin (rosuvastatin/pravastatin), or alternate-day dosing.</li>
+    </ul>
+    <h4>PCSK9 inhibitors &amp; newer agents</h4>
+    <ul>
+      <li><b>PCSK9i:</b> ↑ LDL-receptor recycling → LDL ↓50–60%; for familial hypercholesterolaemia, statin-intolerant, very-high-risk not at goal. Inclisiran (siRNA) — twice-yearly.</li>
+      <li><b>Bempedoic acid</b> (ATP-citrate lyase inhibitor — oral, acts upstream of HMG-CoA, largely muscle-sparing — CLEAR Outcomes: MACE HR 0.87 in statin-intolerant patients); <b>icosapent ethyl</b> (REDUCE-IT — CV risk ↓); <b>ezetimibe</b> (NPC1L1 inhibitor, IMPROVE-IT) as add-on/alternative.</li>
+      <li>FDA (2016) withdrew approval of niacin-ER/fenofibrate + statin combinations for lack of added ASCVD benefit.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> SAMSON (n-of-1 crossover) found 90% of statin-attributed symptoms also occurred on placebo — clinicians should not infer pharmacological causation from symptom pattern alone. CTT individual-participant-data meta-analysis (Lancet 2022, ~124,000 patients) confirmed only a small, mostly mild, year-1 excess of muscle pain, vastly outweighed by CV benefit. JUPITER established inflammation-guided (hs-CRP) statin therapy as a clinical proof of pleiotropy. CLEAR Outcomes validated bempedoic acid as an effective muscle-sparing option for genuine statin intolerance. Newer LDL-lowering targets: ANGPTL3 inhibitors (evinacumab — HoFH), Lp(a)-lowering antisense (pelacarsen, trials), CETP inhibitors (obicetrapib). Inflammation is now increasingly targeted directly (e.g. anti-IL-1β/colchicine programmes) rather than relying on statin pleiotropy alone.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Structure-activity relationship (SAR) of corticosteroids.</span></summary>
+  <div class="answer">
+    <h4>The basic nucleus</h4>
+    <p>Corticosteroids are 21-carbon steroids built on the pregnane (cyclopentanoperhydrophenanthrene) nucleus — three 6-carbon rings (A, B, C) plus one 5-carbon ring (D), with a C17 side chain. Cortisol (hydrocortisone) is the prototype glucocorticoid, aldosterone the prototype mineralocorticoid. Deoxycorticosterone (DOCA) is the parent skeleton from which substitutions are reckoned — itself a selective mineralocorticoid.</p>
+    <div class="dia"><b>Steroid nucleus:</b> Rings A-B-C-D; key carbons — C1-C2 (Δ1 site), C3 (3-keto group), C4-C5 (Δ4 double bond), C9, C11 (11β-OH), C16, C17 (17α-OH), C21 (21-OH). The pharmacophore for receptor binding sits at Δ4-3-keto + 11β-OH + 17α-OH + 21-OH.</div>
+    <h4>Features essential for activity</h4>
+    <ul>
+      <li><b>Δ4,5 double bond (ring A) + 3-keto group</b> — obligatory for receptor binding; hepatic reduction yields inactive tetrahydro metabolites.</li>
+      <li><b>11β-hydroxyl</b> — essential for glucocorticoid activity. 11-keto pro-drugs (cortisone, prednisone) are inactive until hepatic reduction to the 11β-OH form (cortisol, prednisolone) — avoid in severe liver disease.</li>
+      <li><b>17α-hydroxyl</b> — required for full anti-inflammatory/glucocorticoid activity.</li>
+      <li><b>21-hydroxyl + 20-keto with the C17 side chain</b> — required; C21-OH is the site of esterification (formulation tool).</li>
+    </ul>
+    <h4>Key modifications &amp; their consequences</h4>
+    <table>
+      <tr><th>Modification</th><th>Position</th><th>Representative drug(s)</th><th>Effect on activity</th></tr>
+      <tr><td>Δ1,2 double bond (extra unsaturation, ring A)</td><td>C1-C2</td><td>Prednisolone, prednisone</td><td>↑ Glucocorticoid (~4×), relatively ↓ mineralocorticoid; prolongs t½ &gt;50%</td></tr>
+      <tr><td>6α-methyl / 6α-fluoro</td><td>C6</td><td>Methylprednisolone</td><td>More selective GC, less salt retention; 6α-F highly potent</td></tr>
+      <tr><td>9α-fluorination of cortisol</td><td>C9</td><td>Fludrocortisone</td><td>↑ both GC and MC, but MC rises disproportionately → used as potent mineralocorticoid</td></tr>
+      <tr><td>9α-F + Δ1,2 + 16-substituent (combined)</td><td>C9/C16</td><td>Dexamethasone, betamethasone, triamcinolone</td><td>Very potent, long-acting GC with salt retention abolished</td></tr>
+      <tr><td>16α/16β-methyl or 16α-hydroxyl</td><td>C16</td><td>Dexamethasone (16α-CH3), betamethasone (16β-CH3), triamcinolone (16α-OH)</td><td>Abolish mineralocorticoid (salt-retaining) activity</td></tr>
+      <tr><td>16,17-acetonide/acetal</td><td>C16-C17</td><td>Triamcinolone acetonide, budesonide</td><td>↑ surface (topical) activity, skin penetration — dermatologic use</td></tr>
+      <tr><td>21-esterification</td><td>C21</td><td>Hydrocortisone acetate/hemisuccinate, methylprednisolone acetate</td><td>Tailors solubility → topical, depot (IM/intra-articular), or IV preparations</td></tr>
+    </table>
+    <p><b>9α-F paradox:</b> 9α-fluorination alone (→ fludrocortisone) markedly boosts salt retention; but combined with a 16-methyl/hydroxyl group (→ dexamethasone, betamethasone), the salt-retaining action is cancelled, leaving a pure, highly potent glucocorticoid. Dexamethasone and betamethasone are C16 epimers — identical except the 16-methyl is α in dexamethasone and β in betamethasone. Halogenation (9α), Δ1,2 unsaturation and 2-/16-methylation all resist metabolism and prolong half-life by &gt;50%.</p>
+    <h4>Potency comparison (relative to hydrocortisone = 1)</h4>
+    <table>
+      <tr><th>Compound</th><th>Anti-inflammatory (GC)</th><th>Na⁺-retaining (MC)</th><th>Duration</th><th>Equiv. dose (mg)</th></tr>
+      <tr><td>Hydrocortisone (cortisol)</td><td>1</td><td>1</td><td>Short (8–12 h)</td><td>20</td></tr>
+      <tr><td>Cortisone</td><td>0.8</td><td>0.8</td><td>Short</td><td>25</td></tr>
+      <tr><td>Prednisolone</td><td>4</td><td>0.8</td><td>Intermediate (12–36 h)</td><td>5</td></tr>
+      <tr><td>Methylprednisolone</td><td>5</td><td>0.5</td><td>Intermediate</td><td>4</td></tr>
+      <tr><td>Triamcinolone</td><td>5</td><td>0</td><td>Intermediate</td><td>4</td></tr>
+      <tr><td>Dexamethasone</td><td>25</td><td>0</td><td>Long (36–72 h)</td><td>0.75</td></tr>
+      <tr><td>Betamethasone</td><td>25</td><td>0</td><td>Long</td><td>0.75</td></tr>
+      <tr><td>Fludrocortisone</td><td>10</td><td>125</td><td>Intermediate</td><td>— (used as MC)</td></tr>
+    </table>
+    <p>As Δ1, 16- and 9α-fluoro substitutions accumulate, glucocorticoid potency climbs 1 → 25 while mineralocorticoid potency falls 1 → 0.</p>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Pharmacophore = Δ4-3-keto + 11β-OH + 17α-OH + 21-OH on the pregnane nucleus; lose any and activity falls.</li>
+      <li>11-keto (cortisone, prednisone) = pro-drugs → need hepatic 11β-reduction; prefer prednisolone in liver disease.</li>
+      <li>Δ1,2 = the single change converting cortisol → prednisolone (4× GC, less MC).</li>
+      <li>16-methyl/hydroxyl abolishes salt retention (dexamethasone, betamethasone, triamcinolone); 9α-F alone → fludrocortisone (mineralocorticoid); 9α-F + 16-substituent → potent pure GC.</li>
+      <li>Dexamethasone vs betamethasone = 16α vs 16β methyl epimers.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> selective glucocorticoid-receptor agonists/modulators (SEGRAMs/SEGRMs) aim to dissociate beneficial transrepression (anti-inflammatory) from harmful transactivation (metabolic, osteoporotic) effects — the long-sought goal classical SAR could not achieve; still largely investigational.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Emergency &amp; hormonal contraception — classification, mechanism of action &amp; adverse effects.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Hormonal contraceptives are estrogen and/or progestin preparations used for reversible suppression of fertility. <b>Emergency (post-coital) contraception (EC)</b> is the use of a drug or copper IUD after unprotected or inadequately protected intercourse to prevent unintended pregnancy — a back-up, not a routine, method, and <b>not abortifacient</b> (oral EC does not disrupt an already-implanted pregnancy).</p>
+    <h4>Classification of hormonal contraceptive agents</h4>
+    <table>
+      <tr><th>Route / class</th><th>Examples</th><th>Key feature</th></tr>
+      <tr><td>Combined oral pill (COC) — monophasic</td><td>Levonorgestrel + ethinylestradiol (EE)</td><td>Fixed dose × 21 days; most efficacious</td></tr>
+      <tr><td>COC — phasic (triphasic)</td><td>LNG/EE stepped doses</td><td>Mimics natural cycle; lowers total steroid dose</td></tr>
+      <tr><td>Progestin-only pill (minipill)</td><td>Norethindrone, norgestrel</td><td>No estrogen — for lactation/estrogen-contraindicated; continuous, no gap</td></tr>
+      <tr><td>Injectable</td><td>DMPA 150 mg IM q3 months</td><td>Long-acting progestin-only; menstrual disruption common</td></tr>
+      <tr><td>Subdermal implant</td><td>Levonorgestrel, etonogestrel</td><td>Slow release 1–5 yr; LARC</td></tr>
+      <tr><td>Transdermal patch</td><td>Norelgestromin + EE</td><td>~60% higher estrogen exposure than 35-µg COC → ↑VTE caution</td></tr>
+      <tr><td>Vaginal ring</td><td>Etonogestrel + EE (NuvaRing)</td><td>3 weeks in, 1 week out</td></tr>
+      <tr><td>Intrauterine system (hormonal)</td><td>LNG 52-mg IUS (Mirena)</td><td>Local endometrial/cervical-mucus action; 3–6 yr</td></tr>
+      <tr><td>Non-steroidal (India)</td><td>Ormeloxifene (Centchroman/Saheli)</td><td>SERM; weekly oral; cycle not disrupted</td></tr>
+    </table>
+    <h4>Combined oral contraceptive (COC) — composition &amp; regimen</h4>
+    <p>A 19-nortestosterone progestin (antiovulatory) + small-dose estrogen (EE) that enhances efficacy and ensures cycle control. EE 30 µg is the threshold dose, reducible to 20 µg with a potent progestin. 3rd-generation progestins (desogestrel, gestodene, norgestimate) are less androgenic but carry a marginally higher VTE signal. Regimen: 1 tablet daily ×21 days from day 5 of menses, then a 7-day pill-free gap (withdrawal bleed); the progestin protects against endometrial hyperplasia from unopposed estrogen.</p>
+    <h4>Mechanism of action of regular hormonal contraceptives</h4>
+    <ol>
+      <li><b>Inhibition of gonadotropin release</b> (primary for COC) — progestin blunts LH pulse frequency, estrogen suppresses FSH; together they abolish the mid-cycle LH surge → anovulation.</li>
+      <li><b>Thick, hostile cervical mucus</b> (progestin effect) — impairs sperm penetration; operates with all methods except the post-coital pill.</li>
+      <li><b>Out-of-phase endometrium</b> — unsuitable for nidation (most important for minipills and the post-coital pill).</li>
+      <li><b>Altered uterine/tubal motility</b> disfavouring fertilization (contributes to minipill efficacy).</li>
+    </ol>
+    <div class="dia"><b>HPO-axis feedback:</b> GnRH → anterior pituitary → FSH (↓ by estrogen) and LH surge (↓ by progestin) → ovary/follicle → "no ovulation" when feedback is hormonally suppressed.</div>
+    <h4>Adverse effects &amp; contraindications (combined pill)</h4>
+    <p><b>Minor:</b> nausea, headache, breakthrough bleeding, breast tenderness; later weight gain, acne/hirsutism, chloasma. <b>Serious:</b> VTE/PE (estrogen-driven), arterial events (MI, stroke), ↑BP, gallstones, rare hepatoma. <b>Absolute C/I:</b> thromboembolic/coronary/cerebrovascular disease, moderate-severe HTN/hyperlipidaemia, active liver disease, genital/breast malignancy, porphyria, impending major surgery; smokers &gt;35 yr are high-risk. <b>Non-contraceptive benefits:</b> ↓ endometrial/ovarian cancer, ↓ menstrual blood loss, dysmenorrhoea/PMS relief, ↓ PID.</p>
+    <h4>Emergency contraception — agents &amp; regimens</h4>
+    <table>
+      <tr><th>Method</th><th>Regimen / timing</th><th>Efficacy &amp; notes</th></tr>
+      <tr><td>Levonorgestrel (POP)</td><td>1.5 mg single dose within 72 h</td><td>Standard, OTC; failure ~2–4%; ↓efficacy &gt;72 h or weight &gt;75 kg</td></tr>
+      <tr><td>Ulipristal acetate (SPRM)</td><td>30 mg single dose within 120 h</td><td>≥ as effective as LNG to 72 h, superior 72–120 h; widest oral window</td></tr>
+      <tr><td>Yuzpe method</td><td>EE 100 µg + LNG 0.5 mg, 2 doses 12 h apart, ≤72 h</td><td>High nausea (20–50%); largely obsolete</td></tr>
+      <tr><td>Copper IUD</td><td>Insert within 5 days</td><td>Most effective EC (&lt;1% failure); ongoing contraception</td></tr>
+      <tr><td>LNG 52-mg IUS</td><td>Insert within 5 days</td><td>Non-inferior to copper IUD for EC</td></tr>
+    </table>
+    <h4>Mechanism of emergency contraceptive agents</h4>
+    <p>The unifying principle: oral EC works chiefly by delaying/inhibiting ovulation — NOT abortifacient.</p>
+    <ul>
+      <li><b>Levonorgestrel 1.5 mg</b> — inhibits/delays ovulation by blunting the pre-ovulatory LH surge if given before the surge begins; ineffective once the surge has started — explains its time-sensitivity (≤72 h).</li>
+      <li><b>Ulipristal acetate</b> — selective progesterone-receptor modulator; delays follicular rupture even at/just after LH-surge onset — a "later window" of action that extends efficacy to 120 h. May additionally impair endometrial receptivity.</li>
+      <li><b>Copper IUD</b> — acts on gametes/fertilization, not ovulation: copper ions are toxic to sperm/ova and induce a sterile endometrial inflammatory reaction preventing fertilization/implantation — effective even after ovulation, hence highest efficacy.</li>
+    </ul>
+    <h4>Adverse effects of EC</h4>
+    <p>Nausea/vomiting (main, much less with LNG/UPA than Yuzpe); menstrual changes (LNG brings menses earlier, UPA later); headache, breast tenderness. Enzyme inducers reduce EC efficacy; after UPA, delay restarting regular hormonal contraception (barrier ≥7 days).</p>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Primary mechanism of COC = suppression of ovulation (abolished LH surge); minipill/post-coital pill rely more on cervical mucus + out-of-phase endometrium.</li>
+      <li>LNG 1.5 mg ≤72 h (works only before LH surge) vs UPA 30 mg ≤120 h (works at/after surge) — UPA is more versatile.</li>
+      <li>Copper IUD is the most effective EC and the preferred choice in obese women or delayed presentation.</li>
+      <li>Oral EC is NOT an abortifacient — key counselling/ethics point.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> a randomised non-inferiority trial confirmed UPA is at least as effective as LNG within 72 h and superior in the 72–120 h window, establishing the 5-day oral EC standard. Cochrane 2019 (115 trials) ranked efficacy roughly as mid-dose mifepristone ≈ UPA &gt; levonorgestrel &gt; Yuzpe. The LNG 52-mg IUS is now shown non-inferior to the copper IUD for EC, expanding hormonal intrauterine options. Oral EC shows reduced efficacy at higher body weight; the copper IUD remains most reliable in obese women.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Bisphosphonates in postmenopausal osteoporosis — classification, mechanism &amp; clinical use.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> bisphosphonates (BPNs) are stable pyrophosphate analogues (P–C–P bond replacing P–O–P) that chelate Ca²⁺ and bind avidly to bone undergoing active remodelling. They are the most effective antiresorptive drugs and first-line therapy in postmenopausal osteoporosis, raising BMD and reducing vertebral, non-vertebral and hip fractures.</p>
+    <h4>Classification (by generation)</h4>
+    <table>
+      <tr><th>Generation</th><th>Drugs</th><th>Relative potency</th></tr>
+      <tr><td>1st (non-nitrogen)</td><td>Etidronate, clodronate, tiludronate</td><td>~1 (least potent)</td></tr>
+      <tr><td>2nd (amino-BPN)</td><td>Alendronate, pamidronate, ibandronate</td><td>10–100×</td></tr>
+      <tr><td>3rd (N-heterocyclic)</td><td>Risedronate, zoledronate</td><td>up to 10,000×</td></tr>
+    </table>
+    <h4>Mechanism</h4>
+    <p>BPNs concentrate at remodelling sites, bind hydroxyapatite, and are taken up by osteoclasts in the acidic resorption lacuna. Nitrogen-containing BPNs inhibit farnesyl pyrophosphate (FPP) synthase in the mevalonate pathway → block prenylation of Ras-like GTPases → loss of osteoclast cytoskeleton/ruffled border → osteoclast inactivation/apoptosis. Non-nitrogen BPNs are metabolised to cytotoxic ATP analogues triggering osteoclast apoptosis by a distinct mechanism.</p>
+    <div class="dia"><b>Diagram:</b> HMG-CoA → mevalonate → FPP synthase (✗ blocked by N-BPN) → geranylgeranyl-PP → protein prenylation → osteoclast survival.</div>
+    <h4>Pharmacokinetics &amp; dosing</h4>
+    <ul>
+      <li>Oral bioavailability &lt;1% (alendronate/risedronate), reduced further by food/divalent cations — take fasting, empty stomach, full glass of water, remain upright ≥30 min, don't chew.</li>
+      <li>~50% sequestered in bone (skeletal t½ of alendronate ≈10 years); rest excreted unchanged renally — avoid if CrCl &lt;30–35 mL/min.</li>
+      <li>Alendronate 10 mg/day or 70 mg/week; risedronate 5 mg/day or 35 mg/week; zoledronate 5 mg IV once yearly.</li>
+    </ul>
+    <h4>Uses &amp; adverse effects</h4>
+    <p>Uses: postmenopausal/age-related/glucocorticoid-induced osteoporosis, Paget disease, hypercalcaemia of malignancy, osteolytic metastases. ADRs: esophagitis/GI irritation (oral), osteonecrosis of the jaw (rare, more with IV in malignancy), atypical subtrochanteric fractures (long-term use), acute flu-like reaction with first IV dose, hypocalcaemia.</p>
+    <p><b>Drug holiday:</b> after ~5 years oral (~3 years IV zoledronate) therapy in patients not at high fracture risk, to limit ONJ/atypical-fracture risk; high-risk patients continue.</p>
+    <div class="recent"><b>Recent advances:</b> ACP network meta-analysis (2023) confirms bisphosphonates/denosumab reduce hip, vertebral and clinical fractures; abaloparatide/teriparatide/sequential romosozumab→alendronate may outperform bisphosphonates in very-high-risk older women. Guidelines (Osteoporosis Canada 2023, Austrian Society 2024) have shifted to risk-targeted, FRAX-based treatment thresholds; "anabolic-first then antiresorptive" sequencing with mandatory bridging is now standard.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Radioactive iodine (¹³¹I) in thyroid disorders.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> ¹³¹I is the radioisotope of choice for thyroid disorders, given orally as sodium ¹³¹I; exploits the thyroid's avid iodine trapping to deliver targeted internal radiation. Physical t½ 8 days (effective ~5 days); emits both γ-rays (imaging) and β-particles (tissue destruction).</p>
+    <h4>Mechanism</h4>
+    <ul>
+      <li>Trapped via the Na⁺/I⁻ symporter (NIS) like stable ¹²⁷I, organified and stored in colloid.</li>
+      <li>β-particles penetrate only 0.5–2 mm → act almost exclusively on follicular cells from within → pyknosis, necrosis, fibrosis, sparing adjacent tissue.</li>
+      <li>γ-radiation is used for external scanning/uptake (RAIU) studies.</li>
+    </ul>
+    <h4>Uses &amp; dosing</h4>
+    <table>
+      <tr><th>Indication</th><th>Dose</th></tr>
+      <tr><td>Diagnostic (RAIU/scan)</td><td>25–100 µCi</td></tr>
+      <tr><td>Graves' disease/toxic nodular goitre</td><td>~3–15 mCi (commonest use)</td></tr>
+      <tr><td>Metastatic thyroid carcinoma</td><td>Much higher ablative doses, post-thyroidectomy</td></tr>
+    </table>
+    <p>Treatment of choice in patients &gt;25 years or with surgical contraindication (CHF, angina). Response is slow (begins ~2 weeks, peaks ~3 months); ~20–40% need a repeat dose; render euthyroid with antithyroid drugs first in severe/elderly/cardiac cases.</p>
+    <h4>Advantages, ADRs &amp; contraindications</h4>
+    <p>Advantages: simple, outpatient, inexpensive, no surgical risk to parathyroids/recurrent laryngeal nerve, permanent cure. Chief delayed ADR: hypothyroidism (~5–10%/yr in Graves, ≥50% lifetime) needing lifelong levothyroxine. Absolute contraindications: pregnancy (crosses placenta → fetal cretinism) and lactation.</p>
+    <div class="recent"><b>Recent advances:</b> ATA still lists RAI as one of three definitive Graves' options (with antithyroid drugs and surgery); relatively avoided in moderate-severe active orbitopathy and in smokers (risk of worsening eye disease).</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Menopause and hormone replacement therapy (HRT) — regimens, benefits, risks &amp; newer non-hormonal options.</span></summary>
+  <div class="answer">
+    <p><b>Definition:</b> menopause is permanent cessation of menses after loss of ovarian follicular activity (diagnosed after 12 months' amenorrhoea, median age ≈51 yr); estradiol decline removes negative feedback → FSH rises ~15-fold (&gt;40 IU/L). HRT/menopausal hormone therapy (MHT) = low-dose estrogen ± progestogen (if uterus intact) to relieve estrogen-deficiency symptoms — the most effective treatment for moderate-severe vasomotor symptoms (VMS).</p>
+    <h4>Regimens</h4>
+    <table>
+      <tr><th>Regimen</th><th>Use</th></tr>
+      <tr><td>Estrogen-only</td><td>Hysterectomised women only</td></tr>
+      <tr><td>Combined estrogen + progestogen</td><td>Intact uterus — progestin protects endometrium (sequential or continuous-combined)</td></tr>
+      <tr><td>TSEC (CEE + bazedoxifene)</td><td>Intact uterus, progestogen-intolerant — SERM gives endometrial protection without progestin</td></tr>
+      <tr><td>Local vaginal estrogen</td><td>GSM as isolated complaint — minimal systemic absorption</td></tr>
+    </table>
+    <p>Routes: oral, transdermal (lower VTE risk, increasingly preferred), intravaginal, IM, SC pellet. Principle: smallest effective dose, shortest duration.</p>
+    <h4>Benefits vs risks (WHI &amp; timing hypothesis)</h4>
+    <table>
+      <tr><th>Outcome</th><th>Finding</th></tr>
+      <tr><td>VMS/GSM</td><td>Prompt, near-complete relief</td></tr>
+      <tr><td>Bone</td><td>Prevents loss/fractures; resumes loss on stopping</td></tr>
+      <tr><td>CHD/stroke</td><td>↑risk if started late; cardioprotective/neutral if started &lt;60 yr or within 10 yr of menopause ("timing hypothesis")</td></tr>
+      <tr><td>VTE</td><td>Oral MHT ~doubles risk (highest yr 1–2); transdermal lower risk</td></tr>
+      <tr><td>Breast cancer</td><td>Combined ↑ risk (driven by progestogen); estrogen-only does not increase (may lower) risk</td></tr>
+      <tr><td>Endometrial cancer</td><td>Unopposed estrogen → 5–15× risk; progestogen/bazedoxifene blocks it</td></tr>
+    </table>
+    <h4>Contraindications</h4>
+    <p>Absolute: undiagnosed abnormal genital bleeding, breast cancer (known/suspected/past), hormone-dependent neoplasia, active/past VTE or arterial thromboembolism, active liver disease, pregnancy.</p>
+    <h4>Newer/non-hormonal agents</h4>
+    <ul>
+      <li>Ospemifene — oral SERM for dyspareunia/GSM; tibolone — estrogenic/progestogenic/weak androgenic actions, relieves VMS with little endometrial stimulation.</li>
+      <li>Non-hormonal: SSRIs (paroxetine — only FDA-approved non-hormonal for VMS), SNRIs (venlafaxine), gabapentin, clonidine.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> fezolinetant (NK₃ antagonist, FDA-approved 2023, Veozah) — first-in-class non-hormonal oral agent for moderate-severe VMS, acting on hypothalamic KNDy neurons; phase-3 SKYLIGHT trials showed sustained efficacy to 52 weeks. Elinzanetant (dual NK1/NK3 antagonist) — phase-3 OASIS trials showed reduced VMS plus improved sleep/QoL. Practice has shifted to individualised, lowest-effective-dose therapy in women &lt;60 yr/within 10 yr of menopause, favouring transdermal estrogen + micronized progesterone for a better VTE/metabolic profile.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s7" style="--sec:#548a4f;--sec-soft:#548a4f26">
+  <h2>Section 7 · Gastrointestinal Pharmacology</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">"Prescribing PPIs — time to pause &amp; rethink?" Role of PPIs in PUD, current status, misuse &amp; ADRs; compare P-CABs with PPIs.</span></summary>
+  <div class="answer">
+    <h4>PPIs — role &amp; mechanism</h4>
+    <p>Omeprazole, pantoprazole, esomeprazole, rabeprazole. Irreversibly inhibit the gastric <b>H⁺/K⁺-ATPase (proton pump)</b> → most potent acid suppression. <b>Uses:</b> peptic ulcer, GERD, H. pylori eradication (with antibiotics), NSAID-ulcer prophylaxis, Zollinger-Ellison, stress-ulcer prophylaxis.</p>
+    <h4>Misuse / "time to rethink"</h4>
+    <ul>
+      <li>Widely over-prescribed &amp; continued without indication ("just in case"), inappropriate long-term use, lack of de-prescribing review.</li>
+    </ul>
+    <h4>Adverse effects of long-term use</h4>
+    <ul>
+      <li>↓ absorption: <b>vitamin B12, magnesium, calcium, iron</b> → osteoporosis/fractures.</li>
+      <li>↑ infection: <b>C. difficile</b>, community-acquired pneumonia, enteric infections.</li>
+      <li>Hypomagnesaemia, ↑ risk of CKD/AKI &amp; interstitial nephritis, rebound acid hypersecretion, ?dementia (association), clopidogrel interaction (omeprazole — CYP2C19).</li>
+    </ul>
+    <h4>P-CABs vs PPIs</h4>
+    <table>
+      <tr><th>Feature</th><th>PPIs</th><th>P-CABs (vonoprazan, tegoprazan)</th></tr>
+      <tr><td>Mechanism</td><td>Irreversible covalent pump inhibition</td><td>Reversible K⁺-competitive pump block</td></tr>
+      <tr><td>Onset</td><td>Slow (days for full effect)</td><td>Rapid (day 1)</td></tr>
+      <tr><td>Activation</td><td>Prodrug, acid-activated, food-timing matters</td><td>Acid-stable, no activation needed, food-independent</td></tr>
+      <tr><td>Duration / nocturnal control</td><td>Shorter; nocturnal acid breakthrough</td><td>Longer, better nocturnal &amp; 24-h control</td></tr>
+      <tr><td>CYP2C19 dependence</td><td>Yes (variable response)</td><td>Minimal</td></tr>
+    </table>
+    <p><b>P-CABs</b> give faster, stronger, more sustained acid suppression — promising for refractory GERD, H. pylori &amp; healing erosive oesophagitis.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Pharmacotherapy of Irritable Bowel Syndrome (IBS) and role of potassium-channel modulators in peptic ulcer.</span></summary>
+  <div class="answer">
+    <h4>IBS pharmacotherapy (symptom/subtype-based)</h4>
+    <table>
+      <tr><th>Subtype/Symptom</th><th>Drugs</th></tr>
+      <tr><td>General/pain</td><td>Antispasmodics (dicyclomine, hyoscine, mebeverine, peppermint oil), low-dose TCAs</td></tr>
+      <tr><td>IBS-C (constipation)</td><td>Soluble fibre, osmotic laxatives, <b>lubiprostone</b> (ClC-2 activator), <b>linaclotide/plecanatide</b> (guanylate cyclase-C agonists), prucalopride (5-HT4)</td></tr>
+      <tr><td>IBS-D (diarrhoea)</td><td>Loperamide, <b>rifaximin</b>, <b>eluxadoline</b> (mixed opioid), alosetron (5-HT3 antagonist — restricted)</td></tr>
+      <tr><td>Adjuncts</td><td>Probiotics, SSRIs, dietary (low-FODMAP)</td></tr>
+    </table>
+    <h4>Potassium-channel modulators in peptic ulcer</h4>
+    <p>The gastric proton pump is a <b>H⁺/K⁺-ATPase</b> that requires luminal K⁺ recycling (via KCNQ1 channels). <b>P-CABs (vonoprazan)</b> are <b>K⁺-competitive acid blockers</b> — they competitively block the K⁺-binding site of the pump → potent reversible acid suppression — representing the "potassium channel/site modulation" approach to acid-peptic disease.</p>
+  </div></details>
+</section>
+
+<section class="sec" id="s8" style="--sec:#c06a3e;--sec-soft:#c06a3e26">
+  <h2>Section 8 · Erectile Dysfunction &amp; Other Special Topics</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Drugs used in erectile dysfunction; recent advances in its pharmacotherapy.</span></summary>
+  <div class="answer">
+    <h4>First-line — PDE5 inhibitors</h4>
+    <ul>
+      <li><b>Sildenafil, tadalafil, vardenafil, avanafil.</b> Mechanism: inhibit PDE5 → ↑ cGMP in corpus cavernosum (potentiate NO) → smooth-muscle relaxation, ↑ blood flow → erection (needs sexual stimulation).</li>
+      <li>Tadalafil — long acting (36 h, "weekend pill"), also daily dosing &amp; BPH.</li>
+      <li><b>ADR:</b> headache, flushing, dyspepsia, nasal congestion, blue vision (sildenafil), priapism. <b>Contraindicated with nitrates</b> &amp; caution with α-blockers (hypotension).</li>
+    </ul>
+    <h4>Other options</h4>
+    <table>
+      <tr><th>Approach</th><th>Agent</th></tr>
+      <tr><td>Intracavernosal/intraurethral</td><td>Alprostadil (PGE1)</td></tr>
+      <tr><td>Central</td><td>Apomorphine (sublingual, D2 agonist)</td></tr>
+      <tr><td>Hormonal</td><td>Testosterone (if hypogonadism)</td></tr>
+      <tr><td>Others</td><td>Vacuum devices, penile prosthesis (refractory)</td></tr>
+    </table>
+    <div class="recent"><b>Recent advances:</b> on-demand combinations, low-intensity shockwave therapy, intracavernosal stem-cell &amp; gene therapy (experimental), melanocortin agonists, topical formulations.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Drug therapy for hyperprolactinemia and prolactin inhibitors.</span></summary>
+  <div class="answer">
+    <p><b>Principle:</b> Prolactin secretion is tonically inhibited by hypothalamic <b>dopamine</b> acting on pituitary <b>D2</b> receptors. Hence <b>dopamine agonists</b> are the mainstay.</p>
+    <h4>Dopamine agonists (prolactin inhibitors)</h4>
+    <table>
+      <tr><th>Drug</th><th>Notes</th></tr>
+      <tr><td><b>Cabergoline</b> (preferred)</td><td>Long-acting, twice-weekly, more effective &amp; better tolerated; shrinks prolactinoma</td></tr>
+      <tr><td>Bromocriptine</td><td>Older ergot D2 agonist; used in pregnancy planning; more nausea</td></tr>
+      <tr><td>Quinagolide</td><td>Non-ergot alternative</td></tr>
+    </table>
+    <h4>Uses &amp; notes</h4>
+    <ul>
+      <li>Prolactinoma (medical therapy first-line — shrinks tumour, restores fertility), drug-induced &amp; idiopathic hyperprolactinaemia, suppression of lactation, acromegaly (adjunct).</li>
+      <li><b>ADR:</b> nausea, postural hypotension, headache; high-dose ergot agonists — cardiac valvulopathy (echo monitoring).</li>
+      <li>Address cause: stop offending drug (antipsychotics, metoclopramide), treat hypothyroidism; surgery if resistant/large.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section class="sec" id="s9" style="--sec:#7a5bbd;--sec-soft:#7a5bbd26">
+  <h2>Section 9 · Special &amp; Regulatory Topics</h2>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Constitution, functions &amp; guidelines of CCSEA/IAEC/CPCSEA; methods of euthanasia approved for rodents; parallels with the IEC for clinical trials.</span></summary>
+  <div class="answer">
+    <h4>CCSEA / CPCSEA</h4>
+    <p><b>CCSEA</b> (Committee for Control &amp; Supervision of Experiments on Animals; formerly <b>CPCSEA</b>) — statutory body under the Prevention of Cruelty to Animals Act 1960 (MoEFCC). Registers animal facilities, frames guidelines, and oversees ethical animal use; ensures 3R compliance.</p>
+    <h4>IAEC — constitution</h4>
+    <ul>
+      <li>Chairperson; Member-Secretary; biological/veterinary scientists; a scientist from a different discipline; a non-scientific socially-aware member; and a <b>CCSEA-nominated main &amp; link nominee</b> (mandatory).</li>
+    </ul>
+    <h4>Functions</h4>
+    <ul><li>Review &amp; approve animal protocols (justification, numbers, species, endpoints); ensure humane care, anaesthesia/analgesia, 3R; inspect facilities; maintain records; can stop non-compliant work.</li></ul>
+    <h4>Approved euthanasia methods for rodents</h4>
+    <ul>
+      <li><b>CO₂ inhalation</b> (gradual fill — most common), overdose of anaesthetic (e.g. pentobarbital).</li>
+      <li>Physical (require trained personnel/justification): cervical dislocation (small rodents), decapitation — often after sedation.</li>
+      <li>Must ensure rapid loss of consciousness &amp; confirm death; align with AVMA/CCSEA humane-endpoint guidelines.</li>
+    </ul>
+    <h4>Parallel with IEC (clinical trials)</h4>
+    <table>
+      <tr><th>IAEC (animals)</th><th>IEC/IRB (humans)</th></tr>
+      <tr><td>Protects research animal welfare &amp; 3R</td><td>Protects human participants' rights, safety, dignity</td></tr>
+      <tr><td>CCSEA oversight</td><td>CDSCO/ICMR (GCP, NDCT Rules 2019) oversight</td></tr>
+      <tr><td>Approves animal protocol before study</td><td>Approves protocol + <b>informed consent</b> before enrolment</td></tr>
+    </table>
+    <p>Both are independent ethics committees ensuring ethical, justified, well-designed research with continuous monitoring.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Principles for prescribing drugs in patients with renal and hepatic dysfunction.</span></summary>
+  <div class="answer">
+    <h4>Renal dysfunction</h4>
+    <ul>
+      <li>Estimate function (<b>eGFR/CrCl</b>, Cockcroft-Gault); adjust dose of renally-cleared drugs.</li>
+      <li>Methods: <b>↓ dose</b> and/or <b>↑ dosing interval</b>; give loading dose normally (Vd unchanged), reduce maintenance.</li>
+      <li>Avoid nephrotoxins (aminoglycosides, NSAIDs, contrast); watch active/renally-excreted metabolites (morphine, pethidine).</li>
+      <li>Account for dialysis (supplemental dosing for dialysable drugs); monitor K⁺ with RAAS blockers.</li>
+    </ul>
+    <h4>Hepatic dysfunction</h4>
+    <ul>
+      <li>No single reliable marker — use <b>Child-Pugh</b> score to gauge severity.</li>
+      <li>↓ first-pass metabolism → ↑ bioavailability of high-extraction drugs (propranolol, morphine); ↓ clearance of hepatically-metabolised drugs.</li>
+      <li>Hypoalbuminaemia → ↑ free fraction of protein-bound drugs (phenytoin, warfarin).</li>
+      <li>Avoid hepatotoxins (paracetamol high dose, methotrexate); caution with sedatives (precipitate encephalopathy); altered coagulation → care with anticoagulants.</li>
+      <li><b>General principle:</b> "start low, go slow," use drugs with wide therapeutic index, monitor clinically &amp; with TDM where possible.</li>
+    </ul>
+  </div></details>
+</section>
+
+<section class="sec" id="scase" style="--sec:#aa5590;--sec-soft:#aa559026">
+  <h2>🩺 Clinical Case Vignettes</h2>
+  <p class="sec-note">Apply the concepts — read the scenario, decide your answer, then open to check. Filter to just these with the 🩺 Cases chip.</p>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient with sudden breathlessness, frothy sputum and bilateral basal crepitations is in acute pulmonary oedema. Immediate drugs?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Reduce preload quickly.</div>
+    <p>Sit up, high-flow <b>oxygen</b>, IV <b>furosemide</b> (venodilation + diuresis lowers preload), <b>GTN</b> (lowers preload/afterload), morphine in selected cases; treat the precipitant; CPAP/NIV if hypoxic.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A 60-year-old man with HFrEF (EF 30%) is on furosemide only. What disease-modifying therapy should be added?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> The four pillars.</div>
+    <p>Add the <b>four pillars</b>: <b>ARNI</b> (sacubitril/valsartan) or ACEi/ARB + <b>beta-blocker</b> (carvedilol/bisoprolol) + <b>MRA</b> (spironolactone) + <b>SGLT2 inhibitor</b> (dapagliflozin) — each reduces mortality; the diuretic treats symptoms only.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A 72-year-old woman presents with new atrial fibrillation. How do you decide on anticoagulation and which agent?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> CHA2DS2-VASc.</div>
+    <p>Assess stroke risk with <b>CHA2DS2-VASc</b> (and bleeding with HAS-BLED). If anticoagulation is indicated, prefer a <b>DOAC</b> (apixaban/rivaroxaban/dabigatran) over warfarin — except mechanical valves or moderate-severe mitral stenosis (warfarin). Add rate/rhythm control.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A man with crushing chest pain has ST-elevation on ECG. Outline the acute pharmacotherapy.</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Antiplatelet plus reperfusion.</div>
+    <p><b>MONA-B + DAPT + reperfusion:</b> aspirin + a P2Y12 inhibitor (ticagrelor/prasugrel), an anticoagulant (heparin), nitrate, analgesia, beta-blocker; <b>primary PCI</b> preferred, otherwise a <b>fibrinolytic</b> (tenecteplase) if no contraindication; then statin and ACEi.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A CKD patient on ramipril and spironolactone presents with potassium 6.5 and peaked T waves. What happened and how is it managed?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Dual RAAS blockade.</div>
+    <p>ACEi + MRA + renal impairment → <b>hyperkalaemia</b>. Emergency: IV <b>calcium gluconate</b> (cardioprotection), insulin-dextrose, salbutamol; stop the offending drugs; loop diuretic / potassium binder / dialysis. Avoid combining ACEi with ARB or MRA in advanced CKD without monitoring.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient presents with BP 230/130, headache and papilloedema. Treatment principle?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Controlled lowering.</div>
+    <p><b>Hypertensive emergency</b> → IV agents (<b>labetalol, nicardipine, nitroprusside, GTN, esmolol</b>); lower BP <b>gradually (about 25% in the first hour)</b> to avoid cerebral and renal hypoperfusion.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient on simvastatin is started on clarithromycin and develops severe muscle pain and dark urine. Explain.</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> CYP3A4 inhibition.</div>
+    <p>Clarithromycin inhibits <b>CYP3A4</b> → raised simvastatin levels → <b>myopathy/rhabdomyolysis</b> (check CK and renal function). Stop the statin, hydrate; avoid simvastatin with strong CYP3A4 inhibitors (use pravastatin or rosuvastatin, or hold the statin).</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A young woman has rest angina with transient ST-elevation but normal coronary arteries. Best therapy and what to avoid?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Coronary vasospasm.</div>
+    <p><b>Prinzmetal (variant) angina.</b> Use <b>calcium channel blockers + nitrates</b>; <b>avoid non-selective beta-blockers</b> (unopposed alpha may worsen spasm). Stop smoking.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A patient on round-the-clock isosorbide dinitrate finds it no longer relieves angina. Why, and the fix?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> Tolerance.</div>
+    <p><b>Nitrate tolerance</b> from continuous exposure. Provide a <b>nitrate-free interval (about 8–12 hours/day)</b> to restore responsiveness.</p>
+  </div></details>
+  <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A diabetic with heart failure needs better glycaemic control. Which add-on helps the heart, and which should be avoided?</span></summary>
+  <div class="answer">
+    <div class="case-q"><b>Clue:</b> SGLT2 inhibitor.</div>
+    <p>Add an <b>SGLT2 inhibitor</b> (dapagliflozin/empagliflozin) — lowers glucose <b>and</b> reduces HF hospitalisation and mortality. <b>Avoid pioglitazone</b> (fluid retention) and <b>saxagliptin</b> (increased HF hospitalisation) in heart failure.</p>
+  </div></details>
+</section>
+
+<!-- CONTENT END -->
+  </div>
+
+  <footer>
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman, Katzung, Rang &amp; Dale; GINA, ESC, ADA &amp; KDIGO guidelines.
+  </footer>
+</div>
+
+<script>
+  const search   = document.getElementById('search');
+  const items    = Array.from(document.querySelectorAll('details.q'));
+  const sections = Array.from(document.querySelectorAll('section.sec'));
+  const counter  = document.getElementById('counter');
+  const nohit    = document.getElementById('nohit');
+  const chips    = Array.from(document.querySelectorAll('.chip'));
+  const themeBtn = document.getElementById('theme');
+  const root     = document.documentElement;
+  let activeFilter = 'all';
+  let kbIndex = -1;
+
+  items.forEach(d=>{
+    const s = d.querySelector('.stars');
+    d.dataset.pri  = s ? (s.textContent.match(/★/g)||[]).length : 0;
+    d.dataset.type = d.classList.contains('vignette') ? 'case' : 'q';
+  });
+
+  const visible = ()=> items.filter(d=> d.style.display!=='none');
+
+  function apply(){
+    const q = search.value.trim().toLowerCase();
+    let hits = 0;
+    items.forEach(d=>{
+      const matchSearch = !q || d.textContent.toLowerCase().includes(q);
+      let matchFilter = true;
+      if(activeFilter==='case')      matchFilter = d.dataset.type==='case';
+      else if(activeFilter!=='all')  matchFilter = d.dataset.pri===activeFilter;
+      const show = matchSearch && matchFilter;
+      d.style.display = show ? '' : 'none';
+      if(show){ hits++; if(q.length>2) d.open = true; }
+    });
+    sections.forEach(s=>{
+      const any = Array.from(s.querySelectorAll('details.q')).some(d=> d.style.display!=='none');
+      s.style.display = any ? '' : 'none';
+    });
+    nohit.style.display = hits===0 ? 'block' : 'none';
+    counter.textContent = (q || activeFilter!=='all') ? hits + ' shown' : items.length + ' questions';
+    clearKb();
+  }
+
+  chips.forEach(c=> c.onclick = ()=>{
+    chips.forEach(x=> x.classList.remove('active'));
+    c.classList.add('active');
+    activeFilter = c.dataset.f;
+    apply();
+  });
+
+  let t;
+  search.addEventListener('input', ()=>{ clearTimeout(t); t = setTimeout(apply, 110); });
+
+  document.getElementById('expandAll').onclick  = ()=> visible().forEach(d=> d.open=true);
+  document.getElementById('collapseAll').onclick = ()=> items.forEach(d=> d.open=false);
+
+  function randomQ(){
+    const vis = visible(); if(!vis.length) return;
+    items.forEach(d=> d.open=false);
+    const pick = vis[Math.floor(Math.random()*vis.length)];
+    pick.open = true;
+    setKb(items.indexOf(pick));
+  }
+  document.getElementById('shuffle').onclick = randomQ;
+
+  function setTheme(mode){
+    if(mode==='dark'){ root.setAttribute('data-theme','dark'); themeBtn.textContent='☀️'; }
+    else { root.removeAttribute('data-theme'); themeBtn.textContent='🌙'; }
+    try{ localStorage.setItem('pharm-theme', mode); }catch(e){}
+  }
+  themeBtn.onclick = ()=> setTheme(root.getAttribute('data-theme')==='dark' ? 'light' : 'dark');
+  try{ if(localStorage.getItem('pharm-theme')==='dark') setTheme('dark'); }catch(e){}
+
+  function clearKb(){ items.forEach(d=> d.classList.remove('kbfocus')); kbIndex=-1; }
+  function setKb(i){
+    items.forEach(d=> d.classList.remove('kbfocus'));
+    kbIndex = i;
+    if(i>=0){ items[i].classList.add('kbfocus'); items[i].scrollIntoView({behavior:'smooth', block:'center'}); }
+  }
+  function moveKb(dir){
+    const vis = visible(); if(!vis.length) return;
+    let cur = kbIndex>=0 ? vis.indexOf(items[kbIndex]) : -1;
+    cur = (cur + dir + vis.length) % vis.length;
+    setKb(items.indexOf(vis[cur]));
+  }
+
+  document.addEventListener('keydown', e=>{
+    if(e.target===search){ if(e.key==='Escape'){ search.value=''; apply(); search.blur(); } return; }
+    if(e.ctrlKey||e.metaKey||e.altKey) return;
+    switch(e.key){
+      case '/': e.preventDefault(); search.focus(); break;
+      case 'r': case 'R': randomQ(); break;
+      case 'e': case 'E': visible().forEach(d=> d.open=true); break;
+      case 'c': case 'C': items.forEach(d=> d.open=false); break;
+      case 'd': case 'D': themeBtn.click(); break;
+      case 'k': case 'K': case 'ArrowDown': e.preventDefault(); moveKb(1); break;
+      case 'j': case 'J': case 'ArrowUp':   e.preventDefault(); moveKb(-1); break;
+      case ' ': case 'Enter':
+        if(kbIndex>=0){ e.preventDefault(); items[kbIndex].open = !items[kbIndex].open; }
+        break;
+    }
+  });
+
+  apply();
+</script>
+</body>
+</html>

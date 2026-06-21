@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Endocrine Pharmacology · Accelerated Learning System</title>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<style>
+  /* Violet × Honey × Slate — Endocrine */
+  :root {
+    --accent: #b5841a;
+    --accent-light: #d4a84a;
+    --accent-pale: #faf1da;
+    --accent-dark: #6d2f8f;
+    --accent-darker: #51216b;
+    --cool: #3f4d75;
+    --cool-light: #6070a0;
+    --cool-pale: #e8eaf2;
+    --cream: #f6f4f0;
+    --ink: #221a2b;
+    --ink-soft: #4a4256;
+    --muted: #8a8099;
+    --border: #d9d3ca;
+    --hero-gradient: linear-gradient(135deg,#51216b 0%,#3f4d75 55%,#6d2f8f 100%);
+    /* Semantic aliases */
+    --bg: var(--cream);
+    --surface: white;
+    --text: var(--ink);
+    --text-soft: var(--ink-soft);
+    --highlight-bg: var(--accent-pale);
+    --cog-bg: var(--cool-pale);
+    --cog-border: var(--cool);
+  }
+
+  /* ── SHARED TOKENS ─────────────────────────────────── */
+  :root {
+    --fs-xs:   0.72rem;  --fs-sm:  0.85rem;  --fs-base: 1rem;
+    --fs-md:   1.125rem; --fs-lg:  1.35rem;  --fs-xl:   1.7rem;
+    --fs-2xl:  2.2rem;   --fs-3xl: 3rem;
+    --radius:    10px;   --radius-sm: 6px;
+    --shadow:    0 2px 12px rgba(26,26,46,.08);
+    --shadow-lg: 0 8px 32px rgba(26,26,46,.14);
+    --shadow-sm: 0 1px 3px rgba(26,26,46,.08);
+  }
+
+  /* ── RESET & BASE ───────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: var(--fs-base);
+    color: var(--ink);
+    background: var(--cream);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ───────────────────────────────────────────── */
+  .hero, header.hero {
+    background: var(--hero-gradient);
+    color: white;
+    padding: 2.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: none;
+  }
+  .hero::before, header.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 70% 30%, rgba(255,255,255,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* decorative SVG elements inside hero – keep but make subtle */
+  header.hero svg { opacity: .08; pointer-events: none; }
+
+  .eyebrow {
+    font-size: var(--fs-sm);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    font-weight: 600;
+    margin-bottom: .8rem;
+    position: relative;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .hero h1, header.hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2rem, 5vw, var(--fs-3xl));
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: .6rem;
+    position: relative;
+    letter-spacing: -.01em;
+  }
+  .hero h1 em { font-style: italic; font-weight: 500; color: rgba(255,255,255,.82); }
+  .hero-sub, .hero .sub, header.hero .sub {
+    color: rgba(255,255,255,.78);
+    font-size: var(--fs-md);
+    margin-bottom: 1.8rem;
+    position: relative;
+    max-width: 720px;
+    margin-left: auto; margin-right: auto;
+  }
+  .chips, .hero .meta {
+    display: flex; flex-wrap: wrap; gap: .5rem;
+    justify-content: center; position: relative;
+    margin-top: .5rem;
+  }
+  .chip {
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: .25rem .85rem;
+    font-size: var(--fs-xs);
+    letter-spacing: .05em;
+    font-weight: 500;
+    color: white;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .chip.tier1 { background: rgba(255,255,255,.22); border-color: var(--accent-light); }
+  .chip.tier2 { background: rgba(0,0,0,.18); border-color: rgba(255,255,255,.45); }
+  .hero .thesis {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.35);
+    border-radius: 9px; padding: 9px 14px; font-size: .86rem;
+    color: rgba(255,255,255,.9); margin-top: 18px; position: relative;
+  }
+
+  /* ── METHOD STRIP ───────────────────────────────────── */
+  .method-strip, .method {
+    background: var(--ink);
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    border-radius: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+  .method-item, .method .m {
+    padding: 1.2rem 1.4rem;
+    border-right: 1px solid rgba(255,255,255,.08);
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none;
+  }
+  .method-item:last-child, .method .m:last-child { border-right: none; }
+  .method-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-light);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+  .method-name, .method .m h4 {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    margin: .1rem 0;
+    color: white !important;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+  .method-desc, .method .m p {
+    font-size: var(--fs-xs);
+    color: rgba(255,255,255,.55);
+    margin: 0; line-height: 1.5;
+  }
+  @media (max-width: 760px) {
+    .method-strip, .method { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* ── STICKY NAV ─────────────────────────────────────── */
+  .sticky-nav, nav.toc {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(245,244,240,.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--accent);
+    padding: .6rem 2rem;
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,.06);
+  }
+  .sticky-nav::-webkit-scrollbar, nav.toc::-webkit-scrollbar { display: none; }
+  nav.toc .wrap {
+    display: flex; gap: 1.5rem; padding: 0;
+    max-width: none; margin: 0;
+  }
+  .nav-link, nav.toc a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    white-space: nowrap;
+    padding: .2rem 0;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+    border-radius: 0;
+    background: transparent !important;
+  }
+  .nav-link:hover, nav.toc a:hover {
+    color: var(--accent-dark);
+    border-bottom-color: var(--accent-dark);
+    background: transparent !important;
+  }
+  nav.toc a.thesis-link { color: var(--cool); font-weight: 600; }
+  nav.toc a.key { color: var(--accent-dark); font-weight: 600; }
+
+  /* ── LAYOUT ─────────────────────────────────────────── */
+  .container { max-width: 940px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: 0 1.5rem; }
+  main { padding: 6px 0 60px; }
+  main.container { padding: 2rem 1.5rem 4rem; }
+
+  /* ── MODULE CARD ─────────────────────────────────────── */
+  .module, section.module {
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 3rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    padding: 0 !important;
+    border-top: none !important;
+    margin-top: 0 !important;
+  }
+  section.module.thesis-mod { border-color: var(--cool); }
+
+  .module-header {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+  }
+  /* mod-head used in other files */
+  .mod-head {
+    background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+    color: white !important;
+    padding: 1.5rem 1.8rem;
+    display: block !important;
+    align-items: initial !important;
+    gap: 0 !important;
+    flex-wrap: initial !important;
+    margin-bottom: 0 !important;
+  }
+  .mod-num { display: none !important; }  /* hide big decorative number */
+  .mod-titleblock { flex: none !important; min-width: 0 !important; }
+
+  .module-tier, .tier {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent-light) !important;
+    margin-bottom: .3rem;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    font-weight: 600;
+    display: block;
+  }
+  .module-header h2,
+  .mod-titleblock h2,
+  .mod-head h2 {
+    font-family: 'Fraunces', Georgia, serif !important;
+    font-size: var(--fs-xl) !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    color: white !important;
+    letter-spacing: -.01em;
+  }
+  .module-header p,
+  .mod-titleblock .mod-sub,
+  .mod-head p {
+    color: rgba(255,255,255,.72) !important;
+    font-size: var(--fs-sm) !important;
+    margin-top: .3rem !important;
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: normal !important;
+    text-transform: none !important;
+  }
+
+  /* ── STAGE BLOCKS ────────────────────────────────────── */
+  .stage { padding: 1.6rem 1.8rem; border-bottom: 1px solid var(--border); }
+  .stage:last-child { border-bottom: none; }
+  .stage-label {
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .stage-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* MAP / COG block */
+  .cog {
+    background: var(--cool-pale) !important;
+    border-left: 4px solid var(--cool) !important;
+    border-top: none !important; border-right: none !important; border-bottom: none !important;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+    padding: 1.2rem 1.4rem !important;
+    margin-bottom: 1rem;
+    box-shadow: none !important;
+  }
+  .cog > .tag, .cog .stage-label { color: var(--cool) !important; }
+  /* blurt variant overrides cog */
+  .cog.blurt {
+    background: var(--accent-pale) !important;
+    border-left-color: var(--accent) !important;
+  }
+  .cog.blurt > .tag { color: var(--accent-dark) !important; }
+  /* feyn variant */
+  .cog.feyn {
+    background: white !important;
+    border-left-color: var(--cool) !important;
+  }
+  /* spaced variant */
+  .cog.spaced {
+    background: #F4FAF5 !important;
+    border-left-color: #2E7D52 !important;
+  }
+  .cog.spaced > .tag { color: #2E7D52 !important; }
+
+  .pillar {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--cool);
+    border-bottom: 2px solid var(--cool-light);
+    padding-bottom: .5rem;
+    margin-bottom: 1rem;
+    line-height: 1.34;
+    background: none !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    padding-left: 0 !important;
+    padding-top: 0 !important;
+    padding-right: 0 !important;
+  }
+  .thesis-mod .pillar { color: var(--cool); border-left: none !important; }
+
+  .cog ul, .cog ol { padding-left: 1.4rem; }
+  .cog li { margin-bottom: .4rem; font-size: var(--fs-sm); }
+  .cog li::marker { color: var(--cool); }
+  .cog li strong { color: var(--accent-dark); }
+  .cog h4 { font-family: 'Inter', sans-serif; font-size: .95rem; font-weight: 700; margin: 16px 0 5px; color: var(--ink); }
+
+  /* BLURT STAGE */
+  .blurt-stage {
+    background: var(--accent-pale);
+    border-left: 4px solid var(--accent);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.2rem 1.4rem;
+  }
+  .blurt-stage .stage-label { color: var(--accent-dark); }
+  .blurt-prompt {
+    font-style: italic;
+    background: white;
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    font-size: var(--fs-sm);
+    margin-bottom: 1rem;
+    color: var(--ink-soft);
+    font-family: 'Fraunces', Georgia, serif;
+    line-height: 1.4;
+  }
+  /* blurt-prompt in other files (non-italic class) */
+  .blurt-prompt.fraunces { font-style: italic; }
+
+  .primers { list-style: none; padding: 0; counter-reset: p; margin: 0; }
+  .primers li {
+    counter-increment: p;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    padding: .5rem .7rem .5rem 2.4rem;
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    color: var(--accent-darker);
+    position: relative;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin: 7px 0;
+  }
+  .primers li::before {
+    content: 'Q' counter(p);
+    position: absolute; left: 10px; top: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    color: white; background: var(--accent-dark);
+    padding: 2px 5px; border-radius: 4px;
+  }
+
+  /* FEYNMAN GATE */
+  details.gate { margin: 12px 0 2px; }
+  details.gate > summary {
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    padding: .85rem 1.3rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: var(--fs-sm);
+    list-style: none;
+    user-select: none;
+    transition: opacity .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    letter-spacing: .04em;
+  }
+  details.gate > summary::-webkit-details-marker { display: none; }
+  details.gate > summary:hover { opacity: .88; }
+  details.gate > summary::before { content: '🔒 '; }
+  details.gate[open] > summary::before { content: '🔓 '; }
+  details.gate > summary::after { content: none !important; }
+  details.gate[open] > summary {
+    background: transparent; color: var(--ink-soft);
+    border: 1.5px solid var(--border); opacity: 1;
+  }
+  details.gate[open] { border-left: 3px solid var(--border); padding-left: 14px; margin-left: 2px; }
+  details.gate > *:not(summary) { animation: gateReveal .25s ease; }
+  @keyframes gateReveal { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:none; } }
+
+  .feynman-content { padding: 1.2rem 0 .4rem; }
+  .feynman-content h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--cool);
+    margin: 1.2rem 0 .5rem;
+  }
+  .feynman-content h4:first-child { margin-top: 0; }
+  .feynman-content p, .feynman-content li { font-size: var(--fs-sm); }
+  .feynman-content ul, .feynman-content ol { padding-left: 1.4rem; margin-bottom: .7rem; }
+  .feynman-content li { margin-bottom: .35rem; }
+
+  .analogy {
+    background: var(--accent-pale);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .9rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  .analogy::before { content: '💡 Analogy — '; font-weight: 700; color: var(--accent-dark); }
+  /* analogy in other-file style (has .alabel child) */
+  .analogy:has(.alabel)::before { content: none; }
+  .analogy .alabel {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cool); font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 7px;
+  }
+  .analogy .alabel::before { content: '💡 '; }
+  .analogy p { margin: 5px 0; }
+  .analogy .key { font-family: 'Fraunces', serif; font-style: italic; color: var(--cool); font-weight: 600; }
+
+  blockquote.warn {
+    background: #FFF3F0;
+    border-left: 4px solid var(--accent-dark);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: .85rem 1.1rem;
+    margin: 1rem 0;
+    font-size: var(--fs-sm);
+  }
+  blockquote.warn::before { content: '⚠️ Exam Trap — '; font-weight: 700; color: var(--accent-dark); }
+  blockquote.warn .wl { font-weight: 700; color: var(--accent-dark); }
+
+  /* SPACED REP STAGE */
+  .sched-stage {
+    background: #F4FAF5;
+    border-left: 4px solid #2E7D52;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.2rem 1.4rem;
+  }
+  .sched-stage .stage-label { color: #2E7D52; }
+  .sched {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)) !important;
+    gap: .6rem;
+    margin-bottom: 1rem;
+    flex-wrap: initial !important;
+  }
+  .sched-day, .sched .day {
+    background: white;
+    border: 1px solid #C3E6D0 !important;
+    border-top: 3px solid #2E7D52 !important;
+    border-radius: var(--radius-sm);
+    padding: .7rem .9rem;
+    font-size: var(--fs-xs);
+  }
+  .sched-day strong, .sched .day .d {
+    display: block; color: #2E7D52;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-sm); font-weight: 700; margin-bottom: .2rem; letter-spacing: .05em;
+  }
+  .sched .day .f { font-size: .82rem; color: var(--ink-soft); margin-top: 3px; }
+  .bridge {
+    background: white;
+    border: 1px dashed var(--accent);
+    border-radius: var(--radius-sm);
+    padding: .8rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--accent-darker);
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    line-height: 1.4;
+    margin-top: 12px;
+  }
+  .bridge::before { content: '🌉 Bridge — '; font-weight: 700; font-style: normal; font-family: 'Inter',sans-serif; }
+
+  /* ── TABLES ──────────────────────────────────────────── */
+  .tbl-wrap, .tbl { overflow-x: auto; margin: 1rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: var(--fs-xs); }
+  th {
+    background: var(--cool);
+    color: white; padding: .5rem .7rem;
+    text-align: left; font-weight: 600; font-size: var(--fs-xs);
+  }
+  td { padding: .45rem .7rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:nth-child(even) td { background: var(--cream); }
+  tr:hover td { background: var(--accent-pale); }
+  td strong { color: var(--accent-dark); }
+
+  /* ── DIAGRAMS ─────────────────────────────────────────── */
+  .diagram-wrap {
+    background: white; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: .8rem; margin: 1rem 0;
+    text-align: center; overflow-x: auto;
+  }
+  .diagram-caption { font-size: var(--fs-xs); color: var(--muted); margin-top: .4rem; font-style: italic; }
+
+  /* ── QUIZ — TAP TO REVEAL ────────────────────────────── */
+  /* Supports: .quiz-item/.quiz-q/.quiz-a  AND  .q/.qq/.qa patterns */
+  .quizset-title, .quiz-intro h2, .quizbank > h2, section.quizzes h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md);
+    color: var(--ink);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: .3rem;
+    border-top: none; border-left: none; border-right: none;
+  }
+
+  /* Quiz intro banner */
+  .quiz-intro {
+    background: linear-gradient(135deg, var(--accent-darker), var(--accent-dark));
+    color: white;
+    border-radius: var(--radius);
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+  .quiz-intro h2 { color: white !important; border: none !important; font-size: 1.4rem; margin-bottom: .5rem; padding: 0; }
+  .quiz-intro p { color: rgba(255,255,255,.82); font-size: var(--fs-sm); margin: 0; }
+  .quiz-intro .qi-sub { color: rgba(255,255,255,.7); font-size: var(--fs-xs); margin-top: 5px; }
+
+  /* Collapsible quiz section headers (details.qsec, details.quizset) */
+  details.qsec, details.quizset {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: white;
+    margin: 16px 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  details.qsec > summary, details.quizset > summary {
+    cursor: pointer; list-style: none;
+    padding: 1rem 1.3rem;
+    background: linear-gradient(90deg, var(--cool), var(--accent-dark));
+    color: white;
+    font-weight: 600; font-size: var(--fs-sm);
+    display: flex; align-items: center; gap: .6rem;
+    user-select: none; transition: opacity .2s;
+    font-family: 'JetBrains Mono', monospace; letter-spacing: .05em;
+  }
+  details.qsec > summary::-webkit-details-marker,
+  details.quizset > summary::-webkit-details-marker { display: none; }
+  details.qsec > summary:hover, details.quizset > summary:hover { opacity: .88; }
+  .qs-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .68rem; font-weight: 700;
+    background: rgba(255,255,255,.2); border-radius: 4px;
+    padding: 2px 7px; color: white;
+  }
+  .qs-title { flex: 1; }
+  .qs-meta { font-size: var(--fs-xs); color: rgba(255,255,255,.65); font-weight: 400; }
+  .qcaret { transition: transform .25s; color: rgba(255,255,255,.8); font-size: 1.05rem; }
+  details.quizset[open] > summary .qcaret { transform: rotate(90deg); }
+
+  /* Individual Q&A items — BOTH patterns unified */
+  .quiz-item, .q {
+    margin-bottom: .7rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  /* Question row */
+  .quiz-q, .qq {
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: .5rem;
+    user-select: none;
+    transition: background .15s;
+  }
+  /* inner layout of .qq (other files wrap in .qbody) */
+  .qq .qbody { flex: 1; display: flex; align-items: flex-start; gap: .6rem; }
+  .qq .qs-num, .qq b { /* question number prefix */
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .7rem; font-weight: 700;
+    background: var(--cool-pale); color: var(--cool);
+    border-radius: 4px; padding: 2px 6px;
+    flex-shrink: 0; margin-top: 1px;
+    display: inline-block;
+  }
+  .qq b { background: var(--cool-pale); color: var(--cool); border-radius: 4px; padding: 2px 6px; }
+  .q-text { flex: 1; }
+
+  .quiz-q:hover, .qq:hover { background: var(--accent-pale); }
+  .quiz-q::after, .qq::after {
+    content: '▼';
+    font-size: .65rem; color: var(--muted); flex-shrink: 0; margin-top: 3px;
+  }
+  .quiz-item.open .quiz-q::after, .q.open .qq::after { content: '▲'; }
+
+  /* Answer panel */
+  .quiz-a, .qa {
+    display: none;
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0;
+    color: var(--ink-soft);
+  }
+  .quiz-item.open .quiz-a, .q.open .qa { display: block; }
+  .quiz-a strong, .qa strong, .ans strong, .ans b { color: #1f7a42; }
+  .ans { font-size: var(--fs-sm); }
+
+  /* GI file: .qa is a <details> — override to always show */
+  details.qa {
+    display: block !important;
+    border: none !important;
+    margin: 0 !important;
+    background: #F0FBF3;
+    border-top: 1px solid #C3E6D0 !important;
+  }
+  details.qa > summary {
+    display: none !important; /* handled by JS click on .qq */
+  }
+  details.qa > .ans {
+    padding: .75rem 1rem;
+    font-size: var(--fs-sm);
+    color: var(--ink-soft);
+  }
+  .qq { position: relative; }
+  /* show/hide GI-style answers via open class on parent .qq */
+  .qq details.qa { display: none !important; }
+  .qq.open details.qa { display: block !important; }
+
+  /* quiz section body padding */
+  .qbody-wrap, section.quizzes .wrap { padding-top: 1rem; }
+
+  /* ── BADGES ─────────────────────────────────────────── */
+  .badge {
+    display: inline-block; font-size: var(--fs-xs);
+    font-family: 'JetBrains Mono', monospace;
+    padding: .15rem .5rem; border-radius: 4px;
+    font-weight: 500; vertical-align: middle;
+  }
+  .badge-saffron, .badge-accent {
+    background: var(--accent-pale); color: var(--accent-darker); border: 1px solid var(--accent);
+  }
+  .badge-teal, .badge-cool {
+    background: var(--cool-pale); color: var(--cool); border: 1px solid var(--cool-light);
+  }
+  .badge-rust { background: #FFF0EB; color: var(--accent-darker); border: 1px solid #F4B89A; }
+
+  /* ── TYPOGRAPHY ─────────────────────────────────────── */
+  p { margin-bottom: .7rem; font-size: var(--fs-sm); }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--accent-darker); }
+  ul, ol { padding-left: 1.4rem; }
+  li { margin-bottom: .35rem; font-size: var(--fs-sm); }
+  h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-lg); font-weight: 700;
+    margin: 1.2rem 0 .6rem; color: var(--ink);
+  }
+  h4 { font-size: var(--fs-md); font-weight: 700; margin: 1rem 0 .4rem; }
+  code {
+    font-family: 'JetBrains Mono', monospace; font-size: .85em;
+    background: var(--cream); padding: .1em .3em; border-radius: 3px;
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── FOOTER ─────────────────────────────────────────── */
+  footer, .footer {
+    text-align: center; padding: 2rem 1.5rem;
+    font-size: var(--fs-xs); color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer .wrap, .footer .wrap {
+    max-width: 940px; margin: 0 auto;
+    display: block !important; text-align: center;
+  }
+  footer .src { color: var(--muted); line-height: 1.6; font-size: var(--fs-xs); }
+
+  /* ── SCROLLBAR ──────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* ── PRINT ──────────────────────────────────────────── */
+  @media print {
+    .sticky-nav, nav.toc, .method-strip, .method { display: none; }
+    details.gate[open] { break-inside: avoid; }
+  }
+
+
+  /* ── FLASHCARDS ─────────────────────────────────────── */
+  #flashcards { margin-top: 3rem; margin-bottom: 2rem; }
+  #flashcards > h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: var(--fs-md); color: var(--ink);
+    margin-bottom: .4rem;
+    border-bottom: 2px solid var(--accent); padding-bottom: .3rem;
+  }
+  #flashcards > .fc-lead {
+    font-size: var(--fs-sm); color: var(--ink-soft); margin-bottom: 1.5rem;
+  }
+  .flashcards { display: flex; flex-direction: column; gap: .75rem; }
+  .flashcard {
+    border: 1px solid var(--border); border-radius: 12px;
+    overflow: hidden; background: var(--cream); transition: box-shadow .2s;
+  }
+  .flashcard:hover { box-shadow: 0 4px 18px rgba(0,0,0,.08); }
+  .flashcard > summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: flex-start; gap: .9rem;
+    padding: .9rem 1.1rem; background: var(--accent-pale); user-select: none;
+  }
+  .flashcard > summary::-webkit-details-marker { display: none; }
+  .flashcard > summary::after {
+    content: '▶'; color: var(--accent); font-size: .75rem;
+    margin-left: auto; margin-top: .25rem; flex-shrink: 0; transition: transform .2s;
+  }
+  .flashcard[open] > summary::after { transform: rotate(90deg); }
+  .fc-num {
+    font-family: 'JetBrains Mono', monospace; font-size: .68rem;
+    font-weight: 500; color: var(--muted); flex-shrink: 0;
+    margin-top: .2rem; min-width: 2rem;
+  }
+  .fc-q { font-size: var(--fs-sm); color: var(--ink); line-height: 1.55; font-weight: 500; }
+  .fc-back {
+    padding: 1.1rem 1.2rem; border-top: 1px solid var(--border);
+    display: flex; flex-direction: column; gap: .75rem; background: #fff;
+  }
+  .fc-answer {
+    border-left: 3px solid var(--accent); padding: .7rem 1rem;
+    border-radius: 0 8px 8px 0; font-size: var(--fs-sm);
+    color: var(--ink); line-height: 1.65; background: var(--accent-pale);
+  }
+  .fc-answer strong { color: var(--accent-dark, var(--accent)); }
+  .fc-pearl {
+    border-left: 3px solid var(--cool); padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: var(--cool-pale); line-height: 1.5;
+  }
+  .fc-trap {
+    border-left: 3px solid #d97706; padding: .6rem .9rem;
+    border-radius: 0 8px 8px 0; font-size: .8rem;
+    color: var(--ink-soft); background: #fffbeb; line-height: 1.5;
+  }
+  .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
+
+</style>
+  <link rel="stylesheet" href="learning-interactive.css">
+</head>
+<body>
+
+<header class="hero">
+  <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
+    <a href="learning.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">← Learning Hub</a>
+    <a href="index.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">🏠 Study Hub</a>
+  </div>
+  <svg class="steroid" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="#d3a6e8" stroke-width="2.5" fill="none" opacity="0.8">
+      <g transform="translate(130,80) scale(0.9)"><polygon points="0,0 26,15 26,45 0,60 -26,45 -26,15"/><polygon points="26,15 52,0 78,15 78,45 52,60 26,45"/><polygon points="78,15 104,0 130,15 130,45 104,60 78,45"/><polygon points="130,22 152,15 152,38 130,45"/></g>
+      <g transform="translate(520,250) scale(0.8) rotate(20)"><polygon points="0,0 26,15 26,45 0,60 -26,45 -26,15"/><polygon points="26,15 52,0 78,15 78,45 52,60 26,45"/><polygon points="78,15 104,0 130,15 130,45 104,60 78,45"/></g>
+      <g transform="translate(880,110) scale(0.85) rotate(-12)"><polygon points="0,0 26,15 26,45 0,60 -26,45 -26,15"/><polygon points="26,15 52,0 78,15 78,45 52,60 26,45"/><polygon points="78,15 104,0 130,15 130,45 104,60 78,45"/><polygon points="130,22 152,15 152,38 130,45"/></g>
+      <g transform="translate(1000,300) scale(0.7) rotate(8)"><polygon points="0,0 26,15 26,45 0,60 -26,45 -26,15"/><polygon points="26,15 52,0 78,15 78,45 52,60 26,45"/></g>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Goodman &amp; Gilman · 14th Ed · Section V</div>
+    <h1>Endocrine<br><em>Pharmacology</em></h1>
+    <p class="sub">Chapters 46–52, built as an study guide in the same four-stage format as your other systems: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies, and a spaced-repetition plan. The hypothalamic-pituitary axis, thyroid and antithyroid drugs, sex steroids and contraception, adrenal corticosteroids, the full diabetes armamentarium, and bone/mineral agents — the hormone systems you prescribe for and get examined on relentlessly.</p>
+    <div class="meta">
+      <span class="chip">7 modules · full depth</span>
+      <span class="chip">working blurting gates</span>
+      <span class="chip">5 custom diagrams</span>
+      <span class="chip">7 quiz sets · 165 Q</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#method">The method</a>
+    <a class="key" href="#m51">51 · Diabetes</a>
+    <a class="key" href="#m47">47 · Thyroid</a>
+    <a class="key" href="#m50">50 · Adrenal steroids</a>
+    <a href="#m52">52 · Bone &amp; Mineral</a>
+    <a href="#m48">48 · Estrogens/Progestins</a>
+    <a href="#m46">46 · Hypothal-Pituitary</a>
+    <a href="#m49">49 · Androgens</a>
+    <a href="#flashcards">🃏 Flashcards</a>
+    <a href="#quizzes">★ 165 Questions</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<section id="method" style="padding-top:30px">
+  <p class="lead">Each module runs four evidence-based stages — and the blurting gate matters most: retrieving <em>before</em> you read is what builds durable memory. Chapters are ordered by yield, Tier 1 first.</p>
+  <div class="method">
+    <div class="m m1"><h4>① 80/20 Map</h4><p>The 20% of facts that explain 80% of the pharmacology. The skeleton first.</p></div>
+    <div class="m m2"><h4>② Blurting Gate</h4><p>Dump everything you know <em>before</em> reading the notes. Active recall.</p></div>
+    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The mechanism in plain language, with a simple analogy.</p></div>
+    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>When to re-test, and one question linking this topic to another.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Tier 1 (own cold): <strong>Diabetes, Thyroid, Adrenal corticosteroids</strong>. Tier 2: Bone/mineral, Estrogens &amp; progestins, Hypothalamic-pituitary axis. Tier 3 (framework): Androgens.</p>
+</section>
+
+<!-- ============ MODULE 51 — DIABETES ============ -->
+<section class="module" id="m51">
+  <div class="mod-head">
+    <div class="mod-num">51</div>
+    <div class="mod-titleblock">
+      <h2>Endocrine Pancreas &amp; Pharmacotherapy of Diabetes</h2>
+      <div class="mod-sub">Insulin · oral &amp; injectable antidiabetics</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Type 1 diabetes is insulin <strong>deficiency</strong> (always needs insulin); type 2 is insulin <strong>resistance + relative deficiency</strong> — and every drug class is just a different lever on blood glucose: make more insulin, sensitise to it, slow glucose entry, dump glucose in urine, or replace insulin outright.</div>
+      <figure>
+    <div class="fig-title">Figure 51·1 — Antidiabetic drug classes by target organ</div>
+    <svg viewBox="0 0 840 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <rect x="350" y="135" width="140" height="50" rx="10" fill="#51216b"/><text x="420" y="158" fill="#fff" text-anchor="middle" font-weight="700">Blood glucose</text><text x="420" y="175" fill="#d3a6e8" text-anchor="middle" font-size="10">the common target</text>
+      <!-- pancreas -->
+      <rect x="40" y="30" width="200" height="58" rx="9" fill="#efe4f5" stroke="#6d2f8f"/><text x="140" y="50" text-anchor="middle" fill="#51216b" font-weight="700">Pancreas (β-cell)</text><text x="140" y="68" text-anchor="middle" font-size="10" fill="#221a2b">↑ insulin secretion</text><text x="140" y="82" text-anchor="middle" font-size="10" fill="#6d2f8f">sulfonylureas · meglitinides</text>
+      <line x1="200" y1="88" x2="350" y2="140" stroke="#6d2f8f" stroke-width="2"/>
+      <!-- incretin -->
+      <rect x="40" y="100" width="200" height="58" rx="9" fill="#efe4f5" stroke="#6d2f8f"/><text x="140" y="120" text-anchor="middle" fill="#51216b" font-weight="700">Incretin axis</text><text x="140" y="138" text-anchor="middle" font-size="10" fill="#221a2b">↑ glucose-dependent insulin</text><text x="140" y="152" text-anchor="middle" font-size="10" fill="#6d2f8f">GLP-1 RA · DPP-4 inhibitors</text>
+      <line x1="240" y1="150" x2="350" y2="155" stroke="#6d2f8f" stroke-width="2"/>
+      <!-- liver/muscle -->
+      <rect x="40" y="170" width="200" height="58" rx="9" fill="#e8eaf2" stroke="#3f4d75"/><text x="140" y="190" text-anchor="middle" fill="#2f3a5c" font-weight="700">Liver + muscle</text><text x="140" y="208" text-anchor="middle" font-size="10" fill="#221a2b">↓ hepatic gluconeogenesis,↑ sensitivity</text><text x="140" y="222" text-anchor="middle" font-size="10" fill="#3f4d75">metformin · TZDs</text>
+      <line x1="240" y1="200" x2="350" y2="170" stroke="#3f4d75" stroke-width="2"/>
+      <!-- kidney -->
+      <rect x="600" y="100" width="200" height="58" rx="9" fill="#e0f0e9" stroke="#0d7a63"/><text x="700" y="120" text-anchor="middle" fill="#0a5c4a" font-weight="700">Kidney (PCT)</text><text x="700" y="138" text-anchor="middle" font-size="10" fill="#221a2b">↑ urinary glucose excretion</text><text x="700" y="152" text-anchor="middle" font-size="10" fill="#0d7a63">SGLT2 inhibitors (-flozins)</text>
+      <line x1="600" y1="135" x2="490" y2="150" stroke="#0d7a63" stroke-width="2"/>
+      <!-- gut -->
+      <rect x="600" y="170" width="200" height="58" rx="9" fill="#faf1da" stroke="#b5841a"/><text x="700" y="190" text-anchor="middle" fill="#8a6414" font-weight="700">Gut</text><text x="700" y="208" text-anchor="middle" font-size="10" fill="#221a2b">↓ carbohydrate absorption</text><text x="700" y="222" text-anchor="middle" font-size="10" fill="#b5841a">α-glucosidase inhibitors</text>
+      <line x1="600" y1="200" x2="490" y2="170" stroke="#b5841a" stroke-width="2"/>
+      <!-- insulin replacement -->
+      <rect x="600" y="30" width="200" height="58" rx="9" fill="#fbe6ea" stroke="#c0485e"/><text x="700" y="50" text-anchor="middle" fill="#9c2f42" font-weight="700">Replacement</text><text x="700" y="68" text-anchor="middle" font-size="10" fill="#221a2b">exogenous insulin (all T1DM)</text><text x="700" y="82" text-anchor="middle" font-size="10" fill="#c0485e">rapid · short · intermediate · long</text>
+      <line x1="600" y1="80" x2="490" y2="140" stroke="#c0485e" stroke-width="2"/>
+    </svg>
+    <figcaption>Six levers on one target. Type 1 diabetes needs insulin replacement; type 2 picks from the other five according to the patient's dominant defect, comorbidities, and the agent's weight / hypoglycaemia / cardiorenal profile.</figcaption>
+  </figure>
+    <h4>The non-insulin classes — the must-know grid</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Class</th><th>Example</th><th>Mechanism</th><th>Weight</th><th>Hypoglycaemia</th><th>Signature point</th></tr></thead>
+      <tbody>
+        <tr><td>Biguanide</td><td>Metformin</td><td>↓ hepatic gluconeogenesis; ↑ insulin sensitivity</td><td>Neutral/↓</td><td>No</td><td><strong>1st-line</strong>; lactic acidosis risk</td></tr>
+        <tr><td>Sulfonylureas</td><td>Glimepiride, gliclazide</td><td>Close β-cell K⁺-ATP channel → ↑ insulin</td><td>↑</td><td><strong>Yes</strong></td><td>Insulin-independent of glucose → hypos</td></tr>
+        <tr><td>Meglitinides</td><td>Repaglinide</td><td>Same channel, short-acting</td><td>↑</td><td>Yes</td><td>Post-prandial, dose with meals</td></tr>
+        <tr><td>TZDs</td><td>Pioglitazone</td><td>PPAR-γ agonist → ↑ sensitivity</td><td>↑</td><td>No</td><td><strong>Fluid retention → CHF</strong>; fractures</td></tr>
+        <tr><td>DPP-4 inhibitors</td><td>Sitagliptin</td><td>↑ endogenous incretin (GLP-1)</td><td>Neutral</td><td>No</td><td>Well tolerated, modest effect</td></tr>
+        <tr><td>GLP-1 receptor agonists</td><td>Semaglutide, liraglutide</td><td>Incretin mimetic; ↑ glucose-dependent insulin, ↓ glucagon, ↓ appetite</td><td><strong>↓↓</strong></td><td>No</td><td><strong>Weight loss + CV benefit</strong></td></tr>
+        <tr><td>SGLT2 inhibitors</td><td>Dapagliflozin, empagliflozin</td><td>Block renal glucose reabsorption → glycosuria</td><td>↓</td><td>No</td><td><strong>CV + renal + heart-failure benefit</strong></td></tr>
+        <tr><td>α-glucosidase inhib.</td><td>Acarbose</td><td>↓ intestinal carbohydrate breakdown</td><td>Neutral</td><td>No</td><td>Flatulence; blunts post-prandial spike</td></tr>
+      </tbody>
+    </table></div>
+      <figure>
+    <div class="fig-title">Figure 51·2 — Insulin preparations: onset &amp; duration</div>
+    <svg viewBox="0 0 820 200" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <line x1="150" y1="170" x2="800" y2="170" stroke="#4a4256" stroke-width="1.5"/>
+      <text x="150" y="190" font-size="9" fill="#4a4256">0h</text><text x="400" y="190" font-size="9" fill="#4a4256">6h</text><text x="650" y="190" font-size="9" fill="#4a4256">12h</text><text x="780" y="190" font-size="9" fill="#4a4256">24h</text>
+      <g font-size="11">
+        <text x="10" y="40" fill="#c0485e" font-weight="600">Rapid (lispro)</text>
+        <path d="M150,150 Q175,40 210,80 T300,150" fill="none" stroke="#c0485e" stroke-width="2.5"/>
+        <text x="10" y="75" fill="#6d2f8f" font-weight="600">Short (regular)</text>
+        <path d="M150,150 Q200,55 260,90 T400,150" fill="none" stroke="#6d2f8f" stroke-width="2.5"/>
+        <text x="10" y="110" fill="#3f4d75" font-weight="600">Intermediate (NPH)</text>
+        <path d="M150,150 Q280,75 400,100 T640,150" fill="none" stroke="#3f4d75" stroke-width="2.5"/>
+        <text x="10" y="145" fill="#0d7a63" font-weight="600">Long (glargine)</text>
+        <path d="M150,150 L210,120 L760,128 L790,150" fill="none" stroke="#0d7a63" stroke-width="2.5"/>
+      </g>
+    </svg>
+    <figcaption>Rapid-acting covers a meal; long-acting (glargine/detemir/degludec) gives flat basal cover. A basal-bolus regimen combines a long-acting basal with rapid-acting boluses at meals.</figcaption>
+  </figure>
+    <h4>Insulin preparations</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Category</th><th>Examples</th><th>Role</th></tr></thead>
+      <tbody>
+        <tr><td>Rapid-acting</td><td>Lispro, aspart, glulisine</td><td>Mealtime bolus</td></tr>
+        <tr><td>Short-acting</td><td>Regular</td><td>Mealtime; only one usable IV (DKA)</td></tr>
+        <tr><td>Intermediate</td><td>NPH</td><td>Basal-ish, peaks</td></tr>
+        <tr><td>Long-acting</td><td>Glargine, detemir, degludec</td><td>Flat basal cover</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A newly diagnosed type 2 diabetic who is overweight with established heart failure needs treatment. Blurt out the first-line drug, then the single class you would most want to ADD given the heart failure — and explain why a sulfonylurea would be a poor choice here on both counts (weight and a specific safety risk).</div>
+    <h4 style="color:var(--rose)">Guiding primers — ask "why," not "what"</h4>
+    <ul class="primers">
+      <li>Why does a sulfonylurea cause hypoglycaemia but metformin and the incretin drugs essentially don't?</li>
+      <li>Why do GLP-1 agonists and SGLT2 inhibitors cause weight loss while sulfonylureas and TZDs cause weight gain?</li>
+      <li>Why does an SGLT2 inhibitor protect the heart and kidney even though it's "just" a glucose-lowering drug?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Glucose-dependent vs glucose-independent is the safety divide</h4>
+    <p>The drugs split into those that push insulin out <em>regardless</em> of glucose (sulfonylureas, meglitinides — hence hypoglycaemia) and those that only act when glucose is high or work by other mechanisms (incretins, SGLT2, metformin — hence little hypo risk). That single distinction predicts most of the safety profile.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a factory and its glucose "thermostat"</div>
+      <p>Picture insulin release as a <span class="key">heater controlled by a thermostat reading blood glucose</span>. A <strong>sulfonylurea jams the heater ON</strong> regardless of the room temperature — great when it's cold (high glucose), dangerous when it's already warm (normal glucose) because it keeps blasting heat → hypoglycaemia. <strong>Incretin drugs (GLP-1, DPP-4) turn up the thermostat's <em>sensitivity</em></strong> — the heater fires harder only when it's genuinely cold, so it can't overshoot. <strong>Metformin</strong> doesn't touch the heater at all — it tells the liver to stop pouring in cold air (gluconeogenesis). <strong>SGLT2 inhibitors</strong> open a drain in the floor — excess glucose just runs out in the urine, independent of insulin entirely.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — high-yield traps:</span> <strong>Metformin</strong> → lactic acidosis risk; hold before iodinated contrast and in renal impairment. <strong>SGLT2 inhibitors</strong> → euglycaemic DKA, genital mycotic infections, volume depletion. <strong>Pioglitazone (TZD)</strong> → fluid retention worsening heart failure, fracture risk, bladder-cancer signal. <strong>Sulfonylureas</strong> → hypoglycaemia (esp. elderly, renal impairment) and weight gain. Only <strong>regular insulin</strong> is given IV (for DKA). GLP-1 agonists → nausea, contraindicated with personal/family history of medullary thyroid carcinoma/MEN2.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 47 — THYROID ============ -->
+<section class="module" id="m47">
+  <div class="mod-head">
+    <div class="mod-num">47</div>
+    <div class="mod-titleblock">
+      <h2>Thyroid &amp; Antithyroid Drugs</h2>
+      <div class="mod-sub">Levothyroxine · thionamides · radioiodine</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Two clinical states, two treatment logics: <strong>hypothyroidism → replace</strong> (levothyroxine, T₄), and <strong>hyperthyroidism → suppress</strong> (thionamides block synthesis, radioiodine ablates, β-blockers control symptoms).</div>
+      <figure>
+    <div class="fig-title">Figure 47·1 — Thyroid hormone synthesis &amp; where antithyroid drugs act</div>
+    <svg viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <defs><marker id="t1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6d2f8f"/></marker></defs>
+      <rect x="30" y="100" width="120" height="44" rx="8" fill="#51216b"/><text x="90" y="120" fill="#fff" text-anchor="middle" font-weight="600">Iodide (I⁻)</text><text x="90" y="136" fill="#d3a6e8" text-anchor="middle" font-size="9">plasma</text>
+      <line x1="150" y1="122" x2="195" y2="122" stroke="#6d2f8f" stroke-width="2" marker-end="url(#t1)"/>
+      <rect x="197" y="100" width="130" height="44" rx="8" fill="#efe4f5" stroke="#6d2f8f"/><text x="262" y="120" text-anchor="middle" fill="#51216b" font-weight="600">Trapped + organified</text><text x="262" y="136" text-anchor="middle" font-size="9" fill="#221a2b">thyroid peroxidase</text>
+      <line x1="327" y1="122" x2="372" y2="122" stroke="#6d2f8f" stroke-width="2" marker-end="url(#t1)"/>
+      <rect x="374" y="100" width="120" height="44" rx="8" fill="#efe4f5" stroke="#6d2f8f"/><text x="434" y="120" text-anchor="middle" fill="#51216b" font-weight="600">T₄ &amp; T₃</text><text x="434" y="136" text-anchor="middle" font-size="9" fill="#221a2b">stored, released</text>
+      <line x1="494" y1="122" x2="539" y2="122" stroke="#6d2f8f" stroke-width="2" marker-end="url(#t1)"/>
+      <rect x="541" y="100" width="130" height="44" rx="8" fill="#efe4f5" stroke="#6d2f8f"/><text x="606" y="116" text-anchor="middle" fill="#51216b" font-weight="600">Peripheral</text><text x="606" y="132" text-anchor="middle" font-size="10" fill="#221a2b">T₄ → T₃ (active)</text>
+      <!-- drug arrows -->
+      <text x="262" y="60" text-anchor="middle" fill="#a8331f" font-size="11" font-weight="600">⊣ Thionamides (PTU, methimazole)</text><text x="262" y="76" text-anchor="middle" font-size="9.5" fill="#4a4256">block thyroid peroxidase</text>
+      <line x1="262" y1="82" x2="262" y2="98" stroke="#a8331f" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <text x="90" y="190" text-anchor="middle" fill="#a8331f" font-size="11" font-weight="600">⊣ Perchlorate (blocks uptake)</text>
+      <line x1="90" y1="170" x2="90" y2="146" stroke="#a8331f" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <text x="606" y="190" text-anchor="middle" fill="#a8331f" font-size="11" font-weight="600">⊣ PTU also blocks T₄→T₃</text>
+      <text x="606" y="206" text-anchor="middle" fill="#a8331f" font-size="11" font-weight="600">⊣ β-blockers (symptom control)</text>
+      <line x1="606" y1="166" x2="606" y2="146" stroke="#a8331f" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <text x="434" y="190" text-anchor="middle" fill="#0d7a63" font-size="11" font-weight="600">High-dose iodide → ⊣ release (Wolff-Chaikoff)</text>
+    </svg>
+    <figcaption>Antithyroid drugs interrupt synthesis at different steps: thionamides block organification (peroxidase); PTU additionally blocks peripheral T₄→T₃; β-blockers control adrenergic symptoms; radioactive iodine ablates the gland.</figcaption>
+  </figure>
+    <h4>Hypothyroidism — replacement</h4>
+    <ul>
+      <li><strong>Levothyroxine (T₄):</strong> drug of choice — long half-life, steady, converted peripherally to active T₃. Titrate to <strong>TSH</strong>.</li>
+      <li>Take on an empty stomach; absorption reduced by calcium, iron, PPIs.</li>
+    </ul>
+    <h4>Hyperthyroidism — three strategies</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Approach</th><th>Drug/method</th><th>Mechanism &amp; notes</th></tr></thead>
+      <tbody>
+        <tr><td>Thionamides</td><td>Methimazole, propylthiouracil (PTU)</td><td>Block thyroid peroxidase (organification). <strong>PTU also blocks peripheral T₄→T₃</strong></td></tr>
+        <tr><td>β-blockers</td><td>Propranolol</td><td>Rapid symptom control (tremor, tachycardia); propranolol also ↓ T₄→T₃</td></tr>
+        <tr><td>Radioactive iodine</td><td><sup>131</sup>I</td><td>Ablates gland; definitive; often → hypothyroidism (then replace)</td></tr>
+        <tr><td>Iodide (high dose)</td><td>Lugol's, KI</td><td>Transiently ↓ release (Wolff-Chaikoff); pre-op / thyroid storm</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A pregnant woman in her first trimester has hyperthyroidism. Blurt out which thionamide is preferred in the first trimester and why, which is preferred afterwards, and the single rare-but-lethal blood toxicity you must warn every patient on these drugs about.</div>
+    <h4 style="color:var(--rose)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why is levothyroxine (T₄) used for replacement rather than the active hormone T₃?</li>
+      <li>Why do you monitor TSH, not T₄, to titrate replacement (link to feedback loops, Module 46)?</li>
+      <li>Why does PTU have a special role in thyroid storm beyond just blocking synthesis?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Replace the deficient, throttle the excessive</h4>
+    <p>Hypothyroidism is simply too little hormone — give back T₄ and let the body convert what it needs to T₃. Hyperthyroidism is too much — you can stop the gland making it (thionamides), destroy the gland (radioiodine), or just blunt the adrenergic symptoms while you wait (β-blockers).</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a furnace running the body's metabolism</div>
+      <p>Thyroid hormone is the <span class="key">thermostat setting for the body's whole furnace</span>. Hypothyroidism is a furnace set too low — sluggish, cold, slow heart, weight gain — so you simply turn the dial back up (levothyroxine). Hyperthyroidism is the furnace roaring out of control — hot, racing heart, weight loss. You can cut the fuel supply (thionamides block hormone synthesis), rip out the furnace entirely (radioiodine ablation), or — while those slow methods take effect — put a blanket over the alarm bells (β-blockers calm the racing heart and tremor without touching the furnace itself).</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> both thionamides can cause <strong>agranulocytosis</strong> (warn patients: sore throat + fever → stop and check FBC) and hepatotoxicity. In pregnancy: <strong>PTU in the first trimester</strong> (methimazole is teratogenic — aplasia cutis), then switch to methimazole. Over-replacement with levothyroxine → iatrogenic hyperthyroidism (AF, osteoporosis). High-dose iodide before radioiodine blocks its uptake — timing matters.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 50 — ADRENAL STEROIDS ============ -->
+<section class="module" id="m50">
+  <div class="mod-head">
+    <div class="mod-num">50</div>
+    <div class="mod-titleblock">
+      <h2>ACTH, Adrenal Steroids &amp; the Adrenal Cortex</h2>
+      <div class="mod-sub">Glucocorticoids · mineralocorticoids</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Highest yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">The adrenal cortex makes three steroid families (salt, sugar, sex); pharmacology centres on the <strong>glucocorticoids</strong> — superb anti-inflammatories whose every therapeutic action is shadowed by a predictable adverse effect, because they switch the body into a chronic "stress + high-cortisol" state.</div>
+      <figure>
+    <div class="fig-title">Figure 50·1 — Adrenal cortex: three zones, three steroid families</div>
+    <svg viewBox="0 0 820 220" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <rect x="60" y="40" width="220" height="150" rx="10" fill="#faf1da" stroke="#b5841a"/>
+      <rect x="300" y="40" width="220" height="150" rx="10" fill="#efe4f5" stroke="#6d2f8f"/>
+      <rect x="540" y="40" width="220" height="150" rx="10" fill="#e8eaf2" stroke="#3f4d75"/>
+      <text x="170" y="66" text-anchor="middle" font-weight="800" fill="#8a6414" font-size="13">Zona Glomerulosa</text>
+      <text x="410" y="66" text-anchor="middle" font-weight="800" fill="#51216b" font-size="13">Zona Fasciculata</text>
+      <text x="650" y="66" text-anchor="middle" font-weight="800" fill="#2f3a5c" font-size="13">Zona Reticularis</text>
+      <text x="170" y="92" text-anchor="middle" font-size="11" fill="#221a2b" font-weight="600">Mineralocorticoids</text>
+      <text x="410" y="92" text-anchor="middle" font-size="11" fill="#221a2b" font-weight="600">Glucocorticoids</text>
+      <text x="650" y="92" text-anchor="middle" font-size="11" fill="#221a2b" font-weight="600">Androgens</text>
+      <g font-size="11" text-anchor="middle" fill="#4a4256">
+        <text x="170" y="118">Aldosterone</text>
+        <text x="170" y="140">→ Na⁺/water retention,</text>
+        <text x="170" y="156">K⁺ excretion, ↑BP</text>
+        <text x="410" y="118">Cortisol</text>
+        <text x="410" y="140">→ anti-inflammatory,</text>
+        <text x="410" y="156">↑glucose, immune,</text>
+        <text x="410" y="172">stress response</text>
+        <text x="650" y="118">DHEA</text>
+        <text x="650" y="140">→ sex steroid</text>
+        <text x="650" y="156">precursors</text>
+      </g>
+      <text x="410" y="208" text-anchor="middle" font-size="10.5" fill="#6d2f8f" font-style="italic">Mnemonic: "salt, sugar, sex — the deeper you go, the sweeter it gets"</text>
+    </svg>
+    <figcaption>Synthetic corticosteroids are graded by their glucocorticoid vs mineralocorticoid potency — the basis for choosing among hydrocortisone, prednisolone, dexamethasone and fludrocortisone.</figcaption>
+  </figure>
+    <h4>Choosing a corticosteroid (potency grading)</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Drug</th><th>Gluco potency</th><th>Mineralo activity</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td>Hydrocortisone</td><td>1 (reference)</td><td>Yes</td><td>Adrenal insufficiency, acute</td></tr>
+        <tr><td>Prednisolone</td><td>~4</td><td>Some</td><td>Most chronic anti-inflammatory use</td></tr>
+        <tr><td>Dexamethasone</td><td>~25</td><td>Negligible</td><td>Cerebral oedema, potent suppression</td></tr>
+        <tr><td>Fludrocortisone</td><td>—</td><td><strong>High</strong></td><td>Mineralocorticoid replacement (Addison's)</td></tr>
+      </tbody>
+    </table></div>
+    <h4>Glucocorticoid effects = their adverse effects (Cushingoid picture)</h4>
+    <ul>
+      <li>↑ gluconeogenesis → <strong>hyperglycaemia/steroid diabetes</strong></li>
+      <li>Protein catabolism → <strong>muscle wasting, thin skin, poor healing</strong></li>
+      <li>Fat redistribution → <strong>moon face, buffalo hump, central obesity</strong></li>
+      <li>Immunosuppression → <strong>infection risk</strong>; ↓ bone → <strong>osteoporosis</strong></li>
+      <li>Mineralocorticoid → <strong>Na⁺/water retention, hypertension, hypokalaemia</strong></li>
+      <li>HPA-axis suppression → <strong>adrenal atrophy</strong> (never stop abruptly)</li>
+    </ul>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A patient has been on oral prednisolone for three months and wants to stop because of weight gain. Blurt out why you must NEVER stop it abruptly — what has happened to their own adrenal glands — and what catastrophic event abrupt withdrawal could trigger.</div>
+    <h4 style="color:var(--rose)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does giving exogenous steroid shrink the patient's own adrenal glands (link to feedback, Mod 46)?</li>
+      <li>Why does dexamethasone barely cause fluid retention while hydrocortisone does?</li>
+      <li>Why are nearly all the "side effects" of steroids just their normal physiological actions in excess?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>One hormone, the whole stress programme</h4>
+    <p>Cortisol prepares the body for stress: raise blood glucose, free up amino acids and fat, and damp down inflammation. A therapeutic glucocorticoid exploits the anti-inflammatory part — but you can't take just that slice; the whole stress programme runs, which is why chronic use reproduces Cushing's syndrome. And because exogenous steroid suppresses ACTH, the adrenals stop working and atrophy.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — outsourcing a factory until it shuts down</div>
+      <p>Your adrenal glands are a <span class="key">factory that the pituitary keeps busy by sending daily orders (ACTH)</span>. When you give long-term steroid from outside, the warehouse is always full, so the pituitary stops sending orders — and a factory with no orders for months <strong>lays off its workers and rusts shut</strong> (adrenal atrophy). If you then suddenly cut off the outside supply, there's no cortisol from either source — an <strong>adrenal crisis</strong>. That's why you must <em>taper</em>: gradually reducing the outside supply lets the pituitary start sending orders again and the factory slowly restart.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>Never stop chronic glucocorticoids abruptly</strong> — taper to avoid adrenal crisis. Long-term effects: osteoporosis (give bone protection), steroid diabetes, infection (including reactivation of TB), cataracts/glaucoma, growth suppression in children, peptic ulcer risk (esp. with NSAIDs). During intercurrent illness/surgery, patients on long-term steroids need <strong>stress-dose</strong> cover. Mineralocorticoid effect varies by drug — dexamethasone has almost none.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 52 — BONE & MINERAL ============ -->
+<section class="module" id="m52">
+  <div class="mod-head">
+    <div class="mod-num">52</div>
+    <div class="mod-titleblock">
+      <h2>Mineral Ion Homeostasis &amp; Bone Turnover</h2>
+      <div class="mod-sub">Calcium · PTH · vitamin D · osteoporosis</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Solid yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Serum calcium is held steady by <strong>three regulators</strong> (PTH ↑Ca, vitamin D ↑Ca absorption, calcitonin ↓Ca); osteoporosis drugs then split cleanly into <strong>antiresorptives</strong> (stop bone breakdown) and <strong>anabolics</strong> (build new bone).</div>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Regulator</th><th>Action on calcium</th></tr></thead>
+      <tbody>
+        <tr><td>PTH</td><td>↑ Ca (bone resorption, renal reabsorption, activates vit D)</td></tr>
+        <tr><td>Vitamin D (calcitriol)</td><td>↑ Ca + phosphate gut absorption</td></tr>
+        <tr><td>Calcitonin</td><td>↓ Ca (inhibits osteoclasts)</td></tr>
+      </tbody>
+    </table></div>
+    <h4>Osteoporosis drugs</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Drug</th><th>Class</th><th>Mechanism</th></tr></thead>
+      <tbody>
+        <tr><td>Alendronate, zoledronate</td><td>Bisphosphonate (antiresorptive)</td><td>Inhibit osteoclasts → ↓ resorption (<strong>1st-line</strong>)</td></tr>
+        <tr><td>Denosumab</td><td>Anti-RANKL mAb (antiresorptive)</td><td>Blocks osteoclast formation</td></tr>
+        <tr><td>Raloxifene</td><td>SERM (antiresorptive)</td><td>Estrogen agonist on bone</td></tr>
+        <tr><td>Teriparatide</td><td>PTH analogue (<strong>anabolic</strong>)</td><td>Intermittent PTH builds bone</td></tr>
+        <tr><td>Romosozumab</td><td>Anti-sclerostin (anabolic)</td><td>Stimulates bone formation</td></tr>
+        <tr><td>Calcium + vitamin D</td><td>Foundation</td><td>Always co-prescribe</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A patient is prescribed an oral bisphosphonate for osteoporosis. Blurt out the very specific way they must take it (posture, timing, what with) and the two feared long-term toxicities — then explain the paradox that continuous PTH dissolves bone but intermittent PTH (teriparatide) builds it.</div>
+    <h4 style="color:var(--rose)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why must oral bisphosphonates be taken upright with water on an empty stomach?</li>
+      <li>Why does stopping denosumab cause a rebound in fractures, unlike stopping a bisphosphonate?</li>
+      <li>Why does the same hormone (PTH) both raise serum calcium and, given as a drug, build bone?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Slow the demolition or hire the builders</h4>
+    <p>Bone is constantly remodelled by osteoclasts (demolition) and osteoblasts (construction). In osteoporosis demolition outpaces construction. Antiresorptives (bisphosphonates, denosumab) slow the demolition crew; anabolics (teriparatide) hire more builders. The PTH paradox: <em>continuous</em> high PTH favours resorption, but <em>intermittent</em> pulses favour formation.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a building under constant renovation</div>
+      <p>Bone is a <span class="key">building with a demolition crew and a construction crew always at work</span>. Osteoporosis is demolition winning. A <strong>bisphosphonate is like chaining the wrecking ball</strong> — it embeds in the bone and poisons osteoclasts that try to chew it, so demolition slows (and the effect lingers in the bone for years). <strong>Denosumab fires the demolition foreman</strong> (blocks RANKL) — but the moment you stop paying, the whole crew rushes back with a vengeance (rebound). <strong>Teriparatide</strong> is the clever twist: a quick daily visit from the site manager (a PTH pulse) motivates the <em>builders</em>, but if that manager never leaves (continuous PTH) they start directing demolition instead.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> oral bisphosphonates → <strong>oesophagitis</strong> (take upright, empty stomach, full glass of water, stay upright 30 min). Rare but classic: <strong>osteonecrosis of the jaw</strong> and <strong>atypical femoral fractures</strong> with prolonged use. Denosumab → <strong>rebound vertebral fractures on discontinuation</strong> — never stop without follow-on therapy. Correct vitamin D/calcium before starting antiresorptives (risk of hypocalcaemia). Teriparatide carries an osteosarcoma signal (limit duration).</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 48 — ESTROGENS & PROGESTINS ============ -->
+<section class="module" id="m48">
+  <div class="mod-head">
+    <div class="mod-num">48</div>
+    <div class="mod-titleblock">
+      <h2>Estrogens, Progestins &amp; the Female Reproductive Tract</h2>
+      <div class="mod-sub">Contraception · HRT · SERMs</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Solid yield</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Estrogen and progestin given exogenously exploit <strong>negative feedback</strong>: they suppress the hypothalamic-pituitary axis, switching off the LH surge so ovulation never happens — the core of hormonal contraception. The same hormones, used tissue-selectively (SERMs) or blocked (aromatase inhibitors), treat breast cancer and osteoporosis.</div>
+    <h4>Key drug groups</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Group</th><th>Examples</th><th>Use / mechanism</th></tr></thead>
+      <tbody>
+        <tr><td>Combined OCP</td><td>Ethinylestradiol + progestin</td><td>Suppress ovulation (↓FSH/LH); thicken cervical mucus</td></tr>
+        <tr><td>Progestin-only</td><td>Desogestrel, depot, IUS</td><td>Safer when estrogen contraindicated</td></tr>
+        <tr><td>SERMs</td><td>Tamoxifen, raloxifene</td><td>Tissue-selective: agonist some tissues, antagonist others</td></tr>
+        <tr><td>Aromatase inhibitors</td><td>Anastrozole, letrozole</td><td>Block estrogen synthesis (postmenopausal breast cancer)</td></tr>
+        <tr><td>Antiprogestin</td><td>Mifepristone</td><td>Progesterone-receptor antagonist (termination)</td></tr>
+      </tbody>
+    </table></div>
+    <h4>SERM tissue selectivity (high-yield)</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>SERM</th><th>Breast</th><th>Bone</th><th>Endometrium</th></tr></thead>
+      <tbody>
+        <tr><td>Tamoxifen</td><td>Antagonist (treats ER+ breast ca)</td><td>Agonist (protects)</td><td><strong>Agonist (cancer risk)</strong></td></tr>
+        <tr><td>Raloxifene</td><td>Antagonist</td><td>Agonist (osteoporosis)</td><td>Neutral (no cancer risk)</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">Explain how a combined pill prevents pregnancy using the word "feedback." Then blurt out why tamoxifen — a drug that <em>blocks</em> estrogen in the breast — paradoxically <em>raises</em> the risk of endometrial cancer.</div>
+    <h4 style="color:var(--rose)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does adding exogenous estrogen/progestin stop the body's own ovulation cycle?</li>
+      <li>Why can one molecule (a SERM) be an estrogen blocker in one tissue and an activator in another?</li>
+      <li>Why does estrogen-containing contraception raise venous thromboembolism risk?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Feedback off, and the SERM "context-dependent key"</h4>
+    <p>A steady supply of exogenous estrogen + progestin convinces the hypothalamus and pituitary that hormone levels are already adequate, so they stop sending FSH/LH — no follicle matures, no LH surge, no ovulation. SERMs are cleverer: the same molecule behaves as an agonist or antagonist depending on which co-regulators a tissue expresses.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a key that turns differently in different locks</div>
+      <p>A SERM is a <span class="key">master key cut to a strange shape</span>. In the breast lock it jams the mechanism so the real estrogen key can't turn it (antagonist — useful in ER-positive breast cancer). But the bone lock and the endometrial lock are built slightly differently, and in those the same strange key actually <strong>turns the mechanism on</strong> (agonist). That's why tamoxifen protects bone (good) yet stimulates the endometrium (raising cancer risk) — one key, three locks, three outcomes. For contraception, the logic is simpler feedback: keep the warehouse stocked with hormone and head office stops ordering new production (no ovulation).</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> estrogen-containing contraceptives/HRT → <strong>venous thromboembolism</strong> (avoid in smokers >35, prior VTE, migraine with aura). <strong>Tamoxifen</strong> → endometrial cancer + VTE risk. Aromatase inhibitors → osteoporosis (they remove protective estrogen). Mifepristone is a progesterone antagonist. Many interactions with enzyme inducers (rifampicin, certain anticonvulsants) reduce contraceptive efficacy.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 46 — HYPOTHALAMIC-PITUITARY ============ -->
+<section class="module" id="m46">
+  <div class="mod-head">
+    <div class="mod-num">46</div>
+    <div class="mod-titleblock">
+      <h2>Introduction to Endocrinology: The Hypothalamic-Pituitary Axis</h2>
+      <div class="mod-sub">Feedback loops · pituitary drugs</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Framework for the section</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Learn <strong>one ladder with a feedback loop</strong> — hypothalamus → pituitary → target gland, with the target hormone feeding back to switch the top off — and every endocrine drug becomes "replace the deficient, mimic the releaser, or block the excess" at a defined rung.</div>
+      <figure>
+    <div class="fig-title">Figure 46·1 — The hypothalamic-pituitary axis &amp; negative feedback</div>
+    <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+      <defs><marker id="h1" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#6d2f8f"/></marker></defs>
+      <rect x="280" y="14" width="200" height="40" rx="9" fill="#51216b"/><text x="380" y="33" fill="#fff" text-anchor="middle" font-weight="700">Hypothalamus</text><text x="380" y="48" fill="#d3a6e8" text-anchor="middle" font-size="9">releasing hormones (GHRH, TRH, CRH, GnRH)</text>
+      <line x1="380" y1="54" x2="380" y2="84" stroke="#6d2f8f" stroke-width="2" marker-end="url(#h1)"/>
+      <rect x="290" y="86" width="180" height="40" rx="9" fill="#efe4f5" stroke="#6d2f8f"/><text x="380" y="106" text-anchor="middle" fill="#51216b" font-weight="700">Anterior pituitary</text><text x="380" y="120" text-anchor="middle" font-size="9" fill="#221a2b">GH, TSH, ACTH, LH/FSH, prolactin</text>
+      <line x1="380" y1="126" x2="380" y2="156" stroke="#6d2f8f" stroke-width="2" marker-end="url(#h1)"/>
+      <rect x="300" y="158" width="160" height="40" rx="9" fill="#efe4f5" stroke="#6d2f8f"/><text x="380" y="178" text-anchor="middle" fill="#51216b" font-weight="700">Target gland</text><text x="380" y="192" text-anchor="middle" font-size="9" fill="#221a2b">thyroid, adrenal, gonad</text>
+      <line x1="380" y1="198" x2="380" y2="226" stroke="#6d2f8f" stroke-width="2" marker-end="url(#h1)"/>
+      <rect x="320" y="228" width="120" height="28" rx="7" fill="#51216b"/><text x="380" y="247" text-anchor="middle" fill="#fff" font-weight="600">Hormone effect</text>
+      <!-- feedback loop -->
+      <path d="M460,178 C600,178 600,40 482,34" fill="none" stroke="#a8331f" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#h1)"/>
+      <text x="620" y="110" fill="#a8331f" font-size="11" font-weight="600" transform="rotate(90 620 110)">⊣ negative feedback</text>
+      <!-- drug side -->
+      <text x="150" y="106" text-anchor="end" fill="#0d7a63" font-size="10.5" font-weight="600">Agonists: somatropin,</text>
+      <text x="150" y="120" text-anchor="end" fill="#0d7a63" font-size="10.5" font-weight="600">GnRH analogues, desmopressin</text>
+      <text x="150" y="178" text-anchor="end" fill="#a8331f" font-size="10.5" font-weight="600">Antagonists: octreotide,</text>
+      <text x="150" y="192" text-anchor="end" fill="#a8331f" font-size="10.5" font-weight="600">dopamine agonists, pegvisomant</text>
+    </svg>
+    <figcaption>Every pituitary drug is positioned on this ladder: replace a deficient hormone, mimic a releasing factor, or block an excess. Negative feedback is why exogenous hormone shuts the axis down (the basis of steroid taper and contraceptive action).</figcaption>
+  </figure>
+    <h4>The pituitary-targeting drugs</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Axis / hormone</th><th>Drug</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td>Growth hormone deficiency</td><td>Somatropin</td><td>Recombinant GH replacement</td></tr>
+        <tr><td>Acromegaly (GH excess)</td><td>Octreotide (somatostatin analogue), pegvisomant, cabergoline</td><td>Suppress/block GH</td></tr>
+        <tr><td>Hyperprolactinaemia</td><td>Cabergoline, bromocriptine</td><td><strong>Dopamine agonists</strong> (dopamine inhibits prolactin)</td></tr>
+        <tr><td>Fertility / suppression</td><td>GnRH analogues (leuprolide), gonadotropins</td><td>Pulsatile = stimulate; continuous = suppress</td></tr>
+        <tr><td>Diabetes insipidus</td><td>Desmopressin (ADH analogue)</td><td>Renal water reabsorption</td></tr>
+        <tr><td>Labour</td><td>Oxytocin</td><td>Uterine contraction</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">Dopamine normally inhibits prolactin release. Blurt out what that predicts for two opposite drugs: (1) which drug class treats a prolactinoma, and (2) why antipsychotics that <em>block</em> dopamine cause galactorrhoea. Then explain why continuous GnRH suppresses the gonads while pulsatile GnRH stimulates them.</div>
+    <h4 style="color:var(--rose)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does a target-gland hormone feeding back "upstream" stabilise the whole system?</li>
+      <li>Why does the <em>pattern</em> of GnRH delivery (pulsatile vs continuous) flip its effect?</li>
+      <li>Why is desmopressin used for both diabetes insipidus and bed-wetting?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>The master gland and its thermostat</h4>
+    <p>The hypothalamus and pituitary sit atop each endocrine axis, and the target hormone feeds back to keep output stable. Pharmacology either supplies a missing hormone, mimics a releasing signal, or blocks an overactive one. Two quirks dominate exams: dopamine <em>inhibits</em> prolactin (so dopamine agonists treat prolactinomas, dopamine blockers raise prolactin), and GnRH effect depends on <em>pattern</em> — pulses stimulate, a continuous flood desensitises and shuts the gonads down.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a thermostat-controlled heating system</div>
+      <p>An endocrine axis is a <span class="key">house thermostat</span>. The hypothalamus sets the target temperature, the pituitary is the relay that switches the boiler (target gland) on, and the room temperature (hormone level) feeds back to the thermostat to stop it overshooting — that's negative feedback. The GnRH quirk is like a <strong>doorbell</strong>: ringing it in normal rhythm (pulses) keeps summoning a response, but holding the button down continuously just makes everyone tune it out (desensitisation) — which is exactly how continuous GnRH analogues are used to <em>switch off</em> sex-hormone production in prostate cancer.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> GnRH analogues cause an initial <strong>testosterone/estrogen "flare"</strong> before suppression — cover with an anti-androgen in prostate cancer. Dopamine agonists (cabergoline) → nausea, postural hypotension, rare valvulopathy/impulse-control disorders. Desmopressin → hyponatraemia (water retention). This axis logic underlies steroid-taper (Module 50) and contraceptive feedback (Module 48).</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+<!-- ============ MODULE 49 — ANDROGENS ============ -->
+<section class="module" id="m49">
+  <div class="mod-head">
+    <div class="mod-num">49</div>
+    <div class="mod-titleblock">
+      <h2>Androgens &amp; the Male Reproductive Tract</h2>
+      <div class="mod-sub">Testosterone · anti-androgens · 5α-reductase</div>
+    </div>
+    <span class="tier tier-3">Tier 3 · Framework</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Two opposite goals: <strong>replace</strong> androgen in hypogonadism (testosterone), or <strong>block</strong> it in androgen-driven disease (BPH, prostate cancer, hirsutism) — and the blockers act at three points: synthesis, conversion to DHT, or the receptor.</div>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Goal</th><th>Drug</th><th>Mechanism / use</th></tr></thead>
+      <tbody>
+        <tr><td>Replacement</td><td>Testosterone (gel, IM)</td><td>Male hypogonadism</td></tr>
+        <tr><td>↓ DHT conversion</td><td>Finasteride, dutasteride</td><td><strong>5α-reductase inhibitor</strong> → BPH, male-pattern baldness</td></tr>
+        <tr><td>Block receptor</td><td>Flutamide, bicalutamide</td><td>Androgen-receptor antagonist → prostate cancer</td></tr>
+        <tr><td>↓ Synthesis (central)</td><td>GnRH analogues (leuprolide)</td><td>Continuous → suppress testosterone (prostate cancer)</td></tr>
+        <tr><td>↓ Synthesis (adrenal/tumour)</td><td>Abiraterone, ketoconazole</td><td>Block androgen synthesis enzymes</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A man is treated for both BPH and male-pattern baldness with the same single drug. Blurt out the drug, the enzyme it inhibits, and the active hormone whose production it reduces — then list the three different levels at which you could instead block androgens to treat prostate cancer.</div>
+    <h4 style="color:var(--rose)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does blocking 5α-reductase help both the prostate and the scalp?</li>
+      <li>Why is testosterone itself a poor oral drug (link to first-pass metabolism, Gen Pharm)?</li>
+      <li>Why combine a GnRH analogue with an androgen-receptor blocker initially in prostate cancer?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Replace it, or cut it off at one of three points</h4>
+    <p>Testosterone is converted by 5α-reductase to the more potent DHT in tissues like prostate and scalp. To lower androgen action you can stop central production (GnRH analogues), block the conversion to DHT (finasteride), or block the receptor itself (bicalutamide) — a layered system that mirrors how you'd dam a river at the source, midstream, or at the delta.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — shutting off water at three points</div>
+      <p>Androgen action is <span class="key">water reaching a garden through a pipe</span>. To stop it you can close the <strong>main valve at the reservoir</strong> (GnRH analogues stop testicular production), narrow a <strong>booster pump midway</strong> (finasteride blocks conversion of testosterone to the more powerful DHT), or <strong>cap the sprinkler heads</strong> at the garden itself (receptor blockers like bicalutamide). For prostate cancer you often hit two points at once; for BPH/baldness, throttling the midway booster (finasteride) is enough because DHT is what overgrows the prostate and miniaturises hair follicles.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>finasteride/dutasteride are teratogenic</strong> — pregnant women must not handle crushed tablets (risk to male fetus); they also lower PSA (interpret prostate screening with care). GnRH analogues cause an initial testosterone <strong>flare</strong> — pair with an anti-androgen at the start in prostate cancer. Anabolic-steroid abuse → suppressed spermatogenesis, cardiovascular and hepatic harm. Testosterone is contraindicated in prostate cancer.</blockquote>
+  </div>
+  </details>
+
+  
+</section>
+
+
+
+<!-- ============ FLASHCARDS ============ -->
+<section id="flashcards">
+  <div class="wrap">
+    <h2>🃏 Clinical Vignette Flashcards</h2>
+    <p class="fc-lead">Tap a card to reveal the answer, mechanism, clinical pearl, and exam trap. Twenty high-yield scenarios across Endocrine Pharmacology.</p>
+    <div class="flashcards">
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">01</span>
+          <span class="fc-q">A 58-year-old woman with T2DM and eGFR 28 mL/min is on metformin. She is admitted for elective contrast CT. What should be done, and why?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Hold metformin 48 h before and 48 h after IV contrast. Contrast can cause transient AKI; if metformin continues during AKI, lactic acid clearance falls → <strong>metformin-associated lactic acidosis (MALA)</strong>. Also, metformin is contraindicated when eGFR &lt;30 mL/min/1.73m² and should be dose-reduced at eGFR 30–45. Mechanism of metformin: activates AMPK → inhibits hepatic gluconeogenesis + enhances peripheral insulin sensitivity. No hypoglycaemia risk.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> MALA is rare but carries ~50% mortality when it occurs. Classic triad: high anion-gap metabolic acidosis + elevated lactate + metformin use in the setting of CKD, contrast exposure, excessive alcohol, or sepsis.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Metformin does NOT cause hypoglycaemia as monotherapy — it only sensitises to insulin already present. This makes it the preferred first-line agent in T2DM and safe in combination with agents that do cause hypoglycaemia (sulfonylureas).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">02</span>
+          <span class="fc-q">A T2DM patient on glipizide is found unconscious with blood glucose of 36 mg/dL. IV dextrose is given and she wakes, but hypoglycaemia recurs two hours later. Why does this happen, and how long must she be monitored?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Sulfonylureas (glipizide, gliclazide, glibenclamide) stimulate insulin secretion by blocking <strong>K⁺-ATP channels</strong> on β-cells → depolarisation → Ca²⁺ influx → insulin release, independent of glucose level. Their duration of action (6–24 h) means hypoglycaemia can be <strong>prolonged and recurrent</strong> even after initial dextrose correction. Observe for 24–48 h with continuous glucose infusion; hospital admission is often required.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Long-acting sulfonylureas (glibenclamide/glyburide) are the most dangerous in overdose and in elderly/CKD patients — prefer shorter-acting agents (gliclazide, glipizide) or avoid the class entirely in CKD (accumulation risk).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Octreotide (somatostatin analogue) is used for refractory sulfonylurea-induced hypoglycaemia — it suppresses insulin secretion directly, reducing the frequency of dextrose infusions needed. This is the specific antidote for SU overdose.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">03</span>
+          <span class="fc-q">A pregnant woman at 8 weeks with Graves' hyperthyroidism is on methimazole. Her obstetrician insists on switching drugs. Why, and to what?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Methimazole is associated with <strong>embryopathy in the 1st trimester</strong>: aplasia cutis (scalp skin defects), choanal and oesophageal atresia — the 'methimazole embryopathy' syndrome. Switch to <strong>propylthiouracil (PTU)</strong> for the first trimester. After the 1st trimester, switch back to methimazole — PTU carries a risk of severe hepatotoxicity (including fulminant hepatic failure) that outweighs its embryopathy advantage beyond week 14.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> PTU has an additional mechanism absent in methimazole: it inhibits peripheral <strong>5'-deiodinase</strong> → blocks T4 → T3 conversion. This makes PTU the drug of choice in thyroid storm (faster reduction of circulating T3).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Both thionamides cross the placenta AND enter breast milk. PTU crosses less into breast milk → preferred during breastfeeding. Neither drug is 'safe' — the risk-benefit must be weighed. Target: maternal FT4 in the upper-normal range to avoid foetal hypothyroidism.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">04</span>
+          <span class="fc-q">A patient with thyroid storm is admitted. List the pharmacological steps in the correct order, including why one drug must be given before another.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Correct sequence:</strong> (1) <strong>PTU</strong> first — blocks new hormone synthesis AND T4→T3 conversion; (2) Wait ≥1 hour, then <strong>Lugol's iodine / SSKI</strong> — blocks thyroid hormone <em>release</em> (Wolff–Chaikoff). Critical: iodine given before PTU provides substrate for a new surge of hormone synthesis ('escape'). (3) <strong>Propranolol</strong> — controls adrenergic symptoms (tachycardia, tremor) AND inhibits peripheral T4→T3 conversion; (4) <strong>Hydrocortisone</strong> — prevents concurrent adrenal crisis AND reduces peripheral T4→T3 conversion; (5) Supportive care (cooling, fluids).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Cholestyramine can be added to bind thyroid hormones in the gut (reduces enterohepatic recirculation of T4/T3), accelerating their clearance in severe thyroid storm.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> <strong>Aspirin is contraindicated</strong> in thyroid storm — it displaces T4 from thyroid-binding globulin (TBG) → acutely raises free T4. Use paracetamol (acetaminophen) for fever instead.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">05</span>
+          <span class="fc-q">A T2DM patient on semaglutide loses 12 kg over 6 months. He also reports nausea and early satiety. What are the mechanisms of weight loss and GI side effects?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>GLP-1 receptor agonists</strong> (semaglutide, liraglutide) activate GLP-1 receptors in: (1) <strong>Pancreas</strong> → glucose-dependent insulin secretion + glucagon suppression; (2) <strong>Hypothalamus/brainstem</strong> → reduced appetite, increased satiety; (3) <strong>Stomach</strong> → slowed gastric emptying → earlier satiety + prolonged nutrient absorption. The same mechanism of gastric slowing causes nausea, vomiting, and early satiety — the most common side effects (start low, titrate slowly).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> SUSTAIN-6 (semaglutide) and LEADER (liraglutide) trials demonstrated significant reductions in MACE (major adverse cardiovascular events) — cardiovascular benefit independent of glucose lowering. GLP-1 agonists are now first-line add-on in T2DM with established CVD.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> GLP-1 agonists and DPP-4 inhibitors both enhance GLP-1 signalling — but DPP-4 inhibitors (sitagliptin) are weight-neutral, while GLP-1 agonists promote weight loss. GLP-1 agonists are also associated with pancreatitis and theoretical thyroid C-cell tumour risk (contraindicated in MEN2/personal history of MTC).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">06</span>
+          <span class="fc-q">A 45-year-old woman with T2DM is started on empagliflozin. She develops vulvovaginal itching and discharge. What is the mechanism, and what serious adverse effect must also be counselled?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Genital mycotic infections</strong>: SGLT2 inhibitors block glucose reabsorption in the proximal tubule → glucosuria → glucose-rich environment in the genital area → Candida overgrowth. Common in women (vulvovaginitis) and uncircumcised men (balanitis). Treat with topical antifungals; reduce/stop if recurrent. Serious adverse effect: <strong>euglycaemic DKA</strong> — normal or near-normal blood glucose (150–200 mg/dL) but ketoacidosis — because SGLT2 inhibitors promote ketonaemia. Must hold drug during illness, fasting, or surgery.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> EMPA-REG OUTCOME trial: empagliflozin reduced CV death by 38% and HF hospitalisation by 35% in T2DM with CVD. DAPA-HF and EMPEROR-Reduced showed benefit even in patients without diabetes. SGLT2 inhibitors are now standard of care in HFrEF regardless of diabetes status.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Fournier's gangrene (necrotising fasciitis of the perineum) is a rare but FDA black-box warning for SGLT2 inhibitors. Also: SGLT2 inhibitors cause a modest rise in LDL (~2–5%) and increase UTI risk slightly (though overall infection rate is low due to urinary glucose washout effect on uropathogens).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">07</span>
+          <span class="fc-q">A T1DM patient in DKA has an initial K⁺ of 5.4 mEq/L. As insulin is infused, K⁺ drops to 3.0 mEq/L in 4 hours. Explain the physiology and the monitoring protocol.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Despite normal/elevated serum K⁺ at presentation, DKA causes <strong>total body K⁺ depletion</strong> (vomiting, osmotic diuresis, inability to retain K⁺ intracellularly without insulin). Acidosis shifts K⁺ extracellularly, masking the deficit. Insulin therapy: activates Na⁺/K⁺-ATPase → K⁺ rapidly enters cells → serum K⁺ falls precipitously. Protocol: check K⁺ every 2 h; add KCl to IV fluids once K⁺ &lt;5.0; <strong>hold insulin if K⁺ &lt;3.5</strong> until repleted (to prevent life-threatening arrhythmia).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Phosphate also drops with insulin therapy (enters cells with glucose). If phosphate &lt;1.0 mg/dL or patient has haemolysis/respiratory failure, supplement with potassium phosphate (repletes both K⁺ and PO₄³⁻ simultaneously).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Never start insulin in DKA without first knowing the K⁺ level. If K⁺ &lt;3.5, giving insulin can precipitate hypokalaemia → VF → death. This is the leading preventable cause of DKA mortality. Glucose-containing fluids (D5W) are NOT used in initial DKA management — use 0.9% NaCl for initial resuscitation.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">08</span>
+          <span class="fc-q">A patient with Cushing's disease awaiting pituitary surgery is prescribed metyrapone. He develops hypertension and acne. Explain both the mechanism and the side effects.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Metyrapone inhibits <strong>11β-hydroxylase</strong> (CYP11B1) — the final step in cortisol synthesis (11-deoxycortisol → cortisol). Cortisol falls, ACTH rises (pituitary no longer suppressed), and cortisol precursors accumulate. Side effects explained by precursor accumulation: <strong>11-deoxycortisol</strong> has weak glucocorticoid activity; <strong>DHEA and androstenedione</strong> accumulate → androgenic effects (acne, hirsutism, oligomenorrhoea). Precursor mineralocorticoid activity → sodium retention → hypertension.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Metyrapone test: normally the hypothalamic-pituitary axis responds to falling cortisol by secreting more ACTH, raising 11-deoxycortisol. An absent response (low ACTH, low 11-deoxycortisol) implies secondary adrenal insufficiency. Used diagnostically to test the HPA axis integrity.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Ketoconazole (azole antifungal) also inhibits multiple adrenal steroidogenesis enzymes (CYP11A1, CYP17, CYP11B1) → used for Cushing's but limited by hepatotoxicity and extensive CYP3A4 inhibition. Osilodrostat (CYP11B1 inhibitor, newer, more selective) is now preferred over ketoconazole.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">09</span>
+          <span class="fc-q">A patient with primary hypothyroidism is started on levothyroxine. She is also taking ferrous sulphate and calcium carbonate for anaemia and osteoporosis. How should the timing be managed?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Take levothyroxine on an <strong>empty stomach, 30–60 minutes before any food</strong> and separate from: calcium salts, iron supplements, antacids (Al³⁺/Mg²⁺), cholestyramine, sucralfate, PPIs, and soy products — all reduce levothyroxine absorption by chelation or pH alteration. Separate these by ≥4 hours. Coffee also reduces absorption.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> TSH is the most sensitive monitoring parameter. Aim for TSH 0.5–2.5 mIU/L in most adults; 0.1–1.5 in pregnant women (thyroid hormone critical for foetal neurodevelopment). In subclinical hypothyroidism with TSH 4.5–10, treat if symptomatic, pregnant, or planning pregnancy.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Starting levothyroxine in a patient on warfarin increases thyroid hormone-stimulated clearance of clotting factors → warfarin requirements INCREASE, INR FALLS. Conversely, treating new-onset hypothyroidism in a stable warfarin patient → monitor INR closely and expect to increase warfarin dose.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">10</span>
+          <span class="fc-q">A woman with Addison's disease is admitted in shock with BP 70/40, hyponatraemia (Na⁺ 122), and hyperkalaemia (K⁺ 6.1). What is the immediate management?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Addisonian crisis:</strong> acute adrenal insufficiency → deficiency of both cortisol (glucocorticoid) and aldosterone (mineralocorticoid). Immediate treatment: (1) IV <strong>hydrocortisone 100 mg</strong> bolus, then 50–100 mg q6–8h — provides both glucocorticoid and (at high doses) mineralocorticoid activity; (2) <strong>IV 0.9% NaCl</strong> — volume resuscitation + sodium replacement; (3) IV dextrose if hypoglycaemic; (4) Treat hyperkalaemia if K⁺ &gt;6.5 (cardiac risk). Fludrocortisone is not needed acutely (hydrocortisone at stress doses covers mineralocorticoid function).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Maintenance replacement: hydrocortisone 15–25 mg/day in divided doses (AM-weighted to mimic cortisol diurnal rhythm) + fludrocortisone 50–200 µg/day. Sick day rules: double/triple hydrocortisone dose during illness, injury, or surgery — failure to do so → crisis.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Do NOT delay hydrocortisone while waiting for cortisol or ACTH results in suspected Addisonian crisis. If needed, give dexamethasone 4 mg IV (does not interfere with cortisol assay) → draw cortisol/ACTH → then switch to hydrocortisone. Time is critical.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">11</span>
+          <span class="fc-q">A patient with prostate cancer is started on leuprolide (GnRH agonist) depot injection. His PSA and testosterone initially rise at week 2, worsening bone pain. Explain.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Testosterone flare</strong>: continuous GnRH agonist initially stimulates pituitary LH/FSH release ('flare' effect, days 1–14) before causing receptor downregulation → desensitisation → castrate testosterone levels (week 3–4 onwards). The initial testosterone surge can cause disease flare: worsening bone pain, urinary obstruction, spinal cord compression. Prevention: <strong>co-prescribe an anti-androgen</strong> (bicalutamide 50 mg/day) for the first 4 weeks to block AR during the testosterone surge.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> GnRH antagonists (degarelix, relugolix) directly block the GnRH receptor → no initial LH/FSH surge → no testosterone flare → immediate castration levels within 3 days. Preferred over agonists when flare risk is high (impending cord compression, severe bone pain).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Continuous (non-pulsatile) GnRH agonist = suppression. Pulsatile GnRH (as in physiological secretion) = stimulation. This paradox is the basis of both the therapeutic flare and the ultimate hormonal suppression.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">12</span>
+          <span class="fc-q">Octreotide is prescribed for carcinoid syndrome. Six months later, the patient develops right upper quadrant pain and ultrasound confirms gallstones. Explain the mechanism.</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Octreotide (somatostatin analogue) inhibits <strong>cholecystokinin (CCK)</strong> release and gallbladder smooth muscle contraction → biliary stasis → supersaturation of bile → cholesterol or pigment gallstones in 20–50% of long-term users. Other actions of octreotide: inhibits GH/IGF-1 (acromegaly), serotonin/VIP/substance P (carcinoid/VIPoma), and splanchnic blood flow (variceal bleeding).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Ursodeoxycholic acid (UDCA) can be given prophylactically during long-term octreotide use to reduce gallstone formation. Lanreotide is a longer-acting somatostatin analogue (monthly depot) with similar efficacy and gallstone risk.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Octreotide improves carcinoid symptoms (flushing, diarrhoea) but does NOT significantly shrink carcinoid tumours. For tumour control, add everolimus (mTOR inhibitor) or sunitinib, or use peptide receptor radionuclide therapy (PRRT) with lutetium-177-DOTATATE.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">13</span>
+          <span class="fc-q">A postmenopausal woman on anastrozole for breast cancer develops wrist and hip fractures after 3 years of therapy. What pharmacological mechanism explains the bone loss?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Anastrozole (aromatase inhibitor, AI) inhibits CYP19 → blocks peripheral conversion of androgens → oestrogens. In postmenopausal women, peripheral oestrogen production (adrenal androstenedione → oestrone in fat/muscle) is the primary oestrogen source. AI therapy → profound oestrogen deficiency → uncoupled bone remodelling (osteoclasts > osteoblasts) → accelerated bone loss → fractures. AIs cause more bone loss than tamoxifen (which has agonist activity at bone ER).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> DXA scan before and every 2 years on AI therapy. Prescribe calcium 1200 mg + vitamin D 1000–2000 IU/day to all AI patients. Add bisphosphonate (zoledronic acid, alendronate) or denosumab if T-score ≤ -2.0 or multiple risk factors.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Tamoxifen (SERM) protects bone in postmenopausal women (bone ER agonist) but INCREASES endometrial cancer risk (uterine ER agonist). AIs have NO endometrial cancer risk (no ER stimulation) but worsen bone. Choose AI over tamoxifen in postmenopausal women unless fracture risk is very high.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">14</span>
+          <span class="fc-q">A 70-year-old man is started on teriparatide for severe osteoporosis. His doctor says it can only be given for 2 years. Why is there a time limit?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Teriparatide (recombinant PTH 1–34) is an <strong>anabolic</strong> bone agent — it stimulates osteoblast proliferation and activity. Animal studies showed dose-dependent <strong>osteosarcoma</strong> in rats with prolonged high-dose exposure. Although not proven in humans, the FDA imposed a 2-year cumulative lifetime limit as a precautionary measure. After stopping teriparatide, bone density rapidly decreases unless followed immediately by an antiresorptive agent (bisphosphonate or denosumab).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Abaloparatide (PTHrP 1–34 analogue) has the same anabolic mechanism and 2-year limit, with possibly less hypercalcaemia than teriparatide. Romosozumab (anti-sclerostin antibody) — dual anabolic + antiresorptive, 12-month course, but has a cardiovascular safety signal (not in patients with recent MI/stroke).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Teriparatide is contraindicated in: Paget's disease of bone, prior bone radiation therapy, hypercalcaemia, and paediatric patients (open epiphyses — risk of bone tumours). Do NOT combine with bisphosphonates during teriparatide therapy (bisphosphonates blunt the anabolic response).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">15</span>
+          <span class="fc-q">A patient with type 1 DM uses insulin glargine at night and insulin aspart before meals. She is prescribed propranolol for her new diagnosis of essential tremor. What risk does the beta-blocker introduce?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Propranolol (non-selective β-blocker) masks the <strong>adrenergic symptoms of hypoglycaemia</strong>: tachycardia, palpitations, tremor — the early warning signs. The patient may not recognise she is hypoglycaemic until she is confused or loses consciousness. Additionally, β-blockade impairs <strong>glycogenolysis</strong> (hepatic glucose release) → prolongs hypoglycaemic episodes. Diaphoresis (sweating) is a parasympathetic-mediated sign — NOT masked by beta-blockers — but this alone is insufficient warning.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> If a beta-blocker is needed in a diabetic patient on insulin, prefer a <strong>cardioselective beta-blocker</strong> (bisoprolol, metoprolol) — β1 selectivity is somewhat less likely to mask glucagon-mediated recovery, but still masks adrenergic warning symptoms. Counsel all insulin patients on this risk.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Beta-blockers do NOT cause hypoglycaemia — they only mask and prolong it. The hypoglycaemia is caused by too much insulin. Diaphoresis is preserved as a warning sign (mediated by sympathetic cholinergic fibres to sweat glands, not β-adrenoceptors).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">16</span>
+          <span class="fc-q">Radioactive iodine (¹³¹I) is given for Graves' disease. The patient calls 3 days later with sore throat and neck pain. Eight months later she is hypothyroid. Are either of these expected?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Day 3 symptoms:</strong> Radiation thyroiditis — ¹³¹I damages thyroid tissue → acute inflammatory response → sore throat, neck tenderness, transient worsening of hyperthyroidism (hormone release from damaged follicles). Usually self-limiting; treat with NSAIDs or prednisolone if severe. <strong>Month 8:</strong> Permanent hypothyroidism is the <em>intended</em> outcome of ¹³¹I therapy — occurs in ~80% within 10 years. Replace with levothyroxine lifelong.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> ¹³¹I is absolutely contraindicated in pregnancy (crosses placenta → foetal thyroid ablation) and breastfeeding. It is also avoided in active, moderate-to-severe Graves' ophthalmopathy (TED) — can worsen eye disease; give oral glucocorticoids if ¹³¹I must be used.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Pre-treat with methimazole to render the patient euthyroid before ¹³¹I (especially elderly and cardiac patients) — prevents post-ablation thyroid storm from radiation-induced hormone release. Stop methimazole 3–5 days before ¹³¹I (it reduces iodine uptake).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">17</span>
+          <span class="fc-q">A patient with PCOS presents with irregular cycles and infertility. She declines OCP. What pharmacological options address both the metabolic and reproductive aspects?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Metformin:</strong> reduces insulin resistance → lowers androgens (reduces ovarian androgen overproduction driven by hyperinsulinaemia) → may restore ovulatory cycles; first-line for metabolic management of PCOS. <strong>Clomiphene (clomifene):</strong> SERM — blocks oestrogen receptors in hypothalamus → perceived oestrogen deficiency → increased GnRH → LH/FSH surge → ovulation induction; first-line for ovulation induction. <strong>Letrozole</strong> (aromatase inhibitor): now preferred over clomiphene for ovulation induction in PCOS (higher live birth rates per PPCOS-II trial).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Spironolactone (anti-androgen via aldosterone receptor block + CYP17 inhibition) is added for hirsutism and acne in PCOS. Must use contraception with spironolactone in women of childbearing age — it feminises a male foetus.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Do NOT use clomiphene beyond 6 cycles (increased risk of ovarian cancer with prolonged use). Monitor for ovarian hyperstimulation syndrome (OHSS) during induction cycles — abdominal bloating, ascites, haemoconcentration.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">18</span>
+          <span class="fc-q">Desmopressin (DDAVP) is prescribed for central diabetes insipidus. A patient with nephrogenic DI is mistakenly given the same drug. Why will it fail?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Central DI</strong>: ADH deficiency (hypothalamic/pituitary damage). Desmopressin = synthetic ADH V2 receptor agonist → activates renal collecting duct V2 receptors → aquaporin-2 insertion → water reabsorption. Works because the kidney's receptor and response machinery is intact. <strong>Nephrogenic DI</strong>: the kidney <em>cannot respond</em> to ADH (V2 receptor or aquaporin mutations, lithium toxicity, hypercalcaemia, CKD) → desmopressin is ineffective. Treat nephrogenic DI with: thiazide diuretics (paradoxically reduce free water excretion via volume depletion), amiloride (if lithium-induced), low-sodium diet.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Desmopressin also stimulates von Willebrand factor (vWF) release from endothelium (V2 effect) and factor VIII release → used for mild haemophilia A, type 1 von Willebrand disease, and platelet disorders.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Desmopressin can cause severe <strong>hyponatraemia</strong> (dilutional) if patients drink excessive water while on the drug — common in children given desmopressin for nocturnal enuresis. Monitor Na⁺; restrict fluid intake after dosing.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">19</span>
+          <span class="fc-q">A 28-year-old woman is prescribed isotretinoin for severe cystic acne. What monitoring programme is mandated, and what is the teratogenic mechanism?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer">Isotretinoin (13-cis-retinoic acid) is a vitamin A (retinol) derivative — activates retinoic acid receptors (RAR) → regulates gene expression critical for cell differentiation and apoptosis in sebaceous glands. Profound teratogenicity: retinoic acid signalling is essential for normal embryonic development; excess → craniofacial defects, CNS malformations, cardiac defects, thymic aplasia. <strong>iPLEDGE programme</strong> (USA): mandatory monthly pregnancy testing, two forms of contraception, prescriber/pharmacy registration, monthly dispensing limits.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Side effects (all reversible except potential teratogenicity): mucocutaneous dryness (cheilitis, epistaxis, xerosis), elevated triglycerides, transient LFT rise, joint/muscle pain, and potential psychiatric effects (depression — monitor, though causality debated).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Vitamin A supplementation at doses &gt;10,000 IU/day in pregnancy also causes identical birth defects — the same RAR-mediated mechanism. This is why pregnant women are advised to avoid high-dose vitamin A supplements and liver (very high in retinol).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary>
+          <span class="fc-num">20</span>
+          <span class="fc-q">Bisphosphonates are prescribed for osteoporosis. After 7 years, a patient develops a mid-shaft femur fracture from a minimal fall. X-ray shows a transverse fracture with cortical thickening. What is the diagnosis, and why does it occur?</span>
+        </summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Atypical femoral fracture (AFF)</strong> — a rare but recognised complication of long-term bisphosphonate therapy (&gt;5 years). Bisphosphonates inhibit osteoclast farnesyl pyrophosphate synthase (mevalonate pathway) → impaired osteoclast activity → suppressed bone turnover. Prolonged suppression prevents normal micro-crack repair (normally osteoclasts resorb damaged bone) → fatigue fractures accumulate → spontaneous transverse fracture at mid-shaft (not osteoporotic compression fracture). Risk increases with &gt;5 years of use.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> AFF is often bilateral (30–40%) and preceded by prodromal thigh or groin pain ('stress reaction' visible on MRI before fracture). A 'drug holiday' after 5 years in lower-risk patients reduces AFF risk while preserving fracture protection (bisphosphonate is stored in bone mineral and continues to be released slowly).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Also monitor for osteonecrosis of the jaw (ONJ): especially with IV bisphosphonates (zoledronic acid) used for malignancy. Risk factors: dental extraction, poor oral hygiene, corticosteroid use, chemotherapy. ONJ presents as exposed non-healing bone in the jaw. Dental clearance before starting IV bisphosphonates.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+<!-- ============ QUIZZES ============ -->
+<section class="quizzes" id="quizzes">
+  <div class="quiz-intro">
+    <h2>★ Self-Test Question Bank</h2>
+    <p>Seven sets, one per module, weighted toward the highest-yield chapters. Cover the green answer strip, commit out loud, then reveal. Struggling to retrieve is the point — that's what builds durable memory.</p>
+  </div>
+  <details class="quizset" open><summary><span class="qs-num">1</span><span class="qs-title">Diabetes</span><span class="qs-meta">Module 51 · 32 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>First-line oral drug for type 2 diabetes?</div><div class="qa">Metformin.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Mechanism of metformin?</div><div class="qa">↓ hepatic gluconeogenesis and ↑ peripheral insulin sensitivity.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Does metformin cause hypoglycaemia?</div><div class="qa">No (when used alone).</div></div>
+      <div class="q"><div class="qq"><b>4</b>Most serious adverse effect of metformin?</div><div class="qa">Lactic acidosis (esp. in renal impairment/hypoxia).</div></div>
+      <div class="q"><div class="qq"><b>5</b>When should metformin be withheld around imaging?</div><div class="qa">Before iodinated contrast (and in significant renal impairment).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Mechanism of sulfonylureas?</div><div class="qa">Close the β-cell K⁺-ATP channel → depolarisation → insulin release.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Why do sulfonylureas cause hypoglycaemia?</div><div class="qa">They stimulate insulin release independent of the prevailing glucose level.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Give two sulfonylureas.</div><div class="qa">Glimepiride, gliclazide (or glipizide).</div></div>
+      <div class="q"><div class="qq"><b>9</b>How do meglitinides differ from sulfonylureas?</div><div class="qa">Same channel target but short-acting — taken with meals for post-prandial control.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Mechanism of thiazolidinediones (e.g. pioglitazone)?</div><div class="qa">PPAR-γ agonist → ↑ insulin sensitivity.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Major adverse effects of pioglitazone?</div><div class="qa">Fluid retention (worsens heart failure), weight gain, fractures, bladder-cancer signal.</div></div>
+      <div class="q"><div class="qq"><b>12</b>What do DPP-4 inhibitors do?</div><div class="qa">Inhibit DPP-4 → prolong endogenous incretin (GLP-1) → glucose-dependent insulin.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Give a DPP-4 inhibitor.</div><div class="qa">Sitagliptin (vildagliptin, linagliptin).</div></div>
+      <div class="q"><div class="qq"><b>14</b>Mechanism of GLP-1 receptor agonists?</div><div class="qa">Incretin mimetic: ↑ glucose-dependent insulin, ↓ glucagon, slow gastric emptying, ↓ appetite.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Give two GLP-1 receptor agonists.</div><div class="qa">Semaglutide, liraglutide (dulaglutide, exenatide).</div></div>
+      <div class="q"><div class="qq"><b>16</b>Two major benefits of GLP-1 agonists beyond glucose?</div><div class="qa">Weight loss and cardiovascular benefit.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Main side effect of GLP-1 agonists?</div><div class="qa">Nausea/GI upset.</div></div>
+      <div class="q"><div class="qq"><b>18</b>Contraindication to GLP-1 agonists?</div><div class="qa">Personal/family history of medullary thyroid carcinoma or MEN2.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Mechanism of SGLT2 inhibitors?</div><div class="qa">Block renal proximal-tubule glucose reabsorption → glycosuria.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Give two SGLT2 inhibitors.</div><div class="qa">Dapagliflozin, empagliflozin.</div></div>
+      <div class="q"><div class="qq"><b>21</b>Three organ benefits of SGLT2 inhibitors?</div><div class="qa">Cardiovascular, renal, and heart-failure benefit.</div></div>
+      <div class="q"><div class="qq"><b>22</b>Characteristic adverse effects of SGLT2 inhibitors?</div><div class="qa">Genital mycotic infections, volume depletion, euglycaemic DKA.</div></div>
+      <div class="q"><div class="qq"><b>23</b>Mechanism of acarbose?</div><div class="qa">α-glucosidase inhibition → ↓ intestinal carbohydrate breakdown/absorption.</div></div>
+      <div class="q"><div class="qq"><b>24</b>Main side effect of acarbose?</div><div class="qa">Flatulence/GI symptoms.</div></div>
+      <div class="q"><div class="qq"><b>25</b>Which insulin is used IV in DKA?</div><div class="qa">Regular (short-acting) insulin.</div></div>
+      <div class="q"><div class="qq"><b>26</b>Name the rapid-acting insulins.</div><div class="qa">Lispro, aspart, glulisine.</div></div>
+      <div class="q"><div class="qq"><b>27</b>Name the long-acting (basal) insulins.</div><div class="qa">Glargine, detemir, degludec.</div></div>
+      <div class="q"><div class="qq"><b>28</b>What is a basal-bolus regimen?</div><div class="qa">Long-acting basal insulin + rapid-acting boluses at meals.</div></div>
+      <div class="q"><div class="qq"><b>29</b>Which two non-insulin classes cause weight gain?</div><div class="qa">Sulfonylureas and thiazolidinediones.</div></div>
+      <div class="q"><div class="qq"><b>30</b>Which classes are weight-neutral or cause weight loss?</div><div class="qa">Metformin (neutral/loss), DPP-4 (neutral), GLP-1 RA and SGLT2 (loss).</div></div>
+      <div class="q"><div class="qq"><b>31</b>Why is an SGLT2 inhibitor especially relevant in heart failure?</div><div class="qa">It reduces heart-failure hospitalisation and is used even in non-diabetics for HF.</div></div>
+      <div class="q"><div class="qq"><b>32</b>Type 1 diabetes — mainstay of treatment?</div><div class="qa">Exogenous insulin (always required).</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">2</span><span class="qs-title">Thyroid & Antithyroid</span><span class="qs-meta">Module 47 · 22 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Drug of choice for hypothyroidism?</div><div class="qa">Levothyroxine (T₄).</div></div>
+      <div class="q"><div class="qq"><b>2</b>Why use T₄ rather than active T₃ for replacement?</div><div class="qa">Long, stable half-life; converted peripherally to T₃ as needed.</div></div>
+      <div class="q"><div class="qq"><b>3</b>What lab value do you titrate levothyroxine to?</div><div class="qa">TSH.</div></div>
+      <div class="q"><div class="qq"><b>4</b>How should levothyroxine be taken?</div><div class="qa">On an empty stomach; separate from calcium, iron, PPIs.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Two thionamide antithyroid drugs?</div><div class="qa">Methimazole (carbimazole) and propylthiouracil (PTU).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Mechanism of thionamides?</div><div class="qa">Inhibit thyroid peroxidase → block organification of iodide.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Extra action of PTU beyond synthesis?</div><div class="qa">Blocks peripheral conversion of T₄ to T₃.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Most feared haematological toxicity of thionamides?</div><div class="qa">Agranulocytosis.</div></div>
+      <div class="q"><div class="qq"><b>9</b>What symptom should prompt a patient on a thionamide to stop and get an FBC?</div><div class="qa">Sore throat with fever.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Preferred thionamide in the first trimester of pregnancy, and why?</div><div class="qa">PTU — methimazole is teratogenic (aplasia cutis, embryopathy).</div></div>
+      <div class="q"><div class="qq"><b>11</b>Preferred thionamide after the first trimester?</div><div class="qa">Methimazole/carbimazole.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Role of β-blockers in hyperthyroidism?</div><div class="qa">Rapid control of adrenergic symptoms (tremor, tachycardia); propranolol also ↓ T₄→T₃.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Definitive treatment that ablates the thyroid?</div><div class="qa">Radioactive iodine (¹³¹I).</div></div>
+      <div class="q"><div class="qq"><b>14</b>Common outcome after radioiodine?</div><div class="qa">Hypothyroidism (then replace with levothyroxine).</div></div>
+      <div class="q"><div class="qq"><b>15</b>Effect of high-dose iodide on the thyroid?</div><div class="qa">Transiently inhibits hormone release (Wolff-Chaikoff effect).</div></div>
+      <div class="q"><div class="qq"><b>16</b>Use of high-dose iodide (Lugol's)?</div><div class="qa">Pre-operative preparation and thyroid storm.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Why must iodide be timed carefully relative to radioiodine?</div><div class="qa">Iodide blocks radioiodine uptake by the gland.</div></div>
+      <div class="q"><div class="qq"><b>18</b>Consequence of over-replacement with levothyroxine?</div><div class="qa">Iatrogenic hyperthyroidism — atrial fibrillation, osteoporosis.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Which thionamide is preferred in thyroid storm?</div><div class="qa">PTU (blocks synthesis and peripheral conversion).</div></div>
+      <div class="q"><div class="qq"><b>20</b>Which receptor type does thyroid hormone act on?</div><div class="qa">Nuclear (intracellular) receptors altering gene transcription.</div></div>
+      <div class="q"><div class="qq"><b>21</b>What feedback hormone rises in primary hypothyroidism?</div><div class="qa">TSH (raised).</div></div>
+      <div class="q"><div class="qq"><b>22</b>Two drugs that reduce peripheral T₄→T₃ conversion?</div><div class="qa">PTU and propranolol (also glucocorticoids).</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">3</span><span class="qs-title">Adrenal Corticosteroids</span><span class="qs-meta">Module 50 · 22 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Three steroid families of the adrenal cortex (outer to inner)?</div><div class="qa">Mineralocorticoids, glucocorticoids, androgens (salt, sugar, sex).</div></div>
+      <div class="q"><div class="qq"><b>2</b>Main mineralocorticoid and its action?</div><div class="qa">Aldosterone — Na⁺/water retention, K⁺ excretion.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Main glucocorticoid?</div><div class="qa">Cortisol.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Reference glucocorticoid with significant mineralocorticoid activity?</div><div class="qa">Hydrocortisone.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Most commonly used oral anti-inflammatory glucocorticoid?</div><div class="qa">Prednisolone.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Potent glucocorticoid with negligible mineralocorticoid effect?</div><div class="qa">Dexamethasone.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Drug used for pure mineralocorticoid replacement?</div><div class="qa">Fludrocortisone.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Why do chronic glucocorticoids cause hyperglycaemia?</div><div class="qa">They increase gluconeogenesis (and insulin resistance).</div></div>
+      <div class="q"><div class="qq"><b>9</b>Why do they cause muscle wasting and thin skin?</div><div class="qa">Protein catabolism.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Classic fat-redistribution features?</div><div class="qa">Moon face, buffalo hump, central obesity (Cushingoid).</div></div>
+      <div class="q"><div class="qq"><b>11</b>Why do glucocorticoids raise infection risk?</div><div class="qa">Immunosuppression.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Major skeletal complication of long-term steroids?</div><div class="qa">Osteoporosis (also avascular necrosis).</div></div>
+      <div class="q"><div class="qq"><b>13</b>Why can steroids cause hypertension and hypokalaemia?</div><div class="qa">Mineralocorticoid activity → Na⁺/water retention, K⁺ loss.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Why must chronic glucocorticoids never be stopped abruptly?</div><div class="qa">HPA-axis suppression causes adrenal atrophy → risk of adrenal crisis.</div></div>
+      <div class="q"><div class="qq"><b>15</b>How are chronic glucocorticoids discontinued?</div><div class="qa">Gradual taper to let the HPA axis recover.</div></div>
+      <div class="q"><div class="qq"><b>16</b>What do patients on long-term steroids need during surgery/illness?</div><div class="qa">Stress-dose (increased) glucocorticoid cover.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Where in the inflammatory cascade do glucocorticoids act?</div><div class="qa">Upstream, inhibiting phospholipase A₂ (via annexin-1) — both COX and LOX branches.</div></div>
+      <div class="q"><div class="qq"><b>18</b>Why is this broader than an NSAID's effect?</div><div class="qa">NSAIDs block only the COX branch; steroids block the whole cascade.</div></div>
+      <div class="q"><div class="qq"><b>19</b>Ophthalmic risks of chronic steroids?</div><div class="qa">Cataracts and glaucoma.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Effect of glucocorticoids on children's growth?</div><div class="qa">Growth suppression.</div></div>
+      <div class="q"><div class="qq"><b>21</b>GI risk when combined with NSAIDs?</div><div class="qa">Peptic ulceration/bleeding.</div></div>
+      <div class="q"><div class="qq"><b>22</b>Why are most steroid 'side effects' just physiology in excess?</div><div class="qa">They are the normal stress/cortisol actions amplified by supraphysiologic dosing.</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">4</span><span class="qs-title">Bone & Mineral</span><span class="qs-meta">Module 52 · 22 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Three hormonal regulators of serum calcium?</div><div class="qa">PTH, vitamin D (calcitriol), calcitonin.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Net effect of PTH on calcium?</div><div class="qa">Raises serum calcium.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Net effect of calcitonin?</div><div class="qa">Lowers serum calcium (inhibits osteoclasts).</div></div>
+      <div class="q"><div class="qq"><b>4</b>Action of active vitamin D?</div><div class="qa">↑ intestinal calcium and phosphate absorption.</div></div>
+      <div class="q"><div class="qq"><b>5</b>First-line drug class for osteoporosis?</div><div class="qa">Bisphosphonates.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Mechanism of bisphosphonates?</div><div class="qa">Inhibit osteoclasts → reduce bone resorption (antiresorptive).</div></div>
+      <div class="q"><div class="qq"><b>7</b>Give two bisphosphonates.</div><div class="qa">Alendronate, zoledronate (risedronate).</div></div>
+      <div class="q"><div class="qq"><b>8</b>How must oral bisphosphonates be taken?</div><div class="qa">Upright, empty stomach, full glass of water, stay upright ~30 min.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Why those instructions?</div><div class="qa">To prevent oesophagitis/oesophageal injury.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Two rare but classic bisphosphonate toxicities?</div><div class="qa">Osteonecrosis of the jaw and atypical femoral fractures.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Mechanism of denosumab?</div><div class="qa">Monoclonal antibody against RANKL → blocks osteoclast formation (antiresorptive).</div></div>
+      <div class="q"><div class="qq"><b>12</b>Key danger of stopping denosumab?</div><div class="qa">Rebound increase in vertebral fractures — needs follow-on therapy.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Which SERM is used as an antiresorptive in osteoporosis?</div><div class="qa">Raloxifene.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Mechanism of teriparatide?</div><div class="qa">PTH analogue given intermittently → anabolic (builds bone).</div></div>
+      <div class="q"><div class="qq"><b>15</b>The PTH paradox?</div><div class="qa">Continuous PTH causes resorption; intermittent PTH builds bone.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Mechanism of romosozumab?</div><div class="qa">Anti-sclerostin antibody → stimulates bone formation (anabolic).</div></div>
+      <div class="q"><div class="qq"><b>17</b>What must be co-prescribed with osteoporosis drugs?</div><div class="qa">Calcium and vitamin D.</div></div>
+      <div class="q"><div class="qq"><b>18</b>What must be corrected before starting an antiresorptive?</div><div class="qa">Vitamin D/calcium deficiency (risk of hypocalcaemia).</div></div>
+      <div class="q"><div class="qq"><b>19</b>Antiresorptive vs anabolic — the conceptual split?</div><div class="qa">Antiresorptives slow bone breakdown; anabolics stimulate new bone formation.</div></div>
+      <div class="q"><div class="qq"><b>20</b>A common cause of secondary osteoporosis (drug)?</div><div class="qa">Long-term glucocorticoids.</div></div>
+      <div class="q"><div class="qq"><b>21</b>Limit on teriparatide duration — why?</div><div class="qa">Osteosarcoma signal in animals.</div></div>
+      <div class="q"><div class="qq"><b>22</b>Why does denosumab not linger in bone like a bisphosphonate?</div><div class="qa">It is a circulating antibody, not incorporated into bone matrix — hence rebound on stopping.</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">5</span><span class="qs-title">Estrogens & Progestins</span><span class="qs-meta">Module 48 · 22 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Core mechanism of combined oral contraceptives?</div><div class="qa">Suppress the HPA-gonadal axis (↓FSH/LH) → no ovulation.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Additional contraceptive effect of progestin?</div><div class="qa">Thickens cervical mucus, thins endometrium.</div></div>
+      <div class="q"><div class="qq"><b>3</b>When is a progestin-only method preferred?</div><div class="qa">When estrogen is contraindicated (e.g. VTE risk, breast feeding, smokers >35).</div></div>
+      <div class="q"><div class="qq"><b>4</b>What does SERM stand for?</div><div class="qa">Selective Estrogen Receptor Modulator.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Tamoxifen's effect in breast tissue?</div><div class="qa">Estrogen antagonist (treats ER-positive breast cancer).</div></div>
+      <div class="q"><div class="qq"><b>6</b>Tamoxifen's effect on the endometrium?</div><div class="qa">Agonist — increases endometrial cancer risk.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Tamoxifen's effect on bone?</div><div class="qa">Agonist (protective).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Raloxifene's effect on the endometrium?</div><div class="qa">Neutral (no increased cancer risk).</div></div>
+      <div class="q"><div class="qq"><b>9</b>Main therapeutic use of raloxifene?</div><div class="qa">Osteoporosis (and breast-cancer risk reduction).</div></div>
+      <div class="q"><div class="qq"><b>10</b>Mechanism of aromatase inhibitors?</div><div class="qa">Block conversion of androgens to estrogen → ↓ estrogen synthesis.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Give two aromatase inhibitors.</div><div class="qa">Anastrozole, letrozole.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Main population for aromatase inhibitors?</div><div class="qa">Postmenopausal women with ER-positive breast cancer.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Major skeletal side effect of aromatase inhibitors?</div><div class="qa">Osteoporosis (estrogen removed).</div></div>
+      <div class="q"><div class="qq"><b>14</b>Mechanism of mifepristone?</div><div class="qa">Progesterone-receptor antagonist.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Major vascular risk of estrogen-containing products?</div><div class="qa">Venous thromboembolism.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Who should avoid estrogen-containing contraception?</div><div class="qa">Smokers >35, prior VTE, migraine with aura.</div></div>
+      <div class="q"><div class="qq"><b>17</b>Why does a SERM act differently in different tissues?</div><div class="qa">Tissue-specific co-regulator expression determines agonist vs antagonist effect.</div></div>
+      <div class="q"><div class="qq"><b>18</b>Two cancers/risks associated with tamoxifen?</div><div class="qa">Endometrial cancer and VTE.</div></div>
+      <div class="q"><div class="qq"><b>19</b>How do enzyme inducers affect the pill?</div><div class="qa">They increase estrogen/progestin metabolism → reduce contraceptive efficacy.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Name an enzyme inducer that can cause contraceptive failure.</div><div class="qa">Rifampicin (also some anticonvulsants).</div></div>
+      <div class="q"><div class="qq"><b>21</b>What does the LH surge normally trigger, and what blocks it on the pill?</div><div class="qa">Ovulation; suppressed FSH/LH from negative feedback prevents the surge.</div></div>
+      <div class="q"><div class="qq"><b>22</b>Estrogen's effect on bone density?</div><div class="qa">Maintains/increases it (protective against osteoporosis).</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">6</span><span class="qs-title">Hypothalamic-Pituitary Axis</span><span class="qs-meta">Module 46 · 23 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>The three-tier structure of an endocrine axis?</div><div class="qa">Hypothalamus → pituitary → target gland.</div></div>
+      <div class="q"><div class="qq"><b>2</b>What stabilises the axis?</div><div class="qa">Negative feedback from the target-gland hormone.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Drug for growth-hormone deficiency?</div><div class="qa">Somatropin (recombinant GH).</div></div>
+      <div class="q"><div class="qq"><b>4</b>Drugs for acromegaly (GH excess)?</div><div class="qa">Octreotide (somatostatin analogue), pegvisomant, cabergoline.</div></div>
+      <div class="q"><div class="qq"><b>5</b>What is octreotide?</div><div class="qa">A somatostatin analogue that suppresses GH (and other hormones).</div></div>
+      <div class="q"><div class="qq"><b>6</b>What is pegvisomant?</div><div class="qa">A GH-receptor antagonist.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Does dopamine stimulate or inhibit prolactin?</div><div class="qa">Inhibits prolactin release.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Drug class for hyperprolactinaemia/prolactinoma?</div><div class="qa">Dopamine agonists (cabergoline, bromocriptine).</div></div>
+      <div class="q"><div class="qq"><b>9</b>Why do dopamine-blocking antipsychotics cause galactorrhoea?</div><div class="qa">Loss of dopamine inhibition → rising prolactin.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Effect of pulsatile GnRH?</div><div class="qa">Stimulates gonadotropin release.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Effect of continuous GnRH (analogue)?</div><div class="qa">Desensitises receptors → suppresses the gonadal axis.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Give a GnRH analogue.</div><div class="qa">Leuprolide (goserelin).</div></div>
+      <div class="q"><div class="qq"><b>13</b>Clinical use of continuous GnRH analogues?</div><div class="qa">Prostate cancer, endometriosis, central precocious puberty.</div></div>
+      <div class="q"><div class="qq"><b>14</b>What is the initial 'flare' with GnRH analogues?</div><div class="qa">A transient rise in sex hormones before suppression.</div></div>
+      <div class="q"><div class="qq"><b>15</b>How is the flare managed in prostate cancer?</div><div class="qa">Co-administer an anti-androgen initially.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Drug for central diabetes insipidus?</div><div class="qa">Desmopressin (ADH/vasopressin analogue).</div></div>
+      <div class="q"><div class="qq"><b>17</b>Other use of desmopressin?</div><div class="qa">Nocturnal enuresis (bed-wetting); some bleeding disorders.</div></div>
+      <div class="q"><div class="qq"><b>18</b>Main risk of desmopressin?</div><div class="qa">Hyponatraemia (water retention).</div></div>
+      <div class="q"><div class="qq"><b>19</b>Hormone used to induce/augment labour?</div><div class="qa">Oxytocin.</div></div>
+      <div class="q"><div class="qq"><b>20</b>Side effects of dopamine agonists like cabergoline?</div><div class="qa">Nausea, postural hypotension, rare valvulopathy, impulse-control disorders.</div></div>
+      <div class="q"><div class="qq"><b>21</b>Why does exogenous hormone shut off the axis?</div><div class="qa">Negative feedback suppresses hypothalamic/pituitary output.</div></div>
+      <div class="q"><div class="qq"><b>22</b>Which earlier modules rely on this feedback principle?</div><div class="qa">Thyroid (TSH titration), adrenal (steroid taper), contraception.</div></div>
+      <div class="q"><div class="qq"><b>23</b>What hypothalamic factor stimulates ACTH release?</div><div class="qa">CRH (corticotropin-releasing hormone).</div></div>
+    </div>
+  </details>
+  <details class="quizset"><summary><span class="qs-num">7</span><span class="qs-title">Androgens</span><span class="qs-meta">Module 49 · 22 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Drug for male hypogonadism?</div><div class="qa">Testosterone (gel, patch, IM).</div></div>
+      <div class="q"><div class="qq"><b>2</b>Why is oral testosterone problematic?</div><div class="qa">Extensive hepatic first-pass metabolism.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Enzyme converting testosterone to DHT?</div><div class="qa">5α-reductase.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Mechanism of finasteride?</div><div class="qa">5α-reductase inhibitor → ↓ DHT.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Two uses of finasteride?</div><div class="qa">Benign prostatic hyperplasia and male-pattern baldness.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Why does one drug treat both prostate and scalp?</div><div class="qa">Both are DHT-driven; reducing DHT helps both.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Difference between finasteride and dutasteride?</div><div class="qa">Dutasteride inhibits both 5α-reductase isoenzymes (more complete).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Mechanism of flutamide/bicalutamide?</div><div class="qa">Androgen-receptor antagonists.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Main use of androgen-receptor antagonists?</div><div class="qa">Prostate cancer.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Three levels at which androgen action can be blocked?</div><div class="qa">Central synthesis (GnRH analogue), DHT conversion (finasteride), receptor (bicalutamide).</div></div>
+      <div class="q"><div class="qq"><b>11</b>Mechanism of abiraterone?</div><div class="qa">Inhibits androgen synthesis (CYP17) — used in prostate cancer.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Why combine a GnRH analogue with an anti-androgen initially?</div><div class="qa">To cover the testosterone flare from the GnRH analogue.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Key teratogenic warning for finasteride?</div><div class="qa">Pregnant women must not handle crushed/broken tablets (risk to male fetus).</div></div>
+      <div class="q"><div class="qq"><b>14</b>Effect of finasteride on PSA?</div><div class="qa">Lowers it — interpret prostate cancer screening accordingly.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Why is testosterone contraindicated in prostate cancer?</div><div class="qa">It can stimulate androgen-dependent tumour growth.</div></div>
+      <div class="q"><div class="qq"><b>16</b>Consequences of anabolic-steroid abuse?</div><div class="qa">Suppressed spermatogenesis, cardiovascular and hepatic toxicity, mood effects.</div></div>
+      <div class="q"><div class="qq"><b>17</b>How does exogenous androgen suppress sperm production?</div><div class="qa">Negative feedback ↓ LH/FSH → ↓ testicular function.</div></div>
+      <div class="q"><div class="qq"><b>18</b>Which hormone does 5α-reductase produce in the prostate?</div><div class="qa">Dihydrotestosterone (DHT).</div></div>
+      <div class="q"><div class="qq"><b>19</b>GnRH analogue example used in prostate cancer?</div><div class="qa">Leuprolide (goserelin).</div></div>
+      <div class="q"><div class="qq"><b>20</b>Why is DHT more relevant than testosterone in BPH?</div><div class="qa">DHT is the more potent androgen acting on prostate growth.</div></div>
+      <div class="q"><div class="qq"><b>21</b>Is the GnRH suppression principle the same in men and women?</div><div class="qa">Yes — continuous GnRH suppresses the gonadal axis in both sexes.</div></div>
+      <div class="q"><div class="qq"><b>22</b>Ketoconazole's relevance to androgens?</div><div class="qa">At high dose it inhibits steroid (androgen) synthesis enzymes.</div></div>
+    </div>
+  </details>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong>Endocrine Pharmacology · Accelerated Learning System</strong><br>
+      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section V (Chs 46–52).<br>
+      Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
+      Mnemonics are standard teaching aids. Verify all drug dosing against current local protocols before clinical use.</span>
+    </div>
+    <div class="src" style="text-align:right">
+      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Built around active recall and spaced repetition.
+    </div>
+  </div>
+</footer>
+
+
+<script>
+// ── QUIZ TAP-TO-REVEAL ──────────────────────────────────────────────────────
+// Supports: .quiz-q/.quiz-a  (special_systems)
+//           .qq/.qa          (CV-Renal, Endocrine, General, Infectious, Inflammation, Neoplastic, Neuro)
+//           .qq/details.qa   (GI StudyGuide)
+
+(function() {
+  function initReveal(triggerSel, containerSel) {
+    document.querySelectorAll(triggerSel).forEach(function(trigger) {
+      trigger.addEventListener('click', function() {
+        var container = trigger.closest(containerSel);
+        if (!container) return;
+        var wasOpen = container.classList.contains('open');
+        // close all siblings in same quiz group
+        var parent = container.parentElement;
+        if (parent) {
+          parent.querySelectorAll(containerSel).forEach(function(el) {
+            el.classList.remove('open');
+          });
+        }
+        if (!wasOpen) container.classList.add('open');
+      });
+    });
+  }
+
+  // Pattern 1: special_systems  .quiz-item > .quiz-q
+  initReveal('.quiz-q', '.quiz-item');
+
+  // Pattern 2: others  .q > .qq  (qa may be div or details)
+  initReveal('.qq', '.q');
+
+  // For GI: .qq contains details.qa — open/close it directly too
+  document.querySelectorAll('.qq').forEach(function(qq) {
+    qq.addEventListener('click', function() {
+      var q = qq.closest('.q');
+      if (!q) return;
+      var det = q.querySelector('details.qa');
+      if (det) {
+        if (q.classList.contains('open')) {
+          det.setAttribute('open', '');
+        } else {
+          det.removeAttribute('open');
+        }
+      }
+    });
+  });
+})();
+</script>
+
+<script src="learning-interactive.js"></script>
+</body>
+</html>

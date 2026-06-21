@@ -1,0 +1,246 @@
+/* ============================================================
+   Shared interactivity layer — Pharmacology Learning System
+   Top toolbar · dark mode · search · item-by-item navigation ·
+   progress · per-module reviewed
+   Linked by every *_Learning-System.html file.
+   ============================================================ */
+
+html { scroll-behavior: smooth; }
+body { transition: background .25s ease, color .25s ease; padding-top: 48px; }
+
+/* leave room so items aren't hidden under the fixed top bar when jumped to */
+section.module, section[id^="m"], details.flashcard, .q, .quiz-item, .qq { scroll-margin-top: 64px; }
+
+/* push any existing sticky in-page nav below the toolbar */
+nav.toc { top: 48px; }
+
+/* ---------- DARK MODE (overrides the shared CSS variables) ---------- */
+html[data-theme="dark"] {
+  --cream:#15171a; --bg:#15171a;
+  --surface:#1e2125; --white:#1e2125;
+  --ink:#e7e9ec; --text:#e7e9ec;
+  --ink-soft:#c4cad0; --text-soft:#c4cad0;
+  --muted:#99a2ab; --border:#33373d;
+  --accent-pale:#23262b; --cool-pale:#23262b;
+  --highlight-bg:#23262b; --cog-bg:#22262b;
+}
+html[data-theme="dark"] body { background:var(--bg); color:var(--text); }
+html[data-theme="dark"] th { color:var(--text); }
+html[data-theme="dark"] code, html[data-theme="dark"] .mono { background:#2a2e33; }
+
+/* keep inline SVG diagrams readable: render figures as light cards in dark mode */
+html[data-theme="dark"] figure {
+  background:#f6f3ec !important;
+  border-color:#d9d3c7 !important;
+  color:#33373d !important;
+}
+html[data-theme="dark"] figure .fig-title { color:#1f7d5e !important; }
+html[data-theme="dark"] figcaption { color:#5b6168 !important; }
+
+/* ---------- DARK MODE: components with hard-coded light backgrounds ---------- */
+/* quiz question rows (base CSS hard-codes background:white) */
+html[data-theme="dark"] .quiz-q,
+html[data-theme="dark"] .qq { background:#1e2125; color:var(--text); }
+html[data-theme="dark"] .quiz-q:hover,
+html[data-theme="dark"] .qq:hover { background:#2a2f36; }
+html[data-theme="dark"] .quiz-q::after,
+html[data-theme="dark"] .qq::after { color:var(--muted); }
+html[data-theme="dark"] .qq b,
+html[data-theme="dark"] .qq .qs-num { background:#14352a; color:#69dc9c; }
+
+/* quiz answer panels (base CSS hard-codes #F0FBF3) */
+html[data-theme="dark"] .quiz-a,
+html[data-theme="dark"] .qa,
+html[data-theme="dark"] details.qa { background:#16241f !important; border-top-color:#2c4537 !important; color:#d6dbdf; }
+html[data-theme="dark"] details.qa > .ans { color:#d6dbdf; }
+html[data-theme="dark"] .quiz-a strong,
+html[data-theme="dark"] .qa strong,
+html[data-theme="dark"] .ans strong,
+html[data-theme="dark"] .ans b { color:#5fd394; }
+
+/* quiz-set / section container (hard-codes background:white) — bleeds through gaps between items */
+html[data-theme="dark"] details.quizset,
+html[data-theme="dark"] details.qsec { background:#181a1e; }
+
+/* module card + inner section blocks that hard-code white / light backgrounds */
+html[data-theme="dark"] .module,
+html[data-theme="dark"] section.module { background:#181a1e; }
+html[data-theme="dark"] .cog.feyn { background:#1e2125 !important; }
+html[data-theme="dark"] .cog.spaced { background:#172420 !important; border-left-color:#2e7d52 !important; }
+html[data-theme="dark"] .primers li { background:#23262b; }
+html[data-theme="dark"] .sched-day,
+html[data-theme="dark"] .sched .day { background:#23262b; color:var(--text); }
+html[data-theme="dark"] .bridge { background:#1e2125; }
+/* diagram wrappers kept light so the SVG art stays readable */
+html[data-theme="dark"] .diagram-wrap { background:#f6f3ec; border-color:#d9d3c7; color:#33373d; }
+
+/* bold key terms use the darkest accent (invisible on dark) — lighten them */
+html[data-theme="dark"] strong,
+html[data-theme="dark"] .cog li strong,
+html[data-theme="dark"] td strong { color:var(--accent-light); }
+/* …but keep them dark inside the light diagram/figure cards */
+html[data-theme="dark"] figure strong, html[data-theme="dark"] figure b,
+html[data-theme="dark"] .diagram-wrap strong, html[data-theme="dark"] .diagram-wrap b { color:var(--accent-dark); }
+
+/* method strip uses var(--ink) as a DARK background — but --ink is light text in dark mode */
+html[data-theme="dark"] .method,
+html[data-theme="dark"] .method-strip { background:#0f1113; }
+
+/* in-page chapter nav is a near-white bar */
+html[data-theme="dark"] nav.toc { background:rgba(24,26,30,.96); border-color:#33373d; }
+html[data-theme="dark"] nav.toc a { color:var(--text-soft); }
+html[data-theme="dark"] nav.toc a.key { color:var(--accent-light); }
+html[data-theme="dark"] nav.toc a:hover,
+html[data-theme="dark"] .nav-link:hover { color:var(--text); }
+
+/* ---------- emphasis text that used dark accent colours → lighten on dark ---------- */
+html[data-theme="dark"] { --coral:#e0926b; }
+/* body-like emphasis that must just be readable → normal light text */
+html[data-theme="dark"] .primers li,
+html[data-theme="dark"] .bridge,
+html[data-theme="dark"] .eq { color:var(--text); }
+/* the 80/20 key statement + section tags/labels (were mid/dark green) */
+html[data-theme="dark"] .pillar { color:var(--cool-light); }
+html[data-theme="dark"] .cog > .tag,
+html[data-theme="dark"] .cog .stage-label { color:var(--cool-light) !important; }
+html[data-theme="dark"] .blurt-stage .stage-label { color:var(--accent-light); }
+/* analogy label + key terms */
+html[data-theme="dark"] .alabel,
+html[data-theme="dark"] .analogy .alabel,
+html[data-theme="dark"] .analogy .key { color:var(--cool-light); }
+/* spaced-repetition greens (hard-coded #2E7D52) */
+html[data-theme="dark"] .cog.spaced > .tag,
+html[data-theme="dark"] .sched-stage .stage-label,
+html[data-theme="dark"] .sched-day strong,
+html[data-theme="dark"] .sched .day .d { color:#5fbf92 !important; }
+/* badges */
+html[data-theme="dark"] .badge-saffron,
+html[data-theme="dark"] .badge-accent { color:var(--accent-light); }
+html[data-theme="dark"] .badge-teal,
+html[data-theme="dark"] .badge-cool { color:var(--cool-light); }
+/* flashcard reveal caret */
+html[data-theme="dark"] .flashcard > summary::after { color:var(--accent-light); }
+
+/* blurting prompt (hard-coded white) and section tags (hard-coded white) */
+html[data-theme="dark"] .blurt-prompt { background:#1e2125; color:var(--text); }
+html[data-theme="dark"] .cog > .tag,
+html[data-theme="dark"] .tag { background:#262b31 !important; }
+html[data-theme="dark"] .cog.blurt > .tag { color:var(--accent-light) !important; }
+
+/* warning / exam-trap box (hard-coded #FFF3F0) */
+html[data-theme="dark"] blockquote.warn { background:#2a1d1a; color:#efd9d0; }
+html[data-theme="dark"] blockquote.warn::before,
+html[data-theme="dark"] blockquote.warn .wl { color:var(--accent-light); }
+
+/* analogy label */
+html[data-theme="dark"] .analogy::before { color:var(--accent-light); }
+
+/* flashcard internals (hard-coded #fff / #fffbeb) */
+html[data-theme="dark"] .fc-back { background:#1e2125; }
+html[data-theme="dark"] .flashcard summary { background:#23262b; color:var(--text); }
+html[data-theme="dark"] .fc-answer { background:#23262b; color:var(--text); }
+html[data-theme="dark"] .fc-answer strong { color:var(--accent-light); }
+html[data-theme="dark"] .fc-pearl { background:#16241f; color:#d6dbdf; }
+html[data-theme="dark"] .fc-trap { background:#2a2417; color:#ece0c8; }
+html[data-theme="dark"] .fc-q, html[data-theme="dark"] .fc-num { color:var(--text); }
+
+/* ---------- TOP READING-PROGRESS BAR ---------- */
+#li-progress {
+  position:fixed; top:46px; left:0; height:2px; width:0; z-index:10001;
+  background:linear-gradient(90deg, var(--accent,#1f7d5e), var(--cool,#36a07c));
+  transition:width .08s linear;
+}
+
+/* ---------- TOP TOOLBAR ---------- */
+#li-bar {
+  position:fixed; top:0; left:0; right:0; height:48px; z-index:10000;
+  display:flex; align-items:center; gap:6px; padding:0 10px;
+  background:var(--surface,#fff); border-bottom:1px solid var(--border,#e3ddd0);
+  box-shadow:0 1px 8px rgba(0,0,0,.08);
+  font-family:'Inter', system-ui, sans-serif; overflow-x:auto; overflow-y:hidden;
+  scrollbar-width:thin;
+}
+html[data-theme="dark"] #li-bar { background:#1e2125; border-color:#33373d; }
+#li-bar::-webkit-scrollbar { height:0; }
+
+.li-brand {
+  font-family:'Fraunces', Georgia, serif; font-weight:600; font-size:14px;
+  color:var(--text,#1c1917); white-space:nowrap; padding-right:4px; flex-shrink:0;
+}
+.li-sep { width:1px; height:24px; background:var(--border,#ddd); flex-shrink:0; margin:0 2px; }
+.li-group { display:flex; align-items:center; gap:5px; flex-shrink:0; }
+.li-spacer { flex:1 1 auto; min-width:4px; }
+
+.li-btn {
+  display:inline-flex; align-items:center; gap:5px; flex-shrink:0;
+  height:32px; padding:0 11px; border-radius:8px;
+  border:1px solid var(--border,#ddd); background:transparent; color:var(--text,#1c1917);
+  font-family:inherit; font-size:13px; font-weight:500; line-height:1; cursor:pointer; white-space:nowrap;
+  transition:background .14s ease, border-color .14s ease, transform .1s ease;
+}
+.li-btn:hover { background:var(--cool-pale,#e0efe8); border-color:var(--cool,#36a07c); }
+.li-btn:active { transform:translateY(1px); }
+.li-btn.icon { padding:0 9px; font-size:15px; }
+html[data-theme="dark"] .li-btn:hover { background:#2a2f35; }
+
+.li-pos {
+  font-size:12px; color:var(--muted,#777); min-width:62px; text-align:center;
+  font-variant-numeric:tabular-nums; white-space:nowrap; flex-shrink:0;
+}
+
+.li-search { display:none; align-items:center; gap:6px; flex-shrink:0; }
+.li-search.open {
+  display:flex; background:var(--cream,#f5f4ef); border:1px solid var(--border,#ddd);
+  border-radius:8px; padding:4px 9px;
+}
+html[data-theme="dark"] .li-search.open { background:#15171a; border-color:#33373d; }
+.li-search input {
+  border:none; outline:none; background:transparent; color:var(--text,#1c1917);
+  font-size:13px; width:170px; font-family:inherit;
+}
+.li-count { font-size:11px; color:var(--muted,#777); min-width:64px; text-align:right; }
+
+/* search: highlighted matches */
+mark.li-mark { background:#ffe08a; color:#1c1917; border-radius:2px; padding:0 1px; }
+mark.li-mark-cur { background:#ff9f1a; color:#1c1917; box-shadow:0 0 0 2px rgba(255,159,26,.45); }
+html[data-theme="dark"] mark.li-mark { background:#7a6212; color:#fff; }
+html[data-theme="dark"] mark.li-mark-cur { background:#caa017; color:#15171a; box-shadow:0 0 0 2px rgba(202,160,23,.5); }
+.li-hidden { display:none !important; }
+
+/* reviewed toggle injected into module heads */
+.li-review {
+  margin-left:.6rem; align-self:center; white-space:nowrap;
+  border:1px solid var(--border,#ccc); background:transparent; color:var(--muted,#777);
+  font-size:.72rem; font-weight:600; padding:4px 10px; border-radius:99px; cursor:pointer;
+  transition:background .15s ease, color .15s ease;
+}
+.li-review.done { background:var(--cool,#1f7d5e); color:#fff; border-color:transparent; }
+
+/* shortcuts hint popover */
+#li-hint {
+  position:fixed; top:56px; right:12px; z-index:10000; max-width:300px;
+  font-family:'Inter', system-ui, sans-serif; font-size:12px; line-height:1.8;
+  background:var(--surface,#fff); color:var(--text-soft,#444);
+  border:1px solid var(--border,#ddd); border-radius:12px; padding:12px 14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.18); display:none;
+}
+#li-hint.open { display:block; }
+#li-hint b { color:var(--text,#222); }
+#li-hint kbd {
+  font-family:'JetBrains Mono', monospace; font-size:11px;
+  background:rgba(0,0,0,.07); padding:1px 5px; border-radius:4px;
+}
+html[data-theme="dark"] #li-hint, html[data-theme="dark"] #li-bar .li-search { color:var(--text); }
+html[data-theme="dark"] #li-hint kbd { background:rgba(255,255,255,.12); }
+
+/* highlight the item you navigated to */
+.li-focus { outline:3px solid var(--cool,#36a07c) !important; outline-offset:4px; border-radius:6px; }
+
+@media print {
+  #li-bar, #li-progress, #li-hint, .li-review { display:none !important; }
+  body { padding-top:0; }
+}
+@media (max-width:640px) {
+  .li-brand { display:none; }
+  .li-search input { width:120px; }
+}
