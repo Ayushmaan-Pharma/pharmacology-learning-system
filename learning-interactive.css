@@ -6,7 +6,7 @@
    ============================================================ */
 
 html { scroll-behavior: smooth; }
-body { transition: background .25s ease, color .25s ease; padding-top: 48px; }
+body { transition: background .25s ease, color .25s ease; }
 
 /* leave room so items aren't hidden under the fixed top bar when jumped to */
 section.module, section[id^="m"], details.flashcard, .q, .quiz-item, .qq { scroll-margin-top: 64px; }
@@ -146,7 +146,7 @@ html[data-theme="dark"] .fc-q, html[data-theme="dark"] .fc-num { color:var(--tex
 
 /* ---------- TOP READING-PROGRESS BAR ---------- */
 #li-progress {
-  position:fixed; top:46px; left:0; height:2px; width:0; z-index:10001;
+  position:fixed; top:0; left:0; height:2px; width:0; z-index:10001;
   background:linear-gradient(90deg, var(--accent,#1f7d5e), var(--cool,#36a07c));
   transition:width .08s linear;
 }
@@ -244,3 +244,47 @@ html[data-theme="dark"] #li-hint kbd { background:rgba(255,255,255,.12); }
   .li-brand { display:none; }
   .li-search input { width:120px; }
 }
+
+/* ============================================================
+   Merge this toolbar's controls into the floating glass window
+   (.gp-toolbar) that each Learning-System page already builds for
+   its back/chapters-drawer/dark/random controls, instead of the
+   old full-width sticky bar. See learning-interactive.js: when
+   .gp-toolbar exists, this bar's button groups are moved into it.
+   ============================================================ */
+.gp-toolbar { max-width:94vw; overflow-x:auto; scrollbar-width:thin; }
+.gp-toolbar::-webkit-scrollbar { height:0; }
+.gp-toolbar .li-brand { display:none !important; }
+.gp-toolbar .li-spacer { flex:0 0 6px !important; width:6px; min-width:6px; }
+.gp-toolbar .li-sep { height:20px; }
+.gp-toolbar .li-pos { min-width:48px; }
+/* the per-page dark-mode/random buttons are superseded by this file's
+   richer Dark (D) and Random-question (R) buttons once merged in */
+#gpDarkToggle, #gpRandomQuiz { display:none !important; }
+
+/* ---- collapse the floating window down to just ☰ chapters + ← back ----
+   everything else (this bar's nav/jump/search/tools, merged in below) lives
+   inside #gpToolbarExtra and only becomes visible once expanded via the
+   gpToolbarExpand (›) button. */
+.gp-toolbar-expand {
+  font-size:15px;
+  transition:transform .3s cubic-bezier(.4,0,.2,1), background .2s ease;
+}
+.gp-toolbar.expanded .gp-toolbar-expand { transform:rotate(180deg); }
+.gp-toolbar-extra {
+  display:grid; grid-template-columns:0fr; overflow:hidden;
+  transition:grid-template-columns .32s cubic-bezier(.4,0,.2,1);
+}
+.gp-toolbar.expanded .gp-toolbar-extra { grid-template-columns:1fr; }
+.gp-toolbar-extra-inner {
+  display:flex; align-items:center; gap:4px; min-width:0; overflow:hidden; padding-left:2px;
+}
+@supports not (grid-template-columns: 1fr) {
+  .gp-toolbar-extra { display:block; width:0; }
+  .gp-toolbar.expanded .gp-toolbar-extra { width:auto; }
+  .gp-toolbar-extra-inner { display:flex; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .gp-toolbar-expand, .gp-toolbar-extra { transition:none; }
+}
+#li-hint { top:64px; }

@@ -35,9 +35,97 @@
   .pill.case{color:#9a6b1e}
   [data-theme="dark"] .pill.case{color:#e0a93a}
   footer{margin-top:40px; color:var(--muted); font-size:.8rem; text-align:center}
+
+
+/* =========================================================================
+   GLASS / MOTION LAYER — hub page. Additive, reuses this page's own tokens
+   (--bg/--panel/--ink/--accent/--shadow) so colours/content stay identical.
+   ========================================================================= */
+html{scroll-behavior:smooth}
+
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(75px); opacity:.24}
+.gp-ambient .b1{width:38vw;height:38vw; top:-12%; left:-10%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift1 40s ease-in-out infinite}
+.gp-ambient .b2{width:32vw;height:32vw; top:14%; right:-12%; background:radial-gradient(circle,#3f6cb0,transparent 70%); animation:gpDrift2 46s ease-in-out infinite}
+.gp-ambient .b3{width:34vw;height:34vw; bottom:-14%; left:24%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift3 42s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,6vh) scale(1.1)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.1)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--accent), #3f6cb0, var(--accent));
+  box-shadow:0 0 10px rgba(47,111,94,.45); transition:width .12s linear}
+
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:linear-gradient(135deg, var(--accent), #3f6cb0); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.30); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+.wrap{animation:gpFadeIn .6s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpFadeIn{from{opacity:0; transform:translateY(-10px)} to{opacity:1; transform:none}}
+
+.gp-reveal{opacity:0; transform:translateY(20px); transition:opacity .5s ease, transform .5s ease}
+.gp-reveal.in-view{opacity:1; transform:none}
+
+a.card{ transition:transform .25s cubic-bezier(.34,1.2,.64,1), box-shadow .25s ease, border-color .25s ease !important; }
+a.card:hover{ box-shadow:0 14px 34px -8px color-mix(in srgb, var(--accent) 35%, transparent); }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal{opacity:1 !important; transform:none !important; transition:none !important}
+  .wrap{animation:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+.gp-forward-btn{ left:64px; }
+@media (max-width:640px){ .gp-forward-btn{ left:54px; } }
+
+/* TRUE FROSTED GLASS — translucent panels over the ambient blobs */
+body{ background: color-mix(in srgb, var(--bg) 88%, transparent) !important; }
+a.card{
+  background: color-mix(in srgb, var(--panel) 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--bg) !important; }
+  a.card{ background: var(--panel) !important; }
+}
 </style>
 </head>
 <body>
+<button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+<button id="gpForwardBtn" class="gp-back-btn gp-forward-btn" type="button" title="Forward to next page" aria-label="Forward to next page">→</button>
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
+
 <div class="wrap">
   <a href="index.html" style="display:inline-block;margin-bottom:14px;font-size:.85rem;font-weight:600;color:var(--accent);text-decoration:none">← Study hub</a>
   <div class="top">
@@ -48,7 +136,7 @@
     <button class="theme" id="theme" title="Toggle dark mode">🌙</button>
   </div>
 
-  <p class="stats"><b>6</b> subjects · <b>240</b> exam questions · <b>53</b> clinical case vignettes · <b>293</b> total cards</p>
+  <p class="stats"><b>6</b> subjects · <b>264</b> exam questions · <b>53</b> clinical case vignettes · <b>317</b> total cards</p>
 
   <a class="card" href="Pharmacology_Flashcards.html" style="--sec:#3f6cb0; display:flex; align-items:center; gap:16px; margin-bottom:22px; border-left-width:5px">
     <div style="font-size:2rem; line-height:1">🃏</div>
@@ -64,48 +152,48 @@
       <div class="num">01</div>
       <h2>General Pharmacology</h2>
       <p>Drug discovery, pharmacokinetics, pharmacodynamics, NDDS, rational use, pharmacovigilance, ethics.</p>
-      <div class="meta"><span class="pill">61 questions</span><span class="pill case">🩺 10 cases</span></div>
+      <div class="meta"><span class="pill">70 questions</span><span class="pill case">🩺 10 cases</span></div>
     </a>
 
     <a class="card" href="Autonomic_Receptor_Pharmacology_Notes.html" style="--sec:#3f6cb0">
       <div class="num">02</div>
       <h2>Autonomic, Receptor &amp; Neuro</h2>
       <p>ANS &amp; neurotransmission, adrenergic &amp; cholinergic systems, GPCRs, receptor families.</p>
-      <div class="meta"><span class="pill">53 questions</span><span class="pill case">🩺 9 cases</span></div>
+      <div class="meta"><span class="pill">57 questions</span><span class="pill case">🩺 9 cases</span></div>
     </a>
 
     <a class="card" href="Pulmonary_Renal_Cardiovascular_Notes.html" style="--sec:#845bb0">
       <div class="num">03</div>
       <h2>Pulmonary, Renal &amp; Cardiovascular</h2>
       <p>Diuretics, RAAS &amp; heart failure, antianginals, anticoagulants, asthma/PAH, diabetes, lipids.</p>
-      <div class="meta"><span class="pill">33 questions</span><span class="pill case">🩺 10 cases</span></div>
+      <div class="meta"><span class="pill">38 questions</span><span class="pill case">🩺 10 cases</span></div>
     </a>
 
     <a class="card" href="Neoplastic_Disease_Pharmacotherapy_Notes.html" style="--sec:#b15068">
       <div class="num">04</div>
       <h2>Neoplastic Disease &amp; Related</h2>
       <p>Cancer chemotherapy, targeted &amp; immunotherapy, toxicity management, hormonal therapy, FDCs.</p>
-      <div class="meta"><span class="pill">25 questions</span><span class="pill case">🩺 8 cases</span></div>
+      <div class="meta"><span class="pill">26 questions</span><span class="pill case">🩺 8 cases</span></div>
     </a>
 
     <a class="card" href="Special_Systems_Pharmacology_Notes.html" style="--sec:#b3852f">
       <div class="num">05</div>
       <h2>Special Systems</h2>
       <p>Antibiotic stewardship &amp; resistance, ocular &amp; dermato-pharmacology, corticosteroids, poisoning.</p>
-      <div class="meta"><span class="pill">23 questions</span><span class="pill case">🩺 9 cases</span></div>
+      <div class="meta"><span class="pill">27 questions</span><span class="pill case">🩺 9 cases</span></div>
     </a>
 
     <a class="card" href="Miscellaneous_Pharmacology_Notes.html" style="--sec:#2f8696">
       <div class="num">06</div>
       <h2>Miscellaneous</h2>
       <p>Experimental methods, biostatistics, clinical trials, ethics, regulatory affairs, emerging topics.</p>
-      <div class="meta"><span class="pill">45 questions</span><span class="pill case">🩺 7 cases</span></div>
+      <div class="meta"><span class="pill">46 questions</span><span class="pill case">🩺 7 cases</span></div>
     </a>
   </div>
 
   <footer>
     Tip: inside each file use 🎲 Quiz me, the ★ / 🩺 filter chips, and keyboard shortcuts ( / R J K Space D ).
-    &nbsp;|&nbsp; Sources: Goodman &amp; Gilman, Katzung, Rang &amp; Dale + current clinical guidelines.
+    &nbsp;|&nbsp; Sources: standard pharmacology references + current clinical guidelines.
   </footer>
 </div>
 
@@ -115,5 +203,85 @@
   btn.onclick=()=> set(root.getAttribute('data-theme')==='dark'?'light':'dark');
   try{ if(localStorage.getItem('pharm-theme')==='dark') set('dark'); }catch(e){}
 </script>
+<script>
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  document.querySelectorAll('a.card').forEach(function(el){ el.classList.add('gp-reveal'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 6) * 50 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }, 1500);
+})();
+</script>
+
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // Forward counterpart to the back button: re-navigate forward through this
+  // tab's history — e.g. you pressed back to return to this hub, now you
+  // want to go forward again into the page you just came from.
+  var f = document.getElementById('gpForwardBtn');
+  if(!f) return;
+  f.addEventListener('click', function(){
+    window.history.forward();
+  });
+})();
+</script>
+
 </body>
 </html>

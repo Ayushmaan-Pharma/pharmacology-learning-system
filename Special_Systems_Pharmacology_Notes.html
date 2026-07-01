@@ -6,148 +6,289 @@
 <title>Special Systems Pharmacology — PYQ Notes</title>
 <style>
   :root{
-    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
-    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --bg:#f3f0e8; --panel:#ffffff;
+    --panel-glass: rgba(255,255,255,.58); --panel-glass-strong: rgba(255,255,255,.8);
+    --ink:#1f2328; --muted:#6b7280; --line:#e7e7e4; --line-glass: rgba(255,255,255,.7);
+    --accent:#2f6f5e; --accent-soft:#eaf4f0;
     --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
-    --radius:10px;
+    --shadow-lg:0 22px 60px rgba(31,40,45,.12), 0 4px 14px rgba(31,40,45,.06);
+    --radius:18px; --radius-sm:12px;
+    --ease:cubic-bezier(.4,0,.2,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0; background:var(--bg); color:var(--ink);
+    margin:0; color:var(--ink); min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,94,.07), transparent 60%),
+      var(--bg);
     font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
+    transition:background .4s, color .25s;
   }
-  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
-  header.top{margin-bottom:26px}
-  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
-  .sub{color:var(--muted); font-size:.92rem; margin:0}
+
+  /* ---- ambient animated background blobs ---- */
+  .ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+  .ambient .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.32}
+  .ambient .b1{width:46vw;height:46vw; top:-14%; left:-12%; background:radial-gradient(circle,#2f7d6a,transparent 70%); animation:drift1 36s ease-in-out infinite}
+  .ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,#3f6cb0,transparent 70%); animation:drift2 42s ease-in-out infinite}
+  .ambient .b3{width:42vw;height:42vw; bottom:-16%; left:16%; background:radial-gradient(circle,#845bb0,transparent 70%); animation:drift3 39s ease-in-out infinite}
+  .ambient .b4{width:30vw;height:30vw; bottom:8%; right:6%; background:radial-gradient(circle,#b3852f,transparent 70%); animation:drift4 31s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(6vw,8vh) scale(1.12)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-7vw,5vh) scale(1.08)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-6vh) scale(1.1)}}
+  @keyframes drift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5vw,-4vh) scale(1.15)}}
+  [data-theme="dark"] .ambient .blob{opacity:.42}
+  @media (prefers-reduced-motion:reduce){ .ambient .blob{animation:none} }
+
+  /* ---- scroll progress bar ---- */
+  .progress-bar{position:fixed; top:0; left:0; height:3px; width:0%; z-index:100;
+    background:linear-gradient(90deg,#2f7d6a,#3f6cb0,#845bb0,#b15068,#b3852f);
+    box-shadow:0 0 12px rgba(47,111,94,.5); transition:width .12s linear}
+
+  /* ---- back-to-top ---- */
+  .to-top{position:fixed; bottom:26px; right:26px; z-index:50; width:46px; height:46px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#3f6cb0); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+    box-shadow:0 10px 26px rgba(0,0,0,.22); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease-spring)}
+  .to-top.show{opacity:1; transform:none; pointer-events:auto}
+  .to-top:hover{transform:translateY(-3px) scale(1.06)}
+  .to-top:active{transform:scale(.92)}
+
+  .wrap{max-width:900px; margin:0 auto; padding:40px 22px 130px; position:relative}
+
+  /* ---- hero header ---- */
+  header.top{
+    margin-bottom:10px; padding:30px 28px; border-radius:24px; position:relative; overflow:hidden;
+    background:linear-gradient(135deg, rgba(255,255,255,.68), rgba(255,255,255,.32));
+    backdrop-filter:blur(20px) saturate(170%); -webkit-backdrop-filter:blur(20px) saturate(170%);
+    border:1px solid var(--line-glass);
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.7);
+    animation:heroIn .7s var(--ease) both;
+  }
+  header.top::before{content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(120deg, rgba(47,111,94,.16), transparent 45%, rgba(132,91,176,.13));}
+  @keyframes heroIn{from{opacity:0; transform:translateY(-10px) scale(.98)} to{opacity:1; transform:none}}
+  h1{
+    font-size:1.95rem; font-weight:760; letter-spacing:-.02em; margin:0 0 6px; position:relative;
+    background:linear-gradient(100deg,#1f2328 8%,#2f7d6a 48%,#3f6cb0 92%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--muted); font-size:.93rem; margin:0; position:relative}
+  .stat-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; position:relative}
+  .stat-pill{font-size:.78rem; font-weight:650; color:var(--ink); background:rgba(255,255,255,.55);
+    border:1px solid var(--line-glass); padding:6px 14px; border-radius:999px; backdrop-filter:blur(8px);
+    display:flex; align-items:center; gap:6px}
+  .stat-pill b{color:var(--accent); font-weight:780}
+
+  /* ---- sticky glass toolbar ---- */
   .tools{
-    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
-    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
-    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    position:sticky; top:14px; z-index:20; margin:20px 0 14px; padding:14px 18px;
+    background:var(--panel-glass); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid var(--line-glass); border-radius:20px;
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.55);
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    transition:box-shadow .3s var(--ease)
   }
   #search{
-    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
-    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
-    outline:none;
+    flex:1; min-width:200px; padding:11px 16px; border:1px solid var(--line-glass);
+    border-radius:999px; font-size:.95rem; background:rgba(255,255,255,.55); color:var(--ink); outline:none;
+    backdrop-filter:blur(8px); transition:box-shadow .25s var(--ease), border-color .25s, background .25s
   }
-  #search:focus{border-color:var(--accent)}
+  #search:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,111,94,.18); background:rgba(255,255,255,.82)}
   .btn{
-    border:1px solid var(--line); background:var(--panel); color:var(--ink);
-    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
-    transition:.15s; white-space:nowrap;
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--ink);
+    padding:9px 16px; border-radius:999px; font-size:.85rem; cursor:pointer; white-space:nowrap;
+    backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s, border-color .2s, color .2s, background .2s
   }
-  .btn:hover{border-color:var(--accent); color:var(--accent)}
-  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+  .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px); box-shadow:0 10px 22px rgba(0,0,0,.08)}
+  .btn:active{transform:translateY(0) scale(.96)}
+  #theme{transition:transform .5s var(--ease-spring)}
+  #theme.spin{transform:rotate(360deg)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px; font-weight:560}
 
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--muted);
+    padding:7px 15px; border-radius:999px; font-size:.81rem; cursor:pointer; backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s var(--ease), background .25s, color .25s, border-color .25s
+  }
+  .chip:hover{transform:translateY(-1px); border-color:var(--accent); color:var(--accent)}
+  .chip:active{transform:scale(.95)}
+  .chip.active{background:linear-gradient(120deg,var(--accent),#3f6cb0); border-color:transparent; color:#fff;
+    box-shadow:0 6px 18px rgba(47,111,94,.35)}
+  .iconbtn{font-size:1rem; line-height:1}
+
+  .hint{color:var(--muted); font-size:.78rem; margin:10px 2px 4px}
+  .hint kbd, kbd{background:rgba(255,255,255,.6); border:1px solid var(--line-glass); border-radius:6px;
+    padding:1px 7px; font-size:.88em; font-family:inherit; box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* ---- TOC: glass card grid ---- */
   .toc{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+    display:flex; flex-wrap:wrap; gap:10px;
+    background:rgba(255,255,255,.5); border:1px solid var(--line-glass); border-radius:22px;
+    padding:18px 20px; margin:18px 0 32px; box-shadow:var(--shadow-lg);
+    backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%);
   }
-  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
-  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
-  .toc a:hover{color:var(--accent)}
+  .toc h2{flex:1 0 100%; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin:0 0 4px}
+  .toc a{
+    flex:1 1 230px; display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+    font-size:.88rem; font-weight:560; background:rgba(255,255,255,.55); border:1px solid var(--line-glass);
+    border-radius:14px; padding:10px 14px; backdrop-filter:blur(6px);
+    transition:transform .22s var(--ease-spring), box-shadow .25s, border-color .25s, background .25s
+  }
+  .toc a:hover{transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,.10); border-color:var(--line)}
+  .toc .dot{display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:2px; flex-shrink:0;
+    box-shadow:0 0 0 3px rgba(255,255,255,.55)}
 
-  section.sec{margin:34px 0}
+  .nohit{text-align:center; color:var(--muted); padding:50px; display:none; font-size:.95rem}
+
+  /* ---- sections (scroll reveal) ---- */
+  section.sec{
+    margin:46px 0; opacity:0; transform:translateY(26px);
+    transition:opacity .6s var(--ease), transform .6s var(--ease)
+  }
+  section.sec.in-view{opacity:1; transform:none}
   .sec > h2{
-    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
-    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+    font-size:1.18rem; font-weight:700; letter-spacing:-.01em; margin:0 0 6px;
+    padding:10px 14px 12px; border-left:4px solid var(--sec); border-bottom:2px solid var(--sec-soft);
+    background:linear-gradient(90deg, var(--sec-soft), transparent);
+    border-radius:0 12px 0 0;
   }
-  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+  .sec-note{color:var(--muted); font-size:.85rem; margin:0 0 16px; padding-left:18px}
 
+  /* ---- question cards: glass-lite + height-animated accordion ---- */
   details.q{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+    display:grid; grid-template-rows:auto 0fr;
+    background:linear-gradient(160deg, rgba(255,255,255,.86), rgba(255,255,255,.6));
+    border:1px solid var(--line); border-left:4px solid var(--sec); border-radius:16px;
+    margin:12px 0; box-shadow:var(--shadow); overflow:hidden;
+    opacity:0; transform:translateY(18px);
+    transition:opacity .5s var(--ease), transform .4s var(--ease-spring),
+               border-color .2s, box-shadow .35s var(--ease), grid-template-rows .45s var(--ease);
   }
-  details.q[open]{border-color:#d6e6e0}
+  details.q.in-view{opacity:1; transform:translateY(0)}
+  details.q:hover{transform:translateY(-2px); box-shadow:0 16px 36px -10px color-mix(in srgb, var(--sec) 38%, transparent), var(--shadow)}
+  details.q[open]{grid-template-rows:auto 1fr; border-color:color-mix(in srgb, var(--sec) 45%, var(--line))}
+  details.q.vignette{border-left:4px solid #c98a3c; background:linear-gradient(160deg, rgba(255,247,235,.92), rgba(255,255,255,.6))}
+
   summary.q-head{
-    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
-    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+    list-style:none; cursor:pointer; padding:16px 20px; display:flex; gap:12px;
+    align-items:flex-start; font-weight:560; font-size:.97rem; user-select:none;
+    border-radius:16px 16px 0 0; transition:background .25s ease;
   }
   summary.q-head::-webkit-details-marker{display:none}
-  summary.q-head:hover{background:#fcfdfc}
-  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
-  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
-  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  summary.q-head:hover{background:linear-gradient(90deg, color-mix(in srgb, var(--sec) 9%, transparent), transparent)}
+  .chev{flex-shrink:0; display:inline-block; width:16px; margin-top:1px; color:var(--muted); font-size:.8rem;
+    transition:transform .35s var(--ease-spring), color .25s}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--sec)}
+  .stars{flex-shrink:0; font-size:.82rem; letter-spacing:1px; margin-top:2px; min-width:0;
+    background:linear-gradient(100deg,#d99a00,#f0b94a); -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 1px 1px rgba(217,154,0,.22))}
   .q-text{flex:1}
-  .answer{
-    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
-    font-size:.93rem; color:#33383d;
-  }
-  .answer h4{
-    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
-    margin:18px 0 7px;
-  }
-  .answer h5{font-size:.92rem; color:var(--ink); margin:14px 0 4px; font-weight:640}
+  .badge{display:inline-block; flex-shrink:0; background:linear-gradient(120deg,#f3e2c8,#ffe9c2); color:#8a5a16;
+    font-size:.6rem; font-weight:750; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:6px; margin-top:1px}
+
+  details.q > .answer{overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s}
+  details.q[open] > .answer{opacity:1}
+  .answer{padding:6px 24px 22px 48px; border-top:1px solid var(--line); margin-top:-1px; font-size:.93rem; color:#33383d}
+  .answer h4{font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--sec); margin:18px 0 7px}
   .answer p{margin:9px 0}
   .answer ul,.answer ol{margin:8px 0; padding-left:20px}
   .answer li{margin:4px 0}
-  .answer b{font-weight:620}
-  .answer table{
-    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
-  }
+  .answer b{font-weight:640}
+  .answer table{width:100%; border-collapse:collapse; margin:14px 0; font-size:.85rem; border-radius:10px; overflow:hidden; box-shadow:0 1px 5px rgba(0,0,0,.05)}
   .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
-  .answer th{background:var(--accent-soft); font-weight:600}
-  .answer .dia{
-    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
-    margin:12px 0; font-size:.85rem; color:#4a5550;
-  }
-  .answer .dia b{color:var(--accent)}
-  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .answer th{background:linear-gradient(120deg, var(--sec-soft), transparent); font-weight:650}
+  .answer .dia{background:linear-gradient(135deg,#f6f8f7,#eef4f1); border:1px dashed color-mix(in srgb, var(--sec) 45%, white);
+    border-radius:12px; padding:12px 16px; margin:14px 0; font-size:.85rem; color:#4a5550}
+  .answer .dia b{color:var(--sec)}
+  .recent{background:linear-gradient(120deg,#fbf6ec,#fff8e8); border-left:3px solid var(--star); padding:10px 16px;
+    border-radius:0 12px 12px 0; margin:14px 0; box-shadow:0 2px 10px rgba(217,154,0,.08)}
   .recent b{color:#9a7000}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--sec); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
   .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
-  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
-  mark{background:#fff2a8; padding:0 1px}
-  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
-  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+  mark{background:linear-gradient(120deg,#fff2a8,#ffe27a); padding:0 2px; border-radius:3px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:3px; box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent)}
 
-  /* ---- v2 interactive additions ---- */
-  body{transition:background .25s, color .25s}
-  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
-  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
-  .chip:hover{border-color:var(--accent); color:var(--accent)}
-  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
-  .iconbtn{font-size:1rem; line-height:1}
-  details.q.vignette{border-left:3px solid #c98a3c}
-  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
-  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
-  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
-  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
-  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
-  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a; --shadow:0 1px 2px rgba(0,0,0,.35)}
-  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
-  [data-theme="dark"] summary.q-head:hover{background:#23272c}
-  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  footer{margin-top:70px; padding:24px 20px 6px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+
+  @media (max-width:560px){
+    .wrap{padding:24px 14px 110px} .answer{padding-left:20px}
+    header.top{padding:22px 18px} .toc a{flex:1 1 100%}
+    .ambient .blob{filter:blur(40px)}
+  }
+
+  /* ---- dark theme ---- */
+  [data-theme="dark"]{
+    --bg:#0f1113; --panel:#1a1d21; --ink:#e6e8ea; --muted:#9aa3ad;
+    --line:#2c3036; --line-glass:rgba(255,255,255,.10);
+    --panel-glass:rgba(255,255,255,.06); --panel-glass-strong:rgba(255,255,255,.1);
+    --accent:#5db89e; --accent-soft:#1c2925; --star:#e0a93a;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.55), 0 6px 16px rgba(0,0,0,.35);
+  }
+  [data-theme="dark"] body{background:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(93,184,158,.08), transparent 60%), var(--bg)}
+  [data-theme="dark"] header.top{background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02))}
+  [data-theme="dark"] h1{background:linear-gradient(100deg,#e6e8ea 8%,#5db89e 48%,#8fb4e8 92%); -webkit-background-clip:text; background-clip:text; color:transparent}
+  [data-theme="dark"] .tools{background:var(--panel-glass)}
+  [data-theme="dark"] .stat-pill,[data-theme="dark"] .chip,[data-theme="dark"] .btn,[data-theme="dark"] #search,[data-theme="dark"] .toc,[data-theme="dark"] .toc a{
+    background:rgba(255,255,255,.05); border-color:var(--line-glass)}
+  [data-theme="dark"] details.q{background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015))}
+  [data-theme="dark"] details.q.vignette{background:linear-gradient(160deg, rgba(224,169,58,.09), rgba(255,255,255,.02))}
+  [data-theme="dark"] summary.q-head:hover{background:rgba(255,255,255,.04)}
   [data-theme="dark"] .answer{color:#cfd4d8}
-  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
-  [data-theme="dark"] .recent{background:#2a2519}
-  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#1b201d; border-color:#33403a; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:linear-gradient(120deg,#241f12,#1d1a10)}
+  [data-theme="dark"] .answer code{background:#23262a}
   [data-theme="dark"] mark{background:#7a6212; color:#fff}
   [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
-
-  /* ---- per-section colour theming ---- */
-  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
-  .sec > h2{border-bottom:2px solid var(--sec)}
-  .sec details.q{border-left:4px solid var(--sec)}
-  .sec details.q[open]{border-left-color:var(--sec)}
-  .sec details.q[open] .chev{color:var(--sec)}
-  .sec .answer h4{color:var(--sec)}
-  .sec .answer th{background:var(--sec-soft)}
-  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
-  .toc a{display:flex; align-items:center}
-  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
   [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
-  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
-  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
-  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+  [data-theme="dark"] .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3); box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
+  }
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
 </style>
 </head>
 <body>
+<button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="toTop" class="to-top" title="Back to top" aria-label="Back to top">↑</button>
 <div class="wrap">
   <header class="top">
     <h1>Special Systems Pharmacology — Consolidated PYQ Notes</h1>
-    <p class="sub">Exam-oriented model answers · Goodman &amp; Gilman, Katzung, Rang &amp; Dale + current guidelines · click any question to open the answer</p>
+    <p class="sub">Exam-oriented model answers · standard pharmacology references + current guidelines · click any question to open the answer</p>
+    <div class="stat-row" id="statRow"></div>
   </header>
 
   <div class="tools">
@@ -270,7 +411,7 @@
     <div class="recent"><b>Recent advances:</b> CDC 2019 Core Elements update reframed "Drug expertise" as "Pharmacy expertise" — by 2018 ~85% of US acute-care hospitals met all 7 elements. The WHO Access target was raised from ≥60% to a globally binding <b>≥70% by 2030</b> at the Sept 2024 UN General Assembly High-Level Meeting on AMR; amoxicillin-clavulanate is promoted as the Access-group "cornerstone." An ICMR need-assessment found very high antibiotic-prescribing rates at primary/secondary Indian hospitals (~60–64%), showing AMS is still largely confined to tertiary centres — driving calls for AMSP at lower tiers. COVID-19 shifted prescribing toward higher "Watch"-category antibiotics, reinforcing the need for sustained stewardship vigilance.</div>
   </div></details>
 
-  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Resistance to β-lactam antibiotics; newer β-lactams &amp; β-lactamase inhibitors with clinical applications.</span></summary>
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Resistance to β-lactam antibiotics; newer β-lactams &amp; β-lactamase inhibitors with clinical applications; cephalosporin generation classification &amp; fourth-generation agents (cefepime, cefpirome).</span></summary>
   <div class="answer">
     <h4>Mechanisms of β-lactam resistance</h4>
     <ul>
@@ -287,9 +428,27 @@
       <tr><td><b>Avibactam</b></td><td>Ceftazidime-avibactam</td><td>ESBL, KPC, AmpC, OXA-48</td></tr>
       <tr><td><b>Vaborbactam / Relebactam</b></td><td>Meropenem-vaborbactam, imipenem-relebactam</td><td>Carbapenem-resistant Enterobacterales</td></tr>
     </table>
+    <h4>Cephalosporin generation classification (KDT scheme)</h4>
+    <table>
+      <tr><th>Generation</th><th>Representative agents</th><th>Hallmark of the class</th></tr>
+      <tr><td>First</td><td>Cefazolin, Cephalexin, Cefadroxil</td><td>Best gram-positive cocci; modest gram-negative</td></tr>
+      <tr><td>Second</td><td>Cefuroxime, Cefaclor, Cefoxitin (cephamycin)</td><td>More gram-negative incl. H. influenzae; cefoxitin covers anaerobes</td></tr>
+      <tr><td>Third</td><td>Cefotaxime, Ceftriaxone, Cefixime; Ceftazidime (antipseudomonal)</td><td>Marked gram-negative/Enterobacterales activity; good CSF entry</td></tr>
+      <tr><td><b>Fourth</b></td><td><b>Cefepime, Cefpirome</b></td><td>β-lactamase-stable (esp. inducible chromosomal AmpC); 3rd-gen-like spectrum plus antipseudomonal + better gram-positive</td></tr>
+      <tr><td>Fifth</td><td>Ceftaroline fosamil, Ceftobiprole medocaril</td><td>Bind altered PBP2a → activity vs MRSA &amp; penicillin-resistant pneumococci</td></tr>
+    </table>
+    <h4>Fourth-generation cephalosporins — what makes them distinct</h4>
+    <ul>
+      <li><b>Zwitterionic structure</b> (quaternary N at C-3 + carboxyl group) → rapid penetration through gram-negative outer-membrane porins, reaching PBPs faster.</li>
+      <li><b>Low affinity for / stability against inducible chromosomal AmpC (Bush class C) β-lactamases</b> from Enterobacter, Citrobacter, Serratia, Pseudomonas — the same enzymes that hydrolyse 3rd-gen agents on derepression (the key reason cefepime succeeds where ceftriaxone/ceftazidime fail clinically).</li>
+      <li>Spectrum = 3rd-gen cover + antipseudomonal activity + better gram-positive (≈ ceftriaxone); NOT active vs MRSA, enterococci, atypicals, C. difficile, B. fragilis; still hydrolysed by ESBLs &amp; KPCs.</li>
+      <li><b>Dosing:</b> Cefepime 1–2 g IV 8–12 h (escalate to 2 g q8h for Pseudomonas/febrile neutropenia/immunocompromise); Cefpirome 1–2 g IM/IV 12 h. Both parenteral only, t½ ~2 h, renally eliminated (dose-adjust in renal failure); cefepime achieves useful CSF levels for meningitis.</li>
+      <li><b>Key toxicity:</b> cefepime-associated encephalopathy/non-convulsive status epilepticus, especially with renal impairment or high dose — a high-yield exam point. (The MTT-side-chain disulfiram reaction/hypoprothrombinaemia belongs to cefoperazone/cefamandole/cefotetan, not cefepime/cefpirome.)</li>
+      <li><b>Top uses:</b> febrile neutropenia (standard empirical monotherapy), nosocomial pneumonia, septicaemia, complicated UTI/intra-abdominal infection, bacterial meningitis (often with vancomycin).</li>
+    </ul>
     <h4>Newer β-lactams</h4>
     <p><b>Cefiderocol</b> — siderophore cephalosporin (uses iron-transport to enter; active vs MDR gram-negatives incl. carbapenem-resistant); newer cephalosporins (ceftaroline — anti-MRSA); carbapenems for ESBL.</p>
-    <div class="recent"><b>Recent:</b> Newer BLI combinations (avibactam, relebactam, vaborbactam) &amp; cefiderocol combat carbapenem-resistant gram-negatives (NDM, KPC).</div>
+    <div class="recent"><b>Recent:</b> Newer BLI combinations (avibactam, relebactam, vaborbactam) &amp; cefiderocol combat carbapenem-resistant gram-negatives (NDM, KPC). The formal generation scheme is increasingly blurred as ceftazidime/avibactam, ceftolozane/tazobactam and cefiderocol extend gram-negative cover by mechanisms beyond classical "generation" (G&amp;G) — but the KDT 4/5-generation scheme above remains the expected exam framework.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Anti-pseudomonal antibiotics and treatment of pseudomonal infections.</span></summary>
@@ -635,6 +794,79 @@
     <p>Clinically significant resistance has not emerged in <i>E. histolytica</i>; reduced responsiveness reported in some <i>T. vaginalis</i> and <i>Giardia</i>; resistance is a real clinical problem mainly with <i>H. pylori</i>. Mechanism: deficient generation of the reactive nitro radical/lower PFOR activity; in <i>Bacteroides</i>, <i>nim</i> resistance genes encode a nitroimidazole reductase converting the drug to an inactive 5-aminoimidazole.</p>
     <div class="recent"><b>Recent advances:</b> For <b>C. difficile infection, metronidazole is no longer first-line for adults</b> — oral vancomycin or fidaxomicin are now preferred for initial non-severe CDI (2017–18 IDSA update); IV metronidazole is retained only as an adjunct to oral vancomycin in fulminant disease/ileus. For <i>H. pylori</i>, high background metronidazole resistance (~27% treatment-naïve, ~41% treatment-experienced) undermines metronidazole-containing triple therapy — bismuth quadruple therapy and the 3-in-1 bismuth/metronidazole/tetracycline capsule retain efficacy even against resistant strains; concomitant therapy and 10–14 day courses are favoured. Congeners broaden the picture: <b>tinidazole</b> (t½ ~12h, better tolerated, single-dose) and <b>secnidazole</b> (t½ 17–29h, single 2 g dose for amoebiasis/giardiasis/trichomoniasis/BV) share metronidazole's spectrum with more convenient dosing.</div>
   </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Anti-influenza agents — classification, mechanism, resistance &amp; therapeutic use of adamantanes, neuraminidase inhibitors &amp; baloxavir marboxil.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Drugs targeting the influenza virus life cycle. Influenza A/B virions carry haemagglutinin (H, attachment/fusion) and neuraminidase (N, release) surface glycoproteins; antigenic drift (point mutation) causes seasonal variation, antigenic shift (reassortment, influenza A only) causes pandemics.</p>
+    <h4>Classification &amp; mechanism</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Target/mechanism</th><th>Spectrum</th></tr>
+      <tr><td>Adamantanes</td><td>Amantadine, rimantadine</td><td>Block the M2 ion channel → prevent viral uncoating</td><td>Influenza A only (widespread resistance — rarely used now)</td></tr>
+      <tr><td>Neuraminidase inhibitors</td><td>Oseltamivir (oral), zanamivir (inhaled), peramivir (IV)</td><td>Inhibit neuraminidase → virions remain clumped at cell surface, ↓ spread</td><td>Influenza A + B</td></tr>
+      <tr><td>Cap-dependent endonuclease inhibitor</td><td>Baloxavir marboxil</td><td>Inhibits the PA subunit endonuclease of viral RNA polymerase → blocks viral mRNA transcription</td><td>Influenza A + B</td></tr>
+    </table>
+    <h4>Pharmacokinetics</h4>
+    <table>
+      <tr><th>Drug</th><th>Route</th><th>t½</th><th>Notes</th></tr>
+      <tr><td>Oseltamivir</td><td>Oral</td><td>6–10 h</td><td>~80% bioavailability (prodrug, hepatic esterase activation)</td></tr>
+      <tr><td>Zanamivir</td><td>Inhaled</td><td>—</td><td>&lt;5% oral bioavailability; bronchospasm risk — avoid in asthma/COPD</td></tr>
+      <tr><td>Peramivir</td><td>IV</td><td>~20 h</td><td>Single-dose IV for hospitalised patients</td></tr>
+      <tr><td>Baloxavir marboxil</td><td>Oral</td><td>~79–80 h</td><td>Single-dose oral prodrug</td></tr>
+    </table>
+    <h4>Therapeutic use &amp; resistance</h4>
+    <p>Best efficacy within 48h of symptom onset; oseltamivir is first-line for most patients (incl. pregnancy, high-risk groups); baloxavir is an alternative single-dose oral option. Resistance: NA-inhibitor resistance via neuraminidase mutations (e.g. H275Y in oseltamivir); baloxavir resistance via PA-I38T/related substitutions can emerge post-treatment.</p>
+    <h4>Adverse effects</h4>
+    <p>Adamantanes — CNS toxicity (insomnia, dizziness, in amantadine more than rimantadine). Oseltamivir — nausea/vomiting. Zanamivir — bronchospasm (contraindicated in reactive airway disease). Baloxavir — diarrhoea.</p>
+    <h4>High-yield pointers</h4>
+    <ul>
+      <li>Adamantanes act on M2 channel, influenza A only, largely obsolete due to resistance.</li>
+      <li>NA inhibitors (oseltamivir/zanamivir/peramivir) cover both A and B; baloxavir is a single-dose oral cap-endonuclease inhibitor also covering both.</li>
+      <li>Zanamivir — avoid in asthma/COPD (bronchospasm).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> FDA expanded baloxavir to children 5–&lt;12 years [FDA 2022-Aug]. PA-D27G, a novel baloxavir-resistance mutation, reported in China [PMID 41555529]. A large meta-analysis found oseltamivir does not significantly reduce hospitalisation in otherwise-healthy adults [PMID 37306992], while Lancet meta-analyses confirm benefit in severe influenza [PMID 39181595] and for post-exposure prophylaxis [PMID 39181596]. The CENTERSTONE RCT examined antiviral treatment for reducing household transmission [PMID 40267424]. A JAMA Internal Medicine network meta-analysis compared antiviral strategies [PMID 39804622], and combination antiviral therapy was studied in allogeneic HCT recipients [PMID 41891860]. WHO (2024) and AAP (2025–26) guidelines continue to recommend early antiviral therapy in high-risk groups.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Management of opportunistic infections in HIV/AIDS — general principles, CD4-based prophylaxis &amp; treatment of major OIs.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Opportunistic infections (OIs) are reactivations/acquisitions of pathogens that exploit the progressive immunodeficiency of HIV/AIDS as CD4 count falls; their type and risk are predictable by CD4 threshold.</p>
+    <h4>General principles (operational)</h4>
+    <ol>
+      <li>Prevent exposure (food/water hygiene, avoid exposure to specific pathogens).</li>
+      <li>Vaccinate where indicated (pneumococcal, hepatitis B, influenza).</li>
+      <li>Primary chemoprophylaxis once CD4 crosses a risk threshold.</li>
+      <li>Treat the acute episode if it occurs.</li>
+      <li>Secondary chemoprophylaxis (maintenance) to prevent relapse.</li>
+      <li>Discontinue prophylaxis once immune recovery (CD4 response to ART) is sustained.</li>
+    </ol>
+    <h4>CD4 threshold &amp; primary chemoprophylaxis</h4>
+    <table>
+      <tr><th>CD4 count</th><th>OI risk</th><th>Primary prophylaxis</th></tr>
+      <tr><td>&lt;250–350</td><td>Oral candidiasis, herpes zoster</td><td>—</td></tr>
+      <tr><td>&lt;200</td><td><i>Pneumocystis jirovecii</i> pneumonia (PCP)</td><td>Co-trimoxazole (also covers toxoplasma)</td></tr>
+      <tr><td>&lt;150</td><td>Histoplasmosis (endemic areas)</td><td>Itraconazole</td></tr>
+      <tr><td>&lt;100</td><td>Toxoplasmosis, cryptococcal meningitis</td><td>Co-trimoxazole (toxoplasma)</td></tr>
+      <tr><td>&lt;50</td><td>Mycobacterium avium complex (MAC), CMV retinitis</td><td>Azithromycin/clarithromycin (MAC)</td></tr>
+      <tr><td>Any (LTBI)</td><td>Tuberculosis reactivation</td><td>Isoniazid + rifampin (LTBI regimen)</td></tr>
+    </table>
+    <p><b>Co-trimoxazole is the keystone drug</b> — covers both PCP and toxoplasmosis prophylaxis simultaneously.</p>
+    <h4>Treatment of established OIs</h4>
+    <table>
+      <tr><th>OI</th><th>Treatment</th></tr>
+      <tr><td>PCP</td><td>Co-trimoxazole IV/oral (high dose) + adjunct corticosteroids if hypoxic</td></tr>
+      <tr><td>Toxoplasmosis</td><td>Pyrimethamine + sulfadiazine + leucovorin</td></tr>
+      <tr><td>Cryptococcal meningitis</td><td>Liposomal amphotericin B + flucytosine (induction), then fluconazole</td></tr>
+      <tr><td>Candidiasis</td><td>Fluconazole</td></tr>
+      <tr><td>MAC</td><td>Clarithromycin + ethambutol (± rifabutin)</td></tr>
+      <tr><td>CMV retinitis/disease</td><td>Ganciclovir (or valganciclovir)</td></tr>
+    </table>
+    <h4>Secondary prophylaxis &amp; stopping rules</h4>
+    <p>Secondary (maintenance) prophylaxis is continued after treating an acute OI to prevent relapse, and can usually be stopped once CD4 &gt;200 (PCP/toxoplasma) for ≥3 months on suppressive ART.</p>
+    <h4>Immune Reconstitution Inflammatory Syndrome (IRIS)</h4>
+    <p>A paradoxical inflammatory worsening after starting ART as the immune system recovers and reacts against residual/subclinical antigen; risk is highest when ART is started at CD4 &lt;50, and neurological OIs (e.g. cryptococcal meningitis, TB meningitis) carry the most dangerous IRIS presentations.</p>
+    <div class="recent"><b>Recent advances:</b> AMBITION-cm trial established single high-dose liposomal amphotericin B (with fluconazole/flucytosine) as a shorter, less toxic induction regimen for cryptococcal meningitis, now WHO-recommended [PMID 35320642, WHO 2022]. The PIC trial found no benefit from adjunct corticosteroids in HIV-negative PCP [PMID 40652952]. The ECMM/ISHAM/ASM 2024 global guideline updates cryptococcosis management [PMID 38346436]. IAS-USA 2024 guidance addresses optimal ART timing relative to OI treatment [PMID 39616604], and the EACS v13.0 (2025) European guideline consolidates OI prophylaxis/treatment recommendations [PMID 41088922]. NACO India (2021) recommends CrAg (cryptococcal antigen) screening in advanced HIV.</div>
+  </div></details>
 </section>
 
 <section class="sec" id="s2" style="--sec:#3f6cb0;--sec-soft:#3f6cb026">
@@ -702,30 +934,40 @@
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Treatment &amp; recent developments in psoriasis; role of topical glucocorticoids, retinoids, calcineurin inhibitors (tacrolimus) &amp; biologics/TNF-α inhibitors in dermatology.</span></summary>
   <div class="answer">
+    <h4>Definition &amp; pathogenesis</h4>
+    <p>Chronic, immune-mediated inflammatory skin disorder driven by the <b>TH17/IL-17 pathway</b> (IL-23 and TNF-α as upstream/co-mediators) → T-cell activation, dermal inflammation &amp; keratinocyte hyperproliferation (erythematous, silvery-scaled plaques). Incurable (waxes/wanes); comorbid with psoriatic arthritis, metabolic syndrome, CVS disease, depression.</p>
+    <h4>Severity grading — "rule of tens"</h4>
+    <p>Mild ≤5% body surface area (BSA) → topical only. Severe if <b>PASI ≥10</b> or <b>DLQI ≥10</b> or <b>BSA ≥10%</b> (PASI = Psoriasis Area &amp; Severity Index; DLQI = Dermatology Life Quality Index) → escalate to phototherapy/systemic/biologic.</p>
     <h4>Psoriasis — stepwise treatment</h4>
     <table>
       <tr><th>Severity</th><th>Treatment</th></tr>
-      <tr><td>Mild (topical)</td><td>Topical corticosteroids, vitamin-D analogues (calcipotriol), topical retinoid (tazarotene), calcineurin inhibitors (face/flexures), coal tar, salicylic acid, emollients</td></tr>
-      <tr><td>Moderate-severe</td><td>Phototherapy (NB-UVB, PUVA); systemic — methotrexate, ciclosporin, acitretin, apremilast (PDE4)</td></tr>
-      <tr><td>Severe/refractory</td><td><b>Biologics</b></td></tr>
+      <tr><td>Mild (topical)</td><td>Topical corticosteroids, vitamin-D analogues (calcipotriol — cap 100 g/week, hypercalcaemia risk; inactivated by UVA &amp; salicylic acid), topical retinoid (tazarotene — teratogenic), calcineurin inhibitors (face/flexures/inverse psoriasis — avoid steroid atrophy), anthralin/dithranol (SCAT = short-contact anthralin therapy ≤2h), coal tar (Goeckerman = coal tar+UVB), salicylic acid (do not combine with calcipotriol or before UVB)</td></tr>
+      <tr><td>Moderate (phototherapy)</td><td>NB-UVB (narrow-band, first-line phototherapy) or PUVA (psoralen+UVA — more effective but ↑photocarcinogenicity, ~14× SCC risk, cataract); Ingram = anthralin+UVB; RE-PUVA = retinoid+PUVA</td></tr>
+      <tr><td>Severe (rule of tens)</td><td><b>Methotrexate</b> (gold standard, 7.5–15→20–25 mg/wk + folate); <b>ciclosporin</b> (2.5–5 mg/kg/day, rapid rescue/bridge for pustular/erythrodermic, &lt;12-wk courses); <b>acitretin</b> (25–50 mg/day, best for pustular/erythrodermic, teratogenic ×3y); <b>apremilast</b> (oral PDE4i, 30 mg BD, no lab monitoring); <b>deucravacitinib</b> (oral TYK2 inhibitor)</td></tr>
+      <tr><td>Severe/refractory</td><td><b>Biologics</b> — first-line alongside systemics if psoriatic arthritis or MTX/ciclosporin fail</td></tr>
     </table>
     <h4>Biologics in psoriasis</h4>
     <table>
-      <tr><th>Target</th><th>Drugs</th></tr>
-      <tr><td>TNF-α</td><td>Etanercept, infliximab, adalimumab</td></tr>
-      <tr><td>IL-12/23</td><td>Ustekinumab</td></tr>
-      <tr><td>IL-17</td><td>Secukinumab, ixekizumab, brodalumab</td></tr>
-      <tr><td>IL-23</td><td>Guselkumab, risankizumab, tildrakizumab</td></tr>
-      <tr><td>Oral targeted</td><td>Apremilast (PDE4), deucravacitinib (TYK2)</td></tr>
+      <tr><th>Target</th><th>Drugs</th><th>Notes</th></tr>
+      <tr><td>TNF-α</td><td>Etanercept, infliximab, adalimumab, certolizumab pegol</td><td>Certolizumab — minimal placental transfer, preferred in pregnancy if biologic needed; screen TB/hepatitis; caution in heart failure/demyelinating disease</td></tr>
+      <tr><td>IL-12/23 (p40)</td><td>Ustekinumab</td><td>45/90 mg SC wk 0, 4, then q12wk</td></tr>
+      <tr><td>IL-17</td><td>Secukinumab, ixekizumab (IL-17A); brodalumab (IL-17RA); bimekizumab (IL-17A+F)</td><td>Very efficacious; brodalumab carries suicidal-ideation boxed warning (REMS)</td></tr>
+      <tr><td>IL-23 (p19)</td><td>Guselkumab, risankizumab, tildrakizumab</td><td>Risankizumab 150 mg SC wk 0, 4, then q12wk</td></tr>
+      <tr><td>Oral targeted</td><td>Apremilast (PDE4), deucravacitinib (TYK2)</td><td>No routine lab monitoring</td></tr>
     </table>
     <h4>Drug classes in dermatology (roles)</h4>
     <ul>
       <li><b>Topical glucocorticoids:</b> anti-inflammatory/immunosuppressive; classified by potency (mild → super-potent). ADR: skin atrophy, striae, telangiectasia, tachyphylaxis, HPA suppression. Avoid prolonged use on face/flexures.</li>
-      <li><b>Retinoids:</b> topical (tretinoin, adapalene, tazarotene — acne, psoriasis) &amp; systemic (isotretinoin — severe acne; acitretin — psoriasis); <b>highly teratogenic</b> (pregnancy prevention).</li>
+      <li><b>Retinoids:</b> topical (tretinoin, adapalene, tazarotene — acne, psoriasis) &amp; systemic (isotretinoin — severe acne; acitretin — psoriasis, t½ of active metabolite etretinate 80–160 days, avoid alcohol); <b>highly teratogenic</b> (pregnancy prevention).</li>
       <li><b>Calcineurin inhibitors (tacrolimus, pimecrolimus):</b> topical steroid-sparing for atopic dermatitis &amp; sensitive areas (face, eyelids); no skin atrophy.</li>
       <li><b>TNF-α inhibitors/biologics:</b> moderate-severe psoriasis/psoriatic arthritis; screen latent TB.</li>
     </ul>
-    <div class="recent"><b>Recent:</b> IL-17 &amp; IL-23 biologics give high skin-clearance (PASI 90/100); oral <b>deucravacitinib</b> (TYK2) &amp; JAK inhibitors (atopic dermatitis — upadacitinib, abrocitinib); topical roflumilast/tapinarof.</div>
+    <h4>Pearls</h4>
+    <ul>
+      <li>Drug-precipitated/worsened psoriasis: β-blockers, lithium, antimalarials, NSAIDs, abrupt systemic-steroid withdrawal (rebound/pustular flare) — systemic steroids generally avoided.</li>
+      <li>Combination/sequential therapy (calcipotriol+TCS; acitretin+phototherapy; low-dose MTX+biologic) improves efficacy, reduces toxicity.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Oral IL-23-receptor peptide <b>icotrokinra</b> (JNJ-77242113) — first targeted oral peptide blocking IL-23R; phase-3 ICONIC-ADVANCE 1&amp;2 beat placebo &amp; oral deucravacitinib (wk-16 PASI90 55% vs 4% placebo) with fewer AEs than deucravacitinib [PMID 40976249]. <b>Spesolimab</b> (anti-IL-36R, Spevigo) SC — FDA-approved (Mar 2024) for generalised pustular psoriasis flare prevention, Effisayil 2 (~84% flare reduction) [FDA 2024-Mar]. New nonsteroidal once-daily topicals — <b>roflumilast</b> 0.3% cream (PDE4i) &amp; <b>tapinarof</b> 1% cream (aryl-hydrocarbon-receptor modulator) [FDA 2022]. Cochrane living network meta-analysis (2025, 204 RCTs, n=67,889) — infliximab, bimekizumab, ixekizumab, risankizumab top-ranked for PASI90, outranking deucravacitinib/apremilast [PMID 40767824].</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Short note on topical antifungal agents; antiseptics &amp; disinfectants with clinical applications.</span></summary>
@@ -765,11 +1007,22 @@
       <li>Binds <b>Glucocorticoid Response Elements (GRE)</b> → <b>transactivation</b> of anti-inflammatory genes (annexin-1/lipocortin, IκB) &amp; <b>transrepression</b> of NF-κB/AP-1 → ↓ cytokines, COX-2, phospholipase A2.</li>
       <li>Net: anti-inflammatory, immunosuppressive, metabolic (gluconeogenesis), plus rapid non-genomic effects.</li>
     </ol>
+    <h4>General principle</h4>
+    <p>A single large dose is essentially harmless; toxicity beyond ~1 week is dose- &amp; duration-related. No abrupt withdrawal after &gt;2–3 weeks of therapy — taper to avoid HPA-axis/adrenal-crisis precipitation.</p>
+    <h4>Relative potency / equivalent dose</h4>
+    <table>
+      <tr><th>Agent</th><th>Equivalent dose</th><th>Relative potency (vs hydrocortisone)</th></tr>
+      <tr><td>Hydrocortisone</td><td>20 mg</td><td>1×</td></tr>
+      <tr><td>Prednisolone</td><td>5 mg</td><td>4×</td></tr>
+      <tr><td>Methylprednisolone</td><td>4 mg</td><td>5×</td></tr>
+      <tr><td>Dexamethasone</td><td>0.75 mg</td><td>25×</td></tr>
+    </table>
     <h4>Therapeutic uses</h4>
     <table>
       <tr><th>Endocrine (replacement)</th><th>Non-endocrine (pharmacological)</th></tr>
       <tr><td>Adrenal insufficiency (Addison's), CAH, acute adrenal crisis</td><td>Inflammatory/allergic disease, autoimmune disease, asthma/COPD, dermatoses, IBD, transplant immunosuppression, malignancy, cerebral oedema, shock</td></tr>
     </table>
+    <p>System-wise non-endocrine use also spans renal (nephrotic syndrome), infections under antimicrobial cover (TB, meningitis, COVID), eye (uveitis), GI/hepatic (autoimmune hepatitis), haematological (ITP, AIHA), neurological (cerebral oedema), and others (septic shock, thyroid storm).</p>
     <h4>Life-saving uses</h4>
     <ul><li>Anaphylaxis (adjunct), acute severe asthma, adrenal crisis, septic shock (refractory), cerebral oedema, severe COVID-19, status asthmaticus, severe drug reactions (SJS/TEN), autoimmune crises.</li></ul>
     <h4>Role in malignancy</h4>
@@ -791,6 +1044,7 @@
       <li>Calcium + vitamin D ± bisphosphonate (bone protection); monitor BP, glucose, weight, eyes; PPI if ulcer risk; screen/treat latent TB.</li>
       <li>Topical: use appropriate potency for site, avoid prolonged use on face/flexures, beware systemic absorption in children/large areas.</li>
     </ul>
+    <div class="recent"><b>Recent advances:</b> CAPE COD &amp; SONIA pneumonia trials support adjunct hydrocortisone in severe community-acquired pneumonia/septic shock [PMID 36942789, 41159889], though REMAP-CAP found a futility signal in one analysis [PMID 40261382]. Network meta-analysis favours fludrocortisone+hydrocortisone combination in septic shock [PMID 38271488]. ACR 2022 guideline for glucocorticoid-induced osteoporosis (GIOP) recommends fracture-risk-stratified bisphosphonate/anabolic prophylaxis [PMID 37884467].</div>
   </div></details>
 </section>
 
@@ -892,6 +1146,17 @@
 
     <h5>2. Type-2 Diabetes Mellitus</h5>
     <p>Metformin first-line; choose add-ons by comorbidity. <b>SGLT2 inhibitors</b> — ↓ renal glucose reabsorption, weight/BP reduction, <b>cardio-renal protection</b> (used in HF/CKD even without diabetes); ADR genital infection, euglycaemic DKA. <b>DPP-4 inhibitors</b> — ↑ incretins, weight-neutral, low hypoglycaemia, CV-neutral (saxagliptin — ↑HF signal). GLP-1 RAs &amp; tirzepatide give potent glucose + weight benefit.</p>
+    <h4>SGLT2 inhibitors — mechanism, trials &amp; ADRs (focused note)</h4>
+    <p>The proximal tubule SGLT2 transporter reabsorbs ~80–90% of filtered glucose (phlorizin was the proof-of-principle inhibitor). "Gliflozins" block SGLT2 → lower the renal glucose threshold from ~180 to ~40–50 mg/dL → glucosuria independent of insulin.</p>
+    <table>
+      <tr><th>Drug</th><th>Dose</th><th>Distinguishing trial/feature</th></tr>
+      <tr><td>Dapagliflozin</td><td>5/10 mg OD</td><td>HF (DAPA-HF) &amp; CKD (DAPA-CKD) benefit independent of diabetes</td></tr>
+      <tr><td>Canagliflozin</td><td>100/300 mg OD</td><td>Renal benefit (CREDENCE); amputation &amp; fracture signal (CANVAS)</td></tr>
+      <tr><td>Empagliflozin</td><td>10/25 mg OD</td><td>First CV-mortality benefit — EMPA-REG OUTCOME; EMPA-KIDNEY for CKD</td></tr>
+      <tr><td>Ertugliflozin</td><td>5/15 mg OD</td><td>CV-neutral (VERTIS-CV)</td></tr>
+    </table>
+    <p><b>ADRs:</b> genital mycotic infections, UTIs, rare Fournier's gangrene, euglycaemic DKA (stop before major surgery), transient eGFR dip on initiation (expected, not a reason to stop), canagliflozin amputation/fracture signal.</p>
+    <div class="recent"><b>Recent advances:</b> CDSCO approved empagliflozin (Jardiance) for CKD in India (Feb 2024) based on EMPA-KIDNEY. DAPA ACT HF-TIMI 68 — in-hospital initiation of dapagliflozin after acute HF [PMID 40884036]. SMART-C kidney-outcomes meta-analysis [PMID 41203232] and cardiometabolic-spectrum HF meta-analysis [PMID 38768620] both reinforce benefit across the EF/CKD spectrum. GLP-1RA+SGLT2i combination meta-analysis shows additive cardiorenal benefit [PMID 39210781]. KDIGO 2024 CKD guideline [PMID 40063957] and SPAQI 2025 perioperative consensus (hold before surgery) [PMID 42067493] now guide practice.</div>
 
     <h5>3. Acid-peptic disease &amp; PPIs (use &amp; misuse)</h5>
     <ul>
@@ -942,6 +1207,58 @@
     <h4>Treat-to-target strategy &amp; monitoring</h4>
     <p>ACR/EULAR recommend MTX-anchored csDMARD first-line; escalate to combination csDMARDs, a biologic, or a JAK inhibitor (± MTX) if moderate/high activity persists; reassess ≤3 months; taper (not stop) on sustained remission. Glucocorticoids are used short-term as "bridge" therapy for flares only. Monitoring: MTX/leflunomide/sulfasalazine — CBC, ALT/AST, renal function every 2–4 wk ×3 mo, then 8–12 wk, then 12-weekly. Before any biologic/JAK inhibitor, screen for latent TB (TST/IGRA) and hepatitis B; counsel re: serious/opportunistic infection.</p>
     <div class="recent"><b>Recent advances:</b> The <b>ORAL Surveillance</b> RCT (tofacitinib vs TNF inhibitor) led to an FDA boxed warning (2021) for major cardiovascular events, malignancy and thrombosis with JAK inhibitors, now restricted to patients with inadequate response/intolerance to ≥1 TNF inhibitor. Biosimilars of infliximab, etanercept and adalimumab are now widely available, improving access to biologic therapy.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Tocolytics — classification, mechanism &amp; use in delaying preterm labour.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Tocolytics are uterine relaxants used to delay preterm labour by ~48 hours — long enough to administer antenatal corticosteroids for fetal lung maturation and, if needed, arrange transfer to a facility with neonatal care.</p>
+    <h4>Physiological basis</h4>
+    <p>Uterine contraction depends on myosin light-chain kinase (MLCK) activation via the Ca²⁺-calmodulin pathway; oxytocin and prostaglandin receptors are Gq-coupled (↑IP3/Ca²⁺ → contraction), while β2-agonists (cAMP) and NO donors (cGMP) relax the myometrium.</p>
+    <h4>Classification</h4>
+    <table>
+      <tr><th>Class</th><th>Drug</th><th>Mechanism</th></tr>
+      <tr><td>β2-adrenergic agonists</td><td>Ritodrine (prototype), terbutaline</td><td>↑cAMP → ↓intracellular Ca²⁺ → myometrial relaxation</td></tr>
+      <tr><td>Calcium-channel blocker</td><td>Nifedipine</td><td>Blocks Ca²⁺ influx into myometrial cells</td></tr>
+      <tr><td>Oxytocin-receptor antagonist</td><td>Atosiban</td><td>Competitive antagonism at the oxytocin receptor</td></tr>
+      <tr><td>Magnesium sulfate</td><td>MgSO₄</td><td>Competes with Ca²⁺ at the myometrial cell membrane; also fetal neuroprotection</td></tr>
+      <tr><td>COX inhibitors</td><td>Indomethacin</td><td>↓Prostaglandin synthesis</td></tr>
+      <tr><td>NO donors</td><td>Nitroglycerin</td><td>↑cGMP → smooth-muscle relaxation</td></tr>
+    </table>
+    <h4>Clinical significance</h4>
+    <p>Nifedipine or atosiban are generally preferred today (favourable maternal/fetal safety profile vs β-agonists, which carry maternal tachycardia/pulmonary-oedema/hyperglycaemia risk). MgSO₄ is additionally used for fetal neuroprotection in very preterm labour, independent of its tocolytic effect.</p>
+    <div class="recent"><b>Recent advances:</b> The APOSTEL 8 RCT found no superiority of atosiban over nifedipine for tocolysis [PMID 40049187]. A Cochrane review confirms the neuroprotective benefit of antenatal MgSO₄ in very preterm birth [PMID 38726883]. The WAPM-PMF guideline provides updated practice recommendations on tocolysis [PMID 37913556], and a meta-analysis compared nitroglycerin vs nifedipine for tocolysis [PMID 39994579].</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Anabolic steroids — chemistry, mechanism, therapeutic uses, abuse in sport &amp; adverse effects.</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p>Anabolic-androgenic steroids (AAS) are synthetic testosterone derivatives engineered to maximise the anabolic (muscle-building) effect relative to androgenic effects. Schedule III controlled substances; banned by WADA.</p>
+    <h4>Chemistry &amp; classification</h4>
+    <table>
+      <tr><th>Class</th><th>Examples</th><th>Notes</th></tr>
+      <tr><td>17α-alkylated (oral)</td><td>Methandienone, oxymetholone, stanozolol, methyltestosterone</td><td>Resists first-pass hepatic metabolism — hepatotoxic (cholestasis, peliosis hepatis, hepatocellular carcinoma)</td></tr>
+      <tr><td>17β-esters (depot/IM)</td><td>Nandrolone decanoate</td><td>Slow release; not 17α-alkylated → less hepatotoxic</td></tr>
+      <tr><td>Testosterone esters</td><td>Testosterone enanthate/cypionate/propionate</td><td>Replacement &amp; abuse</td></tr>
+      <tr><td>Designer/novel agents</td><td>Tetrahydrogestrinone (THG), norbolethone</td><td>Developed to evade standard doping assays</td></tr>
+    </table>
+    <h4>Anabolic : androgenic ratio (Hershberger bioassay)</h4>
+    <p>Selectivity is quantified in castrated rats: drug-induced weight gain of the levator ani muscle (anabolic index) is compared with that of the ventral prostate/seminal vesicle (androgenic index). Testosterone = ratio 1; synthetic agents show only modest selectivity (ratios 1–3 in the rat — oxandrolone up to 1:13) and "the dissociation is less marked in humans… all are potent androgens" — at abused high doses the relative anabolic advantage is lost.</p>
+    <h4>Mechanism</h4>
+    <p>Lipophilic — binds the intracellular androgen receptor (AR, nuclear-receptor superfamily); 5α-reductase converts testosterone/synthetic analogues to the more potent dihydrotestosterone (DHT) in androgen-sensitive tissues (skin, prostate); skeletal muscle relies chiefly on testosterone/AR directly. Ligand–AR dimerises, translocates to nucleus, binds androgen response elements → ↑protein synthesis/+ve nitrogen balance. High-dose exogenous use suppresses hypothalamic GnRH → ↓LH/FSH → infertility, testicular atrophy (recovers in ~4 months–1 year).</p>
+    <h4>Therapeutic uses</h4>
+    <p>Catabolic/wasting states, refractory anaemias (now largely superseded by erythropoietin), osteoporosis, delayed puberty, hereditary angioedema (danazol, stanozolol — ↑C1-esterase-inhibitor synthesis).</p>
+    <h4>Abuse in sport &amp; detection</h4>
+    <p>Used to increase muscle mass/strength. Detection: GC-MS for synthetic AAS; testosterone/epitestosterone (T/E) ratio and ¹³C/¹²C carbon-isotope-ratio mass spectrometry to distinguish exogenous from endogenous testosterone; out-of-competition testing closes the detection window.</p>
+    <h4>Adverse effects</h4>
+    <ul>
+      <li><b>Hepatic</b> (17α-alkylated agents only): cholestasis, peliosis hepatis, hepatocellular carcinoma.</li>
+      <li><b>Metabolic/CVS:</b> dyslipidaemia (↓HDL), hypertension, left ventricular hypertrophy, ↑thrombotic/cardiovascular risk.</li>
+      <li><b>Endocrine/reproductive:</b> testicular atrophy, infertility, gynaecomastia (peripheral aromatisation).</li>
+      <li><b>Virilisation</b> in women (hirsutism, voice deepening, clitoromegaly) and children (precocious puberty, premature epiphyseal closure → short stature).</li>
+      <li><b>Haematological:</b> polycythaemia. <b>Behavioural:</b> aggression ("roid rage"), dependence, mood disturbance.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Enobosarm (ostarine), a selective androgen-receptor modulator (SARM), showed signal in a phase-2 RCT for AR-positive metastatic breast cancer [PMID 38342115]. A Danish national-registry cohort linked AAS use to elevated cardiovascular risk [PMID 39945117], reinforced by a cross-sectional coronary-plaque study [PMID 40880090] and a 16-year prospective echocardiography/CT cohort [PMID 40759534]. The TRAVERSE trial assessed cardiovascular safety of testosterone replacement in hypogonadal men [PMID 37326322]. The FDA updated testosterone product labelling (Feb 2025) and stepped up enforcement against unapproved SARM products (Dec 2025). In India, doping is regulated under the National Anti-Doping Act 2022 (NADA).</div>
   </div></details>
 </section>
 
@@ -999,7 +1316,7 @@
   </div>
 
   <footer>
-    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman, Katzung, Rang &amp; Dale; WHO/ICMR, GINA, ADA &amp; Indian guidelines.
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: standard pharmacology references; WHO/ICMR, GINA, ADA &amp; Indian guidelines.
   </footer>
 </div>
 
@@ -1061,7 +1378,6 @@
     const vis = visible(); if(!vis.length) return;
     items.forEach(d=> d.open=false);
     const pick = vis[Math.floor(Math.random()*vis.length)];
-    pick.open = true;
     setKb(items.indexOf(pick));
   }
   document.getElementById('shuffle').onclick = randomQ;
@@ -1105,6 +1421,89 @@
   });
 
   apply();
+
+  /* ---- v3: glass / motion enhancements (additive — does not touch logic above) ---- */
+  const progressBar = document.getElementById('progressBar');
+  function updateProgress(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', ()=> requestAnimationFrame(updateProgress), {passive:true});
+  updateProgress();
+
+  const statRow = document.getElementById('statRow');
+  if(statRow){
+    const nQ = items.filter(d=> d.dataset.type!=='case').length;
+    const nCase = items.filter(d=> d.dataset.type==='case').length;
+    statRow.innerHTML =
+      '<span class="stat-pill">\u{1F4DA} <b>'+sections.length+'</b>&nbsp;sections</span>'+
+      '<span class="stat-pill">❓ <b>'+nQ+'</b>&nbsp;questions</span>'+
+      '<span class="stat-pill">\u{1FA7A} <b>'+nCase+'</b>&nbsp;cases</span>';
+  }
+
+  const toTopBtn = document.getElementById('toTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', ()=>{
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  }
+
+  themeBtn.addEventListener('click', ()=>{
+    themeBtn.classList.add('spin');
+    setTimeout(()=> themeBtn.classList.remove('spin'), 500);
+  });
+
+  if('IntersectionObserver' in window){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const secObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); secObserver.unobserve(en.target); } });
+    }, {threshold:0.08, rootMargin:'0px 0px -60px 0px'});
+    sections.forEach(s=> secObserver.observe(s));
+
+    const qObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); qObserver.unobserve(en.target); } });
+    }, {threshold:0.05, rootMargin:'0px 0px -40px 0px'});
+    items.forEach((d,i)=>{
+      if(!reduceMotion) d.style.transitionDelay = (i % 5) * 55 + 'ms';
+      qObserver.observe(d);
+    });
+  } else {
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }
+
+  // safety net — guarantee nothing stays invisible if something above misfires
+  setTimeout(()=>{
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }, 1600);
+
 </script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

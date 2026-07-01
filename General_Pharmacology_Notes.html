@@ -6,153 +6,289 @@
 <title>General Pharmacology — PYQ Notes</title>
 <style>
   :root{
-    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
-    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --bg:#f3f0e8; --panel:#ffffff;
+    --panel-glass: rgba(255,255,255,.58); --panel-glass-strong: rgba(255,255,255,.8);
+    --ink:#1f2328; --muted:#6b7280; --line:#e7e7e4; --line-glass: rgba(255,255,255,.7);
+    --accent:#2f6f5e; --accent-soft:#eaf4f0;
     --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
-    --radius:10px;
+    --shadow-lg:0 22px 60px rgba(31,40,45,.12), 0 4px 14px rgba(31,40,45,.06);
+    --radius:18px; --radius-sm:12px;
+    --ease:cubic-bezier(.4,0,.2,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0; background:var(--bg); color:var(--ink);
+    margin:0; color:var(--ink); min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,94,.07), transparent 60%),
+      var(--bg);
     font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
+    transition:background .4s, color .25s;
   }
-  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
-  header.top{margin-bottom:26px}
-  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
-  .sub{color:var(--muted); font-size:.92rem; margin:0}
+
+  /* ---- ambient animated background blobs ---- */
+  .ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+  .ambient .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.32}
+  .ambient .b1{width:46vw;height:46vw; top:-14%; left:-12%; background:radial-gradient(circle,#2f7d6a,transparent 70%); animation:drift1 36s ease-in-out infinite}
+  .ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,#3f6cb0,transparent 70%); animation:drift2 42s ease-in-out infinite}
+  .ambient .b3{width:42vw;height:42vw; bottom:-16%; left:16%; background:radial-gradient(circle,#845bb0,transparent 70%); animation:drift3 39s ease-in-out infinite}
+  .ambient .b4{width:30vw;height:30vw; bottom:8%; right:6%; background:radial-gradient(circle,#b3852f,transparent 70%); animation:drift4 31s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(6vw,8vh) scale(1.12)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-7vw,5vh) scale(1.08)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-6vh) scale(1.1)}}
+  @keyframes drift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5vw,-4vh) scale(1.15)}}
+  [data-theme="dark"] .ambient .blob{opacity:.42}
+  @media (prefers-reduced-motion:reduce){ .ambient .blob{animation:none} }
+
+  /* ---- scroll progress bar ---- */
+  .progress-bar{position:fixed; top:0; left:0; height:3px; width:0%; z-index:100;
+    background:linear-gradient(90deg,#2f7d6a,#3f6cb0,#845bb0,#b15068,#b3852f);
+    box-shadow:0 0 12px rgba(47,111,94,.5); transition:width .12s linear}
+
+  /* ---- back-to-top ---- */
+  .to-top{position:fixed; bottom:26px; right:26px; z-index:50; width:46px; height:46px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#3f6cb0); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+    box-shadow:0 10px 26px rgba(0,0,0,.22); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease-spring)}
+  .to-top.show{opacity:1; transform:none; pointer-events:auto}
+  .to-top:hover{transform:translateY(-3px) scale(1.06)}
+  .to-top:active{transform:scale(.92)}
+
+  .wrap{max-width:900px; margin:0 auto; padding:40px 22px 130px; position:relative}
+
+  /* ---- hero header ---- */
+  header.top{
+    margin-bottom:10px; padding:30px 28px; border-radius:24px; position:relative; overflow:hidden;
+    background:linear-gradient(135deg, rgba(255,255,255,.68), rgba(255,255,255,.32));
+    backdrop-filter:blur(20px) saturate(170%); -webkit-backdrop-filter:blur(20px) saturate(170%);
+    border:1px solid var(--line-glass);
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.7);
+    animation:heroIn .7s var(--ease) both;
+  }
+  header.top::before{content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(120deg, rgba(47,111,94,.16), transparent 45%, rgba(132,91,176,.13));}
+  @keyframes heroIn{from{opacity:0; transform:translateY(-10px) scale(.98)} to{opacity:1; transform:none}}
+  h1{
+    font-size:1.95rem; font-weight:760; letter-spacing:-.02em; margin:0 0 6px; position:relative;
+    background:linear-gradient(100deg,#1f2328 8%,#2f7d6a 48%,#3f6cb0 92%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--muted); font-size:.93rem; margin:0; position:relative}
+  .stat-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; position:relative}
+  .stat-pill{font-size:.78rem; font-weight:650; color:var(--ink); background:rgba(255,255,255,.55);
+    border:1px solid var(--line-glass); padding:6px 14px; border-radius:999px; backdrop-filter:blur(8px);
+    display:flex; align-items:center; gap:6px}
+  .stat-pill b{color:var(--accent); font-weight:780}
+
+  /* ---- sticky glass toolbar ---- */
   .tools{
-    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
-    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
-    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    position:sticky; top:14px; z-index:20; margin:20px 0 14px; padding:14px 18px;
+    background:var(--panel-glass); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid var(--line-glass); border-radius:20px;
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.55);
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    transition:box-shadow .3s var(--ease)
   }
   #search{
-    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
-    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
-    outline:none;
+    flex:1; min-width:200px; padding:11px 16px; border:1px solid var(--line-glass);
+    border-radius:999px; font-size:.95rem; background:rgba(255,255,255,.55); color:var(--ink); outline:none;
+    backdrop-filter:blur(8px); transition:box-shadow .25s var(--ease), border-color .25s, background .25s
   }
-  #search:focus{border-color:var(--accent)}
+  #search:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,111,94,.18); background:rgba(255,255,255,.82)}
   .btn{
-    border:1px solid var(--line); background:var(--panel); color:var(--ink);
-    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
-    transition:.15s; white-space:nowrap;
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--ink);
+    padding:9px 16px; border-radius:999px; font-size:.85rem; cursor:pointer; white-space:nowrap;
+    backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s, border-color .2s, color .2s, background .2s
   }
-  .btn:hover{border-color:var(--accent); color:var(--accent)}
-  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+  .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px); box-shadow:0 10px 22px rgba(0,0,0,.08)}
+  .btn:active{transform:translateY(0) scale(.96)}
+  #theme{transition:transform .5s var(--ease-spring)}
+  #theme.spin{transform:rotate(360deg)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px; font-weight:560}
 
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--muted);
+    padding:7px 15px; border-radius:999px; font-size:.81rem; cursor:pointer; backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s var(--ease), background .25s, color .25s, border-color .25s
+  }
+  .chip:hover{transform:translateY(-1px); border-color:var(--accent); color:var(--accent)}
+  .chip:active{transform:scale(.95)}
+  .chip.active{background:linear-gradient(120deg,var(--accent),#3f6cb0); border-color:transparent; color:#fff;
+    box-shadow:0 6px 18px rgba(47,111,94,.35)}
+  .iconbtn{font-size:1rem; line-height:1}
+
+  .hint{color:var(--muted); font-size:.78rem; margin:10px 2px 4px}
+  .hint kbd, kbd{background:rgba(255,255,255,.6); border:1px solid var(--line-glass); border-radius:6px;
+    padding:1px 7px; font-size:.88em; font-family:inherit; box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* ---- TOC: glass card grid ---- */
   .toc{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+    display:flex; flex-wrap:wrap; gap:10px;
+    background:rgba(255,255,255,.5); border:1px solid var(--line-glass); border-radius:22px;
+    padding:18px 20px; margin:18px 0 32px; box-shadow:var(--shadow-lg);
+    backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%);
   }
-  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
-  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
-  .toc a:hover{color:var(--accent)}
+  .toc h2{flex:1 0 100%; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin:0 0 4px}
+  .toc a{
+    flex:1 1 230px; display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+    font-size:.88rem; font-weight:560; background:rgba(255,255,255,.55); border:1px solid var(--line-glass);
+    border-radius:14px; padding:10px 14px; backdrop-filter:blur(6px);
+    transition:transform .22s var(--ease-spring), box-shadow .25s, border-color .25s, background .25s
+  }
+  .toc a:hover{transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,.10); border-color:var(--line)}
+  .toc .dot{display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:2px; flex-shrink:0;
+    box-shadow:0 0 0 3px rgba(255,255,255,.55)}
 
-  section.sec{margin:34px 0}
+  .nohit{text-align:center; color:var(--muted); padding:50px; display:none; font-size:.95rem}
+
+  /* ---- sections (scroll reveal) ---- */
+  section.sec{
+    margin:46px 0; opacity:0; transform:translateY(26px);
+    transition:opacity .6s var(--ease), transform .6s var(--ease)
+  }
+  section.sec.in-view{opacity:1; transform:none}
   .sec > h2{
-    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
-    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+    font-size:1.18rem; font-weight:700; letter-spacing:-.01em; margin:0 0 6px;
+    padding:10px 14px 12px; border-left:4px solid var(--sec); border-bottom:2px solid var(--sec-soft);
+    background:linear-gradient(90deg, var(--sec-soft), transparent);
+    border-radius:0 12px 0 0;
   }
-  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+  .sec-note{color:var(--muted); font-size:.85rem; margin:0 0 16px; padding-left:18px}
 
+  /* ---- question cards: glass-lite + height-animated accordion ---- */
   details.q{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+    display:grid; grid-template-rows:auto 0fr;
+    background:linear-gradient(160deg, rgba(255,255,255,.86), rgba(255,255,255,.6));
+    border:1px solid var(--line); border-left:4px solid var(--sec); border-radius:16px;
+    margin:12px 0; box-shadow:var(--shadow); overflow:hidden;
+    opacity:0; transform:translateY(18px);
+    transition:opacity .5s var(--ease), transform .4s var(--ease-spring),
+               border-color .2s, box-shadow .35s var(--ease), grid-template-rows .45s var(--ease);
   }
-  details.q[open]{border-color:#d6e6e0}
+  details.q.in-view{opacity:1; transform:translateY(0)}
+  details.q:hover{transform:translateY(-2px); box-shadow:0 16px 36px -10px color-mix(in srgb, var(--sec) 38%, transparent), var(--shadow)}
+  details.q[open]{grid-template-rows:auto 1fr; border-color:color-mix(in srgb, var(--sec) 45%, var(--line))}
+  details.q.vignette{border-left:4px solid #c98a3c; background:linear-gradient(160deg, rgba(255,247,235,.92), rgba(255,255,255,.6))}
+
   summary.q-head{
-    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
-    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+    list-style:none; cursor:pointer; padding:16px 20px; display:flex; gap:12px;
+    align-items:flex-start; font-weight:560; font-size:.97rem; user-select:none;
+    border-radius:16px 16px 0 0; transition:background .25s ease;
   }
   summary.q-head::-webkit-details-marker{display:none}
-  summary.q-head:hover{background:#fcfdfc}
-  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
-  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
-  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  summary.q-head:hover{background:linear-gradient(90deg, color-mix(in srgb, var(--sec) 9%, transparent), transparent)}
+  .chev{flex-shrink:0; display:inline-block; width:16px; margin-top:1px; color:var(--muted); font-size:.8rem;
+    transition:transform .35s var(--ease-spring), color .25s}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--sec)}
+  .stars{flex-shrink:0; font-size:.82rem; letter-spacing:1px; margin-top:2px; min-width:0;
+    background:linear-gradient(100deg,#d99a00,#f0b94a); -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 1px 1px rgba(217,154,0,.22))}
   .q-text{flex:1}
-  .answer{
-    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
-    font-size:.93rem; color:#33383d;
-  }
-  .answer h4{
-    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
-    margin:18px 0 7px;
-  }
+  .badge{display:inline-block; flex-shrink:0; background:linear-gradient(120deg,#f3e2c8,#ffe9c2); color:#8a5a16;
+    font-size:.6rem; font-weight:750; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:6px; margin-top:1px}
+
+  details.q > .answer{overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s}
+  details.q[open] > .answer{opacity:1}
+  .answer{padding:6px 24px 22px 48px; border-top:1px solid var(--line); margin-top:-1px; font-size:.93rem; color:#33383d}
+  .answer h4{font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--sec); margin:18px 0 7px}
   .answer p{margin:9px 0}
   .answer ul,.answer ol{margin:8px 0; padding-left:20px}
   .answer li{margin:4px 0}
-  .answer b{font-weight:620}
-  .answer table{
-    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
-  }
+  .answer b{font-weight:640}
+  .answer table{width:100%; border-collapse:collapse; margin:14px 0; font-size:.85rem; border-radius:10px; overflow:hidden; box-shadow:0 1px 5px rgba(0,0,0,.05)}
   .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
-  .answer th{background:var(--accent-soft); font-weight:600}
-  .answer .dia{
-    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
-    margin:12px 0; font-size:.85rem; color:#4a5550;
-  }
-  .answer .dia b{color:var(--accent)}
-  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .answer th{background:linear-gradient(120deg, var(--sec-soft), transparent); font-weight:650}
+  .answer .dia{background:linear-gradient(135deg,#f6f8f7,#eef4f1); border:1px dashed color-mix(in srgb, var(--sec) 45%, white);
+    border-radius:12px; padding:12px 16px; margin:14px 0; font-size:.85rem; color:#4a5550}
+  .answer .dia b{color:var(--sec)}
+  .recent{background:linear-gradient(120deg,#fbf6ec,#fff8e8); border-left:3px solid var(--star); padding:10px 16px;
+    border-radius:0 12px 12px 0; margin:14px 0; box-shadow:0 2px 10px rgba(217,154,0,.08)}
   .recent b{color:#9a7000}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--sec); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
   .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
-  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
-  mark{background:#fff2a8; padding:0 1px}
-  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
-  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+  mark{background:linear-gradient(120deg,#fff2a8,#ffe27a); padding:0 2px; border-radius:3px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:3px; box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent)}
 
-  /* ---- v2 interactive additions ---- */
-  body{transition:background .25s, color .25s}
-  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
-  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
-  .chip:hover{border-color:var(--accent); color:var(--accent)}
-  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
-  .iconbtn{font-size:1rem; line-height:1}
-  details.q.vignette{border-left:3px solid #c98a3c}
-  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
-  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
-  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
-  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
-  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
+  footer{margin-top:70px; padding:24px 20px 6px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+
+  @media (max-width:560px){
+    .wrap{padding:24px 14px 110px} .answer{padding-left:20px}
+    header.top{padding:22px 18px} .toc a{flex:1 1 100%}
+    .ambient .blob{filter:blur(40px)}
+  }
 
   /* ---- dark theme ---- */
   [data-theme="dark"]{
-    --bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad;
-    --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a;
-    --shadow:0 1px 2px rgba(0,0,0,.35);
+    --bg:#0f1113; --panel:#1a1d21; --ink:#e6e8ea; --muted:#9aa3ad;
+    --line:#2c3036; --line-glass:rgba(255,255,255,.10);
+    --panel-glass:rgba(255,255,255,.06); --panel-glass-strong:rgba(255,255,255,.1);
+    --accent:#5db89e; --accent-soft:#1c2925; --star:#e0a93a;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.55), 0 6px 16px rgba(0,0,0,.35);
   }
-  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
-  [data-theme="dark"] summary.q-head:hover{background:#23272c}
-  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  [data-theme="dark"] body{background:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(93,184,158,.08), transparent 60%), var(--bg)}
+  [data-theme="dark"] header.top{background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02))}
+  [data-theme="dark"] h1{background:linear-gradient(100deg,#e6e8ea 8%,#5db89e 48%,#8fb4e8 92%); -webkit-background-clip:text; background-clip:text; color:transparent}
+  [data-theme="dark"] .tools{background:var(--panel-glass)}
+  [data-theme="dark"] .stat-pill,[data-theme="dark"] .chip,[data-theme="dark"] .btn,[data-theme="dark"] #search,[data-theme="dark"] .toc,[data-theme="dark"] .toc a{
+    background:rgba(255,255,255,.05); border-color:var(--line-glass)}
+  [data-theme="dark"] details.q{background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015))}
+  [data-theme="dark"] details.q.vignette{background:linear-gradient(160deg, rgba(224,169,58,.09), rgba(255,255,255,.02))}
+  [data-theme="dark"] summary.q-head:hover{background:rgba(255,255,255,.04)}
   [data-theme="dark"] .answer{color:#cfd4d8}
-  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
-  [data-theme="dark"] .recent{background:#2a2519}
-  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#1b201d; border-color:#33403a; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:linear-gradient(120deg,#241f12,#1d1a10)}
+  [data-theme="dark"] .answer code{background:#23262a}
   [data-theme="dark"] mark{background:#7a6212; color:#fff}
   [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
-
-  /* ---- per-section colour theming ---- */
-  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
-  .sec > h2{border-bottom:2px solid var(--sec)}
-  .sec details.q{border-left:4px solid var(--sec)}
-  .sec details.q[open]{border-left-color:var(--sec)}
-  .sec details.q[open] .chev{color:var(--sec)}
-  .sec .answer h4{color:var(--sec)}
-  .sec .answer th{background:var(--sec-soft)}
-  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
-  .toc a{display:flex; align-items:center}
-  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
   [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
-  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
-  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
-  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+  [data-theme="dark"] .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3); box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
+  }
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
 </style>
 </head>
 <body>
+<button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="toTop" class="to-top" title="Back to top" aria-label="Back to top">↑</button>
 <div class="wrap">
   <header class="top">
     <h1>General Pharmacology — Consolidated PYQ Notes</h1>
-    <p class="sub">Exam-oriented model answers · contextualised to Goodman &amp; Gilman (14th ed.) · click any question to open the answer</p>
+    <p class="sub">Exam-oriented model answers · contextualised to standard pharmacology references · click any question to open the answer</p>
+    <div class="stat-row" id="statRow"></div>
   </header>
 
   <div class="tools">
@@ -185,7 +321,8 @@
     <a href="#s7"><span class="dot" style="background:#548a4f"></span>7 · Pharmacoeconomics &amp; Drug Utilization</a>
     <a href="#s8"><span class="dot" style="background:#c06a3e"></span>8 · Preclinical Studies, Ethics &amp; Alternatives</a>
     <a href="#s9"><span class="dot" style="background:#7a5bbd"></span>9 · Emerging &amp; Special Topics</a>
-    <a href="#s10"><span class="dot" style="background:#aa5590"></span>10 · 🩺 Clinical Case Vignettes</a>
+    <a href="#s10"><span class="dot" style="background:#a83232"></span>10 · High-Yield Recurring Topics (RGUHS PYQ Bank)</a>
+    <a href="#s11"><span class="dot" style="background:#aa5590"></span>11 · 🩺 Clinical Case Vignettes</a>
   </nav>
 
   <p class="nohit" id="nohit">No questions match your search.</p>
@@ -195,7 +332,7 @@
 
 <section class="sec" id="s1" style="--sec:#2f7d6a;--sec-soft:#2f7d6a26">
   <h2>Section 1 · Drug Discovery, Development &amp; Clinical Evaluation</h2>
-  <p class="sec-note">G&amp;G 14e — Chapter 1: Drug Discovery, From Medicinal Plants to Computer-Aided Drug Design.</p>
+  <p class="sec-note">Covers drug discovery, from medicinal plants to computer-aided drug design.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Discuss in detail the complete process of new drug discovery and development (methods, preclinical, clinical phases, regulatory, recent advances). Add a note on microdosing &amp; ethics.</span></summary>
   <div class="answer">
@@ -264,11 +401,11 @@
       <tr><th>Method</th><th>Principle</th><th>Application / Example</th></tr>
       <tr><td><b>HTS</b></td><td>Automated, miniaturised (384/1536-well) assay of huge libraries against a target to find hits.</td><td>Kinase inhibitor screening; statins lead optimisation.</td></tr>
       <tr><td><b>CADD</b></td><td>In-silico methods: molecular docking, QSAR, pharmacophore mapping, MD simulation, virtual screening — reduces wet-lab burden.</td><td>Captopril (SBDD), HIV protease inhibitors, dorzolamide, oseltamivir.</td></tr>
-      <tr><td><b>Reverse pharmacology</b></td><td>"Bedside → bench": start from clinical/traditional efficacy, then define the target/mechanism.</td><td>Artemisinin, reserpine, many Ayurvedic leads (CSIR programmes).</td></tr>
+      <tr><td><b>Reverse pharmacology</b></td><td>"Bedside → bench" (Man → mice → molecule) — the deliberate reversal of conventional "bench-to-bedside" (Molecule → mice → man); starts from clinical/traditional efficacy, then defines the target/mechanism — via 3 stages: <i>Experiential</i> (documented traditional/clinical use — the clinical hit) → <i>Exploratory</i> (dose-activity studies + in-vitro/in-vivo models confirming target/MOA) → <i>Experimental</i> (formulation standardisation/HPLC fingerprinting, human dose determination, confirmed on safety/efficacy/acceptability). Molecular variant: <b>receptor deorphanisation</b> — finding the ligand for a known orphan receptor (e.g. GPCRs, RXR) rather than a receptor for a known ligand.</td><td>Artemisinin (Artemisia/Qinghaosu), reserpine (Rauwolfia), digitalis (Na⁺/K⁺-ATPase), morphine (opium), quinine (cinchona); CDSCO's phytopharmaceutical approval pathway (≥4 marker constituents, HPLC fingerprint) is built on this principle.</td></tr>
       <tr><td><b>AI / ML</b></td><td>Deep learning for hit prediction, generative chemistry, ADMET &amp; toxicity prediction, protein-structure prediction.</td><td>AlphaFold (structures), Insilico Medicine candidate for IPF, BenevolentAI repurposing of baricitinib for COVID-19.</td></tr>
     </table>
     <p><b>Combined value:</b> CADD + AI triage millions of molecules virtually; HTS validates hits experimentally; reverse pharmacology supplies clinically-validated starting points — together compressing timelines and cost.</p>
-    <div class="recent"><b>Recent:</b> Generative-AI de-novo molecules, foundation models for chemistry, and AI-predicted polypharmacology now feature in early pipelines.</div>
+    <div class="recent"><b>Recent advances:</b> Generative-AI de-novo molecules, foundation models for chemistry, and AI-predicted polypharmacology now feature in early pipelines. Reverse pharmacology + omics ("Ayurgenomics") — traditional-use lead → reverse pharmacology → systems-biology/multi-omics to define multi-target mechanisms [PMID 40783108]. ICMR's Ethical Requirements for Research in Integrative Medicine Addendum (Mar 2025) now covers AYUSH-conventional integrative studies; CCRAS General Guidelines for Drug Development of Ayurveda (Jul 2024) operationalise the clinics-to-labs route for Ayurvedic candidates.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Principles, applications, advantages &amp; limitations of microdosing (Phase 0) studies.</span></summary>
@@ -282,6 +419,8 @@
     <ul><li>Human data earlier; lower cost and animal use; faster go/no-go decisions; minimal subject risk.</li></ul>
     <h4>Limitations</h4>
     <ul><li>No efficacy or toxicity information.</li><li>Non-linear PK → microdose may not predict therapeutic-dose kinetics.</li><li>Requires costly specialised assays (AMS/PET); not suitable for drugs with active metabolites or saturable processes.</li></ul>
+    <p><b>AMS vs PET:</b> AMS uses ¹⁴C-label (t½≈5740 yr) — chiefly PK, samples assayable up to ~100 days post-dose. PET uses ¹¹C-label (t½≈20 min) — chiefly PD/real-time imaging, useful PK window only ~2 h. Neither distinguishes parent drug from metabolite alone — LC-MS chromatographic separation is added.</p>
+    <div class="recent"><b>Recent advances:</b> Intra-Target Microdosing (ITM) delivers drug to a small (~1% body) compartment at locally therapeutic concentration, yielding PD/target-engagement data — not PK alone — from a Phase 0 study [PMID 39210357]. A ¹⁴C-microtracer (10 mg, 14.8 kBq) of AZD4831 read by AMS recovered ~84% of dose and mapped UGT1A1-derived metabolism at a therapeutically-relevant dose with very low radiolabel activity [PMID 36639243]; co-administered IV ¹⁴C-microtracer (30 µg) with inhaled velsecorat (720 µg) resolved clearance/Vd/metabolite pattern in one ADME study [PMID 34853068]. FDA's Exploratory IND (eIND) framework remains the regulatory basis: microdose ≤1/100th predicted active dose and ≤100 µg, read by AMS/PET/LC-MS/MS [FDA eIND].</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Phases of clinical trials with emphasis on Phase I design (esp. antiepileptics) &amp; adaptive designs — advantages, challenges, examples.</span></summary>
@@ -402,7 +541,7 @@
 
 <section class="sec" id="s2" style="--sec:#3f6cb0;--sec-soft:#3f6cb026">
   <h2>Section 2 · Pharmacokinetics (ADME, TDM &amp; Individualisation)</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 2 (Pharmacokinetics), Ch. 4 (Membrane Transporters), Ch. 5 (Drug Metabolism), Ch. 7 (Pharmacogenetics).</p>
+  <p class="sec-note">Covers pharmacokinetics, membrane transporters, drug metabolism, and pharmacogenetics.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacokinetics in detail — ADME, membrane transport, bioavailability, Vd, clearance, kinetics (1st/0-order), metabolism (Phase I/II, inducers/inhibitors), excretion, chrono- &amp; toxicokinetics, genetic polymorphism.</span></summary>
   <div class="answer">
@@ -410,10 +549,11 @@
 
     <h4>Membrane transport mechanisms</h4>
     <ul>
-      <li><b>Passive diffusion</b> (lipid-soluble, unionised drugs; governed by pH-partition &amp; Henderson-Hasselbalch).</li>
-      <li><b>Facilitated diffusion</b> &amp; <b>aqueous (paracellular) diffusion.</b></li>
-      <li><b>Active transport</b> (carrier, ATP-dependent) — e.g. <b>P-glycoprotein (MDR1), OATP, OCT, OAT</b> (G&amp;G Ch.4).</li>
-      <li><b>Endocytosis/pinocytosis</b> for large molecules.</li>
+      <li><b>Passive diffusion</b> (lipid-soluble, unionised drugs; governed by Fick's law (rate ∝ concentration gradient × area / thickness) and the <b>pH-partition hypothesis</b> — Henderson-Hasselbalch predicts that the unionised fraction of a weak acid/base diffuses across membranes; weak acids absorbed better in acidic stomach, weak bases in alkaline intestine).</li>
+      <li><b>Filtration</b> through aqueous channels/paracellular pores (small molecules, e.g. glomerular filtration) &amp; <b>facilitated diffusion</b> (carrier-assisted, no ATP, e.g. GLUT transporters).</li>
+      <li><b>Active transport</b> — carrier-mediated, ATP-dependent, against a gradient; saturable &amp; competitively inhibitable. Two transporter superfamilies: <b>ABC (ATP-Binding Cassette)</b> efflux pumps (P-glycoprotein/MDR1, BCRP, MRP2) and <b>SLC (Solute Carrier)</b> influx/efflux carriers (OATP, OCT, OAT, PEPT1) (G&amp;G Ch.4). <b>Secondary active transport</b> (symport/antiport) uses an ion gradient (e.g. Na⁺) rather than direct ATP hydrolysis.</li>
+      <li><b>Vesicular transport</b> — endocytosis/pinocytosis for large molecules (peptides, nanoparticles).</li>
+      <li><b>P-glycoprotein</b> is the prototype ABC efflux pump — limits oral bioavailability &amp; CNS penetration, mediates multidrug resistance, and a major site of drug–drug interactions (verapamil, ketoconazole inhibit it).</li>
     </ul>
 
     <h4>A — Absorption &amp; Bioavailability (F)</h4>
@@ -441,7 +581,9 @@
     <ul>
       <li><b>First-order:</b> constant <i>fraction</i> eliminated/unit time; rate ∝ concentration; constant t½ (most drugs).</li>
       <li><b>Zero-order:</b> constant <i>amount</i> eliminated; saturable; e.g. <b>phenytoin, ethanol, aspirin (high dose), warfarin, theophylline</b> — small dose change → large concentration rise.</li>
-      <li><b>Clearance (CL)</b> = volume of plasma cleared/unit time; CL = rate of elimination/C; determines maintenance dose. <b>t½ = 0.693 × Vd / CL.</b> Steady state reached in ~4–5 half-lives.</li>
+      <li><b>Clearance (CL)</b> = volume of plasma cleared/unit time; CL = rate of elimination/C = Dose/AUC; determines maintenance dose (dosing rate = CL × C<sub>ss</sub>). Clearances are additive (CL<sub>total</sub> = CL<sub>renal</sub> + CL<sub>hepatic</sub> + CL<sub>other</sub>).</li>
+      <li><b>CL and Vd are the two truly independent ("primary") PK parameters</b>; t½ and the elimination rate constant (k) are <i>derived/secondary</i> — t½ = 0.693 × Vd / CL and k = CL/Vd = 0.693/t½, so t½ rises if CL falls <i>or</i> Vd rises (either can change independently in disease). Steady state — and ~94% drug elimination — is reached in ~4–5 half-lives, independent of dose.</li>
+      <li><b>Extraction ratio (E)</b> = (C<sub>arterial</sub>−C<sub>venous</sub>)/C<sub>arterial</sub>. High-extraction drugs (E→1: lidocaine, propranolol, morphine, diltiazem, imipramine) have <b>flow-limited</b> hepatic clearance (sensitive to hepatic blood flow); low-extraction drugs have <b>capacity-limited</b> clearance (sensitive to enzyme activity/protein binding).</li>
     </ul>
 
     <h4>Special kinetics</h4>
@@ -450,7 +592,7 @@
       <li><b>Toxicokinetics:</b> PK at toxic doses — saturation, altered protein binding, prolonged t½ (overdose management).</li>
       <li><b>Genetic polymorphism:</b> CYP2D6 (poor/ultra-rapid metabolisers — codeine), CYP2C19 (clopidogrel/PPIs), NAT2 (isoniazid fast/slow acetylators), TPMT (azathioprine), DPYD (5-FU) — basis of pharmacogenomics.</li>
     </ul>
-    <div class="recent"><b>Recent:</b> Physiologically-Based PK (PBPK) modelling &amp; model-informed drug development now guide dosing in special populations and DDI prediction for regulatory submissions.</div>
+    <div class="recent"><b>Recent:</b> Physiologically-Based PK (PBPK) modelling &amp; model-informed drug development now guide dosing in special populations and DDI prediction for regulatory submissions. <b>Model-informed precision dosing (MIPD)</b> using population-PK models (e.g. the Eleveld model) individualises propofol TCI dosing in obese patients; <b>AUC-guided (clearance-based)</b> vancomycin dosing significantly lowers nephrotoxicity versus old trough-only targeting (now the 2020 consensus standard); 2024–25 guidance favours <b>race-free eGFR</b> over Cockcroft-Gault creatinine clearance for renal dose adjustment.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Define TDM. Indications, sampling strategy, interpretation, dose-regimen calculation, applications for specific drugs.</span></summary>
@@ -505,7 +647,7 @@
 
 <section class="sec" id="s3" style="--sec:#845bb0;--sec-soft:#845bb026">
   <h2>Section 3 · Pharmacodynamics — Receptors, Signaling &amp; Dose-Response</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 3: Pharmacodynamics, Molecular Mechanisms of Drug Action.</p>
+  <p class="sec-note">Covers pharmacodynamics and the molecular mechanisms of drug action.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Explain the receptor concept of drug action. Classify receptor types (location, signal transduction, an agonist &amp; antagonist each, clinical importance). Discuss GPCRs in detail (G-protein types &amp; second messengers).</span></summary>
   <div class="answer">
@@ -546,12 +688,16 @@
     <p><b>DRC vs log-DRC:</b> plotting response against <i>log dose</i> converts the hyperbola into a symmetrical <b>sigmoid</b>, expands the low-dose region, and gives a straight middle segment — easier to compare EC₅₀ and parallelism (agonist/antagonist analysis).</p>
     <h4>Key definitions</h4>
     <ul>
-      <li><b>Potency:</b> dose required for a given effect (position on x-axis; lower EC₅₀ = more potent). e.g. bumetanide more potent than furosemide.</li>
+      <li><b>Potency:</b> dose required for a given effect (position on x-axis; lower EC₅₀ = more potent). e.g. bumetanide more potent than furosemide; morphine 10 mg ≈ pethidine 100 mg (morphine 10× more potent).</li>
       <li><b>Efficacy (intrinsic activity):</b> maximal effect achievable (Emax; height of curve). e.g. morphine > codeine; loop diuretics > thiazides. <i>Efficacy &gt; potency clinically.</i></li>
-      <li><b>Therapeutic Index (TI) = TD₅₀ / ED₅₀</b> (or LD₅₀/ED₅₀). Higher = safer. Low-TI drugs: digoxin, warfarin, lithium, phenytoin, aminoglycosides.</li>
-      <li><b>Therapeutic window:</b> concentration range between minimum effective and minimum toxic concentration — a more clinically useful safety measure than TI.</li>
+      <li><b>Potency &amp; efficacy are independent:</b> aspirin is less potent <i>and</i> less efficacious than morphine; pethidine is less potent but equally efficacious as morphine; furosemide is less potent but more efficacious than metolazone (high ceiling — useful in renal failure); diazepam is more potent but less efficacious a CNS depressant than pentobarbitone (lower efficacy → relative overdose safety).</li>
+      <li><b>Spare receptors (receptor reserve, Stephenson 1956):</b> a full agonist can produce the maximal tissue response while occupying &lt;1% of receptors — the surplus shifts the log-DRC leftward (↑ apparent potency), so occupancy and response are not linearly related and a concentration-effect curve cannot directly measure agonist affinity.</li>
+      <li><b>Therapeutic Index (TI) = TD₅₀ / ED₅₀</b> (or LD₅₀/ED₅₀). Higher = safer. Low-TI drugs: digoxin, warfarin, lithium, phenytoin, aminoglycosides. Worked example: LD₅₀ 400, ED₅₀ 100 → TI = 4.</li>
+      <li><b>Certain safety factor = LD₁/ED₉₉</b> — uses curve extremes (not medians) to account for individual variability that the median-ratio TI ignores; more conservative than TI.</li>
+      <li><b>Therapeutic window:</b> concentration range between minimum effective and minimum toxic concentration — a more clinically useful safety measure than TI; acceptable width depends on disease severity (wide for headache, narrow-but-tolerated for life-threatening disease).</li>
     </ul>
     <div class="dia"><b>Diagram:</b> Log-dose (x) vs % response (y): two sigmoid curves — ED₅₀ (efficacy) and TD₅₀/LD₅₀; gap between them = therapeutic window/safety margin.</div>
+    <div class="recent"><b>Recent:</b> FDA's <b>Project Optimus</b> initiative shifts oncology dose-selection away from the classical maximum-tolerated-dose (MTD) approach toward an "optimal dose" balancing efficacy and long-term tolerability; reviews find approved oncology doses are often well above this optimum, supporting model-informed dose individualisation. FDA now formally lists narrow-therapeutic-index (NTI) drug products requiring extra monitoring.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Classify agonists (full, partial, inverse) &amp; antagonists (competitive, non-competitive, physiological, chemical) with mechanisms &amp; examples. Note on receptor up/down-regulation.</span></summary>
@@ -632,23 +778,56 @@
     <p><b>3rd-gen clinical uses:</b> hypertension (esp. with metabolic syndrome — nebivolol improves insulin sensitivity), heart failure (carvedilol — mortality benefit), and lower peripheral resistance/fewer metabolic adverse effects than older agents.</p>
   </div></details>
 
-  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">SERMs and SPRMs — classification, mechanism, pharmacological profile, clinical applications.</span></summary>
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">SERMs and SPRMs — classification, molecular basis of tissue selectivity, individual-agent pharmacokinetics, clinical applications &amp; recent advances.</span></summary>
   <div class="answer">
-    <h4>SERMs (Selective Estrogen Receptor Modulators)</h4>
-    <p><b>Mechanism:</b> tissue-selective agonist/antagonist at estrogen receptors depending on co-activator/co-repressor recruitment.</p>
+    <h4>SERMs — definition &amp; molecular basis of tissue selectivity</h4>
+    <p>SERMs are non-steroidal compounds that bind the estrogen receptor (ER) and act as <b>estrogen agonists in some tissues</b> (bone, liver, CVS) and <b>antagonists in others</b> (breast, and in some agents the endometrium) — contrasted with pure agonists (estradiol), pure antiestrogens (clomiphene) and SERDs/selective ER down-regulators (fulvestrant), which act uniformly across tissues.</p>
+    <ul>
+      <li>All SERMs competitively occupy the ER ligand-binding pocket (ERα/ERβ), but the ligand–receptor conformation differs for each drug (estradiol vs tamoxifen vs raloxifene), especially in the <b>AF-2 (activation function-2)</b> domain — this dictates coactivator vs corepressor recruitment at the ERE on a given gene promoter.</li>
+      <li>Tamoxifen's residual endometrial <b>agonist</b> activity is mediated by the ligand-independent <b>AF-1</b> domain of ERα (ERβ lacks functional AF-1, so tamoxifen cannot activate it); raloxifene induces a distinct ERα conformation acting via a separate "raloxifene response element" (RRE).</li>
+      <li>Because coactivator/corepressor levels differ by cell type, the same drug switches between agonist and antagonist across tissues.</li>
+    </ul>
+    <h4>Classification (ER ligands of clinical relevance)</h4>
     <table>
-      <tr><th>Drug</th><th>Breast</th><th>Bone</th><th>Uterus</th><th>Use</th></tr>
-      <tr><td>Tamoxifen</td><td>Antagonist</td><td>Agonist</td><td>Agonist (↑Ca risk)</td><td>ER+ breast cancer</td></tr>
-      <tr><td>Raloxifene</td><td>Antagonist</td><td>Agonist</td><td>Neutral</td><td>Postmenopausal osteoporosis</td></tr>
-      <tr><td>Clomiphene</td><td>—</td><td>—</td><td>Antagonist (hypothalamus)</td><td>Ovulation induction</td></tr>
-      <tr><td>Ospemifene</td><td>—</td><td>—</td><td>Agonist (vagina)</td><td>Dyspareunia</td></tr>
+      <tr><th>Class</th><th>Mechanism/profile</th><th>Examples</th></tr>
+      <tr><td>SERMs (tissue-selective)</td><td>Agonist in some tissues, antagonist in others</td><td>Tamoxifen, Toremifene, Raloxifene, Bazedoxifene, Ospemifene, Ormeloxifene (Centchroman)</td></tr>
+      <tr><td>Pure antiestrogens</td><td>Antagonist in all tissues studied</td><td>Clomiphene (pituitary/hypothalamus)</td></tr>
+      <tr><td>SERDs (down-regulators)</td><td>Block dimerisation + ↑ ER degradation</td><td>Fulvestrant</td></tr>
+      <tr><td>Aromatase inhibitors (comparison)</td><td>Block estrogen synthesis — not ER ligands</td><td>Letrozole, Anastrozole (non-steroidal); Exemestane (steroidal)</td></tr>
     </table>
+    <p>Chemically, SERMs are triphenylethylenes (tamoxifen, toremifene) or "fixed-ring" benzothiophenes (raloxifene, bazedoxifene); fulvestrant is a 7α-alkylamide estradiol derivative.</p>
+    <h4>Tissue-by-tissue agonist/antagonist profile</h4>
+    <table>
+      <tr><th>Tissue</th><th>Tamoxifen</th><th>Raloxifene</th></tr>
+      <tr><td>Breast</td><td>Antagonist (antiproliferative)</td><td>Antagonist</td></tr>
+      <tr><td>Endometrium</td><td>Agonist (hyperplasia, ↑ Ca risk)</td><td>No stimulation</td></tr>
+      <tr><td>Bone</td><td>Agonist (antiresorptive)</td><td>Agonist (antiresorptive)</td></tr>
+      <tr><td>Liver/lipids</td><td>Agonist — ↓ total &amp; LDL cholesterol</td><td>Agonist — ↓ LDL, HDL unchanged</td></tr>
+      <tr><td>Coagulation</td><td>Pro-thrombotic, 2–3× ↑ VTE</td><td>Pro-thrombotic, ~3× ↑ DVT/PE</td></tr>
+      <tr><td>CNS/vasomotor</td><td>Hot flushes</td><td>No relief; may induce hot flushes</td></tr>
+    </table>
+    <h4>Individual agents — doses &amp; kinetics</h4>
+    <ul>
+      <li><b>Tamoxifen</b> — 10–20 mg BD (≈20 mg/day, max 40); biphasic t½ (initial 7–14 h, terminal ~7 days) → 3–4 wk to steady state. Hepatic CYP3A4/5 + CYP2D6 → N-desmethyltamoxifen and the highly active <b>endoxifen</b> (25–50× ER affinity); CYP2D6 poor metabolisers/strong CYP2D6 inhibitors blunt efficacy. Enterohepatic circulation; faecal excretion.</li>
+      <li><b>Toremifene</b> — newer tamoxifen congener, weaker ER agonist; covers tamoxifen-resistant disease alongside fulvestrant.</li>
+      <li><b>Raloxifene</b> — 60 mg OD; bioavailability only ~2% (extensive first-pass glucuronidation); t½ ~28 h; faecal elimination. ↑ Lumbar BMD ~2%, ↓ vertebral fractures 30–50% (not hip/non-vertebral); ↓ ER+ breast cancer risk ~65%; no endometrial stimulation, no vasomotor relief.</li>
+      <li><b>Bazedoxifene</b> — third-gen "fixed-ring" SERM; combined with conjugated equine estrogens (CEE) forms a <b>tissue-selective estrogen complex (TSEC)</b> for vasomotor symptoms + osteoporosis prevention with endometrial protection.</li>
+      <li><b>Ospemifene</b> — for moderate-severe dyspareunia/vulvovaginal atrophy; ↑ thromboembolic risk.</li>
+      <li><b>Ormeloxifene (Centchroman)</b> — non-steroidal SERM developed at CDRI, India; predominantly antagonist in uterus/breast; once-/twice-weekly oral contraceptive (utero-embryonic asynchrony + implantation failure) and approved for dysfunctional uterine bleeding; long t½ (~1 wk); does not disrupt ovulation.</li>
+    </ul>
+    <h4>Clinical significance &amp; adverse effects</h4>
+    <ul>
+      <li><b>Tamoxifen</b> — hormonal treatment of choice for ER+ breast cancer (all ages); 5-yr therapy ↓ recurrence ~50%, death ~27%; chemoprevention in high-risk women (~45–50% fewer new tumours); ATLAS/aTTom support extension to 10 yr. Specific ADR: 2–3× ↑ endometrial carcinoma, cataracts.</li>
+      <li><b>Raloxifene</b> — second-line for postmenopausal osteoporosis, favoured in younger postmenopausal women at high breast-cancer/low VTE-hip-fracture risk.</li>
+      <li>Class ADR: hot flushes, leg cramps, 2–3× VTE. Monitor for abnormal uterine bleeding (tamoxifen) and thromboembolic symptoms. Avoid strong CYP2D6 inhibitors with tamoxifen.</li>
+    </ul>
     <h4>SPRMs (Selective Progesterone Receptor Modulators)</h4>
     <ul>
       <li><b>Mifepristone</b> — PR antagonist: medical abortion (with misoprostol), Cushing's.</li>
-      <li><b>Ulipristal acetate</b> — emergency contraception &amp; uterine fibroids.</li>
+      <li><b>Ulipristal acetate</b> — emergency contraception &amp; uterine fibroids; monitor liver.</li>
     </ul>
-    <p><b>Profile:</b> SERMs ↑ VTE risk &amp; hot flushes; tamoxifen ↑ endometrial cancer; raloxifene safer on uterus. SPRMs — monitor liver (ulipristal).</p>
+    <div class="dia"><b>Diagram:</b> ER + ligand → conformational change in AF-2 domain → coactivator recruitment (agonist gene response) or corepressor recruitment (antagonist response) at the ERE; tissue-selective output mapped onto breast (antagonist) / endometrium (tamoxifen agonist, raloxifene neutral) / bone (agonist) / liver (agonist).</div>
+    <div class="recent"><b>Recent advances:</b> <b>Lasofoxifene</b> — next-gen SERM stabilising an antagonist ERα conformation even with ESR1 mutations — has FDA Fast Track for ER+/HER2−, ESR1-mutant metastatic breast cancer; phase-3 <b>ELAINE 3</b> (lasofoxifene+abemaciclib vs fulvestrant+abemaciclib) enrolling, data expected 2027 (PMID 40222048). ELAINE 1 (PMID 38072514) showed lasofoxifene vs fulvestrant PFS 5.6 vs 3.7 months in ESR1-mutant mBC; ELAINE 2 (PMID 38072513) paired it with abemaciclib (~13-month PFS). Low-dose ("baby") tamoxifen 5 mg/day is a distinct preventive option for noninvasive breast neoplasia — TAM-01 10-yr follow-up cut invasive recurrence (HR 0.58) without excess endometrial cancer/VTE (PMID 36917758); a 2026 meta-analysis confirmed no rise in endometrial cancer with this dose (PMID 42015440). A 2026 Taiwanese cohort reaffirmed full-dose tamoxifen's endometrial hazard even in young women (HR 4.99 for uterine disease) (PMID 41785462). For SERM/AI-related hot flushes, the non-hormonal NK1/NK3 antagonist <b>elinzanetant</b> (Lynkuet) was FDA-approved Oct 2025 after cutting vasomotor episodes in a 474-woman phase-3 RCT (PMID 40454634). 2023 ACP-informing osteoporosis network meta-analyses keep raloxifene/bazedoxifene as second-line, vertebral-fracture-only agents behind bisphosphonates/denosumab (PMID 36592455, 37130601). Indian RCTs (2025) continue to support ormeloxifene's superiority over norethisterone for AUB (PMID 41399552, 41583291, 41054634).</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">NMDA receptors, glutamate receptors and drugs acting on them with therapeutic potential.</span></summary>
@@ -722,7 +901,7 @@
 
 <section class="sec" id="s4" style="--sec:#b15068;--sec-soft:#b1506826">
   <h2>Section 4 · Novel &amp; Targeted Drug Delivery Systems (NDDS)</h2>
-  <p class="sec-note">Supplemented from standard pharmaceutics/pharmacology (limited in G&amp;G Ch.1–9).</p>
+  <p class="sec-note">Supplemented from standard pharmaceutics/pharmacology references.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">What are NDDS? Objectives, properties of an ideal targeted delivery system, strategies of drug targeting (with examples), particulate carriers/nanoparticles/nanomedicine, recent advances.</span></summary>
   <div class="answer">
@@ -741,6 +920,9 @@
       <li>Physically/chemically stable; easy to manufacture &amp; sterilise; cost-effective.</li>
       <li>Adequate drug-loading; protects drug; eliminated safely after delivery.</li>
     </ul>
+    <h4>Modified-release (rate-controlled) systems — the "controlled-time" arm of NDDS</h4>
+    <p>Alongside targeted/carrier systems, NDDS includes <b>modified-release</b> oral &amp; transdermal products that alter the temporal profile: <b>Extended-release (ER)</b> gives ≥2-fold ↓ in dosing frequency vs IR (matrix — Higuchi √t kinetics; reservoir/membrane-controlled — near zero-order; osmotic pump/OROS-GITS — semipermeable membrane + laser-drilled orifice, zero-order &amp; pH-independent, e.g. push-pull Procardia-XL, osmotic-trilayer Concerta; ion-exchange resin); <b>Delayed-release (DR)</b> = enteric coating (EC aspirin, mesalamine); <b>Targeted-release</b> to a physiologic site (mesalamine to colon); <b>ODT/oral film</b> (aripiprazole ODT). <b>Transdermal (TTS)</b> patches (backing, drug reservoir/matrix, rate-controlling membrane, adhesive, release liner) avoid first-pass over 1–7 days (GTN, fentanyl, nicotine, estradiol patches in India; clonidine Catapres-TTS elsewhere). <b>Depot/implant</b> parenterals give weeks–months release (leuprolide depot, levonorgestrel rods, carmustine Gliadel wafer).</p>
+    <p><b>Key hazard — dose dumping:</b> rapid release of the entire MR dose → toxic levels (alcohol can dump some opioid ER formulations); MR/EC units must never be crushed or chewed. ER is best suited to drugs of intermediate t½ (impractically large tablets needed for short-t½ drugs) and is not rational for drugs with inherently long t½.</p>
     <h4>Strategies of drug targeting</h4>
     <table>
       <tr><th>Order</th><th>Type</th><th>Meaning / Example</th></tr>
@@ -760,9 +942,17 @@
       <tr><td>Polymeric nanoparticles / micelles</td><td>Nab-paclitaxel (Abraxane)</td></tr>
       <tr><td>Dendrimers, niosomes, SLNs</td><td>Gene/drug delivery</td></tr>
       <tr><td><b>Lipid nanoparticles (LNP)</b></td><td><b>mRNA COVID-19 vaccines</b>, patisiran (siRNA)</td></tr>
-      <tr><td>Antibody–drug conjugates</td><td>Trastuzumab emtansine, brentuximab vedotin</td></tr>
+      <tr><td>Antibody–drug conjugates (ADC)</td><td>Trastuzumab emtansine, brentuximab vedotin</td></tr>
+      <tr><td>Radioimmunoconjugates</td><td>¹³¹I-tositumomab, ¹⁷⁷Lu-DOTATATE (Lutathera)</td></tr>
+      <tr><td>Immunotoxins</td><td>Denileukin diftitox</td></tr>
     </table>
-    <div class="recent"><b>Recent advances:</b> LNP-mRNA platforms, ADCs, CAR-T, theranostics (therapy + imaging), 3D-printed dosage forms, microneedle patches, and AI-designed nanocarriers.</div>
+    <h4>Design strategies — PEGylation &amp; FDA "nanoscale"</h4>
+    <ul>
+      <li><b>PEGylation</b> (polyethylene-glycol coating) shields the carrier from the reticuloendothelial system → ↓ opsonisation/clearance, ↑ circulation t½ ("stealth" liposomes, e.g. Doxil); also used to extend half-life of biologics (pegfilgrastim, peg-interferon).</li>
+      <li>FDA regards <b>≤1000 nm</b> with size-dependent properties as the practical "nanoscale" for regulatory purposes (most therapeutic nanocarriers are 10–200 nm).</li>
+      <li><b>Albumin conjugation</b> (nab-paclitaxel) and <b>FcRn-mediated recycling</b> are alternative half-life-extension/targeting strategies to PEGylation.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> LNP-mRNA platforms, CAR-T, theranostics (therapy + imaging), 3D-printed dosage forms, microneedle patches, and AI-designed nanocarriers. The <b>AMBITION trial</b> validated single high-dose liposomal amphotericin B for HIV-associated cryptococcal meningitis in resource-limited settings; newer <b>bispecific ADCs</b> (e.g. iza-bren) are in active clinical trials, and meta-analyses now correlate ADC linker/DAR design with off-target toxicity. ADC pipeline remains the fastest-moving class — FDA approved datopotamab deruxtecan (Datroway, Jan 2025, HR+/HER2− breast cancer), telisotuzumab vedotin (Emrelis, May 2025, first c-Met-directed ADC for NSCLC) and reinstated belantamab mafodotin (Blenrep, Oct 2025) [FDA 2025]; pooled trastuzumab-deruxtecan analyses show ILD/pneumonitis in 15.4% (grade 5 in 2.2%), now driving mandatory CT-monitoring rules [PMID 35963179]. Oral macromolecule delivery reached a hard outcome: SNAC-permeation-enhanced oral semaglutide gained an FDA CV-risk-reduction indication (Oct 2025) after the SOUL trial cut MACE (HR 0.86) in 9,650 high-risk T2DM patients [PMID 40162642]. Twice-yearly subcutaneous depot lenacapavir gave near-complete HIV PrEP in PURPOSE 1 &amp; 2 (0 infections among 2,134 women; 0.10 vs 0.93/100PY vs daily oral F/TDF) [PMID 39046157, 39602624] — India's Dr Reddy's/Hetero/Emcure/Mylan received royalty-free voluntary licences for generic manufacture. Hybrid closed-loop insulin-pump systems (28-RCT network meta-analysis, MiniMed 780G top-ranked) extend rate-controlled delivery to automated insulin dosing [PMID 39298688]; long-acting-injectable vs oral antipsychotics show comparable efficacy with the depot's advantage in adherence/relapse prevention (115-RCT NMA, 25,550 patients) [PMID 38490016].</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Concept of drug targeting &amp; its clinical utility (esp. cancer &amp; other diseases) with examples.</span></summary>
@@ -783,7 +973,7 @@
 
 <section class="sec" id="s5" style="--sec:#b3852f;--sec-soft:#b3852f26">
   <h2>Section 5 · Rational Use of Drugs &amp; Clinical Pharmacology Concepts</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 1 (public policy, biosimilars) &amp; Ch. 7; supplemented with WHO/Indian guidance.</p>
+  <p class="sec-note">Covers public policy and biosimilars; supplemented with WHO/Indian guidance.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Rational Use of Drugs &amp; the 'P-drug' concept — importance, methods to improve RUD using technology; note on rational/irrational antibiotic use &amp; antibiotic policy.</span></summary>
   <div class="answer">
@@ -979,9 +1169,10 @@
       <tr><td>Chronergy</td><td>Net rhythmic effect = chronokinetics + chronesthesy</td></tr>
       <tr><td>Chronotoxicity</td><td>Time-dependent variation in drug toxicity</td></tr>
     </table>
-    <p>Rhythm classes: ultradian (&lt;20h), circadian (~20–28h — sleep-wake, cortisol), infradian (&gt;28h — menstrual, circannual). Circadian rhythms are endogenous (free-run ~24.2h), entrained by zeitgebers (mainly light-dark cycle).</p>
+    <p>Rhythm classes: ultradian (&lt;20h), circadian (~20–28h — sleep-wake, cortisol), infradian (&gt;28h — menstrual, circannual). Circadian rhythms are endogenous (free-run ~24.2h), entrained by zeitgebers (mainly light-dark cycle, the strongest external "time-giver"). A rhythm is quantified by its <b>mesor</b> (rhythm-adjusted mean), <b>amplitude</b> (half the peak–trough swing) and <b>acrophase</b> (clock time of the peak).</p>
     <h4>Biological clock</h4>
-    <p>Master clock = suprachiasmatic nucleus (SCN), entrained by light via retinohypothalamic tract, synchronising peripheral clocks (liver, heart, kidney). Molecular clock = CLOCK-BMAL1 heterodimer drives PER/CRY transcription; accumulated PER/CRY feed back to inhibit CLOCK-BMAL1 (~24h loop). Melatonin (pineal, dark-secreted) and cortisol (peaks ~06:00–08:00) are the principal humoral "hands" of the clock.</p>
+    <p>Master clock = suprachiasmatic nucleus (SCN), entrained by light via retinohypothalamic tract, synchronising peripheral clocks (liver, heart, kidney, adrenal — the adrenal's own clock helps set the cortisol rhythm). Molecular clock = CLOCK-BMAL1 heterodimer drives PER/CRY transcription; accumulated PER/CRY feed back to inhibit CLOCK-BMAL1 (~24h loop). Melatonin (pineal, dark-secreted; synthesised from serotonin) and cortisol (peaks ~06:00–08:00) are the principal humoral "hands" of the clock. Melatonin acts on MT1 (inhibits SCN firing) and MT2 (phase-shifts SCN rhythm) — both Gi/Go-coupled — and is the body's main <b>chronobiotic</b> ("internal zeitgeber").</p>
+    <p>Tissue glucocorticoid sensitivity runs <i>inverse</i> to the cortisol rhythm — low in late morning, high in evening/early night — so the GR–NF-κB-mediated inflammatory response is enhanced at night, relevant to evening worsening of inflammatory conditions.</p>
     <div class="dia"><b>Diagram:</b> 24-h clock face — 06:00 cortisol/BP/platelet/MI-stroke peak; 04:00 nocturnal asthma (PEFR nadir); night = gastric acid &amp; cholesterol synthesis peak.</div>
     <h4>Circadian variation in disease &amp; clinical chronotherapy</h4>
     <table>
@@ -993,15 +1184,18 @@
       <tr><td>Statins (short t½)</td><td>Hepatic HMG-CoA reductase peaks at night</td><td>Evening/bedtime (simvastatin, lovastatin)</td></tr>
       <tr><td>Glucocorticoids</td><td>Mimics natural cortisol peak</td><td>Morning — least HPA-axis suppression</td></tr>
       <tr><td>Diuretics</td><td>—</td><td>Morning — avoid nocturnal diuresis</td></tr>
+      <tr><td>Hypertension — dippers vs non-dippers</td><td>BP/CV events peak early morning; "dippers" show normal nocturnal BP fall, "non-dippers" don't (higher CV risk)</td><td>Dippers → morning dosing; non-dippers → added/single evening dose to restore the dipping profile</td></tr>
+      <tr><td>T2DM (Cycloset/bromocriptine)</td><td>Resets hypothalamic dopaminergic control of circadian GH/prolactin/ACTH rhythm</td><td>Quick-release bromocriptine taken early morning (0.8mg OD up to 4.8mg OD); ↓HbA1c up to ~0.5%</td></tr>
+      <tr><td>Jet lag/shift work/DSPS</td><td>Desynchronised SCN rhythm</td><td>Melatonin at target bedtime (10PM–midnight); more effective eastward, ≥5 time zones, plus daylight exposure on arrival</td></tr>
     </table>
-    <p>Chronotherapeutic formulations: controlled-onset extended-release (COER) verapamil/diltiazem (bedtime, timed to release at the dawn BP surge); pulsatile delayed-release prednisone for RA morning stiffness; prolonged-release melatonin for circadian sleep disorders. Anticancer chronomodulation (timed infusion of 5-FU, oxaliplatin, irinotecan) exploits circadian differences between tumour and normal-cell cycling.</p>
-    <div class="recent"><b>Recent advances:</b> the bedtime-antihypertensive-dosing debate — Hygia trial (n≈19,084) reported bedtime dosing halved major CVD events (HR 0.55) but was widely questioned/not replicated; the larger pragmatic TIME study (n=21,104) found no difference between evening and morning dosing (HR 0.95) — current stance: dose antihypertensives for adherence, not clock-time. "Circadian medicine" is emerging with clock-modulating drugs (REV-ERB/ROR ligands, CK1/CRY modulators) under investigation.</div>
+    <p>Chronotherapeutic formulations: controlled-onset extended-release (COER) verapamil/diltiazem (bedtime, timed to release at the dawn BP surge); pulsatile delayed-release prednisone for RA morning stiffness; prolonged-release melatonin for circadian sleep disorders. Anticancer chronomodulation (timed infusion of 5-FU, oxaliplatin, irinotecan, cisplatin) exploits circadian differences between tumour and normal-cell cycling; least marrow/gut toxicity when given at the trough of those tissues' proliferative cycle. Diagnostic timing: overnight dexamethasone suppression test (1mg at 11PM, cortisol at 8AM; suppression &lt;1.8µg/dL excludes Cushing) directly exploits the cortisol rhythm.</p>
+    <div class="recent"><b>Recent advances:</b> Tasimelteon (Hetlioz), a dual MT1/MT2 agonist, is the first prescription chronobiotic — FDA-approved for Non-24-Hour Sleep-Wake Disorder (mostly blind adults) and Smith-Magenis-syndrome sleep disturbance, exemplifying pharmacological SCN resetting rather than sedation. The bedtime-antihypertensive-dosing debate continues: a 2025 meta-analysis of 56 RCTs found bedtime dosing lowered nighttime/ambulatory SBP more in patients &lt;60y, BMI≥30, female-majority cohorts and CCB users [PMID 40251431]; the OMAN RCT (n=720) found bedtime single-pill olmesartan-amlodipine cut nighttime SBP by an extra 3.0mmHg and restored dipping [PMID 40632538]; but a 2026 meta-analysis (5 RCTs, 46,477 patients) found dosing time did not significantly change MACE/death/stroke once the contested Hygia trial was set aside [PMID 41605370] — current stance: dose antihypertensives for adherence, not clock-time. Cancer chronotherapy has extended beyond 5-FU/cisplatin: the LungTIME-C01 phase-3 RCT found anti-PD-1 immunochemotherapy before 15:00 roughly halved progression and death vs later infusion in advanced NSCLC [PMID 41629425], concordant with a 2024 checkpoint-inhibitor meta-analysis favouring early-day infusion [PMID 38232612]. Afternoon (15:00–16:00) once-daily inhaled corticosteroid dosing outperformed morning/twice-daily dosing for overnight FEV1 in a crossover RCT, refining the asthma "morning-dip" concept [PMID 40234005]. Melatonin's hypnotic efficacy is timing- not purely dose-dependent (peaks ~4mg/day) [PMID 38888087]; an FDA analysis found paediatric OTC melatonin products contained 0–667% of labelled content amid ~11,000 paediatric ER visits (2019–22) [FDA 2024-Apr], while a melatonin–heart-failure safety signal (AHA 2025) was not replicated in NHANES analysis [PMID 42167796]. "Circadian medicine" is emerging with clock-modulating drugs (REV-ERB/ROR ligands, CK1/CRY modulators) under investigation, and a 2025 Chest consensus recommends embedding circadian principles (light cycling, timed nutrition/sedation) into ICU care [PMID 41429288].</div>
   </div></details>
 </section>
 
 <section class="sec" id="s6" style="--sec:#2f8696;--sec-soft:#2f869626">
   <h2>Section 6 · Pharmacovigilance, ADR Monitoring &amp; Drug Safety</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 8: Postmarketing Drug Safety; supplemented with PvPI/CDSCO.</p>
+  <p class="sec-note">Covers postmarketing drug safety; supplemented with PvPI/CDSCO.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Define Pharmacovigilance. PvPI in detail; classify ADRs; methods of ADR monitoring, causality assessment, signal detection, PSUR, DSMB; challenges in India.</span></summary>
   <div class="answer">
@@ -1022,19 +1216,32 @@
       <tr><td>E (End of use)</td><td>Withdrawal (β-blocker rebound, opioid)</td></tr>
       <tr><td>F (Failure)</td><td>Therapeutic failure (rifampicin + OC pill)</td></tr>
     </table>
-    <h4>Methods of ADR monitoring</h4>
-    <ul><li><b>Spontaneous (voluntary) reporting</b> — yellow card system.</li><li>Cohort event monitoring / Prescription Event Monitoring (PEM).</li><li>Case-control &amp; cohort studies; record linkage; targeted active surveillance.</li></ul>
+    <h4>Methods of ADR monitoring — pharmacoepidemiological study designs</h4>
+    <p>Pre-marketing RCTs are limited (small samples, short duration, narrow populations, surrogate endpoints) and cannot detect rare/delayed/special-population ADRs — hence the need for post-marketing pharmacoepidemiology.</p>
+    <table>
+      <tr><th>Method</th><th>Design / use</th></tr>
+      <tr><td>Spontaneous (voluntary) reporting</td><td>Yellow/red card system; cheap, covers whole population, but under-reporting &amp; no denominator</td></tr>
+      <tr><td>Prescription Event Monitoring (PEM)</td><td>Cohort of patients prescribed a new drug followed prospectively via GP/pharmacy records</td></tr>
+      <tr><td>Cohort study</td><td>Exposed vs unexposed groups followed forward for outcome — gives incidence/relative risk</td></tr>
+      <tr><td>Case-control study</td><td>Cases (with ADR) vs controls compared retrospectively for exposure — efficient for rare events</td></tr>
+      <tr><td>Record-linkage study</td><td>Links prescription/health databases (e.g. claims data) to outcomes at population scale</td></tr>
+      <tr><td>Phase IV / post-marketing RCTs</td><td>Interventional trials after launch to confirm/refute a safety signal or seek a new indication — randomised → establishes causation, but expensive &amp; ethical constraints (no equipoise once a signal exists)</td></tr>
+    </table>
+    <p>An <b>Individual Case Safety Report (ICSR)</b> — the spontaneous-reporting unit — ideally records the suspect drug, dose, duration, event, concomitant drugs, comorbidities &amp; outcome, though reports are often incomplete; aggregated globally in WHO-UMC's <b>VigiBase</b>.</p>
     <h4>Causality assessment</h4>
-    <p>WHO-UMC categories (certain, probable, possible, unlikely, unclassified) &amp; <b>Naranjo scale</b> (definite/probable/possible/doubtful).</p>
+    <p>WHO-UMC categories (certain, probable, possible, unlikely, unclassified) &amp; <b>Naranjo scale</b> (definite/probable/possible/doubtful). Tools rely on temporal relationship, prior knowledge/consistency, dechallenge (event subsides on stopping) &amp; rechallenge (recurs on re-exposure — often unethical). <b>Severity grading (modified Hartwig scale):</b> Minor (no change) → Moderate (therapy change/↑hospital stay ≥1 day) → Severe (life-threatening/permanent damage) → Lethal. Newer descriptive scheme: <b>DoTS</b> (Dose-relatedness, Time-course, Susceptibility — Aronson &amp; Ferner 2003).</p>
     <h4>Signal detection &amp; management</h4>
-    <p><b>Signal</b> = new/changing drug–event association warranting investigation. Detected by disproportionality analysis (PRR, ROR) in databases; assessed, then risk-minimisation (label change, REMS, withdrawal).</p>
+    <p><b>Signal</b> = new/changing drug–event association warranting investigation. Detected by disproportionality analysis (PRR, ROR) in databases; assessed, then risk-minimisation in 3 escalating tiers: (1) <b>Communication</b> — Drug Safety Communications, "Dear Doctor" letters, label/boxed warnings; (2) <b>REMS</b> — medication guides, restricted distribution, registries, mandatory testing (e.g. isotretinoin pregnancy-prevention programme); (3) <b>Withdrawal</b> (e.g. rofecoxib, terfenadine, astemizole, cisapride — QT-prolongation deaths).</p>
     <h4>PSUR &amp; DSMB</h4>
     <ul>
       <li><b>PSUR/PBRER</b> — Periodic Safety Update Report: periodic benefit–risk reassessment submitted to regulators.</li>
       <li><b>DSMB/DSMC</b> — Data &amp; Safety Monitoring Board: independent group reviewing interim safety/efficacy in trials, can recommend stopping.</li>
     </ul>
+    <h4>Why pre-marketing trials miss ADRs</h4>
+    <p>Trials are small (median ~467 patients in pivotal trials, 2015–17), short (median ~24 wk — misses delayed events like bisphosphonate jaw osteonecrosis), exclude special populations (children, pregnant women, elderly &gt;75y), often use surrogate endpoints (~59% of pivotal trials — flecainide/encainide reduced ectopy yet ↑mortality in CAST), and rarely use active comparators (~29%). Classic contrast: terfenadine ~5,000 studied premarket vs ~7.5 million exposed before withdrawal. Consequently ~70% of drugs undergo safety-related label changes post-marketing.</p>
     <h4>Challenges in India &amp; role in safety</h4>
     <p>Under-reporting, lack of awareness/training, vast population &amp; informal drug use, OTC misuse. PV protects patient safety, supports regulatory decisions &amp; rational prescribing.</p>
+    <div class="recent"><b>Recent advances:</b> ML now outperforms classic disproportionality for signal detection — gradient-boosting models reached AUROC 0.973 vs ROR 0.548 in one comparison, an emerging supplement (not replacement) to PRR/ROR/BCPNN [PMID 40257538]; GPT-3.5 mapped adverse-event terms to dismiss "already-listed" signals with 78% accuracy vs 65% for conventional NLP, and de-duplicated 17% of COVID-19 vaccine disproportionality signals [PMID 40257538]. AI-ADR-prediction models pooled sensitivity 78.1%/specificity 70.6% (development-only), rising to 81.5%/79.5% on external validation — but only 23% of studies were externally validated [PMID 39961738]. VigiBase repurposed for AMR surveillance via a "RIOLE" framework across 37 LMICs [PMID 42260726]. FDA's first AI-in-regulation draft guidance (6 Jan 2025) introduces a risk-based credibility framework covering the post-marketing phase [FDA 2025-Jan]; FDA Emerging Drug Safety Technology Program (2024) and Sentinel Innovation Center pilot ML/NLP mining of clinical narratives. India: PvPI now runs &gt;600 AMCs, contributes ~50,000 ICSRs/yr to VigiBase via VigiFlow, and reached WHO GBT regulatory Maturity Level 3 (Oct 2025); a North-India 282-ICSR study found antibiotics (36%, mainly cephalosporins) the leading culprit class, 91% graded "probable" [PMID 41069921]. 2024 NDCT Rules amendment added CRO registration (SUGAM portal) &amp; tightened SAE-reporting timelines.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">What is an adverse event? Rationale for pharmacovigilance; methods of signal detection &amp; management.</span></summary>
@@ -1160,55 +1367,76 @@
 
 <section class="sec" id="s8" style="--sec:#c06a3e;--sec-soft:#c06a3e26">
   <h2>Section 8 · Preclinical Studies, Ethics &amp; Alternatives</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 1 (preclinical/IND) &amp; Ch. 9 (toxicology).</p>
+  <p class="sec-note">Covers preclinical/IND processes and toxicology.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Aims, methodology &amp; limitations of acute &amp; chronic toxicity studies; prerequisites/battery of safety studies before IND.</span></summary>
   <div class="answer">
+    <h4>Definition &amp; underlying assumptions</h4>
+    <p>Drug toxicity (safety) studies — sometimes "hyperpharmacology" — characterise a candidate's adverse effects, dose, duration and target-organ relationships before/during human exposure; conducted under <b>GLP</b> in ≥2 species (1 rodent + 1 non-rodent) by the intended human route. Two assumptions: (i) properly dose-scaled animal effects apply to humans; (ii) high-dose testing of small groups validly uncovers hazards occurring at low human doses.</p>
     <h4>Acute toxicity</h4>
     <ul>
       <li><b>Aim:</b> determine short-term toxicity of a single (or 24-h) dose; estimate LD₅₀/approximate lethal dose, target organs, dose for further studies.</li>
-      <li><b>Method:</b> single escalating doses in ≥2 species (rodent + sometimes non-rodent), 2 routes incl. intended clinical route; observe 14 days; gross pathology. Modern: <b>fixed-dose, up-and-down, ATC</b> methods (replace classical LD₅₀).</li>
+      <li><b>Method:</b> ≥2 rodent species, ≥5 animals/sex/group, ≥3 graded doses; oral limit dose 2g/kg or 10× intended human dose; observe 14 days; gross pathology + histopathology of affected organs. Modern: <b>fixed-dose, up-and-down, ATC</b> methods (replace classical LD₅₀ for ethical/3R reasons).</li>
     </ul>
     <h4>Sub-acute &amp; chronic toxicity</h4>
     <ul>
       <li><b>Aim:</b> toxicity on repeated dosing; NOAEL, cumulative &amp; target-organ effects; reversibility.</li>
-      <li><b>Method:</b> sub-acute 14–28 days; chronic up to 6–12 months in 2 species, 3 dose levels + control; haematology, clinical chemistry, histopathology. Duration tied to intended clinical-use duration.</li>
+      <li><b>Method:</b> sub-acute/subchronic 14–180 days; chronic 6 months–2 years in 2 species (rat+dog), 3 dose levels (high = overt toxicity, mid = mild signs, low = NOAEL) + control; full haematology/biochemistry (liver, hepatocellular-leakage enzymes AST/ALT/SDH/LDH, pancreatic, lipid, renal panels) &amp; histopathology of all viscera; non-rodents also get ECG &amp; fundus exam. Duration tied to intended clinical-use duration.</li>
     </ul>
+    <h4>LD50 estimation</h4>
+    <p>LD50 (Trevan &amp; Behrens) = dose lethal to 50% of animals, ideally the most sensitive species. <b>Karber's method</b> (mathematical, no curve needed) vs <b>probit/graphical method</b> (Bliss 1939, Miller–Tainter 1944, Litchfield–Wilcoxon 1949 — % mortality→probit, plotted against log-dose to linearise the sigmoid curve). Rule of thumb: i.p. LD50≈30%, i.v. LD50≈10% of oral LD50. <b>Therapeutic index (TI) = LD50/ED50</b> (animals) or TD50/ED50 (humans); margin of safety = LD1/ED99.</p>
     <h4>Full safety battery before IND</h4>
     <ul>
       <li>Acute, sub-acute, chronic toxicity.</li>
-      <li><b>Safety pharmacology</b> (CV — hERG/QT, CNS, respiratory).</li>
-      <li><b>Genotoxicity</b> (Ames, micronucleus, chromosomal aberration).</li>
-      <li><b>Reproductive/developmental</b> toxicity (Segment I, II teratogenicity, III).</li>
-      <li><b>Carcinogenicity</b> (for chronic-use drugs), local tolerance, immunotoxicity, toxicokinetics.</li>
+      <li><b>Safety pharmacology</b> core battery (CV — hERG/Kv11.1/QT, CNS, respiratory; dependence liability for CNS-penetrant drugs).</li>
+      <li><b>Genotoxicity</b> (Ames, micronucleus, chromosomal aberration, dominant-lethal).</li>
+      <li><b>Reproductive/developmental</b> toxicity (Segment I, II teratogenicity — rodent+rabbit, III).</li>
+      <li><b>Carcinogenicity</b> (whole-life, ~2yr, 2 species — for chronic-use drugs), local tolerance, toxicokinetics/ADME at toxic doses.</li>
     </ul>
-    <h4>Limitations</h4>
-    <p>Species differences → poor human prediction; high cost/time; ethical concerns; cannot detect idiosyncratic/immune ADRs; high-dose extrapolation issues.</p>
+    <h4>Limitations &amp; clinical translation</h4>
+    <p>Species differences → poor human prediction; high cost/time (2–6 yr); ethical concerns; cannot detect idiosyncratic/immune ADRs or rare effects (caught later by pharmacovigilance); high-dose extrapolation issues. Starting human (Phase 0/I) dose conventionally 1/100–1/10 of the animal no-effect dose; records (protocol, raw data, slides, blocks) retained ≥5 years post-marketing; IAEC clearance compulsory.</p>
+    <div class="recent"><b>Recent advances:</b> NAMs (New Approach Methodologies — in-vitro/ex-vivo/in-silico/in-chemico methods improving predictivity or enabling 3Rs) are reframing preclinical toxicology, including organ-on-chip/microphysiological systems [PMID 41231273]; iPSC-derived hepatocyte/cardiomyocyte/neuron organoids are positioned as human-relevant alternatives to the rodent+non-rodent paradigm, though clone-to-clone variability limits full replacement [PMID 38639829]. Poor animal-to-human translation persists as the reform driver — a narrative review reports &gt;92% failure rate moving from animal to human testing [PMID 36883244]. hiPSC-cardiomyocyte NAMs predicted clinical QT-prolongation risk with accuracy 0.83, outperforming hERG assays (0.54–0.64) in a retrospective &gt;20-IND FDA analysis [PMID 42243606]; an EFPIA/PDEG review catalogued candidate categories where human-derived in-vitro NAMs outperform animal models [PMID 40316753]. CiPA + ICH S7B/E14 shift cardiac safety toward integrated mechanism-based proarrhythmia assessment; ICH S5(R3)/OECD guidelines now sit alongside AOP/IATA frameworks for DART weight-of-evidence decisions [PMID 42021917]. AI/ML is emerging in safety pharmacology (proarrhythmia, seizure-liability, digital pathology) — a 2024 survey found 57% of Safety Pharmacology Society members not yet using AI but 84% intending to [PMID 42031077]. FDA's Roadmap to Reducing Animal Testing (Apr 2025, under the Modernization Act 2.0) targets animal studies becoming the exception over 3–5 yr, starting with monoclonal antibodies; CDSCO (29 Jul 2024) now allows GLP toxicity data already reviewed by a foreign regulator to avoid repeat-testing in India (case-by-case; subacute data still mandatory for IV/injectables) [CDSCO 2024-Jul].</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Principles of 3R/4R in animal experimentation &amp; alternatives (with examples).</span></summary>
   <div class="answer">
-    <p><b>3R (Russell &amp; Burch 1959):</b></p>
+    <p><b>3R (Russell &amp; Burch 1959)</b> is the ethical/regulatory cornerstone of humane experimentation; alternatives replace, reduce or refine live-vertebrate use while still yielding valid, predictive data. Driving rationale: animal testing is slow (2–6 yr for toxicology), costly, raises welfare concerns, and is imperfectly predictive of human responses.</p>
     <table>
       <tr><th>R</th><th>Principle</th><th>Example</th></tr>
-      <tr><td>Replacement</td><td>Avoid/replace animals</td><td>Cell cultures, organoids, organ-on-chip, in-silico, microdosing</td></tr>
-      <tr><td>Reduction</td><td>Use fewest animals</td><td>Better statistics, shared/historical controls</td></tr>
-      <tr><td>Refinement</td><td>Minimise suffering</td><td>Analgesia, humane endpoints, enrichment</td></tr>
-      <tr><td>Rehabilitation (4th R)</td><td>Rehome after study</td><td>Adoption of research dogs/primates</td></tr>
+      <tr><td>Replacement</td><td><b>First choice</b> — animal use forbidden where a validated replacement exists. <i>Absolute/full</i> (no animal material — in vitro cell lines, in silico, human-tissue, healthy-volunteer microdosing) vs <i>Relative/partial</i> (isolated organ-bath tissue ex vivo, or lower/invertebrate species substituted for vertebrates)</td><td>Cell cultures, organoids, organ-on-chip, in-silico/QSAR, microdosing</td></tr>
+      <tr><td>Reduction</td><td>Minimum animals consistent with statistical validity (~5/group for significance, 95% CI); better design, shared/historical data</td><td>Smallest-N LD50 estimation, shared controls</td></tr>
+      <tr><td>Refinement</td><td>Minimise pain/distress — analgesia/anaesthesia, humane endpoints, GLP-compliant housing &amp; handling, humane euthanasia</td><td>Analgesia, enrichment</td></tr>
+      <tr><td>Rehabilitation (proposed 4th R)</td><td>Rehome/rehabilitate animals after study — an emerging addition to the classical 3</td><td>Adoption of research dogs/primates</td></tr>
     </table>
-    <h4>Validated alternatives</h4>
+    <h4>Major categories of alternatives</h4>
+    <table>
+      <tr><th>Category</th><th>Examples</th><th>Replaces</th></tr>
+      <tr><td>In vitro (cell/tissue)</td><td>Cell lines/primary cultures, isolated organ-bath preparations, in-vitro ADME (permeability, hepatocyte/microsome metabolism), toxicity/mutagenicity assays</td><td>Whole-animal pharmacology &amp; early toxicity screening</td></tr>
+      <tr><td>3-D/advanced in vitro</td><td>iPSC-derived organoids, 3-D bioprinted tissue, "clinical trials in a dish," organ/tissue-on-chip</td><td>Standard cell culture &amp; animal models for activity/DMPK/toxicity</td></tr>
+      <tr><td>In silico</td><td>QSAR, receptor/molecular docking, pharmacophore modelling, ADME/Tox &amp; AI-assisted candidate prediction</td><td>Early hit-finding &amp; predictive toxicology</td></tr>
+      <tr><td>HTS</td><td>Robotic screening of compound libraries against molecular/cellular targets</td><td>Mass whole-animal lead screening</td></tr>
+      <tr><td>Human-based</td><td>Healthy-volunteer microdosing (Phase 0; ≤100 µg or 1/100th active dose, measured by AMS-¹⁴C or PET-¹¹C), human-tissue bioassay, biomarkers</td><td>Early animal PK/PD/toxicology</td></tr>
+      <tr><td>Lower organisms</td><td>Less-sentient/invertebrate species, microbial systems</td><td>Higher vertebrate models</td></tr>
+    </table>
+    <h4>Validated regulatory alternatives</h4>
     <ul>
       <li><b>Eye/skin irritation:</b> EpiOcular, BCOP, reconstructed human epidermis (replacing Draize test).</li>
-      <li><b>Pyrogen testing:</b> Monocyte Activation Test / LAL (replacing rabbit pyrogen test).</li>
+      <li><b>Pyrogen testing:</b> Monocyte Activation Test/LAL (replacing rabbit pyrogen test).</li>
       <li><b>Toxicity/efficacy:</b> 3D organoids, zebrafish, QSAR, PBPK, human organ-chips.</li>
     </ul>
-    <div class="recent"><b>Recent:</b> FDA Modernization Act 2.0 (2022) accepts non-animal methods; OECD validated in-vitro test guidelines.</div>
+    <h4>India — regulatory framework</h4>
+    <ul>
+      <li><b>CPCSEA</b> (Committee for the Purpose of Control &amp; Supervision of Experiments on Animals; Ministry of Environment &amp; Forests) supervises all institutional animal use; controls IAEC &amp; IBSC.</li>
+      <li><b>IAEC</b> (Institutional Animal Ethics Committee, Rule 13 of the 1998 Rules) — biological scientist, 2 scientists from different biological disciplines, veterinarian, in-charge of animal facility, outside scientist, socially-aware non-scientific member, CPCSEA nominee; approves experiments up to rodents (mice/rats/rabbits) — higher-than-rodent work forwarded to CPCSEA.</li>
+      <li><b>IBSC/IBC</b> oversees hazardous-chemical use &amp; recombinant-DNA/genetic-engineering work.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> "NAMs" (New Approach Methodologies) is now the umbrella term for in-vitro/ex-vivo human-cell systems, organoids, organ-on-chip, and AI-supported in-silico modelling explicitly framed to replace/reduce/refine animal testing [PMID 41231273]; human intestinal organoids entering early use for gut ADME/toxicity "in a dish" [PMID 41766415]. FDA <b>Roadmap to Reducing Animal Testing in Preclinical Safety Studies</b> (Apr 2025) phases out animal-testing requirements starting with monoclonal antibodies, targeting an integrated NAM-battery within 3–5 yr [FDA 2025-Apr]; Year-1 milestones (Apr 2026) include draft guidance to reduce/eliminate non-human-primate mAb testing and a searchable alternative-methods database [FDA 2026-Apr]. FDA Modernization Act 2.0 (Dec 2022) removed the blanket animal-study mandate, authorising cell-based assays, iPSC systems, organoids, organ-chips &amp; AI/computational methods. India's New Drugs &amp; Clinical Trials (Amendment) Rules 2023 permit 3-D organoids, organ-chips &amp; in-silico data for non-clinical safety/efficacy — India's first formal step toward animal-free testing; alternatives-focused Indian labs/startups grew from &lt;24 (2019) to &gt;80, with &gt;665 facilities CPCSEA-registered [CDSCO 2023]. Caveat: NAMs still cannot fully replicate metabolic competence, multi-cell-type architecture or inflammatory-cell crosstalk, so in-vivo validation persists pre-first-in-human [PMID 40795217].</div>
   </div></details>
 </section>
 
 <section class="sec" id="s9" style="--sec:#7a5bbd;--sec-soft:#7a5bbd26">
   <h2>Section 9 · Emerging &amp; Special Topics</h2>
-  <p class="sec-note">Mixed G&amp;G + Katzung/Rang &amp; Dale + recent literature.</p>
+  <p class="sec-note">Drawn from standard pharmacology references and recent literature.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Current status &amp; applications of Gene Therapy (esp. inherited conditions).</span></summary>
   <div class="answer">
@@ -1467,7 +1695,7 @@
     <p><b>Pros:</b> personalised dosing, on-demand/point-of-care manufacturing, complex geometries. <b>Cons:</b> regulatory/QC challenges, scalability, material limits.</p>
   </div></details>
 
-  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Concept of P-value, normal distribution, confounding factors &amp; tests of significance in research/clinical trials.</span></summary>
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Concept of P-value, normal distribution, confounding factors &amp; tests of significance — Student's t-test, chi-square test &amp; non-parametric tests in research/clinical trials.</span></summary>
   <div class="answer">
     <h4>Normal distribution</h4>
     <p>Symmetric bell-shaped curve; mean = median = mode; ~68/95/99.7% data within ±1/2/3 SD. Basis of parametric tests.</p>
@@ -1476,16 +1704,49 @@
     <ul><li><b>Type I error (α):</b> false positive (reject true null).</li><li><b>Type II error (β):</b> false negative; <b>Power = 1−β</b>.</li></ul>
     <h4>Confounding factor</h4>
     <p>An extraneous variable associated with both exposure &amp; outcome, distorting the true association (e.g. smoking confounding alcohol–lung cancer). Controlled by randomisation, matching, restriction, stratification, multivariable adjustment.</p>
-    <h4>Tests of significance</h4>
+    <h4>Tests of significance — overview</h4>
     <table>
       <tr><th>Data</th><th>Test</th></tr>
-      <tr><td>2 means (parametric)</td><td>Student's t-test (paired/unpaired)</td></tr>
+      <tr><td>2 means (parametric)</td><td>Student's t-test (paired/unpaired/one-sample)</td></tr>
       <tr><td>&gt;2 means</td><td>ANOVA</td></tr>
       <tr><td>Categorical/proportions</td><td>Chi-square, Fisher's exact</td></tr>
       <tr><td>Non-parametric</td><td>Mann-Whitney, Wilcoxon, Kruskal-Wallis</td></tr>
       <tr><td>Correlation/prediction</td><td>Pearson/Spearman, regression</td></tr>
       <tr><td>Survival</td><td>Kaplan-Meier, log-rank, Cox</td></tr>
     </table>
+
+    <h4>Student's t-test in detail</h4>
+    <p>Statistic <b>t = (mean difference)/(SE of the difference)</b>, compared against the t-distribution (df-dependent) to get a p-value.</p>
+    <table>
+      <tr><th>Type</th><th>Use</th></tr>
+      <tr><td>Unpaired (independent)</td><td>Compares means of two independent groups</td></tr>
+      <tr><td>Paired</td><td>Compares means of matched/before–after observations in the same subjects</td></tr>
+      <tr><td>One-sample</td><td>Compares a sample mean to a known/hypothesised value</td></tr>
+    </table>
+    <p><b>Assumptions:</b> continuous data, approximately normal distribution, (unpaired) homogeneity of variance, independent observations. <b>Sample-size formula</b> (two-group comparison, 80% power, α=0.05): <code>n ≈ 16·σ²/E²</code> per group (σ = SD, E = clinically meaningful difference) — a classic exam one-liner.</p>
+    <div class="dia"><b>Diagram:</b> t-distribution curve (bell-shaped, heavier tails than normal) with two-tailed critical regions shaded beyond ±t<sub>crit</sub>; df labelled.</div>
+
+    <h4>Chi-square (χ²) test in detail</h4>
+    <p>Used for <b>categorical/nominal</b> data (proportions) — tests whether observed frequencies differ from those expected under the null hypothesis.</p>
+    <p><b>Formula:</b> <code>χ² = Σ(O−E)²/E</code>; degrees of freedom <code>df = (rows−1)(columns−1)</code>.</p>
+    <ul>
+      <li><b>Yates' continuity correction</b> — applied in a 2×2 table to reduce overestimation of χ² with small samples.</li>
+      <li><b>Fisher's exact test</b> — preferred over chi-square when expected cell frequency &lt;5 (sparse/small-sample 2×2 tables).</li>
+      <li><b>McNemar's test</b> — chi-square variant for <i>paired</i> categorical (before–after) data.</li>
+    </ul>
+    <div class="dia"><b>Diagram:</b> 2×2 contingency table (exposure × outcome) with observed (O) and expected (E) cell counts annotated, alongside a χ² distribution curve with the critical region.</div>
+
+    <h4>Non-parametric tests — when normality fails</h4>
+    <table>
+      <tr><th>Parametric</th><th>Non-parametric equivalent</th></tr>
+      <tr><td>Unpaired t-test</td><td>Mann-Whitney U test</td></tr>
+      <tr><td>Paired t-test</td><td>Wilcoxon signed-rank test</td></tr>
+      <tr><td>One-way ANOVA</td><td>Kruskal-Wallis test</td></tr>
+      <tr><td>Pearson correlation</td><td>Spearman's rank correlation</td></tr>
+      <tr><td>Repeated-measures ANOVA</td><td>Friedman test</td></tr>
+    </table>
+    <p>Preferred when data are ordinal, skewed, have outliers, or sample size is too small to assess normality.</p>
+    <div class="recent"><b>Recent:</b> the post-ASA "retire statistical significance" movement pushes reporting of effect sizes &amp; confidence intervals alongside (or instead of) p&lt;0.05 thresholds; sparse-contingency-table reviews reinforce using Fisher's exact/Yates correction to avoid inflated Type-I error; FDA-endorsed <b>Win Ratio</b> and <b>DOOR</b> (desirability of outcome ranking) frameworks are modern non-parametric, hierarchical-outcome alternatives now used in cardiovascular &amp; infectious-disease trials.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Pharmacological basis &amp; rationale of drugs used in peptic ulcer, gout, migraine &amp; diabetic ketoacidosis.</span></summary>
@@ -1564,8 +1825,260 @@
   </div></details>
 </section>
 
-<section class="sec" id="s10" style="--sec:#aa5590;--sec-soft:#aa559026">
-  <h2>Section 10 · 🩺 Clinical Case Vignettes</h2>
+<section class="sec" id="s10" style="--sec:#a83232;--sec-soft:#a8323226">
+  <h2>Section 10 · High-Yield Recurring Topics (RGUHS PYQ Bank)</h2>
+  <p class="sec-note">Extracted from RGUHS MD Pharmacology AnswerBank 2021–2026 (Paper I, General Pharmacology) — repeatedly-asked short notes not otherwise covered above.</p>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Discuss the placebo effect in clinical pharmacology — types of placebo, mechanism of placebo analgesia, its role in RCT design, and the ethical issues involved. <i>(RGUHS Paper I, Sep 2025)</i></span></summary>
+  <div class="answer">
+    <h4>Definition &amp; types</h4>
+    <table>
+      <tr><th>Type</th><th>Meaning</th></tr>
+      <tr><td>Pure placebo</td><td>Inert substance with no pharmacological activity</td></tr>
+      <tr><td>Active placebo</td><td>Mimics the side effects of the test drug to preserve blinding</td></tr>
+      <tr><td>Sham procedure</td><td>Sham surgery/sham acupuncture as a procedural control</td></tr>
+      <tr><td>Nocebo</td><td>Negative effect arising purely from negative expectation</td></tr>
+      <tr><td>Open-label placebo</td><td>Given with full disclosure — still produces measurable benefit</td></tr>
+    </table>
+    <h4>Mechanism of placebo analgesia</h4>
+    <p>Expectation-driven <b>descending pain modulation</b>: prefrontal cortex → periaqueductal grey (PAG) → rostral ventromedial medulla → release of endogenous opioids that inhibit nociceptive transmission at the dorsal horn. The effect is <b>naloxone-reversible</b>, confirming an opioidergic substrate; dopaminergic reward/expectation pathways also contribute. Classical conditioning and verbal expectation both drive the response.</p>
+    <h4>Role in RCT design</h4>
+    <ul>
+      <li>Blinding controls for both patient and assessor bias, separating true pharmacodynamic effect from natural history, regression to the mean, and expectation.</li>
+      <li>Placebo response magnitude is typically 30–40% for subjective endpoints (pain, mood) and far lower for objective/hard endpoints (tumour shrinkage, mortality).</li>
+      <li><b>Run-in periods</b> are used to identify and exclude high placebo-responders before randomisation.</li>
+    </ul>
+    <h4>Ethical considerations</h4>
+    <ul>
+      <li><b>Declaration of Helsinki:</b> placebo is permissible only when no proven effective intervention exists, or when scientifically necessary and patients face no additional risk of serious harm.</li>
+      <li>Requires <b>clinical equipoise</b> and explicit disclosure in informed consent of the possibility of receiving placebo.</li>
+    </ul>
+    <div class="dia"><b>Diagram:</b> Descending pain-modulation circuit — PFC → PAG → RVM → dorsal horn inhibition (naloxone-reversible); alongside a schematic contrasting placebo vs active-placebo vs nocebo response curves.</div>
+    <div class="recent"><b>Recent:</b> the SAMSON statin trial showed ~90% of muscle-related adverse effects reported on statins were reproduced on placebo (a nocebo effect); meta-analyses of open-label placebo (with fMRI evidence of PFC–PAG engagement) confirm efficacy without deception; FDA guidance continues to require placebo-controlled trial designs where ethically justified, including for newer vaccines.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Discuss transgenic and knockout animals — methods of production, applications in pharmacological research, and their limitations. <i>(RGUHS Paper I, May 2025)</i></span></summary>
+  <div class="answer">
+    <h4>Terminology</h4>
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>Transgenic</td><td>Foreign gene randomly inserted via pronuclear microinjection</td></tr>
+      <tr><td>Knockout (KO)</td><td>Targeted gene deletion via embryonic stem (ES)-cell homologous recombination</td></tr>
+      <tr><td>Knock-in</td><td>Targeted gene replacement/insertion at a specific locus</td></tr>
+      <tr><td>Conditional KO</td><td>Tissue- or time-specific deletion (Cre-lox system) — avoids embryonic lethality</td></tr>
+      <tr><td>Knock-down (RNAi)</td><td>Short dsRNA transiently/partially silences (not deletes) a gene — reversible</td></tr>
+      <tr><td>Homozygous vs heterozygous KO</td><td>Both vs one allele disrupted → complete vs partial loss of function</td></tr>
+    </table>
+    <p>The mouse is the workhorse — rapid breeding cycle, well-characterised genome, &gt;99% conservation with humans, and the only species whose totipotent embryonic stem (ES) cells can be grown in vitro and re-injected to form a germ line.</p>
+    <h4>Methods</h4>
+    <ul>
+      <li><b>Pronuclear microinjection</b> of foreign DNA into a fertilised oocyte → random genomic integration → classic transgenic founder; pivotal in studying MHC-class-II-associated autoimmune disease (RA, MS, diabetes).</li>
+      <li><b>ES-cell-based homologous recombination</b> → targeted knockout in ES cells → injected into a blastocyst → chimeric mouse → heterozygous F1 inter-mated → homozygous knockout; germline transmission confirmed by Southern blot/PCR + Mendelian inheritance (Mario Capecchi, Martin Evans, Oliver Smithies — Nobel Prize 2007).</li>
+      <li><b>Knock-down (RNAi)</b> — short dsRNA silences the target gene without altering DNA, useful where deletion is embryonically lethal (Andrew Fire &amp; Craig Mello — Nobel Prize 2006).</li>
+    </ul>
+    <h4>Applications in pharmacology</h4>
+    <ul>
+      <li><b>Target validation via receptor KO:</b> M2-KO abolishes vagal/carbachol bradycardia; M3-KO eliminates muscarinic bronchoconstriction; M1-KO impairs forebrain plasticity &amp; loses pilocarpine seizures; α1-KO defines cardiovascular/lower-urinary-tract roles, α2-KO neuronal/inhibitory roles; MAO-KO vs NET-KO dissect noradrenergic-transmission termination.</li>
+      <li><b>Disease models:</b> α-synuclein (Parkinson's), APP/3xTg-AD (Alzheimer's), R6/2 huntingtin-exon-1 (Huntington's), mutant SOD1 (ALS), ob/ob &amp; db/db (obesity/T2DM, leptin pathway), HBV-transgenic (hepatitis-B/HCC), humanised TNF-transgenic (RA).</li>
+      <li>Humanised mice for antibody/biologic testing; CFTR-KO cystic fibrosis; humanised CYP/nuclear-receptor mice for ADME/toxicology; transgenic animals as biologic "bioreactors".</li>
+    </ul>
+    <h4>Advantages &amp; limitations</h4>
+    <table>
+      <tr><th>Advantage</th><th>Limitation</th></tr>
+      <tr><td>Precise, causal dissection of gene function in vivo</td><td>Species differences in physiology limit human predictivity</td></tr>
+      <tr><td>Generates disease models otherwise unavailable</td><td>High cost, long generation time, compensatory pathways can mask phenotype</td></tr>
+    </table>
+    <div class="dia"><b>Diagram:</b> Flow — targeted DNA construct → ES-cell homologous recombination → injection into blastocyst → chimeric mouse → germline transmission → homozygous knockout.</div>
+    <div class="recent"><b>Recent:</b> CRISPR/Cas9 is now the workhorse for rapidly generating KO/knock-in animals across species (mouse, rat, rabbit, pig, dog, monkey — e.g. first DMD rabbit via zygote co-injection of SpCas9 mRNA+gRNAs), though line creation remains costly and genetic compensation can still mask phenotypes [PMID 37894981, 38786024]. Next-gen editors extend beyond simple deletion — base editors (single-nucleotide change, no double-strand break; ~60% of pathogenic point mutations theoretically correctable) and prime editors (precise insertions ≤44bp) — letting modellers install defined point mutations rather than crude nulls [PMID 38786024, 42173386]. Multi-gene-edited (10-GE) Revivicor pigs (4 porcine genes inactivated incl. αGal/Neu5Gc/SDa xenoantigens + 6 human transgenes) supplied hearts for the first two clinical pig-to-human heart xenotransplants (Univ. of Maryland, Jan 2022) under FDA expanded-access IND — the highest-profile transgenic-animal product to date [PMID 38517040, FDA 2022-Jan]. Humanised immunodeficient mice (NSG, knock-in MISTRG expressing human M-CSF/GM-CSF/IL-3/TPO/SIRPα) co-engrafted with patient tumours (PDX) are now the in-vivo workhorse for immuno-oncology drug development [PMID 36635480]. Casgevy (exa-cel) is the first FDA-approved CRISPR-based human therapy (8 Dec 2023, sickle-cell/β-thalassaemia), translating gene-editing principles validated in transgenic-animal platforms [FDA 2023-Dec]; the FDA's Apr-2025 roadmap to reduce/replace animal testing with NAMs (organoids, organ-on-chip, AI/in-silico) builds on the FDA Modernization Act 2.0 (2022), paralleled by India's New Drugs &amp; Clinical Trials (Amendment) Rules 2023 permitting non-animal methods and aligning CDSCO with the global 3Rs shift.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Discuss drug enantiomers and stereoselectivity in pharmacokinetics and pharmacodynamics, with examples of chiral switching. <i>(RGUHS Paper I, May 2025)</i></span></summary>
+  <div class="answer">
+    <h4>Basic concepts</h4>
+    <p>A <b>chiral centre</b> gives rise to non-superimposable mirror-image <b>enantiomers</b>. The more pharmacologically active isomer is the <b>eutomer</b>, the less active (or inactive) the <b>distomer</b>; the <b>eudismic ratio</b> = potency of eutomer/distomer.</p>
+    <h4>Pharmacodynamic stereoselectivity</h4>
+    <table>
+      <tr><th>Drug</th><th>Stereoselective finding</th></tr>
+      <tr><td>Warfarin</td><td>S-warfarin is the more potent anticoagulant enantiomer</td></tr>
+      <tr><td>Propranolol</td><td>S-propranolol has ~100× the β-blocking activity of R-propranolol</td></tr>
+      <tr><td>Salbutamol</td><td>R-isomer is the bronchodilator (levosalbutamol); S-isomer may worsen bronchial hyperreactivity</td></tr>
+      <tr><td>Ketamine</td><td>S-(es)ketamine is the more potent NMDA-receptor antagonist</td></tr>
+    </table>
+    <h4>Pharmacokinetic stereoselectivity</h4>
+    <p>Enantiomers can show different protein binding, metabolism (CYP isoforms metabolise enantiomers at different rates), renal transport, and even <b>chiral inversion</b> in vivo (R-ibuprofen converts to the active S-form).</p>
+    <h4>Chiral switches</h4>
+    <table>
+      <tr><th>Racemate → single enantiomer</th><th>Rationale</th></tr>
+      <tr><td>Omeprazole → esomeprazole</td><td rowspan="3">Improved potency/selectivity, reduced effective dose, fewer off-target effects, patent-life extension</td></tr>
+      <tr><td>Citalopram → escitalopram</td></tr>
+      <tr><td>Ketamine → esketamine</td></tr>
+    </table>
+    <div class="dia"><b>Diagram:</b> Lock-and-key receptor-fit schematic — eutomer fits the active site precisely; distomer is a poor/mismatched fit (mirror-image side chain clashing with the binding pocket).</div>
+    <div class="recent"><b>Recent:</b> esketamine nasal spray remains FDA-approved for treatment-resistant depression (including as monotherapy in recent label updates); a large escitalopram-vs-donepezil Alzheimer's-prevention trial returned negative; CPIC pharmacogenomic guidelines now address CYP2B6-mediated stereoselective methadone metabolism.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Discuss the WHO concept of Essential Medicines — definition, criteria for selection, and the National List of Essential Medicines (NLEM). <i>(RGUHS Paper I, May 2025 · Paper IV, May 2022 — asked 2×)</i></span></summary>
+  <div class="answer">
+    <h4>Definition &amp; rationale</h4>
+    <p>WHO defines Essential Medicines as those that <b>"satisfy the priority healthcare needs of the population,"</b> selected with regard to public-health relevance, efficacy/safety evidence, and comparative cost-effectiveness — to be available at all times, in adequate amounts, assured quality, and at an affordable price.</p>
+    <h4>WHO selection criteria</h4>
+    <ul>
+      <li>(a) Adequate efficacy &amp; safety evidence from clinical studies.</li>
+      <li>(b) Assured quality, including bioavailability and storage stability.</li>
+      <li>(c) Disease pattern, feasibility (facilities, trained personnel, resources).</li>
+      <li>(d) Comparative efficacy/safety/cost when alternatives exist.</li>
+      <li>(e) Favourable pharmacokinetics &amp; local manufacturing feasibility.</li>
+      <li>(f) Single compounds preferred; FDCs only with proven added benefit.</li>
+      <li>(g) Dynamic, continuously revised process.</li>
+      <li>(h) Based on standard treatment guidelines.</li>
+    </ul>
+    <h4>WHO Model List vs NLEM (India)</h4>
+    <table>
+      <tr><th>Feature</th><th>WHO Model List (EML)</th><th>NLEM (India)</th></tr>
+      <tr><td>First issued</td><td>1977</td><td>1996</td></tr>
+      <tr><td>Revision cycle</td><td>Every 2 years</td><td>Periodic (2011, 2015, 2022)</td></tr>
+      <tr><td>Categorisation</td><td>Core vs complementary list</td><td>Primary / secondary / tertiary level of care</td></tr>
+    </table>
+    <h4>Fixed-dose combinations (FDCs)</h4>
+    <p>Included only when ingredients have matched PK profiles and a proven advantage in efficacy, safety, adherence, or reducing resistance (anti-TB, antimalarial, HIV regimens) — e.g. cotrimoxazole, carbidopa+levodopa, ORS.</p>
+    <div class="dia"><b>Diagram:</b> Selection funnel — "all marketed medicines" narrowing through efficacy/safety → quality → disease-pattern/feasibility → cost-effectiveness → single-compound preference → guideline-based filters to the final EML.</div>
+    <div class="recent"><b>Recent:</b> WHO's 24th Model List (Sep 2025) now carries 523 adult / 374 paediatric medicines, adding GLP-1 receptor agonists/tirzepatide for diabetes with CVD/CKD (not obesity alone); the WHO <b>AWaRe</b> (Access/Watch/Reserve) antibiotic-stewardship classification covers 41 EML antibiotics (plus 257 non-EML), with the 2024 UN High-Level Meeting target of ≥70% Access-group use — only 14.1% of LMIC studies currently meet it [PMID 38342438, 40110554]; India's NLEM remains the 2022 list (384 drugs) and is criticised for not yet adopting AWaRe categorisation. A 2026 Nature study of decision-aware ML allocation deployed nationwide in Sierra Leone raised essential-product consumption by ~19% in treated districts (~2 million women/under-5 children) [PMID 42056524]; pharmacogenomics is emerging as a new selection lens — ~13% of 2023 WHO-EML drugs carry actionable PGx-biomarker guidance [PMID 41932843]. LMIC access reviews confirm a national EML is a key facilitator against stock-outs/high private prices, though paediatric-cancer-drug lists align only 40-60% with the WHO EML for Children [PMID 41658422, 39891074].</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Classify the drug reservoirs in the body with their clinical significance, and explain redistribution using thiopental as an example. <i>(RGUHS Paper I, Jan 2025 · Paper I, Nov 2022 — asked 2×)</i></span></summary>
+  <div class="answer">
+    <h4>Concept</h4>
+    <p>A drug reservoir is any compartment — plasma protein, tissue, fat, or bone — into which drug binds reversibly and from which it slowly re-releases as free plasma concentration falls. Bound drug is inactive but in equilibrium with free drug, prolonging duration of action and raising apparent Vd.</p>
+    <h4>Classification</h4>
+    <table>
+      <tr><th>Reservoir</th><th>Mechanism</th><th>Examples</th></tr>
+      <tr><td>Plasma proteins</td><td>Albumin (acidic drugs), α1-acid glycoprotein (basic drugs)</td><td>Warfarin, phenytoin, NSAIDs (albumin); lidocaine, propranolol (α1-AG)</td></tr>
+      <tr><td>Cellular/tissue</td><td>Binding to intracellular proteins/phospholipids; active transport</td><td>Digoxin → muscle/heart; chloroquine, tetracyclines → liver</td></tr>
+      <tr><td>Fat</td><td>Physical solution of lipophilic drugs in neutral fat</td><td>Thiopental, lipophilic toxins</td></tr>
+      <tr><td>Bone &amp; teeth</td><td>Adsorption onto hydroxyapatite</td><td>Tetracyclines, bisphosphonates, lead, radium</td></tr>
+      <tr><td>Transcellular/organ-specific</td><td>Selective uptake/melanin binding</td><td>Iodine → thyroid; chloroquine → retina; atropine → iris</td></tr>
+    </table>
+    <h4>Plasma protein binding</h4>
+    <p>Reversible equilibrium — only free drug is active, filtered, and metabolised. High protein binding → small Vd, longer apparent action, not removed by haemodialysis. α1-acid glycoprotein is an acute-phase reactant (rises in cancer, MI, arthritis).</p>
+    <h4>Redistribution — thiopental</h4>
+    <p>A single IV dose of thiopental rapidly crosses the BBB (peak brain concentration within ~1 min) due to high lipid solubility, producing rapid anaesthesia onset; it then <b>redistributes</b> to muscle and finally fat, and plasma/brain levels fall — anaesthesia terminates by redistribution, <i>not</i> elimination (true elimination t½ is long, 3–8 h). With repeated dosing the low-perfusion depots saturate, and the drug becomes cumulative/longer-acting.</p>
+    <div class="dia"><b>Diagram:</b> Thiopental concentration–time curves for blood, brain, muscle and fat on a log scale — showing the early blood/brain peak and the cross-over as muscle/fat levels rise while blood/brain fall, terminating anaesthesia.</div>
+    <div class="recent"><b>Recent:</b> a DOLPHIN-trial sub-analysis confirmed the <b>unbound (free) fraction</b> is the pharmacologically active reservoir component — unbound ceftriaxone fraction ~15% in critically ill patients, varying with albumin and renal function; a 2021 review challenged "high protein binding causes clinically important displacement" as largely a myth; a 2026 critical update reframes Vd(area), not Vd(ss), as the truer measure of the distribution/reservoir volume.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Describe the principle, methodology and clinical applications of radioimmunoassay (RIA). <i>(RGUHS Paper I — asked 5× across Jan 2025, Dec 2023, Jul 2023, Nov 2021, Jul 2021)</i></span></summary>
+  <div class="answer">
+    <h4>Principle — competitive binding</h4>
+    <p>A fixed, limiting amount of specific <b>antibody</b> and a fixed amount of <b>radiolabelled antigen</b> (typically <sup>125</sup>I) compete with the unlabelled antigen in the test sample for the limited antibody-binding sites. As sample antigen rises, it progressively displaces the radiolabelled antigen, so <b>bound radioactivity falls</b> in proportion to the analyte present — the signal is inversely proportional to analyte concentration. Developed by Berson &amp; Yalow (1960) for plasma insulin; Yalow received the Nobel Prize (1977).</p>
+    <h4>Reagents &amp; methodology</h4>
+    <table>
+      <tr><th>Step</th><th>Procedure</th></tr>
+      <tr><td>1. Labelling</td><td>Antigen labelled with <sup>125</sup>I/<sup>131</sup>I (iodogen or chloramine-T oxidation)</td></tr>
+      <tr><td>2. Reaction</td><td>Constant antibody + labelled antigen added to standard or unknown sample</td></tr>
+      <tr><td>3. Competition</td><td>Incubate to equilibrium — labelled and unlabelled antigen compete for antibody</td></tr>
+      <tr><td>4. Separation</td><td>Bound vs free antigen separated (double-antibody precipitation, PEG, charcoal, or coated tube)</td></tr>
+      <tr><td>5. Counting</td><td>Gamma counter measures bound (or free) radioactivity</td></tr>
+      <tr><td>6. Read-off</td><td>Unknown concentration interpolated from a log/logit-linearised standard binding curve</td></tr>
+    </table>
+    <h4>Variants</h4>
+    <table>
+      <tr><th>Assay</th><th>Label/principle</th></tr>
+      <tr><td>RIA</td><td>Radiolabel on antigen; competitive (limited antibody) — original method</td></tr>
+      <tr><td>IRMA</td><td>Radiolabel on antibody; non-competitive, two-site "sandwich"</td></tr>
+      <tr><td>RRA</td><td>Labelled ligand binds a receptor instead of an antibody</td></tr>
+      <tr><td>ELISA</td><td>Enzyme label (no radioactivity) — safer, cheaper, longer shelf-life</td></tr>
+    </table>
+    <h4>Clinical applications</h4>
+    <ul>
+      <li>Hormone assays — insulin, thyroid hormones, steroids, gonadotropins, hCG.</li>
+      <li>Therapeutic drug monitoring — serum digoxin (narrow therapeutic window).</li>
+      <li>Plasma renin concentration (unaffected by aliskiren, unlike the enzymatic PRA assay).</li>
+    </ul>
+    <div class="dia"><b>Diagram:</b> Standard binding curve — % antibody-bound radioactivity (y) vs log antigen concentration (x), a descending sigmoid; alongside a competitive-binding schematic showing labelled vs unlabelled antigen competing for limited antibody sites.</div>
+    <div class="recent"><b>Recent:</b> LC-MS/MS is displacing RIA as the reference method for steroid hormones — RIA overestimated plasma aldosterone by ~29% versus LC-MS/MS in a primary-aldosteronism screening study; radioimmunoprecipitation (RIPA) remains the most sensitive myasthenia-gravis autoantibody assay but is being phased out for non-radioactive cell-based assays; femtomolar non-isotopic bioluminescence immunoassays (LUCAS) now rival RIA sensitivity without radiation hazard.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Discuss drug therapy in pregnancy and lactation — placental transfer, teratogenesis, and neonatal pharmacokinetics. <i>(RGUHS Paper I, Dec 2023 · Paper I, Jul 2023 — asked 2×)</i></span></summary>
+  <div class="answer">
+    <h4>Placental transfer determinants</h4>
+    <p>Lipid solubility, molecular size, ionisation, placental blood flow, and transporter activity (P-glycoprotein limits transfer of some drugs) determine the rate and extent of transplacental passage — most drugs cross to some degree by simple diffusion.</p>
+    <h4>Teratogenesis — three phases</h4>
+    <table>
+      <tr><th>Phase</th><th>Timing</th><th>Vulnerability</th></tr>
+      <tr><td>Pre-implantation</td><td>0–2 weeks</td><td>"All-or-none" — death or no effect (minimal teratogenicity)</td></tr>
+      <tr><td>Embryonic (organogenesis)</td><td>3–8 weeks</td><td>Highest risk of major structural malformations</td></tr>
+      <tr><td>Fetal period</td><td>9 weeks–term</td><td>Growth restriction, functional/CNS deficits rather than gross malformation</td></tr>
+    </table>
+    <h4>Important human teratogens</h4>
+    <ul>
+      <li><b>Valproate</b> — neural tube defects, neurodevelopmental impairment (avoid in pregnancy).</li>
+      <li><b>ACE inhibitors/ARBs</b> — fetal renal agenesis, oligohydramnios (2nd/3rd trimester).</li>
+      <li><b>Warfarin</b> — warfarin embryopathy (nasal hypoplasia, stippled epiphyses).</li>
+      <li><b>Isotretinoin, thalidomide</b> — classic severe structural teratogens.</li>
+      <li><b>Tetracyclines</b> — dental staining, bone growth effects.</li>
+    </ul>
+    <h4>Lactation &amp; neonatal pharmacokinetics</h4>
+    <p>Drug transfer into milk favours lipid-soluble, low-protein-bound, weakly basic drugs (milk is slightly acidic — ion trapping). Neonates have immature CYP/UGT enzymes, higher body water, lower protein binding, and immature renal function — prolonging drug half-lives and increasing toxicity risk (e.g. chloramphenicol "gray baby" syndrome).</p>
+    <div class="dia"><b>Diagram:</b> Critical-periods-of-development timeline — pre-implantation, embryonic (organogenesis, peak teratogen susceptibility), and fetal periods, each annotated with the dominant type of injury.</div>
+    <div class="recent"><b>Recent:</b> the FDA's <b>Pregnancy and Lactation Labeling Rule (PLLR)</b> has replaced the old A/B/C/D/X risk categories with narrative risk summaries; the MATISSE trial established maternal RSV vaccination efficacy for neonatal protection; large cohort studies confirm in-utero antiseizure-drug exposure (valproate worst) affects neurodevelopmental outcomes, reinforcing avoidance in pregnancy where alternatives exist.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Discuss autoreceptors — concept, signal transduction mechanism, and therapeutic correlates. <i>(RGUHS Paper I, Dec 2023 · Paper I, Jul 2023 — asked 2×)</i></span></summary>
+  <div class="answer">
+    <h4>Concept</h4>
+    <p>An <b>autoreceptor</b> is a presynaptic receptor on a neuron that responds to the <i>same</i> neurotransmitter the neuron itself releases ("homotropic" feedback), providing negative-feedback inhibition of further release. (A <b>heteroreceptor</b> responds to a different neurotransmitter released by a neighbouring neuron — "heterotropic" modulation.)</p>
+    <h4>Major autoreceptor systems</h4>
+    <table>
+      <tr><th>System</th><th>Autoreceptor</th><th>Effect</th></tr>
+      <tr><td>Noradrenergic</td><td>α2</td><td>↓ noradrenaline release (Gi-coupled)</td></tr>
+      <tr><td>Dopaminergic</td><td>D2</td><td>↓ dopamine release/synthesis</td></tr>
+      <tr><td>Serotonergic</td><td>5-HT1A (somatodendritic) / 5-HT1B (terminal)</td><td>↓ serotonin firing/release</td></tr>
+      <tr><td>Cholinergic</td><td>M2</td><td>↓ acetylcholine release</td></tr>
+      <tr><td>Histaminergic</td><td>H3</td><td>↓ histamine release</td></tr>
+    </table>
+    <h4>Signal transduction</h4>
+    <p>Most autoreceptors (α2, D2, 5-HT1A/1B, M2, H3) are <b>Gi/Go-coupled</b> — activation ↓ adenylyl cyclase/cAMP and ↓ voltage-gated Ca²⁺ influx while ↑ K⁺ conductance, reducing vesicular neurotransmitter release.</p>
+    <h4>Therapeutic correlates</h4>
+    <ul>
+      <li><b>Clonidine</b> (α2-agonist) → activates autoreceptors → ↓ central sympathetic outflow → antihypertensive effect.</li>
+      <li><b>Mirtazapine</b> (α2-antagonist) → blocks autoreceptor feedback → ↑ noradrenaline &amp; serotonin release — antidepressant mechanism.</li>
+      <li><b>Buspirone</b> (5-HT1A partial agonist) — anxiolytic via autoreceptor/heteroreceptor modulation.</li>
+      <li><b>SSRI delayed onset</b> — initial ↑ synaptic 5-HT activates inhibitory 5-HT1A somatodendritic autoreceptors, which must desensitise (over 2–4 weeks) before full antidepressant effect emerges.</li>
+    </ul>
+    <div class="dia"><b>Diagram:</b> Noradrenergic varicosity — released NA feeding back onto presynaptic α2 autoreceptor (Gi-coupled) → ↓cAMP, ↓Ca²⁺ influx → ↓ further NA release (negative-feedback loop).</div>
+    <div class="recent"><b>Recent:</b> gepirone ER (5-HT1A partial agonist) is FDA-approved for major depressive disorder; pitolisant (H3-receptor antagonist/inverse agonist) showed efficacy in narcolepsy in the HAROSA III trial; ongoing H3-antagonist research explores cognitive-enhancement potential via heteroreceptor modulation.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Describe the principle, instrumentation and clinical applications of flame photometry. <i>(RGUHS Paper I, Dec 2023 · Paper I, Jul 2023 — asked 2×)</i></span></summary>
+  <div class="answer">
+    <h4>Principle</h4>
+    <p>A liquid sample is aspirated into a flame in four sequential steps — <b>desolvation</b> (solvent evaporates) → <b>atomisation</b> (solid residue vaporises to free atoms) → <b>excitation</b> (flame thermal energy promotes outer-shell electrons) → <b>emission</b> (electrons fall back, emitting light of a characteristic wavelength). Emission intensity at that wavelength is proportional to analyte concentration.</p>
+    <h4>Analytical emission lines</h4>
+    <table>
+      <tr><th>Element</th><th>Wavelength</th></tr>
+      <tr><td>Sodium (Na)</td><td>589 nm (yellow)</td></tr>
+      <tr><td>Potassium (K)</td><td>766/770 nm</td></tr>
+      <tr><td>Lithium (Li)</td><td>671 nm</td></tr>
+      <tr><td>Calcium (Ca)</td><td>622 nm</td></tr>
+    </table>
+    <h4>Instrumentation</h4>
+    <p>Atomiser/burner with fuel-oxidant flame (propane/air or acetylene/air) → optical filter or monochromator selects the element-specific wavelength → photodetector → readout, calibrated against known standards (calibration curve).</p>
+    <h4>Interferences &amp; flame photometry vs AAS</h4>
+    <table>
+      <tr><th>Feature</th><th>Flame photometry</th><th>Atomic absorption spectroscopy (AAS)</th></tr>
+      <tr><td>Measures</td><td>Emission from thermally excited atoms</td><td>Absorption of light by ground-state atoms</td></tr>
+      <tr><td>Sensitivity</td><td>Good for easily-excited alkali/alkaline-earth metals (Na, K, Li, Ca)</td><td>Higher sensitivity, broader element range</td></tr>
+      <tr><td>Interferences</td><td>Spectral overlap, ionisation interference, viscosity/flow-rate variation</td><td>Fewer spectral interferences (hollow-cathode lamp specificity)</td></tr>
+    </table>
+    <h4>Clinical applications</h4>
+    <p>Estimation of serum/urine <b>sodium, potassium, lithium</b> (therapeutic drug monitoring) and calcium — long the standard clinical-laboratory method, now substantially replaced by ion-selective electrodes for Na⁺/K⁺.</p>
+    <div class="dia"><b>Diagram:</b> Block diagram — sample → atomiser/burner → flame → monochromator/filter → photodetector → readout; inset calibration curve (emission intensity vs known concentration).</div>
+    <div class="recent"><b>Recent:</b> point-of-care lithium-monitoring devices (dried blood spot/microfluidic platforms) are emerging as faster bedside alternatives to laboratory flame photometry for therapeutic drug monitoring of lithium.</div>
+  </div></details>
+</section>
+
+<section class="sec" id="s11" style="--sec:#aa5590;--sec-soft:#aa559026">
+  <h2>Section 11 · 🩺 Clinical Case Vignettes</h2>
   <p class="sec-note">Apply the concepts — read the scenario, decide your answer, then open to check. Filter to just these with the "🩺 Cases" chip.</p>
 
   <details class="q vignette"><summary class="q-head"><span class="chev">▸</span><span class="badge">🩺 Case</span><span class="q-text">A 26-year-old woman on combined oral contraceptive pills is started on <b>rifampicin</b> for tuberculosis. Two months later she is pregnant. Explain the pharmacological basis &amp; what advice was missed.</span></summary>
@@ -1659,7 +2172,7 @@
   </div>
 
   <footer>
-    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman 14e (Ch. 1–9), Katzung, Rang &amp; Dale, Indian regulatory guidelines.
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: standard pharmacology references, Indian regulatory guidelines.
   </footer>
 </div>
 
@@ -1721,7 +2234,6 @@
     const vis = visible(); if(!vis.length) return;
     items.forEach(d=> d.open=false);
     const pick = vis[Math.floor(Math.random()*vis.length)];
-    pick.open = true;
     setKb(items.indexOf(pick));
   }
   document.getElementById('shuffle').onclick = randomQ;
@@ -1765,6 +2277,89 @@
   });
 
   apply();
+
+  /* ---- v3: glass / motion enhancements (additive — does not touch logic above) ---- */
+  const progressBar = document.getElementById('progressBar');
+  function updateProgress(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', ()=> requestAnimationFrame(updateProgress), {passive:true});
+  updateProgress();
+
+  const statRow = document.getElementById('statRow');
+  if(statRow){
+    const nQ = items.filter(d=> d.dataset.type!=='case').length;
+    const nCase = items.filter(d=> d.dataset.type==='case').length;
+    statRow.innerHTML =
+      '<span class="stat-pill">\u{1F4DA} <b>'+sections.length+'</b>&nbsp;sections</span>'+
+      '<span class="stat-pill">❓ <b>'+nQ+'</b>&nbsp;questions</span>'+
+      '<span class="stat-pill">\u{1FA7A} <b>'+nCase+'</b>&nbsp;cases</span>';
+  }
+
+  const toTopBtn = document.getElementById('toTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', ()=>{
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  }
+
+  themeBtn.addEventListener('click', ()=>{
+    themeBtn.classList.add('spin');
+    setTimeout(()=> themeBtn.classList.remove('spin'), 500);
+  });
+
+  if('IntersectionObserver' in window){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const secObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); secObserver.unobserve(en.target); } });
+    }, {threshold:0.08, rootMargin:'0px 0px -60px 0px'});
+    sections.forEach(s=> secObserver.observe(s));
+
+    const qObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); qObserver.unobserve(en.target); } });
+    }, {threshold:0.05, rootMargin:'0px 0px -40px 0px'});
+    items.forEach((d,i)=>{
+      if(!reduceMotion) d.style.transitionDelay = (i % 5) * 55 + 'ms';
+      qObserver.observe(d);
+    });
+  } else {
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }
+
+  // safety net — guarantee nothing stays invisible if something above misfires
+  setTimeout(()=>{
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }, 1600);
+
 </script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

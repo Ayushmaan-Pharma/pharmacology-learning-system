@@ -6,148 +6,289 @@
 <title>Miscellaneous Pharmacology — PYQ Notes</title>
 <style>
   :root{
-    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
-    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --bg:#f3f0e8; --panel:#ffffff;
+    --panel-glass: rgba(255,255,255,.58); --panel-glass-strong: rgba(255,255,255,.8);
+    --ink:#1f2328; --muted:#6b7280; --line:#e7e7e4; --line-glass: rgba(255,255,255,.7);
+    --accent:#2f6f5e; --accent-soft:#eaf4f0;
     --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
-    --radius:10px;
+    --shadow-lg:0 22px 60px rgba(31,40,45,.12), 0 4px 14px rgba(31,40,45,.06);
+    --radius:18px; --radius-sm:12px;
+    --ease:cubic-bezier(.4,0,.2,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0; background:var(--bg); color:var(--ink);
+    margin:0; color:var(--ink); min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,94,.07), transparent 60%),
+      var(--bg);
     font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
+    transition:background .4s, color .25s;
   }
-  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
-  header.top{margin-bottom:26px}
-  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
-  .sub{color:var(--muted); font-size:.92rem; margin:0}
+
+  /* ---- ambient animated background blobs ---- */
+  .ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+  .ambient .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.32}
+  .ambient .b1{width:46vw;height:46vw; top:-14%; left:-12%; background:radial-gradient(circle,#2f7d6a,transparent 70%); animation:drift1 36s ease-in-out infinite}
+  .ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,#3f6cb0,transparent 70%); animation:drift2 42s ease-in-out infinite}
+  .ambient .b3{width:42vw;height:42vw; bottom:-16%; left:16%; background:radial-gradient(circle,#845bb0,transparent 70%); animation:drift3 39s ease-in-out infinite}
+  .ambient .b4{width:30vw;height:30vw; bottom:8%; right:6%; background:radial-gradient(circle,#b3852f,transparent 70%); animation:drift4 31s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(6vw,8vh) scale(1.12)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-7vw,5vh) scale(1.08)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-6vh) scale(1.1)}}
+  @keyframes drift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5vw,-4vh) scale(1.15)}}
+  [data-theme="dark"] .ambient .blob{opacity:.42}
+  @media (prefers-reduced-motion:reduce){ .ambient .blob{animation:none} }
+
+  /* ---- scroll progress bar ---- */
+  .progress-bar{position:fixed; top:0; left:0; height:3px; width:0%; z-index:100;
+    background:linear-gradient(90deg,#2f7d6a,#3f6cb0,#845bb0,#b15068,#b3852f);
+    box-shadow:0 0 12px rgba(47,111,94,.5); transition:width .12s linear}
+
+  /* ---- back-to-top ---- */
+  .to-top{position:fixed; bottom:26px; right:26px; z-index:50; width:46px; height:46px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#3f6cb0); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+    box-shadow:0 10px 26px rgba(0,0,0,.22); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease-spring)}
+  .to-top.show{opacity:1; transform:none; pointer-events:auto}
+  .to-top:hover{transform:translateY(-3px) scale(1.06)}
+  .to-top:active{transform:scale(.92)}
+
+  .wrap{max-width:900px; margin:0 auto; padding:40px 22px 130px; position:relative}
+
+  /* ---- hero header ---- */
+  header.top{
+    margin-bottom:10px; padding:30px 28px; border-radius:24px; position:relative; overflow:hidden;
+    background:linear-gradient(135deg, rgba(255,255,255,.68), rgba(255,255,255,.32));
+    backdrop-filter:blur(20px) saturate(170%); -webkit-backdrop-filter:blur(20px) saturate(170%);
+    border:1px solid var(--line-glass);
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.7);
+    animation:heroIn .7s var(--ease) both;
+  }
+  header.top::before{content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(120deg, rgba(47,111,94,.16), transparent 45%, rgba(132,91,176,.13));}
+  @keyframes heroIn{from{opacity:0; transform:translateY(-10px) scale(.98)} to{opacity:1; transform:none}}
+  h1{
+    font-size:1.95rem; font-weight:760; letter-spacing:-.02em; margin:0 0 6px; position:relative;
+    background:linear-gradient(100deg,#1f2328 8%,#2f7d6a 48%,#3f6cb0 92%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--muted); font-size:.93rem; margin:0; position:relative}
+  .stat-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; position:relative}
+  .stat-pill{font-size:.78rem; font-weight:650; color:var(--ink); background:rgba(255,255,255,.55);
+    border:1px solid var(--line-glass); padding:6px 14px; border-radius:999px; backdrop-filter:blur(8px);
+    display:flex; align-items:center; gap:6px}
+  .stat-pill b{color:var(--accent); font-weight:780}
+
+  /* ---- sticky glass toolbar ---- */
   .tools{
-    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
-    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
-    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    position:sticky; top:14px; z-index:20; margin:20px 0 14px; padding:14px 18px;
+    background:var(--panel-glass); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid var(--line-glass); border-radius:20px;
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.55);
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    transition:box-shadow .3s var(--ease)
   }
   #search{
-    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
-    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
-    outline:none;
+    flex:1; min-width:200px; padding:11px 16px; border:1px solid var(--line-glass);
+    border-radius:999px; font-size:.95rem; background:rgba(255,255,255,.55); color:var(--ink); outline:none;
+    backdrop-filter:blur(8px); transition:box-shadow .25s var(--ease), border-color .25s, background .25s
   }
-  #search:focus{border-color:var(--accent)}
+  #search:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,111,94,.18); background:rgba(255,255,255,.82)}
   .btn{
-    border:1px solid var(--line); background:var(--panel); color:var(--ink);
-    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
-    transition:.15s; white-space:nowrap;
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--ink);
+    padding:9px 16px; border-radius:999px; font-size:.85rem; cursor:pointer; white-space:nowrap;
+    backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s, border-color .2s, color .2s, background .2s
   }
-  .btn:hover{border-color:var(--accent); color:var(--accent)}
-  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+  .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px); box-shadow:0 10px 22px rgba(0,0,0,.08)}
+  .btn:active{transform:translateY(0) scale(.96)}
+  #theme{transition:transform .5s var(--ease-spring)}
+  #theme.spin{transform:rotate(360deg)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px; font-weight:560}
 
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--muted);
+    padding:7px 15px; border-radius:999px; font-size:.81rem; cursor:pointer; backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s var(--ease), background .25s, color .25s, border-color .25s
+  }
+  .chip:hover{transform:translateY(-1px); border-color:var(--accent); color:var(--accent)}
+  .chip:active{transform:scale(.95)}
+  .chip.active{background:linear-gradient(120deg,var(--accent),#3f6cb0); border-color:transparent; color:#fff;
+    box-shadow:0 6px 18px rgba(47,111,94,.35)}
+  .iconbtn{font-size:1rem; line-height:1}
+
+  .hint{color:var(--muted); font-size:.78rem; margin:10px 2px 4px}
+  .hint kbd, kbd{background:rgba(255,255,255,.6); border:1px solid var(--line-glass); border-radius:6px;
+    padding:1px 7px; font-size:.88em; font-family:inherit; box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* ---- TOC: glass card grid ---- */
   .toc{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+    display:flex; flex-wrap:wrap; gap:10px;
+    background:rgba(255,255,255,.5); border:1px solid var(--line-glass); border-radius:22px;
+    padding:18px 20px; margin:18px 0 32px; box-shadow:var(--shadow-lg);
+    backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%);
   }
-  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
-  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
-  .toc a:hover{color:var(--accent)}
+  .toc h2{flex:1 0 100%; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin:0 0 4px}
+  .toc a{
+    flex:1 1 230px; display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+    font-size:.88rem; font-weight:560; background:rgba(255,255,255,.55); border:1px solid var(--line-glass);
+    border-radius:14px; padding:10px 14px; backdrop-filter:blur(6px);
+    transition:transform .22s var(--ease-spring), box-shadow .25s, border-color .25s, background .25s
+  }
+  .toc a:hover{transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,.10); border-color:var(--line)}
+  .toc .dot{display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:2px; flex-shrink:0;
+    box-shadow:0 0 0 3px rgba(255,255,255,.55)}
 
-  section.sec{margin:34px 0}
+  .nohit{text-align:center; color:var(--muted); padding:50px; display:none; font-size:.95rem}
+
+  /* ---- sections (scroll reveal) ---- */
+  section.sec{
+    margin:46px 0; opacity:0; transform:translateY(26px);
+    transition:opacity .6s var(--ease), transform .6s var(--ease)
+  }
+  section.sec.in-view{opacity:1; transform:none}
   .sec > h2{
-    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
-    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+    font-size:1.18rem; font-weight:700; letter-spacing:-.01em; margin:0 0 6px;
+    padding:10px 14px 12px; border-left:4px solid var(--sec); border-bottom:2px solid var(--sec-soft);
+    background:linear-gradient(90deg, var(--sec-soft), transparent);
+    border-radius:0 12px 0 0;
   }
-  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+  .sec-note{color:var(--muted); font-size:.85rem; margin:0 0 16px; padding-left:18px}
 
+  /* ---- question cards: glass-lite + height-animated accordion ---- */
   details.q{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+    display:grid; grid-template-rows:auto 0fr;
+    background:linear-gradient(160deg, rgba(255,255,255,.86), rgba(255,255,255,.6));
+    border:1px solid var(--line); border-left:4px solid var(--sec); border-radius:16px;
+    margin:12px 0; box-shadow:var(--shadow); overflow:hidden;
+    opacity:0; transform:translateY(18px);
+    transition:opacity .5s var(--ease), transform .4s var(--ease-spring),
+               border-color .2s, box-shadow .35s var(--ease), grid-template-rows .45s var(--ease);
   }
-  details.q[open]{border-color:#d6e6e0}
+  details.q.in-view{opacity:1; transform:translateY(0)}
+  details.q:hover{transform:translateY(-2px); box-shadow:0 16px 36px -10px color-mix(in srgb, var(--sec) 38%, transparent), var(--shadow)}
+  details.q[open]{grid-template-rows:auto 1fr; border-color:color-mix(in srgb, var(--sec) 45%, var(--line))}
+  details.q.vignette{border-left:4px solid #c98a3c; background:linear-gradient(160deg, rgba(255,247,235,.92), rgba(255,255,255,.6))}
+
   summary.q-head{
-    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
-    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+    list-style:none; cursor:pointer; padding:16px 20px; display:flex; gap:12px;
+    align-items:flex-start; font-weight:560; font-size:.97rem; user-select:none;
+    border-radius:16px 16px 0 0; transition:background .25s ease;
   }
   summary.q-head::-webkit-details-marker{display:none}
-  summary.q-head:hover{background:#fcfdfc}
-  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
-  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
-  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  summary.q-head:hover{background:linear-gradient(90deg, color-mix(in srgb, var(--sec) 9%, transparent), transparent)}
+  .chev{flex-shrink:0; display:inline-block; width:16px; margin-top:1px; color:var(--muted); font-size:.8rem;
+    transition:transform .35s var(--ease-spring), color .25s}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--sec)}
+  .stars{flex-shrink:0; font-size:.82rem; letter-spacing:1px; margin-top:2px; min-width:0;
+    background:linear-gradient(100deg,#d99a00,#f0b94a); -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 1px 1px rgba(217,154,0,.22))}
   .q-text{flex:1}
-  .answer{
-    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
-    font-size:.93rem; color:#33383d;
-  }
-  .answer h4{
-    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
-    margin:18px 0 7px;
-  }
-  .answer h5{font-size:.92rem; color:var(--ink); margin:14px 0 4px; font-weight:640}
+  .badge{display:inline-block; flex-shrink:0; background:linear-gradient(120deg,#f3e2c8,#ffe9c2); color:#8a5a16;
+    font-size:.6rem; font-weight:750; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:6px; margin-top:1px}
+
+  details.q > .answer{overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s}
+  details.q[open] > .answer{opacity:1}
+  .answer{padding:6px 24px 22px 48px; border-top:1px solid var(--line); margin-top:-1px; font-size:.93rem; color:#33383d}
+  .answer h4{font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--sec); margin:18px 0 7px}
   .answer p{margin:9px 0}
   .answer ul,.answer ol{margin:8px 0; padding-left:20px}
   .answer li{margin:4px 0}
-  .answer b{font-weight:620}
-  .answer table{
-    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
-  }
+  .answer b{font-weight:640}
+  .answer table{width:100%; border-collapse:collapse; margin:14px 0; font-size:.85rem; border-radius:10px; overflow:hidden; box-shadow:0 1px 5px rgba(0,0,0,.05)}
   .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
-  .answer th{background:var(--accent-soft); font-weight:600}
-  .answer .dia{
-    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
-    margin:12px 0; font-size:.85rem; color:#4a5550;
-  }
-  .answer .dia b{color:var(--accent)}
-  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .answer th{background:linear-gradient(120deg, var(--sec-soft), transparent); font-weight:650}
+  .answer .dia{background:linear-gradient(135deg,#f6f8f7,#eef4f1); border:1px dashed color-mix(in srgb, var(--sec) 45%, white);
+    border-radius:12px; padding:12px 16px; margin:14px 0; font-size:.85rem; color:#4a5550}
+  .answer .dia b{color:var(--sec)}
+  .recent{background:linear-gradient(120deg,#fbf6ec,#fff8e8); border-left:3px solid var(--star); padding:10px 16px;
+    border-radius:0 12px 12px 0; margin:14px 0; box-shadow:0 2px 10px rgba(217,154,0,.08)}
   .recent b{color:#9a7000}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--sec); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
   .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
-  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
-  mark{background:#fff2a8; padding:0 1px}
-  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
-  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+  mark{background:linear-gradient(120deg,#fff2a8,#ffe27a); padding:0 2px; border-radius:3px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:3px; box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent)}
 
-  /* ---- v2 interactive additions ---- */
-  body{transition:background .25s, color .25s}
-  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
-  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
-  .chip:hover{border-color:var(--accent); color:var(--accent)}
-  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
-  .iconbtn{font-size:1rem; line-height:1}
-  details.q.vignette{border-left:3px solid #c98a3c}
-  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
-  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
-  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
-  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
-  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
-  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a; --shadow:0 1px 2px rgba(0,0,0,.35)}
-  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
-  [data-theme="dark"] summary.q-head:hover{background:#23272c}
-  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  footer{margin-top:70px; padding:24px 20px 6px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+
+  @media (max-width:560px){
+    .wrap{padding:24px 14px 110px} .answer{padding-left:20px}
+    header.top{padding:22px 18px} .toc a{flex:1 1 100%}
+    .ambient .blob{filter:blur(40px)}
+  }
+
+  /* ---- dark theme ---- */
+  [data-theme="dark"]{
+    --bg:#0f1113; --panel:#1a1d21; --ink:#e6e8ea; --muted:#9aa3ad;
+    --line:#2c3036; --line-glass:rgba(255,255,255,.10);
+    --panel-glass:rgba(255,255,255,.06); --panel-glass-strong:rgba(255,255,255,.1);
+    --accent:#5db89e; --accent-soft:#1c2925; --star:#e0a93a;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.55), 0 6px 16px rgba(0,0,0,.35);
+  }
+  [data-theme="dark"] body{background:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(93,184,158,.08), transparent 60%), var(--bg)}
+  [data-theme="dark"] header.top{background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02))}
+  [data-theme="dark"] h1{background:linear-gradient(100deg,#e6e8ea 8%,#5db89e 48%,#8fb4e8 92%); -webkit-background-clip:text; background-clip:text; color:transparent}
+  [data-theme="dark"] .tools{background:var(--panel-glass)}
+  [data-theme="dark"] .stat-pill,[data-theme="dark"] .chip,[data-theme="dark"] .btn,[data-theme="dark"] #search,[data-theme="dark"] .toc,[data-theme="dark"] .toc a{
+    background:rgba(255,255,255,.05); border-color:var(--line-glass)}
+  [data-theme="dark"] details.q{background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015))}
+  [data-theme="dark"] details.q.vignette{background:linear-gradient(160deg, rgba(224,169,58,.09), rgba(255,255,255,.02))}
+  [data-theme="dark"] summary.q-head:hover{background:rgba(255,255,255,.04)}
   [data-theme="dark"] .answer{color:#cfd4d8}
-  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
-  [data-theme="dark"] .recent{background:#2a2519}
-  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#1b201d; border-color:#33403a; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:linear-gradient(120deg,#241f12,#1d1a10)}
+  [data-theme="dark"] .answer code{background:#23262a}
   [data-theme="dark"] mark{background:#7a6212; color:#fff}
   [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
-
-  /* ---- per-section colour theming ---- */
-  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
-  .sec > h2{border-bottom:2px solid var(--sec)}
-  .sec details.q{border-left:4px solid var(--sec)}
-  .sec details.q[open]{border-left-color:var(--sec)}
-  .sec details.q[open] .chev{color:var(--sec)}
-  .sec .answer h4{color:var(--sec)}
-  .sec .answer th{background:var(--sec-soft)}
-  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
-  .toc a{display:flex; align-items:center}
-  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
   [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
-  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
-  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
-  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+  [data-theme="dark"] .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3); box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
+  }
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
 </style>
 </head>
 <body>
+<button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="toTop" class="to-top" title="Back to top" aria-label="Back to top">↑</button>
 <div class="wrap">
   <header class="top">
     <h1>Miscellaneous Pharmacology — Consolidated PYQ Notes</h1>
-    <p class="sub">Exam-oriented model answers · Goodman &amp; Gilman, Katzung, Rang &amp; Dale + ICMR/CDSCO &amp; ICH guidelines · click any question to open the answer</p>
+    <p class="sub">Exam-oriented model answers · standard pharmacology references + ICMR/CDSCO &amp; ICH guidelines · click any question to open the answer</p>
+    <div class="stat-row" id="statRow"></div>
   </header>
 
   <div class="tools">
@@ -242,21 +383,65 @@
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Bioassay — principles, classification, methodology &amp; applications; role in estimating relative potency &amp; shift toward non-animal methods.</span></summary>
   <div class="answer">
     <h4>Definition &amp; principle</h4>
-    <p><b>Bioassay</b> = estimation of the concentration or <b>potency</b> of a substance by measuring its biological response on living tissue/organism, compared against a standard. Principle: under controlled conditions, the magnitude of response is proportional to the dose/concentration.</p>
+    <p><b>Bioassay</b> = estimation of the concentration or <b>potency</b> of a substance by measuring its biological response on living tissue/organism, compared against a standard. Principle: under controlled conditions, the magnitude of response is proportional to the dose/concentration — its essence is comparing <b>potencies, not absolute responses</b>. Historically begun by Paul Ehrlich (diphtheria-antitoxin standardisation); remains the method of choice for natural-origin substances (hormones, antisera, crude extracts) of unknown structure, or where chemical assay doesn't capture biological activity (insulin, heparin, vasopressin, oxytocin, digitalis, vaccines). Chemical/synthetic drugs of known structure are not ideal candidates — chemical standardisation suffices.</p>
+    <h4>Fundamental principles</h4>
+    <ul>
+      <li><b>Comparison against a standard:</b> unknown (U) always compared with a stable reference standard (S) of the same substance; result expressed as potency ratio M ("U is x times as potent as S").</li>
+      <li><b>Like compared with like:</b> test &amp; standard must act through the same mechanism/receptor, same qualitative response.</li>
+      <li><b>Parallel log dose–response curves (DRC):</b> the horizontal distance between parallel S and U lines on log-dose scale gives M — comparing responses to equal doses is invalid.</li>
+      <li>Doses chosen on the linear (~25–75% of maximal) segment of the log DRC for best discrimination.</li>
+      <li><b>Control of biological variation</b> — the central bioassay problem; minimised by randomisation (Latin-square), repeated readings, most sensitive/reliable/durable tissue.</li>
+    </ul>
     <h4>Classification</h4>
     <ul>
-      <li><b>Quantal</b> (all-or-none — e.g. death, convulsion) vs <b>graded</b> (continuous response).</li>
-      <li><b>Direct</b> (response measured directly, e.g. digitalis cardiac arrest) vs <b>indirect</b> (response compared with standard).</li>
-      <li>Methods of comparison: matching, interpolation, bracketing, <b>three-point &amp; four-point assay</b>, multiple-point assay.</li>
+      <li><b>Direct end-point assay (DEPA):</b> threshold dose producing an immediate recognisable end-point measured directly (e.g. digitalis in cat, infused till cardiac arrest) — simple but only for toxic/high-dose end-points, no dose-ranging.</li>
+      <li><b>Quantal (all-or-none):</b> proportion showing an all-or-none effect plotted vs log dose (LD50; insulin by mouse-convulsion method).</li>
+      <li><b>Graded:</b> response magnitude is a graded function of dose (sigmoid DRC) — sub-types <b>matching</b> (trial-and-error, subjective, no parallelism check), <b>bracketing</b> (test bracketed between higher/lower standard, poor precision), <b>interpolation</b> (test interpolated off plotted standard DRC), <b>multiple-point</b> (most accurate — 3-point S1/S2/T, 4-point S1/S2/T1/T2, 6-/8-point; Latin-square randomisation on the 25–75% linear range; 4-point more sensitive than 3-point, permissible error &lt;10%).</li>
     </ul>
-    <h4>Methodology (example — four-point assay)</h4>
-    <p>Two doses each of standard (S1,S2) &amp; test (T1,T2) on the same tissue; construct parallel log dose-response lines; relative potency calculated from the horizontal distance between the lines.</p>
-    <h4>Estimating relative potency</h4>
-    <p>Relative potency = ratio of equi-effective doses of standard to test. Requires parallel log dose-response curves &amp; the same maximal effect (same mechanism).</p>
+    <h4>Isolated-tissue bioassay set-up</h4>
+    <p>Organ-bath assembly: inner bath (5–50mL) + outer water jacket/thermostat + stirrer + aerator + tissue holder; recording via Type-1 lever (isotonic/isometric, 5–15× magnification) on Sherrington drum/kymograph. Physiological salt solution chosen per tissue (Tyrode—smooth muscle, Krebs—nerve-muscle, De Jalon—uterus, Ringer-Locke—heart), pH 7.3–7.4, aerated, CaCl₂ added last. Classic tissue–agonist pairs: guinea-pig ileum–histamine, frog rectus abdominis/leech dorsal muscle–acetylcholine, rat fundus/uterus–5-HT. Dose cycle (gap between doses, incl. washing) = 3min (fast tissue) / 5min (slow tissue).</p>
+    <h4>Errors in bioassay</h4>
+    <p><b>Biological variation</b> (animal-to-animal differences, receptor down-regulation from over-washing, tachyphylaxis) — corrected by same species, fresh sensitive tissue, constant conditions, mean of several readings (~±10% acceptable). <b>Methodological error</b> (faulty technique, apparatus calibration, pH/temperature drift) — corrected by standardised procedure &amp; instrument checks.</p>
+    <h4>Bioassay of an antagonist</h4>
+    <p>Fixed antagonist concentration shifts the agonist DRC: parallel rightward shift with unchanged maximum = competitive (surmountable); depressed maximum = non-competitive. Antagonist potency quantified as <b>pA2</b> (−log₁₀ molar concentration giving a 2-fold dose-ratio shift); Schild plot slope=1 (intercept=Kd) confirms competitive antagonism.</p>
     <h4>Applications</h4>
-    <p>Standardisation of drugs lacking chemical assays (historically insulin, heparin, oxytocin, vaccines, antisera, digitalis, d-tubocurarine), hormone potency, antibiotic assay (microbiological).</p>
+    <p>Standardisation of drugs lacking chemical assays (insulin, heparin, oxytocin, vaccines, antisera, digitalis, d-tubocurarine) expressed in International Units (e.g. insulin: 1mg International Standard ≈28 Units); cytokine/biotherapeutic potency (interleukins, interferons, CSFs, TNF); human-tissue bioassay (vascular rings, atrial appendage) contributed to discovery of NO/endothelin/EDHF pathways; clinical relative-potency comparisons (morphine ≈13× codeine by parallel-line human assay).</p>
     <h4>Shift to non-animal methods</h4>
     <p>Per 3R, animal bioassays are replaced by physicochemical (HPLC, LC-MS), immunoassays (ELISA/RIA), and cell-based/in-vitro assays — more precise, reproducible &amp; ethical.</p>
+    <div class="recent"><b>Recent advances:</b> Cell-based potency assays (CBPA) are progressively replacing live-animal LD50 "lethality" bioassays for biologicals — for botulinum toxin A, a fully in-vitro SiMa-neuroblastoma sandwich-ELISA assay (reading BoNT-cleaved SNAP-25) now matches mouse-LD50 sensitivity for batch release (FDA-approved 2011, ~US$65M R&amp;D, projected to cut animal testing by ≥95% within 3 years) [PMID 41003517]. hiPSC-derived motor-neuron assays detect BoNT/A and BoNT/B ≥30× more sensitively than the mouse bioassay; SNAP-25/VAMP-NanoLuc luciferase reporters achieve antibody-free, femtomolar potency detection — directly addressing bioassay's central biological-variability problem [PMID 41003517]. Pyrogen testing is shifting from animal reagents to human cell-based/recombinant assays: a luciferase Monocyte Activation Test detects endotoxin/non-endotoxin pyrogens in 3–12h, replacing the Rabbit Pyrogen Test [PMID 42237577]; iPSC-derived monocytes give a batch-consistent animal-free MAT alternative [PMID 42165675]. Pharmacopoeias are adopting recombinant Factor C (rFC) as a synthetic alternative to horseshoe-crab Limulus Amebocyte Lysate for the Bacterial Endotoxin Test (Chinese Pharmacopoeia 2025, aligning with ICH Q4B/USP/Ph.Eur./JP) [PMID 41620123]. The FDA-co-led Botanical Safety Consortium has defined a NAM battery (human iPSC assays, zebrafish, transcriptomics) extending bioassay logic to complex mixtures where chemical assay fails [PMID 42048162]; defined in-vitro approaches (DPRA/KeratinoSens/h-CLAT) now predict skin-sensitisation potency in place of the murine Local Lymph Node quantal assay [PMID 41997411].</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Pharmacometrics — population PK, PK-PD modelling, disease-progress models &amp; model-informed drug development (MIDD).</span></summary>
+  <div class="answer">
+    <h4>Definition</h4>
+    <p><b>Pharmacometrics</b> is the science of developing and applying mathematical/statistical models to describe, quantify and predict the interplay between pharmacokinetics (PK), pharmacodynamics (PD) and disease progression, informing dosing and drug-development decisions. Conceptually: <i>Clinical pharmacology = disease progression + drug action</i>; pharmacometrics is the quantitative expression of this system over time. It converts large clinical datasets into a small parameter set (clearance, volume, EC50, Emax) describing the population and its variability. Three integrated pillars: population PK, PK–PD (exposure–response) modelling, and disease-progress modelling — with <b>model-informed drug development (MIDD)</b> as the regulatory application.</p>
+    <h4>Three components of a population model</h4>
+    <ul>
+      <li><b>Structural model</b> — the PK/PD equations (1-/2-compartment, Emax) describing the typical concentration-time/effect profile.</li>
+      <li><b>Covariate model</b> — predictable (fixed-effect) variability linked to patient covariates (age, weight, renal/hepatic function, sex, genotype, co-medication).</li>
+      <li><b>Statistical (random-effects) model</b> — unpredictable variability: interindividual (η, variance ω²), interoccasion, and residual/within-subject (ε) error.</li>
+    </ul>
+    <h4>Population pharmacokinetics (PopPK)</h4>
+    <p>Studies variability in plasma concentration between individuals on the same dose, using sparse/irregular sampling (late-phase trials, neonates, ICU). For subject j: CLⱼ = CL_population + ηⱼ.</p>
+    <table>
+      <tr><th>Method</th><th>Principle</th><th>Limitation</th></tr>
+      <tr><td>Naïve pooled data</td><td>All subjects' data treated as one individual</td><td>Cannot separate within- vs between-subject variability</td></tr>
+      <tr><td>Two-stage method</td><td>Stage 1 fit each individual (OLS); Stage 2 average &amp; regress on covariates</td><td>Needs rich per-subject sampling; estimation-error inflated variance</td></tr>
+      <tr><td>Nonlinear mixed-effects modelling (NLMEM)</td><td>Single-stage simultaneous estimation of population means, covariates &amp; both variance levels (NONMEM software)</td><td>Computationally/expertise intensive — but the modern standard</td></tr>
+    </table>
+    <p>Estimation algorithms (accuracy↑): FO → FOCE → Laplacian/2nd-order; EM/SAEM for very sparse data. Model selection: <b>AIC = OFV+2np</b>, <b>BIC = OFV+np·lnN</b> (BIC penalises complexity more), likelihood-ratio test (χ² 3.84/6.63/10.83 for P=0.05/0.01/0.001). Evaluation: goodness-of-fit plots (PRED/IPRED/CWRES), Visual Predictive Check (VPC/pcVPC), bootstrap CIs.</p>
+    <h4>PK–PD (exposure–response) modelling</h4>
+    <p>Central dogma: drug action depends on concentration, not dose. Concentration–effect models (increasing complexity): Linear (E=β·C) → Log-linear (mid-range) → <b>Emax</b> (E=Emax·C/(EC50+C)) → <b>Sigmoid Emax/Hill</b> (E=Emax·Cⁿ/(EC50ⁿ+Cⁿ), n=Hill coefficient, steep/cooperative responses).</p>
+    <ul>
+      <li><b>Biophase/effect-compartment model</b> (Segre/Sheiner/Hull) — handles delay when the site of action equilibrates slowly (neuromuscular blockers, digoxin inotropy); plasma-vs-effect plot gives a counter-clockwise hysteresis loop.</li>
+      <li><b>Turnover/indirect-response models</b> — drug alters production/elimination of an endogenous mediator (dM/dt=R−k_e·M); explains slow onset/offset (warfarin ↓synthesis of factors II,VII,IX,X; also H2-blockers, diuretics, corticosteroids, NSAIDs).</li>
+      <li>Tolerance shows as a <b>proteresis</b> (clockwise) loop — smaller effect at same concentration over time.</li>
+    </ul>
+    <h4>Disease-progress modelling &amp; MIDD</h4>
+    <p>Separates natural disease history from drug effect: <b>symptomatic/offset</b> effect (status shifted, progression rate unchanged, lost on withdrawal) vs <b>disease-modifying/slope</b> effect (progression rate changed, durable benefit). MIDD applies these models across development/regulation — dose selection, exposure–response evidence, special-population dosing (paediatric, renal/hepatic impairment), flat-vs-weight-based dosing, sometimes enabling approval of untested regimens (fixed-dose biologics via PopPK simulation).</p>
+    <h4>Clinical significance</h4>
+    <p>Dose individualisation via PopPK + Bayesian forecasting underpins TDM/dosing of narrow-index drugs (aminoglycosides, vancomycin) and critically-ill antimicrobial dosing; covariate models inform paediatric/organ-impairment labelling; trial-simulation reduces empirical dose-finding and shortens paediatric labelling timelines. Pitfall: conclusions are only as good as the data/structural assumptions — sparse data with the FO method can bias estimates.</p>
+    <div class="recent"><b>Recent advances:</b> ICH M15 (General Principles for MIDD) reached Step 2 (draft endorsed Nov 2024) — the first harmonised global MIDD guideline, covering PopPK/PD, PBPK/biopharmaceutics, exposure–response &amp; model-based meta-analysis, sanctioning model-based paediatric extrapolation, PBPK-based DDI waivers and virtual bioequivalence [ICH 2024-Nov]. Model-informed precision dosing (MIPD) is positioned as TDM's successor — integrating Bayesian forecasting, ML model selection and real-time biosensors — though confirmatory outcome trials are still awaited [PMID 39159868]. In busulfan MIPD before allogeneic HSCT (535 patients), model-based initial dosing didn't beat label dosing, but adding one day-2–4 TDM sample (Bayesian MIPD) raised AUC target attainment from 49% to ~87% [PMID 40545743]. Dashboard Bayesian PopPK MIPD supports proactive infliximab optimisation in IBD; exposure–response is reproducible for ustekinumab but golimumab shows no MIPD benefit — exposure–response strength (not drug class) dictates where pharmacometric dosing helps [PMID 39382556]. Hybrid pharmacometric–ML (hPMxML) models are entering oncology development, with a 2025 tutorial defining the first reporting checklist for regulator-readiness [PMID 41104621]. FDA institutionalised the MIDD Paired Meeting Program (PDUFA VII, FY2023–27) and finalised Project Optimus oncology dose-optimisation guidance embedding exposure–response dossiers into routine review [FDA 2024]; CDSCO (India) issued draft Similar Biologics guidelines (2025) moving toward model-based, risk-based biosimilar comparability, reducing mandatory animal/human efficacy testing and aligning with EMA/FDA/MHRA [CDSCO 2025].</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Preclinical screening methods for analgesic, anti-inflammatory, anti-epileptic, anti-diabetic, anti-psychotic &amp; anti-peptic-ulcer agents.</span></summary>
@@ -271,6 +456,29 @@
       <tr><td><b>Anti-peptic-ulcer</b></td><td>Pylorus ligation (Shay rat), stress (cold-restraint) ulcer, NSAID/aspirin-induced, ethanol-induced, histamine/ cysteamine duodenal ulcer</td></tr>
     </table>
     <p>Each model targets the relevant mechanism &amp; allows comparison with standard drugs; increasingly supplemented/replaced by in-vitro and in-silico methods.</p>
+    <h4>Anti-peptic-ulcer screening — expanded battery (no single ideal model)</h4>
+    <table>
+      <tr><th>Tier</th><th>Models</th></tr>
+      <tr><td>In-vitro/target</td><td>[¹²⁵I]-gastrin binding (CCK-B receptor), [³H]-tiotidine binding (H2 receptor), H⁺/K⁺-ATPase inhibition assay (proton pump, malachite-green colorimetry) — screens antagonists/PPIs before whole-animal work</td></tr>
+      <tr><td>Acute acid/secretory</td><td><b>Pylorus ligation (Shay rat, 1945)</b> — fasted rat, pylorus ligated, sacrificed ~17–19h later; acidity titrated (0.1N NaOH); <b>Ulcer Index = UN + US + (UP×10⁻¹)</b> (UN=mean ulcer number, US=mean severity 0–3, UP=% animals ulcerated). Allied: Heidenhain pouch (dog), Ghosh–Schild perfused stomach</td></tr>
+      <tr><td>Stress/secretagogue/NSAID</td><td>Restraint (Selye 1936), cold-immersion restraint, swimming stress; indomethacin (20mg/kg)/aspirin (NSAID-COX); histamine/reserpine/dimaprit (H2-mediated); serotonin (vasoconstriction-ischaemia)</td></tr>
+      <tr><td>Cytoprotection</td><td>Absolute-ethanol mucosal damage — prostaglandins (PGE2/PGI2) protect at non-antisecretory doses, defining "cytoprotection" (Robert)</td></tr>
+      <tr><td>Chronic/duodenal healing</td><td>Acetic-acid ulcer (Okabe/Takagi 1969 — gold-standard chronic gastric model, >100-day relapse); cysteamine-induced duodenal ulcer (Selye &amp; Szabo 1973); mepirizole &amp; dimaprit duodenal ulcer; subacute/Ezer healing-rate model; H. pylori-infected mouse</td></tr>
+    </table>
+    <h4>Evaluation of antipsychotic agents — expanded battery</h4>
+    <p>Rests on the dopamine over-activity hypothesis (mesolimbic D2 hyperfunction); validity classes — <b>predictive</b> (responds to known antipsychotics), <b>face</b> (symptom similarity — catatonia, stereotypy), <b>construct</b> (reproduces pathophysiology — genetic/neurodevelopmental models). No single receptor assay predicts efficacy alone (atypicals combine weak D2 + potent 5-HT2A antagonism).</p>
+    <table>
+      <tr><th>Tier</th><th>Method</th><th>What it predicts</th></tr>
+      <tr><td>In-vitro binding</td><td>D2 ([³H]-spiroperidol/haloperidol) — Seeman correlation between D2-affinity &amp; clinical potency; D1 ([³H]-SCH23390); 5-HT2 (cortex) — D2:5-HT2 ratio screens atypicality; α1 ([³H]-prazosin) — predicts hypotension/sedation</td><td>Core antipsychotic potency &amp; atypicality</td></tr>
+      <tr><td>Catalepsy</td><td>Rodent fails to correct an imposed posture (bar test, ≥60s); haloperidol ~1mg/kg effective; clozapine does NOT induce it</td><td>EPS liability (not efficacy) — absence = atypical marker</td></tr>
+      <tr><td>Apomorphine/amphetamine stereotypy</td><td>Inhibition of apomorphine (1.5mg/kg)- or amphetamine (5–10mg/kg)-induced licking/sniffing/gnawing; ED50 haloperidol~0.2mg/kg; clozapine ineffective vs apomorphine</td><td>Striatal D2 blockade (EPS) + efficacy; atypical-vs-typical separator</td></tr>
+      <tr><td>Conditioned avoidance response (CAR)</td><td>Suppresses avoidance at doses sparing escape response — the signature test separating neuroleptics from sedatives</td><td>Most discriminating efficacy screen</td></tr>
+      <tr><td>Prepulse inhibition (PPI)</td><td>Restoration of sensorimotor gating disrupted by amphetamine/apomorphine (all antipsychotics) or NMDA antagonists PCP/MK-801 (atypicals only — clozapine, olanzapine)</td><td>Face/construct-valid; separates atypicals</td></tr>
+      <tr><td>A9/A10 electrophysiology</td><td>Chronic dosing causes depolarisation block; selective ↓firing in mesolimbic A10 vs nigrostriatal A9</td><td>Atypical, low-EPS profile</td></tr>
+      <tr><td>Human (clinical)</td><td>PET/SPECT D2-occupancy 60–80% for efficacy, &gt;78% sharply ↑EPS risk; aripiprazole (partial agonist) needs 80–100%; PANSS/BPRS rating scales</td><td>Final efficacy/EPS confirmation</td></tr>
+    </table>
+    <div class="recent"><b>Recent advances:</b> Xanomeline-trospium (KarXT/Cobenfy) — FDA-approved Sep 2024, first schizophrenia drug in ~70 years acting without D2 blockade (M1/M4-preferring muscarinic agonist + peripheral anticholinergic trospium) — validates a non-dopaminergic evaluation paradigm; EMERGENT-2 and EMERGENT-3 phase-3 RCTs both met primary PANSS endpoints with no excess EPS/akathisia/weight gain [PMID 38104575, 38691387], though the adjunctive ARISE trial missed its endpoint [BMS 2025]. Ulotaront (TAAR1+5-HT1A agonist, no D2/5-HT2A action) reached phase 3 on FDA Breakthrough designation, illustrating deliberate "target-agnostic" non-D2 screening [PMID 37165101]. The Schneider-Thoma/Leucht maintenance network meta-analysis (127 RCTs, 32 antipsychotics, 18,152 patients) found all agents reduce relapse vs placebo with no clear efficacy superiority — agent choice should be tolerability-driven [PMID 35219395].</div>
+    <div class="recent"><b>Recent advances:</b> Vonoprazan (P-CAB) — first new gastric-antisecretory class in ~30 years; reversibly blocks H⁺/K⁺-ATPase (the same target as the in-vitro malachite-green assay), giving faster/more sustained suppression than PPIs; FDA-approved for H. pylori (2022), erosive oesophagitis (2023), non-erosive GERD (2024); DCGI/CDSCO-approved India 2024 (Lupin–Takeda). Oral vonoprazan was noninferior to IV PPI for high-risk ulcer rebleeding post-haemostasis (7.1% vs 10.4%) [PMID 38582271]. Rebamipide (mucosal-protective, detected by ethanol/NSAID cytoprotection models) significantly reduced NSAID-induced GI mucosal breaks vs placebo in a 13-RCT meta-analysis [PMID 40366001]. Vonoprazan-based dual therapy achieved H. pylori eradication comparable to bismuth quadruple therapy with far fewer adverse events [PMID 42141850, 41781325].</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Genotoxicity studies — definitions, ICH S2(R1) test battery &amp; regulatory placement in drug development.</span></summary>
@@ -766,6 +974,7 @@
     </ul>
     <h4>Sampling techniques</h4>
     <ul><li><b>Probability:</b> simple random, systematic, stratified, cluster, multistage. <b>Non-probability:</b> convenience, purposive, quota, snowball.</li></ul>
+    <p><b>Allocation ratio:</b> usually equal (1:1), which maximises power for a given total N. Unequal ratios (e.g. 2:1 toward active drug) attenuate power only modestly and may be chosen to make a trial more attractive, enlarge a group for mediator analysis, manage cost of an expensive intervention, or strengthen a control arm shared across several treatment arms.</p>
     <div class="dia"><b>Diagram —</b> CONSORT-style flow diagram: "Assessed for eligibility → Excluded (not meeting criteria/declined) → Randomized → Allocated to Intervention/Control → Lost to follow-up → Analysed (ITT)."</div>
     <h4>High-yield exam pointers</h4>
     <ul>
@@ -773,8 +982,9 @@
       <li>Name ≥5 methods: simple, block, stratified, cluster, biased-coin, minimization.</li>
       <li>Block randomization controls chronological bias; stratified balances prognostic factors; cluster randomizes groups, not individuals.</li>
       <li>Justified only under equipoise; analyse by intention-to-treat; randomization does not guarantee identical groups.</li>
+      <li>Mendelian randomization = "nature's randomized trial" — uses genetic variants as instruments for causal inference in observational data; reported per STROBE-MR.</li>
     </ul>
-    <div class="recent"><b>Recent advances:</b> CONSORT mandates reporting of the method of sequence generation, allocation concealment mechanism, and a participant flow diagram. Central web-based randomization (IWRS/IVRS) is now standard in multicentre/registration trials, replacing envelopes. Response-adaptive and Bayesian adaptive randomization (platform/master-protocol trials) increasingly allocate more patients to better-performing arms, and minimization is now widely accepted by regulators when a random element is retained.</div>
+    <div class="recent"><b>Recent advances:</b> CONSORT 2025 (first revision since 2010) is a 30-item checklist (+7 new, 3 revised, 1 deleted) with a dedicated open-science section; sequence generation, allocation concealment &amp; implementation remain core reportable items [PMID 40228499]. SPIRIT 2025 correspondingly updated the protocol standard to 34 items, newly emphasising harms assessment &amp; patient/public involvement [PMID 40294593]. First paediatric extensions arrived in 2026 — CONSORT-C and SPIRIT-C, adding age/weight/body-surface-area dose-adjustment and developmental-appropriateness reporting for trials in ages 0–19 [PMID 42283643, 42283642]. STROBE-MR (2021) is now the standard 20-item reporting checklist for Mendelian-randomization studies [PMID 34698778]. Methodological work has extended covariate-adaptive (minimization) randomization to multi-arm trials with formal asymptotic balance theory [PMID 35912316], and shown response-adaptive (doubly-adaptive biased-coin) designs keep valid allocation proportions even under outcome-model misspecification [PMID 38819309]. FDA final guidance (May 2023) endorses pre-specified covariate adjustment and clarifies analysis of stratified-randomization interactions [FDA 2023-May]. Central web-based randomization (IWRS/IVRS) is now standard in multicentre/registration trials, replacing envelopes.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Surrogate markers in clinical trials — attributes, merits, demerits, examples; note on biomarkers in drug evaluation.</span></summary>
@@ -828,10 +1038,17 @@
     <ul>
       <li>A non-specific effect of the whole therapeutic setting, depending heavily on the physician-patient relationship and the patient's expectancy/belief about outcome.</li>
       <li><b>Expectation + conditioning:</b> prior experience of relief from "taking a medicine" conditions a response; awareness of being studied adds the Hawthorne (guinea-pig) effect.</li>
-      <li><b>Endorphin release:</b> placebos induce real physiological responses, e.g. endogenous endorphin/dopamine release producing analgesia. <b>Naloxone blocks placebo analgesia</b>, proving an opioidergic substrate (must-write mechanism line).</li>
-      <li>Highly variable even within the same individual; can supplement the pharmacodynamic action of an active drug.</li>
+      <li><b>Endorphin release:</b> placebos induce real physiological responses, e.g. endogenous endorphin/dopamine release producing analgesia. <b>Naloxone blocks placebo analgesia</b>, proving an opioidergic substrate (must-write mechanism line) — brain imaging localises this to altered activity in the <b>prefrontal cortex and periaqueductal grey (PAG)</b>, activating descending inhibitory pathways to the spinal dorsal horn; expectation modifies even real-drug effects (open vs covert remifentanil gives greater analgesia when the subject is told the drug is being given).</li>
+      <li>Highly variable even within the same individual; can supplement the pharmacodynamic action of an active drug; positive response reaches <b>30–40%</b> of subjects in some conditions.</li>
       <li>Example: in an antiemetic trial, sedation occurred in 46% of placebo patients, and "highs" in 12% of prochlorperazine patients from anticipating THC.</li>
     </ul>
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td>Active placebo</td><td>Mimics the active drug's side-effects (e.g. dry mouth) to preserve blinding without therapeutic action</td></tr>
+      <tr><td>Sham procedure</td><td>Surgical/device analogue of a placebo (e.g. sham angioplasty, sham plasma exchange)</td></tr>
+      <tr><td>Placebo run-in (lead-in)</td><td>Pre-randomisation period when all take placebo; only ≥80% adherent subjects are randomised — improves adherence/effect estimate</td></tr>
+      <tr><td>Open-label placebo (OLP)</td><td>Given knowingly (no deception) — still shows a small but real effect (Kaptchuk, IBS/chronic pain)</td></tr>
+    </table>
     <h4>Role as control in clinical trials</h4>
     <table>
       <tr><th>Control type</th><th>Comparator the control receives</th><th>Key point</th></tr>
@@ -867,7 +1084,7 @@
       <li>Helsinki: placebo not allowed when proven effective therapy exists → use add-on design; needs equipoise + informed consent + IEC approval.</li>
       <li>Both arms feel the placebo effect in a placebo-controlled (parallel) trial → the between-group difference is attributable to the drug.</li>
     </ul>
-    <div class="recent"><b>Recent advances:</b> Declaration of Helsinki (2024 revision, Para 33) retains that placebo/no-intervention is acceptable only where no proven intervention exists, or for compelling methodological reasons with safeguards against serious/irreversible harm. Growing interest in "open-label placebo" research (placebo given honestly, yet still effective in IBS, chronic pain) and expectation/conditioning neuroimaging is deepening understanding of placebo neurobiology. Regulators (US-FDA/CDSCO) continue to prefer placebo-controlled superiority designs where ethical, reserving non-inferiority designs for areas with established effective therapy.</div>
+    <div class="recent"><b>Recent advances:</b> SAMSON (2021): a 12-month n-of-1 crossover in 60 statin-intolerant patients found symptom scores in placebo months (15.4) no different from statin months (16.3; P=0.388), both higher than no-tablet (8.0) — a 90% nocebo ratio, i.e. ~90% of statin-attributed symptoms were reproduced by placebo; half restarted statins after debrief [PMID 34531021]. A cross-diagnostic meta-analysis of 90 RCTs (9,985 placebo-treated patients) quantified placebo-arm improvement across 9 psychiatric disorders — largest in major depression (dav=1.40) and GAD (1.23), smallest in OCD (0.65) and schizophrenia (0.59) [PMID 38809560]. Meta-research on Cochrane's "placebo for all conditions" dataset (186 trials, 16,655 patients) estimated ~54% of total RCT treatment effect is attributable to contextual/placebo response rather than the drug's specific effect [PMID 34311793]. The first open-label-placebo RCT with longitudinal fMRI in chronic back pain found a single non-deceptive saline injection reduced pain at 1 month (Hedges g=0.45) via the same prefrontal-brainstem pathway as deceptive placebo — biological proof that honesty doesn't abolish the placebo response [PMID 39259542]. Declaration of Helsinki (2024 revision, Para 33) retains that placebo/no-intervention is acceptable only where no proven intervention exists or for compelling methodological reasons with harm safeguards; FDA's May-2025 NEJM perspective newly requires randomised placebo-controlled efficacy data (≥6-month follow-up) for new COVID-19 vaccines in healthy adults/children [FDA 2025-May, PMID 40392534]. India's New Drugs and Clinical Trials Rules 2019 + ICMR National Ethical Guidelines (2017) permit a placebo arm only where it carries no therapeutic disadvantage, echoing Helsinki.</div>
   </div></details>
 <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Discuss decentralized (virtual) clinical trials and real-world evidence (RWE).</span></summary>
   <div class="answer">
@@ -1152,13 +1369,30 @@
   </div></details>
 <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Discuss off-label use of drugs - concept, examples, and ethical/regulatory aspects.</span></summary>
   <div class="answer">
-<p><b>Off-label use</b> = prescribing an approved drug for an <b>unapproved indication, age group, dose or route</b>.</p>
-<h4>Where common</h4><p>Paediatrics, oncology, psychiatry, pregnancy and rare diseases (few approved options).</p>
-<h4>Examples</h4>
-<ul><li>Propranolol for infantile haemangioma; amitriptyline/gabapentinoids for neuropathic pain; spironolactone for acne/hirsutism; low-dose aspirin in pregnancy.</li></ul>
-<h4>Ethical and regulatory aspects</h4>
-<ul><li>Generally <b>legal</b> when based on sound clinical judgement, but needs reasonable <b>evidence</b>, <b>informed consent</b> and documentation.</li>
-<li>Manufacturers <b>may not promote</b> off-label uses; the prescriber bears greater liability; adverse events should be reported (pharmacovigilance).</li></ul>
+<p><b>Off-label use</b> = prescribing an approved, marketed drug for an <b>unapproved indication, age-group, dose or route</b> — the drug itself is licensed; only the use is not. Distinguish from <b>unlicensed medicine</b> (no marketing authorisation at all; "named-patient"/"compassionate" supply) and <b>investigational use</b> (regulated under a trial protocol) — neither is the same as off-label.</p>
+<h4>Why it occurs</h4>
+<ul><li>Labelled indications are deliberately narrow (manufacturer seeks approval only for what it studied); extending a licence needs fresh, expensive trials manufacturers may not fund unless profitable; vulnerable/understudied populations (children, pregnancy, elderly — most trials are in adults); emerging evidence outpaces the label; unmet need (rare disease, MDR infection); serendipitous discovery (bimatoprost → eyelash growth).</li></ul>
+<h4>Where common &amp; classic examples</h4>
+<table>
+  <tr><th>Drug</th><th>Approved use</th><th>Off-label use</th></tr>
+  <tr><td>Ketamine</td><td>Anaesthesia/sedation</td><td>Treatment-resistant depression (rapid onset, within 24h)</td></tr>
+  <tr><td>Bupropion</td><td>Depression; smoking cessation</td><td>ADHD</td></tr>
+  <tr><td>Clonidine</td><td>Hypertension</td><td>Smoking cessation; opioid/alcohol-withdrawal craving; menopausal flushing; Tourette syndrome</td></tr>
+  <tr><td>Ivabradine</td><td>Heart failure (USA)</td><td>Chronic stable angina (off-label in USA only)</td></tr>
+  <tr><td>Demeclocycline</td><td>Antibacterial</td><td>SIADH (interferes with renal ADH action)</td></tr>
+  <tr><td>Erythromycin</td><td>Antibacterial</td><td>Gastroparesis (motilin-receptor agonism)</td></tr>
+  <tr><td>Linezolid</td><td>Gram-positive infections</td><td>MDR-tuberculosis; Nocardia infections</td></tr>
+  <tr><td>Cyproheptadine</td><td>Allergy/anti-itch</td><td>Appetite stimulation (caution: CNS depression in underweight children)</td></tr>
+  <tr><td>Haloperidol/antipsychotics</td><td>Psychosis</td><td>Tourette syndrome, Huntington's disease</td></tr>
+  <tr><td>IVIG</td><td>Replacement; ITP</td><td>Neurological disorders (GBS, CIDP)</td></tr>
+  <tr><td>Propranolol; amitriptyline/gabapentinoids; spironolactone; low-dose aspirin</td><td>HTN/migraine; depression/seizures; HF/hyperaldosteronism; antiplatelet</td><td>Infantile haemangioma; neuropathic pain; acne/hirsutism; pre-eclampsia prophylaxis</td></tr>
+</table>
+<h4>Ethical, medico-legal and regulatory aspects</h4>
+<ul><li>Generally <b>legal</b> — "a physician may legally prescribe a drug for any purpose deemed reasonable" (G&amp;G) — but the <b>prescriber, not the manufacturer, carries responsibility</b>.</li>
+<li>Manufacturers <b>may not promote</b> off-label uses (promotional material cannot deviate from the package insert); off-label injury is <b>not automatically malpractice</b>, but courts may require the clinician to justify the choice with expert evidence — hence sound published evidence, <b>informed consent</b>, and contemporaneous documentation are the prescriber's defence.</li>
+<li><b>Reimbursement:</b> third-party payers often deny coverage unless backed by a statutory compendium (e.g. AHFS-DI).</li>
+<li>Adverse events must be reported through pharmacovigilance (FDA MedWatch, UK Yellow Card, India PvPI) — post-marketing surveillance is the main route by which off-label safety signals emerge.</li></ul>
+<div class="recent"><b>Recent advances:</b> The paradigm "off-label → approved" case: FDA approved intranasal esketamine (Spravato) as the first stand-alone monotherapy for treatment-resistant depression (21 Jan 2025), converting the classic ketamine-off-label-for-TRD example via supplemental NDA; the supporting phase-4 RCT (378 adults) showed significant MADRS improvement by 24h [FDA 2025-Jan, PMID 40601310]. India saw a parallel story: tirzepatide (Mounjaro) received CDSCO approval for chronic weight management (Mar 2025), narrowing the window in which GLP-1/GIP agonists were used off-label for obesity. A 2025 review found off-label antipsychotic prescribing remains a major pharmacovigilance concern — ~2/3 of youths and 30-60% of adults on antipsychotics, with low-dose quetiapine for anxiety/insomnia the paradigmatic example [PMID 39791867]; a scoping review found 73% of off-label prescriptions in a large US study had little/no scientific support, with COVID-19 a cautionary case of off-label agents later shown ineffective/harmful [PMID 37208845]. ELEKT-D (2023) found subanaesthetic IV ketamine non-inferior to ECT for treatment-resistant depression, underpinning prior off-label practice [PMID 37224232]. The first international consensus framework for off-label decision-making (modified-Delphi) recommends rigorous evidence review, multidisciplinary appraisal, and regulator-clinician-payer partnerships [PMID 37208845]; specialty-society governance statements (2025 European Laryngological Society; palliative-medicine Delphi, 64/68 recommendations across 21 drugs) are formalising procedure-specific consent and consensus structure [PMID 40358656, 40088119].</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Regulatory requirements for generic medicines — pharmaceutical/therapeutic equivalence, bioequivalence study design &amp; BCS-based biowaivers.</span></summary>
@@ -1392,7 +1626,17 @@
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Pharmacoepidemiology; Materiovigilance (MvPI), Haemovigilance &amp; Cosmetovigilance.</span></summary>
   <div class="answer">
     <h4>Pharmacoepidemiology</h4>
-    <p>The study of the <b>use and effects (beneficial &amp; adverse) of drugs in large populations.</b> Combines pharmacology + epidemiology. Methods: cohort, case-control, cross-sectional studies, drug-utilisation reviews, database/record-linkage studies. Uses: post-marketing surveillance, ADR quantification, risk-benefit &amp; outcomes research, policy.</p>
+    <p>The study of the <b>use and effects (beneficial &amp; adverse) of drugs in large populations</b> — applies epidemiological methods to clinical pharmacology, forming the scientific backbone of post-marketing surveillance (Phase IV)/pharmacovigilance. Needed because pre-marketing trials are small (median ~467 patients), short (median ~24wk — misses delayed effects like bisphosphonate jaw osteonecrosis), and selective (exclude children, pregnant women, elderly &gt;75y); classic contrast: terfenadine ~5,000 pre-marketing vs ~7.5 million exposed before withdrawal.</p>
+    <table>
+      <tr><th>Method</th><th>Design</th><th>Strength / Weakness</th></tr>
+      <tr><td>Spontaneous reporting</td><td>Voluntary ADR reports (Yellow Card, FAERS)</td><td>Cheap, lifelong, detects rare reactions / gross under-reporting (~94%), no denominator</td></tr>
+      <tr><td>PEM</td><td>Prospective observational cohort ("event recording")</td><td>No prior causality suspicion needed / needs large numbers, long follow-up</td></tr>
+      <tr><td>Cohort study</td><td>Exposed vs unexposed, followed forward</td><td>Gives incidence/relative risk, finds unsuspected ADRs / costly, long follow-up</td></tr>
+      <tr><td>Case-control study ("trohoc")</td><td>Cases vs controls, traced backward for exposure</td><td>Quick, cheap, best for rare events (odds ratio) / needs prior hypothesis, recall bias</td></tr>
+      <tr><td>Record-linkage/RWD</td><td>Linked EHR/claims/registries (UK CPRD, FDA Sentinel)</td><td>Millions of patients, timely / confounding by indication</td></tr>
+    </table>
+    <p><b>Confounding</b> is the central pitfall of observational data — hormone replacement therapy (HRT) cohorts wrongly showed cardioprotection ("healthy-user" bias); the randomised Women's Health Initiative found increased CV risk &amp; 24% higher breast-cancer risk. Evidence grading (highest→lowest): systematic review/meta-analysis &gt; single RCT &gt; cohort/case-control &gt; case reports. Regulatory toolkit on a confirmed signal: communication (label/boxed warning) → REMS → PASS/post-marketing trial → withdrawal.</p>
+    <div class="recent"><b>Recent advances:</b> Target trial emulation (TTE) is now the dominant causal-inference framework for observational data — specifying a hypothetical "target" RCT protocol and emulating it in EHR/claims data to remove immortal-time and prevalent-user bias [PMID 37131279]; a 116-million-patient US EHR emulation (1,094,761 T2DM patients) found semaglutide associated with lower first-time Alzheimer's diagnosis vs other antidiabetics (HR 0.33) [PMID 39445596]. ML signal-detection models for ADRs in hospitalised patients reached pooled sensitivity/specificity 78.1%/70.6% (rising to 81.5%/79.5% with external validation, though only 23% of studies were externally validated) [PMID 39961738]. A network meta-analysis combining RCT and real-world data for schizophrenia relapse prevention found broad RWE-RCT concordance [PMID 38215784]. FDA's Real-World Evidence Program finalised guidance on RWD/RWE for regulatory decisions (Aug 2023); EMA's DARWIN EU network expanded to ~250 million patients, logging 59 regulator-led studies (2024-25) [EMA 2025, PMID 38566457]. PvPI now runs ~562 AMCs feeding VigiFlow→VigiBase→VigiLyze, with 543,586 ICSRs received by end-2021.</div>
     <h4>"Vigilance" programmes of India</h4>
     <table>
       <tr><th>Programme</th><th>Monitors</th><th>Coordinating centre</th></tr>
@@ -1448,7 +1692,7 @@
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Contribution of Alfred G. Gilman to pharmacology — discovery of G proteins &amp; the cyc⁻ S49 reconstitution experiment.</span></summary>
   <div class="answer">
     <h4>Who he was</h4>
-    <p><b>Alfred Goodman Gilman (1941–2015)</b> was an American pharmacologist/biochemist who, with Martin Rodbell, was awarded the <b>1994 Nobel Prize in Physiology or Medicine</b> "for the discovery of G proteins and the role of these proteins in signal transduction in cells." His work defined how a hormone/neurotransmitter binding a cell-surface receptor is transduced into an intracellular biochemical response — the molecular foundation of modern GPCR pharmacology. He was also long-time editor of <i>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</i> (named after his father Alfred Gilman Sr. and Louis Goodman).</p>
+    <p><b>Alfred Goodman Gilman (1941–2015)</b> was an American pharmacologist/biochemist who, with Martin Rodbell, was awarded the <b>1994 Nobel Prize in Physiology or Medicine</b> "for the discovery of G proteins and the role of these proteins in signal transduction in cells." His work defined how a hormone/neurotransmitter binding a cell-surface receptor is transduced into an intracellular biochemical response — the molecular foundation of modern GPCR pharmacology. He was also long-time editor of a landmark pharmacology textbook (named after his father Alfred Gilman Sr. and Louis Goodman).</p>
     <h4>Biographical note</h4>
     <p>American physician-scientist (MD-PhD); son of Alfred Gilman Sr., co-author of the classic textbook — pharmacology was literally the family trade. Worked chiefly at the University of Virginia and later UT Southwestern Medical Center, Dallas. Shared the 1994 Nobel with Martin Rodbell: Rodbell had shown a GTP requirement for hormone action and proposed a "transducer" between receptor and effector; Gilman identified and biochemically characterised that transducer as the <b>G protein</b>.</p>
     <h4>Major contributions at a glance</h4>
@@ -1458,7 +1702,7 @@
       <tr><td>cyc⁻ S49 lymphoma reconstitution experiments</td><td>Genetic-biochemical proof that a distinct protein (Gs), not the receptor or enzyme, couples hormone to adenylyl cyclase</td></tr>
       <tr><td>Mechanism of receptor-effector coupling</td><td>Explained signal amplification and on/off switching (GDP/GTP cycle on Gα)</td></tr>
       <tr><td>Defined G-protein families (Gs, Gᵢ, Gq, G₁₂) and effectors</td><td>Rational framework for drug-receptor subtype targeting</td></tr>
-      <tr><td>Editor, <i>Goodman &amp; Gilman's</i></td><td>Shaped how generations of physicians learn therapeutics</td></tr>
+      <tr><td>Editor, <i>a landmark pharmacology textbook</i></td><td>Shaped how generations of physicians learn therapeutics</td></tr>
     </table>
     <h4>The cyc⁻ S49 lymphoma reconstitution experiments (decisive contribution)</h4>
     <ul>
@@ -1623,7 +1867,7 @@
   </div>
 
   <footer>
-    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman, Katzung, Rang &amp; Dale; ICMR (2017), NDCT Rules 2019, ICH-GCP, Declaration of Helsinki.
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: standard pharmacology references; ICMR (2017), NDCT Rules 2019, ICH-GCP, Declaration of Helsinki.
   </footer>
 </div>
 
@@ -1685,7 +1929,6 @@
     const vis = visible(); if(!vis.length) return;
     items.forEach(d=> d.open=false);
     const pick = vis[Math.floor(Math.random()*vis.length)];
-    pick.open = true;
     setKb(items.indexOf(pick));
   }
   document.getElementById('shuffle').onclick = randomQ;
@@ -1729,6 +1972,89 @@
   });
 
   apply();
+
+  /* ---- v3: glass / motion enhancements (additive — does not touch logic above) ---- */
+  const progressBar = document.getElementById('progressBar');
+  function updateProgress(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', ()=> requestAnimationFrame(updateProgress), {passive:true});
+  updateProgress();
+
+  const statRow = document.getElementById('statRow');
+  if(statRow){
+    const nQ = items.filter(d=> d.dataset.type!=='case').length;
+    const nCase = items.filter(d=> d.dataset.type==='case').length;
+    statRow.innerHTML =
+      '<span class="stat-pill">\u{1F4DA} <b>'+sections.length+'</b>&nbsp;sections</span>'+
+      '<span class="stat-pill">❓ <b>'+nQ+'</b>&nbsp;questions</span>'+
+      '<span class="stat-pill">\u{1FA7A} <b>'+nCase+'</b>&nbsp;cases</span>';
+  }
+
+  const toTopBtn = document.getElementById('toTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', ()=>{
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  }
+
+  themeBtn.addEventListener('click', ()=>{
+    themeBtn.classList.add('spin');
+    setTimeout(()=> themeBtn.classList.remove('spin'), 500);
+  });
+
+  if('IntersectionObserver' in window){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const secObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); secObserver.unobserve(en.target); } });
+    }, {threshold:0.08, rootMargin:'0px 0px -60px 0px'});
+    sections.forEach(s=> secObserver.observe(s));
+
+    const qObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); qObserver.unobserve(en.target); } });
+    }, {threshold:0.05, rootMargin:'0px 0px -40px 0px'});
+    items.forEach((d,i)=>{
+      if(!reduceMotion) d.style.transitionDelay = (i % 5) * 55 + 'ms';
+      qObserver.observe(d);
+    });
+  } else {
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }
+
+  // safety net — guarantee nothing stays invisible if something above misfires
+  setTimeout(()=>{
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }, 1600);
+
 </script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

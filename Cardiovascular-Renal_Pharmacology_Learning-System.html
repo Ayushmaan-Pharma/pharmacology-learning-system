@@ -837,10 +837,433 @@
   }
   .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
 
+
+
+/* =========================================================================
+   GLASS / MOTION DEMO LAYER v3 — additive, appended after all base rules.
+   Uses this file's own tokens (--accent, --cool, --hero-gradient, etc.,
+   with safe fallbacks where a file doesn't define one) so colours/content
+   stay identical to the original. Shared across the whole Learning System
+   family for visual/motion consistency.
+   ========================================================================= */
+
+html{scroll-behavior:smooth}
+
+/* ---- ambient drifting blobs, colour-matched to this file's palette ---- */
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(75px); opacity:.30}
+.gp-ambient .b1{width:44vw;height:44vw; top:-14%; left:-12%; background:radial-gradient(circle,var(--accent-dark),transparent 70%); animation:gpDrift1 38s ease-in-out infinite}
+.gp-ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,var(--cool),transparent 70%); animation:gpDrift2 44s ease-in-out infinite}
+.gp-ambient .b3{width:42vw;height:42vw; bottom:-18%; left:18%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift3 40s ease-in-out infinite}
+.gp-ambient .b4{width:26vw;height:26vw; bottom:10%; right:8%; background:radial-gradient(circle,var(--cool-light,var(--cool)),transparent 70%); animation:gpDrift4 33s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,7vh) scale(1.12)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.12)}}
+@keyframes gpDrift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-4vw,-3vh) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+/* ---- scroll progress bar ---- */
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--accent-dark), var(--cool), var(--accent));
+  box-shadow:0 0 10px rgba(15,107,107,.45); transition:width .12s linear}
+
+/* ---- back-to-top, using the page's own hero gradient (with fallback) ---- */
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:var(--hero-gradient, linear-gradient(135deg, var(--accent-dark), var(--cool))); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.35); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+/* ---- stronger glass on the already-sticky nav ---- */
+.sticky-nav, nav.toc{
+  background:rgba(245,244,240,.62) !important;
+  backdrop-filter:blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(190%) !important;
+  box-shadow:0 4px 24px rgba(16,38,52,.08) !important;
+}
+nav.toc a{transition:color .2s, transform .2s}
+nav.toc a:hover{transform:translateY(-1px)}
+
+/* ---- hero entrance + glass stat strip ---- */
+header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpHeroIn{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+.chip{transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{transform:translateY(-2px) scale(1.04)}
+
+.gp-stat-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; position:relative}
+.gp-stat-pill{font-size:.78rem; font-weight:650; color:#fff; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.32); padding:6px 14px; border-radius:999px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; gap:6px}
+.gp-stat-pill b{color:#fff; font-weight:800}
+
+/* ---- generic scroll-reveal utilities (assigned by JS) ---- */
+.gp-reveal{opacity:0; transform:translateY(28px) scale(.985); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.34,1.2,.64,1)}
+.gp-reveal.in-view{opacity:1; transform:none}
+.gp-reveal-soft{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease}
+.gp-reveal-soft.in-view{opacity:1; transform:none}
+
+/* ---- module card + header glass sheen / hover glow ---- */
+section.module{transition:box-shadow .35s ease}
+section.module:hover{box-shadow:0 20px 48px rgba(16,38,52,.18)}
+.module-header, .mod-head{position:relative; overflow:hidden}
+.module-header::after, .mod-head::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(120deg, rgba(255,255,255,.20), transparent 45%, rgba(255,255,255,.06));
+}
+
+.cog, .blurt-stage, .sched-stage, .flashcard, .quiz-intro{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease
+}
+.cog:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--cool) 35%, transparent)}
+.cog.blurt:hover{box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 38%, transparent)}
+.blurt-stage:hover, .sched-stage:hover{transform:translateY(-3px)}
+.flashcard:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 30%, transparent)}
+
+/* =========================================================================
+   ANIMATED ACCORDIONS — CSS-grid height trick (no JS height math needed).
+   grid-auto-rows (not just grid-template-rows) is set too, so this stays
+   correct even when a gate/quizset/qa has more than one content child
+   (e.g. Neoplastic's details.gate > p, p, p). Works regardless of who
+   toggles [open]/.open (click, keyboard, or the existing inline JS),
+   because it keys off the attribute/class only.
+   ========================================================================= */
+details.gate, details.quizset, details.qa{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1), grid-auto-rows .45s cubic-bezier(.4,0,.2,1);
+}
+details.gate[open], details.quizset[open], details.qa[open]{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+details.gate > *:not(summary), details.quizset > *:not(summary), details.qa > *:not(summary){
+  overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s;
+}
+details.gate[open] > *:not(summary), details.quizset[open] > *:not(summary), details.qa[open] > *:not(summary){ opacity:1; }
+
+div.q{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1), box-shadow .25s ease;
+  border-radius:var(--radius-sm);
+}
+div.q.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; box-shadow:0 6px 18px -6px color-mix(in srgb, var(--cool) 30%, transparent); }
+div.q > .qa{
+  display:block !important; overflow:hidden; min-height:0; opacity:0;
+  transition:opacity .3s ease .05s;
+}
+div.q.open > .qa{ opacity:1; }
+/* same pattern for the alternate class names used in sibling files of this series */
+.quiz-item{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.quiz-item.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+.quiz-item > .quiz-a{ display:block !important; overflow:hidden; min-height:0; opacity:0; transition:opacity .3s ease .05s; }
+.quiz-item.open > .quiz-a{ opacity:1; }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal, .gp-reveal-soft{opacity:1 !important; transform:none !important; transition:none !important}
+  header.hero{animation:none}
+  details.gate, details.quizset, details.qa, div.q, .quiz-item{transition:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+
+/* TRUE FROSTED GLASS — translucent panels over the ambient blobs */
+body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; }
+.module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+.diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+.fc-back, .mnemonic, figure.dia {
+  background: color-mix(in srgb, white 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
+  .module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+  .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+  .fc-back, .mnemonic, figure.dia { background: white !important; }
+}
+
+/* =========================================================================
+   CONSOLIDATED TOOLBAR + CHAPTERS DRAWER + DARK MODE SKIN
+   Replaces the old standalone back button + horizontal sticky chapter bar
+   (which used to visually collide) with one floating icon toolbar plus a
+   toggleable left-hand chapters drawer. Additive, reuses this file's tokens.
+   ========================================================================= */
+.gp-toolbar{
+  position:fixed; top:16px; left:16px; z-index:300;
+  display:flex; align-items:center; gap:4px;
+  background:rgba(255,255,255,.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border:1px solid rgba(0,0,0,.10); border-radius:999px; padding:6px; box-shadow:0 6px 22px rgba(0,0,0,.16);
+}
+.gp-tool-btn{
+  width:38px; height:38px; border-radius:50%; border:none; background:transparent; color:#1c1917;
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease; padding:0;
+}
+.gp-tool-btn:hover{ background:rgba(0,0,0,.07); transform:translateY(-1px) scale(1.06); }
+.gp-tool-btn:active{ transform:scale(.9); }
+.gp-toolbar .gp-back-btn{ position:static; box-shadow:none; border:none; background:transparent; }
+.gp-toolbar .gp-back-btn:hover{ box-shadow:none; }
+@media (max-width:640px){ .gp-toolbar{ top:10px; left:10px; padding:4px; gap:2px; } .gp-tool-btn{ width:33px; height:33px; font-size:15px; } }
+@media (prefers-reduced-motion:reduce){ .gp-tool-btn{ transition:none; } }
+
+/* the old horizontal sticky chapter bar is replaced by the drawer below */
+.sticky-nav, nav.toc{ display:none !important; }
+
+/* ---- chapters drawer ---- */
+.gp-drawer-overlay{
+  position:fixed; inset:0; z-index:298; background:rgba(10,12,16,.32);
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.gp-drawer-overlay.show{ opacity:1; pointer-events:auto; }
+.gp-drawer{
+  position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw); z-index:299;
+  background:rgba(245,244,240,.90); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-right:1px solid rgba(0,0,0,.08); box-shadow:8px 0 32px rgba(0,0,0,.18);
+  transform:translateX(-104%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; padding:18px 0;
+}
+.gp-drawer.show{ transform:none; }
+.gp-drawer-head{
+  display:flex; align-items:center; justify-content:space-between; padding:0 18px 14px;
+  border-bottom:1px solid rgba(0,0,0,.08); font-weight:700; font-size:.95rem; color:var(--ink, #1c1917);
+  margin-bottom:6px;
+}
+.gp-drawer-close{ border:none; background:transparent; font-size:16px; cursor:pointer; color:var(--ink-soft, #555); padding:4px; }
+.gp-drawer-links{ display:flex; flex-direction:column; overflow-y:auto; padding:6px 10px; gap:2px; }
+.gp-drawer-links a{
+  display:block; padding:.55rem .75rem; border-radius:10px; text-decoration:none;
+  color:var(--ink-soft, #44403c); font-size:.88rem; font-weight:500; transition:background .18s ease, color .18s ease;
+  white-space:normal;
+}
+.gp-drawer-links a:hover{ background:rgba(0,0,0,.06); }
+.gp-drawer-links a.thesis-link{ color:var(--cool, var(--accent)); font-weight:600; }
+.gp-drawer-links a.key{ color:var(--accent-dark, var(--accent)); font-weight:600; }
+@media (prefers-reduced-motion:reduce){ .gp-drawer, .gp-drawer-overlay{ transition:none; } }
+
+html[data-theme="dark"] .gp-toolbar{ background:rgba(30,33,37,.78); border-color:rgba(255,255,255,.14); }
+html[data-theme="dark"] .gp-tool-btn{ color:#e7e9ec; }
+html[data-theme="dark"] .gp-tool-btn:hover{ background:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-back-btn{ background:transparent !important; }
+html[data-theme="dark"] .gp-drawer{ background:rgba(30,33,37,.92); border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-head{ color:#e7e9ec; border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-close{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a:hover{ background:rgba(255,255,255,.08); }
+
+/* ---- dark mode skin for the page itself ---- */
+html[data-theme="dark"] body{ background: color-mix(in srgb, #15171a 88%, transparent) !important; color:#cdd1d6; }
+html[data-theme="dark"] main{ color:#cdd1d6; }
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] h4{ color:#eef0f2; }
+html[data-theme="dark"] strong{ color: color-mix(in srgb, var(--accent-darker, var(--accent, #d4a847)) 55%, white 45%) !important; }
+html[data-theme="dark"] main a:not(.gp-drawer-links a){ color: color-mix(in srgb, var(--cool, var(--accent, #0f6b6b)) 60%, white 40%); }
+
+html[data-theme="dark"] .module, html[data-theme="dark"] section.module, html[data-theme="dark"] .blurt-prompt,
+html[data-theme="dark"] .primers li, html[data-theme="dark"] .sched-day, html[data-theme="dark"] .sched .day,
+html[data-theme="dark"] .bridge, html[data-theme="dark"] .diagram-wrap, html[data-theme="dark"] details.qsec,
+html[data-theme="dark"] details.quizset, html[data-theme="dark"] details.gate, html[data-theme="dark"] details.qa,
+html[data-theme="dark"] .quiz-q, html[data-theme="dark"] .qq, html[data-theme="dark"] .fc-back,
+html[data-theme="dark"] .mnemonic, html[data-theme="dark"] figure.dia, html[data-theme="dark"] .q, html[data-theme="dark"] .quiz-item{
+  background: color-mix(in srgb, #1e2125 70%, transparent) !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .qa, html[data-theme="dark"] .quiz-a{ color:#c4cad0 !important; }
+html[data-theme="dark"] table, html[data-theme="dark"] td, html[data-theme="dark"] th{ color:#c7cbd1 !important; border-color: rgba(255,255,255,.10) !important; }
+html[data-theme="dark"] blockquote{ border-color: rgba(255,255,255,.18) !important; }
+html[data-theme="dark"] .site-footer, html[data-theme="dark"] footer{ color:#9aa1a8 !important; }
+</style>
+  <style id="mindmap-style">
+/* =========================================================================
+   INTERACTIVE MIND MAP
+   Self-contained: scoped to #mindmap, reuses the page's own design tokens.
+   ========================================================================= */
+.mindmap-section .mm-inner { padding: 2.2rem 2rem 2.4rem; }
+
+.mm-intro { text-align: center; max-width: 700px; margin: 0 auto 2rem; }
+.mm-tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--cool-pale); color: var(--cool);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .35rem .85rem; border-radius: 999px; margin-bottom: .9rem;
+}
+.mm-intro h2 {
+  font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-2xl); color: var(--ink);
+  margin: 0 0 .6rem;
+}
+.mm-intro p { color: var(--ink-soft); font-size: var(--fs-sm); line-height: 1.6; margin: 0 0 1.1rem; }
+.mm-actions { display: flex; justify-content: center; gap: .6rem; }
+.mm-btn {
+  font-family: 'Inter', sans-serif; font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .03em; color: var(--accent-dark); background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: .5rem 1rem; cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.mm-btn:hover { background: var(--accent-pale); border-color: var(--accent); }
+
+/* Root node + connecting "bus" line ----------------------------------- */
+.mm-root {
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  width: fit-content; margin: 0 auto;
+  background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+  color: white; font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+  font-size: var(--fs-lg); text-align: center; line-height: 1.15;
+  padding: .85rem 1.6rem; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.mm-root-emoji { font-size: 1.4em; }
+.mm-bus { width: 2px; height: 22px; background: var(--border); margin: 0 auto; }
+
+.mm-branches {
+  display: grid; gap: .65rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { .mm-branches { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .mm-branches { grid-template-columns: 1fr; } }
+
+/* Branch card ------------------------------------------------------------ */
+.mm-branch {
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: white; align-self: start;
+  border-top: 3px solid var(--mm-c, var(--accent));
+}
+.mm-node {
+  width: 100%; display: flex; align-items: center; gap: .65rem;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Inter', sans-serif; color: var(--ink);
+}
+.mm-module {
+  padding: .8rem .9rem;
+}
+.mm-mnum {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 700;
+  color: white; background: var(--mm-c, var(--accent)); border-radius: 5px;
+  padding: 3px 6px; flex-shrink: 0;
+}
+.mm-mtext { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.mm-mtitle { font-weight: 700; font-size: var(--fs-sm); color: var(--ink); }
+.mm-msub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+.mm-chev {
+  flex-shrink: 0; color: var(--muted); font-size: .8rem;
+  transition: transform .25s ease;
+}
+.mm-module[aria-expanded="true"] .mm-chev,
+.mm-sub[aria-expanded="true"] .mm-chev { transform: rotate(90deg); color: var(--mm-c, var(--accent)); }
+.mm-module:hover, .mm-sub:hover { background: var(--cream); }
+
+/* Collapse mechanics — same animated-grid technique used elsewhere on this page */
+.mm-children {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  background: var(--cream);
+  transition: grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.mm-children > div { overflow: hidden; min-height: 0; }
+.mm-branch:has(.mm-module[aria-expanded="true"]) .mm-children { grid-template-rows: 1fr; }
+
+.mm-twig { border-top: 1px solid var(--border); }
+.mm-twig:first-child { border-top: 1px solid var(--border); }
+.mm-sub { padding: .6rem .9rem .6rem 1.5rem; font-size: .82rem; font-weight: 600; align-items: flex-start; }
+.mm-stext { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.mm-stitle { line-height: 1.3; }
+.mm-ssub { font-size: .7rem; font-weight: 400; color: var(--muted); line-height: 1.4; white-space: normal; }
+.mm-sub .mm-chev { margin-top: 2px; }
+
+.mm-leaves {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  list-style: none; margin: 0; padding: 0 1.1rem 0 2.2rem;
+  transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1), padding .35s ease;
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.55;
+}
+.mm-leaves > li { overflow: hidden; min-height: 0; }
+.mm-twig:has(.mm-sub[aria-expanded="true"]) .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
+.mm-leaves li {
+  position: relative; padding: .25rem 0 .25rem .85rem; border-bottom: 1px dashed var(--border);
+}
+.mm-leaves li:last-child { border-bottom: none; }
+.mm-leaves li::before {
+  content: '•'; position: absolute; left: 0; color: var(--mm-c, var(--accent)); font-weight: 700;
+}
+.mm-leaves li.mm-eq {
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent-darker);
+  background: var(--accent-pale); border-radius: 4px; padding: .35rem .5rem .35rem .85rem;
+  border-bottom: none; margin: .2rem 0;
+}
+.mm-leaves li.mm-eq::before { content: 'ƒ'; }
+
+/* Dark mode -------------------------------------------------------------- */
+html[data-theme="dark"] .mm-branch { background: #1e2125; border-color: rgba(255,255,255,.10); }
+html[data-theme="dark"] .mm-children { background: #181a1d; }
+html[data-theme="dark"] .mm-twig { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-leaves li { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-node { color: #d7dce1; }
+html[data-theme="dark"] .mm-mtitle { color: #eef1f4; }
+html[data-theme="dark"] .mm-module:hover, html[data-theme="dark"] .mm-sub:hover { background: rgba(255,255,255,.05); }
+html[data-theme="dark"] .mm-leaves { color: #b7bec5; }
+html[data-theme="dark"] .mm-leaves li.mm-eq { background: rgba(176,116,16,.18); color: #e8c98a; }
+html[data-theme="dark"] .mm-btn { background: #1e2125; color: #e8c98a; border-color: rgba(255,255,255,.15); }
+html[data-theme="dark"] .mm-btn:hover { background: rgba(176,116,16,.18); }
+html[data-theme="dark"] .mm-tag { background: rgba(15,107,107,.2); color: #6fc6c6; }
+html[data-theme="dark"] .mm-intro h2 { color: #eef1f4; }
+html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
+
+/* Reduced motion ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .mm-children, .mm-leaves, .mm-chev { transition: none; }
+}
+
+/* No-:has() fallback */
+.mm-branch.mm-open > .mm-children { grid-template-rows: 1fr; }
+.mm-twig.mm-open > .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
 </style>
   <link rel="stylesheet" href="learning-interactive.css">
+  <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<div class="gp-toolbar" role="toolbar" aria-label="Page controls">
+  <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
+  <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+  <button id="gpDarkToggle" class="gp-tool-btn" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  <button id="gpRandomQuiz" class="gp-tool-btn" type="button" title="Random quiz question" aria-label="Open a random quiz question">🎲</button>
+  <button id="gpToolbarExpand" class="gp-tool-btn gp-toolbar-expand" type="button" title="More controls" aria-label="Show more controls" aria-expanded="false">›</button>
+  <div class="gp-toolbar-extra" id="gpToolbarExtraOuter">
+    <div class="gp-toolbar-extra-inner" id="gpToolbarExtra"></div>
+  </div>
+</div>
+<div class="gp-drawer-overlay" id="gpDrawerOverlay"></div>
+<aside class="gp-drawer" id="gpDrawer" aria-label="Chapter index">
+  <div class="gp-drawer-head">
+    <span>Chapters</span>
+    <button id="gpDrawerClose" class="gp-drawer-close" type="button" aria-label="Close chapters index">✕</button>
+  </div>
+  <nav class="gp-drawer-links" id="gpDrawerLinks"></nav>
+</aside>
+
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
 
 <header class="hero">
   <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
@@ -852,7 +1275,7 @@
       fill="none" stroke="#f0b8b0" stroke-width="2.5"/>
   </svg>
   <div class="wrap">
-    <div class="eyebrow">Goodman &amp; Gilman · 14th Ed · Section III</div>
+    <div class="eyebrow">Pharmacology Learning System · Section III</div>
     <h1>Cardiovascular-Renal Pharmacology<br><em>an accelerated learning system</em></h1>
     <p class="sub">Chapters 29–37 organized as a study guide: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies that make the mechanisms clear, and a spaced-repetition plan to help you remember it. Diuretics, the RAAS, heart failure, arrhythmias, anticoagulation and lipids — the drugs that run the clinic.</p>
     <div class="thesis">🎯 <span>Highest-yield chapters highlighted in teal — <b>Ch 29 diuretics</b>, <b>Ch 30 RAAS</b>, <b>Ch 33 heart failure</b> carry the heaviest clinical and exam weight.</span></div>
@@ -863,10 +1286,18 @@
       <span class="chip">6 quiz sets × 20 Q</span>
     </div>
   </div>
-</header>
+
+    <div class="gp-stat-row">
+      <span class="gp-stat-pill">9 modules · full depth</span>
+      <span class="gp-stat-pill">6 diagrams</span>
+      <span class="gp-stat-pill">blurting gates + analogies</span>
+      <span class="gp-stat-pill">6 quiz sets × 20 Q</span>
+    </div>
+  </header>
 
 <nav class="toc">
   <div class="wrap">
+    <a href="#mindmap">🗺️ Mind Map</a>
     <a href="#method">The method</a>
     <a class="thesis-link" href="#m29">29 · Diuretics ★</a>
     <a class="thesis-link" href="#m30">30 · RAAS ★</a>
@@ -884,13 +1315,228 @@
 
 <main class="wrap">
 
+<section class="module mindmap-section" id="mindmap">
+<div class="mm-inner">
+  <div class="mm-intro">
+    <div class="mm-tag"><span>🗺️</span> Interactive Mind Map</div>
+    <h2>See the whole chapter at a glance</h2>
+    <p>Click a module below to branch into its subheadings — click a subheading to reveal the short topics and key formulas underneath it. Click anything again to collapse it.</p>
+    <div class="mm-actions">
+      <button id="mmExpandAll" class="mm-btn" type="button">Expand all</button>
+      <button id="mmCollapseAll" class="mm-btn" type="button">Collapse all</button>
+    </div>
+  </div>
+
+  <div class="mindmap" id="mindmapTree">
+    <div class="mm-root"><span class="mm-root-emoji">❤️</span><span>Cardiovascular-Renal Pharmacology<br>an accelerated learning system</span></div>
+    <div class="mm-bus" aria-hidden="true"></div>
+    <div class="mm-branches">
+
+      <div class="mm-branch" style="--mm-c:#0f6b6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m29">
+          <span class="mm-mnum">29</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Drugs Affecting Renal Excretory Function — Diuretics</span><span class="mm-msub">How each diuretic class targets one transporter in one part of the kidney tubule, and why that explains its strength and side effects.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m29">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The five classes, by site (proximal → distal)</span><span class="mm-ssub">Lists which drug blocks which transporter at which part of the nephron, and how much salt that segment normally handles.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Carbonic anhydrase inhibitors act in the proximal tubule (acetazolamide) — handle ~65% of Na⁺ but are weak diuretics</li>
+              <li>Loop diuretics block NKCC2 in the thick ascending limb (furosemide, bumetanide, torsemide) — only ~25% of Na⁺ but the most powerful class</li>
+              <li>Thiazides block NCC in the distal tubule (hydrochlorothiazide, chlorthalidone) — only ~5% of Na⁺</li>
+              <li>K⁺-sparing/MR antagonists act on ENaC or the aldosterone receptor in the collecting duct (amiloride, spironolactone, eplerenone) — only ~2%</li>
+              <li>Osmotic diuretics (mannitol) pull water out across the whole nephron</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Key anchors — loop diuretics</span><span class="mm-ssub">Explains why furosemide has to reach the urine to work, why it can stop working well in heart failure, and how that's fixed.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Furosemide must be secreted into the tubular fluid before it can act — urine drug levels (not blood levels) tell you if it's reaching its target</li>
+              <li>Diuretic resistance in heart failure comes from poor kidney blood flow, less drug secretion, salt "braking," and downstream segments enlarging to compensate</li>
+              <li>Adding a second drug further down the nephron (thiazide or MR antagonist) overcomes resistance — sequential blockade</li>
+              <li class="mm-eq">Furosemide : torsemide conversion ≈ 2:1, not 4:1</li>
+              <li>Loops and thiazides both lower K⁺ and cause alkalosis; loops also lower Ca²⁺ while thiazides raise it; K⁺-sparing drugs raise K⁺</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#a8331f">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m30">
+          <span class="mm-mnum">30</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Renin &amp; Angiotensin — the RAAS</span><span class="mm-msub">The body's blood-pressure thermostat, and how four different drug classes each interrupt it at a different step.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m30">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The cascade &amp; its blockers</span><span class="mm-ssub">Walks through renin to Ang II to aldosterone, and which drug class blocks which step.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Low BP/Na⁺ triggers renin release, which makes Ang I; ACE converts Ang I to Ang II, which constricts vessels and triggers aldosterone release</li>
+              <li>ACE inhibitors ("-pril") stop Ang II formation but let bradykinin build up, causing cough/angioedema</li>
+              <li>ARBs ("-sartan") block the AT1 receptor directly — bradykinin is untouched so cough is rare</li>
+              <li>MR antagonists (spironolactone, eplerenone) block aldosterone and improve survival in heart failure</li>
+              <li>Direct renin inhibitor (aliskiren) and ARNI (sacubitril/valsartan, combining neprilysin inhibition with an ARB) are newer options</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#5b4a7a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m31">
+          <span class="mm-mnum">31</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Treatment of Ischemic Heart Disease</span><span class="mm-msub">Angina drugs work by either lowering how hard the heart has to work or improving its blood supply.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m31">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Supply vs demand drug classes</span><span class="mm-ssub">The four drug groups used for angina, and whether each one lowers the heart's oxygen demand or boosts its supply.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Nitrates release NO, dilate veins, lower preload, and relieve pain fast — but tolerance builds with continuous use</li>
+              <li>Beta-blockers lower heart rate and contraction force, cutting demand — first-line for chronic stable angina</li>
+              <li>Calcium-channel blockers dilate coronary arteries (dihydropyridines like amlodipine) or slow the heart (verapamil, diltiazem)</li>
+              <li>Antiplatelets and statins treat the underlying clot/plaque rather than just the symptoms</li>
+              <li>Never combine nitrates with PDE5 inhibitors (sildenafil) — risk of severe hypotension</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#b9791a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m32">
+          <span class="mm-mnum">32</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Treatment of Hypertension</span><span class="mm-msub">Blood pressure equals cardiac output times resistance, so every drug class lowers one of those two factors.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m32">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">First-line classes &amp; how to pick one</span><span class="mm-ssub">The core first-line drugs, plus how specific patient factors (diabetes, pregnancy, race) change which drug you'd choose.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>First-line: thiazide diuretics (lower volume), ACE-I/ARB (lower RAAS activity), calcium-channel blockers (lower resistance)</li>
+              <li>Beta-blockers are second-line generally, but move to first-line if the patient also has had an MI or has heart failure</li>
+              <li>Diabetes/CKD favors ACE-I/ARB (protects kidneys); pregnancy favors labetalol, methyldopa, nifedipine; Black patients often do best on a CCB or thiazide</li>
+              <li>Resistant hypertension adds spironolactone as a 4th-line drug</li>
+              <li>Hypertensive emergencies use IV drugs (labetalol, nicardipine, nitroprusside) to lower BP gradually, not abruptly</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#2e8e8e">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m33">
+          <span class="mm-mnum">33</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Therapy of Heart Failure</span><span class="mm-msub">The failing heart triggers a hormone cycle that makes it worse over time — some drugs break that cycle, others just ease symptoms.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m33">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Survival drugs vs symptom drugs</span><span class="mm-ssub">Which heart-failure drugs actually help patients live longer, and which ones only make them feel better short-term.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>ACE-I/ARB/ARNI, beta-blockers, MR antagonists, and SGLT2 inhibitors (dapagliflozin) all give a mortality benefit — the four "survival pillars"</li>
+              <li>Loop diuretics relieve congestion but do not change survival</li>
+              <li>Digoxin is a positive inotrope that reduces hospitalization but only helps symptoms, not survival</li>
+              <li>The failing heart triggers RAAS and sympathetic activation as compensation, but this remodeling makes the heart worse over time</li>
+              <li>Diuretic resistance still matters clinically — even though diuretics don't change survival, failing to control congestion leads to hospitalization</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#3a6b3a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m34">
+          <span class="mm-mnum">34</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Antiarrhythmic Drugs</span><span class="mm-msub">The Vaughan-Williams system groups antiarrhythmics by which ion channel or receptor they block during the heartbeat.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m34">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The four Vaughan-Williams classes</span><span class="mm-ssub">What each class blocks, what that does to the heartbeat, and which drugs belong to each class.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Class I blocks Na⁺ channels, blunting the upstroke of the heartbeat (Ia quinidine, Ib lidocaine, Ic flecainide)</li>
+              <li>Class II blocks beta-receptors, slowing the heart's natural pacemaker (metoprolol, esmolol)</li>
+              <li>Class III blocks K⁺ channels, prolonging the heartbeat and lengthening the QT interval (amiodarone, sotalol)</li>
+              <li>Class IV blocks Ca²⁺ channels, slowing conduction through the AV node (verapamil, diltiazem)</li>
+              <li>Amiodarone hits all four classes — very effective, but causes toxicity in the thyroid, lungs, liver, skin, and eyes</li>
+              <li>Adenosine sits outside the classes and briefly blocks the AV node to stop SVT; lidocaine works best on damaged, ischemic tissue after an MI</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#16344a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m35">
+          <span class="mm-mnum">35</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Pulmonary Arterial Hypertension</span><span class="mm-msub">PAH treatment manipulates three pathways in the lung's blood vessels — two that relax them, one that tightens them.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m35">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Three vasodilator pathways</span><span class="mm-ssub">The NO, prostacyclin, and endothelin pathways, and which drugs act on each one to widen the lung's arteries.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>NO pathway: PDE5 inhibitors (sildenafil) and sGC stimulators (riociguat) raise cGMP, causing vasodilation</li>
+              <li>Prostacyclin pathway: epoprostenol, iloprost raise cAMP, also causing vasodilation</li>
+              <li>Endothelin pathway: receptor antagonists (bosentan, ambrisentan) block the vessel-constricting signal</li>
+              <li>PDE5 inhibitors plus nitrates cause severe hypotension — the same danger as elsewhere in cardiology</li>
+              <li>Endothelin antagonists are teratogenic and hepatotoxic — liver function must be monitored and contraception is required</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#8a3e6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m36">
+          <span class="mm-mnum">36</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Anticoagulant, Antiplatelet &amp; Fibrinolytic Drugs</span><span class="mm-msub">Three different ways to fight a clot: stop platelets sticking together, shut down the clotting cascade, or dissolve a clot that's already formed.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m36">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Three roles: antiplatelet, anticoagulant, fibrinolytic</span><span class="mm-ssub">Which drugs belong to each role, how they're monitored, and how each one is reversed if there's bleeding.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Antiplatelets: aspirin blocks TXA₂; clopidogrel/ticagrelor block ADP-P2Y12; clopidogrel needs active CYP2C19 to work</li>
+              <li>Heparin/LMWH activate antithrombin to lower factors IIa and Xa — fast-acting, monitored by aPTT, reversed with protamine</li>
+              <li>Warfarin blocks vitamin K recycling, lowering factors II, VII, IX, X — slow onset, monitored by INR, reversed with vitamin K/PCC</li>
+              <li>DOACs (dabigatran blocks IIa; rivaroxaban/apixaban block Xa) need no routine monitoring; reversed with idarucizumab or andexanet</li>
+              <li>Fibrinolytics (alteplase, streptokinase) activate plasmin to dissolve an existing clot; tranexamic acid works against them</li>
+              <li>Early warfarin therapy can briefly raise clotting risk (protein C/S drop faster than clotting factors) — heparin bridges this gap</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#4a6fa5">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m37">
+          <span class="mm-mnum">37</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Drug Therapy for Dyslipidemias</span><span class="mm-msub">Nearly every lipid drug exists to lower LDL cholesterol, and statins do this best by making the liver pull more LDL out of the blood.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m37">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Drug classes for lowering lipids</span><span class="mm-ssub">Statins are first-line; this covers the other drug options and what each one mainly affects (LDL vs triglycerides).</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Statins block HMG-CoA reductase, so the liver makes more LDL receptors and pulls LDL out of the blood — biggest mortality benefit, but watch for myopathy/rhabdomyolysis and rising LFTs</li>
+              <li>Ezetimibe blocks intestinal cholesterol absorption (NPC1L1) and is added on top of a statin</li>
+              <li>PCSK9 inhibitors (evolocumab) stop LDL receptors from being broken down, giving very strong LDL lowering by injection</li>
+              <li>Fibrates (fenofibrate) are PPAR-alpha agonists that mainly lower triglycerides, not LDL</li>
+              <li>Bile-acid sequestrants, niacin, and omega-3 are add-on options</li>
+              <li>Combining a statin with a fibrate (especially gemfibrozil) raises myopathy risk</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
 <section id="method" style="padding-top:30px">
-  <p class="lead">Each module runs four evidence-based stages. The blurting gate matters most — retrieving <em>before</em> you read is what builds durable memory. Three high-yield chapters get extra depth.</p>
+  <p class="lead">Every module follows the same four-step learning sequence. The most important step is the blurting gate — pulling information out of memory <em>before</em> you ever read the notes is what makes the learning stick. A few especially high-yield chapters get a deeper treatment.</p>
   <div class="method">
-    <div class="m m1"><h4>① 80/20 Map</h4><p>The 20% of ideas that explain 80% of the pharmacology. The skeleton first.</p></div>
-    <div class="m m2"><h4>② Blurting Gate</h4><p>Dump everything you know <em>before</em> reading the notes. Active recall.</p></div>
-    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The mechanism in plain language, with a simple analogy.</p></div>
-    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>When to re-test, and one question linking this topic to another.</p></div>
+    <div class="m m1"><h4>① 80/20 Map</h4><p>A small fraction of the concepts — roughly a fifth — accounts for most of what you need to understand the pharmacology, so start with that core skeleton.</p></div>
+    <div class="m m2"><h4>② Blurting Gate</h4><p>Before opening the notes, write down everything you can recall unaided. This act of forced retrieval is the active-recall step.</p></div>
+    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>A plain-English walkthrough of the mechanism, paired with an easy analogy.</p></div>
+    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>A schedule for when to retest yourself, plus a question that ties this topic back to a related one.</p></div>
   </div>
 </section>
 
@@ -907,7 +1553,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Every diuretic is defined by <strong>one transporter at one segment of the nephron</strong> — learn the map of where Na⁺ is reabsorbed and you can predict each drug's potency, electrolyte effects, and adverse profile without memorising lists.</div>
+    <div class="pillar">Each diuretic class can be traced back to <strong>a single transporter at a single nephron segment</strong> — once you know which part of the tubule handles which share of Na⁺ reabsorption, the drug's strength, its electrolyte fallout, and its side-effect pattern all follow logically, with no need to rote-learn separate lists.</div>
     <h4>The five classes, by site (proximal → distal)</h4>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Class</th><th>Site</th><th>Target</th><th>Drugs</th><th>Na⁺ reabsorbed there</th></tr></thead>
@@ -921,10 +1567,10 @@
     </table></div>
     <h4>Key anchors — loop diuretics</h4>
     <ul>
-      <li><strong>Furosemide acts from the luminal (urine) side</strong> — it must be <em>secreted into the tubule</em> (via OAT) to reach NKCC2. This is exactly why <strong>urinary</strong> furosemide, not plasma, reflects drug delivery — it must reach the lumen to work.</li>
-      <li><strong>Diuretic resistance</strong> in heart failure: reduced renal perfusion, ↓tubular secretion, post-diuretic Na⁺ retention ("braking"), and distal-nephron hypertrophy compensating for blocked NKCC2 — the rationale for sequential nephron blockade (add thiazide or an MR antagonist).</li>
-      <li><strong>Torsemide vs furosemide:</strong> torsemide has higher, more predictable oral bioavailability and a longer half-life. <span class="pill">conversion ≈ 2:1 (furosemide:torsemide), not 4:1</span></li>
-      <li><strong>Electrolyte signatures:</strong> loops & thiazides → hypokalemia, metabolic alkalosis; loops → hypocalcemia (lose Ca²⁺), thiazides → hypercalcemia (retain Ca²⁺); K⁺-sparing → hyperkalemia.</li>
+      <li><strong>Furosemide works from inside the tubule, not from the blood</strong> — it has to be <em>pumped into the urine</em> (via OAT) before it can reach NKCC2. That's the reason the amount of furosemide showing up in the <strong>urine</strong>, rather than the plasma level, tells you whether the drug is actually getting to its site of action.</li>
+      <li><strong>Diuretic resistance</strong> in heart failure arises from several overlapping problems: the kidneys are underperfused, less drug gets secreted into the tubule, Na⁺ rebounds back up once the dose wears off ("braking"), and downstream segments enlarge to take over for the blocked NKCC2. This is why adding a second agent further down the nephron (a thiazide or an MR antagonist) makes sense — sequential blockade.</li>
+      <li><strong>Torsemide vs furosemide:</strong> torsemide is absorbed orally more reliably and at a higher rate, and it stays in the body longer. <span class="pill">conversion ≈ 2:1 (furosemide:torsemide), not 4:1</span></li>
+      <li><strong>Electrolyte signatures:</strong> both loops and thiazides drive K⁺ down and push the blood toward alkalosis; loops also drop Ca²⁺ (lost in the urine), while thiazides do the opposite and raise Ca²⁺ (retained); K⁺-sparing agents, true to their name, push K⁺ up.</li>
     </ul>
   </div>
 
@@ -959,12 +1605,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">Your heart-failure patient on a big IV dose of furosemide is barely making urine — classic diuretic resistance. Before reading on, blurt out: name three distinct mechanisms that could be blunting the drug's effect, and for each, what you would do about it. (Think: is the drug even reaching its target?)</div>
+    <div class="blurt-prompt">A heart-failure patient given a large IV dose of furosemide is producing almost no urine — a textbook case of diuretic resistance. Before continuing, try to blurt out three separate mechanisms that could be weakening the drug's effect, and a fix for each one. (Hint: start by asking whether the drug is even arriving where it needs to act.)</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does furosemide have to be <em>secreted into the urine</em> to work — and what happens to that secretion when kidney perfusion falls in heart failure?</li>
-      <li>Why does chronic loop-diuretic use eventually lose potency even at the same dose (what is the distal tubule doing in response)?</li>
-      <li>Why do loops cause hypocalcemia but thiazides cause hypercalcemia, when they act only one segment apart?</li>
+      <li>Why must furosemide first be <em>pumped into the tubular fluid</em> before it can act — and how does that step get disrupted when renal blood flow drops in heart failure?</li>
+      <li>Why does the same dose of a loop diuretic gradually become less effective with long-term use (what change is the distal tubule undergoing)?</li>
+      <li>Why does one segment cause Ca²⁺ to fall with loop diuretics, while the very next segment causes Ca²⁺ to rise with thiazides?</li>
     </ul>
   </div>
 
@@ -974,13 +1620,13 @@
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
     <h4>Mechanism</h4>
-    <p>Loop diuretics block <strong>NKCC2</strong> in the thick ascending limb. That transporter normally drags Na⁺, K⁺ and 2Cl⁻ out of the urine — and crucially it powers the <em>countercurrent gradient</em> that lets the kidney concentrate urine. Block it and a huge salt load stays in the tubule and is excreted, dragging water with it. Because it also abolishes the medullary gradient, the kidney loses concentrating power. The lost Ca²⁺/Mg²⁺ reabsorption (which depended on that gradient) explains the hypocalcemia.</p>
+    <p><strong>NKCC2</strong>, sitting in the thick ascending limb, is the target loop diuretics shut down. Under normal conditions this transporter pulls Na⁺, K⁺, and 2Cl⁻ out of the tubular fluid, and in doing so it also maintains the <em>countercurrent gradient</em> the kidney relies on to concentrate urine. Once it's blocked, a large amount of salt is left behind in the tubule and washes out in the urine, water following along with it. Losing that medullary gradient also means the kidney can no longer concentrate urine effectively. Since Ca²⁺ and Mg²⁺ reabsorption depend on the same gradient, their reabsorption falls too — which is why hypocalcemia results.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — bouncers on a river of salt</div>
-      <p>Picture the nephron as a <span class="key">river carrying salt back into the body</span>, with reabsorption "pumps" stationed along the bank. The thick ascending limb has the <strong>biggest pump station of all the accessible sites</strong> — loop diuretics are bouncers who shut <em>that</em> station down, so a flood of salt rushes downstream and out as urine.</p>
-      <p>Diuretic resistance is what happens when (a) the bouncers <strong>can't get into the building</strong> — in heart failure, poor blood flow means little drug is secreted into the tubule where it works (hence urinary, not plasma, furosemide reflects delivery to the site); and (b) the <strong>downstream stations grow bigger</strong> to compensate (distal tubule hypertrophy). Sequential nephron blockade = posting a second bouncer (a thiazide) at that downstream station too.</p>
+      <p>Think of the nephron as a <span class="key">river returning salt to the body</span>, lined with reabsorption "pump stations" along its bank. Of all the stations you can actually reach with a drug, the thick ascending limb runs the <strong>biggest one</strong> — loop diuretics act as bouncers who shut <em>that</em> particular station down, sending a wave of salt rushing past it and out into the urine.</p>
+      <p>Diuretic resistance shows up when (a) the bouncers <strong>never make it inside the building</strong> in the first place — in heart failure, poor renal blood flow means the drug barely gets secreted into the tubule, the place it has to act (which is exactly why checking urinary furosemide, rather than the plasma level, tells you about delivery to the site); or (b) the <strong>stations further downstream bulk up</strong> to pick up the slack (distal tubule hypertrophy). Sequential nephron blockade simply means stationing a second bouncer — a thiazide — at that downstream spot as well.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning — the torsemide conversion trap:</span> furosemide-to-torsemide is roughly <strong>2:1</strong> (e.g., 40 mg furosemide ≈ 20 mg torsemide), <em>not</em> 4:1. Torsemide's superior, more predictable oral bioavailability is precisely why it is favoured when gut absorption is unreliable — directly relevant to your resistance work.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — the torsemide conversion trap:</span> the furosemide-to-torsemide ratio is approximately <strong>2:1</strong> (so, for example, 40 mg furosemide ≈ 20 mg torsemide) — <em>not</em> 4:1. It's torsemide's more reliable, higher oral bioavailability that makes it the better choice when gut absorption can't be trusted — a point that ties directly back into managing resistance.</blockquote>
   </div>
 
   </details>
@@ -1001,14 +1647,14 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">The renin-angiotensin-aldosterone system is the body's <strong>blood-pressure and volume thermostat</strong>, and four drug classes each interrupt it at a different step — making it the most-blocked pathway in all of medicine.</div>
+    <div class="pillar">Think of the renin-angiotensin-aldosterone system as the body's built-in <strong>thermostat for blood pressure and fluid volume</strong>; four separate drug classes each break this circuit at their own step, which makes RAAS the single most frequently targeted pathway anywhere in pharmacology.</div>
     <h4>The cascade &amp; its blockers</h4>
     <ul>
-      <li><strong>The cascade:</strong> low BP/Na⁺ → kidney releases <strong>renin</strong> → cleaves angiotensinogen to <strong>Ang I</strong> → <strong>ACE</strong> converts to <strong>Ang II</strong> → AT1 receptor → vasoconstriction + <strong>aldosterone</strong> (Na⁺/water retention) → BP/volume ↑.</li>
-      <li><strong>ACE inhibitors</strong> ("-pril": enalapril, ramipril) — block Ang II formation; also raise <strong>bradykinin</strong> → the dry cough &amp; angioedema.</li>
-      <li><strong>ARBs</strong> ("-sartan": losartan, valsartan) — block AT1 receptor; no bradykinin effect → less cough.</li>
-      <li><strong>MR antagonists</strong> (spironolactone, eplerenone) — block aldosterone (overlap with Ch 29; survival benefit in HF).</li>
-      <li><strong>Direct renin inhibitor</strong> (aliskiren); <strong>ARNI</strong> (sacubitril/valsartan) — neprilysin inhibition + ARB, a major HF advance.</li>
+      <li><strong>The cascade:</strong> a drop in BP or Na⁺ triggers the kidney to release <strong>renin</strong>, which cleaves angiotensinogen into <strong>Ang I</strong>; <strong>ACE</strong> then converts this to <strong>Ang II</strong>, which acts on the AT1 receptor to cause vasoconstriction and stimulate <strong>aldosterone</strong> release (driving Na⁺/water retention) — the net effect being a rise in BP/volume.</li>
+      <li><strong>ACE inhibitors</strong> ("-pril": enalapril, ramipril) — prevent Ang II from being formed; as a side effect they also let <strong>bradykinin</strong> build up, which is responsible for the dry cough and angioedema.</li>
+      <li><strong>ARBs</strong> ("-sartan": losartan, valsartan) — instead block the AT1 receptor directly; since bradykinin is untouched, cough is much less common.</li>
+      <li><strong>MR antagonists</strong> (spironolactone, eplerenone) — work by blocking aldosterone (this is the same mechanism covered in Ch 29; they confer a survival benefit in HF).</li>
+      <li><strong>Direct renin inhibitor</strong> (aliskiren); <strong>ARNI</strong> (sacubitril/valsartan) — combines neprilysin inhibition with an ARB, representing a significant advance in HF therapy.</li>
     </ul>
   </div>
 
@@ -1042,7 +1688,7 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A patient on an ACE inhibitor develops a persistent dry cough. Blurt: which molecule (not angiotensin) is responsible, why blocking ACE raises it, and what single drug-class switch fixes the cough while keeping the same therapeutic benefit?</div>
+    <div class="blurt-prompt">A patient taking an ACE inhibitor starts having a persistent dry cough. Try to blurt out: which molecule other than angiotensin is to blame, why ACE blockade causes its levels to climb, and which single drug-class swap eliminates the cough while preserving the same treatment benefit.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
       <li>Why can ACE inhibitors and ARBs both <em>raise</em> serum potassium — what downstream hormone falls?</li>
@@ -1135,23 +1781,23 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Blood pressure = cardiac output × peripheral resistance, so every antihypertensive lowers one of those two — and the "first-line four" cover both levers at once.</div>
+    <div class="pillar">Because blood pressure is just cardiac output multiplied by peripheral resistance, every antihypertensive works by pulling down one of those two factors — and the "first-line four" between them hit both levers.</div>
     <ul>
-      <li><strong>The first-line classes:</strong> <strong>thiazide diuretics</strong> (↓volume), <strong>ACE-I / ARB</strong> (↓RAAS), <strong>calcium-channel blockers</strong> (↓resistance). β-blockers are now second-line for uncomplicated HTN but first-line with comorbidities (post-MI, HF).</li>
-      <li><strong>Compelling indications steer choice:</strong> diabetes/CKD → ACE-I/ARB (renoprotective); pregnancy → labetalol, methyldopa, nifedipine; Black patients → CCB or thiazide preferred as monotherapy.</li>
-      <li><strong>Resistant HTN:</strong> add <strong>spironolactone</strong> (4th-line) — links to aldosterone again.</li>
-      <li><strong>Hypertensive emergency:</strong> IV agents (labetalol, nicardipine, sodium nitroprusside) with controlled BP reduction.</li>
+      <li><strong>The first-line classes:</strong> <strong>thiazide diuretics</strong> (↓volume), <strong>ACE-I / ARB</strong> (↓RAAS), and <strong>calcium-channel blockers</strong> (↓resistance) make up the core options. β-blockers have been bumped to second-line for uncomplicated HTN, but they move back to first-line when comorbidities are present (post-MI, HF).</li>
+      <li><strong>Specific patient factors steer the choice:</strong> diabetes/CKD → ACE-I/ARB (renoprotective); pregnancy → labetalol, methyldopa, nifedipine; in Black patients, a CCB or thiazide is generally favored as monotherapy.</li>
+      <li><strong>For resistant HTN,</strong> <strong>spironolactone</strong> gets added as the 4th-line agent — bringing aldosterone back into the picture.</li>
+      <li><strong>In a hypertensive emergency,</strong> IV agents (labetalol, nicardipine, sodium nitroprusside) are used to bring BP down in a controlled, not abrupt, fashion.</li>
     </ul>
   </div>
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">Two patients have the same blood pressure: one also has diabetes with protein in the urine, the other is a healthy 60-year-old of African descent. Blurt out which first-line drug you'd start for each — and the specific reason the "best" choice differs between them.</div>
+    <div class="blurt-prompt">Picture two patients with identical blood pressure readings: one has diabetes plus protein showing up in their urine, the other is an otherwise-healthy 60-year-old of African descent. Without looking anything up, say out loud which first-line agent you'd reach for in each case, and pinpoint exactly why the optimal choice isn't the same for both.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does a thiazide's long-term BP effect outlast its diuretic effect (what happens to vascular resistance over weeks)?</li>
-      <li>Why is an ACE-I especially protective in diabetic kidney disease (think glomerular pressure)?</li>
-      <li>Why combine drugs from <em>different</em> classes rather than maxing one out?</li>
+      <li>A thiazide's antihypertensive effect persists well past the point where its diuresis has worn off — what's happening to vascular resistance over those intervening weeks that explains this?</li>
+      <li>What makes an ACE-I particularly protective for kidneys damaged by diabetes (hint: think about glomerular pressure)?</li>
+      <li>What's the rationale for pairing agents from <em>separate</em> classes instead of pushing a single drug to its ceiling dose?</li>
     </ul>
   </div>
 
@@ -1161,12 +1807,12 @@
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
     <h4>Mechanism</h4>
-    <p>You can lower BP by removing fluid (diuretics), relaxing arteries (CCBs, ACE-I/ARB), or slowing the pump (β-blockers). ACE-I/ARBs additionally dilate the glomerulus's <em>efferent</em> arteriole, lowering the pressure that damages diabetic kidneys — that's the renoprotection.</p>
+    <p>There are three basic routes to a lower BP: pull fluid off (diuretics), open up the arteries (CCBs, ACE-I/ARB), or ease the heart's pumping effort (β-blockers). ACE-I/ARBs have a bonus trick — they widen the <em>efferent</em> arteriole leaving the glomerulus, which takes pressure off the kidney's filtering units and is the basis of their renoprotective effect in diabetics.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — a garden hose under pressure</div>
-      <p>Think of the circulation as a <span class="key">hose with a nozzle</span>. Pressure rises if you pump more water (cardiac output) or tighten the nozzle (resistance). Diuretics <strong>drain some water out of the system</strong>; CCBs and ACE-I/ARBs <strong>loosen the nozzle</strong>; β-blockers <strong>slow the pump</strong>. Combining a "less water" drug with a "looser nozzle" drug at modest doses controls pressure with fewer side effects than cranking either one to maximum.</p>
+      <p>Picture the circulatory system as a <span class="key">garden hose with an adjustable nozzle</span>. Water pressure climbs either because you're pushing more water through (cardiac output) or because you've cranked the nozzle tighter (resistance). Diuretics work by <strong>letting some water out of the system</strong>; CCBs and ACE-I/ARBs act by <strong>opening up the nozzle</strong>; β-blockers <strong>ease off how hard the pump is working</strong>. Pairing a "less water" agent with a "wider nozzle" agent, each at a moderate dose, controls the pressure just as well — with fewer side effects — than pushing one drug all the way to its max.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Don't drop BP too fast in a hypertensive emergency — the brain and kidneys have auto-regulated to the high pressure, and a precipitous fall can cause stroke or AKI. Aim for a controlled, partial reduction.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> In a hypertensive emergency, resist the urge to crash the BP down quickly — the brain and kidneys have adapted their autoregulation to the elevated pressure, so a sudden drop can trigger stroke or acute kidney injury. The goal is a gradual, partial correction, not normalization on the spot.</blockquote>
   </div>
 
   </details>
@@ -1187,7 +1833,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Modern heart-failure therapy works by <strong>interrupting the neurohormonal vicious cycle</strong> (RAAS + sympathetic overdrive) that the failing heart triggers to compensate but which ultimately destroys it — drugs that block this cycle prolong life, while drugs that just relieve symptoms do not.</div>
+    <div class="pillar">The key to modern heart-failure treatment is <strong>breaking the neurohormonal vicious cycle</strong> (RAAS plus excess sympathetic drive) — a response the failing heart switches on to compensate, which ends up wrecking it further over time. Agents that interrupt this cycle extend survival, whereas agents that merely ease symptoms do not.</div>
     <h4>Survival drugs vs symptom drugs</h4>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Drug class</th><th>Action</th><th>Effect on survival?</th></tr></thead>
@@ -1230,12 +1876,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A heart-failure patient feels much better on a loop diuretic — yet the diuretic does nothing for their long-term survival, while a β-blocker (which can transiently make them feel worse) saves lives. Blurt out <em>why</em>: what is the diuretic treating, and what is the β-blocker treating, that makes their long-term fates so different?</div>
+    <div class="blurt-prompt">A patient with heart failure feels considerably better after starting a loop diuretic, yet that drug does nothing to extend how long they'll live. Meanwhile a β-blocker — which can make them feel temporarily worse — actually saves lives. Say out loud <em>why</em> this is: what problem is the diuretic actually fixing, versus what problem the β-blocker is fixing, such that their long-term outcomes diverge so sharply?</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why would giving a powerful positive inotrope that makes the heart pump harder actually <em>shorten</em> survival in chronic HF?</li>
-      <li>Why must β-blockers be started low and slow in HF, never at full dose?</li>
-      <li>Clinically: why does diuretic <em>resistance</em> matter so much if diuretics don't even improve survival?</li>
+      <li>If a potent positive inotrope makes the heart contract more forcefully, why might it actually <em>cut short</em> survival in chronic HF?</li>
+      <li>Why do β-blockers in HF always need to be initiated at a low dose and titrated up slowly, rather than started at full strength?</li>
+      <li>From a clinical standpoint, why does diuretic <em>resistance</em> carry so much weight if diuretics aren't even improving survival to begin with?</li>
     </ul>
   </div>
 
@@ -1353,7 +1999,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">PAH treatment targets <strong>three vasodilator pathways</strong> in the pulmonary arteries — boost the two "good" dilators (NO and prostacyclin) and block the "bad" constrictor (endothelin).</div>
+    <div class="pillar">Managing PAH comes down to manipulating <strong>three vasodilator pathways</strong> in the lung arteries: amplify the two pathways that relax vessels (NO and prostacyclin) while shutting down the one that constricts them (endothelin).</div>
     <ul>
       <li><strong>NO pathway:</strong> PDE5 inhibitors (sildenafil) + sGC stimulators (riociguat) → ↑cGMP → vasodilation.</li>
       <li><strong>Prostacyclin pathway:</strong> epoprostenol, iloprost → ↑cAMP → vasodilation.</li>
@@ -1363,12 +2009,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">PAH drugs and erectile-dysfunction drugs share a mechanism. Blurt out which one, why the same enzyme matters in both the lung artery and elsewhere, and why that overlap creates a dangerous interaction with nitrates.</div>
+    <div class="blurt-prompt">There's a mechanistic overlap between PAH drugs and erectile-dysfunction drugs. Before reading on, try to recall which mechanism they share, why that same enzyme is relevant in both the pulmonary vasculature and elsewhere in the body, and why this shared target makes combining these drugs with nitrates so risky.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does giving a systemic vasodilator risk dropping systemic BP while you're trying to dilate only the lung vessels?</li>
-      <li>Why is endothelin a logical target (what does it normally do to vessels)?</li>
-      <li>Why monitor liver function on bosentan?</li>
+      <li>If your goal is to dilate only the pulmonary vessels, why does using a vasodilator that acts throughout the body threaten to crash systemic blood pressure too?</li>
+      <li>What makes endothelin a sensible drug target — what is its normal effect on blood vessels?</li>
+      <li>What's the reasoning behind checking liver function in patients on bosentan?</li>
     </ul>
   </div>
 
@@ -1378,12 +2024,12 @@
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
     <h4>Mechanism</h4>
-    <p>The pulmonary arteries in PAH are abnormally constricted and remodelled. The three pathways converge on smooth-muscle tone: NO and prostacyclin relax it (via cGMP and cAMP); endothelin tightens it. Drugs push all three toward dilation.</p>
+    <p>In PAH, the pulmonary arteries become excessively narrowed and undergo structural remodeling. All three pathways ultimately act on the same target — smooth-muscle tone: NO and prostacyclin work to relax it (through cGMP and cAMP, respectively), while endothelin works to tighten it. Treatment nudges all three pathways in the direction of dilation.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — three thermostats on one room</div>
-      <p>The pulmonary artery's tone is controlled by <span class="key">three thermostats</span>: two set it to "relax" (NO, prostacyclin) and one to "tighten" (endothelin). In PAH the room is stuck too tight. PDE5 inhibitors <strong>stop the "relax" signal from being erased</strong> (cGMP lingers); prostacyclin analogues <strong>turn up the second relax dial</strong>; endothelin blockers <strong>tape over the "tighten" thermostat</strong>. Combine them and the vessel finally opens.</p>
+      <p>Think of <span class="key">three thermostats</span> governing how tight or loose the pulmonary artery stays: two are set toward "relax" (NO, prostacyclin), and one is set toward "tighten" (endothelin). In PAH, the room is jammed on too tight. PDE5 inhibitors work by <strong>keeping the "relax" signal from fading out</strong> (cGMP sticks around longer); prostacyclin analogues <strong>crank up the other relax dial</strong>; endothelin blockers <strong>disable the "tighten" thermostat</strong>. Used together, the vessel can finally loosen up.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Same lethal rule as nitrates — <strong>PDE5 inhibitors + nitrates = severe hypotension</strong>. And endothelin antagonists are teratogenic and hepatotoxic (monitor LFTs, mandatory contraception).</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> The same danger that applies to nitrates elsewhere applies here too — <strong>PDE5 inhibitors + nitrates = severe hypotension</strong>. Separately, endothelin antagonists carry teratogenic and hepatotoxic risk (LFTs must be monitored, and contraception is mandatory).</blockquote>
   </div>
 
   </details>
@@ -1404,7 +2050,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Clotting drugs split cleanly into <strong>three jobs</strong>: stop platelets clumping (antiplatelets), stop the fibrin cascade (anticoagulants), or dissolve a clot already formed (fibrinolytics).</div>
+    <div class="pillar">Drugs that act on clotting fall into <strong>three distinct roles</strong>: keeping platelets from sticking together (antiplatelets), shutting down the fibrin-forming cascade (anticoagulants), or breaking apart a clot that has already formed (fibrinolytics).</div>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Job</th><th>Drugs</th><th>Mechanism</th><th>Monitor / reverse</th></tr></thead>
       <tbody>
@@ -1446,12 +2092,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A patient needs anticoagulation started <em>today</em> but also long-term. Blurt: why do we often start heparin AND warfarin together, why warfarin alone is dangerous in the first few days ("transient hypercoagulability"), and which lab test monitors each drug.</div>
+    <div class="blurt-prompt">Imagine a patient who needs anticoagulation right away, but also needs to stay anticoagulated long-term. Before reading further, try to explain why heparin and warfarin are often started together, why starting warfarin by itself is risky for the first several days ("transient hypercoagulability"), and which lab value is used to track each drug.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does warfarin take days to work, while heparin works in minutes?</li>
-      <li>Why does aspirin's antiplatelet effect last the whole life of the platelet (~7–10 days)?</li>
-      <li>Why is clopidogrel useless in some patients (recall the prodrug + CYP2C19 link from metabolism)?</li>
+      <li>What explains the gap between warfarin needing days to take effect and heparin acting within minutes?</li>
+      <li>Why does a single dose of aspirin keep affecting platelets for as long as those platelets are alive (~7–10 days)?</li>
+      <li>In some patients clopidogrel simply doesn't work — what's the underlying reason (think about the prodrug + CYP2C19 connection from metabolism)?</li>
     </ul>
   </div>
 
@@ -1461,12 +2107,12 @@
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
     <h4>Mechanism</h4>
-    <p><strong>Heparin</strong> supercharges antithrombin (the body's natural brake) → instant effect, monitor aPTT. <strong>Warfarin</strong> blocks recycling of vitamin K, starving the liver of clotting factors II, VII, IX, X — but those already in the blood must decay first, so it takes days; monitor INR. <strong>DOACs</strong> hit one factor directly, no monitoring. <strong>Aspirin</strong> irreversibly acetylates COX-1 in platelets, which can't make new enzyme → effect lasts the platelet's lifespan. <strong>tPA</strong> turns on plasmin to chew up fibrin.</p>
+    <p><strong>Heparin</strong> dramatically boosts antithrombin activity (the body's own braking protein), so its effect is immediate and is tracked with aPTT. <strong>Warfarin</strong> interferes with vitamin K recycling, which cuts off the liver's supply of clotting factors II, VII, IX, and X — but the factors already circulating have to clear out first, so onset takes days; it's tracked with INR. <strong>DOACs</strong> directly block a single factor and need no routine monitoring. <strong>Aspirin</strong> permanently acetylates COX-1 inside platelets, and since platelets cannot synthesize fresh enzyme, the effect persists for that platelet's entire lifespan. <strong>tPA</strong> activates plasmin, which breaks down fibrin.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — fighting a fire</div>
-      <p>A clot is a <span class="key">fire you must control three ways</span>. <strong>Antiplatelets remove the kindling</strong> (platelets that start it). <strong>Anticoagulants cut off the fuel line</strong> (the fibrin cascade) — heparin slams the valve shut instantly, warfarin slowly stops fuel <em>production</em> (so old fuel keeps burning for a day or two). <strong>Fibrinolytics are the water hose</strong> — they put out a fire already raging (clot already formed, e.g., in stroke or STEMI).</p>
+      <p>Picture a clot as <span class="key">a fire that can be fought in three different ways</span>. <strong>Antiplatelets clear away the kindling</strong> (the platelets that get the process started). <strong>Anticoagulants choke off the fuel supply</strong> (the fibrin cascade) — heparin closes that valve immediately, while warfarin only gradually halts new fuel <em>production</em>, so existing fuel keeps the fire going for a day or two more. <strong>Fibrinolytics act like a hose</strong>, dousing a fire that's already burning out of control (a clot that has already formed, as in stroke or STEMI).</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Warfarin's early "hypercoagulable" window — proteins C and S (natural anticoagulants) fall <em>faster</em> than the clotting factors, so the first 1–3 days can paradoxically promote clotting (warfarin skin necrosis). That's why you <strong>bridge with heparin</strong> until the INR is therapeutic.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> There's a brief window early in warfarin therapy where clotting risk actually goes up — proteins C and S (the body's own anticoagulant proteins) decline <em>more quickly</em> than the pro-clotting factors do, so days 1–3 can paradoxically favor clot formation (warfarin skin necrosis). This is exactly why <strong>heparin is used as a bridge</strong> until the INR reaches a therapeutic level.</blockquote>
   </div>
 
   </details>
@@ -1487,7 +2133,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">The entire chapter centres on one goal — <strong>lowering LDL cholesterol</strong> — and statins dominate because they do it by making the liver hungrier for LDL.</div>
+    <div class="pillar">Nearly everything in this topic serves a single aim — <strong>lowering LDL cholesterol</strong> — and statins are the dominant drug class because they achieve this by making the liver pull in more LDL from the blood.</div>
     <ul>
       <li><strong>Statins</strong> ("-statin") — inhibit <strong>HMG-CoA reductase</strong> (rate-limiting step of cholesterol synthesis) → liver upregulates LDL receptors → pulls LDL from blood. First-line; biggest mortality benefit. <span class="pill r">⚠ myopathy/rhabdomyolysis, ↑LFTs</span></li>
       <li><strong>Ezetimibe</strong> — blocks intestinal cholesterol absorption (NPC1L1); add-on to statin.</li>
@@ -1499,12 +2145,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">Statins block cholesterol <em>production</em> in the liver — yet their main benefit is clearing cholesterol already in the <em>blood</em>. Blurt out the indirect chain that connects "block synthesis" to "lower blood LDL." (Hint: what does the starved liver put more of on its surface?)</div>
+    <div class="blurt-prompt">Statins act by blocking cholesterol <em>synthesis</em> inside the liver, and yet their biggest payoff is removing cholesterol that's already circulating in the <em>blood</em>. Before continuing, try to blurt out the indirect chain of events that links "block synthesis" to "lower blood LDL." (Hint: what does the now-deprived liver cell add more of to its own surface?)</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does combining a statin with a fibrate raise myopathy risk?</li>
-      <li>Why do PCSK9 inhibitors work even in people whose livers barely respond to statins?</li>
-      <li>Why give statins at night for the short-acting ones (when is cholesterol synthesis highest)?</li>
+      <li>What's behind the increased myopathy risk when a statin is combined with a fibrate?</li>
+      <li>How can PCSK9 inhibitors still be effective in patients whose livers respond poorly to statins?</li>
+      <li>For the shorter-acting statins, what's the rationale for dosing at night (think about when cholesterol synthesis peaks)?</li>
     </ul>
   </div>
 
@@ -1514,12 +2160,12 @@
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
     <h4>Mechanism</h4>
-    <p>Statins block the liver's cholesterol factory (HMG-CoA reductase). Sensing low internal cholesterol, the liver cell <strong>puts more LDL receptors on its surface</strong> to grab cholesterol from the bloodstream — and that clearance of circulating LDL is the real benefit. PCSK9 normally destroys those receptors; blocking PCSK9 lets them keep working.</p>
+    <p>Statins shut down the liver's own cholesterol-producing machinery (HMG-CoA reductase). Because the liver cell now senses a shortfall of internal cholesterol, it responds by <strong>displaying more LDL receptors on its surface</strong> so it can pull cholesterol in from the bloodstream instead — and this removal of circulating LDL is where the real clinical benefit comes from. PCSK9 is normally responsible for breaking down those same receptors; blocking PCSK9 allows them to remain active for longer.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — a factory that starts importing</div>
-      <p>The liver is a <span class="key">factory that both makes and imports cholesterol</span>. A statin <strong>shuts down the in-house production line</strong>; short on stock, the factory <strong>opens more loading docks</strong> (LDL receptors) and imports cholesterol from circulating trucks (blood LDL) — emptying the streets of LDL. PCSK9 is the manager who keeps <strong>demolishing loading docks</strong>; a PCSK9 inhibitor fires that manager, so the docks stay open and even more LDL is pulled in.</p>
+      <p>Picture the liver as <span class="key">a factory that can either manufacture cholesterol or import it</span>. A statin <strong>shuts down the factory's own assembly line</strong>; now running low on supply, the factory <strong>builds extra loading docks</strong> (LDL receptors) so it can unload cholesterol from passing delivery trucks (blood LDL) — which clears LDL off the streets. PCSK9 acts like a manager whose job is <strong>tearing down those loading docks</strong>; a PCSK9 inhibitor essentially removes that manager from the job, so the docks remain open and pull in even more LDL.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Statin <strong>myopathy → rhabdomyolysis</strong> is the key adverse effect; risk rises with fibrates (especially gemfibrozil), CYP3A4 inhibitors (grapefruit, macrolides — recall your metabolism chapter), and high doses. Check for muscle pain and CK.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> The adverse effect to remember is statin-induced <strong>myopathy progressing to rhabdomyolysis</strong>; the odds go up when fibrates are added (gemfibrozil in particular), with CYP3A4 inhibitors (grapefruit, macrolides — tying back to the metabolism chapter), and at higher doses. Watch for muscle pain and check CK.</blockquote>
   </div>
 
   </details>
@@ -1939,12 +2585,12 @@
   <div class="wrap">
     <div>
       <strong>Cardiovascular-Renal Pharmacology · Accelerated Learning System</strong><br>
-      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section III (Chs 29–37).<br>
+      <span class="src">Source: Standard pharmacology references — Section III.<br>
       Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
       Verify all drug dosing against current local protocols before clinical use.</span>
     </div>
     <div class="src" style="text-align:right">
-      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Part of a comprehensive pharmacology learning series.<br>
       Built around active recall and spaced repetition.
     </div>
   </div>
@@ -2000,6 +2646,189 @@
 })();
 </script>
 
+<script>
+/* ---- GLASS / MOTION DEMO v3 — additive, does not touch the quiz logic above ---- */
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  var bigSel = 'section.module, .quiz-intro, #flashcards, details.quizset';
+  var smallSel = '.cog, .blurt-stage, .sched-stage, details.gate, details.qa, .flashcard, .tbl-scroll, .diagram-wrap, blockquote.warn, .analogy, div.q';
+
+  document.querySelectorAll(bigSel).forEach(function(el){ el.classList.add('gp-reveal'); });
+  document.querySelectorAll(smallSel).forEach(function(el){ el.classList.add('gp-reveal-soft'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -50px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal, .gp-reveal-soft');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 7) * 50 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // safety net — guarantee nothing is stuck invisible
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }, 2000);
+})();
+</script>
+
 <script src="learning-interactive.js"></script>
+<script src="gamify.js"></script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- populate chapters drawer from this page's existing (now hidden) chapter nav ----
+  var drawerLinks = document.getElementById('gpDrawerLinks');
+  var sourceNav = document.querySelector('nav.toc, .sticky-nav');
+  if (drawerLinks && sourceNav) {
+    var anchors = sourceNav.querySelectorAll('a');
+    anchors.forEach(function(a){ drawerLinks.appendChild(a.cloneNode(true)); });
+  }
+
+  // ---- drawer open/close ----
+  var drawer = document.getElementById('gpDrawer');
+  var overlay = document.getElementById('gpDrawerOverlay');
+  var openBtn = document.getElementById('gpDrawerToggle');
+  var closeBtn = document.getElementById('gpDrawerClose');
+  function openDrawer(){
+    if (drawer) drawer.classList.add('show');
+    if (overlay) overlay.classList.add('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','true');
+  }
+  function closeDrawer(){
+    if (drawer) drawer.classList.remove('show');
+    if (overlay) overlay.classList.remove('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','false');
+  }
+  if (openBtn) openBtn.addEventListener('click', function(){
+    if (drawer && drawer.classList.contains('show')) closeDrawer(); else openDrawer();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  if (drawerLinks) drawerLinks.addEventListener('click', function(e){
+    if (e.target && e.target.tagName === 'A') closeDrawer();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // ---- dark mode toggle, persisted (shared key with the hub pages) ----
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('gpDarkToggle');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function upd(){ if (darkBtn) darkBtn.textContent = isDark() ? '☀️' : '🌙'; }
+  function setTheme(m){
+    if (m === 'dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('pharm-theme', m); } catch(e){}
+    upd();
+  }
+  upd();
+  if (darkBtn) darkBtn.addEventListener('click', function(){ setTheme(isDark() ? 'light' : 'dark'); });
+
+  // ---- random quiz question ----
+  var randomBtn = document.getElementById('gpRandomQuiz');
+  if (randomBtn) randomBtn.addEventListener('click', function(){
+    var qs = Array.prototype.slice.call(document.querySelectorAll('.q, .quiz-item'));
+    if (!qs.length) return;
+    var pick = qs[Math.floor(Math.random() * qs.length)];
+    var trigger = pick.querySelector('.qq, .quiz-q');
+    if (trigger) trigger.click();
+    if (!pick.classList.contains('open')) pick.classList.add('open');
+    pick.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  // ---- expand/contract the floating toolbar itself ----
+  // Chapters (☰) and Back (←) always stay visible; every other control
+  // (nav/jump/search/tools merged in by learning-interactive.js) lives inside
+  // the collapsible .gp-toolbar-extra and only shows once expanded.
+  var expandBtn = document.getElementById('gpToolbarExpand');
+  var toolbarEl = document.querySelector('.gp-toolbar');
+  if (expandBtn && toolbarEl) expandBtn.addEventListener('click', function(){
+    var open = !toolbarEl.classList.contains('expanded');
+    toolbarEl.classList.toggle('expanded', open);
+    expandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var tree = document.getElementById('mindmapTree');
+  if(!tree) return;
+
+  function setExpanded(btn, open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var holder = btn.closest('.mm-branch, .mm-twig');
+    if(holder) holder.classList.toggle('mm-open', open);
+  }
+
+  tree.addEventListener('click', function(e){
+    var btn = e.target.closest('.mm-node');
+    if(!btn) return;
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setExpanded(btn, !isOpen);
+  });
+
+  var expandAllBtn = document.getElementById('mmExpandAll');
+  var collapseAllBtn = document.getElementById('mmCollapseAll');
+  if(expandAllBtn){
+    expandAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, true); });
+    });
+  }
+  if(collapseAllBtn){
+    collapseAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, false); });
+    });
+  }
+})();
+</script>
+
 </body>
 </html>

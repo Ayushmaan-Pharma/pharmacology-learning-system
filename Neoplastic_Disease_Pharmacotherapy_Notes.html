@@ -6,148 +6,289 @@
 <title>Neoplastic Disease Pharmacotherapy &amp; Related Topics — PYQ Notes</title>
 <style>
   :root{
-    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
-    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --bg:#f3f0e8; --panel:#ffffff;
+    --panel-glass: rgba(255,255,255,.58); --panel-glass-strong: rgba(255,255,255,.8);
+    --ink:#1f2328; --muted:#6b7280; --line:#e7e7e4; --line-glass: rgba(255,255,255,.7);
+    --accent:#2f6f5e; --accent-soft:#eaf4f0;
     --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
-    --radius:10px;
+    --shadow-lg:0 22px 60px rgba(31,40,45,.12), 0 4px 14px rgba(31,40,45,.06);
+    --radius:18px; --radius-sm:12px;
+    --ease:cubic-bezier(.4,0,.2,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0; background:var(--bg); color:var(--ink);
+    margin:0; color:var(--ink); min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,94,.07), transparent 60%),
+      var(--bg);
     font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
+    transition:background .4s, color .25s;
   }
-  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
-  header.top{margin-bottom:26px}
-  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
-  .sub{color:var(--muted); font-size:.92rem; margin:0}
+
+  /* ---- ambient animated background blobs ---- */
+  .ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+  .ambient .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.32}
+  .ambient .b1{width:46vw;height:46vw; top:-14%; left:-12%; background:radial-gradient(circle,#2f7d6a,transparent 70%); animation:drift1 36s ease-in-out infinite}
+  .ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,#3f6cb0,transparent 70%); animation:drift2 42s ease-in-out infinite}
+  .ambient .b3{width:42vw;height:42vw; bottom:-16%; left:16%; background:radial-gradient(circle,#845bb0,transparent 70%); animation:drift3 39s ease-in-out infinite}
+  .ambient .b4{width:30vw;height:30vw; bottom:8%; right:6%; background:radial-gradient(circle,#b3852f,transparent 70%); animation:drift4 31s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(6vw,8vh) scale(1.12)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-7vw,5vh) scale(1.08)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-6vh) scale(1.1)}}
+  @keyframes drift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5vw,-4vh) scale(1.15)}}
+  [data-theme="dark"] .ambient .blob{opacity:.42}
+  @media (prefers-reduced-motion:reduce){ .ambient .blob{animation:none} }
+
+  /* ---- scroll progress bar ---- */
+  .progress-bar{position:fixed; top:0; left:0; height:3px; width:0%; z-index:100;
+    background:linear-gradient(90deg,#2f7d6a,#3f6cb0,#845bb0,#b15068,#b3852f);
+    box-shadow:0 0 12px rgba(47,111,94,.5); transition:width .12s linear}
+
+  /* ---- back-to-top ---- */
+  .to-top{position:fixed; bottom:26px; right:26px; z-index:50; width:46px; height:46px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#3f6cb0); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+    box-shadow:0 10px 26px rgba(0,0,0,.22); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease-spring)}
+  .to-top.show{opacity:1; transform:none; pointer-events:auto}
+  .to-top:hover{transform:translateY(-3px) scale(1.06)}
+  .to-top:active{transform:scale(.92)}
+
+  .wrap{max-width:900px; margin:0 auto; padding:40px 22px 130px; position:relative}
+
+  /* ---- hero header ---- */
+  header.top{
+    margin-bottom:10px; padding:30px 28px; border-radius:24px; position:relative; overflow:hidden;
+    background:linear-gradient(135deg, rgba(255,255,255,.68), rgba(255,255,255,.32));
+    backdrop-filter:blur(20px) saturate(170%); -webkit-backdrop-filter:blur(20px) saturate(170%);
+    border:1px solid var(--line-glass);
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.7);
+    animation:heroIn .7s var(--ease) both;
+  }
+  header.top::before{content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(120deg, rgba(47,111,94,.16), transparent 45%, rgba(132,91,176,.13));}
+  @keyframes heroIn{from{opacity:0; transform:translateY(-10px) scale(.98)} to{opacity:1; transform:none}}
+  h1{
+    font-size:1.95rem; font-weight:760; letter-spacing:-.02em; margin:0 0 6px; position:relative;
+    background:linear-gradient(100deg,#1f2328 8%,#2f7d6a 48%,#3f6cb0 92%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--muted); font-size:.93rem; margin:0; position:relative}
+  .stat-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; position:relative}
+  .stat-pill{font-size:.78rem; font-weight:650; color:var(--ink); background:rgba(255,255,255,.55);
+    border:1px solid var(--line-glass); padding:6px 14px; border-radius:999px; backdrop-filter:blur(8px);
+    display:flex; align-items:center; gap:6px}
+  .stat-pill b{color:var(--accent); font-weight:780}
+
+  /* ---- sticky glass toolbar ---- */
   .tools{
-    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
-    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
-    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    position:sticky; top:14px; z-index:20; margin:20px 0 14px; padding:14px 18px;
+    background:var(--panel-glass); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid var(--line-glass); border-radius:20px;
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.55);
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    transition:box-shadow .3s var(--ease)
   }
   #search{
-    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
-    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
-    outline:none;
+    flex:1; min-width:200px; padding:11px 16px; border:1px solid var(--line-glass);
+    border-radius:999px; font-size:.95rem; background:rgba(255,255,255,.55); color:var(--ink); outline:none;
+    backdrop-filter:blur(8px); transition:box-shadow .25s var(--ease), border-color .25s, background .25s
   }
-  #search:focus{border-color:var(--accent)}
+  #search:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,111,94,.18); background:rgba(255,255,255,.82)}
   .btn{
-    border:1px solid var(--line); background:var(--panel); color:var(--ink);
-    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
-    transition:.15s; white-space:nowrap;
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--ink);
+    padding:9px 16px; border-radius:999px; font-size:.85rem; cursor:pointer; white-space:nowrap;
+    backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s, border-color .2s, color .2s, background .2s
   }
-  .btn:hover{border-color:var(--accent); color:var(--accent)}
-  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+  .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px); box-shadow:0 10px 22px rgba(0,0,0,.08)}
+  .btn:active{transform:translateY(0) scale(.96)}
+  #theme{transition:transform .5s var(--ease-spring)}
+  #theme.spin{transform:rotate(360deg)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px; font-weight:560}
 
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--muted);
+    padding:7px 15px; border-radius:999px; font-size:.81rem; cursor:pointer; backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s var(--ease), background .25s, color .25s, border-color .25s
+  }
+  .chip:hover{transform:translateY(-1px); border-color:var(--accent); color:var(--accent)}
+  .chip:active{transform:scale(.95)}
+  .chip.active{background:linear-gradient(120deg,var(--accent),#3f6cb0); border-color:transparent; color:#fff;
+    box-shadow:0 6px 18px rgba(47,111,94,.35)}
+  .iconbtn{font-size:1rem; line-height:1}
+
+  .hint{color:var(--muted); font-size:.78rem; margin:10px 2px 4px}
+  .hint kbd, kbd{background:rgba(255,255,255,.6); border:1px solid var(--line-glass); border-radius:6px;
+    padding:1px 7px; font-size:.88em; font-family:inherit; box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* ---- TOC: glass card grid ---- */
   .toc{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+    display:flex; flex-wrap:wrap; gap:10px;
+    background:rgba(255,255,255,.5); border:1px solid var(--line-glass); border-radius:22px;
+    padding:18px 20px; margin:18px 0 32px; box-shadow:var(--shadow-lg);
+    backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%);
   }
-  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
-  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
-  .toc a:hover{color:var(--accent)}
+  .toc h2{flex:1 0 100%; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin:0 0 4px}
+  .toc a{
+    flex:1 1 230px; display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+    font-size:.88rem; font-weight:560; background:rgba(255,255,255,.55); border:1px solid var(--line-glass);
+    border-radius:14px; padding:10px 14px; backdrop-filter:blur(6px);
+    transition:transform .22s var(--ease-spring), box-shadow .25s, border-color .25s, background .25s
+  }
+  .toc a:hover{transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,.10); border-color:var(--line)}
+  .toc .dot{display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:2px; flex-shrink:0;
+    box-shadow:0 0 0 3px rgba(255,255,255,.55)}
 
-  section.sec{margin:34px 0}
+  .nohit{text-align:center; color:var(--muted); padding:50px; display:none; font-size:.95rem}
+
+  /* ---- sections (scroll reveal) ---- */
+  section.sec{
+    margin:46px 0; opacity:0; transform:translateY(26px);
+    transition:opacity .6s var(--ease), transform .6s var(--ease)
+  }
+  section.sec.in-view{opacity:1; transform:none}
   .sec > h2{
-    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
-    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+    font-size:1.18rem; font-weight:700; letter-spacing:-.01em; margin:0 0 6px;
+    padding:10px 14px 12px; border-left:4px solid var(--sec); border-bottom:2px solid var(--sec-soft);
+    background:linear-gradient(90deg, var(--sec-soft), transparent);
+    border-radius:0 12px 0 0;
   }
-  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+  .sec-note{color:var(--muted); font-size:.85rem; margin:0 0 16px; padding-left:18px}
 
+  /* ---- question cards: glass-lite + height-animated accordion ---- */
   details.q{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+    display:grid; grid-template-rows:auto 0fr;
+    background:linear-gradient(160deg, rgba(255,255,255,.86), rgba(255,255,255,.6));
+    border:1px solid var(--line); border-left:4px solid var(--sec); border-radius:16px;
+    margin:12px 0; box-shadow:var(--shadow); overflow:hidden;
+    opacity:0; transform:translateY(18px);
+    transition:opacity .5s var(--ease), transform .4s var(--ease-spring),
+               border-color .2s, box-shadow .35s var(--ease), grid-template-rows .45s var(--ease);
   }
-  details.q[open]{border-color:#d6e6e0}
+  details.q.in-view{opacity:1; transform:translateY(0)}
+  details.q:hover{transform:translateY(-2px); box-shadow:0 16px 36px -10px color-mix(in srgb, var(--sec) 38%, transparent), var(--shadow)}
+  details.q[open]{grid-template-rows:auto 1fr; border-color:color-mix(in srgb, var(--sec) 45%, var(--line))}
+  details.q.vignette{border-left:4px solid #c98a3c; background:linear-gradient(160deg, rgba(255,247,235,.92), rgba(255,255,255,.6))}
+
   summary.q-head{
-    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
-    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+    list-style:none; cursor:pointer; padding:16px 20px; display:flex; gap:12px;
+    align-items:flex-start; font-weight:560; font-size:.97rem; user-select:none;
+    border-radius:16px 16px 0 0; transition:background .25s ease;
   }
   summary.q-head::-webkit-details-marker{display:none}
-  summary.q-head:hover{background:#fcfdfc}
-  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
-  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
-  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  summary.q-head:hover{background:linear-gradient(90deg, color-mix(in srgb, var(--sec) 9%, transparent), transparent)}
+  .chev{flex-shrink:0; display:inline-block; width:16px; margin-top:1px; color:var(--muted); font-size:.8rem;
+    transition:transform .35s var(--ease-spring), color .25s}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--sec)}
+  .stars{flex-shrink:0; font-size:.82rem; letter-spacing:1px; margin-top:2px; min-width:0;
+    background:linear-gradient(100deg,#d99a00,#f0b94a); -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 1px 1px rgba(217,154,0,.22))}
   .q-text{flex:1}
-  .answer{
-    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
-    font-size:.93rem; color:#33383d;
-  }
-  .answer h4{
-    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
-    margin:18px 0 7px;
-  }
-  .answer h5{font-size:.92rem; color:var(--ink); margin:14px 0 4px; font-weight:640}
+  .badge{display:inline-block; flex-shrink:0; background:linear-gradient(120deg,#f3e2c8,#ffe9c2); color:#8a5a16;
+    font-size:.6rem; font-weight:750; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:6px; margin-top:1px}
+
+  details.q > .answer{overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s}
+  details.q[open] > .answer{opacity:1}
+  .answer{padding:6px 24px 22px 48px; border-top:1px solid var(--line); margin-top:-1px; font-size:.93rem; color:#33383d}
+  .answer h4{font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--sec); margin:18px 0 7px}
   .answer p{margin:9px 0}
   .answer ul,.answer ol{margin:8px 0; padding-left:20px}
   .answer li{margin:4px 0}
-  .answer b{font-weight:620}
-  .answer table{
-    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
-  }
+  .answer b{font-weight:640}
+  .answer table{width:100%; border-collapse:collapse; margin:14px 0; font-size:.85rem; border-radius:10px; overflow:hidden; box-shadow:0 1px 5px rgba(0,0,0,.05)}
   .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
-  .answer th{background:var(--accent-soft); font-weight:600}
-  .answer .dia{
-    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
-    margin:12px 0; font-size:.85rem; color:#4a5550;
-  }
-  .answer .dia b{color:var(--accent)}
-  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .answer th{background:linear-gradient(120deg, var(--sec-soft), transparent); font-weight:650}
+  .answer .dia{background:linear-gradient(135deg,#f6f8f7,#eef4f1); border:1px dashed color-mix(in srgb, var(--sec) 45%, white);
+    border-radius:12px; padding:12px 16px; margin:14px 0; font-size:.85rem; color:#4a5550}
+  .answer .dia b{color:var(--sec)}
+  .recent{background:linear-gradient(120deg,#fbf6ec,#fff8e8); border-left:3px solid var(--star); padding:10px 16px;
+    border-radius:0 12px 12px 0; margin:14px 0; box-shadow:0 2px 10px rgba(217,154,0,.08)}
   .recent b{color:#9a7000}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--sec); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
   .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
-  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
-  mark{background:#fff2a8; padding:0 1px}
-  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
-  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+  mark{background:linear-gradient(120deg,#fff2a8,#ffe27a); padding:0 2px; border-radius:3px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:3px; box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent)}
 
-  /* ---- v2 interactive additions ---- */
-  body{transition:background .25s, color .25s}
-  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
-  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
-  .chip:hover{border-color:var(--accent); color:var(--accent)}
-  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
-  .iconbtn{font-size:1rem; line-height:1}
-  details.q.vignette{border-left:3px solid #c98a3c}
-  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
-  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
-  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
-  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
-  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
-  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a; --shadow:0 1px 2px rgba(0,0,0,.35)}
-  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
-  [data-theme="dark"] summary.q-head:hover{background:#23272c}
-  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  footer{margin-top:70px; padding:24px 20px 6px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+
+  @media (max-width:560px){
+    .wrap{padding:24px 14px 110px} .answer{padding-left:20px}
+    header.top{padding:22px 18px} .toc a{flex:1 1 100%}
+    .ambient .blob{filter:blur(40px)}
+  }
+
+  /* ---- dark theme ---- */
+  [data-theme="dark"]{
+    --bg:#0f1113; --panel:#1a1d21; --ink:#e6e8ea; --muted:#9aa3ad;
+    --line:#2c3036; --line-glass:rgba(255,255,255,.10);
+    --panel-glass:rgba(255,255,255,.06); --panel-glass-strong:rgba(255,255,255,.1);
+    --accent:#5db89e; --accent-soft:#1c2925; --star:#e0a93a;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.55), 0 6px 16px rgba(0,0,0,.35);
+  }
+  [data-theme="dark"] body{background:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(93,184,158,.08), transparent 60%), var(--bg)}
+  [data-theme="dark"] header.top{background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02))}
+  [data-theme="dark"] h1{background:linear-gradient(100deg,#e6e8ea 8%,#5db89e 48%,#8fb4e8 92%); -webkit-background-clip:text; background-clip:text; color:transparent}
+  [data-theme="dark"] .tools{background:var(--panel-glass)}
+  [data-theme="dark"] .stat-pill,[data-theme="dark"] .chip,[data-theme="dark"] .btn,[data-theme="dark"] #search,[data-theme="dark"] .toc,[data-theme="dark"] .toc a{
+    background:rgba(255,255,255,.05); border-color:var(--line-glass)}
+  [data-theme="dark"] details.q{background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015))}
+  [data-theme="dark"] details.q.vignette{background:linear-gradient(160deg, rgba(224,169,58,.09), rgba(255,255,255,.02))}
+  [data-theme="dark"] summary.q-head:hover{background:rgba(255,255,255,.04)}
   [data-theme="dark"] .answer{color:#cfd4d8}
-  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
-  [data-theme="dark"] .recent{background:#2a2519}
-  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#1b201d; border-color:#33403a; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:linear-gradient(120deg,#241f12,#1d1a10)}
+  [data-theme="dark"] .answer code{background:#23262a}
   [data-theme="dark"] mark{background:#7a6212; color:#fff}
   [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
-
-  /* ---- per-section colour theming ---- */
-  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
-  .sec > h2{border-bottom:2px solid var(--sec)}
-  .sec details.q{border-left:4px solid var(--sec)}
-  .sec details.q[open]{border-left-color:var(--sec)}
-  .sec details.q[open] .chev{color:var(--sec)}
-  .sec .answer h4{color:var(--sec)}
-  .sec .answer th{background:var(--sec-soft)}
-  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
-  .toc a{display:flex; align-items:center}
-  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
   [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
-  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
-  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
-  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+  [data-theme="dark"] .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3); box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
+  }
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
 </style>
 </head>
 <body>
+<button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="toTop" class="to-top" title="Back to top" aria-label="Back to top">↑</button>
 <div class="wrap">
   <header class="top">
     <h1>Pharmacotherapy of Neoplastic Disease &amp; Related Topics — Consolidated PYQ Notes</h1>
-    <p class="sub">Exam-oriented model answers · Goodman &amp; Gilman, Katzung, Rang &amp; Dale + current guidelines · click any question to open the answer</p>
+    <p class="sub">Exam-oriented model answers · standard pharmacology references + current guidelines · click any question to open the answer</p>
+    <div class="stat-row" id="statRow"></div>
   </header>
 
   <div class="tools">
@@ -578,21 +719,25 @@
     <h4>Organ-specific toxicity &amp; cytoprotective / rescue agents</h4>
     <table>
       <tr><th>Drug</th><th>Toxicity</th><th>Protective / rescue agent</th></tr>
-      <tr><td>Methotrexate</td><td>Mucositis, marrow</td><td><b>Leucovorin (folinic acid)</b> rescue</td></tr>
-      <tr><td>Cyclophosphamide/ifosfamide</td><td>Haemorrhagic cystitis</td><td><b>Mesna</b> + hydration</td></tr>
-      <tr><td>Cisplatin</td><td>Nephrotoxicity</td><td><b>Amifostine</b>, hydration + mannitol diuresis</td></tr>
-      <tr><td>Doxorubicin (anthracyclines)</td><td>Cardiotoxicity</td><td><b>Dexrazoxane</b> (iron chelator)</td></tr>
+      <tr><td>High-dose methotrexate</td><td>Mucositis, marrow, renal precipitation</td><td><b>Leucovorin (folinic acid)</b> rescue; <b>glucarpidase</b> for MTX-induced renal toxicity/markedly elevated levels</td></tr>
+      <tr><td>Cyclophosphamide/ifosfamide</td><td>Haemorrhagic cystitis</td><td><b>Mesna</b> — 20% of the ifosfamide dose given at 0, 4 &amp; 8 h, + hydration</td></tr>
+      <tr><td>Cisplatin</td><td>Nephrotoxicity, neurotoxicity</td><td><b>Amifostine</b> 910 mg/m² IV, hydration + mannitol diuresis</td></tr>
+      <tr><td>Doxorubicin (anthracyclines)</td><td>Cardiotoxicity</td><td><b>Dexrazoxane</b> (iron chelator) — start once cumulative dose &gt;300 mg/m²</td></tr>
       <tr><td>5-FU / capecitabine overdose</td><td>Severe toxicity</td><td><b>Uridine triacetate</b></td></tr>
+      <tr><td>Pemetrexed</td><td>Myelosuppression, mucositis</td><td>Pre-treatment with <b>folic acid + vitamin B12 + dexamethasone</b></td></tr>
       <tr><td>Vincristine</td><td>Neuropathy</td><td>Dose modification</td></tr>
       <tr><td>Bleomycin</td><td>Pulmonary fibrosis</td><td>Cumulative dose limit, monitor PFT</td></tr>
     </table>
     <h4>Ameliorative measures (supportive care)</h4>
     <ul>
-      <li><b>Antiemetics:</b> 5-HT3 antagonists (ondansetron) + NK1 antagonist (aprepitant) + dexamethasone (for highly emetogenic chemo).</li>
-      <li><b>Neutropenia:</b> G-CSF, prophylactic antibiotics, neutropenic precautions; <b>anaemia:</b> erythropoietin/transfusion; <b>thrombocytopenia:</b> platelet support/TPO agonists.</li>
-      <li><b>Tumour lysis syndrome:</b> hydration, <b>allopurinol/rasburicase</b>, manage electrolytes.</li>
-      <li>Mucositis care, growth factors, dose individualisation, and pharmacogenomic screening (TPMT, DPYD, UGT1A1).</li>
+      <li><b>CINV control (risk-tiered):</b> 5-HT3 antagonists (ondansetron) + NK1 antagonist (aprepitant) + dexamethasone ± <b>olanzapine</b> for highly emetogenic regimens; prophylaxis intensity matched to emetogenic risk tier.</li>
+      <li><b>Haematopoietic growth factors:</b> <b>filgrastim</b> 5 µg/kg/day or <b>pegfilgrastim</b> 6 mg/cycle (G-CSF, neutropenia), sargramostim (GM-CSF); <b>ESAs</b> — epoetin/darbepoetin (anaemia); <b>TPO agonists</b> — romiplostim, eltrombopag, avatrombopag, and <b>luspatercept</b> (erythroid maturation agent) for thrombocytopenia/anaemia.</li>
+      <li><b>Tumour lysis syndrome:</b> hydration, urinary alkalinisation, <b>allopurinol/rasburicase</b>, manage electrolytes.</li>
+      <li><b>Other metabolic support:</b> bisphosphonates for hypercalcaemia; <b>palifermin</b> for severe mucositis.</li>
+      <li>Pulse dosing, regional (intra-arterial/intrathecal) delivery and fertility preservation are additional strategies to reduce cumulative systemic toxicity.</li>
+      <li>Mucositis care, dose individualisation, and pharmacogenomic screening (TPMT, DPYD, UGT1A1).</li>
     </ul>
+    <div class="recent"><b>Recent advances:</b> <b>Trilaciclib</b>, a transient CDK4/6 inhibitor given before chemotherapy, is a myeloprotective agent reducing multilineage marrow toxicity [PMID 39823755, 38224653]. An RCT supports <b>olanzapine</b> in moderately emetogenic chemotherapy regimens [PMID 39106066]. <b>Efbemalenograstim alfa</b> (Ryzneuta), a novel long-acting G-CSF, was approved to reduce chemotherapy-induced neutropenia [PMID 39272058]. ASCO's 2024 guideline addresses cannabis/cannabinoid use for cancer-related symptom management [PMID 38478773].</div>
   </div></details>
 </section>
 
@@ -652,6 +797,31 @@
     <h4>Female sex hormones &amp; analogues (pharmacology note)</h4>
     <p>Estrogens (nuclear ER → transcription) &amp; progestins; high-dose progestins (megestrol) used in endometrial/breast cancer &amp; cancer cachexia. SERMs/SERDs/AIs modify this receptor pathway selectively. <b>ADR of endocrine therapy:</b> hot flushes, VTE &amp; endometrial cancer (tamoxifen), osteoporosis &amp; arthralgia (aromatase inhibitors).</p>
     <div class="recent"><b>Recent advances:</b> <b>HER2-low</b> is now a treatable category — T-DXd improved PFS/OS vs chemo in previously-treated HER2-low (IHC 1+ or 2+/ISH−) metastatic disease (DESTINY-Breast04), extending ADC benefit beyond classic HER2+ disease (watch for interstitial lung disease). <b>Trop-2 ADC in HR+ disease</b> — sacituzumab govitecan improved OS vs chemo in endocrine-refractory HR+/HER2− disease (TROPiCS-02). <b>Immunotherapy in early TNBC</b> — neoadjuvant pembrolizumab + chemo raised pathological complete response &amp; event-free survival in high-risk early TNBC (KEYNOTE-522). <b>Oral SERDs</b> — elacestrant approved for ESR1-mutated HR+/HER2− advanced disease after endocrine progression. Emerging: AKT inhibitor capivasertib + fulvestrant (AGC/PIK3CA/PTEN-altered); next-gen anti-HER2 ADCs/TKIs; India — trastuzumab biosimilars have markedly improved access.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">GnRH analogues — classification (agonists vs antagonists), mechanism (flare vs immediate suppression), clinical uses across oncology &amp; benign disease, and adverse effects.</span></summary>
+  <div class="answer">
+    <h4>Definition / physiology</h4>
+    <p>GnRH is a decapeptide from the hypothalamic kisspeptin (KNDy)-driven pulse generator, acting on a Gq/G11-coupled GPCR in the pituitary. <b>Pulsatile</b> GnRH stimulates gonadotropin (LH/FSH) release; <b>continuous/supraphysiological</b> exposure desensitises/downregulates the receptor → suppresses gonadotropins — the basis for both diagnostic (pulsatile) and therapeutic (continuous) use.</p>
+    <h4>Classification</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Mechanism</th></tr>
+      <tr><td>Native peptide</td><td>Gonadorelin</td><td>Diagnostic pituitary-reserve test</td></tr>
+      <tr><td>Superactive agonists</td><td>Leuprolide, goserelin, triptorelin, nafarelin, histrelin, buserelin, deslorelin</td><td>Initial <b>flare</b> (transient ↑LH/FSH/sex-steroid in first 1–2 wk) → receptor downregulation → sustained suppression by ~3–4 wk</td></tr>
+      <tr><td>Peptide antagonists</td><td>Cetrorelix, ganirelix, degarelix, abarelix</td><td>Competitive GnRH-receptor blockade → <b>immediate</b> suppression, no flare</td></tr>
+      <tr><td>Oral non-peptide antagonists</td><td>Elagolix, relugolix, linzagolix</td><td>Oral, immediate suppression; dose-titratable (partial vs full suppression) — newer alternative to injectable agonists</td></tr>
+    </table>
+    <h4>Clinical uses</h4>
+    <ul>
+      <li><b>Prostate cancer:</b> agonists (leuprolide/goserelin) — must co-administer an anti-androgen (e.g. bicalutamide) during the first weeks to cover the testosterone flare (avoid disease flare/spinal cord compression); degarelix (antagonist) avoids flare entirely, useful when rapid androgen suppression is needed.</li>
+      <li><b>Central precocious puberty:</b> continuous agonist therapy (e.g. leuprolide depot, histrelin implant) suppresses the prematurely activated HPG axis.</li>
+      <li><b>Endometriosis &amp; uterine fibroids:</b> agonists or oral antagonists (elagolix, relugolix) reduce estrogen-driven pain/bleeding; limited to ~6 months in benign disease owing to bone-loss risk (add-back hormone therapy can extend use).</li>
+      <li><b>IVF/ART:</b> agonists (long protocol, prevent premature LH surge) or antagonists (cetrorelix/ganirelix, short protocol) for controlled ovarian stimulation.</li>
+      <li><b>Diagnostic:</b> gonadorelin stimulation test for hypothalamic-pituitary-gonadal axis evaluation.</li>
+    </ul>
+    <h4>Adverse effects</h4>
+    <p>Hypogonadism symptoms (hot flushes, decreased libido, vaginal dryness, gynaecomastia in men), and <b>osteoporosis risk</b> with prolonged use — limiting benign-disease use to roughly 6 months unless add-back therapy is used.</p>
+    <div class="recent"><b>Recent advances:</b> <b>Relugolix</b> (oral GnRH antagonist) — approved as monotherapy for advanced prostate cancer (HERO trial, faster/deeper testosterone suppression with lower cardiovascular-event rate than leuprolide) [PMID 32469183, FDA 2020-Dec], and as relugolix combination therapy (Myfembree, with estradiol/norethindrone) for uterine-fibroid-associated heavy bleeding (LIBERTY 1&amp;2) [PMID 33596357, FDA 2021] and endometriosis pain (SPIRIT 1&amp;2) [PMID 35717987, 38243752]. A 2025 meta-analysis of oral GnRH antagonists in fibroids confirms durable symptom control [PMID 39821450].</div>
   </div></details>
 </section>
 
@@ -920,6 +1090,9 @@
       <tr><td>Biologicals</td><td>Basiliximab (anti-CD25), ATG, muromonab-CD3, alemtuzumab (anti-CD52), belatacept (CD80/86–CD28 blocker), rituximab (anti-CD20)</td><td>Block costimulation, deplete/mask lymphocytes</td></tr>
     </table>
     <p><b>Tacrolimus</b> is ~100× more potent than ciclosporin, the preferred CNI (bile-independent absorption, valuable in liver transplant); both need therapeutic drug-level monitoring (CYP3A4). <b>Sirolimus</b> is NOT nephrotoxic — useful when CNIs cause renal toxicity (not for liver transplant). <b>Basiliximab</b> (anti-CD25, t½ ~1 wk) is for induction only, not for treating established rejection. <b>ATG/muromonab-CD3</b> deplete T-cells, reserved for steroid-resistant rejection.</p>
+    <h4>Calcineurin inhibitors — source &amp; molecular detail</h4>
+    <p>Ciclosporin is a cyclic peptide from the fungus <i>Beauveria nivea</i> (formerly <i>Tolypocladium inflatum</i>), binding the cytosolic protein <b>cyclophilin</b>. Tacrolimus is a macrolide from <i>Streptomyces tsukubaensis</i>, binding <b>FKBP-12</b>. Both drug–immunophilin complexes inhibit calcineurin (a Ca²⁺/calmodulin-dependent phosphatase) → block NFAT dephosphorylation/nuclear translocation → ↓IL-2 gene transcription. (Contrast: sirolimus/everolimus also bind FKBP-12 but inhibit mTOR, not calcineurin.) <b>Voclosporin</b> is a newer ciclosporin analogue, FDA-approved 2021 specifically for lupus nephritis. Both ciclosporin and tacrolimus require therapeutic drug monitoring due to narrow therapeutic index and extensive CYP3A4 metabolism (many drug interactions — azoles/macrolides raise levels, rifampin lowers levels).</p>
+    <div class="recent"><b>Recent advances (calcineurin inhibitors):</b> Voclosporin labelling was updated [FDA 2024-Apr] following AURORA 1 &amp; 2 lupus-nephritis trials [PMID 33971155, 37466424]. An extended-release tacrolimus formulation (Envarsus XR) offers more stable trough levels with once-daily dosing [PMID 42175811]. BMT CTN 1703 compared tacrolimus-based GVHD prophylaxis regimens after allogeneic HSCT [PMID 37342922], and the CAST/ALLG BM12 NEJM trial (2025) examined calcineurin-inhibitor-based GVHD prevention strategies [PMID 40513032]. EULAR/ERA 2025 issued updated lupus-nephritis recommendations incorporating voclosporin [PMID 41107121], and a EULAR 2024 update addresses reproduction/pregnancy considerations with CNIs [PMID 40287311]. India's CDSCO has not yet approved voclosporin [CDSCO 2025-Sep].</div>
     <div class="dia"><b>Diagram (T-cell activation pathway with drug sites):</b> APC–MHC/antigen–TCR → CD80/86–CD28 (belatacept blocks) → calcineurin–NFAT (ciclosporin/tacrolimus blocks) → IL-2→IL-2R/CD25 (basiliximab blocks) → mTOR (sirolimus blocks) → purine synthesis (MMF/azathioprine blocks) → CD3 (muromonab blocks).</div>
     <h4>Adverse effects</h4>
     <table>
@@ -932,7 +1105,7 @@
       <tr><td>ATG/muromonab-CD3</td><td>Cytokine-release syndrome, serum sickness, anaphylaxis</td></tr>
     </table>
     <p>Class-wide: opportunistic infections (CMV, fungal) and increased malignancy (skin, PTLD) from over-immunosuppression.</p>
-    <div class="recent"><b>Recent advances:</b> <b>Belatacept</b> (selective CD80/86–CD28 costimulation blocker) offers a calcineurin-inhibitor-sparing, non-nephrotoxic maintenance option in renal transplant. <b>Voclosporin</b>, a newer ciclosporin analogue with superior immunosuppressive activity, FDA-approved 2021, reflects continued CNI optimisation. AMR therapy is evolving: plasmapheresis + IVIg, rituximab and proteasome inhibitors (bortezomib) target the antibody/plasma-cell arm. Drug-level monitoring and individualised, centre-specific protocols remain standard of care.</div>
+    <div class="recent"><b>Recent advances:</b> <b>Belatacept</b> (selective CD80/86–CD28 costimulation blocker) offers a calcineurin-inhibitor-sparing, non-nephrotoxic maintenance option in renal transplant — a CNI-to-belatacept conversion trial demonstrated improved renal function with this switch strategy [PMID 34706967]. <b>Voclosporin</b>, a newer ciclosporin analogue with superior immunosuppressive activity, FDA-approved 2021, reflects continued CNI optimisation. <b>Teplizumab</b> (anti-CD3, Tzield), an immunosuppressant biologic shown in the PROTECT trial to delay progression to clinical type-1 diabetes, was FDA-approved (Nov 2022) for at-risk individuals [PMID 37861217]. A network meta-analysis compared immunosuppressive regimens for lupus nephritis [PMID 37901212]. AMR therapy is evolving: plasmapheresis + IVIg, rituximab and proteasome inhibitors (bortezomib) target the antibody/plasma-cell arm. Drug-level monitoring and individualised, centre-specific protocols remain standard of care.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Immunosuppressant role of corticosteroids — mechanism, effects on immune cells, clinical uses, HPA-axis suppression &amp; tapering.</span></summary>
@@ -1159,7 +1332,7 @@
   </div>
 
   <footer>
-    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman, Katzung, Rang &amp; Dale; NCCN/ESMO, GINA, ADA, WHO &amp; Indian guidelines.
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: standard pharmacology references; NCCN/ESMO, GINA, ADA, WHO &amp; Indian guidelines.
   </footer>
 </div>
 
@@ -1221,7 +1394,6 @@
     const vis = visible(); if(!vis.length) return;
     items.forEach(d=> d.open=false);
     const pick = vis[Math.floor(Math.random()*vis.length)];
-    pick.open = true;
     setKb(items.indexOf(pick));
   }
   document.getElementById('shuffle').onclick = randomQ;
@@ -1265,6 +1437,89 @@
   });
 
   apply();
+
+  /* ---- v3: glass / motion enhancements (additive — does not touch logic above) ---- */
+  const progressBar = document.getElementById('progressBar');
+  function updateProgress(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', ()=> requestAnimationFrame(updateProgress), {passive:true});
+  updateProgress();
+
+  const statRow = document.getElementById('statRow');
+  if(statRow){
+    const nQ = items.filter(d=> d.dataset.type!=='case').length;
+    const nCase = items.filter(d=> d.dataset.type==='case').length;
+    statRow.innerHTML =
+      '<span class="stat-pill">\u{1F4DA} <b>'+sections.length+'</b>&nbsp;sections</span>'+
+      '<span class="stat-pill">❓ <b>'+nQ+'</b>&nbsp;questions</span>'+
+      '<span class="stat-pill">\u{1FA7A} <b>'+nCase+'</b>&nbsp;cases</span>';
+  }
+
+  const toTopBtn = document.getElementById('toTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', ()=>{
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  }
+
+  themeBtn.addEventListener('click', ()=>{
+    themeBtn.classList.add('spin');
+    setTimeout(()=> themeBtn.classList.remove('spin'), 500);
+  });
+
+  if('IntersectionObserver' in window){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const secObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); secObserver.unobserve(en.target); } });
+    }, {threshold:0.08, rootMargin:'0px 0px -60px 0px'});
+    sections.forEach(s=> secObserver.observe(s));
+
+    const qObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); qObserver.unobserve(en.target); } });
+    }, {threshold:0.05, rootMargin:'0px 0px -40px 0px'});
+    items.forEach((d,i)=>{
+      if(!reduceMotion) d.style.transitionDelay = (i % 5) * 55 + 'ms';
+      qObserver.observe(d);
+    });
+  } else {
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }
+
+  // safety net — guarantee nothing stays invisible if something above misfires
+  setTimeout(()=>{
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }, 1600);
+
 </script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

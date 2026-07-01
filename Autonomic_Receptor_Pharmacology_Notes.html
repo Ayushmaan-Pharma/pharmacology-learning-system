@@ -6,147 +6,289 @@
 <title>Autonomic, Receptor &amp; Neuro Pharmacology — PYQ Notes</title>
 <style>
   :root{
-    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
-    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --bg:#f3f0e8; --panel:#ffffff;
+    --panel-glass: rgba(255,255,255,.58); --panel-glass-strong: rgba(255,255,255,.8);
+    --ink:#1f2328; --muted:#6b7280; --line:#e7e7e4; --line-glass: rgba(255,255,255,.7);
+    --accent:#2f6f5e; --accent-soft:#eaf4f0;
     --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
-    --radius:10px;
+    --shadow-lg:0 22px 60px rgba(31,40,45,.12), 0 4px 14px rgba(31,40,45,.06);
+    --radius:18px; --radius-sm:12px;
+    --ease:cubic-bezier(.4,0,.2,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0; background:var(--bg); color:var(--ink);
+    margin:0; color:var(--ink); min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,94,.07), transparent 60%),
+      var(--bg);
     font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
+    transition:background .4s, color .25s;
   }
-  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
-  header.top{margin-bottom:26px}
-  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
-  .sub{color:var(--muted); font-size:.92rem; margin:0}
+
+  /* ---- ambient animated background blobs ---- */
+  .ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+  .ambient .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.32}
+  .ambient .b1{width:46vw;height:46vw; top:-14%; left:-12%; background:radial-gradient(circle,#2f7d6a,transparent 70%); animation:drift1 36s ease-in-out infinite}
+  .ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,#3f6cb0,transparent 70%); animation:drift2 42s ease-in-out infinite}
+  .ambient .b3{width:42vw;height:42vw; bottom:-16%; left:16%; background:radial-gradient(circle,#845bb0,transparent 70%); animation:drift3 39s ease-in-out infinite}
+  .ambient .b4{width:30vw;height:30vw; bottom:8%; right:6%; background:radial-gradient(circle,#b3852f,transparent 70%); animation:drift4 31s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(6vw,8vh) scale(1.12)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-7vw,5vh) scale(1.08)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-6vh) scale(1.1)}}
+  @keyframes drift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5vw,-4vh) scale(1.15)}}
+  [data-theme="dark"] .ambient .blob{opacity:.42}
+  @media (prefers-reduced-motion:reduce){ .ambient .blob{animation:none} }
+
+  /* ---- scroll progress bar ---- */
+  .progress-bar{position:fixed; top:0; left:0; height:3px; width:0%; z-index:100;
+    background:linear-gradient(90deg,#2f7d6a,#3f6cb0,#845bb0,#b15068,#b3852f);
+    box-shadow:0 0 12px rgba(47,111,94,.5); transition:width .12s linear}
+
+  /* ---- back-to-top ---- */
+  .to-top{position:fixed; bottom:26px; right:26px; z-index:50; width:46px; height:46px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#3f6cb0); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+    box-shadow:0 10px 26px rgba(0,0,0,.22); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease-spring)}
+  .to-top.show{opacity:1; transform:none; pointer-events:auto}
+  .to-top:hover{transform:translateY(-3px) scale(1.06)}
+  .to-top:active{transform:scale(.92)}
+
+  .wrap{max-width:900px; margin:0 auto; padding:40px 22px 130px; position:relative}
+
+  /* ---- hero header ---- */
+  header.top{
+    margin-bottom:10px; padding:30px 28px; border-radius:24px; position:relative; overflow:hidden;
+    background:linear-gradient(135deg, rgba(255,255,255,.68), rgba(255,255,255,.32));
+    backdrop-filter:blur(20px) saturate(170%); -webkit-backdrop-filter:blur(20px) saturate(170%);
+    border:1px solid var(--line-glass);
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.7);
+    animation:heroIn .7s var(--ease) both;
+  }
+  header.top::before{content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(120deg, rgba(47,111,94,.16), transparent 45%, rgba(132,91,176,.13));}
+  @keyframes heroIn{from{opacity:0; transform:translateY(-10px) scale(.98)} to{opacity:1; transform:none}}
+  h1{
+    font-size:1.95rem; font-weight:760; letter-spacing:-.02em; margin:0 0 6px; position:relative;
+    background:linear-gradient(100deg,#1f2328 8%,#2f7d6a 48%,#3f6cb0 92%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--muted); font-size:.93rem; margin:0; position:relative}
+  .stat-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; position:relative}
+  .stat-pill{font-size:.78rem; font-weight:650; color:var(--ink); background:rgba(255,255,255,.55);
+    border:1px solid var(--line-glass); padding:6px 14px; border-radius:999px; backdrop-filter:blur(8px);
+    display:flex; align-items:center; gap:6px}
+  .stat-pill b{color:var(--accent); font-weight:780}
+
+  /* ---- sticky glass toolbar ---- */
   .tools{
-    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
-    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
-    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    position:sticky; top:14px; z-index:20; margin:20px 0 14px; padding:14px 18px;
+    background:var(--panel-glass); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid var(--line-glass); border-radius:20px;
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.55);
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    transition:box-shadow .3s var(--ease)
   }
   #search{
-    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
-    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
-    outline:none;
+    flex:1; min-width:200px; padding:11px 16px; border:1px solid var(--line-glass);
+    border-radius:999px; font-size:.95rem; background:rgba(255,255,255,.55); color:var(--ink); outline:none;
+    backdrop-filter:blur(8px); transition:box-shadow .25s var(--ease), border-color .25s, background .25s
   }
-  #search:focus{border-color:var(--accent)}
+  #search:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,111,94,.18); background:rgba(255,255,255,.82)}
   .btn{
-    border:1px solid var(--line); background:var(--panel); color:var(--ink);
-    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
-    transition:.15s; white-space:nowrap;
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--ink);
+    padding:9px 16px; border-radius:999px; font-size:.85rem; cursor:pointer; white-space:nowrap;
+    backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s, border-color .2s, color .2s, background .2s
   }
-  .btn:hover{border-color:var(--accent); color:var(--accent)}
-  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+  .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px); box-shadow:0 10px 22px rgba(0,0,0,.08)}
+  .btn:active{transform:translateY(0) scale(.96)}
+  #theme{transition:transform .5s var(--ease-spring)}
+  #theme.spin{transform:rotate(360deg)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px; font-weight:560}
 
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--muted);
+    padding:7px 15px; border-radius:999px; font-size:.81rem; cursor:pointer; backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s var(--ease), background .25s, color .25s, border-color .25s
+  }
+  .chip:hover{transform:translateY(-1px); border-color:var(--accent); color:var(--accent)}
+  .chip:active{transform:scale(.95)}
+  .chip.active{background:linear-gradient(120deg,var(--accent),#3f6cb0); border-color:transparent; color:#fff;
+    box-shadow:0 6px 18px rgba(47,111,94,.35)}
+  .iconbtn{font-size:1rem; line-height:1}
+
+  .hint{color:var(--muted); font-size:.78rem; margin:10px 2px 4px}
+  .hint kbd, kbd{background:rgba(255,255,255,.6); border:1px solid var(--line-glass); border-radius:6px;
+    padding:1px 7px; font-size:.88em; font-family:inherit; box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* ---- TOC: glass card grid ---- */
   .toc{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+    display:flex; flex-wrap:wrap; gap:10px;
+    background:rgba(255,255,255,.5); border:1px solid var(--line-glass); border-radius:22px;
+    padding:18px 20px; margin:18px 0 32px; box-shadow:var(--shadow-lg);
+    backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%);
   }
-  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
-  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
-  .toc a:hover{color:var(--accent)}
+  .toc h2{flex:1 0 100%; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin:0 0 4px}
+  .toc a{
+    flex:1 1 230px; display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+    font-size:.88rem; font-weight:560; background:rgba(255,255,255,.55); border:1px solid var(--line-glass);
+    border-radius:14px; padding:10px 14px; backdrop-filter:blur(6px);
+    transition:transform .22s var(--ease-spring), box-shadow .25s, border-color .25s, background .25s
+  }
+  .toc a:hover{transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,.10); border-color:var(--line)}
+  .toc .dot{display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:2px; flex-shrink:0;
+    box-shadow:0 0 0 3px rgba(255,255,255,.55)}
 
-  section.sec{margin:34px 0}
+  .nohit{text-align:center; color:var(--muted); padding:50px; display:none; font-size:.95rem}
+
+  /* ---- sections (scroll reveal) ---- */
+  section.sec{
+    margin:46px 0; opacity:0; transform:translateY(26px);
+    transition:opacity .6s var(--ease), transform .6s var(--ease)
+  }
+  section.sec.in-view{opacity:1; transform:none}
   .sec > h2{
-    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
-    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+    font-size:1.18rem; font-weight:700; letter-spacing:-.01em; margin:0 0 6px;
+    padding:10px 14px 12px; border-left:4px solid var(--sec); border-bottom:2px solid var(--sec-soft);
+    background:linear-gradient(90deg, var(--sec-soft), transparent);
+    border-radius:0 12px 0 0;
   }
-  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+  .sec-note{color:var(--muted); font-size:.85rem; margin:0 0 16px; padding-left:18px}
 
+  /* ---- question cards: glass-lite + height-animated accordion ---- */
   details.q{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+    display:grid; grid-template-rows:auto 0fr;
+    background:linear-gradient(160deg, rgba(255,255,255,.86), rgba(255,255,255,.6));
+    border:1px solid var(--line); border-left:4px solid var(--sec); border-radius:16px;
+    margin:12px 0; box-shadow:var(--shadow); overflow:hidden;
+    opacity:0; transform:translateY(18px);
+    transition:opacity .5s var(--ease), transform .4s var(--ease-spring),
+               border-color .2s, box-shadow .35s var(--ease), grid-template-rows .45s var(--ease);
   }
-  details.q[open]{border-color:#d6e6e0}
+  details.q.in-view{opacity:1; transform:translateY(0)}
+  details.q:hover{transform:translateY(-2px); box-shadow:0 16px 36px -10px color-mix(in srgb, var(--sec) 38%, transparent), var(--shadow)}
+  details.q[open]{grid-template-rows:auto 1fr; border-color:color-mix(in srgb, var(--sec) 45%, var(--line))}
+  details.q.vignette{border-left:4px solid #c98a3c; background:linear-gradient(160deg, rgba(255,247,235,.92), rgba(255,255,255,.6))}
+
   summary.q-head{
-    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
-    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+    list-style:none; cursor:pointer; padding:16px 20px; display:flex; gap:12px;
+    align-items:flex-start; font-weight:560; font-size:.97rem; user-select:none;
+    border-radius:16px 16px 0 0; transition:background .25s ease;
   }
   summary.q-head::-webkit-details-marker{display:none}
-  summary.q-head:hover{background:#fcfdfc}
-  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
-  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
-  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  summary.q-head:hover{background:linear-gradient(90deg, color-mix(in srgb, var(--sec) 9%, transparent), transparent)}
+  .chev{flex-shrink:0; display:inline-block; width:16px; margin-top:1px; color:var(--muted); font-size:.8rem;
+    transition:transform .35s var(--ease-spring), color .25s}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--sec)}
+  .stars{flex-shrink:0; font-size:.82rem; letter-spacing:1px; margin-top:2px; min-width:0;
+    background:linear-gradient(100deg,#d99a00,#f0b94a); -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 1px 1px rgba(217,154,0,.22))}
   .q-text{flex:1}
-  .answer{
-    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
-    font-size:.93rem; color:#33383d;
-  }
-  .answer h4{
-    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
-    margin:18px 0 7px;
-  }
+  .badge{display:inline-block; flex-shrink:0; background:linear-gradient(120deg,#f3e2c8,#ffe9c2); color:#8a5a16;
+    font-size:.6rem; font-weight:750; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:6px; margin-top:1px}
+
+  details.q > .answer{overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s}
+  details.q[open] > .answer{opacity:1}
+  .answer{padding:6px 24px 22px 48px; border-top:1px solid var(--line); margin-top:-1px; font-size:.93rem; color:#33383d}
+  .answer h4{font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--sec); margin:18px 0 7px}
   .answer p{margin:9px 0}
   .answer ul,.answer ol{margin:8px 0; padding-left:20px}
   .answer li{margin:4px 0}
-  .answer b{font-weight:620}
-  .answer table{
-    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
-  }
+  .answer b{font-weight:640}
+  .answer table{width:100%; border-collapse:collapse; margin:14px 0; font-size:.85rem; border-radius:10px; overflow:hidden; box-shadow:0 1px 5px rgba(0,0,0,.05)}
   .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
-  .answer th{background:var(--accent-soft); font-weight:600}
-  .answer .dia{
-    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
-    margin:12px 0; font-size:.85rem; color:#4a5550;
-  }
-  .answer .dia b{color:var(--accent)}
-  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .answer th{background:linear-gradient(120deg, var(--sec-soft), transparent); font-weight:650}
+  .answer .dia{background:linear-gradient(135deg,#f6f8f7,#eef4f1); border:1px dashed color-mix(in srgb, var(--sec) 45%, white);
+    border-radius:12px; padding:12px 16px; margin:14px 0; font-size:.85rem; color:#4a5550}
+  .answer .dia b{color:var(--sec)}
+  .recent{background:linear-gradient(120deg,#fbf6ec,#fff8e8); border-left:3px solid var(--star); padding:10px 16px;
+    border-radius:0 12px 12px 0; margin:14px 0; box-shadow:0 2px 10px rgba(217,154,0,.08)}
   .recent b{color:#9a7000}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--sec); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
   .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
-  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
-  mark{background:#fff2a8; padding:0 1px}
-  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
-  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+  mark{background:linear-gradient(120deg,#fff2a8,#ffe27a); padding:0 2px; border-radius:3px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:3px; box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent)}
 
-  /* ---- v2 interactive additions ---- */
-  body{transition:background .25s, color .25s}
-  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
-  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
-  .chip:hover{border-color:var(--accent); color:var(--accent)}
-  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
-  .iconbtn{font-size:1rem; line-height:1}
-  details.q.vignette{border-left:3px solid #c98a3c}
-  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
-  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
-  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
-  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
-  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
-  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a; --shadow:0 1px 2px rgba(0,0,0,.35)}
-  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
-  [data-theme="dark"] summary.q-head:hover{background:#23272c}
-  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  footer{margin-top:70px; padding:24px 20px 6px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+
+  @media (max-width:560px){
+    .wrap{padding:24px 14px 110px} .answer{padding-left:20px}
+    header.top{padding:22px 18px} .toc a{flex:1 1 100%}
+    .ambient .blob{filter:blur(40px)}
+  }
+
+  /* ---- dark theme ---- */
+  [data-theme="dark"]{
+    --bg:#0f1113; --panel:#1a1d21; --ink:#e6e8ea; --muted:#9aa3ad;
+    --line:#2c3036; --line-glass:rgba(255,255,255,.10);
+    --panel-glass:rgba(255,255,255,.06); --panel-glass-strong:rgba(255,255,255,.1);
+    --accent:#5db89e; --accent-soft:#1c2925; --star:#e0a93a;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.55), 0 6px 16px rgba(0,0,0,.35);
+  }
+  [data-theme="dark"] body{background:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(93,184,158,.08), transparent 60%), var(--bg)}
+  [data-theme="dark"] header.top{background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02))}
+  [data-theme="dark"] h1{background:linear-gradient(100deg,#e6e8ea 8%,#5db89e 48%,#8fb4e8 92%); -webkit-background-clip:text; background-clip:text; color:transparent}
+  [data-theme="dark"] .tools{background:var(--panel-glass)}
+  [data-theme="dark"] .stat-pill,[data-theme="dark"] .chip,[data-theme="dark"] .btn,[data-theme="dark"] #search,[data-theme="dark"] .toc,[data-theme="dark"] .toc a{
+    background:rgba(255,255,255,.05); border-color:var(--line-glass)}
+  [data-theme="dark"] details.q{background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015))}
+  [data-theme="dark"] details.q.vignette{background:linear-gradient(160deg, rgba(224,169,58,.09), rgba(255,255,255,.02))}
+  [data-theme="dark"] summary.q-head:hover{background:rgba(255,255,255,.04)}
   [data-theme="dark"] .answer{color:#cfd4d8}
-  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
-  [data-theme="dark"] .recent{background:#2a2519}
-  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#1b201d; border-color:#33403a; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:linear-gradient(120deg,#241f12,#1d1a10)}
+  [data-theme="dark"] .answer code{background:#23262a}
   [data-theme="dark"] mark{background:#7a6212; color:#fff}
   [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
-
-  /* ---- per-section colour theming ---- */
-  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
-  .sec > h2{border-bottom:2px solid var(--sec)}
-  .sec details.q{border-left:4px solid var(--sec)}
-  .sec details.q[open]{border-left-color:var(--sec)}
-  .sec details.q[open] .chev{color:var(--sec)}
-  .sec .answer h4{color:var(--sec)}
-  .sec .answer th{background:var(--sec-soft)}
-  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
-  .toc a{display:flex; align-items:center}
-  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
   [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
-  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
-  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
-  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+  [data-theme="dark"] .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3); box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
+  }
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
 </style>
 </head>
 <body>
+<button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="toTop" class="to-top" title="Back to top" aria-label="Back to top">↑</button>
 <div class="wrap">
   <header class="top">
     <h1>Autonomic, Receptor &amp; Neuro-Pharmacology — Consolidated PYQ Notes</h1>
-    <p class="sub">Exam-oriented model answers · contextualised to Goodman &amp; Gilman (14th ed., Neuropharmacology Ch. 10–28) · click any question to open the answer</p>
+    <p class="sub">Exam-oriented model answers · contextualised to standard pharmacology references for neuropharmacology · click any question to open the answer</p>
+    <div class="stat-row" id="statRow"></div>
   </header>
 
   <div class="tools">
@@ -188,7 +330,7 @@
 
 <section class="sec" id="s1" style="--sec:#2f7d6a;--sec-soft:#2f7d6a26">
   <h2>Section 1 · Autonomic Nervous System &amp; Neurotransmission</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 10: Neurotransmission: The Autonomic &amp; Somatic Motor Nervous Systems.</p>
+  <p class="sec-note">Covers neurotransmission across the autonomic and somatic motor nervous systems.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Discuss adrenergic and cholinergic neurotransmission in detail — co-transmission, steps at cholinergic &amp; adrenergic synapses, co-transmitters/neuromodulators, and clinical relevance.</span></summary>
   <div class="answer">
@@ -272,7 +414,7 @@
 
 <section class="sec" id="s2" style="--sec:#3f6cb0;--sec-soft:#3f6cb026">
   <h2>Section 2 · Adrenergic System (Receptors, Agonists &amp; Antagonists)</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 14: Adrenergic Agonists and Antagonists.</p>
+  <p class="sec-note">Covers adrenergic agonists and antagonists.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Classification, distribution, signaling mechanisms &amp; clinical importance of adrenergic receptors; drugs acting on α and β receptors (examples).</span></summary>
   <div class="answer">
@@ -430,7 +572,7 @@
 
 <section class="sec" id="s3" style="--sec:#845bb0;--sec-soft:#845bb026">
   <h2>Section 3 · Cholinergic System</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 11 (Muscarinic agonists/antagonists), Ch. 12 (Anticholinesterases &amp; reactivators), Ch. 13 (NMJ, muscle relaxants).</p>
+  <p class="sec-note">Covers muscarinic agonists/antagonists, anticholinesterases &amp; reactivators, and NMJ/muscle relaxants.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Explain cholinergic transmission; pharmacological actions &amp; therapeutic uses of antimuscarinic drugs; note on vasoselective anticholinergics &amp; subtype-specific agents.</span></summary>
   <div class="answer">
@@ -455,6 +597,42 @@
     <p>Pre-anaesthetic medication, bradyarrhythmia, organophosphate/anticholinesterase &amp; mushroom poisoning, COPD/asthma (ipratropium/tiotropium), overactive bladder, IBS/GI spasm, mydriatic/cycloplegic for fundoscopy, motion sickness (hyoscine), Parkinsonism, peptic ulcer (pirenzepine).</p>
     <h4>Vasoselective / subtype-specific anticholinergics</h4>
     <p>Subtype selectivity reduces off-target ADRs: M1 — pirenzepine/telenzepine (gastric, ↓antisecretory ADRs); M3 — darifenacin, solifenacin (bladder-selective, ↓CNS/cardiac effects); inhaled tiotropium (lung-selective via topical delivery). "Vasoselective" antimuscarinic action is minimal as vessels lack cholinergic innervation — but local/organ-selective targeting is the principle.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Structure-activity relationship (SAR) of anticholinergics (muscarinic antagonists) — basic pharmacophore, structural classes, stereochemistry &amp; correlation with potency/selectivity/CNS penetration.</span></summary>
+  <div class="answer">
+    <h4>Basic pharmacophore</h4>
+    <p>Antimuscarinic agents are built around three pharmacophoric elements common to ACh-mimetic/antagonist chemistry: (1) a <b>cationic head</b> (tertiary or quaternary nitrogen, mimicking ACh's quaternary ammonium, providing the key electrostatic/cation-π interaction with the receptor's anionic binding pocket), (2) a <b>bulky aromatic/cyclic acidic moiety</b> (e.g. tropic acid in atropine, mandelic acid in homatropine) replacing ACh's small acetate group — this bulk is what confers antagonism rather than agonism, and (3) an <b>ester or ether linkage</b> connecting the two, plus a hydroxyl group contributing to receptor affinity via H-bonding.</p>
+    <h4>Key SAR determinants</h4>
+    <table>
+      <tr><th>Structural feature</th><th>Pharmacological consequence</th></tr>
+      <tr><td>Tertiary amine (atropine, scopolamine, homatropine, benzhexol, oxybutynin)</td><td>Lipophilic, un-ionised fraction at physiological pH → crosses BBB/placenta → CNS effects (sedation, delirium in toxicity); used for CNS indications (Parkinsonism, motion sickness) or where systemic/CNS absorption is acceptable</td></tr>
+      <tr><td>Quaternary ammonium (ipratropium, tiotropium, glycopyrrolate, propantheline, methscopolamine)</td><td>Permanently charged → poor BBB penetration, poor oral absorption → fewer CNS/systemic ADRs → preferred for inhaled (COPD/asthma) or peripheral-selective (antispasmodic) use</td></tr>
+      <tr><td>Bulky/branched acidic-moiety substitution</td><td>↑ antagonist potency &amp; receptor residence time vs the small-acyl agonist ACh</td></tr>
+      <tr><td>N-substitution (size of alkyl groups on N)</td><td>Influences M-subtype selectivity and ganglion-blocking vs muscarinic-blocking balance</td></tr>
+      <tr><td>Esterification (vs ether-linked compounds)</td><td>Ester linkage (atropine-type) susceptible to esterase hydrolysis — short/intermediate duration; some semisynthetic/synthetic agents use non-ester linkages for metabolic stability &amp; longer duration (tiotropium)</td></tr>
+    </table>
+    <h4>Stereochemistry</h4>
+    <p>Activity resides predominantly in one enantiomer — e.g. <b>(–)-hyoscyamine</b> is far more potent than (+)-hyoscyamine; atropine itself is the racemate (dl-hyoscyamine), so its potency is roughly half that of pure l-hyoscyamine. This chiral selectivity reflects the stereospecific fit of the cationic head and acidic-moiety substituents into the muscarinic binding pocket — a classic example of stereochemistry determining potency independent of bulk physicochemical properties.</p>
+    <h4>Structural classes &amp; representative drugs</h4>
+    <table>
+      <tr><th>Class</th><th>Examples</th><th>SAR-based niche</th></tr>
+      <tr><td>Belladonna alkaloids (natural tertiary esters)</td><td>Atropine, hyoscine (scopolamine), hyoscyamine</td><td>Prototype tertiary-amine tropane esters — full CNS + peripheral antimuscarinic profile</td></tr>
+      <tr><td>Semisynthetic quaternary derivatives</td><td>Ipratropium, glycopyrrolate, methscopolamine, propantheline</td><td>Quaternisation of a tertiary parent → peripheral selectivity, inhaled/GI use</td></tr>
+      <tr><td>Synthetic tertiary amines (antispasmodic/CNS)</td><td>Dicyclomine, oxybutynin, tolterodine, benzhexol (trihexyphenidyl)</td><td>Tailored lipophilicity for bladder (OAB) or CNS (anti-Parkinsonian) penetration</td></tr>
+      <tr><td>Subtype-selective synthetic agents</td><td>Pirenzepine (M1), darifenacin/solifenacin (M3)</td><td>Structural bulk/rigidity engineered for receptor-subtype discrimination, minimising off-target M2 (cardiac)/M1 (CNS) effects</td></tr>
+      <tr><td>Long-acting inhaled quaternary agents</td><td>Tiotropium, glycopyrronium, umeclidinium</td><td>Slow dissociation from M3 (kinetic selectivity) → once-daily dosing in COPD</td></tr>
+    </table>
+    <h4>Antimuscarinic toxidrome (clinical correlate of the pharmacophore)</h4>
+    <p>"Hot as a hare (hyperthermia — ↓sweating), dry as a bone (↓secretions), red as a beet (cutaneous vasodilation), blind as a bat (mydriasis/cycloplegia), mad as a hatter (CNS delirium — only with tertiary/CNS-penetrant agents)." The CNS components occur only with tertiary-amine agents that cross the BBB — quaternary agents (ipratropium, glycopyrrolate) at therapeutic doses produce a peripheral-only picture, directly illustrating the structure-CNS-penetration relationship.</p>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Quaternary nitrogen = poor BBB penetration → peripheral-selective, inhaled/GI agents (ipratropium, tiotropium, glycopyrrolate); tertiary amine = CNS-penetrant (atropine, scopolamine, benzhexol).</li>
+      <li>l-hyoscyamine &gt; atropine (racemate) &gt; d-hyoscyamine in potency — classic stereochemistry exam point.</li>
+      <li>Bulky acidic-moiety substitution (vs ACh's small acetate) is what converts an agonist scaffold into an antagonist.</li>
+      <li>M1/M3 subtype-selective agents (pirenzepine; darifenacin/solifenacin) achieve selectivity through structural bulk/rigidity, not just dose.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Structure-guided design continues to refine M3-selective, slow-off-rate (kinetically selective) agents (tiotropium, umeclidinium, glycopyrronium) enabling once-daily inhaled dosing in COPD/asthma with minimal cardiac (M2) or CNS crossover, extending the classical SAR principles (charge, bulk, stereochemistry) into modern long-acting bronchodilator design.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Cholinesterase inhibitors &amp; enzyme reactivators (oximes); role of oximes in acute anticholinesterase poisoning &amp; treatment of atropine poisoning.</span></summary>
@@ -510,7 +688,7 @@
 
 <section class="sec" id="s4" style="--sec:#b15068;--sec-soft:#b1506826">
   <h2>Section 4 · G-Protein Coupled Receptors &amp; Signaling</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 3 (Pharmacodynamics) &amp; Ch. 10.</p>
+  <p class="sec-note">Covers pharmacodynamics and autonomic neurotransmission.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">What is a drug receptor? Classify receptor types (location, an agonist &amp; antagonist each). Discuss GPCRs in detail (G-protein types, second messengers, signal transduction). Note on drugs modifying adenylyl cyclase.</span></summary>
   <div class="answer">
@@ -571,7 +749,7 @@
 
 <section class="sec" id="s5" style="--sec:#b3852f;--sec-soft:#b3852f26">
   <h2>Section 5 · Specific Receptor Systems (High-Yield)</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 15 (5-HT/dopamine), Ch. 16, Ch. 22 (hypnotics), Ch. 23 (opioids); supplemented for SERM/endothelin/peptide receptors.</p>
+  <p class="sec-note">Covers 5-HT/dopamine signalling, hypnotics, and opioids; supplemented for SERM/endothelin/peptide receptors.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">5-HT (serotonin) receptors — subtypes, distribution, agonists, antagonists, current therapeutic status; clinical uses of agonists/antagonists; drugs altering 5-HT concentration &amp; 5-HT4 agonists.</span></summary>
   <div class="answer">
@@ -716,6 +894,31 @@
     <div class="recent"><b>Recent advances:</b> Extended-release injectable/depot buprenorphine (monthly) and naltrexone depot formulations improve adherence in opioid use disorder. Take-home naloxone programs and over-the-counter naloxone nasal spray have expanded community overdose-reversal access amid the ongoing opioid/fentanyl epidemic. Biased µ-agonists (oliceridine — G-protein-biased, theoretically less respiratory depression/constipation) represent a structure-based attempt to dissociate analgesia from adverse/abuse-related signalling.</div>
   </div></details>
 
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Recent advances in pain therapy — multimodal/mechanism-based analgesia framework, novel non-opioid targets &amp; newest approved agents.</span></summary>
+  <div class="answer">
+    <p><i>Cross-reference:</i> see the opioid-receptor card above for classical µ/κ/δ pharmacology and opioid-use-disorder management — this card focuses on the <b>newer, largely non-opioid mechanisms</b> driving current pain-therapy innovation, reflecting the shift away from opioid-centric analgesia.</p>
+    <h4>Multimodal / mechanism-based analgesia framework</h4>
+    <p>Modern pain management stratifies therapy by the dominant pain mechanism — <b>nociceptive</b> (tissue injury — NSAIDs, paracetamol), <b>neuropathic</b> (nerve injury — gabapentinoids, TCAs/SNRIs, topical agents), <b>nociplastic</b> (central sensitisation, e.g. fibromyalgia — SNRIs, pregabalin) and inflammatory (NGF/cytokine-driven) — rather than escalating a single opioid-centric ladder. Multimodal analgesia combines agents acting at different sites/mechanisms for additive efficacy with lower doses of each (opioid-sparing).</p>
+    <h4>Novel non-opioid targets</h4>
+    <table>
+      <tr><th>Target/class</th><th>Agent(s)</th><th>Mechanism &amp; status</th></tr>
+      <tr><td>Anti-NGF monoclonal antibody</td><td>Tanezumab</td><td>Neutralises nerve growth factor (NGF) → blocks NGF-TrkA pain-sensitisation signalling; effective in osteoarthritis pain but FDA rejected due to rapidly progressive osteoarthritis/joint destruction risk — illustrates NGF's dual role in pain signalling AND joint protective/trophic function</td></tr>
+      <tr><td>N-type (Cav2.2) Ca²⁺-channel blocker</td><td>Ziconotide</td><td>Synthetic cone-snail (Conus magus) peptide; blocks N-type Ca²⁺ channels at spinal presynaptic terminals → ↓ neurotransmitter release; intrathecal only (does not cross BBB); used for severe refractory chronic pain (no tolerance/dependence, unlike opioids) but narrow therapeutic window (neuropsychiatric ADRs)</td></tr>
+      <tr><td>Voltage-gated Na⁺-channel blockers (Nav1.7/1.8/1.9-selective)</td><td>Suzetrigine (Journavx)</td><td>Highly selective <b>Nav1.8</b> blocker — blocks peripheral pain-signal transmission without CNS Na-channel effects (avoids sedation/abuse potential); <b>FDA-approved January 2025</b> for moderate-severe acute pain — first novel non-opioid oral analgesic mechanism approved in decades</td></tr>
+      <tr><td>TRPV1 antagonists/agonists</td><td>Capsaicin (agonist — desensitisation), TRPV1 antagonists (trials)</td><td>TRPV1 mediates heat/capsaicin-induced nociceptor activation; topical capsaicin causes initial activation then long-term desensitisation; systemic antagonists limited by hyperthermia ADR</td></tr>
+      <tr><td>CGRP-pathway agents (migraine — pain-specific receptor pharmacology)</td><td>Gepants (rimegepant, ubrogepant — small-molecule CGRP-receptor antagonists); anti-CGRP/CGRP-receptor mAbs (erenumab, fremanezumab, galcanezumab, eptinezumab)</td><td>Block CGRP-mediated trigeminovascular neurogenic inflammation/pain transmission — gepants for acute + preventive use (no vasoconstriction, unlike triptans); mAbs for prevention only</td></tr>
+      <tr><td>Dual-mechanism opioid/non-opioid hybrid</td><td>Cebranopadol</td><td>Dual NOP (nociceptin) + µ-opioid receptor agonist — aims to retain analgesia while NOP co-activation tempers abuse liability/respiratory depression; in trials</td></tr>
+    </table>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Suzetrigine (Journavx, FDA Jan 2025) is the highest-yield "newest approved drug" fact in this topic — first novel non-opioid oral analgesic mechanism (Nav1.8 blockade) approved in decades, for acute pain.</li>
+      <li>Ziconotide = intrathecal-only N-type Ca²⁺-channel blocker, non-opioid, no tolerance/dependence — but narrow therapeutic window.</li>
+      <li>Tanezumab's rejection (joint destruction) is a classic cautionary example of an effective analgesic mechanism failing on the safety axis.</li>
+      <li>Gepants are CGRP-receptor antagonists usable for both acute AND preventive migraine — unlike triptans (acute only) and anti-CGRP mAbs (preventive only).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> <b>Suzetrigine/Journavx (FDA Jan 2025)</b> — landmark approval of a selective Nav1.8 blocker as a genuinely novel non-opioid oral analgesic class for acute pain, widely seen as a milestone in opioid-sparing pain management amid the opioid epidemic. Depemokimab/CGRP-pathway agents continue to refine migraine-specific pain pharmacology. Cebranopadol and other dual-receptor (NOP/µ) hybrid molecules remain in trials aiming to dissociate analgesia from abuse liability.</div>
+  </div></details>
+
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Therapeutic implications of drugs acting on benzodiazepine receptors; enumerate BZD agonists with indications.</span></summary>
   <div class="answer">
     <h4>Mechanism</h4>
@@ -732,6 +935,32 @@
       <tr><td>"Z-drugs" (zolpidem, zopiclone)</td><td>Insomnia (selective ω1, less dependence)</td></tr>
     </table>
     <p><b>Caution:</b> tolerance, dependence, withdrawal, falls in elderly, respiratory depression with opioids/alcohol.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">GABA modulators in epilepsy — classification by synaptic site of action, mechanism of each class, absence-seizure paradox &amp; recent regulatory updates.</span></summary>
+  <div class="answer">
+    <p><i>Cross-reference:</i> see the benzodiazepine-receptor card above for general BZD pharmacology — this card classifies <b>all</b> GABAergic antiepileptic mechanisms by their distinct synaptic site of action, a frequently tested high-yield framework distinct from plain "BZD agonist" recall.</p>
+    <h4>Four distinct GABAergic synaptic sites targeted by antiepileptics</h4>
+    <table>
+      <tr><th>Site/mechanism</th><th>Drug(s)</th><th>Action</th></tr>
+      <tr><td>1. GABA-A receptor — positive allosteric modulation (postsynaptic)</td><td>Benzodiazepines (diazepam, clonazepam, clobazam), barbiturates (phenobarbitone)</td><td>BZDs ↑ <b>frequency</b> of Cl⁻ channel opening; barbiturates ↑ <b>duration</b> of opening — both require endogenous GABA (BZDs have a ceiling effect; barbiturates do not, hence narrower safety margin)</td></tr>
+      <tr><td>2. GABA transporter-1 (GAT-1) inhibition (presynaptic/glial reuptake block)</td><td>Tiagabine</td><td>Blocks GAT-1-mediated reuptake of GABA from the synaptic cleft → prolongs/intensifies synaptic GABA action; adjunct for partial seizures</td></tr>
+      <tr><td>3. GABA-transaminase (GABA-T) inhibition (catabolic enzyme block)</td><td>Vigabatrin</td><td>Irreversibly inhibits GABA-transaminase → ↓ GABA catabolism → ↑ steady-state GABA levels; highly effective in infantile spasms (West syndrome) but carries a <b>black-box warning for permanent bilateral peripheral visual-field constriction/retinal toxicity</b> — requires baseline + periodic visual-field/ERG monitoring</td></tr>
+      <tr><td>4. Presynaptic modulation of GABA/glutamate release</td><td>Gabapentin, pregabalin (bind α2δ subunit of voltage-gated Ca²⁺ channels — NOT direct GABA-receptor agonists despite the name); valproate (multiple mechanisms incl. ↑GABA synthesis via glutamic-acid-decarboxylase stimulation, T-type Ca²⁺-channel block)</td><td>↓ Excitatory neurotransmitter release / ↑ inhibitory tone via indirect presynaptic mechanisms</td></tr>
+    </table>
+    <h4>The absence-seizure paradox — a classic exam trap</h4>
+    <p>Although GABA is broadly anti-seizure, <b>indiscriminately enhancing GABA-A transmission in the thalamocortical circuit can worsen absence seizures</b>: GABA-B receptor activation in the thalamus promotes the rebound burst-firing (T-type Ca²⁺-channel-mediated) that generates the 3 Hz spike-and-wave discharge of absence epilepsy. This is why <b>vigabatrin and tiagabine (which raise/prolong synaptic GABA) can precipitate or worsen absence seizures</b>, and why ethosuximide (T-type Ca²⁺-channel blocker, not GABAergic) — not a GABA-enhancing drug — is first-line for absence seizures. Valproate works in absence seizures via its T-type Ca²⁺-channel-blocking action, not its GABAergic action.</p>
+    <h4>Newer GABA-A modulators</h4>
+    <p><b>Ganaxolone</b> — a synthetic neurosteroid, positive allosteric modulator at a distinct (non-BZD) site on the GABA-A receptor (the neurosteroid-binding site) — <b>FDA-approved in 2022</b> specifically for seizures associated with <b>CDKL5 deficiency disorder</b>, the first approved synthetic neurosteroid antiepileptic, opening a new GABA-A-modulation drug class distinct from BZDs/barbiturates.</p>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Four distinct GABAergic sites: GABA-A PAM (BZD/barbiturate), GAT-1 inhibitor (tiagabine), GABA-T inhibitor (vigabatrin), presynaptic release modulators (gabapentinoids/valproate) — classic "classify by site" exam question.</li>
+      <li>Vigabatrin's black-box ADR = irreversible peripheral visual-field constriction (retinal toxicity) — mandatory ophthalmologic monitoring.</li>
+      <li>Absence-seizure paradox: GABA-A enhancers (vigabatrin/tiagabine) can worsen absence seizures via thalamic GABA-B-mediated rebound bursting — ethosuximide (T-type Ca²⁺ blocker) is the mechanistically correct first-line drug instead.</li>
+      <li>Ganaxolone (2022) = first synthetic neurosteroid GABA-A PAM approved, specifically for CDKL5 deficiency disorder seizures.</li>
+      <li>Gabapentin/pregabalin act on Ca²⁺-channel α2δ subunits, not GABA receptors directly — a frequently mis-tested point.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Ganaxolone's 2022 FDA approval for CDKL5 deficiency disorder established the neurosteroid-binding site as a new druggable GABA-A target distinct from the classical BZD/barbiturate sites. The <b>AAN/AES/SMFM 2024 guideline update on epilepsy &amp; pregnancy</b> reinforced avoiding valproate in women of childbearing potential (high teratogenicity/neurodevelopmental risk) wherever possible, while affirming lamotrigine/levetiracetam as preferred safer alternatives — directly relevant when counselling on GABAergic/multi-mechanism antiepileptic choice in pregnancy.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Vasopressin, Prostaglandin, Thyroid, Somatostatin &amp; GnRH receptors — agonists/antagonists &amp; clinical applications.</span></summary>
@@ -958,7 +1187,7 @@
 
 <section class="sec" id="s6" style="--sec:#2f8696;--sec-soft:#2f869626">
   <h2>Section 6 · Enzyme Inhibitors &amp; Modulators</h2>
-  <p class="sec-note">Supplemented from CVS/immunology/antimicrobial pharmacology (Katzung, Rang &amp; Dale).</p>
+  <p class="sec-note">Supplemented from standard CVS/immunology/antimicrobial pharmacology references.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Phosphodiesterase (PDE) inhibitors — classification, clinical uses (esp. PDE-5), role in heart failure &amp; other conditions.</span></summary>
   <div class="answer">
@@ -981,7 +1210,7 @@
     <table>
       <tr><th>Class</th><th>Drugs</th><th>Mechanism / Use</th></tr>
       <tr><td>Direct thrombin inhibitors</td><td>Dabigatran (oral), bivalirudin, argatroban (IV)</td><td>Inhibit factor IIa → anticoagulation (AF, VTE, PCI); reversal: idarucizumab</td></tr>
-      <tr><td>Factor Xa inhibitors</td><td>Rivaroxaban, apixaban, edoxaban</td><td>Inhibit Xa (oral DOACs) — AF, VTE; reversal: andexanet alfa</td></tr>
+      <tr><td>Factor Xa inhibitors</td><td>Rivaroxaban, apixaban, edoxaban</td><td>Inhibit Xa (oral DOACs) — AF, VTE; reversal: PCC (andexanet alfa withdrawn from US market, Dec 2025 — thromboembolic safety signal)</td></tr>
       <tr><td>ACE inhibitors</td><td>Enalapril, ramipril, lisinopril</td><td>Block ACE → ↓Ang II, ↑bradykinin → ↓BP, anti-remodelling; HTN, HF, post-MI, diabetic nephropathy; ADR: cough, hyperkalaemia, angioedema</td></tr>
       <tr><td>Renin inhibitors</td><td>Aliskiren</td><td>Direct renin inhibition → blocks RAAS at first step; HTN (limited use)</td></tr>
       <tr><td>ARNI</td><td>Sacubitril + valsartan</td><td>Neprilysin inhibition (↑natriuretic peptides) + ARB → HFrEF (superior to ACEi — PARADIGM-HF)</td></tr>
@@ -1110,7 +1339,7 @@
 
 <section class="sec" id="s8" style="--sec:#c06a3e;--sec-soft:#c06a3e26">
   <h2>Section 8 · Integrated Therapeutic &amp; Special Topics</h2>
-  <p class="sec-note">G&amp;G 14e — Ch. 17 (BBB), Ch. 18/21 (depression/neurodegeneration), Ch. 28 (addiction); supplemented.</p>
+  <p class="sec-note">Covers the blood-brain barrier, depression/neurodegeneration, and addiction; supplemented from additional references.</p>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacotherapy of glaucoma in detail — aqueous humour dynamics, classification of antiglaucoma drugs, individual classes with adverse effects, combination therapy, therapeutic approach in POAG &amp; acute angle-closure, drugs precipitating glaucoma, and recent advances.</span></summary>
   <div class="answer">
@@ -1307,6 +1536,42 @@
       <tr><td><b>Parkinson's / neurodegeneration</b></td><td>Continuous levodopa delivery, MAO-B (safinamide), adenosine A2A antagonist (istradefylline); ALS — riluzole, edaravone, sodium phenylbutyrate-taurursodiol; SMA — nusinersen, risdiplam, gene therapy</td></tr>
     </table>
     <div class="recent"><b>Recent:</b> First disease-modifying Alzheimer's antibodies (lecanemab 2023, donanemab 2024); oral CGRP antagonists transformed migraine care.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacotherapy of depression — monoamine hypothesis &amp; its limitations, classification of antidepressants by mechanism, individual classes &amp; newer rapid-acting agents.</span></summary>
+  <div class="answer">
+    <p><i>Cross-reference:</i> the table-card above briefly lists newer depression agents alongside Alzheimer's/migraine drugs — this card gives the full classification &amp; mechanism framework underlying modern antidepressant pharmacotherapy.</p>
+    <h4>Monoamine hypothesis &amp; its limitations</h4>
+    <p>Classical hypothesis: depression results from a functional deficiency of monoamines (5-HT, NA, ± DA) at CNS synapses. All older antidepressants (TCAs, MAOIs, SSRIs/SNRIs) raise synaptic monoamine levels, supporting the hypothesis — but the <b>therapeutic lag (2–4 weeks)</b> despite immediate biochemical monoamine elevation, and a substantial <b>30–40% treatment-non-response rate</b>, indicate the hypothesis is incomplete; downstream adaptive changes (receptor downregulation, BDNF/neurotrophic signalling, neuroplasticity, hippocampal neurogenesis) are now considered central to true antidepressant action — explaining why rapid monoamine-independent agents (ketamine/esketamine) can produce effects within hours.</p>
+    <h4>Classification of antidepressants by mechanism</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Mechanism</th></tr>
+      <tr><td>SSRIs</td><td>Fluoxetine, sertraline, escitalopram, paroxetine</td><td>Selective serotonin reuptake (SERT) inhibition</td></tr>
+      <tr><td>SNRIs</td><td>Venlafaxine, duloxetine, desvenlafaxine</td><td>SERT + NET inhibition</td></tr>
+      <tr><td>TCAs</td><td>Amitriptyline, imipramine, clomipramine, nortriptyline</td><td>Non-selective SERT/NET inhibition + antimuscarinic/antihistaminic/α1-blocking (ADR-heavy)</td></tr>
+      <tr><td>MAOIs</td><td>Phenelzine, tranylcypromine (irreversible, non-selective); moclobemide (reversible MAO-A — RIMA)</td><td>↓ monoamine breakdown; classical MAOIs need tyramine-free diet (hypertensive crisis risk)</td></tr>
+      <tr><td>NDRI</td><td>Bupropion</td><td>NA + dopamine reuptake inhibition; no sexual dysfunction; lowers seizure threshold</td></tr>
+      <tr><td>NaSSA</td><td>Mirtazapine</td><td>α2-autoreceptor/heteroreceptor antagonism (↑NA/5-HT release) + 5-HT2/5-HT3 antagonism; sedating, appetite-stimulating</td></tr>
+      <tr><td>SARI</td><td>Trazodone</td><td>5-HT2A antagonism + weak SERT inhibition; mainly used for insomnia at low dose</td></tr>
+      <tr><td>Multimodal</td><td>Vortioxetine</td><td>SERT inhibition + multiple 5-HT receptor agonist/antagonist actions</td></tr>
+      <tr><td>NMDA-receptor modulators (rapid-acting)</td><td>Esketamine (intranasal), ketamine (IV, off-label); dextromethorphan-bupropion (Auvelity)</td><td>NMDA-receptor antagonism → glutamatergic/AMPA-throughput surge → rapid synaptogenesis/antidepressant effect (hours, not weeks)</td></tr>
+      <tr><td>GABA-A neurosteroid modulators</td><td>Brexanolone (IV), zuranolone (oral)</td><td>Positive allosteric modulation at neurosteroid site of GABA-A receptor; approved specifically for postpartum depression — rapid onset (days)</td></tr>
+    </table>
+    <h4>Newer/rapid-acting agents — mechanistic detail</h4>
+    <ul>
+      <li><b>Esketamine</b> (S-enantiomer of ketamine, intranasal) — NMDA-receptor antagonism on GABAergic interneurons → disinhibition of glutamatergic pyramidal neurons → AMPA-receptor-mediated synaptic potentiation/BDNF release → rapid (within hours-days) antidepressant effect in treatment-resistant depression; requires REMS monitoring (dissociation, sedation, abuse potential, BP monitoring).</li>
+      <li><b>Zuranolone</b> — first oral neurosteroid GABA-A PAM approved specifically for postpartum depression, 14-day course, rapid onset distinguishing it from the weeks-long lag of classical antidepressants.</li>
+      <li><b>Dextromethorphan-bupropion (Auvelity)</b> — dextromethorphan provides NMDA antagonism (CYP2D6-metabolised; bupropion co-administered as a CYP2D6 inhibitor to boost dextromethorphan exposure) — an oral, rapid-acting alternative to parenteral/intranasal ketamine-class agents.</li>
+      <li><b>Psilocybin</b> (5-HT2A agonist, classic psychedelic) — under trial for treatment-resistant depression; proposed mechanism involves acute 5-HT2A-mediated neuroplasticity/default-mode-network disruption with sustained effect after limited dosing sessions; not yet approved, used only in controlled trial/therapy-assisted settings.</li>
+    </ul>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Therapeutic lag (2–4 weeks) despite immediate monoamine elevation is the classic evidence AGAINST a pure monoamine-deficiency model — favours a neuroplasticity/BDNF-based explanation.</li>
+      <li>Esketamine/ketamine and zuranolone/brexanolone are the two distinct rapid-acting mechanistic classes (glutamatergic-NMDA vs GABAergic-neurosteroid) — do not conflate them.</li>
+      <li>Mirtazapine's mechanism (α2-autoreceptor antagonism ↑ NA/5-HT release) directly links back to the presynaptic autoreceptor concept covered in Section 1.</li>
+      <li>Bupropion lowers seizure threshold (avoid in seizure disorders/eating disorders); MAOIs require dietary tyramine restriction (classical, irreversible agents only — moclobemide as reversible MAO-A inhibitor is safer).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Esketamine and zuranolone represent the two newest distinct mechanistic classes in depression pharmacotherapy — both deliver days-to-hours onset versus the weeks-long lag of classical monoaminergic agents. Dextromethorphan-bupropion (Auvelity) offers an oral rapid-acting alternative without the dissociative/REMS burden of esketamine. Psilocybin-assisted therapy remains investigational but is among the most active current research fronts in treatment-resistant depression.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Pharmacotherapy of rheumatoid arthritis — DMARDs, biologics &amp; TNF-α inhibitors; note on biosimilars vs biologicals.</span></summary>
@@ -1820,7 +2085,7 @@
   </div>
 
   <footer>
-    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman 14e (Neuropharmacology, Ch. 10–28), Katzung, Rang &amp; Dale, Indian/clinical guidelines.
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: standard pharmacology references, Indian/clinical guidelines.
   </footer>
 </div>
 
@@ -1882,7 +2147,6 @@
     const vis = visible(); if(!vis.length) return;
     items.forEach(d=> d.open=false);
     const pick = vis[Math.floor(Math.random()*vis.length)];
-    pick.open = true;
     setKb(items.indexOf(pick));
   }
   document.getElementById('shuffle').onclick = randomQ;
@@ -1926,6 +2190,89 @@
   });
 
   apply();
+
+  /* ---- v3: glass / motion enhancements (additive — does not touch logic above) ---- */
+  const progressBar = document.getElementById('progressBar');
+  function updateProgress(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', ()=> requestAnimationFrame(updateProgress), {passive:true});
+  updateProgress();
+
+  const statRow = document.getElementById('statRow');
+  if(statRow){
+    const nQ = items.filter(d=> d.dataset.type!=='case').length;
+    const nCase = items.filter(d=> d.dataset.type==='case').length;
+    statRow.innerHTML =
+      '<span class="stat-pill">\u{1F4DA} <b>'+sections.length+'</b>&nbsp;sections</span>'+
+      '<span class="stat-pill">❓ <b>'+nQ+'</b>&nbsp;questions</span>'+
+      '<span class="stat-pill">\u{1FA7A} <b>'+nCase+'</b>&nbsp;cases</span>';
+  }
+
+  const toTopBtn = document.getElementById('toTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', ()=>{
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  }
+
+  themeBtn.addEventListener('click', ()=>{
+    themeBtn.classList.add('spin');
+    setTimeout(()=> themeBtn.classList.remove('spin'), 500);
+  });
+
+  if('IntersectionObserver' in window){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const secObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); secObserver.unobserve(en.target); } });
+    }, {threshold:0.08, rootMargin:'0px 0px -60px 0px'});
+    sections.forEach(s=> secObserver.observe(s));
+
+    const qObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); qObserver.unobserve(en.target); } });
+    }, {threshold:0.05, rootMargin:'0px 0px -40px 0px'});
+    items.forEach((d,i)=>{
+      if(!reduceMotion) d.style.transitionDelay = (i % 5) * 55 + 'ms';
+      qObserver.observe(d);
+    });
+  } else {
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }
+
+  // safety net — guarantee nothing stays invisible if something above misfires
+  setTimeout(()=>{
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }, 1600);
+
 </script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

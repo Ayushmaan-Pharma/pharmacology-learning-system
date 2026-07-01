@@ -391,16 +391,132 @@
     }
     #hub-theme:hover { transform:translateY(-2px); }
     html[data-theme="dark"] #hub-theme { background:#1e2125; border-color:#33373d; }
-  </style>
+  
+
+/* =========================================================================
+   GLASS / MOTION LAYER — hub page. Additive, reuses this page's own tokens
+   (--cream/--ink/--gold/--border/--white) so colours/content stay identical.
+   ========================================================================= */
+html{scroll-behavior:smooth}
+
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(80px); opacity:.22}
+.gp-ambient .b1{width:40vw;height:40vw; top:-12%; left:-10%; background:radial-gradient(circle,var(--gold,#D4A847),transparent 70%); animation:gpDrift1 40s ease-in-out infinite}
+.gp-ambient .b2{width:34vw;height:34vw; top:10%; right:-12%; background:radial-gradient(circle,#8a6a2f,transparent 70%); animation:gpDrift2 46s ease-in-out infinite}
+.gp-ambient .b3{width:38vw;height:38vw; bottom:-16%; left:22%; background:radial-gradient(circle,#5a7a8a,transparent 70%); animation:gpDrift3 42s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,6vh) scale(1.1)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.1)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--gold,#D4A847), #8a6a2f, var(--gold,#D4A847));
+  box-shadow:0 0 10px rgba(212,168,71,.5); transition:width .12s linear}
+
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:linear-gradient(135deg, var(--ink,#1C1917), #3a3531); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.35); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpHeroIn{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+
+.gp-reveal{opacity:0; transform:translateY(26px) scale(.985); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.34,1.2,.64,1)}
+.gp-reveal.in-view{opacity:1; transform:none}
+
+.portal, .card{ transition:transform .25s cubic-bezier(.34,1.2,.64,1), box-shadow .3s ease !important; }
+.portal:hover, .card:hover{ box-shadow:0 18px 44px -10px rgba(212,168,71,.35), var(--shadow-lg); }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal{opacity:1 !important; transform:none !important; transition:none !important}
+  header.hero{animation:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+.gp-forward-btn{ left:64px; }
+@media (max-width:640px){ .gp-forward-btn{ left:54px; } }
+
+/* =========================================================================
+   TRUE FROSTED GLASS — make panel surfaces actually translucent + blurred
+   so the ambient colour blobs show through, instead of flat solid panels.
+   Additive override, reuses this page's own colour tokens.
+   ========================================================================= */
+body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; }
+.hero{
+  background: color-mix(in srgb, var(--ink) 80%, transparent) !important;
+  backdrop-filter: blur(22px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(160%) !important;
+}
+.portal, .card{
+  background: color-mix(in srgb, var(--white) 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+  border-color: rgba(255,255,255,.55) !important;
+}
+.portal-footer, .card-footer{
+  background: color-mix(in srgb, var(--cream) 68%, transparent) !important;
+  backdrop-filter: blur(10px) !important; -webkit-backdrop-filter: blur(10px) !important;
+}
+html[data-theme="dark"] body{ background: color-mix(in srgb, #15171a 88%, transparent) !important; }
+html[data-theme="dark"] .portal, html[data-theme="dark"] .card{
+  background: color-mix(in srgb, #1e2125 58%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+  border-color: rgba(255,255,255,.12) !important;
+}
+html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
+  background: color-mix(in srgb, #15171a 68%, transparent) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
+  .hero{ background: var(--ink) !important; }
+  .portal, .card{ background: var(--white) !important; }
+  .portal-footer, .card-footer{ background: var(--cream) !important; }
+  html[data-theme="dark"] body{ background:#15171a !important; }
+  html[data-theme="dark"] .portal, html[data-theme="dark"] .card{ background:#1e2125 !important; }
+}
+</style>
   <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+<button id="gpForwardBtn" class="gp-back-btn gp-forward-btn" type="button" title="Forward to next page" aria-label="Forward to next page">→</button>
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
+
 <button id="hub-theme" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">&#127769;</button>
 
 <!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
 <header class="hero">
   <div class="hero-inner">
-    <p class="hero-label">Goodman &amp; Gilman · Clinical High-Yield Notes</p>
+    <p class="hero-label">Clinical High-Yield Pharmacology Notes</p>
     <h1>Pharmacology<br><em>Study Hub</em></h1>
     <p class="hero-sub">
       Your central gateway to structured learning guides, interactive PYQ notes,
@@ -446,7 +562,7 @@
       <p class="portal-type">Structured Study</p>
       <h2 class="portal-title">Learning Systems</h2>
       <p class="portal-desc">
-        Ten integrated Goodman &amp; Gilman study guides spanning every major
+        Ten integrated pharmacology study guides spanning every major
         pharmacological system — structured notes, clinical vignette flashcards,
         and self-test question banks.
       </p>
@@ -502,7 +618,7 @@
           <span class="meta-label">Subjects</span>
         </div>
         <div class="meta-item">
-          <span class="meta-num">179</span>
+          <span class="meta-num">264</span>
           <span class="meta-label">Questions</span>
         </div>
         <div class="meta-item">
@@ -596,7 +712,7 @@
 <footer>
   <div class="site-footer">
     <p>
-      Based on <strong>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</strong>, 14th Edition.<br>
+      Based on standard pharmacology references and current clinical guidelines.<br>
       Open <strong>index.html</strong> as your starting point · All files must remain in the same folder structure for links to work.
     </p>
   </div>
@@ -610,6 +726,86 @@
   function set(m){ if(m==='dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme'); try{ localStorage.setItem('pharm-theme', m); }catch(e){} upd(); }
   upd();
   if(btn) btn.addEventListener('click', function(){ set(isDark() ? 'light' : 'dark'); });
+})();
+</script>
+
+<script>
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  document.querySelectorAll('.portal, .card').forEach(function(el){ el.classList.add('gp-reveal'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.08, rootMargin:'0px 0px -50px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 6) * 60 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }, 1800);
+})();
+</script>
+
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // Forward counterpart to the back button: re-navigate forward through this
+  // tab's history — e.g. you pressed back to return to this hub, now you
+  // want to go forward again into the page you just came from.
+  var f = document.getElementById('gpForwardBtn');
+  if(!f) return;
+  f.addEventListener('click', function(){
+    window.history.forward();
+  });
 })();
 </script>
 

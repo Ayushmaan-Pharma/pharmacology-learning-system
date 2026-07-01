@@ -795,10 +795,423 @@
   }
   .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
 
+
+
+/* =========================================================================
+   GLASS / MOTION DEMO LAYER v3 — additive, appended after all base rules.
+   Uses this file's own tokens (--accent, --cool, --hero-gradient, etc.,
+   with safe fallbacks where a file doesn't define one) so colours/content
+   stay identical to the original. Shared across the whole Learning System
+   family for visual/motion consistency.
+   ========================================================================= */
+
+html{scroll-behavior:smooth}
+
+/* ---- ambient drifting blobs, colour-matched to this file's palette ---- */
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(75px); opacity:.30}
+.gp-ambient .b1{width:44vw;height:44vw; top:-14%; left:-12%; background:radial-gradient(circle,var(--accent-dark),transparent 70%); animation:gpDrift1 38s ease-in-out infinite}
+.gp-ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,var(--cool),transparent 70%); animation:gpDrift2 44s ease-in-out infinite}
+.gp-ambient .b3{width:42vw;height:42vw; bottom:-18%; left:18%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift3 40s ease-in-out infinite}
+.gp-ambient .b4{width:26vw;height:26vw; bottom:10%; right:8%; background:radial-gradient(circle,var(--cool-light,var(--cool)),transparent 70%); animation:gpDrift4 33s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,7vh) scale(1.12)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.12)}}
+@keyframes gpDrift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-4vw,-3vh) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+/* ---- scroll progress bar ---- */
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--accent-dark), var(--cool), var(--accent));
+  box-shadow:0 0 10px rgba(15,107,107,.45); transition:width .12s linear}
+
+/* ---- back-to-top, using the page's own hero gradient (with fallback) ---- */
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:var(--hero-gradient, linear-gradient(135deg, var(--accent-dark), var(--cool))); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.35); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+/* ---- stronger glass on the already-sticky nav ---- */
+.sticky-nav, nav.toc{
+  background:rgba(245,244,240,.62) !important;
+  backdrop-filter:blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(190%) !important;
+  box-shadow:0 4px 24px rgba(16,38,52,.08) !important;
+}
+nav.toc a{transition:color .2s, transform .2s}
+nav.toc a:hover{transform:translateY(-1px)}
+
+/* ---- hero entrance + glass stat strip ---- */
+header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpHeroIn{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+.chip{transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{transform:translateY(-2px) scale(1.04)}
+
+.gp-stat-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; position:relative}
+.gp-stat-pill{font-size:.78rem; font-weight:650; color:#fff; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.32); padding:6px 14px; border-radius:999px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; gap:6px}
+.gp-stat-pill b{color:#fff; font-weight:800}
+
+/* ---- generic scroll-reveal utilities (assigned by JS) ---- */
+.gp-reveal{opacity:0; transform:translateY(28px) scale(.985); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.34,1.2,.64,1)}
+.gp-reveal.in-view{opacity:1; transform:none}
+.gp-reveal-soft{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease}
+.gp-reveal-soft.in-view{opacity:1; transform:none}
+
+/* ---- module card + header glass sheen / hover glow ---- */
+section.module{transition:box-shadow .35s ease}
+section.module:hover{box-shadow:0 20px 48px rgba(16,38,52,.18)}
+.module-header, .mod-head{position:relative; overflow:hidden}
+.module-header::after, .mod-head::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(120deg, rgba(255,255,255,.20), transparent 45%, rgba(255,255,255,.06));
+}
+
+.cog, .blurt-stage, .sched-stage, .flashcard, .quiz-intro{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease
+}
+.cog:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--cool) 35%, transparent)}
+.cog.blurt:hover{box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 38%, transparent)}
+.blurt-stage:hover, .sched-stage:hover{transform:translateY(-3px)}
+.flashcard:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 30%, transparent)}
+
+/* =========================================================================
+   ANIMATED ACCORDIONS — CSS-grid height trick (no JS height math needed).
+   grid-auto-rows (not just grid-template-rows) is set too, so this stays
+   correct even when a gate/quizset/qa has more than one content child
+   (e.g. Neoplastic's details.gate > p, p, p). Works regardless of who
+   toggles [open]/.open (click, keyboard, or the existing inline JS),
+   because it keys off the attribute/class only.
+   ========================================================================= */
+details.gate, details.quizset, details.qa{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1), grid-auto-rows .45s cubic-bezier(.4,0,.2,1);
+}
+details.gate[open], details.quizset[open], details.qa[open]{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+details.gate > *:not(summary), details.quizset > *:not(summary), details.qa > *:not(summary){
+  overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s;
+}
+details.gate[open] > *:not(summary), details.quizset[open] > *:not(summary), details.qa[open] > *:not(summary){ opacity:1; }
+
+div.q{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1), box-shadow .25s ease;
+  border-radius:var(--radius-sm);
+}
+div.q.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; box-shadow:0 6px 18px -6px color-mix(in srgb, var(--cool) 30%, transparent); }
+div.q > .qa{
+  display:block !important; overflow:hidden; min-height:0; opacity:0;
+  transition:opacity .3s ease .05s;
+}
+div.q.open > .qa{ opacity:1; }
+/* same pattern for the alternate class names used in sibling files of this series */
+.quiz-item{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.quiz-item.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+.quiz-item > .quiz-a{ display:block !important; overflow:hidden; min-height:0; opacity:0; transition:opacity .3s ease .05s; }
+.quiz-item.open > .quiz-a{ opacity:1; }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal, .gp-reveal-soft{opacity:1 !important; transform:none !important; transition:none !important}
+  header.hero{animation:none}
+  details.gate, details.quizset, details.qa, div.q, .quiz-item{transition:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+
+/* TRUE FROSTED GLASS — translucent panels over the ambient blobs */
+body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; }
+.module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+.diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+.fc-back, .mnemonic, figure.dia {
+  background: color-mix(in srgb, white 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
+  .module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+  .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+  .fc-back, .mnemonic, figure.dia { background: white !important; }
+}
+
+/* =========================================================================
+   CONSOLIDATED TOOLBAR + CHAPTERS DRAWER + DARK MODE SKIN
+   Replaces the old standalone back button + horizontal sticky chapter bar
+   (which used to visually collide) with one floating icon toolbar plus a
+   toggleable left-hand chapters drawer. Additive, reuses this file's tokens.
+   ========================================================================= */
+.gp-toolbar{
+  position:fixed; top:16px; left:16px; z-index:300;
+  display:flex; align-items:center; gap:4px;
+  background:rgba(255,255,255,.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border:1px solid rgba(0,0,0,.10); border-radius:999px; padding:6px; box-shadow:0 6px 22px rgba(0,0,0,.16);
+}
+.gp-tool-btn{
+  width:38px; height:38px; border-radius:50%; border:none; background:transparent; color:#1c1917;
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease; padding:0;
+}
+.gp-tool-btn:hover{ background:rgba(0,0,0,.07); transform:translateY(-1px) scale(1.06); }
+.gp-tool-btn:active{ transform:scale(.9); }
+.gp-toolbar .gp-back-btn{ position:static; box-shadow:none; border:none; background:transparent; }
+.gp-toolbar .gp-back-btn:hover{ box-shadow:none; }
+@media (max-width:640px){ .gp-toolbar{ top:10px; left:10px; padding:4px; gap:2px; } .gp-tool-btn{ width:33px; height:33px; font-size:15px; } }
+@media (prefers-reduced-motion:reduce){ .gp-tool-btn{ transition:none; } }
+
+/* the old horizontal sticky chapter bar is replaced by the drawer below */
+.sticky-nav, nav.toc{ display:none !important; }
+
+/* ---- chapters drawer ---- */
+.gp-drawer-overlay{
+  position:fixed; inset:0; z-index:298; background:rgba(10,12,16,.32);
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.gp-drawer-overlay.show{ opacity:1; pointer-events:auto; }
+.gp-drawer{
+  position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw); z-index:299;
+  background:rgba(245,244,240,.90); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-right:1px solid rgba(0,0,0,.08); box-shadow:8px 0 32px rgba(0,0,0,.18);
+  transform:translateX(-104%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; padding:18px 0;
+}
+.gp-drawer.show{ transform:none; }
+.gp-drawer-head{
+  display:flex; align-items:center; justify-content:space-between; padding:0 18px 14px;
+  border-bottom:1px solid rgba(0,0,0,.08); font-weight:700; font-size:.95rem; color:var(--ink, #1c1917);
+  margin-bottom:6px;
+}
+.gp-drawer-close{ border:none; background:transparent; font-size:16px; cursor:pointer; color:var(--ink-soft, #555); padding:4px; }
+.gp-drawer-links{ display:flex; flex-direction:column; overflow-y:auto; padding:6px 10px; gap:2px; }
+.gp-drawer-links a{
+  display:block; padding:.55rem .75rem; border-radius:10px; text-decoration:none;
+  color:var(--ink-soft, #44403c); font-size:.88rem; font-weight:500; transition:background .18s ease, color .18s ease;
+  white-space:normal;
+}
+.gp-drawer-links a:hover{ background:rgba(0,0,0,.06); }
+.gp-drawer-links a.thesis-link{ color:var(--cool, var(--accent)); font-weight:600; }
+.gp-drawer-links a.key{ color:var(--accent-dark, var(--accent)); font-weight:600; }
+@media (prefers-reduced-motion:reduce){ .gp-drawer, .gp-drawer-overlay{ transition:none; } }
+
+html[data-theme="dark"] .gp-toolbar{ background:rgba(30,33,37,.78); border-color:rgba(255,255,255,.14); }
+html[data-theme="dark"] .gp-tool-btn{ color:#e7e9ec; }
+html[data-theme="dark"] .gp-tool-btn:hover{ background:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-back-btn{ background:transparent !important; }
+html[data-theme="dark"] .gp-drawer{ background:rgba(30,33,37,.92); border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-head{ color:#e7e9ec; border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-close{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a:hover{ background:rgba(255,255,255,.08); }
+
+/* ---- dark mode skin for the page itself ---- */
+html[data-theme="dark"] body{ background: color-mix(in srgb, #15171a 88%, transparent) !important; color:#cdd1d6; }
+html[data-theme="dark"] main{ color:#cdd1d6; }
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] h4{ color:#eef0f2; }
+html[data-theme="dark"] strong{ color: color-mix(in srgb, var(--accent-darker, var(--accent, #d4a847)) 55%, white 45%) !important; }
+html[data-theme="dark"] main a:not(.gp-drawer-links a){ color: color-mix(in srgb, var(--cool, var(--accent, #0f6b6b)) 60%, white 40%); }
+
+html[data-theme="dark"] .module, html[data-theme="dark"] section.module, html[data-theme="dark"] .blurt-prompt,
+html[data-theme="dark"] .primers li, html[data-theme="dark"] .sched-day, html[data-theme="dark"] .sched .day,
+html[data-theme="dark"] .bridge, html[data-theme="dark"] .diagram-wrap, html[data-theme="dark"] details.qsec,
+html[data-theme="dark"] details.quizset, html[data-theme="dark"] details.gate, html[data-theme="dark"] details.qa,
+html[data-theme="dark"] .quiz-q, html[data-theme="dark"] .qq, html[data-theme="dark"] .fc-back,
+html[data-theme="dark"] .mnemonic, html[data-theme="dark"] figure.dia, html[data-theme="dark"] .q, html[data-theme="dark"] .quiz-item{
+  background: color-mix(in srgb, #1e2125 70%, transparent) !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .qa, html[data-theme="dark"] .quiz-a{ color:#c4cad0 !important; }
+html[data-theme="dark"] table, html[data-theme="dark"] td, html[data-theme="dark"] th{ color:#c7cbd1 !important; border-color: rgba(255,255,255,.10) !important; }
+html[data-theme="dark"] blockquote{ border-color: rgba(255,255,255,.18) !important; }
+html[data-theme="dark"] .site-footer, html[data-theme="dark"] footer{ color:#9aa1a8 !important; }
+</style>
+  <style id="mindmap-style">
+.mindmap-section .mm-inner { padding: 2.2rem 2rem 2.4rem; }
+
+.mm-intro { text-align: center; max-width: 700px; margin: 0 auto 2rem; }
+.mm-tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--cool-pale); color: var(--cool);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .35rem .85rem; border-radius: 999px; margin-bottom: .9rem;
+}
+.mm-intro h2 {
+  font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-2xl); color: var(--ink);
+  margin: 0 0 .6rem;
+}
+.mm-intro p { color: var(--ink-soft); font-size: var(--fs-sm); line-height: 1.6; margin: 0 0 1.1rem; }
+.mm-actions { display: flex; justify-content: center; gap: .6rem; }
+.mm-btn {
+  font-family: 'Inter', sans-serif; font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .03em; color: var(--accent-dark); background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: .5rem 1rem; cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.mm-btn:hover { background: var(--accent-pale); border-color: var(--accent); }
+
+.mm-root {
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  width: fit-content; margin: 0 auto;
+  background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+  color: white; font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+  font-size: var(--fs-lg); text-align: center; line-height: 1.15;
+  padding: .85rem 1.6rem; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.mm-root-emoji { font-size: 1.4em; }
+.mm-bus { width: 2px; height: 22px; background: var(--border); margin: 0 auto; }
+
+.mm-branches {
+  display: grid; gap: .65rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { .mm-branches { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .mm-branches { grid-template-columns: 1fr; } }
+
+.mm-branch {
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: white; align-self: start;
+  border-top: 3px solid var(--mm-c, var(--accent));
+}
+.mm-node {
+  width: 100%; display: flex; align-items: center; gap: .65rem;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Inter', sans-serif; color: var(--ink);
+}
+.mm-module {
+  padding: .8rem .9rem;
+}
+.mm-mnum {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 700;
+  color: white; background: var(--mm-c, var(--accent)); border-radius: 5px;
+  padding: 3px 6px; flex-shrink: 0;
+}
+.mm-mtext { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.mm-mtitle { font-weight: 700; font-size: var(--fs-sm); color: var(--ink); }
+.mm-msub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+.mm-chev {
+  flex-shrink: 0; color: var(--muted); font-size: .8rem;
+  transition: transform .25s ease;
+}
+.mm-module[aria-expanded="true"] .mm-chev,
+.mm-sub[aria-expanded="true"] .mm-chev { transform: rotate(90deg); color: var(--mm-c, var(--accent)); }
+.mm-module:hover, .mm-sub:hover { background: var(--cream); }
+
+.mm-children {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  background: var(--cream);
+  transition: grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.mm-children > div { overflow: hidden; min-height: 0; }
+.mm-branch:has(.mm-module[aria-expanded="true"]) .mm-children { grid-template-rows: 1fr; }
+
+.mm-twig { border-top: 1px solid var(--border); }
+.mm-twig:first-child { border-top: 1px solid var(--border); }
+.mm-sub { padding: .6rem .9rem .6rem 1.5rem; font-size: .82rem; font-weight: 600; align-items: flex-start; }
+.mm-stext { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.mm-stitle { line-height: 1.3; }
+.mm-ssub { font-size: .7rem; font-weight: 400; color: var(--muted); line-height: 1.4; white-space: normal; }
+.mm-sub .mm-chev { margin-top: 2px; }
+
+.mm-leaves {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  list-style: none; margin: 0; padding: 0 1.1rem 0 2.2rem;
+  transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1), padding .35s ease;
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.55;
+}
+.mm-leaves > li { overflow: hidden; min-height: 0; }
+.mm-twig:has(.mm-sub[aria-expanded="true"]) .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
+.mm-leaves li {
+  position: relative; padding: .25rem 0 .25rem .85rem; border-bottom: 1px dashed var(--border);
+}
+.mm-leaves li:last-child { border-bottom: none; }
+.mm-leaves li::before {
+  content: '•'; position: absolute; left: 0; color: var(--mm-c, var(--accent)); font-weight: 700;
+}
+.mm-leaves li.mm-eq {
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent-darker);
+  background: var(--accent-pale); border-radius: 4px; padding: .35rem .5rem .35rem .85rem;
+  border-bottom: none; margin: .2rem 0;
+}
+.mm-leaves li.mm-eq::before { content: 'ƒ'; }
+
+html[data-theme="dark"] .mm-branch { background: #1e2125; border-color: rgba(255,255,255,.10); }
+html[data-theme="dark"] .mm-children { background: #181a1d; }
+html[data-theme="dark"] .mm-twig { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-leaves li { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-node { color: #d7dce1; }
+html[data-theme="dark"] .mm-mtitle { color: #eef1f4; }
+html[data-theme="dark"] .mm-module:hover, html[data-theme="dark"] .mm-sub:hover { background: rgba(255,255,255,.05); }
+html[data-theme="dark"] .mm-leaves { color: #b7bec5; }
+html[data-theme="dark"] .mm-leaves li.mm-eq { background: rgba(176,116,16,.18); color: #e8c98a; }
+html[data-theme="dark"] .mm-btn { background: #1e2125; color: #e8c98a; border-color: rgba(255,255,255,.15); }
+html[data-theme="dark"] .mm-btn:hover { background: rgba(176,116,16,.18); }
+html[data-theme="dark"] .mm-tag { background: rgba(15,107,107,.2); color: #6fc6c6; }
+html[data-theme="dark"] .mm-intro h2 { color: #eef1f4; }
+html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-children, .mm-leaves, .mm-chev { transition: none; }
+}
+
+.mm-branch.mm-open > .mm-children { grid-template-rows: 1fr; }
+.mm-twig.mm-open > .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
 </style>
   <link rel="stylesheet" href="learning-interactive.css">
+  <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<div class="gp-toolbar" role="toolbar" aria-label="Page controls">
+  <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
+  <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+  <button id="gpDarkToggle" class="gp-tool-btn" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  <button id="gpRandomQuiz" class="gp-tool-btn" type="button" title="Random quiz question" aria-label="Open a random quiz question">🎲</button>
+  <button id="gpToolbarExpand" class="gp-tool-btn gp-toolbar-expand" type="button" title="More controls" aria-label="Show more controls" aria-expanded="false">›</button>
+  <div class="gp-toolbar-extra" id="gpToolbarExtraOuter">
+    <div class="gp-toolbar-extra-inner" id="gpToolbarExtra"></div>
+  </div>
+</div>
+<div class="gp-drawer-overlay" id="gpDrawerOverlay"></div>
+<aside class="gp-drawer" id="gpDrawer" aria-label="Chapter index">
+  <div class="gp-drawer-head">
+    <span>Chapters</span>
+    <button id="gpDrawerClose" class="gp-drawer-close" type="button" aria-label="Close chapters index">✕</button>
+  </div>
+  <nav class="gp-drawer-links" id="gpDrawerLinks"></nav>
+</aside>
+
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
 
 <header class="hero">
   <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
@@ -814,7 +1227,7 @@
       <circle cx="600" cy="120" r="4"/><circle cx="300" cy="120" r="3"/><circle cx="1100" cy="260" r="4"/></g>
   </svg>
   <div class="wrap">
-    <div class="eyebrow">Goodman &amp; Gilman &middot; 14th Ed &middot; Section VIII Pharmacotherapy of Neoplastic Disease</div>
+    <div class="eyebrow">Pharmacology Learning System &middot; Section VIII &middot; Pharmacotherapy of Neoplastic Disease</div>
     <h1>Chemotherapy of Neoplastic Diseases<br><em>an accelerated learning system</em></h1>
     <p class="sub">Chapters 69&ndash;73 organized as a study guide: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies that make the mechanisms clear, and custom SVG diagrams. Plus a spaced-repetition plan and 100 self-test questions.</p>
     <div class="meta">
@@ -824,10 +1237,18 @@
       <span class="chip">5 quiz sets &times; 20 Q</span>
     </div>
   </div>
-</header>
+
+    <div class="gp-stat-row">
+      <span class="gp-stat-pill">5 Oncology modules · full depth</span>
+      <span class="gp-stat-pill">4 custom SVG diagrams</span>
+      <span class="gp-stat-pill">blurting gates + analogies</span>
+      <span class="gp-stat-pill">5 quiz sets × 20 Q</span>
+    </div>
+  </header>
 
 <nav class="toc">
   <div class="wrap">
+    <a href="#mindmap">🗺️ Mind Map</a>
     <a href="#method">The method</a>
     <a class="key" href="#m69">69 &middot; General Principles</a>
     <a class="key" href="#m70">70 &middot; Cytotoxics</a>
@@ -841,14 +1262,228 @@
 
 <main class="wrap">
 
+<!-- ========== MIND MAP ========== -->
+<section class="module mindmap-section" id="mindmap">
+<div class="mm-inner">
+  <div class="mm-intro">
+    <div class="mm-tag"><span>🗺️</span> Interactive Mind Map</div>
+    <h2>See the whole chapter at a glance</h2>
+    <p>Click a module below to branch into its subheadings — click a subheading to reveal the short topics and key formulas underneath it. Click anything again to collapse it.</p>
+    <div class="mm-actions">
+      <button id="mmExpandAll" class="mm-btn" type="button">Expand all</button>
+      <button id="mmCollapseAll" class="mm-btn" type="button">Collapse all</button>
+    </div>
+  </div>
+
+  <div class="mindmap" id="mindmapTree">
+    <div class="mm-root"><span class="mm-root-emoji">🧫</span><span>Chemotherapy of<br>Neoplastic Diseases</span></div>
+    <div class="mm-bus" aria-hidden="true"></div>
+    <div class="mm-branches">
+
+      <div class="mm-branch" style="--mm-c:#0f6b6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m69">
+          <span class="mm-mnum">69</span>
+          <span class="mm-mtext"><span class="mm-mtitle">General Principles in the Pharmacotherapy of Cancer</span><span class="mm-msub">The big-picture rules: why chemo is given in repeated cycles and how tumors fight back against drugs.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m69">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Cell-Cycle Specificity</span><span class="mm-ssub">Sorts chemo drugs by which stage of cell division they attack. Focus on which drug class hits S-phase, M-phase, or works no matter the phase.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>S-phase specific: antimetabolites (Methotrexate, 5-FU, 6-MP, Cytarabine) block DNA/RNA building</li>
+              <li>M-phase specific: microtubule inhibitors (Vincristine, Paclitaxel) freeze the mitotic spindle</li>
+              <li>Cell-cycle non-specific (CCNS): alkylators, platinum drugs, anthracyclines damage DNA at any stage</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Combination Chemotherapy Rationale</span><span class="mm-ssub">Explains why doctors mix several drugs together instead of using one. Focus on the CHOP regimen as the textbook example.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Combine drugs that work by different mechanisms to kill more of the tumor</li>
+              <li>Pick drugs whose side effects don't overlap, so each can be dosed at full strength</li>
+              <li>CHOP = Cyclophosphamide, Hydroxydaunorubicin (Doxorubicin), Oncovin (Vincristine), Prednisone</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Mechanisms of Drug Resistance</span><span class="mm-ssub">Five distinct ways a tumor can stop responding to a drug over time. Focus on matching each mechanism to its classic drug example.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>P-glycoprotein (MDR1): an ATP-powered pump that ejects the drug from the cell, causing resistance to anthracyclines, vinca alkaloids, taxanes</li>
+              <li>Target mutation: the drug's binding site changes shape (e.g., T315I mutation blocks Imatinib)</li>
+              <li>Decreased drug activation: cell loses the enzyme that turns a prodrug active (Cytarabine resistance)</li>
+              <li>Enhanced DNA repair: more repair enzymes like MGMT undo the drug's damage (Temozolomide resistance)</li>
+              <li>Gene amplification: extra copies of the target enzyme outpace the drug (DHFR amplification, Methotrexate resistance)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#a8331f">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m70">
+          <span class="mm-mnum">70</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Cytotoxics and Antimetabolites</span><span class="mm-msub">The classic chemo drugs that poison any fast-dividing cell. Focus on each drug's signature, dose-limiting side effect.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m70">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Alkylating Agents &amp; Platinum Compounds</span><span class="mm-ssub">Drugs that directly damage DNA strands regardless of cell-cycle stage. Focus on which organ each drug's toxicity targets.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Cyclophosphamide: prodrug that cross-links DNA; causes hemorrhagic cystitis, prevented with Mesna</li>
+              <li>Busulfan: causes pulmonary fibrosis ("busulfan lung") and skin darkening</li>
+              <li>Temozolomide: crosses the blood-brain barrier for glioblastoma; resistance tied to MGMT</li>
+              <li>Cisplatin: dose-limiting nephrotoxicity, plus ototoxicity and severe nausea</li>
+              <li>Carboplatin: same mechanism as cisplatin but dose-limited by myelosuppression (low platelets) instead of kidneys</li>
+              <li>Oxaliplatin: causes peripheral neuropathy that flares with cold</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Antimetabolites (S-Phase Specific)</span><span class="mm-ssub">Drugs that mimic normal DNA building blocks to jam up replication. Focus on what reverses or worsens each drug's toxicity.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Methotrexate: blocks DHFR, cutting off thymidylate and purine production; reversed with Leucovorin</li>
+              <li>5-Fluorouracil: pyrimidine mimic that blocks thymidylate synthase; causes hand-foot type skin reaction</li>
+              <li>Capecitabine: oral prodrug converted to 5-FU mainly in tumor tissue</li>
+              <li>6-Mercaptopurine: broken down by xanthine oxidase, so Allopurinol forces a dose cut</li>
+              <li>Cytarabine: gets built into DNA to halt the chain; key drug for AML, can damage the cerebellum at high doses</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Microtubule Agents (M-Phase Specific)</span><span class="mm-ssub">Two drug families that jam the cell's internal scaffolding so it can't finish dividing. Focus on the opposite way each family blocks the spindle.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Vinca alkaloids (Vincristine, Vinblastine): block microtubules from ever forming, so the spindle never assembles</li>
+              <li>Vincristine: dose-limiting peripheral neuropathy, areflexia, constipation</li>
+              <li>Taxanes (Paclitaxel, Docetaxel): lock microtubules together so they can't break down, freezing the spindle</li>
+              <li>Taxanes cause neuropathy and myelosuppression; Paclitaxel needs premedication for allergic reactions</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Topoisomerase Inhibitors &amp; Antibiotics</span><span class="mm-ssub">Drugs that damage DNA through enzyme blockade or free radicals. Focus on Doxorubicin's heart risk, the one most tested.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Etoposide: blocks Topoisomerase II; carries a later risk of treatment-related AML</li>
+              <li>Irinotecan: blocks Topoisomerase I; causes severe early and late-onset diarrhea</li>
+              <li>Doxorubicin: blocks Topoisomerase II and generates free radicals; causes permanent, dose-related heart damage, blunted by Dexrazoxane</li>
+              <li>Bleomycin: causes pulmonary fibrosis but largely spares the bone marrow</li>
+              <li>Never combine Doxorubicin with Trastuzumab — both independently damage the heart</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#5b4a7a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m71">
+          <span class="mm-mnum">71</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Protein Kinase Inhibitors and Pathway-Targeted Small Molecules</span><span class="mm-msub">Pill-form drugs that shut down the one specific mutated protein driving a tumor. Focus on matching drug-name endings to their target.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m71">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The Naming Convention</span><span class="mm-ssub">A shortcut for guessing what a targeted drug does just from its name ending. Focus on linking each suffix to its drug class and example.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>-tinib = tyrosine kinase inhibitor (Imatinib, Erlotinib, Osimertinib)</li>
+              <li>-fenib = RAF kinase inhibitor (Vemurafenib, Dabrafenib)</li>
+              <li>-zomib = proteasome inhibitor (Bortezomib, Carfilzomib)</li>
+              <li>-ciclib = CDK4/6 inhibitor (Palbociclib, Ribociclib), used in ER-positive breast cancer</li>
+              <li>Imatinib blocks BCR-ABL in CML but loses effect once the T315I resistance mutation appears</li>
+              <li>Erlotinib/Gefitinib (EGFR inhibitors) cause an acne-like rash that actually signals the drug is working</li>
+              <li>Vemurafenib/Dabrafenib (BRAF inhibitors) are paired with a MEK inhibitor to stop them triggering new skin cancers</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#b9791a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m72">
+          <span class="mm-mnum">72</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Antibodies, CAR T Cells, and Proteins</span><span class="mm-msub">Immune-based treatments that unmask the tumor or re-engineer immune cells to destroy it. Focus on each treatment's hallmark, dangerous side effect.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m72">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Immune Checkpoint Inhibitors</span><span class="mm-ssub">Drugs that release the brakes tumors put on the immune system. Focus on why their side effects look like autoimmune disease.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Tumors display PD-L1, which binds PD-1 on T-cells and sends an "off" signal</li>
+              <li>Anti-PD-1 (Pembrolizumab, Nivolumab) and anti-PD-L1 (Atezolizumab, Durvalumab) block that off-signal</li>
+              <li>Anti-CTLA-4 (Ipilimumab) instead boosts T-cell priming back in the lymph node</li>
+              <li>Side effects are autoimmune: colitis, pneumonitis, hepatitis, thyroiditis, type 1 diabetes, hypophysitis — treated with corticosteroids</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Monoclonal Antibodies (mAbs)</span><span class="mm-ssub">Lab-made antibodies that latch onto a specific protein on the tumor's surface. Focus on which antibody pairs with which cancer type and its main risk.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Rituximab targets CD20, depleting B-cells; risk of Hepatitis B reactivation and PML</li>
+              <li>Trastuzumab targets HER2 in HER2+ breast cancer; causes reversible heart toxicity, never combine with Doxorubicin</li>
+              <li>Bevacizumab neutralizes VEGF to block tumor blood-vessel growth; risks include bleeding and poor wound healing</li>
+              <li>Cetuximab blocks EGFR in colorectal and head/neck cancer; causes an acne-like rash</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Antibody-Drug Conjugates (ADCs)</span><span class="mm-ssub">A delivery-truck strategy: an antibody drives a toxic payload straight to the cancer cell before releasing it. Focus on the two named examples.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>The antibody gives targeting precision, the attached drug supplies the killing power</li>
+              <li>Ado-trastuzumab emtansine (T-DM1): Trastuzumab linked to a microtubule poison, for HER2+ breast cancer</li>
+              <li>Brentuximab vedotin: anti-CD30 antibody linked to a microtubule poison, for Hodgkin lymphoma</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">CAR-T Cell Therapy</span><span class="mm-ssub">A patient's own T-cells are removed, genetically reprogrammed, and reinfused to hunt the tumor. Focus on the 4 production steps and the cytokine storm risk.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Step 1: harvest the patient's T-cells (leukapheresis)</li>
+              <li>Step 2: genetically engineer them to express a receptor (CAR) against a tumor marker like CD19</li>
+              <li>Step 3: grow the modified cells outside the body</li>
+              <li>Step 4: infuse them back after chemo that depletes existing lymphocytes</li>
+              <li>Key drugs: Tisagenlecleucel (Kymriah), Axicabtagene ciloleucel (Yescarta)</li>
+              <li>Cytokine Release Syndrome: fever, low blood pressure, organ stress from a flood of IL-6 — treated with Tocilizumab</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#2e8e8e">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m73">
+          <span class="mm-mnum">73</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Hormones, Hormone Receptor Antagonists, and Related Agents</span><span class="mm-msub">Treatments that starve hormone-fueled breast and prostate tumors by blocking, stopping, or removing the hormone supply.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m73">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Breast Cancer (ER/PR Positive)</span><span class="mm-ssub">Drugs that cut off estrogen's growth signal to the tumor in different ways. Focus on which drug works in premenopausal vs. postmenopausal women.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>SERMs (Tamoxifen, Raloxifene): block estrogen receptor in breast but act like estrogen in bone/uterus</li>
+              <li>Tamoxifen raises endometrial cancer and blood clot risk; Raloxifene does not carry the uterine risk</li>
+              <li>SERDs (Fulvestrant): pure antagonist that breaks down the estrogen receptor itself</li>
+              <li>Aromatase inhibitors (Anastrozole, Letrozole, Exemestane): stop peripheral conversion of androgens to estrogen, only effective after menopause</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Prostate Cancer</span><span class="mm-ssub">Drugs that lower testosterone or block its receptor to slow prostate tumor growth. Focus on why Leuprolide needs an add-on drug at the start.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>GnRH agonists (Leuprolide, Goserelin): eventually shut down testosterone, but cause an early flare needing Flutamide cover</li>
+              <li>GnRH antagonists (Degarelix): block the receptor directly with no initial flare</li>
+              <li>Antiandrogens (Flutamide, Bicalutamide, Enzalutamide): block the androgen receptor itself; Enzalutamide is stronger and works in castration-resistant disease</li>
+              <li>Abiraterone blocks CYP17 to stop androgen production everywhere, must be paired with prednisone</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Other Hormonal Agents</span><span class="mm-ssub">Two extra drug types that round out hormone-based cancer treatment. Focus on what each one is combined with.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Glucocorticoids (Prednisone, Dexamethasone): trigger apoptosis in lymphoid cancers, also reduce brain swelling from metastases</li>
+              <li>CDK4/6 inhibitors (Palbociclib, Ribociclib): block the G1-to-S cell cycle step, combined with hormone therapy in ER+ breast cancer</li>
+              <li>Key toxicity of CDK4/6 inhibitors is neutropenia</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
 <!-- ========== METHOD ========== -->
 <section id="method" style="padding-top:30px">
-  <p class="lead">This guide isn't built to be <em>read</em> &mdash; it's built to be <em>used</em>. Each module runs through four evidence-based learning stages. Don't skip the blurting gate: retrieving before reading is what builds durable memory.</p>
+  <p class="lead">This isn't meant to be <em>read</em> straight through &mdash; it's meant to be <em>worked</em>. Every module steps through four learning stages grounded in cognitive science. Don't shortcut the blurting gate: pulling the answer from memory before you read it is exactly what cements long-term retention.</p>
   <div class="method">
-    <div class="m m1"><h4>&num;1 80/20 Map</h4><p>The 20% of ideas that explain 80% of the pharmacology. Start here for the skeleton.</p></div>
-    <div class="m m2"><h4>&num;2 Blurting Gate</h4><p>Force active recall. Jot down mechanisms and side effects <em>before</em> opening details.</p></div>
-    <div class="m m3"><h4>&num;3 Analogy</h4><p>If you can't explain it simply, you don't understand it. We provide the intuitive analogy.</p></div>
-    <div class="m m4"><h4>&num;4 Spaced Repetition</h4><p>A concrete schedule to review this material at expanding intervals to fight the forgetting curve.</p></div>
+    <div class="m m1"><h4>&num;1 80/20 Map</h4><p>The small slice of concepts responsible for most of the pharmacology. Begin here to get the framework.</p></div>
+    <div class="m m2"><h4>&num;2 Blurting Gate</h4><p>Make yourself retrieve it actively. Write out mechanisms and side effects <em>before</em> you check the answer.</p></div>
+    <div class="m m3"><h4>&num;3 Analogy</h4><p>Real understanding shows up when you can explain something in plain terms. We supply that everyday comparison.</p></div>
+    <div class="m m4"><h4>&num;4 Spaced Repetition</h4><p>A defined revisit schedule at growing intervals so the material doesn't slip away over time.</p></div>
   </div>
 </section>
 
@@ -866,7 +1501,7 @@
   <!-- 80/20 MAP -->
   <div class="cog map">
     <div class="tag"><span class="num">01</span> The 80/20 Map</div>
-    <div class="pillar">Chemotherapy follows first-order kinetics (the <strong>log-kill hypothesis</strong>): a given dose kills a constant <em>fraction</em> (e.g., 99.9%) of tumor cells, not a constant <em>number</em>. Cure requires repeated cycles.</div>
+    <div class="pillar">Chemotherapy kinetics obey first-order behavior &mdash; the <strong>log-kill hypothesis</strong> &mdash; meaning each dose eliminates the same <em>percentage</em> of tumor cells every time (say, 99.9%) rather than wiping out a fixed <em>count</em>. Because of this, achieving a cure depends on giving cycle after cycle.</div>
 
     <h4>Cell-Cycle Specificity</h4>
     <ul>
@@ -876,18 +1511,18 @@
     </ul>
 
     <h4>Combination Chemotherapy Rationale</h4>
-    <p>Uses drugs with <strong>different mechanisms</strong> and <strong>non-overlapping toxicities</strong> to maximize log-kill and overcome resistance. Classic example: <strong>CHOP</strong> regimen (Cyclophosphamide, Hydroxydaunorubicin [Doxorubicin], Oncovin [Vincristine], Prednisone).</p>
+    <p>Pairing agents that work through <strong>distinct mechanisms</strong> and that produce <strong>separate, non-overlapping toxicities</strong> pushes log-kill higher and helps get around resistance. The textbook illustration is the <strong>CHOP</strong> regimen (Cyclophosphamide, Hydroxydaunorubicin [Doxorubicin], Oncovin [Vincristine], Prednisone).</p>
 
     <h4>Mechanisms of Drug Resistance</h4>
     <div class="tbl-scroll">
       <table>
         <thead><tr><th>Mechanism</th><th>Explanation</th><th>Example</th></tr></thead>
         <tbody>
-          <tr><td><strong>P-glycoprotein (MDR1)</strong></td><td>ATP-dependent efflux pump exports drugs from cell.</td><td>Resistance to anthracyclines, vinca alkaloids, taxanes.</td></tr>
-          <tr><td><strong>Target Mutation</strong></td><td>Altered binding site prevents drug interaction.</td><td>T315I mutation in BCR-ABL (Imatinib resistance).</td></tr>
-          <tr><td><strong>Decreased Drug Activation</strong></td><td>Prodrug cannot be converted to active metabolite.</td><td>Loss of deoxycytidine kinase (Cytarabine resistance).</td></tr>
-          <tr><td><strong>Enhanced DNA Repair</strong></td><td>Cancer cells upregulate repair enzymes (e.g., MGMT).</td><td>Temozolomide resistance in glioblastoma.</td></tr>
-          <tr><td><strong>Gene Amplification</strong></td><td>Overproduction of target enzyme overwhelms drug.</td><td>DHFR amplification (Methotrexate resistance).</td></tr>
+          <tr><td><strong>P-glycoprotein (MDR1)</strong></td><td>An ATP-powered pump that ejects drug molecules out of the cell.</td><td>Resistance to anthracyclines, vinca alkaloids, taxanes.</td></tr>
+          <tr><td><strong>Target Mutation</strong></td><td>The drug's binding site changes shape so the drug no longer fits.</td><td>T315I mutation in BCR-ABL (Imatinib resistance).</td></tr>
+          <tr><td><strong>Decreased Drug Activation</strong></td><td>The cell loses the ability to convert a prodrug into its active form.</td><td>Loss of deoxycytidine kinase (Cytarabine resistance).</td></tr>
+          <tr><td><strong>Enhanced DNA Repair</strong></td><td>Tumor cells increase production of repair enzymes (e.g., MGMT).</td><td>Temozolomide resistance in glioblastoma.</td></tr>
+          <tr><td><strong>Gene Amplification</strong></td><td>Extra copies of the target enzyme are made, outpacing the drug's effect.</td><td>DHFR amplification (Methotrexate resistance).</td></tr>
         </tbody>
       </table>
     </div>
@@ -940,14 +1575,14 @@
         <text x="486" y="221" font-size="11" fill="#4a4560">Alkylating agents, Platinum analogs,</text>
         <text x="486" y="237" font-size="11" fill="#4a4560">Anthracyclines, Bleomycin</text>
       </svg>
-      <figcaption>Cell-cycle specific drugs target S or M phase. Non-specific agents damage DNA at any phase, including resting G0 cells.</figcaption>
+      <figcaption>Drugs that are cell-cycle specific act on either S or M phase, while non-specific agents can damage DNA regardless of phase, even in cells resting in G0.</figcaption>
     </figure>
   </div>
 
   <!-- BLURTING GATE -->
   <div class="cog blurt">
     <div class="tag"><span class="num">02</span> The Blurting Gate</div>
-    <div class="blurt-prompt">Before revealing, jot down what the Log-Kill Hypothesis means and list 3 mechanisms of drug resistance.</div>
+    <div class="blurt-prompt">Before you reveal the answers, write out in your own words what the Log-Kill Hypothesis says, and list three ways tumors become drug-resistant.</div>
     <ul class="primers">
       <li>Why does a 1-gram tumor (10<sup>9</sup> cells) take multiple cycles of chemo to eradicate?</li>
       <li>Name the protein encoded by MDR1 and explain how it causes resistance.</li>
@@ -955,9 +1590,9 @@
     </ul>
     <details class="gate">
       <summary>Reveal Answers</summary>
-      <p><strong>Log-Kill Hypothesis:</strong> Chemotherapy kills a constant <em>fraction</em> of cells per cycle. A 3-log kill reduces 10<sup>9</sup> cells to 10<sup>6</sup> (99.9% killed). Repeated cycles are needed to push the tumor burden below the level where the immune system can eliminate the remainder. Between cycles, normal rapidly dividing tissues (marrow, GI mucosa) recover.</p>
-      <p><strong>P-glycoprotein (MDR1):</strong> An ATP-dependent efflux pump embedded in the cancer cell membrane. It pumps out hydrophobic drugs (anthracyclines, vinca alkaloids, taxanes) before they reach intracellular targets, rendering multiple drug classes simultaneously ineffective.</p>
-      <p><strong>Combination rationale:</strong> Different mechanisms maximize cell kill across heterogeneous tumor populations. Non-overlapping toxicities (e.g., Vincristine &rarr; neuropathy vs. Cyclophosphamide &rarr; cystitis) mean each drug can be given at full dose without compounding the same organ injury.</p>
+      <p><strong>Log-Kill Hypothesis:</strong> Each chemo cycle wipes out the same <em>proportion</em> of cells, not an absolute number. A 3-log kill takes 10<sup>9</sup> cells down to 10<sup>6</sup> &mdash; 99.9% destroyed. You need several cycles in succession to drive the surviving tumor population low enough that the immune system can finish the job. The gap between cycles also gives quickly-dividing healthy tissue (marrow, gut lining) time to bounce back.</p>
+      <p><strong>P-glycoprotein (MDR1):</strong> This is an efflux pump, powered by ATP, sitting in the membrane of the cancer cell. It actively ejects hydrophobic drugs &mdash; anthracyclines, vinca alkaloids, taxanes &mdash; before they can reach their targets inside the cell, which knocks out several drug classes at once.</p>
+      <p><strong>Combination rationale:</strong> Attacking via several mechanisms at once kills more cells across a genetically varied tumor. Choosing drugs whose toxicities don't overlap &mdash; say, Vincristine's neuropathy versus Cyclophosphamide's cystitis &mdash; lets each be dosed fully without stacking damage onto the same organ.</p>
     </details>
   </div>
 
@@ -966,11 +1601,11 @@
     <div class="tag"><span class="num">03</span> Analogy</div>
     <div class="analogy">
       <div class="alabel">&#x1F9EA; The Log-Kill Analogy</div>
-      <p>Imagine you have a jar of 1,000 marbles representing tumor cells. Each round of chemo removes <span class="key">90% of whatever is left</span> (a 1-log kill). After round 1: 100 remain. After round 2: 10 remain. After round 3: 1 remains. You can <em>never</em> remove a fixed number &mdash; each round only takes a fraction. That's why you need multiple cycles, and why stopping early allows the remaining marbles to multiply back.</p>
+      <p>Picture a jar holding 1,000 marbles, standing in for tumor cells. Each chemo round clears out <span class="key">90% of the marbles still in the jar</span> (one log-kill). Round 1 leaves 100. Round 2 leaves 10. Round 3 leaves 1. You're <em>never</em> subtracting a flat number &mdash; only ever a percentage of what's left. That's the whole reason multiple rounds are required, and why quitting early lets the survivors repopulate the jar.</p>
     </div>
     <div class="analogy">
       <div class="alabel">&#x1F6A8; P-glycoprotein Analogy</div>
-      <p>Think of P-glycoprotein as a <span class="key">bouncer at a nightclub</span>. Even if drugs manage to get inside the cancer cell, the bouncer (P-gp) physically grabs them and throws them back out. The cancer cell upregulates more bouncers at every door, making it nearly impossible for multiple drug classes to stay inside long enough to do damage.</p>
+      <p>Picture P-glycoprotein as a <span class="key">club bouncer</span>. Drugs that slip past the door into the cancer cell get physically grabbed by the bouncer (P-gp) and tossed back outside. The tumor cell keeps hiring more bouncers at every entrance, so it becomes almost impossible for several drug classes at once to stick around long enough to do any damage.</p>
     </div>
   </div>
 
@@ -992,48 +1627,48 @@
   <!-- 80/20 MAP -->
   <div class="cog map">
     <div class="tag"><span class="num">01</span> The 80/20 Map</div>
-    <div class="pillar">Cytotoxic drugs directly attack the machinery of cell division. They are highly toxic to <strong>all</strong> rapidly dividing cells, causing three classic side effects: <strong>myelosuppression</strong>, <strong>mucositis</strong>, and <strong>alopecia</strong>.</div>
+    <div class="pillar">Cytotoxic agents go straight after the molecular machinery cells use to divide. Because that machinery is shared by <strong>every</strong> fast-dividing cell, not just tumor cells, three signature toxicities show up across the board: <strong>myelosuppression</strong>, <strong>mucositis</strong>, and <strong>alopecia</strong>.</div>
 
     <h4>Alkylating Agents &amp; Platinum Compounds</h4>
     <div class="tbl-scroll">
       <table>
         <thead><tr><th>Drug</th><th>Mechanism</th><th>Key Clinical Use</th><th>Unique Toxicity</th></tr></thead>
         <tbody>
-          <tr><td><strong>Cyclophosphamide</strong></td><td>Cross-links DNA at guanine N7 (prodrug, activated by CYP450).</td><td>Lymphoma, breast cancer, autoimmune disease.</td><td><strong>Hemorrhagic cystitis</strong> (acrolein metabolite). Prevented by <span class="pill">Mesna</span>.</td></tr>
-          <tr><td><strong>Busulfan</strong></td><td>Alkylates DNA. CCNS.</td><td>CML, bone marrow ablation before transplant.</td><td><strong>Pulmonary fibrosis</strong> ("busulfan lung"), hyperpigmentation.</td></tr>
-          <tr><td><strong>Temozolomide</strong></td><td>Methylates guanine O6. Crosses BBB.</td><td>Glioblastoma multiforme.</td><td>Myelosuppression. Resistance via MGMT methylation status.</td></tr>
-          <tr><td><strong>Cisplatin</strong></td><td>Cross-links DNA (intra-strand). CCNS.</td><td>Testicular, ovarian, bladder, lung.</td><td><strong>Nephrotoxicity</strong> (dose-limiting). Ototoxicity. Severe nausea.</td></tr>
-          <tr><td><strong>Carboplatin</strong></td><td>Same as cisplatin but less nephrotoxic.</td><td>Ovarian, lung.</td><td><strong>Myelosuppression</strong> (dose-limiting, especially thrombocytopenia).</td></tr>
-          <tr><td><strong>Oxaliplatin</strong></td><td>DNA cross-links.</td><td>Colorectal cancer (with 5-FU in FOLFOX).</td><td><strong>Peripheral neuropathy</strong> (cold-triggered).</td></tr>
+          <tr><td><strong>Cyclophosphamide</strong></td><td>A prodrug switched on by CYP450 enzymes; the active form links DNA strands together at the N7 position of guanine.</td><td>Lymphoma, breast cancer, autoimmune disease.</td><td><strong>Hemorrhagic cystitis</strong>, driven by the acrolein byproduct. Prevented with <span class="pill">Mesna</span>.</td></tr>
+          <tr><td><strong>Busulfan</strong></td><td>Alkylates DNA; not phase-restricted (CCNS).</td><td>CML, bone marrow ablation before transplant.</td><td><strong>Pulmonary fibrosis</strong> (nicknamed "busulfan lung"), skin hyperpigmentation.</td></tr>
+          <tr><td><strong>Temozolomide</strong></td><td>Adds a methyl group to guanine O6; able to cross the blood-brain barrier.</td><td>Glioblastoma multiforme.</td><td>Myelosuppression. Resistance tracks with MGMT methylation status.</td></tr>
+          <tr><td><strong>Cisplatin</strong></td><td>Forms intra-strand DNA cross-links; not phase-restricted (CCNS).</td><td>Testicular, ovarian, bladder, lung.</td><td><strong>Nephrotoxicity</strong> is dose-limiting. Also ototoxicity and severe nausea.</td></tr>
+          <tr><td><strong>Carboplatin</strong></td><td>Works the same way as cisplatin but with less kidney damage.</td><td>Ovarian, lung.</td><td><strong>Myelosuppression</strong> is dose-limiting here, particularly low platelets.</td></tr>
+          <tr><td><strong>Oxaliplatin</strong></td><td>Cross-links DNA.</td><td>Colorectal cancer (with 5-FU in FOLFOX).</td><td><strong>Peripheral neuropathy</strong> that flares with cold exposure.</td></tr>
         </tbody>
       </table>
     </div>
 
-    <blockquote class="warn"><span class="wl">&#x26A0; High-Yield Toxicity:</span> Cisplatin nephrotoxicity is <strong>dose-limiting</strong> and requires aggressive IV hydration + amifostine. Always monitor renal function and audiometry.</blockquote>
+    <blockquote class="warn"><span class="wl">&#x26A0; High-Yield Toxicity:</span> Kidney injury from cisplatin caps how much can be given and calls for vigorous IV fluids plus amifostine. Renal function and hearing tests need ongoing monitoring.</blockquote>
 
     <h4>Antimetabolites (S-Phase Specific)</h4>
     <div class="tbl-scroll">
       <table>
         <thead><tr><th>Drug</th><th>Target</th><th>Mechanism</th><th>Key Points</th></tr></thead>
         <tbody>
-          <tr><td><strong>Methotrexate (MTX)</strong></td><td>DHFR</td><td>Inhibits dihydrofolate reductase &rarr; blocks thymidylate and purine synthesis.</td><td>Rescued by <span class="pill">Leucovorin</span> (folinic acid). Hepatotoxicity, mucositis. Also used in RA, ectopic pregnancy.</td></tr>
-          <tr><td><strong>5-Fluorouracil (5-FU)</strong></td><td>Thymidylate Synthase</td><td>Pyrimidine analog. Inhibits dTMP synthesis after conversion to 5-FdUMP.</td><td>Potentiated by Leucovorin. Myelosuppression, mucositis, palmar-plantar erythrodysesthesia.</td></tr>
-          <tr><td><strong>Capecitabine</strong></td><td>Thymidylate Synthase</td><td>Oral prodrug of 5-FU. Converted to 5-FU preferentially in tumor tissue.</td><td>Hand-foot syndrome. Oral alternative to IV 5-FU.</td></tr>
-          <tr><td><strong>6-Mercaptopurine (6-MP)</strong></td><td>Purine synthesis</td><td>Purine analog. Inhibits de novo purine synthesis. Activated by HGPRT.</td><td>Metabolized by <strong>xanthine oxidase</strong> &mdash; dose must be reduced if taking <span class="pill">Allopurinol</span>. Hepatotoxic.</td></tr>
-          <tr><td><strong>Cytarabine (Ara-C)</strong></td><td>DNA polymerase</td><td>Pyrimidine analog. Incorporated into DNA causing chain termination.</td><td>Standard in AML induction. Cerebellar toxicity at high doses.</td></tr>
+          <tr><td><strong>Methotrexate (MTX)</strong></td><td>DHFR</td><td>Shuts down dihydrofolate reductase, which cuts off both thymidylate and purine production.</td><td>Reversed with <span class="pill">Leucovorin</span> (folinic acid). Can cause liver injury and mucositis. Also prescribed for RA and ectopic pregnancy.</td></tr>
+          <tr><td><strong>5-Fluorouracil (5-FU)</strong></td><td>Thymidylate Synthase</td><td>A pyrimidine mimic; once converted to 5-FdUMP it blocks dTMP production.</td><td>Effect is boosted by Leucovorin. Causes myelosuppression, mucositis, palmar-plantar erythrodysesthesia.</td></tr>
+          <tr><td><strong>Capecitabine</strong></td><td>Thymidylate Synthase</td><td>An oral prodrug that gets turned into 5-FU mainly within tumor tissue.</td><td>Hand-foot syndrome. Useful as an oral substitute for IV 5-FU.</td></tr>
+          <tr><td><strong>6-Mercaptopurine (6-MP)</strong></td><td>Purine synthesis</td><td>A purine mimic activated by HGPRT that shuts down new purine production.</td><td>Broken down by <strong>xanthine oxidase</strong> &mdash; needs a lower dose if the patient is also on <span class="pill">Allopurinol</span>. Can damage the liver.</td></tr>
+          <tr><td><strong>Cytarabine (Ara-C)</strong></td><td>DNA polymerase</td><td>A pyrimidine mimic that gets built into DNA and stops the chain from extending.</td><td>A mainstay of AML induction therapy. High doses can damage the cerebellum.</td></tr>
         </tbody>
       </table>
     </div>
 
-    <blockquote class="warn"><span class="wl">&#x26A0; Drug Interaction:</span> 6-MP is metabolized by xanthine oxidase. If the patient is on <strong>Allopurinol</strong> (a xanthine oxidase inhibitor for gout), 6-MP levels will skyrocket &rarr; severe myelosuppression. <strong>Reduce 6-MP dose by 75%.</strong></blockquote>
+    <blockquote class="warn"><span class="wl">&#x26A0; Drug Interaction:</span> Xanthine oxidase normally clears 6-MP. Put the patient on <strong>Allopurinol</strong> (a gout drug that blocks that same enzyme) and 6-MP concentrations spike, bringing on severe myelosuppression. <strong>Cut the 6-MP dose by 75%.</strong></blockquote>
 
     <h4>Microtubule Agents (M-Phase Specific)</h4>
     <div class="tbl-scroll">
       <table>
         <thead><tr><th>Drug Class</th><th>Key Drugs</th><th>Mechanism</th><th>Key Toxicity</th></tr></thead>
         <tbody>
-          <tr><td><strong>Vinca Alkaloids</strong></td><td>Vincristine, Vinblastine</td><td><strong>Inhibit microtubule polymerization</strong> (prevent assembly of the mitotic spindle).</td><td>Vincristine: <strong>peripheral neuropathy</strong> (dose-limiting), areflexia, constipation (autonomic). Vinblastine: myelosuppression.</td></tr>
-          <tr><td><strong>Taxanes</strong></td><td>Paclitaxel, Docetaxel</td><td><strong>Stabilize microtubules</strong> (prevent disassembly &rarr; frozen spindle).</td><td>Peripheral neuropathy, myelosuppression. Paclitaxel requires premedication (hypersensitivity).</td></tr>
+          <tr><td><strong>Vinca Alkaloids</strong></td><td>Vincristine, Vinblastine</td><td><strong>Block microtubule polymerization</strong>, so the mitotic spindle never assembles.</td><td>Vincristine: <strong>peripheral neuropathy</strong> is dose-limiting, plus areflexia and autonomic constipation. Vinblastine: myelosuppression.</td></tr>
+          <tr><td><strong>Taxanes</strong></td><td>Paclitaxel, Docetaxel</td><td><strong>Lock microtubules in place</strong> so they can't disassemble, freezing the spindle.</td><td>Peripheral neuropathy and myelosuppression. Paclitaxel needs premedication due to hypersensitivity risk.</td></tr>
         </tbody>
       </table>
     </div>
@@ -1043,15 +1678,15 @@
       <table>
         <thead><tr><th>Drug</th><th>Target</th><th>Key Toxicity</th></tr></thead>
         <tbody>
-          <tr><td><strong>Etoposide</strong></td><td>Topoisomerase II</td><td>Myelosuppression. Risk of secondary AML.</td></tr>
-          <tr><td><strong>Irinotecan</strong></td><td>Topoisomerase I</td><td>Severe <strong>diarrhea</strong> (early cholinergic + late secretory). Myelosuppression.</td></tr>
-          <tr><td><strong>Doxorubicin</strong></td><td>Topoisomerase II + DNA intercalation + free radical generation.</td><td><strong>Dilated cardiomyopathy</strong> (cumulative, dose-dependent, irreversible). Prevented by <span class="pill">Dexrazoxane</span> (iron chelator).</td></tr>
-          <tr><td><strong>Bleomycin</strong></td><td>Generates free radicals that cleave DNA.</td><td><strong>Pulmonary fibrosis</strong> (dose-limiting). Minimal myelosuppression (used in BEP regimen for testicular cancer).</td></tr>
+          <tr><td><strong>Etoposide</strong></td><td>Topoisomerase II</td><td>Myelosuppression, with a risk of treatment-related AML later on.</td></tr>
+          <tr><td><strong>Irinotecan</strong></td><td>Topoisomerase I</td><td>Severe <strong>diarrhea</strong>, both early-onset (cholinergic) and late-onset (secretory). Also myelosuppression.</td></tr>
+          <tr><td><strong>Doxorubicin</strong></td><td>Inhibits Topoisomerase II, intercalates into DNA, and generates free radicals.</td><td><strong>Dilated cardiomyopathy</strong> that's cumulative, dose-dependent, and permanent. Held off by <span class="pill">Dexrazoxane</span>, an iron chelator.</td></tr>
+          <tr><td><strong>Bleomycin</strong></td><td>Cleaves DNA via free-radical generation.</td><td><strong>Pulmonary fibrosis</strong> caps the dose. Spares the marrow fairly well (which is why it's part of the BEP regimen for testicular cancer).</td></tr>
         </tbody>
       </table>
     </div>
 
-    <blockquote class="warn"><span class="wl">&#x26A0; Cardiotoxicity:</span> Doxorubicin cardiomyopathy is <strong>cumulative and irreversible</strong>. Lifetime dose must be tracked. Dexrazoxane chelates iron, preventing free radical formation that damages cardiac myocytes. <em>Never</em> combine Doxorubicin with Trastuzumab simultaneously &mdash; both are cardiotoxic.</blockquote>
+    <blockquote class="warn"><span class="wl">&#x26A0; Cardiotoxicity:</span> Doxorubicin's heart damage <strong>builds up over time and doesn't reverse</strong>, so lifetime cumulative dose has to be tracked carefully. Dexrazoxane binds up iron to stop the free-radical damage to heart muscle cells. <em>Avoid</em> giving Doxorubicin and Trastuzumab at the same time &mdash; each one is independently cardiotoxic.</blockquote>
 
     <figure>
       <div class="fig-title">The Log-Kill Hypothesis: Tumor Burden Over Chemotherapy Cycles</div>
@@ -1092,14 +1727,14 @@
         <rect x="420" y="230" width="230" height="25" rx="4" fill="#e0f7fa" stroke="#00838f" stroke-dasharray="3"/>
         <text x="445" y="247" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#00838f">Immune clearance zone</text>
       </svg>
-      <figcaption>Each chemotherapy cycle kills a constant fraction (log-kill). Between cycles, surviving cells regrow. Repeated cycles push tumor burden low enough for immune clearance.</figcaption>
+      <figcaption>A constant fraction dies with every chemotherapy cycle (log-kill), while the survivors regrow in between cycles. Going through enough cycles eventually pushes tumor burden down to where the immune system can clear what's left.</figcaption>
     </figure>
   </div>
 
   <!-- BLURTING GATE -->
   <div class="cog blurt">
     <div class="tag"><span class="num">02</span> The Blurting Gate</div>
-    <div class="blurt-prompt">Without looking, name 5 cytotoxic drug classes and a unique toxicity for each.</div>
+    <div class="blurt-prompt">From memory, list five classes of cytotoxic drugs and one toxicity specific to each.</div>
     <ul class="primers">
       <li>What is the dose-limiting toxicity of Cisplatin vs. Carboplatin?</li>
       <li>How do Vinca alkaloids differ from Taxanes at the molecular level?</li>
@@ -1108,10 +1743,10 @@
     </ul>
     <details class="gate">
       <summary>Reveal Answers</summary>
-      <p><strong>Cisplatin vs. Carboplatin:</strong> Cisplatin &rarr; nephrotoxicity (dose-limiting), ototoxicity, severe nausea. Carboplatin &rarr; myelosuppression (thrombocytopenia is dose-limiting), much less nephrotoxic.</p>
-      <p><strong>Vinca vs. Taxanes:</strong> Vinca alkaloids <em>prevent assembly</em> of microtubules (hide the bricks). Taxanes <em>prevent disassembly</em> (super-glue the scaffold). Both freeze the mitotic spindle, arresting cells in M-phase.</p>
-      <p><strong>6-MP + Allopurinol:</strong> 6-MP is metabolized by xanthine oxidase. Allopurinol inhibits xanthine oxidase, causing 6-MP to accumulate to toxic levels. Reduce 6-MP dose by 75%.</p>
-      <p><strong>Doxorubicin cardiomyopathy:</strong> Cumulative, dose-dependent, irreversible dilated cardiomyopathy caused by iron-mediated free radical damage. Prevented by <strong>Dexrazoxane</strong> (iron chelator that prevents free radical formation in cardiac tissue).</p>
+      <p><strong>Cisplatin vs. Carboplatin:</strong> With Cisplatin, kidney damage caps the dose, alongside ototoxicity and intense nausea. With Carboplatin, it's myelosuppression (low platelets specifically) that limits dosing, and kidney damage is much less of a concern.</p>
+      <p><strong>Vinca vs. Taxanes:</strong> Vinca alkaloids stop microtubules from <em>forming</em> in the first place (the building blocks never get assembled). Taxanes do the opposite &mdash; they stop the finished structure from <em>coming apart</em> (essentially gluing it together). Either way, the mitotic spindle locks up and the cell can't get past M-phase.</p>
+      <p><strong>6-MP + Allopurinol:</strong> Xanthine oxidase is what normally breaks down 6-MP. Block that enzyme with Allopurinol and 6-MP builds up to toxic concentrations, so the dose has to be cut by 75%.</p>
+      <p><strong>Doxorubicin cardiomyopathy:</strong> Iron-catalyzed free radicals progressively and permanently damage heart muscle, with the damage tracking total dose given. <strong>Dexrazoxane</strong>, which chelates iron, blocks that free-radical formation in cardiac tissue and prevents it.</p>
     </details>
   </div>
 
@@ -1120,13 +1755,13 @@
     <div class="tag"><span class="num">03</span> Analogy</div>
     <div class="analogy">
       <div class="alabel">&#x1F9F1; Microtubules: Scaffolding Analogy</div>
-      <p>Imagine a construction site building a skyscraper (the dividing cell). The scaffolding (microtubules) must go <strong>up</strong> to position workers (chromosomes), then come <strong>down</strong> once they're placed.</p>
-      <p><span class="key">Vinca alkaloids</span> lock up the warehouse where the scaffolding poles are stored &mdash; the crew can't build the scaffolding, so the project freezes.</p>
-      <p><span class="key">Taxanes</span> weld the scaffolding together permanently &mdash; it can't be taken down, so the crew can never move to the next building. Both outcomes: <strong>project canceled (apoptosis)</strong>.</p>
+      <p>Picture a skyscraper going up (the dividing cell). Scaffolding (microtubules) needs to go <strong>up</strong> so workers (chromosomes) can be placed, then come back <strong>down</strong> once they're in position.</p>
+      <p><span class="key">Vinca alkaloids</span> padlock the warehouse holding the scaffolding poles &mdash; nothing can be erected, and the whole job grinds to a halt.</p>
+      <p><span class="key">Taxanes</span> instead fuse the scaffolding in place permanently &mdash; it can never come down, so the crew is stuck and can't start the next floor. Either way, the result is the same: <strong>the job gets scrapped (apoptosis)</strong>.</p>
     </div>
     <div class="analogy">
       <div class="alabel">&#x1F4A3; Doxorubicin: The Time Bomb</div>
-      <p>Doxorubicin is like hiring a demolition expert who also accidentally <span class="key">drops a time bomb in the control room (heart)</span>. Each dose adds another bomb. Once enough bombs accumulate, the control room collapses (cardiomyopathy). Dexrazoxane is the bomb squad that defuses each bomb (chelates iron) before it can detonate.</p>
+      <p>Think of Doxorubicin as a demolition contractor who keeps <span class="key">leaving a time bomb in the control room (heart)</span> with every job. Each dose plants one more bomb. Eventually enough accumulate that the control room gives way (cardiomyopathy). Dexrazoxane acts as the bomb squad, defusing each one (by chelating iron) before it can go off.</p>
     </div>
   </div>
 
@@ -1148,17 +1783,17 @@
   <!-- 80/20 MAP -->
   <div class="cog map">
     <div class="tag"><span class="num">01</span> The 80/20 Map</div>
-    <div class="pillar">Targeted therapies exploit specific oncogenic mutations driving individual tumors. They end in <strong>"-nib"</strong> (kinase inhibitor) or <strong>"-mib"</strong> (proteasome inhibitor). Much more selective than cytotoxics, but resistance develops when the target mutates.</div>
+    <div class="pillar">Targeted agents take advantage of the particular driver mutations behind a given tumor. Their generic names typically end in <strong>"-nib"</strong> for kinase inhibitors or <strong>"-mib"</strong> for proteasome inhibitors. They're far more selective than cytotoxic drugs, though tumors can eventually escape them once the target itself mutates.</div>
 
     <div class="tbl-scroll">
       <table>
         <thead><tr><th>Drug</th><th>Target</th><th>Indication</th><th>Key Toxicity / Notes</th></tr></thead>
         <tbody>
-          <tr><td><strong>Imatinib</strong></td><td>BCR-ABL tyrosine kinase</td><td>CML (Philadelphia chromosome+)</td><td>Fluid retention, nausea. Resistance via T315I mutation.</td></tr>
-          <tr><td><strong>Dasatinib, Nilotinib</strong></td><td>BCR-ABL (2nd-gen)</td><td>Imatinib-resistant CML</td><td>Dasatinib: pleural effusions. Nilotinib: QT prolongation.</td></tr>
-          <tr><td><strong>Erlotinib, Gefitinib</strong></td><td>EGFR</td><td>NSCLC (EGFR mutation+)</td><td><strong>Acneiform rash</strong> (paradoxically correlates with efficacy). Diarrhea.</td></tr>
+          <tr><td><strong>Imatinib</strong></td><td>BCR-ABL tyrosine kinase</td><td>CML (Philadelphia chromosome+)</td><td>Fluid retention, nausea. Loses effect once the T315I mutation arises.</td></tr>
+          <tr><td><strong>Dasatinib, Nilotinib</strong></td><td>BCR-ABL (2nd-gen)</td><td>Imatinib-resistant CML</td><td>Dasatinib brings pleural effusions; Nilotinib brings QT prolongation.</td></tr>
+          <tr><td><strong>Erlotinib, Gefitinib</strong></td><td>EGFR</td><td>NSCLC (EGFR mutation+)</td><td><strong>Acneiform rash</strong> (oddly enough, a marker of how well the drug is working). Also diarrhea.</td></tr>
           <tr><td><strong>Osimertinib</strong></td><td>EGFR (T790M mutant)</td><td>NSCLC after 1st-gen EGFR-TKI resistance.</td><td>Cardiotoxicity (QT prolongation).</td></tr>
-          <tr><td><strong>Vemurafenib, Dabrafenib</strong></td><td>BRAF V600E</td><td>Melanoma</td><td>Squamous cell carcinoma (paradoxical MAPK activation). Combined with MEK inhibitors (Trametinib).</td></tr>
+          <tr><td><strong>Vemurafenib, Dabrafenib</strong></td><td>BRAF V600E</td><td>Melanoma</td><td>Can trigger squamous cell carcinoma by paradoxically activating MAPK. Paired with a MEK inhibitor (Trametinib) to counter this.</td></tr>
           <tr><td><strong>Sunitinib, Sorafenib</strong></td><td>Multi-kinase (VEGFR, PDGFR)</td><td>Renal cell carcinoma, HCC.</td><td><strong>Hypertension</strong>, hand-foot syndrome, thyroid dysfunction.</td></tr>
           <tr><td><strong>Bortezomib</strong></td><td>Proteasome (26S)</td><td>Multiple myeloma</td><td><strong>Peripheral neuropathy</strong>, thrombocytopenia.</td></tr>
         </tbody>
@@ -1167,10 +1802,10 @@
 
     <h4>The Naming Convention</h4>
     <ul>
-      <li><strong>-tinib:</strong> Tyrosine kinase inhibitor (Imatinib, Erlotinib, Osimertinib).</li>
-      <li><strong>-fenib:</strong> RAF kinase inhibitor (Vemurafenib, Dabrafenib).</li>
-      <li><strong>-zomib:</strong> Proteasome inhibitor (Bortezomib, Carfilzomib).</li>
-      <li><strong>-ciclib:</strong> CDK4/6 inhibitor (Palbociclib, Ribociclib) &mdash; used in ER+ breast cancer.</li>
+      <li><strong>-tinib:</strong> marks a tyrosine kinase inhibitor (Imatinib, Erlotinib, Osimertinib).</li>
+      <li><strong>-fenib:</strong> marks a RAF kinase inhibitor (Vemurafenib, Dabrafenib).</li>
+      <li><strong>-zomib:</strong> marks a proteasome inhibitor (Bortezomib, Carfilzomib).</li>
+      <li><strong>-ciclib:</strong> marks a CDK4/6 inhibitor (Palbociclib, Ribociclib), given in ER-positive breast cancer.</li>
     </ul>
 
     <figure>
@@ -1221,14 +1856,14 @@
         <!-- Divider -->
         <line x1="340" y1="10" x2="340" y2="260" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="6"/>
       </svg>
-      <figcaption>Left: Normal receptor signaling drives proliferation. Right: Imatinib occupies the ATP-binding pocket, preventing kinase activity and halting downstream survival signals.</figcaption>
+      <figcaption>On the left, normal receptor signaling pushes cells to proliferate. On the right, Imatinib sits inside the ATP-binding pocket, shutting down kinase activity and cutting off survival signaling downstream.</figcaption>
     </figure>
   </div>
 
   <!-- BLURTING GATE -->
   <div class="cog blurt">
     <div class="tag"><span class="num">02</span> The Blurting Gate</div>
-    <div class="blurt-prompt">Without looking, write down 5 targeted drugs, their targets, and indications.</div>
+    <div class="blurt-prompt">Without checking your notes, list five targeted agents along with what each targets and what it's used for.</div>
     <ul class="primers">
       <li>What is the Philadelphia chromosome and which drug targets it?</li>
       <li>Why does the acneiform rash from EGFR inhibitors paradoxically indicate efficacy?</li>
@@ -1236,9 +1871,9 @@
     </ul>
     <details class="gate">
       <summary>Reveal Answers</summary>
-      <p><strong>Philadelphia chromosome:</strong> A translocation t(9;22) that creates the BCR-ABL fusion oncoprotein, a constitutively active tyrosine kinase. <strong>Imatinib</strong> competitively binds the ATP pocket of BCR-ABL, shutting it down.</p>
-      <p><strong>EGFR rash = efficacy:</strong> EGFR is expressed in normal skin. Blocking it in skin causes acneiform rash. The more the skin reacts, the more the drug is reaching its target systemically. Patients with a rash tend to have better outcomes.</p>
-      <p><strong>BRAF + MEK:</strong> BRAF inhibitors alone can paradoxically activate MAPK signaling through wild-type RAF, causing squamous cell carcinomas. Adding a MEK inhibitor (Trametinib) blocks downstream MAPK, preventing this paradoxical activation and improving efficacy.</p>
+      <p><strong>Philadelphia chromosome:</strong> Translocation t(9;22) fuses BCR and ABL into a single oncoprotein that behaves as an always-on tyrosine kinase. <strong>Imatinib</strong> competes for the ATP-binding pocket on BCR-ABL and switches it off.</p>
+      <p><strong>EGFR rash = efficacy:</strong> Normal skin expresses EGFR too, so blocking the receptor produces an acneiform rash there. A stronger skin reaction suggests the drug is reaching its target throughout the body, and patients who get the rash tend to do better overall.</p>
+      <p><strong>BRAF + MEK:</strong> Used by itself, a BRAF inhibitor can backfire by switching on MAPK signaling through the wild-type RAF pathway, which can trigger squamous cell carcinomas. Layering on a MEK inhibitor (Trametinib) shuts down that downstream MAPK activity, heading off the paradoxical effect and making the regimen more effective overall.</p>
     </details>
   </div>
 
@@ -1883,8 +2518,8 @@
 
 <footer>
   <div class="wrap">
-    <div><strong>Goodman &amp; Gilman</strong> Accelerated Learning System</div>
-    <div class="src">Generated from 14th Edition &middot; Section VIII &middot; Chapters 69&ndash;73</div>
+    <div><strong>Pharmacology</strong> Accelerated Learning System</div>
+    <div class="src">Generated from standard pharmacology references for this subject area.</div>
   </div>
 </footer>
 
@@ -1937,6 +2572,186 @@
 })();
 </script>
 
+<script>
+/* ---- GLASS / MOTION DEMO v3 — additive, does not touch the quiz logic above ---- */
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  var bigSel = 'section.module, .quiz-intro, #flashcards, details.quizset';
+  var smallSel = '.cog, .blurt-stage, .sched-stage, details.gate, details.qa, .flashcard, .tbl-scroll, .diagram-wrap, blockquote.warn, .analogy, div.q';
+
+  document.querySelectorAll(bigSel).forEach(function(el){ el.classList.add('gp-reveal'); });
+  document.querySelectorAll(smallSel).forEach(function(el){ el.classList.add('gp-reveal-soft'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -50px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal, .gp-reveal-soft');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 7) * 50 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // safety net — guarantee nothing is stuck invisible
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }, 2000);
+})();
+</script>
+
 <script src="learning-interactive.js"></script>
+<script src="gamify.js"></script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- populate chapters drawer from this page's existing (now hidden) chapter nav ----
+  var drawerLinks = document.getElementById('gpDrawerLinks');
+  var sourceNav = document.querySelector('nav.toc, .sticky-nav');
+  if (drawerLinks && sourceNav) {
+    var anchors = sourceNav.querySelectorAll('a');
+    anchors.forEach(function(a){ drawerLinks.appendChild(a.cloneNode(true)); });
+  }
+
+  // ---- drawer open/close ----
+  var drawer = document.getElementById('gpDrawer');
+  var overlay = document.getElementById('gpDrawerOverlay');
+  var openBtn = document.getElementById('gpDrawerToggle');
+  var closeBtn = document.getElementById('gpDrawerClose');
+  function openDrawer(){
+    if (drawer) drawer.classList.add('show');
+    if (overlay) overlay.classList.add('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','true');
+  }
+  function closeDrawer(){
+    if (drawer) drawer.classList.remove('show');
+    if (overlay) overlay.classList.remove('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','false');
+  }
+  if (openBtn) openBtn.addEventListener('click', function(){
+    if (drawer && drawer.classList.contains('show')) closeDrawer(); else openDrawer();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  if (drawerLinks) drawerLinks.addEventListener('click', function(e){
+    if (e.target && e.target.tagName === 'A') closeDrawer();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // ---- dark mode toggle, persisted (shared key with the hub pages) ----
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('gpDarkToggle');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function upd(){ if (darkBtn) darkBtn.textContent = isDark() ? '☀️' : '🌙'; }
+  function setTheme(m){
+    if (m === 'dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('pharm-theme', m); } catch(e){}
+    upd();
+  }
+  upd();
+  if (darkBtn) darkBtn.addEventListener('click', function(){ setTheme(isDark() ? 'light' : 'dark'); });
+
+  // ---- random quiz question ----
+  var randomBtn = document.getElementById('gpRandomQuiz');
+  if (randomBtn) randomBtn.addEventListener('click', function(){
+    var qs = Array.prototype.slice.call(document.querySelectorAll('.q, .quiz-item'));
+    if (!qs.length) return;
+    var pick = qs[Math.floor(Math.random() * qs.length)];
+    var trigger = pick.querySelector('.qq, .quiz-q');
+    if (trigger) trigger.click();
+    if (!pick.classList.contains('open')) pick.classList.add('open');
+    pick.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  // ---- expand/contract the floating toolbar itself ----
+  // Chapters (☰) and Back (←) always stay visible; every other control
+  // (nav/jump/search/tools merged in by learning-interactive.js) lives inside
+  // the collapsible .gp-toolbar-extra and only shows once expanded.
+  var expandBtn = document.getElementById('gpToolbarExpand');
+  var toolbarEl = document.querySelector('.gp-toolbar');
+  if (expandBtn && toolbarEl) expandBtn.addEventListener('click', function(){
+    var open = !toolbarEl.classList.contains('expanded');
+    toolbarEl.classList.toggle('expanded', open);
+    expandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var tree = document.getElementById('mindmapTree');
+  if(!tree) return;
+  function setExpanded(btn, open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var holder = btn.closest('.mm-branch, .mm-twig');
+    if(holder) holder.classList.toggle('mm-open', open);
+  }
+  tree.addEventListener('click', function(e){
+    var btn = e.target.closest('.mm-node');
+    if(!btn) return;
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setExpanded(btn, !isOpen);
+  });
+  var expandAllBtn = document.getElementById('mmExpandAll');
+  var collapseAllBtn = document.getElementById('mmCollapseAll');
+  if(expandAllBtn){
+    expandAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, true); });
+    });
+  }
+  if(collapseAllBtn){
+    collapseAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, false); });
+    });
+  }
+})();
+</script>
+
 </body>
 </html>

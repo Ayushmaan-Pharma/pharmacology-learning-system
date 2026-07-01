@@ -65,11 +65,29 @@
       clearTimeout(flash._t);
       flash._t = setTimeout(function () { el.classList.remove("li-focus"); }, 1100);
     }
+    /* open any collapsed <details> ancestors (module gates, quiz-sets,
+       flashcards) and reveal the question/answer itself, so the target is
+       actually visible before we scroll to it. Without this, Prev/Next/Random
+       can silently land on an item that's still hidden inside a closed
+       <details> — it looks like the button did nothing. Mirrors what
+       gotoMark() already does for search-jump. */
+    function revealForNav(el) {
+      var node = el;
+      while (node && node !== document.body) {
+        if (node.tagName === "DETAILS" && !node.open) node.open = true;
+        node = node.parentElement;
+      }
+      var qd = el.closest && el.closest(".q, .quiz-item");
+      if (qd) qd.classList.add("open");
+      var qq = el.closest && el.closest(".qq");
+      if (qq && !qq.closest(".q") && !qq.closest(".quiz-item")) qq.classList.add("open");
+    }
     function goTo(i) {
       if (!navItems.length) return;
       curIdx = Math.max(0, Math.min(navItems.length - 1, i));
       lockUntil = Date.now() + 700;            // let the smooth-scroll settle before re-syncing
       var el = navItems[curIdx];
+      revealForNav(el);
       el.scrollIntoView({ behavior: "smooth", block: "center" });
       flash(el);
       updPos();
@@ -94,9 +112,16 @@
     window.addEventListener("resize", onScroll);
 
     /* random / quiz-me */
+    var lastRandomPoolIdx = -1;
     function randomItem() {
       if (!quizPool.length) { if (navItems.length) goTo(Math.floor(Math.random() * navItems.length)); return; }
-      var el = quizPool[Math.floor(Math.random() * quizPool.length)];
+      var poolIdx = Math.floor(Math.random() * quizPool.length);
+      if (quizPool.length > 1) {                       // avoid repeating the same pick twice in a row
+        var tries = 0;
+        while (poolIdx === lastRandomPoolIdx && tries < 8) { poolIdx = Math.floor(Math.random() * quizPool.length); tries++; }
+      }
+      lastRandomPoolIdx = poolIdx;
+      var el = quizPool[poolIdx];
       var idx = navItems.indexOf(el);
       goTo(idx >= 0 ? idx : 0);
     }
@@ -143,7 +168,13 @@
 
     /* ---------- search: find-on-page → highlight matches and jump to them ---------- */
     var marks = [], markIdx = -1, searchDebounce = 0;
-    var searchRoot = document.querySelector("main") || document.body;
+    // Search the whole page, not just <main> — the hero header (title,
+    // subtitle, chapter blurbs), the table-of-contents nav, and the footer
+    // (source/citation text) all live OUTSIDE <main> on these pages, so
+    // restricting to <main> made a large chunk of real, visible content
+    // unsearchable. Chrome (toolbar/drawer/hint popover) is still excluded
+    // below in acceptNode.
+    var searchRoot = document.body;
     function clearMarks() {
       document.querySelectorAll("mark.li-mark").forEach(function (m) {
         m.parentNode.replaceChild(document.createTextNode(m.textContent), m);
@@ -173,7 +204,7 @@
           var p = n.parentNode; if (!p) return NodeFilter.FILTER_REJECT;
           var tag = p.nodeName.toLowerCase();
           if (tag === "script" || tag === "style" || tag === "mark") return NodeFilter.FILTER_REJECT;
-          if (p.closest && p.closest("#li-bar, #li-hint")) return NodeFilter.FILTER_REJECT;
+          if (p.closest && p.closest("#li-bar, .gp-toolbar, #li-hint, #gpDrawer, #gpProgressBar")) return NodeFilter.FILTER_REJECT;
           rx.lastIndex = 0;
           return rx.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
         }
@@ -284,7 +315,19 @@
     bar.appendChild(searchWrap);
     bar.appendChild(document.createElement("span")).className = "li-spacer";
     bar.appendChild(toolGroup);
-    document.body.appendChild(bar);
+
+    /* fold these controls into the floating glass toolbar each page already
+       builds for back/chapters-drawer (see .gp-toolbar), instead of adding a
+       second, separate full-width sticky bar. Prefer the collapsible
+       #gpToolbarExtra region (so these land in the expand/contract drawer,
+       keeping only ☰/← visible by default); fall back to dropping straight
+       into .gp-toolbar, then to the old standalone bar, if either is absent. */
+    var hostToolbar = document.getElementById("gpToolbarExtra") || document.querySelector(".gp-toolbar");
+    if (hostToolbar) {
+      while (bar.firstChild) hostToolbar.appendChild(bar.firstChild);
+    } else {
+      document.body.appendChild(bar);
+    }
 
     updPos();
     onScroll();
@@ -306,7 +349,7 @@
         case "b": case "B": window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" }); break;
         case "/": e.preventDefault(); toggleSearch(true); break;
         case " ": case "Spacebar":
-          if (e.target.closest && e.target.closest("#li-bar")) return; // let toolbar buttons use Space
+          if (e.target.closest && e.target.closest("#li-bar, .gp-toolbar")) return; // let toolbar buttons use Space
           e.preventDefault();
           toggleItem(navItems[curIdx]);
           break;

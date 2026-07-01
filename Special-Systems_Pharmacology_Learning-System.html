@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Special Systems Pharmacology — G&G 14th ed.</title>
+<title>Special Systems Pharmacology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -524,10 +524,423 @@
   }
   .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
 
+
+
+/* =========================================================================
+   GLASS / MOTION DEMO LAYER v3 — additive, appended after all base rules.
+   Uses this file's own tokens (--accent, --cool, --hero-gradient, etc.,
+   with safe fallbacks where a file doesn't define one) so colours/content
+   stay identical to the original. Shared across the whole Learning System
+   family for visual/motion consistency.
+   ========================================================================= */
+
+html{scroll-behavior:smooth}
+
+/* ---- ambient drifting blobs, colour-matched to this file's palette ---- */
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(75px); opacity:.30}
+.gp-ambient .b1{width:44vw;height:44vw; top:-14%; left:-12%; background:radial-gradient(circle,var(--accent-dark),transparent 70%); animation:gpDrift1 38s ease-in-out infinite}
+.gp-ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,var(--cool),transparent 70%); animation:gpDrift2 44s ease-in-out infinite}
+.gp-ambient .b3{width:42vw;height:42vw; bottom:-18%; left:18%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift3 40s ease-in-out infinite}
+.gp-ambient .b4{width:26vw;height:26vw; bottom:10%; right:8%; background:radial-gradient(circle,var(--cool-light,var(--cool)),transparent 70%); animation:gpDrift4 33s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,7vh) scale(1.12)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.12)}}
+@keyframes gpDrift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-4vw,-3vh) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+/* ---- scroll progress bar ---- */
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--accent-dark), var(--cool), var(--accent));
+  box-shadow:0 0 10px rgba(15,107,107,.45); transition:width .12s linear}
+
+/* ---- back-to-top, using the page's own hero gradient (with fallback) ---- */
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:var(--hero-gradient, linear-gradient(135deg, var(--accent-dark), var(--cool))); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.35); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+/* ---- stronger glass on the already-sticky nav ---- */
+.sticky-nav, nav.toc{
+  background:rgba(245,244,240,.62) !important;
+  backdrop-filter:blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(190%) !important;
+  box-shadow:0 4px 24px rgba(16,38,52,.08) !important;
+}
+nav.toc a{transition:color .2s, transform .2s}
+nav.toc a:hover{transform:translateY(-1px)}
+
+/* ---- hero entrance + glass stat strip ---- */
+header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpHeroIn{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+.chip{transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{transform:translateY(-2px) scale(1.04)}
+
+.gp-stat-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; position:relative}
+.gp-stat-pill{font-size:.78rem; font-weight:650; color:#fff; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.32); padding:6px 14px; border-radius:999px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; gap:6px}
+.gp-stat-pill b{color:#fff; font-weight:800}
+
+/* ---- generic scroll-reveal utilities (assigned by JS) ---- */
+.gp-reveal{opacity:0; transform:translateY(28px) scale(.985); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.34,1.2,.64,1)}
+.gp-reveal.in-view{opacity:1; transform:none}
+.gp-reveal-soft{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease}
+.gp-reveal-soft.in-view{opacity:1; transform:none}
+
+/* ---- module card + header glass sheen / hover glow ---- */
+section.module{transition:box-shadow .35s ease}
+section.module:hover{box-shadow:0 20px 48px rgba(16,38,52,.18)}
+.module-header, .mod-head{position:relative; overflow:hidden}
+.module-header::after, .mod-head::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(120deg, rgba(255,255,255,.20), transparent 45%, rgba(255,255,255,.06));
+}
+
+.cog, .blurt-stage, .sched-stage, .flashcard, .quiz-intro{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease
+}
+.cog:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--cool) 35%, transparent)}
+.cog.blurt:hover{box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 38%, transparent)}
+.blurt-stage:hover, .sched-stage:hover{transform:translateY(-3px)}
+.flashcard:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 30%, transparent)}
+
+/* =========================================================================
+   ANIMATED ACCORDIONS — CSS-grid height trick (no JS height math needed).
+   grid-auto-rows (not just grid-template-rows) is set too, so this stays
+   correct even when a gate/quizset/qa has more than one content child
+   (e.g. Neoplastic's details.gate > p, p, p). Works regardless of who
+   toggles [open]/.open (click, keyboard, or the existing inline JS),
+   because it keys off the attribute/class only.
+   ========================================================================= */
+details.gate, details.quizset, details.qa{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1), grid-auto-rows .45s cubic-bezier(.4,0,.2,1);
+}
+details.gate[open], details.quizset[open], details.qa[open]{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+details.gate > *:not(summary), details.quizset > *:not(summary), details.qa > *:not(summary){
+  overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s;
+}
+details.gate[open] > *:not(summary), details.quizset[open] > *:not(summary), details.qa[open] > *:not(summary){ opacity:1; }
+
+div.q{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1), box-shadow .25s ease;
+  border-radius:var(--radius-sm);
+}
+div.q.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; box-shadow:0 6px 18px -6px color-mix(in srgb, var(--cool) 30%, transparent); }
+div.q > .qa{
+  display:block !important; overflow:hidden; min-height:0; opacity:0;
+  transition:opacity .3s ease .05s;
+}
+div.q.open > .qa{ opacity:1; }
+/* same pattern for the alternate class names used in sibling files of this series */
+.quiz-item{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.quiz-item.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+.quiz-item > .quiz-a{ display:block !important; overflow:hidden; min-height:0; opacity:0; transition:opacity .3s ease .05s; }
+.quiz-item.open > .quiz-a{ opacity:1; }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal, .gp-reveal-soft{opacity:1 !important; transform:none !important; transition:none !important}
+  header.hero{animation:none}
+  details.gate, details.quizset, details.qa, div.q, .quiz-item{transition:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+
+/* TRUE FROSTED GLASS — translucent panels over the ambient blobs */
+body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; }
+.module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+.diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+.fc-back, .mnemonic, figure.dia {
+  background: color-mix(in srgb, white 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
+  .module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+  .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+  .fc-back, .mnemonic, figure.dia { background: white !important; }
+}
+
+/* =========================================================================
+   CONSOLIDATED TOOLBAR + CHAPTERS DRAWER + DARK MODE SKIN
+   Replaces the old standalone back button + horizontal sticky chapter bar
+   (which used to visually collide) with one floating icon toolbar plus a
+   toggleable left-hand chapters drawer. Additive, reuses this file's tokens.
+   ========================================================================= */
+.gp-toolbar{
+  position:fixed; top:16px; left:16px; z-index:300;
+  display:flex; align-items:center; gap:4px;
+  background:rgba(255,255,255,.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border:1px solid rgba(0,0,0,.10); border-radius:999px; padding:6px; box-shadow:0 6px 22px rgba(0,0,0,.16);
+}
+.gp-tool-btn{
+  width:38px; height:38px; border-radius:50%; border:none; background:transparent; color:#1c1917;
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease; padding:0;
+}
+.gp-tool-btn:hover{ background:rgba(0,0,0,.07); transform:translateY(-1px) scale(1.06); }
+.gp-tool-btn:active{ transform:scale(.9); }
+.gp-toolbar .gp-back-btn{ position:static; box-shadow:none; border:none; background:transparent; }
+.gp-toolbar .gp-back-btn:hover{ box-shadow:none; }
+@media (max-width:640px){ .gp-toolbar{ top:10px; left:10px; padding:4px; gap:2px; } .gp-tool-btn{ width:33px; height:33px; font-size:15px; } }
+@media (prefers-reduced-motion:reduce){ .gp-tool-btn{ transition:none; } }
+
+/* the old horizontal sticky chapter bar is replaced by the drawer below */
+.sticky-nav, nav.toc{ display:none !important; }
+
+/* ---- chapters drawer ---- */
+.gp-drawer-overlay{
+  position:fixed; inset:0; z-index:298; background:rgba(10,12,16,.32);
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.gp-drawer-overlay.show{ opacity:1; pointer-events:auto; }
+.gp-drawer{
+  position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw); z-index:299;
+  background:rgba(245,244,240,.90); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-right:1px solid rgba(0,0,0,.08); box-shadow:8px 0 32px rgba(0,0,0,.18);
+  transform:translateX(-104%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; padding:18px 0;
+}
+.gp-drawer.show{ transform:none; }
+.gp-drawer-head{
+  display:flex; align-items:center; justify-content:space-between; padding:0 18px 14px;
+  border-bottom:1px solid rgba(0,0,0,.08); font-weight:700; font-size:.95rem; color:var(--ink, #1c1917);
+  margin-bottom:6px;
+}
+.gp-drawer-close{ border:none; background:transparent; font-size:16px; cursor:pointer; color:var(--ink-soft, #555); padding:4px; }
+.gp-drawer-links{ display:flex; flex-direction:column; overflow-y:auto; padding:6px 10px; gap:2px; }
+.gp-drawer-links a{
+  display:block; padding:.55rem .75rem; border-radius:10px; text-decoration:none;
+  color:var(--ink-soft, #44403c); font-size:.88rem; font-weight:500; transition:background .18s ease, color .18s ease;
+  white-space:normal;
+}
+.gp-drawer-links a:hover{ background:rgba(0,0,0,.06); }
+.gp-drawer-links a.thesis-link{ color:var(--cool, var(--accent)); font-weight:600; }
+.gp-drawer-links a.key{ color:var(--accent-dark, var(--accent)); font-weight:600; }
+@media (prefers-reduced-motion:reduce){ .gp-drawer, .gp-drawer-overlay{ transition:none; } }
+
+html[data-theme="dark"] .gp-toolbar{ background:rgba(30,33,37,.78); border-color:rgba(255,255,255,.14); }
+html[data-theme="dark"] .gp-tool-btn{ color:#e7e9ec; }
+html[data-theme="dark"] .gp-tool-btn:hover{ background:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-back-btn{ background:transparent !important; }
+html[data-theme="dark"] .gp-drawer{ background:rgba(30,33,37,.92); border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-head{ color:#e7e9ec; border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-close{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a:hover{ background:rgba(255,255,255,.08); }
+
+/* ---- dark mode skin for the page itself ---- */
+html[data-theme="dark"] body{ background: color-mix(in srgb, #15171a 88%, transparent) !important; color:#cdd1d6; }
+html[data-theme="dark"] main{ color:#cdd1d6; }
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] h4{ color:#eef0f2; }
+html[data-theme="dark"] strong{ color: color-mix(in srgb, var(--accent-darker, var(--accent, #d4a847)) 55%, white 45%) !important; }
+html[data-theme="dark"] main a:not(.gp-drawer-links a){ color: color-mix(in srgb, var(--cool, var(--accent, #0f6b6b)) 60%, white 40%); }
+
+html[data-theme="dark"] .module, html[data-theme="dark"] section.module, html[data-theme="dark"] .blurt-prompt,
+html[data-theme="dark"] .primers li, html[data-theme="dark"] .sched-day, html[data-theme="dark"] .sched .day,
+html[data-theme="dark"] .bridge, html[data-theme="dark"] .diagram-wrap, html[data-theme="dark"] details.qsec,
+html[data-theme="dark"] details.quizset, html[data-theme="dark"] details.gate, html[data-theme="dark"] details.qa,
+html[data-theme="dark"] .quiz-q, html[data-theme="dark"] .qq, html[data-theme="dark"] .fc-back,
+html[data-theme="dark"] .mnemonic, html[data-theme="dark"] figure.dia, html[data-theme="dark"] .q, html[data-theme="dark"] .quiz-item{
+  background: color-mix(in srgb, #1e2125 70%, transparent) !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .qa, html[data-theme="dark"] .quiz-a{ color:#c4cad0 !important; }
+html[data-theme="dark"] table, html[data-theme="dark"] td, html[data-theme="dark"] th{ color:#c7cbd1 !important; border-color: rgba(255,255,255,.10) !important; }
+html[data-theme="dark"] blockquote{ border-color: rgba(255,255,255,.18) !important; }
+html[data-theme="dark"] .site-footer, html[data-theme="dark"] footer{ color:#9aa1a8 !important; }
+</style>
+  <style id="mindmap-style">
+.mindmap-section .mm-inner { padding: 2.2rem 2rem 2.4rem; }
+
+.mm-intro { text-align: center; max-width: 700px; margin: 0 auto 2rem; }
+.mm-tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--cool-pale); color: var(--cool);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .35rem .85rem; border-radius: 999px; margin-bottom: .9rem;
+}
+.mm-intro h2 {
+  font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-2xl); color: var(--ink);
+  margin: 0 0 .6rem;
+}
+.mm-intro p { color: var(--ink-soft); font-size: var(--fs-sm); line-height: 1.6; margin: 0 0 1.1rem; }
+.mm-actions { display: flex; justify-content: center; gap: .6rem; }
+.mm-btn {
+  font-family: 'Inter', sans-serif; font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .03em; color: var(--accent-dark); background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: .5rem 1rem; cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.mm-btn:hover { background: var(--accent-pale); border-color: var(--accent); }
+
+.mm-root {
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  width: fit-content; margin: 0 auto;
+  background: linear-gradient(90deg, var(--accent-darker, var(--rust-dark)), var(--cool));
+  color: white; font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+  font-size: var(--fs-lg); text-align: center; line-height: 1.15;
+  padding: .85rem 1.6rem; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.mm-root-emoji { font-size: 1.4em; }
+.mm-bus { width: 2px; height: 22px; background: var(--border); margin: 0 auto; }
+
+.mm-branches {
+  display: grid; gap: .65rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { .mm-branches { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .mm-branches { grid-template-columns: 1fr; } }
+
+.mm-branch {
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: white; align-self: start;
+  border-top: 3px solid var(--mm-c, var(--accent));
+}
+.mm-node {
+  width: 100%; display: flex; align-items: center; gap: .65rem;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Inter', sans-serif; color: var(--ink);
+}
+.mm-module {
+  padding: .8rem .9rem;
+}
+.mm-mnum {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 700;
+  color: white; background: var(--mm-c, var(--accent)); border-radius: 5px;
+  padding: 3px 6px; flex-shrink: 0;
+}
+.mm-mtext { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.mm-mtitle { font-weight: 700; font-size: var(--fs-sm); color: var(--ink); }
+.mm-msub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+.mm-chev {
+  flex-shrink: 0; color: var(--muted); font-size: .8rem;
+  transition: transform .25s ease;
+}
+.mm-module[aria-expanded="true"] .mm-chev,
+.mm-sub[aria-expanded="true"] .mm-chev { transform: rotate(90deg); color: var(--mm-c, var(--accent)); }
+.mm-module:hover, .mm-sub:hover { background: var(--cream); }
+
+.mm-children {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  background: var(--cream);
+  transition: grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.mm-children > div { overflow: hidden; min-height: 0; }
+.mm-branch:has(.mm-module[aria-expanded="true"]) .mm-children { grid-template-rows: 1fr; }
+
+.mm-twig { border-top: 1px solid var(--border); }
+.mm-twig:first-child { border-top: 1px solid var(--border); }
+.mm-sub { padding: .6rem .9rem .6rem 1.5rem; font-size: .82rem; font-weight: 600; align-items: flex-start; }
+.mm-stext { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.mm-stitle { line-height: 1.3; }
+.mm-ssub { font-size: .7rem; font-weight: 400; color: var(--muted); line-height: 1.4; white-space: normal; }
+.mm-sub .mm-chev { margin-top: 2px; }
+
+.mm-leaves {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  list-style: none; margin: 0; padding: 0 1.1rem 0 2.2rem;
+  transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1), padding .35s ease;
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.55;
+}
+.mm-leaves > li { overflow: hidden; min-height: 0; }
+.mm-twig:has(.mm-sub[aria-expanded="true"]) .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
+.mm-leaves li {
+  position: relative; padding: .25rem 0 .25rem .85rem; border-bottom: 1px dashed var(--border);
+}
+.mm-leaves li:last-child { border-bottom: none; }
+.mm-leaves li::before {
+  content: '•'; position: absolute; left: 0; color: var(--mm-c, var(--accent)); font-weight: 700;
+}
+.mm-leaves li.mm-eq {
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent-darker, var(--rust-dark));
+  background: var(--accent-pale); border-radius: 4px; padding: .35rem .5rem .35rem .85rem;
+  border-bottom: none; margin: .2rem 0;
+}
+.mm-leaves li.mm-eq::before { content: 'ƒ'; }
+
+html[data-theme="dark"] .mm-branch { background: #1e2125; border-color: rgba(255,255,255,.10); }
+html[data-theme="dark"] .mm-children { background: #181a1d; }
+html[data-theme="dark"] .mm-twig { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-leaves li { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-node { color: #d7dce1; }
+html[data-theme="dark"] .mm-mtitle { color: #eef1f4; }
+html[data-theme="dark"] .mm-module:hover, html[data-theme="dark"] .mm-sub:hover { background: rgba(255,255,255,.05); }
+html[data-theme="dark"] .mm-leaves { color: #b7bec5; }
+html[data-theme="dark"] .mm-leaves li.mm-eq { background: rgba(176,116,16,.18); color: #e8c98a; }
+html[data-theme="dark"] .mm-btn { background: #1e2125; color: #e8c98a; border-color: rgba(255,255,255,.15); }
+html[data-theme="dark"] .mm-btn:hover { background: rgba(176,116,16,.18); }
+html[data-theme="dark"] .mm-tag { background: rgba(15,107,107,.2); color: #6fc6c6; }
+html[data-theme="dark"] .mm-intro h2 { color: #eef1f4; }
+html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-children, .mm-leaves, .mm-chev { transition: none; }
+}
+
+.mm-branch.mm-open > .mm-children { grid-template-rows: 1fr; }
+.mm-twig.mm-open > .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
 </style>
   <link rel="stylesheet" href="learning-interactive.css">
+  <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<div class="gp-toolbar" role="toolbar" aria-label="Page controls">
+  <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
+  <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+  <button id="gpDarkToggle" class="gp-tool-btn" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  <button id="gpRandomQuiz" class="gp-tool-btn" type="button" title="Random quiz question" aria-label="Open a random quiz question">🎲</button>
+  <button id="gpToolbarExpand" class="gp-tool-btn gp-toolbar-expand" type="button" title="More controls" aria-label="Show more controls" aria-expanded="false">›</button>
+  <div class="gp-toolbar-extra" id="gpToolbarExtraOuter">
+    <div class="gp-toolbar-extra-inner" id="gpToolbarExtra"></div>
+  </div>
+</div>
+<div class="gp-drawer-overlay" id="gpDrawerOverlay"></div>
+<aside class="gp-drawer" id="gpDrawer" aria-label="Chapter index">
+  <div class="gp-drawer-head">
+    <span>Chapters</span>
+    <button id="gpDrawerClose" class="gp-drawer-close" type="button" aria-label="Close chapters index">✕</button>
+  </div>
+  <nav class="gp-drawer-links" id="gpDrawerLinks"></nav>
+</aside>
+
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
 
 <!-- ═══════════════ HERO ═══════════════ -->
 <header class="hero">
@@ -535,7 +948,7 @@
     <a href="learning.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">← Learning Hub</a>
     <a href="index.html" style="display:inline-block;margin:0 4px;font-size:.78rem;font-weight:600;color:rgba(255,255,255,.85);background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;text-decoration:none">🏠 Study Hub</a>
   </div>
-  <div class="eyebrow">Goodman &amp; Gilman 14th Edition — Section IX</div>
+  <div class="eyebrow">Pharmacology Learning System — Section IX</div>
   <h1>Special Systems Pharmacology</h1>
   <p class="hero-sub">Ocular · Dermatological · Environmental — Three Chapters, One Visual Logic</p>
   <div class="chips">
@@ -545,7 +958,14 @@
     <span class="chip">3 Modules · 45 Quiz Q&amp;As · 4 SVG Diagrams</span>
     <span class="chip">🎨 Saffron × Rust × Deep Teal Palette</span>
   </div>
-</header>
+
+    <div class="gp-stat-row">
+      <span class="gp-stat-pill">⭐ Tier 1 — Ch.74 Ocular</span>
+      <span class="gp-stat-pill">⭐⭐ Tier 2 — Ch.75 Dermatological</span>
+      <span class="gp-stat-pill">📐 Tier 3 — Ch.76 Environmental</span>
+      <span class="gp-stat-pill">3 Modules · 45 Quiz Q&As · 4 SVG Diagrams</span>
+    </div>
+  </header>
 
 <!-- ═══════════════ METHOD STRIP ═══════════════ -->
 <div class="method-strip">
@@ -573,6 +993,7 @@
 
 <!-- ═══════════════ NAV ═══════════════ -->
 <nav class="sticky-nav">
+  <a class="nav-link" href="#mindmap">🗺️ Mind Map</a>
   <a class="nav-link" href="#ch74">Ch.74 Ocular</a>
   <a class="nav-link" href="#ch75">Ch.75 Dermatological</a>
   <a class="nav-link" href="#ch76">Ch.76 Environmental</a>
@@ -583,6 +1004,172 @@
 </nav>
 
 <main class="container">
+
+<section class="module mindmap-section" id="mindmap">
+<div class="mm-inner">
+  <div class="mm-intro">
+    <div class="mm-tag"><span>🗺️</span> Interactive Mind Map</div>
+    <h2>See the whole chapter at a glance</h2>
+    <p>Click a module below to branch into its subheadings — click a subheading to reveal the short topics and key formulas underneath it. Click anything again to collapse it.</p>
+    <div class="mm-actions">
+      <button id="mmExpandAll" class="mm-btn" type="button">Expand all</button>
+      <button id="mmCollapseAll" class="mm-btn" type="button">Collapse all</button>
+    </div>
+  </div>
+
+  <div class="mindmap" id="mindmapTree">
+    <div class="mm-root"><span class="mm-root-emoji">👁️</span><span>Special Systems<br>Pharmacology</span></div>
+    <div class="mm-bus" aria-hidden="true"></div>
+    <div class="mm-branches">
+
+      <div class="mm-branch" style="--mm-c:#0f6b6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-ch74">
+          <span class="mm-mnum">74</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Ocular Pharmacology</span><span class="mm-msub">How drugs change pupil size, eye pressure, and the visual cycle — and how to read pupil tests.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-ch74">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Why PG Analogues Won the First-Line Battle</span><span class="mm-ssub">Explains why prostaglandin drops like latanoprost became the top glaucoma choice over older β-blocker drops.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Prostaglandin analogues (latanoprost, travoprost, bimatoprost, tafluprost) act on FP receptors in the ciliary muscle to open up a second drainage route for eye fluid (uveoscleral outflow).</li>
+              <li>This route normally carries only 5–20% of outflow, but loosening the tissue around it lets a lot more fluid drain out, cutting eye pressure by 25–35%.</li>
+              <li>Big advantages: once-daily dosing, and the drug is broken down locally in the cornea so little reaches the rest of the body.</li>
+              <li>β-blockers instead just reduce fluid production, but they get absorbed through the nose and can slow the heart or trigger asthma — which is why prostaglandins overtook them as first choice.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Nasolacrimal Systemic Absorption</span><span class="mm-ssub">Eye drops can sneak into the bloodstream through the nose, causing whole-body side effects you wouldn't expect from "just an eye drop."</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Eye drops drain through a tear duct into the nose, where the lining is full of blood vessels — so the drug bypasses the liver's usual filtering (first-pass metabolism).</li>
+              <li>One timolol drop can deliver enough β-blocker into the blood to slow the heart — so pulse should be checked in patients using these drops.</li>
+              <li>Brimonidine (an α2 drug) can cross into a baby's brain and cause breathing to slow or stop (apnea) in neonates.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Corneal Drug Penetration — The Fat-Water-Fat Rule</span><span class="mm-ssub">Describes what kind of molecule can actually get through the eye's surface layers to reach the inside of the eye.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>The cornea has three layers a drug must cross: an oily (hydrophobic) outer layer, a watery (hydrophilic) middle layer, then another oily layer.</li>
+              <li>A purely oil-loving drug gets stuck in the first layer; a purely water-loving drug can't even enter it — only a molecule that is both ("amphipathic") gets all the way through.</li>
+              <li>Latanoprost is designed as an oily prodrug to get in, then the eye's own enzymes convert it to its active, water-friendlier form once inside.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Echothiophate → Cataracts: The Mechanism</span><span class="mm-ssub">Explains why one particular glaucoma drug, unlike similar ones, can cause cataracts over time.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Echothiophate permanently blocks the enzyme that breaks down acetylcholine, so its pupil-constricting effect never lets up.</li>
+              <li>This nonstop pulling on the lens's support fibers slowly damages how the lens feeds itself, eventually causing cataracts.</li>
+              <li>Pilocarpine causes the same kind of pupil constriction but is reversible and milder, so it doesn't carry the same cataract risk.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The Horner Diagnostic Logic</span><span class="mm-ssub">Walks through which eye-drop tests are used to pinpoint exactly where a damaged sympathetic nerve pathway has gone wrong.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Horner syndrome means a break somewhere in the nerve pathway that normally widens the pupil, causing droopy eyelid, small pupil, and dry skin on one side.</li>
+              <li>Cocaine drops normally widen a healthy pupil; in Horner syndrome there's no widening because the damaged nerve isn't releasing its chemical messenger.</li>
+              <li>Apraclonidine causes strong widening specifically in the Horner eye, because the eye becomes oversensitive to that chemical messenger after the nerve damage.</li>
+              <li>Hydroxyamphetamine tells you whether the damage is before or after the last nerve junction — no widening means the very last nerve segment is the damaged one.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#a8331f">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-ch75">
+          <span class="mm-mnum">75</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Dermatological Pharmacology</span><span class="mm-msub">Covers retinoids, steroid creams, and biologic injections used for acne, psoriasis, and eczema, plus how skin absorbs drugs.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-ch75">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Retinoids: Nuclear Receptor Logic</span><span class="mm-ssub">Explains the two different "modes" retinoid drugs work through, and why each mode suits different skin conditions.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Retinoids attach to receptors inside the cell (RAR and RXR) that turn certain genes on or off.</li>
+              <li>RAR-acting retinoids (tretinoin, adapalene, tazarotene, acitretin) mainly fix how skin cells grow and mature — used for acne, psoriasis, sun-damaged skin.</li>
+              <li>RXR-acting retinoids (bexarotene, alitretinoin) mainly push abnormal cells toward self-destruction — used for certain skin cancers.</li>
+              <li>Isotretinoin works differently and somewhat mysteriously — it shrinks oil glands and reduces acne-causing bacteria, and can cure severe acne in about 70% of patients after one course.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Acitretin's 3-Year Contraception Requirement</span><span class="mm-ssub">Explains the odd rule that a pregnancy-risk drug needs years of contraception after stopping it, because of an interaction with alcohol.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Acitretin itself clears the body in about 50 hours, which would normally be safe quickly after stopping.</li>
+              <li>But if the patient drinks any alcohol while on it, the drug converts into etretinate, which gets stored in body fat and lingers for months (80–160 days half-life).</li>
+              <li>Because etretinate causes birth defects just like acitretin, doctors require 3 years of contraception after stopping, just in case alcohol was ever consumed during treatment.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Why Facial Steroids Cause Perioral Dermatitis and Rosacea</span><span class="mm-ssub">Explains why strong steroid creams are risky on the face specifically, even though they work fine elsewhere on the body.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Facial skin is thin and absorbs much more steroid than skin elsewhere on the body.</li>
+              <li>Long-term use of strong (fluorinated) steroids on the face disturbs its normal bacterial balance, causing pimple-like bumps around the mouth and flushed, rosacea-like skin.</li>
+              <li>Stopping the steroid can temporarily make this worse before it gets better (a "rebound" effect), so only mild, non-fluorinated steroids should be used on the face.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">IL-17 vs. IL-23 Biologics — Why Candida Risk Differs</span><span class="mm-ssub">Explains why two similar classes of psoriasis injections carry different risks for yeast infections, even though they target the same inflammatory pathway.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>IL-17 normally helps the skin fight off Candida yeast, so drugs that block IL-17 directly (secukinumab, ixekizumab, bimekizumab, brodalumab) raise the risk of yeast infections.</li>
+              <li>IL-23 sits one step earlier in the chain that produces IL-17, so blocking IL-23 (guselkumab, risankizumab, tildrakizumab) doesn't fully remove IL-17's protective effect, leaving fewer Candida infections.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Brodalumab REMS — Suicidal Ideation</span><span class="mm-ssub">Explains why one psoriasis biologic carries a special safety-monitoring program for mental health risk.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Brodalumab blocks the receptor for all forms of IL-17, including effects in the brain, and trials noticed some patients reporting suicidal thoughts.</li>
+              <li>It's not proven that the drug actually causes this — psoriasis patients already have higher rates of depression — but regulators still required a special safety program (REMS) before the drug can be prescribed.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#5b4a7a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-ch76">
+          <span class="mm-mnum">76</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Environmental Toxicology</span><span class="mm-msub">Covers heavy-metal poisoning and which antidote (chelator) to use for each metal, plus how chemicals cause cancer.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-ch76">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Chelation: Why "More Potent" Doesn't Mean Better</span><span class="mm-ssub">Compares two lead-poisoning antidotes and explains why the stronger one isn't always the safer choice.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>CaNa₂EDTA grabs lead well and helps the body excrete it, but it can stir lead loose from tissues and accidentally push some of it into the brain.</li>
+              <li>Succimer (DMSA) is more selective — it mostly leaves essential metals (zinc, copper, iron) alone, doesn't redistribute lead to the brain, and can be taken as a pill.</li>
+              <li>For a child with a moderate lead level who can be treated as an outpatient, succimer is the safer, preferred choice.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Dimercaprol (BAL) Contraindications</span><span class="mm-ssub">Explains which metals dimercaprol should never be used for, and why an oil-based injection has its own special warning.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>For iron, cadmium, and selenium, the dimercaprol-metal combination is actually more toxic than the metal alone, especially to the kidneys — so it should never be used for these.</li>
+              <li>Cadmium poisoning specifically gets worse with any chelation, so it's treated with supportive care only, not antidotes.</li>
+              <li>Dimercaprol is dissolved in peanut oil and given as a painful injection into the muscle, so it cannot be used in patients with peanut allergy.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Methyl Mercury Fetal Toxicity</span><span class="mm-ssub">Explains why a pregnant woman can feel fine after eating mercury-contaminated fish while her unborn baby suffers severe brain damage.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Methyl mercury disguises itself as an amino acid (methionine), so the body's transporters actively carry it across the placenta and into the brain.</li>
+              <li>A developing fetal brain is still building its structure and is extremely sensitive to this kind of damage, while an adult's fully-formed brain tolerates it much better.</li>
+              <li>This mismatch explains Minamata disease — babies born with severe brain damage to mothers who had only mild symptoms themselves.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Aflatoxin B₁ + Hepatitis B: Synergy Mechanism</span><span class="mm-ssub">Explains why having both a liver toxin from moldy food and a hepatitis B infection multiplies liver cancer risk far more than either alone.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Aflatoxin (from moldy grains/nuts) damages liver cell DNA; hepatitis B's HBx protein blocks the cell's normal DNA-repair protein (p53), so that damage doesn't get fixed.</li>
+              <li>Hepatitis B also makes the liver produce more of the enzyme that turns aflatoxin into its cancer-causing form, while reducing the enzyme that detoxifies it.</li>
+              <li>Hepatitis B kills liver cells, forcing the survivors to multiply quickly — spreading any aflatoxin-caused mutations faster.</li>
+              <li>Result: aflatoxin alone raises liver cancer risk about 3-fold, hepatitis B alone about 7-fold, but together the risk rises 59-fold — far more than simply adding the two.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
 
 <!-- ═══════════════════════════════════════════
      MODULE 1 — CHAPTER 74: OCULAR PHARMACOLOGY
@@ -599,7 +1186,7 @@
   <div class="stage">
     <div class="cog">
       <div class="stage-label">🧭 80/20 High-Yield Map</div>
-      <div class="pillar">The eye's autonomic pharmacology is a direct read-off of the peripheral ANS — every drug that dilates, constricts, or changes IOP does so through the same α, β, or M receptors you already know.</div>
+      <div class="pillar">Ocular autonomic pharmacology simply mirrors what's already known about the peripheral ANS elsewhere in the body — any agent that widens or narrows the pupil, or shifts intraocular pressure, is acting through the familiar α, β, or M receptor set.</div>
 
       <!-- SVG 1: Autonomic Eye Pathways -->
       <div class="diagram-wrap">
@@ -642,15 +1229,15 @@
           <text x="350" y="180" text-anchor="middle" font-family="Inter" font-size="22" fill="#1A1A2E">⇔</text>
           <text x="350" y="270" text-anchor="middle" font-family="JetBrains Mono" font-size="10" fill="#7B7B99">BALANCE GOVERNS IOP</text>
         </svg>
-        <div class="diagram-caption">Figure 74-A: Autonomic receptor map of the eye. Receptor subtype determines pharmacological response.</div>
+        <div class="diagram-caption">Figure 74-A: Ocular autonomic receptor map — which receptor subtype is engaged dictates the drug response seen.</div>
       </div>
 
       <p><strong>Key high-yield points:</strong></p>
       <ul>
-        <li><strong>Aqueous humor pathway:</strong> Ciliary processes → posterior chamber → pupil → anterior chamber → trabecular meshwork (80–95%) + uveoscleral route → episcleral veins. <em>Cholinergic drugs target the trabecular pathway; PG analogues target the uveoscleral route.</em></li>
-        <li><strong>Drug-melanin binding:</strong> Dark irides have slower mydriatic onset with α-agonists; chloroquine accumulates in RPE → "bull's-eye" maculopathy.</li>
-        <li><strong>Amphipathic drugs penetrate cornea best</strong> — needs to cross hydrophobic epithelium, hydrophilic stroma, hydrophobic endothelium ("fat-water-fat").</li>
-        <li><strong>Nasolacrimal drainage → systemic absorption bypasses first-pass metabolism</strong> → significant systemic side effects from eye drops (β-blockers → bradycardia; brimonidine → apnea in neonates).</li>
+        <li><strong>Aqueous humor pathway:</strong> Fluid is produced by the ciliary processes, flows into the posterior chamber, passes through the pupil into the anterior chamber, then drains mainly via the trabecular meshwork (80–95%) with the remainder via the uveoscleral route into episcleral veins. <em>Cholinergic agents act on the trabecular route; prostaglandin analogues act on the uveoscleral route.</em></li>
+        <li><strong>Drug-melanin binding:</strong> Heavily pigmented irides dilate more slowly with α-agonists; chloroquine builds up in the RPE, producing "bull's-eye" maculopathy.</li>
+        <li><strong>Cornea favors amphipathic drugs</strong> — a molecule must traverse a hydrophobic epithelium, then a hydrophilic stroma, then a hydrophobic endothelium again (the "fat-water-fat" sandwich).</li>
+        <li><strong>Nasolacrimal drainage lets eye drops dodge first-pass metabolism</strong>, so meaningful systemic effects can follow topical dosing (β-blockers causing bradycardia; brimonidine causing apnea in neonates).</li>
       </ul>
 
       <div class="diagram-wrap">
@@ -704,7 +1291,7 @@
           <text x="565" y="193" text-anchor="middle" font-family="Inter" font-size="10" fill="#3D3D55">Mannitol IV, Glycerin PO</text>
           <text x="565" y="207" text-anchor="middle" font-family="Inter" font-size="9" fill="#7B7B99">Acute IOP crisis — use with caution in CHF/renal failure</text>
         </svg>
-        <div class="diagram-caption">Figure 74-B: Stepwise glaucoma pharmacotherapy. PG analogues replaced β-blockers as first-line due to once-daily dosing and minimal systemic effects.</div>
+        <div class="diagram-caption">Figure 74-B: Stepwise glaucoma drug therapy — PG analogues overtook β-blockers as first choice thanks to once-a-day use and fewer systemic effects.</div>
       </div>
 
       <div class="tbl-wrap">
@@ -754,10 +1341,10 @@
 
       <p><strong>Vitamin A & Visual cycle key points:</strong></p>
       <ul>
-        <li><strong>11-cis-retinal</strong> is the chromophore for both rods and cones. Photon → 11-cis → all-trans → transducin activation → PDE6 activation → ↓ cGMP → CNG channels close → hyperpolarization → ↓ transmitter release.</li>
-        <li><strong>PDE5 inhibitors (sildenafil)</strong> mildly inhibit PDE6 → blue haze / light sensitivity at high doses.</li>
-        <li><strong>Vitamin A deficiency:</strong> Night blindness → xerophthalmia (Bitot spots, keratomalacia) → corneal perforation (irreversible blindness).</li>
-        <li><strong>Hydroxychloroquine toxicity:</strong> Accumulates in RPE → "bull's-eye" maculopathy; max dose 5 mg/kg/day; requires annual eye exams after 5 years.</li>
+        <li><strong>11-cis-retinal</strong> serves as the chromophore in both rod and cone photoreceptors. A photon converts it to all-trans, which activates transducin, which in turn activates PDE6; cGMP then falls, CNG channels shut, the cell hyperpolarizes, and transmitter release drops.</li>
+        <li><strong>PDE5 inhibitors (sildenafil)</strong> have weak off-target PDE6 inhibition, producing a bluish visual haze or light sensitivity at higher doses.</li>
+        <li><strong>Vitamin A deficiency:</strong> Progresses from night blindness to xerophthalmia (Bitot spots, keratomalacia) and, if unchecked, corneal perforation with permanent blindness.</li>
+        <li><strong>Hydroxychloroquine toxicity:</strong> Builds up in the RPE and produces "bull's-eye" maculopathy; the dose ceiling is 5 mg/kg/day, and yearly eye exams are needed once treatment passes the 5-year mark.</li>
       </ul>
     </div>
   </div>
@@ -767,12 +1354,12 @@
     <div class="blurt-stage">
       <div class="stage-label">🧠 Active Recall Gate</div>
       <div class="blurt-prompt">
-        <strong>Clinical scenario:</strong> You are a pharmacology examiner. Close this guide. On paper, dump everything you know about: (1) Why PG analogues replaced β-blockers as first-line glaucoma therapy; (2) How a topical eye drop can cause systemic bradycardia; (3) The drugs used to diagnose Horner syndrome and the principle behind each. Write for 5 minutes before reading the plain-language notes.
+        <strong>Clinical scenario:</strong> Imagine you're the one writing the exam. Shut this guide and, on paper, write out everything you can recall about: (1) what pushed PG analogues ahead of β-blockers as first-line glaucoma treatment; (2) the route by which a topical drop ends up causing systemic bradycardia; (3) the agents used to work up Horner syndrome and the reasoning behind each one. Spend five minutes on this before unlocking the notes below.
       </div>
       <ul class="primers">
-        <li>Why does an amphipathic drug penetrate the cornea better than a purely lipophilic or purely hydrophilic one?</li>
-        <li>Why does brimonidine cause apnea in neonates but is relatively safe in adults?</li>
-        <li>Why does echothiophate (an irreversible AChE inhibitor) cause cataracts, while pilocarpine (a direct agonist) does not?</li>
+        <li>What makes an amphipathic molecule cross the cornea more effectively than one that is only lipophilic or only hydrophilic?</li>
+        <li>Why is apnea a real risk with brimonidine in neonates when adults tolerate it without much trouble?</li>
+        <li>Why does the irreversible AChE inhibitor echothiophate produce cataracts when the direct agonist pilocarpine generally doesn't?</li>
       </ul>
     </div>
   </div>
@@ -783,39 +1370,39 @@
       <summary>✓ I've blurted — reveal the Plain-Language Notes for Ch.74 Ocular Pharmacology</summary>
       <div class="feynman-content">
         <h4>Why PG Analogues Won the First-Line Battle</h4>
-        <p>Prostaglandin F₂α analogues (latanoprost, travoprost, bimatoprost, tafluprost) work by a completely different mechanism from everything else — they activate <strong>FP receptors</strong> (Gq/11-PLC-IP3-Ca²⁺ pathway) in the ciliary muscle, ultimately increasing <strong>uveoscleral outflow</strong>. This is the secondary outflow pathway (normally 5–20%) through the ciliary muscle into the suprachoroidal space. Matrix metalloproteinases are released, digesting extracellular matrix, essentially enlarging the drainage channel. The payoff is <strong>once-daily dosing, minimal systemic effects</strong> (prodrug hydrolyzed locally by corneal esterases), and 25–35% IOP reduction.</p>
-        <p>β-blockers reduce aqueous production (b₂ blockade → ↓ cAMP → ↓ secretion), but timolol is absorbed nasally, causes systemic bradycardia and bronchospasm, and is poorly tolerated in asthmatics. PG analogues won.</p>
+        <p>Prostaglandin F₂α analogues (latanoprost, travoprost, bimatoprost, tafluprost) take an entirely separate route compared with the rest of the glaucoma armamentarium — they act on <strong>FP receptors</strong> (Gq/11-PLC-IP3-Ca²⁺ signaling) in the ciliary muscle, with the end result being a rise in <strong>uveoscleral outflow</strong>. This secondary drainage route (ordinarily handling 5–20% of flow) runs through the ciliary muscle into the suprachoroidal space. Release of matrix metalloproteinases breaks down extracellular matrix there, effectively widening the channel. The benefit: <strong>once-a-day dosing and few systemic effects</strong> (the prodrug is broken down locally by corneal esterases), plus a 25–35% drop in IOP.</p>
+        <p>β-blockers work differently, cutting aqueous production (β2 blockade lowers cAMP and thus secretion), but timolol gets absorbed nasally and can trigger systemic bradycardia and bronchospasm, making it a poor fit for asthmatics. That tradeoff is why PG analogues came out ahead.</p>
 
         <div class="analogy">
-          PG analogues are like opening a second drain in a bathtub that's overflowing — instead of just turning down the tap (as β-blockers do), you widen the uveoscleral drain. More outflow pathways = better IOP control.
+          Think of PG analogues as cutting a second drain into an overflowing bathtub — rather than just easing off the tap the way β-blockers do, you're widening the uveoscleral outlet. Adding outflow capacity controls IOP better than restricting inflow alone.
         </div>
 
         <h4>Nasolacrimal Systemic Absorption — The Hidden Route</h4>
-        <p>When you instil an eye drop, most of it drains through the nasolacrimal duct into the nose. The nasal mucosa is <strong>highly vascular</strong> and absorption here bypasses hepatic first-pass metabolism. So a single timolol eye drop can deliver bioavailable β-blocker systemically. This is why: (a) patients on β-blocker eye drops should have pulse checked; (b) brimonidine (lipophilic, CNS-penetrant α₂ agonist) causes respiratory depression and apnea in neonates — they are actually <em>receiving a systemic CNS depressant</em>.</p>
+        <p>An instilled eye drop largely drains through the nasolacrimal duct into the nasal passage. Because the nasal mucosa is <strong>richly vascularized</strong>, whatever is absorbed there skips hepatic first-pass metabolism entirely. A single timolol drop can therefore deliver a meaningfully bioavailable dose of β-blocker into the bloodstream. That's the reasoning behind: (a) checking pulse in patients using β-blocker drops; (b) brimonidine (a lipophilic α₂ agonist that crosses into the CNS) producing respiratory depression and apnea in neonates — they're effectively getting a systemic CNS depressant.</p>
 
         <h4>Corneal Drug Penetration — The "Fat-Water-Fat" Rule</h4>
-        <p>The cornea has three barriers: hydrophobic epithelium, hydrophilic stroma, hydrophobic endothelium. A purely lipophilic drug gets stuck in the epithelium. A purely hydrophilic drug can't enter the epithelium. An <strong>amphipathic drug</strong> (has both properties) sails through all three. Latanoprost is designed as an isopropyl ester prodrug (lipophilic enough to penetrate) that esterases convert to PGF₂α (active acid form) inside the eye.</p>
+        <p>Three layers stand between a topical drug and the eye's interior: a hydrophobic epithelium, a hydrophilic stroma, then a hydrophobic endothelium. A drug that's purely lipophilic gets trapped in the epithelium; one that's purely hydrophilic can't even enter it. Only an <strong>amphipathic molecule</strong>, with both properties, can move through all three layers. Latanoprost is built as an isopropyl ester prodrug — lipophilic enough to get in — which corneal esterases then convert to PGF₂α, the active acid form, once inside the eye.</p>
 
         <h4>Echothiophate → Cataracts: The Mechanism</h4>
-        <p>Echothiophate is an irreversible organophosphate AChE inhibitor. Its quaternary ammonium structure keeps it charged → it stays in the anterior chamber. Chronic intense parasympathetic stimulation causes miosis. The chronic miotic tension on the zonular apparatus and lens may alter lens metabolism, causing posterior subcapsular cataracts. Pilocarpine causes miosis too, but as a reversible direct agonist its intensity is lower and offset by natural variation between doses. Echothiophate's irreversibility means continuous supersaturation of receptors.</p>
+        <p>Echothiophate, an organophosphate that inhibits AChE irreversibly, carries a quaternary ammonium group that keeps it charged and confined to the anterior chamber. This produces sustained, intense parasympathetic drive and miosis. That ongoing miotic pull on the zonules and lens can disturb lens metabolism over time, leading to posterior subcapsular cataracts. Pilocarpine also causes miosis, but being a reversible direct agonist its effect is milder and varies between doses, whereas echothiophate's irreversibility keeps receptors continuously saturated.</p>
 
         <h4>The Horner Diagnostic Logic</h4>
-        <p>Horner = loss of sympathetic tone (ptosis, miosis, anhidrosis). The three-neuron chain (hypothalamus → cilio-spinal center → superior cervical ganglion → iris dilator) is tested pharmacologically:</p>
+        <p>Horner syndrome reflects lost sympathetic outflow (ptosis, miosis, anhidrosis). Pharmacologic testing probes the three-neuron chain (hypothalamus → cilio-spinal center → superior cervical ganglion → iris dilator) at different points:</p>
         <ul>
-          <li><strong>Cocaine 10%</strong> → normally dilates (blocks NE reuptake). In Horner, <em>no dilation</em> because the terminal neuron isn't releasing NE to reuptake.</li>
-          <li><strong>Apraclonidine 0.5%</strong> → α₂ dominant normally → minimal dilation. In Horner, <em>denervation supersensitivity</em> upregulates α₁ → marked dilation. Now commonly replaces cocaine.</li>
-          <li><strong>Hydroxyamphetamine 1%</strong> → releases NE from postganglionic terminal. Dilates if postganglionic is intact (1st/2nd order Horner). <em>No dilation</em> = postganglionic lesion (3rd order Horner) — the neuron has no NE to release.</li>
-          <li><strong>Pilocarpine 0.05–0.1%</strong> → only dilute enough to stimulate <em>supersensitive</em> M receptors (Adie's pupil has parasympathetic denervation → supersensitive M₃). Normal pupils don't respond.</li>
+          <li><strong>Cocaine 10%</strong> — ordinarily produces dilation by blocking NE reuptake. With Horner present, there's <em>no dilation</em> since the damaged terminal neuron isn't releasing NE in the first place.</li>
+          <li><strong>Apraclonidine 0.5%</strong> — normally produces little dilation since α₂ effects dominate. In Horner syndrome, <em>denervation supersensitivity</em> upregulates α₁ receptors, so dilation becomes pronounced — this test has largely taken over from cocaine.</li>
+          <li><strong>Hydroxyamphetamine 1%</strong> — triggers NE release from the postganglionic terminal. Dilation occurs if that neuron is intact (1st- or 2nd-order Horner); absence of dilation points to a postganglionic lesion (3rd-order Horner), since there's no NE left to release.</li>
+          <li><strong>Pilocarpine 0.05–0.1%</strong> — dilute enough to act only on <em>supersensitive</em> M receptors, as seen in Adie's pupil where parasympathetic denervation upregulates M₃. A normal pupil shows no response at this concentration.</li>
         </ul>
 
         <blockquote class="warn">
-          Betaxolol is β₁-selective and less efficacious for glaucoma because ocular β receptors are predominantly β₂. But betaxolol is preferred if the patient has asthma — less pulmonary β₂ blockade. Don't confuse selectivity with efficacy in the eye.
+          Betaxolol's β₁ selectivity makes it less powerful for IOP control, since the eye's β receptors are mostly β₂ subtype — yet that same selectivity is exactly why it's chosen for patients with asthma, sparing pulmonary β₂ receptors. Efficacy and receptor selectivity are separate issues here, not interchangeable.
         </blockquote>
         <blockquote class="warn">
-          Iris pigmentation from PG analogues (especially in hazel/mixed irides) is PERMANENT — melanocytes in the stroma produce more melanin. Differentiate this from conjunctival hyperemia (reversible) and orbital fat atrophy (structural, not pigmentary).
+          PG-analogue-induced iris darkening (most noticeable in hazel or mixed-color irides) is PERMANENT, driven by increased melanin output from stromal melanocytes. Keep this distinct from conjunctival hyperemia (which resolves) and orbital fat atrophy (a structural change, not a pigment change).
         </blockquote>
         <blockquote class="warn">
-          Topical steroids cause THREE classic complications: posterior subcapsular cataracts, secondary open-angle glaucoma (with positive family history, up to 90% of patients develop marked IOP elevation), and opportunistic infections. Loteprednol was engineered to reduce (NOT eliminate) IOP risk — it undergoes rapid inactivation by the eye's own 11β-HSD.
+          Topical steroids carry three signature risks: posterior subcapsular cataracts, secondary open-angle glaucoma (in those with a family history, IOP can spike markedly in up to 90%), and opportunistic infection. Loteprednol was designed to lower (though not eliminate) the glaucoma risk, since the eye's own 11β-HSD rapidly inactivates it.
         </blockquote>
       </div>
     </details>
@@ -832,7 +1419,7 @@
         <div class="sched-day"><strong>Day 21</strong> Integrate: patient on 25 years HCQ for SLE — what monitoring? Neonate given eye drops — what systemic risk and why?</div>
       </div>
       <div class="bridge">
-        <strong>Clinical Bridge:</strong> Furosemide (like latanoprost) is a prodrug-like molecule with site-specific activation — furosemide acts from the tubular lumen side (urinary concentration is the pharmacologically relevant measure). Similarly, latanoprost prodrug is activated at the corneal surface. Both illustrate how the <em>site of bioactivation determines the pharmacokinetically relevant compartment</em>. Measuring urinary furosemide samples the pharmacologically active compartment directly — exactly analogous to measuring intraocular PGF₂α rather than plasma latanoprost.
+        <strong>Clinical Bridge:</strong> Furosemide resembles latanoprost in that both depend on activation occurring at a specific site — furosemide must act from within the tubular lumen (so urinary concentration is what matters pharmacologically), while latanoprost's prodrug is converted to its active form at the corneal surface. Both cases show that <em>where bioactivation happens defines which compartment is pharmacokinetically relevant</em>. Sampling urinary furosemide reflects the drug's actual site of action directly, just as measuring intraocular PGF₂α — rather than plasma latanoprost — tells you what's actually happening at the target tissue.
       </div>
     </div>
   </div>
@@ -843,7 +1430,7 @@
 <section id="flashcards">
   <div class="wrap">
     <h2>🃏 Clinical Vignette Flashcards</h2>
-    <p class="fc-lead">Tap a card to reveal the answer, mechanism, clinical pearl, and exam trap. Twenty high-yield scenarios spanning ocular, dermatological, and environmental/toxicology pharmacology.</p>
+    <p class="fc-lead">Click any card to see the answer, the underlying mechanism, a clinical pearl, and a common exam pitfall. Twenty high-yield scenarios covering ocular, dermatological, and environmental/toxicology pharmacology.</p>
     <div class="flashcards">
       <details class="flashcard">
         <summary>
@@ -851,9 +1438,9 @@
           <span class="fc-q">A 65-year-old man with open-angle glaucoma is started on latanoprost eye drops. After 6 weeks he notices his iris has turned from grey-green to brown, and his eyelashes are longer and darker. Explain.</span>
         </summary>
         <div class="fc-back">
-          <div class="fc-answer">Latanoprost is a <strong>prostaglandin F2α (PGF2α) analogue</strong> — it increases uveoscleral outflow (the non-conventional aqueous humour drainage pathway) → reduces intraocular pressure (IOP). Melanocyte stimulation: PGF2α receptors (FP receptors) on iris melanocytes → upregulate melanin synthesis in iris stromal melanocytes → <strong>irreversible iris colour darkening</strong> (heterochromia if one eye treated). Eyelash effects: FP receptors on follicular melanocytes and dermal papilla cells → increased melanogenesis + follicle anagen extension → <strong>hypertrichosis</strong> (longer, thicker, darker lashes — eyelash growth is actually a cosmetic application of bimatoprost, a related prostamide). Both effects are permanent even after stopping the drug.</div>
-          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> First-line IOP-lowering agents for glaucoma: <strong>prostaglandin analogues</strong> (latanoprost, bimatoprost, travoprost — once daily, excellent efficacy) > beta-blockers (timolol) > alpha-2 agonists (brimonidine) > carbonic anhydrase inhibitors (dorzolamide). Prostaglandins are first-line because of once-daily dosing, highest efficacy, and no systemic cardiovascular or pulmonary effects.</div>
-          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Prostaglandin analogues are <strong>contraindicated in uveitis and cystoid macular oedema</strong> — FP receptor stimulation promotes prostaglandin-mediated inflammation. Also contraindicated in aphakic/pseudophakic eyes at risk of CMO. In these patients, use beta-blockers or carbonic anhydrase inhibitors as first-line alternatives.</div>
+          <div class="fc-answer">Latanoprost, a <strong>prostaglandin F2α (PGF2α) analogue</strong>, lowers intraocular pressure (IOP) by boosting uveoscleral outflow, the alternative aqueous-drainage route. Its effect on pigmentation: FP receptors on iris melanocytes get stimulated, ramping up melanin production in the stromal melanocytes, which produces <strong>irreversible darkening of iris color</strong> (heterochromia if only one eye is treated). The lash changes follow a similar path: FP receptors on follicular melanocytes and dermal papilla cells drive extra melanin production plus a longer anagen phase, giving <strong>hypertrichosis</strong> — lashes that are longer, thicker, and darker (this same property is exploited cosmetically with bimatoprost, a related prostamide). Neither change reverses once the drug is stopped.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Glaucoma drug ranking by first-line preference: <strong>prostaglandin analogues</strong> (latanoprost, bimatoprost, travoprost — once daily, very effective) rank above beta-blockers (timolol), which rank above alpha-2 agonists (brimonidine), which rank above carbonic anhydrase inhibitors (dorzolamide). Prostaglandins lead the list because of their single daily dose, strong efficacy, and lack of cardiovascular or pulmonary systemic effects.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Prostaglandin analogues should be <strong>avoided in uveitis and cystoid macular oedema</strong> — stimulating FP receptors promotes prostaglandin-driven inflammation, and they're also unsuitable for aphakic/pseudophakic eyes prone to CMO. Beta-blockers or carbonic anhydrase inhibitors become the first-line choice in these patients instead.</div>
         </div>
       </details>
       <details class="flashcard">
@@ -862,9 +1449,9 @@
           <span class="fc-q">Timolol eye drops are prescribed for glaucoma in a 70-year-old man with mild COPD. Two weeks later he is admitted with acute bronchospasm. How did topical timolol cause systemic effects?</span>
         </summary>
         <div class="fc-back">
-          <div class="fc-answer">Timolol is a non-selective <strong>beta-blocker (β1 + β2 blockade)</strong>. Topical eye drops drain via the nasolacrimal duct into the nasal cavity → absorbed via nasal mucosa → enters systemic circulation, <strong>bypassing first-pass hepatic metabolism</strong> → systemic bioavailability ~80% of topical dose. β2 blockade in bronchial smooth muscle → bronchoconstriction → acute bronchospasm in susceptible patients (COPD, asthma). Systemic effects also include: bradycardia, heart block, hypotension, masking hypoglycaemia, fatigue. Prevention: nasolacrimal occlusion (press the inner corner of the eye after instillation × 1–2 minutes) reduces systemic absorption by ~50%.</div>
-          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Timolol reduces aqueous humour <strong>production</strong> (β2 receptors on ciliary body epithelium → reduced cAMP → reduced aqueous secretion). It lowers IOP but does NOT affect outflow. Contraindications: asthma, severe COPD, heart block, bradycardia, decompensated heart failure. Use betaxolol (β1-selective) as an alternative in mild COPD — lower bronchospasm risk.</div>
-          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Systemic side effects from eye drops are commonly underestimated and under-reported. Always check for eye drop use when evaluating bradycardia, bronchospasm, or fatigue — patients often forget to mention 'just eye drops.' The nasolacrimal drainage route means topical ocular drugs can achieve significant systemic drug levels.</div>
+          <div class="fc-answer">Timolol blocks both β1 and β2 receptors non-selectively. Drops applied to the eye drain through the nasolacrimal duct into the nose, get absorbed by the nasal mucosa, and reach the systemic circulation while <strong>skipping hepatic first-pass metabolism</strong> — roughly 80% of the topical dose ends up systemically bioavailable. β2 blockade in the airway smooth muscle then triggers bronchoconstriction, causing acute bronchospasm in patients already prone to it (COPD, asthma). Other systemic consequences include bradycardia, heart block, hypotension, masked hypoglycaemia, and fatigue. Occluding the nasolacrimal punctum (pressing the inner corner of the eye for 1–2 minutes after dosing) cuts systemic absorption by about half.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Timolol works by cutting aqueous humour <strong>production</strong>: β2 receptors on the ciliary body epithelium are blocked, cAMP falls, and secretion drops accordingly — outflow is unaffected. Avoid it in asthma, severe COPD, heart block, bradycardia, or decompensated heart failure. Betaxolol, being β1-selective, is a reasonable substitute in mild COPD with less bronchospasm risk.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Systemic effects from eye drops get overlooked far too often. Anyone presenting with bradycardia, bronchospasm, or fatigue should be asked specifically about eye drop use, since patients rarely think to mention them. Because of nasolacrimal drainage, a "just eye drops" history can still translate into clinically significant systemic drug exposure.</div>
         </div>
       </details>
       <details class="flashcard">
@@ -873,9 +1460,9 @@
           <span class="fc-q">A patient with acute angle-closure glaucoma presents with severe eye pain, vomiting, and IOP of 58 mmHg. After pilocarpine and IV acetazolamide, IOP falls to 35 mmHg. Explain the mechanisms of both drugs.</span>
         </summary>
         <div class="fc-back">
-          <div class="fc-answer"><strong>Pilocarpine</strong> (direct M3 muscarinic agonist): stimulates ciliary muscle contraction → pulls on trabecular meshwork → opens Schlemm's canal → increases conventional (trabecular) aqueous outflow. Also causes miosis (sphincter pupillae contraction) → in acute angle-closure, miosis pulls the iris away from the trabecular meshwork → opens the drainage angle. <strong>Acetazolamide IV</strong> (carbonic anhydrase inhibitor): inhibits CA-II and CA-IV in ciliary body epithelium → reduces HCO₃⁻ production → reduces Na⁺ and water secretion into posterior chamber → dramatically reduces aqueous humour formation (→ IOP reduction within 30 minutes). Definitive treatment: <strong>Nd:YAG laser peripheral iridotomy</strong> — creates a hole in the peripheral iris → equalises pressure between posterior and anterior chambers → eliminates pupillary block.</div>
-          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Systemic acetazolamide causes metabolic acidosis (inhibits renal tubular CA → impaired HCO₃⁻ reabsorption → bicarbonate wasting → non-anion gap metabolic acidosis). Also causes sulfonamide-type side effects (nephrolithiasis, paraesthesiae, hypokalaemia). Contraindicated in sulfonamide allergy and severe renal failure.</div>
-          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Pilocarpine causes <strong>miosis</strong> (pupil constriction) — do NOT use in open-angle glaucoma as monotherapy (miosis reduces vision in dim light, causes headache from ciliary spasm). Also: systemic pilocarpine effects (DUMBELS — cholinergic stimulation) — avoid in asthma, bowel obstruction, urinary obstruction. In ACUTE angle-closure, pilocarpine is appropriate; in CHRONIC open-angle glaucoma, prostaglandins and beta-blockers are preferred.</div>
+          <div class="fc-answer"><strong>Pilocarpine</strong>, a direct M3 muscarinic agonist, contracts the ciliary muscle, which tugs open the trabecular meshwork and Schlemm's canal, boosting conventional outflow. It also produces miosis via sphincter pupillae contraction; in acute angle-closure, this pulls the iris away from the trabecular meshwork and reopens the drainage angle. <strong>IV acetazolamide</strong>, a carbonic anhydrase inhibitor, blocks CA-II and CA-IV in the ciliary epithelium, which curbs HCO₃⁻ generation and thereby Na⁺/water secretion into the posterior chamber — aqueous production drops sharply and IOP falls within roughly 30 minutes. The definitive fix is <strong>Nd:YAG laser peripheral iridotomy</strong>, which punches a hole through the peripheral iris to equalize pressure across the chambers and eliminate the pupillary block.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Systemic acetazolamide produces metabolic acidosis by blocking renal tubular CA, impairing HCO₃⁻ reabsorption and causing bicarbonate loss (a non-anion-gap acidosis). It also brings sulfonamide-type effects — nephrolithiasis, paraesthesiae, hypokalaemia — and should be avoided with sulfonamide allergy or severe renal impairment.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Pilocarpine's <strong>miosis</strong> makes it unsuitable as standalone therapy for open-angle glaucoma — constricted pupils worsen dim-light vision and ciliary spasm causes headache. Its systemic cholinergic effects (the DUMBELS pattern) also mean caution in asthma or bowel/urinary obstruction. The drug is appropriate for ACUTE angle-closure but in CHRONIC open-angle disease, prostaglandins and beta-blockers are favored.</div>
         </div>
       </details>
       <details class="flashcard">
@@ -884,9 +1471,9 @@
           <span class="fc-q">A dermatology patient with severe plaque psoriasis on cyclosporin develops new hypertension and rising creatinine. What is the mechanism, and what topical immunosuppressant avoids these systemic effects?</span>
         </summary>
         <div class="fc-back">
-          <div class="fc-answer">Cyclosporin inhibits calcineurin → blocks NFAT → reduces IL-2 → suppresses T-cell activation → reduces the Th1/Th17-driven keratinocyte hyperproliferation in psoriasis. Systemic toxicity: <strong>nephrotoxicity</strong> — cyclosporin causes afferent arteriolar vasoconstriction (via TXA2, ET-1 upregulation, reduced NO/PGI2) → reduced GFR → progressive CKD with chronic use. Also causes hypertension (same vascular mechanism), hyperkalaemia, hypomagnesaemia, gingival hyperplasia, hirsutism. Topical alternative: <strong>tacrolimus</strong> (Protopic) or <strong>pimecrolimus</strong> (Elidel) — topical calcineurin inhibitors. Applied to skin → inhibit T-cell calcineurin locally → reduce cytokine production → reduce inflammation. Negligible systemic absorption from intact skin → minimal nephrotoxicity or immunosuppression.</div>
-          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Topical tacrolimus/pimecrolimus carry a black-box warning about theoretical malignancy risk (lymphoma, skin cancer) — based on systemic immunosuppressive experience. However, topical levels are far below systemic levels achieved with oral tacrolimus, and evidence for actual malignancy risk from topical use is weak. Still, avoid use on malignant/pre-malignant skin lesions.</div>
-          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Cyclosporin nephrotoxicity is <strong>dose-dependent and partially reversible</strong> on dose reduction, but chronic use causes irreversible interstitial fibrosis. Distinguish from tacrolimus nephrotoxicity (same mechanism, same monitoring required). Cyclosporin maximum duration for psoriasis: 2 years (due to cumulative nephrotoxicity). Monitor creatinine, BP, and drug levels throughout.</div>
+          <div class="fc-answer">Cyclosporin works by inhibiting calcineurin, which blocks NFAT activity, lowers IL-2 output, and dampens T-cell activation — the net effect being less Th1/Th17-driven keratinocyte overgrowth in psoriasis. Its systemic downside is <strong>nephrotoxicity</strong>: the drug constricts the afferent arteriole (via increased TXA2 and ET-1, reduced NO/PGI2), which lowers GFR and, with chronic use, drives progressive CKD. The same vascular effect explains the hypertension; hyperkalaemia, hypomagnesaemia, gingival hyperplasia, and hirsutism round out its toxicity profile. A topical option that sidesteps this is <strong>tacrolimus</strong> (Protopic) or <strong>pimecrolimus</strong> (Elidel) — both calcineurin inhibitors applied directly to skin, where they suppress local T-cell cytokine output and inflammation. Because intact skin absorbs so little of either drug, nephrotoxicity and systemic immunosuppression are minimal.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Topical tacrolimus and pimecrolimus both carry a black-box warning for a theoretical malignancy risk (lymphoma, skin cancer), extrapolated from systemic immunosuppression data — yet topical exposure levels are far below what oral tacrolimus produces, and actual evidence linking topical use to malignancy is weak. Even so, they shouldn't be applied to malignant or pre-malignant lesions.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Cyclosporin-induced kidney injury is <strong>dose-related and partly reversible</strong> if the dose is reduced, but prolonged use leaves behind irreversible interstitial fibrosis — the same mechanism and monitoring needs apply to tacrolimus. For psoriasis, cyclosporin is capped at 2 years of use given this cumulative renal risk, with creatinine, blood pressure, and drug levels tracked throughout.</div>
         </div>
       </details>
       <details class="flashcard">
@@ -895,9 +1482,9 @@
           <span class="fc-q">A 28-year-old woman with acne vulgaris is prescribed isotretinoin. Before dispensing, what pregnancy-related obligations must be fulfilled, and what monitoring is required during therapy?</span>
         </summary>
         <div class="fc-back">
-          <div class="fc-answer">Isotretinoin (13-cis-retinoic acid) is <strong>highly teratogenic</strong> — retinoic acid is essential for embryonic development; excess causes characteristic defects: <strong>craniofacial abnormalities, cardiac defects, CNS malformations (hydrocephalus), thymic hypoplasia</strong> — fetal retinoid syndrome. Obligations before dispensing: (1) Two negative pregnancy tests (one at initiation, one 19–37 days later, on day 2–3 of next menstrual cycle); (2) Two forms of contraception for 1 month before, throughout, and 1 month after therapy (UK: iPLEDGE equivalent — Pregnancy Prevention Programme); (3) Signed informed consent; (4) Written prescription valid for 7 days only, no repeat dispensing without re-assessment. Monitoring during therapy: monthly pregnancy tests, LFTs (hepatotoxicity), fasting lipids (triglyceridaemia — severe hypertriglyceridaemia can cause pancreatitis), FBC (leucopenia).</div>
-          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Isotretinoin works by multiple mechanisms: (1) Reduces sebaceous gland size and sebum production (most important — sebum is the substrate for <em>C. acnes</em>); (2) Normalises follicular keratinisation (reduces comedone formation); (3) Anti-inflammatory; (4) Reduces <em>C. acnes</em> colonisation indirectly. The only acne treatment with the potential for <strong>permanent remission</strong> (~80% never need retreatment).</div>
-          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Isotretinoin causes <strong>night blindness</strong> (vitamin A analogue → impairs rhodopsin regeneration) — warn patients before starting. Also causes <strong>cheilitis</strong> (most common side effect — dry, cracked lips), dry eyes, myalgia, epistaxis. Tetracyclines + isotretinoin → <strong>benign intracranial hypertension</strong> (pseudotumour cerebri) — this combination is absolutely contraindicated.</div>
+          <div class="fc-answer">Because isotretinoin (13-cis-retinoic acid) is so <strong>strongly teratogenic</strong> — retinoic acid signaling is critical to embryonic development, and excess produces the fetal retinoid syndrome (<strong>craniofacial defects, cardiac malformations, CNS abnormalities such as hydrocephalus, thymic hypoplasia</strong>) — strict safeguards apply before any prescription is filled: (1) two pregnancy tests come back negative (one before starting, a second 19–37 days afterward, timed to day 2–3 of the next cycle); (2) the patient uses two contraceptive methods spanning 1 month before, the entire treatment course, and 1 month after (equivalent to the US iPLEDGE program — termed the Pregnancy Prevention Programme in the UK); (3) informed consent is documented; (4) each prescription is valid for only 7 days, requiring reassessment before any refill. Ongoing monitoring includes monthly pregnancy testing, liver function tests (hepatotoxicity), fasting lipids (since marked hypertriglyceridaemia risks pancreatitis), and a full blood count (leucopenia).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Isotretinoin acts through several overlapping effects: shrinking sebaceous glands and cutting sebum output (the most important action, since sebum feeds <em>C. acnes</em>); correcting abnormal follicular keratinisation to reduce comedones; reducing inflammation; and indirectly limiting <em>C. acnes</em> colonisation. It stands alone among acne treatments in offering a shot at <strong>lasting remission</strong> — about 80% of patients never need a second course.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Because it's a vitamin A analogue that interferes with rhodopsin regeneration, isotretinoin can cause <strong>night blindness</strong> — patients should be warned in advance. Its most frequent side effect is actually <strong>cheilitis</strong> (dry, cracked lips), alongside dry eyes, myalgia, and epistaxis. Combining it with tetracyclines risks <strong>benign intracranial hypertension</strong> (pseudotumour cerebri), so this pairing must always be avoided.</div>
         </div>
       </details>
       <details class="flashcard">
@@ -906,9 +1493,9 @@
           <span class="fc-q">A farmer presents with pinpoint pupils, bradycardia, copious secretions, bronchospasm, urinary incontinence, and muscle fasciculations. He has been spraying organophosphate pesticides. What is the treatment sequence?</span>
         </summary>
         <div class="fc-back">
-          <div class="fc-answer">Organophosphate (OP) toxidrome — <strong>irreversible acetylcholinesterase inhibition</strong> → ACh accumulates at all cholinergic synapses. Muscarinic effects (DUMBELS): Diarrhoea/Defaecation, Urination, Miosis, Bradycardia/Bronchospasm/Bronchorrhoea, Emesis, Lacrimation, Salivation/Sweating. Nicotinic effects (NMJ): muscle fasciculations → paralysis (including respiratory muscles — the main cause of death). CNS: seizures, coma. Treatment sequence: (1) <strong>Atropine IV</strong> (large doses, titrated to dry secretions — NOT to pupil size) — blocks muscarinic receptors, reverses bronchospasm and secretions; (2) <strong>Pralidoxime (2-PAM) IV</strong> — reactivates AChE by displacing the phosphate group before 'ageing' (irreversible covalent bond maturation) — must be given within hours; (3) Benzodiazepines for seizures; (4) Supportive care, mechanical ventilation if respiratory failure.</div>
-          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Pralidoxime has a narrow time window — OP-AChE bond undergoes 'ageing' (oxime-resistant conformation) within hours (nerve agents: minutes; malathion: hours; chlorpyrifos: days). After ageing, pralidoxime is ineffective — only atropine for muscarinic control. Nerve agents (sarin, VX, novichok) cause the same toxidrome but with faster ageing times.</div>
-          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Atropine dosing in OP poisoning: <strong>massive doses</strong> are required (2–4 mg IV bolus repeated every 5–10 min until secretions dry — total doses of 20–100 mg may be needed). The endpoint is drying of secretions and improving bronchospasm, NOT pupil dilation or tachycardia. Inadequate atropine dosing is a leading cause of death in OP poisoning.</div>
+          <div class="fc-answer">This is the classic organophosphate (OP) toxidrome, driven by <strong>irreversible inhibition of acetylcholinesterase</strong>, which lets ACh build up at every cholinergic synapse. The muscarinic features fit the DUMBELS pattern — Diarrhoea/Defaecation, Urination, Miosis, Bradycardia/Bronchospasm/Bronchorrhoea, Emesis, Lacrimation, Salivation/Sweating — while nicotinic effects at the neuromuscular junction produce fasciculations progressing to paralysis (respiratory muscle failure is the leading cause of death), and CNS involvement brings seizures and coma. Management proceeds in order: (1) <strong>IV atropine</strong> in large, repeated doses titrated to drying of secretions (not pupil size) to reverse muscarinic effects including bronchospasm; (2) <strong>IV pralidoxime (2-PAM)</strong>, which reactivates AChE by knocking the phosphate group loose before the bond 'ages' into an irreversible state — this must happen within hours; (3) benzodiazepines if seizures occur; (4) supportive measures, including ventilation for respiratory failure.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Pralidoxime only works within a narrow window — the OP-AChE bond 'ages' into an oxime-resistant form over a timeframe that varies by agent (minutes for nerve agents, hours for malathion, days for chlorpyrifos). Once ageing occurs, atropine alone manages the muscarinic symptoms. Nerve agents (sarin, VX, novichok) produce an identical toxidrome but age much faster.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> OP poisoning calls for <strong>far larger atropine doses</strong> than typical clinical use — 2–4 mg IV boluses every 5–10 minutes until secretions dry up, sometimes totaling 20–100 mg. The goal is dry secretions and resolved bronchospasm, never pupil size or heart rate. Underdosing atropine is one of the most common causes of death in these cases.</div>
         </div>
       </details>
       <details class="flashcard">
@@ -917,9 +1504,9 @@
           <span class="fc-q">A patient ingests a large quantity of paracetamol (acetaminophen) 4 hours ago. LFTs are normal, INR is 1.0. Should you start N-acetylcysteine (NAC) now, or wait for toxicity?</span>
         </summary>
         <div class="fc-back">
-          <div class="fc-answer">Start NAC <strong>immediately</strong> if the paracetamol level at 4 hours is above the treatment threshold on the Rumack-Matthew nomogram (or the UK risk assessment line). Do NOT wait for liver injury — NAC is most effective when given before hepatotoxicity develops. Mechanism of paracetamol toxicity: CYP2E1/CYP3A4 convert paracetamol to <strong>NAPQI</strong> (N-acetyl-p-benzoquinone imine) — a highly reactive hepatotoxic metabolite. Normally conjugated by hepatic glutathione (GSH) → non-toxic mercapturate. Overdose overwhelms GSH stores → free NAPQI → covalent binding to hepatocyte proteins → necrosis (centrilobular — zone 3, highest CYP2E1 activity). NAC mechanism: replenishes cysteine → GSH synthesis → scavenges NAPQI. Also donates cysteine/GSH directly, improves microvascular circulation.</div>
-          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Risk factors that lower the threshold for treatment (shift the nomogram line): enzyme inducers (rifampin, carbamazepine, alcohol — chronic use → more CYP2E1 induction → more NAPQI); malnutrition/anorexia/fasting (depleted baseline GSH stores). These factors increase paracetamol hepatotoxicity at lower doses. UK guidelines now use a single treatment line without risk stratification.</div>
-          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> NAC itself can cause anaphylactoid reactions (flushing, urticaria, bronchospasm — particularly at the start of the IV loading dose) — NOT IgE-mediated. Manage by temporarily stopping infusion and giving antihistamine; restart at slower rate. The reaction is more common in asthmatics. This is NOT a reason to withhold NAC — benefit far outweighs risk of the reaction.</div>
+          <div class="fc-answer">NAC should be started <strong>right away</strong> if the 4-hour paracetamol level sits above the Rumack-Matthew nomogram treatment line (or the UK risk line) — waiting for liver damage to appear defeats the purpose, since NAC works best before hepatotoxicity sets in. The toxicity itself stems from CYP2E1/CYP3A4 converting paracetamol into <strong>NAPQI</strong> (N-acetyl-p-benzoquinone imine), a reactive metabolite that's normally neutralized by conjugation with hepatic glutathione (GSH) into a harmless mercapturate. In overdose, GSH reserves run out, leaving free NAPQI to bind hepatocyte proteins covalently and cause necrosis, concentrated in zone 3 where CYP2E1 activity peaks. NAC counters this by supplying cysteine for new GSH synthesis (scavenging NAPQI directly), while also donating cysteine/GSH itself and improving microvascular flow.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Certain factors lower the threshold at which treatment becomes necessary — enzyme inducers like rifampin, carbamazepine, or chronic alcohol use (which boost CYP2E1 and thus NAPQI generation), and malnutrition, anorexia, or fasting (which deplete baseline GSH). All of these raise hepatotoxicity risk at lower paracetamol doses. Current UK guidance has moved to a single treatment line rather than stratifying by risk factors.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> NAC infusions, particularly during the initial loading dose, can trigger anaphylactoid reactions (flushing, hives, bronchospasm) that are NOT IgE-mediated — more common in asthmatics. The fix is to pause the infusion briefly, give an antihistamine, then resume more slowly; this reaction is never a reason to stop NAC altogether, since its benefit clearly outweighs this risk.</div>
         </div>
       </details>
       <details class="flashcard">
@@ -928,9 +1515,9 @@
           <span class="fc-q">Carbon monoxide poisoning is suspected in a family found unconscious at home. What is the treatment and why is high-flow 100% O₂ the key intervention?</span>
         </summary>
         <div class="fc-back">
-          <div class="fc-answer">CO poisoning mechanism: CO binds haemoglobin with 240× the affinity of O₂ → carboxyhaemoglobin (COHb) cannot carry O₂ → functional anaemia. Also binds myoglobin and cytochrome c oxidase (Complex IV) → inhibits cellular respiration → histotoxic hypoxia. SpO₂ pulse oximetry reads COHb as oxyhaemoglobin → falsely normal SpO₂ — measure COHb by co-oximetry (ABG). Treatment: <strong>high-flow 100% O₂ via non-rebreather mask</strong>. Rationale: competitive displacement of CO from haemoglobin. Half-life of COHb: ~5 hours on room air (21% O₂) → ~90 minutes on 100% O₂ → ~20–30 minutes in <strong>hyperbaric O₂ (HBO)</strong> (3 atm). HBO indications: loss of consciousness, neurological deficit, COHb &gt;25%, pregnancy (fetus especially sensitive), cardiac involvement.</div>
-          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> CO poisoning causes a characteristic <strong>cherry-red skin</strong> (COHb is bright red) — but this is a late/post-mortem finding. In acute presentation, patients appear pale or cyanotic. Classic history: multiple family members affected (from a faulty boiler/enclosed car), headache, nausea, confusion (CO causes selective white matter and basal ganglia injury).</div>
-          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Cyanide toxicity can co-occur with CO in smoke inhalation (burning plastics/upholstery release HCN). Presentation: profound lactic acidosis disproportionate to haemodynamic status + cellular hypoxia despite adequate O₂ delivery. Treatment: <strong>hydroxocobalamin</strong> (binds CN⁻ → cyanocobalamin, excreted renally) — preferred over dicobalt edetate (toxic, causes vomiting/hypotension) or sodium thiosulfate + sodium nitrite regimen.</div>
+          <div class="fc-answer">CO binds haemoglobin roughly 240 times more tightly than oxygen does, forming carboxyhaemoglobin (COHb) that can no longer carry O₂ — a functional anaemia. It also blocks myoglobin and cytochrome c oxidase (Complex IV), shutting down cellular respiration and causing histotoxic hypoxia. Standard pulse oximetry can't distinguish COHb from oxyhaemoglobin, so SpO₂ reads falsely normal; COHb must instead be measured by co-oximetry on an arterial blood gas. The treatment is <strong>high-flow 100% O₂ via non-rebreather mask</strong>, which competitively displaces CO from haemoglobin. COHb's half-life drops from roughly 5 hours on room air to about 90 minutes on 100% O₂, and down to 20–30 minutes with <strong>hyperbaric O₂</strong> at 3 atmospheres — reserved for cases involving loss of consciousness, neurological deficits, COHb above 25%, pregnancy (the fetus is especially vulnerable), or cardiac involvement.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> The textbook <strong>cherry-red skin</strong> of CO poisoning (from bright-red COHb) is mostly a late or post-mortem sign — acutely, patients more often look pale or cyanotic. A telling history is several household members affected together (faulty boiler, enclosed vehicle), along with headache, nausea, and confusion, since CO preferentially damages white matter and the basal ganglia.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Smoke inhalation can bring concurrent cyanide toxicity, since burning plastics and upholstery release HCN — suspect this when lactic acidosis is out of proportion to haemodynamics and hypoxia persists despite adequate oxygen delivery. <strong>Hydroxocobalamin</strong> (converted to cyanocobalamin and excreted renally) is the preferred antidote, ahead of dicobalt edetate (toxic, causes vomiting and hypotension) or the sodium thiosulfate/nitrite combination.</div>
         </div>
       </details>
       <details class="flashcard">
@@ -939,9 +1526,9 @@
           <span class="fc-q">A patient presents with acute opioid overdose — pinpoint pupils, respiratory rate 4/min, GCS 6. What is given, and what problem arises if the patient is opioid-dependent?</span>
         </summary>
         <div class="fc-back">
-          <div class="fc-answer"><strong>Naloxone IV</strong> (or IM/intranasal) — competitive antagonist at μ, κ, δ opioid receptors. Rapid reversal of opioid-induced respiratory depression, sedation, and miosis. Onset within 2 minutes IV. Dose: 0.4–2 mg IV, repeat every 2–3 minutes as needed up to 10 mg. Problem in opioid-dependent patients: naloxone's half-life is <strong>60–90 minutes</strong> — much shorter than most opioids (morphine ~4–6 h, methadone ~24–36 h, buprenorphine ~24–72 h). Reversal wears off → re-narcotisation → patient may re-arrest. Additionally, in opioid-dependent patients, naloxone precipitates <strong>acute opioid withdrawal</strong> — agitation, vomiting, diarrhoea, tachycardia, severe distress. Management: titrate naloxone to restore adequate ventilation (NOT to full wakefulness) — use small incremental doses to avoid precipitating withdrawal.</div>
-          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> <strong>Naltrexone</strong> is a long-acting oral opioid antagonist (half-life ~13 hours, metabolite 6-β-naltrexol active for ~24 hours) — used for opioid use disorder (relapse prevention after detox) and alcohol use disorder (reduces craving/reward). Extended-release IM naltrexone (Vivitrol, monthly injection) improves adherence. Naltrexone + bupropion (Contrave) is an FDA-approved anti-obesity combination.</div>
-          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Buprenorphine (partial μ-agonist, κ-antagonist) used in opioid substitution therapy has a <strong>ceiling effect on respiratory depression</strong> — safer in overdose than full agonists. However, high doses of buprenorphine + benzodiazepines or alcohol → can still cause fatal respiratory depression. Naloxone partially reverses buprenorphine (partial agonist properties mean it is harder to displace than full agonists — may need higher naloxone doses).</div>
+          <div class="fc-answer"><strong>Naloxone</strong> (IV, IM, or intranasal) acts as a competitive antagonist across μ, κ, and δ opioid receptors, quickly reversing the respiratory depression, sedation, and miosis caused by opioids — onset is under 2 minutes IV, given as 0.4–2 mg doses repeated every 2–3 minutes up to a 10 mg ceiling. The catch in opioid-dependent patients is naloxone's short <strong>60–90 minute</strong> half-life compared with most opioids (morphine roughly 4–6 hours, methadone 24–36 hours, buprenorphine 24–72 hours) — once naloxone wears off, the opioid effect can return and the patient may re-arrest. It can also precipitate <strong>acute withdrawal</strong> in dependent patients (agitation, vomiting, diarrhoea, tachycardia, severe distress), so dosing should be titrated to restore adequate breathing rather than full alertness, using small incremental doses to avoid triggering withdrawal.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> <strong>Naltrexone</strong>, a long-acting oral antagonist (half-life around 13 hours, with its active metabolite 6-β-naltrexol lasting about 24 hours), is used both for opioid use disorder (preventing relapse after detox) and alcohol use disorder (blunting craving and reward). A monthly extended-release IM formulation (Vivitrol) helps with adherence, and the naltrexone-bupropion combination (Contrave) is FDA-approved for weight management.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Buprenorphine, a partial μ-agonist and κ-antagonist used in opioid substitution therapy, shows a <strong>ceiling effect on respiratory depression</strong> that makes it relatively safer in overdose than full agonists — though combining high doses with benzodiazepines or alcohol can still be fatal. Naloxone only partially reverses buprenorphine, since its partial-agonist binding is harder to displace, sometimes requiring higher naloxone doses.</div>
         </div>
       </details>
       <details class="flashcard">
@@ -1545,7 +2132,7 @@
 <!-- ═══════════════ FOOTER ═══════════════ -->
 <footer class="footer">
   <p><strong>Special Systems Pharmacology · Accelerated Learning System</strong> — 3 modules (Ch. 74–76), note blocks, inline SVG diagrams, and 45 quiz Q&amp;As.</p>
-  <p style="margin-top:0.5rem">Source: Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics, 14th Edition — Section IX (Chapters 74–76). Verify all drug dosing against current local protocols before clinical use.</p>
+  <p style="margin-top:0.5rem">Source: Standard pharmacology references — Section IX. Verify all drug dosing against current local protocols before clinical use.</p>
 </footer>
 
 <script>
@@ -1560,6 +2147,186 @@
     });
   });
 </script>
+<script>
+/* ---- GLASS / MOTION DEMO v3 — additive, does not touch the quiz logic above ---- */
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  var bigSel = 'section.module, .quiz-intro, #flashcards, details.quizset';
+  var smallSel = '.cog, .blurt-stage, .sched-stage, details.gate, details.qa, .flashcard, .tbl-scroll, .diagram-wrap, blockquote.warn, .analogy, div.q';
+
+  document.querySelectorAll(bigSel).forEach(function(el){ el.classList.add('gp-reveal'); });
+  document.querySelectorAll(smallSel).forEach(function(el){ el.classList.add('gp-reveal-soft'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -50px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal, .gp-reveal-soft');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 7) * 50 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // safety net — guarantee nothing is stuck invisible
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }, 2000);
+})();
+</script>
+
 <script src="learning-interactive.js"></script>
+<script src="gamify.js"></script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- populate chapters drawer from this page's existing (now hidden) chapter nav ----
+  var drawerLinks = document.getElementById('gpDrawerLinks');
+  var sourceNav = document.querySelector('nav.toc, .sticky-nav');
+  if (drawerLinks && sourceNav) {
+    var anchors = sourceNav.querySelectorAll('a');
+    anchors.forEach(function(a){ drawerLinks.appendChild(a.cloneNode(true)); });
+  }
+
+  // ---- drawer open/close ----
+  var drawer = document.getElementById('gpDrawer');
+  var overlay = document.getElementById('gpDrawerOverlay');
+  var openBtn = document.getElementById('gpDrawerToggle');
+  var closeBtn = document.getElementById('gpDrawerClose');
+  function openDrawer(){
+    if (drawer) drawer.classList.add('show');
+    if (overlay) overlay.classList.add('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','true');
+  }
+  function closeDrawer(){
+    if (drawer) drawer.classList.remove('show');
+    if (overlay) overlay.classList.remove('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','false');
+  }
+  if (openBtn) openBtn.addEventListener('click', function(){
+    if (drawer && drawer.classList.contains('show')) closeDrawer(); else openDrawer();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  if (drawerLinks) drawerLinks.addEventListener('click', function(e){
+    if (e.target && e.target.tagName === 'A') closeDrawer();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // ---- dark mode toggle, persisted (shared key with the hub pages) ----
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('gpDarkToggle');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function upd(){ if (darkBtn) darkBtn.textContent = isDark() ? '☀️' : '🌙'; }
+  function setTheme(m){
+    if (m === 'dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('pharm-theme', m); } catch(e){}
+    upd();
+  }
+  upd();
+  if (darkBtn) darkBtn.addEventListener('click', function(){ setTheme(isDark() ? 'light' : 'dark'); });
+
+  // ---- random quiz question ----
+  var randomBtn = document.getElementById('gpRandomQuiz');
+  if (randomBtn) randomBtn.addEventListener('click', function(){
+    var qs = Array.prototype.slice.call(document.querySelectorAll('.q, .quiz-item'));
+    if (!qs.length) return;
+    var pick = qs[Math.floor(Math.random() * qs.length)];
+    var trigger = pick.querySelector('.qq, .quiz-q');
+    if (trigger) trigger.click();
+    if (!pick.classList.contains('open')) pick.classList.add('open');
+    pick.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  // ---- expand/contract the floating toolbar itself ----
+  // Chapters (☰) and Back (←) always stay visible; every other control
+  // (nav/jump/search/tools merged in by learning-interactive.js) lives inside
+  // the collapsible .gp-toolbar-extra and only shows once expanded.
+  var expandBtn = document.getElementById('gpToolbarExpand');
+  var toolbarEl = document.querySelector('.gp-toolbar');
+  if (expandBtn && toolbarEl) expandBtn.addEventListener('click', function(){
+    var open = !toolbarEl.classList.contains('expanded');
+    toolbarEl.classList.toggle('expanded', open);
+    expandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var tree = document.getElementById('mindmapTree');
+  if(!tree) return;
+  function setExpanded(btn, open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var holder = btn.closest('.mm-branch, .mm-twig');
+    if(holder) holder.classList.toggle('mm-open', open);
+  }
+  tree.addEventListener('click', function(e){
+    var btn = e.target.closest('.mm-node');
+    if(!btn) return;
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setExpanded(btn, !isOpen);
+  });
+  var expandAllBtn = document.getElementById('mmExpandAll');
+  var collapseAllBtn = document.getElementById('mmCollapseAll');
+  if(expandAllBtn){
+    expandAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, true); });
+    });
+  }
+  if(collapseAllBtn){
+    collapseAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, false); });
+    });
+  }
+})();
+</script>
+
 </body>
 </html>

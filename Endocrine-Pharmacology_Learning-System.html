@@ -795,10 +795,423 @@
   }
   .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
 
+
+
+/* =========================================================================
+   GLASS / MOTION DEMO LAYER v3 — additive, appended after all base rules.
+   Uses this file's own tokens (--accent, --cool, --hero-gradient, etc.,
+   with safe fallbacks where a file doesn't define one) so colours/content
+   stay identical to the original. Shared across the whole Learning System
+   family for visual/motion consistency.
+   ========================================================================= */
+
+html{scroll-behavior:smooth}
+
+/* ---- ambient drifting blobs, colour-matched to this file's palette ---- */
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(75px); opacity:.30}
+.gp-ambient .b1{width:44vw;height:44vw; top:-14%; left:-12%; background:radial-gradient(circle,var(--accent-dark),transparent 70%); animation:gpDrift1 38s ease-in-out infinite}
+.gp-ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,var(--cool),transparent 70%); animation:gpDrift2 44s ease-in-out infinite}
+.gp-ambient .b3{width:42vw;height:42vw; bottom:-18%; left:18%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift3 40s ease-in-out infinite}
+.gp-ambient .b4{width:26vw;height:26vw; bottom:10%; right:8%; background:radial-gradient(circle,var(--cool-light,var(--cool)),transparent 70%); animation:gpDrift4 33s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,7vh) scale(1.12)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.12)}}
+@keyframes gpDrift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-4vw,-3vh) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+/* ---- scroll progress bar ---- */
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--accent-dark), var(--cool), var(--accent));
+  box-shadow:0 0 10px rgba(15,107,107,.45); transition:width .12s linear}
+
+/* ---- back-to-top, using the page's own hero gradient (with fallback) ---- */
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:var(--hero-gradient, linear-gradient(135deg, var(--accent-dark), var(--cool))); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.35); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+/* ---- stronger glass on the already-sticky nav ---- */
+.sticky-nav, nav.toc{
+  background:rgba(245,244,240,.62) !important;
+  backdrop-filter:blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(190%) !important;
+  box-shadow:0 4px 24px rgba(16,38,52,.08) !important;
+}
+nav.toc a{transition:color .2s, transform .2s}
+nav.toc a:hover{transform:translateY(-1px)}
+
+/* ---- hero entrance + glass stat strip ---- */
+header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpHeroIn{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+.chip{transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{transform:translateY(-2px) scale(1.04)}
+
+.gp-stat-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; position:relative}
+.gp-stat-pill{font-size:.78rem; font-weight:650; color:#fff; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.32); padding:6px 14px; border-radius:999px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; gap:6px}
+.gp-stat-pill b{color:#fff; font-weight:800}
+
+/* ---- generic scroll-reveal utilities (assigned by JS) ---- */
+.gp-reveal{opacity:0; transform:translateY(28px) scale(.985); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.34,1.2,.64,1)}
+.gp-reveal.in-view{opacity:1; transform:none}
+.gp-reveal-soft{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease}
+.gp-reveal-soft.in-view{opacity:1; transform:none}
+
+/* ---- module card + header glass sheen / hover glow ---- */
+section.module{transition:box-shadow .35s ease}
+section.module:hover{box-shadow:0 20px 48px rgba(16,38,52,.18)}
+.module-header, .mod-head{position:relative; overflow:hidden}
+.module-header::after, .mod-head::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(120deg, rgba(255,255,255,.20), transparent 45%, rgba(255,255,255,.06));
+}
+
+.cog, .blurt-stage, .sched-stage, .flashcard, .quiz-intro{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease
+}
+.cog:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--cool) 35%, transparent)}
+.cog.blurt:hover{box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 38%, transparent)}
+.blurt-stage:hover, .sched-stage:hover{transform:translateY(-3px)}
+.flashcard:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 30%, transparent)}
+
+/* =========================================================================
+   ANIMATED ACCORDIONS — CSS-grid height trick (no JS height math needed).
+   grid-auto-rows (not just grid-template-rows) is set too, so this stays
+   correct even when a gate/quizset/qa has more than one content child
+   (e.g. Neoplastic's details.gate > p, p, p). Works regardless of who
+   toggles [open]/.open (click, keyboard, or the existing inline JS),
+   because it keys off the attribute/class only.
+   ========================================================================= */
+details.gate, details.quizset, details.qa{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1), grid-auto-rows .45s cubic-bezier(.4,0,.2,1);
+}
+details.gate[open], details.quizset[open], details.qa[open]{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+details.gate > *:not(summary), details.quizset > *:not(summary), details.qa > *:not(summary){
+  overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s;
+}
+details.gate[open] > *:not(summary), details.quizset[open] > *:not(summary), details.qa[open] > *:not(summary){ opacity:1; }
+
+div.q{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1), box-shadow .25s ease;
+  border-radius:var(--radius-sm);
+}
+div.q.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; box-shadow:0 6px 18px -6px color-mix(in srgb, var(--cool) 30%, transparent); }
+div.q > .qa{
+  display:block !important; overflow:hidden; min-height:0; opacity:0;
+  transition:opacity .3s ease .05s;
+}
+div.q.open > .qa{ opacity:1; }
+/* same pattern for the alternate class names used in sibling files of this series */
+.quiz-item{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.quiz-item.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+.quiz-item > .quiz-a{ display:block !important; overflow:hidden; min-height:0; opacity:0; transition:opacity .3s ease .05s; }
+.quiz-item.open > .quiz-a{ opacity:1; }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal, .gp-reveal-soft{opacity:1 !important; transform:none !important; transition:none !important}
+  header.hero{animation:none}
+  details.gate, details.quizset, details.qa, div.q, .quiz-item{transition:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+
+/* TRUE FROSTED GLASS — translucent panels over the ambient blobs */
+body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; }
+.module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+.diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+.fc-back, .mnemonic, figure.dia {
+  background: color-mix(in srgb, white 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
+  .module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+  .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+  .fc-back, .mnemonic, figure.dia { background: white !important; }
+}
+
+/* =========================================================================
+   CONSOLIDATED TOOLBAR + CHAPTERS DRAWER + DARK MODE SKIN
+   Replaces the old standalone back button + horizontal sticky chapter bar
+   (which used to visually collide) with one floating icon toolbar plus a
+   toggleable left-hand chapters drawer. Additive, reuses this file's tokens.
+   ========================================================================= */
+.gp-toolbar{
+  position:fixed; top:16px; left:16px; z-index:300;
+  display:flex; align-items:center; gap:4px;
+  background:rgba(255,255,255,.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border:1px solid rgba(0,0,0,.10); border-radius:999px; padding:6px; box-shadow:0 6px 22px rgba(0,0,0,.16);
+}
+.gp-tool-btn{
+  width:38px; height:38px; border-radius:50%; border:none; background:transparent; color:#1c1917;
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease; padding:0;
+}
+.gp-tool-btn:hover{ background:rgba(0,0,0,.07); transform:translateY(-1px) scale(1.06); }
+.gp-tool-btn:active{ transform:scale(.9); }
+.gp-toolbar .gp-back-btn{ position:static; box-shadow:none; border:none; background:transparent; }
+.gp-toolbar .gp-back-btn:hover{ box-shadow:none; }
+@media (max-width:640px){ .gp-toolbar{ top:10px; left:10px; padding:4px; gap:2px; } .gp-tool-btn{ width:33px; height:33px; font-size:15px; } }
+@media (prefers-reduced-motion:reduce){ .gp-tool-btn{ transition:none; } }
+
+/* the old horizontal sticky chapter bar is replaced by the drawer below */
+.sticky-nav, nav.toc{ display:none !important; }
+
+/* ---- chapters drawer ---- */
+.gp-drawer-overlay{
+  position:fixed; inset:0; z-index:298; background:rgba(10,12,16,.32);
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.gp-drawer-overlay.show{ opacity:1; pointer-events:auto; }
+.gp-drawer{
+  position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw); z-index:299;
+  background:rgba(245,244,240,.90); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-right:1px solid rgba(0,0,0,.08); box-shadow:8px 0 32px rgba(0,0,0,.18);
+  transform:translateX(-104%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; padding:18px 0;
+}
+.gp-drawer.show{ transform:none; }
+.gp-drawer-head{
+  display:flex; align-items:center; justify-content:space-between; padding:0 18px 14px;
+  border-bottom:1px solid rgba(0,0,0,.08); font-weight:700; font-size:.95rem; color:var(--ink, #1c1917);
+  margin-bottom:6px;
+}
+.gp-drawer-close{ border:none; background:transparent; font-size:16px; cursor:pointer; color:var(--ink-soft, #555); padding:4px; }
+.gp-drawer-links{ display:flex; flex-direction:column; overflow-y:auto; padding:6px 10px; gap:2px; }
+.gp-drawer-links a{
+  display:block; padding:.55rem .75rem; border-radius:10px; text-decoration:none;
+  color:var(--ink-soft, #44403c); font-size:.88rem; font-weight:500; transition:background .18s ease, color .18s ease;
+  white-space:normal;
+}
+.gp-drawer-links a:hover{ background:rgba(0,0,0,.06); }
+.gp-drawer-links a.thesis-link{ color:var(--cool, var(--accent)); font-weight:600; }
+.gp-drawer-links a.key{ color:var(--accent-dark, var(--accent)); font-weight:600; }
+@media (prefers-reduced-motion:reduce){ .gp-drawer, .gp-drawer-overlay{ transition:none; } }
+
+html[data-theme="dark"] .gp-toolbar{ background:rgba(30,33,37,.78); border-color:rgba(255,255,255,.14); }
+html[data-theme="dark"] .gp-tool-btn{ color:#e7e9ec; }
+html[data-theme="dark"] .gp-tool-btn:hover{ background:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-back-btn{ background:transparent !important; }
+html[data-theme="dark"] .gp-drawer{ background:rgba(30,33,37,.92); border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-head{ color:#e7e9ec; border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-close{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a:hover{ background:rgba(255,255,255,.08); }
+
+/* ---- dark mode skin for the page itself ---- */
+html[data-theme="dark"] body{ background: color-mix(in srgb, #15171a 88%, transparent) !important; color:#cdd1d6; }
+html[data-theme="dark"] main{ color:#cdd1d6; }
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] h4{ color:#eef0f2; }
+html[data-theme="dark"] strong{ color: color-mix(in srgb, var(--accent-darker, var(--accent, #d4a847)) 55%, white 45%) !important; }
+html[data-theme="dark"] main a:not(.gp-drawer-links a){ color: color-mix(in srgb, var(--cool, var(--accent, #0f6b6b)) 60%, white 40%); }
+
+html[data-theme="dark"] .module, html[data-theme="dark"] section.module, html[data-theme="dark"] .blurt-prompt,
+html[data-theme="dark"] .primers li, html[data-theme="dark"] .sched-day, html[data-theme="dark"] .sched .day,
+html[data-theme="dark"] .bridge, html[data-theme="dark"] .diagram-wrap, html[data-theme="dark"] details.qsec,
+html[data-theme="dark"] details.quizset, html[data-theme="dark"] details.gate, html[data-theme="dark"] details.qa,
+html[data-theme="dark"] .quiz-q, html[data-theme="dark"] .qq, html[data-theme="dark"] .fc-back,
+html[data-theme="dark"] .mnemonic, html[data-theme="dark"] figure.dia, html[data-theme="dark"] .q, html[data-theme="dark"] .quiz-item{
+  background: color-mix(in srgb, #1e2125 70%, transparent) !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .qa, html[data-theme="dark"] .quiz-a{ color:#c4cad0 !important; }
+html[data-theme="dark"] table, html[data-theme="dark"] td, html[data-theme="dark"] th{ color:#c7cbd1 !important; border-color: rgba(255,255,255,.10) !important; }
+html[data-theme="dark"] blockquote{ border-color: rgba(255,255,255,.18) !important; }
+html[data-theme="dark"] .site-footer, html[data-theme="dark"] footer{ color:#9aa1a8 !important; }
+</style>
+  <style id="mindmap-style">
+.mindmap-section .mm-inner { padding: 2.2rem 2rem 2.4rem; }
+
+.mm-intro { text-align: center; max-width: 700px; margin: 0 auto 2rem; }
+.mm-tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--cool-pale); color: var(--cool);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .35rem .85rem; border-radius: 999px; margin-bottom: .9rem;
+}
+.mm-intro h2 {
+  font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-2xl); color: var(--ink);
+  margin: 0 0 .6rem;
+}
+.mm-intro p { color: var(--ink-soft); font-size: var(--fs-sm); line-height: 1.6; margin: 0 0 1.1rem; }
+.mm-actions { display: flex; justify-content: center; gap: .6rem; }
+.mm-btn {
+  font-family: 'Inter', sans-serif; font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .03em; color: var(--accent-dark); background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: .5rem 1rem; cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.mm-btn:hover { background: var(--accent-pale); border-color: var(--accent); }
+
+.mm-root {
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  width: fit-content; margin: 0 auto;
+  background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+  color: white; font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+  font-size: var(--fs-lg); text-align: center; line-height: 1.15;
+  padding: .85rem 1.6rem; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.mm-root-emoji { font-size: 1.4em; }
+.mm-bus { width: 2px; height: 22px; background: var(--border); margin: 0 auto; }
+
+.mm-branches {
+  display: grid; gap: .65rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { .mm-branches { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .mm-branches { grid-template-columns: 1fr; } }
+
+.mm-branch {
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: white; align-self: start;
+  border-top: 3px solid var(--mm-c, var(--accent));
+}
+.mm-node {
+  width: 100%; display: flex; align-items: center; gap: .65rem;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Inter', sans-serif; color: var(--ink);
+}
+.mm-module {
+  padding: .8rem .9rem;
+}
+.mm-mnum {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 700;
+  color: white; background: var(--mm-c, var(--accent)); border-radius: 5px;
+  padding: 3px 6px; flex-shrink: 0;
+}
+.mm-mtext { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.mm-mtitle { font-weight: 700; font-size: var(--fs-sm); color: var(--ink); }
+.mm-msub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+.mm-chev {
+  flex-shrink: 0; color: var(--muted); font-size: .8rem;
+  transition: transform .25s ease;
+}
+.mm-module[aria-expanded="true"] .mm-chev,
+.mm-sub[aria-expanded="true"] .mm-chev { transform: rotate(90deg); color: var(--mm-c, var(--accent)); }
+.mm-module:hover, .mm-sub:hover { background: var(--cream); }
+
+.mm-children {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  background: var(--cream);
+  transition: grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.mm-children > div { overflow: hidden; min-height: 0; }
+.mm-branch:has(.mm-module[aria-expanded="true"]) .mm-children { grid-template-rows: 1fr; }
+
+.mm-twig { border-top: 1px solid var(--border); }
+.mm-twig:first-child { border-top: 1px solid var(--border); }
+.mm-sub { padding: .6rem .9rem .6rem 1.5rem; font-size: .82rem; font-weight: 600; align-items: flex-start; }
+.mm-stext { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.mm-stitle { line-height: 1.3; }
+.mm-ssub { font-size: .7rem; font-weight: 400; color: var(--muted); line-height: 1.4; white-space: normal; }
+.mm-sub .mm-chev { margin-top: 2px; }
+
+.mm-leaves {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  list-style: none; margin: 0; padding: 0 1.1rem 0 2.2rem;
+  transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1), padding .35s ease;
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.55;
+}
+.mm-leaves > li { overflow: hidden; min-height: 0; }
+.mm-twig:has(.mm-sub[aria-expanded="true"]) .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
+.mm-leaves li {
+  position: relative; padding: .25rem 0 .25rem .85rem; border-bottom: 1px dashed var(--border);
+}
+.mm-leaves li:last-child { border-bottom: none; }
+.mm-leaves li::before {
+  content: '•'; position: absolute; left: 0; color: var(--mm-c, var(--accent)); font-weight: 700;
+}
+.mm-leaves li.mm-eq {
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent-darker);
+  background: var(--accent-pale); border-radius: 4px; padding: .35rem .5rem .35rem .85rem;
+  border-bottom: none; margin: .2rem 0;
+}
+.mm-leaves li.mm-eq::before { content: 'ƒ'; }
+
+html[data-theme="dark"] .mm-branch { background: #1e2125; border-color: rgba(255,255,255,.10); }
+html[data-theme="dark"] .mm-children { background: #181a1d; }
+html[data-theme="dark"] .mm-twig { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-leaves li { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-node { color: #d7dce1; }
+html[data-theme="dark"] .mm-mtitle { color: #eef1f4; }
+html[data-theme="dark"] .mm-module:hover, html[data-theme="dark"] .mm-sub:hover { background: rgba(255,255,255,.05); }
+html[data-theme="dark"] .mm-leaves { color: #b7bec5; }
+html[data-theme="dark"] .mm-leaves li.mm-eq { background: rgba(176,116,16,.18); color: #e8c98a; }
+html[data-theme="dark"] .mm-btn { background: #1e2125; color: #e8c98a; border-color: rgba(255,255,255,.15); }
+html[data-theme="dark"] .mm-btn:hover { background: rgba(176,116,16,.18); }
+html[data-theme="dark"] .mm-tag { background: rgba(15,107,107,.2); color: #6fc6c6; }
+html[data-theme="dark"] .mm-intro h2 { color: #eef1f4; }
+html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-children, .mm-leaves, .mm-chev { transition: none; }
+}
+
+.mm-branch.mm-open > .mm-children { grid-template-rows: 1fr; }
+.mm-twig.mm-open > .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
 </style>
   <link rel="stylesheet" href="learning-interactive.css">
+  <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<div class="gp-toolbar" role="toolbar" aria-label="Page controls">
+  <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
+  <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+  <button id="gpDarkToggle" class="gp-tool-btn" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  <button id="gpRandomQuiz" class="gp-tool-btn" type="button" title="Random quiz question" aria-label="Open a random quiz question">🎲</button>
+  <button id="gpToolbarExpand" class="gp-tool-btn gp-toolbar-expand" type="button" title="More controls" aria-label="Show more controls" aria-expanded="false">›</button>
+  <div class="gp-toolbar-extra" id="gpToolbarExtraOuter">
+    <div class="gp-toolbar-extra-inner" id="gpToolbarExtra"></div>
+  </div>
+</div>
+<div class="gp-drawer-overlay" id="gpDrawerOverlay"></div>
+<aside class="gp-drawer" id="gpDrawer" aria-label="Chapter index">
+  <div class="gp-drawer-head">
+    <span>Chapters</span>
+    <button id="gpDrawerClose" class="gp-drawer-close" type="button" aria-label="Close chapters index">✕</button>
+  </div>
+  <nav class="gp-drawer-links" id="gpDrawerLinks"></nav>
+</aside>
+
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
 
 <header class="hero">
   <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
@@ -814,20 +1227,28 @@
     </g>
   </svg>
   <div class="wrap">
-    <div class="eyebrow">Goodman &amp; Gilman · 14th Ed · Section V</div>
+    <div class="eyebrow">Pharmacology Learning System · Section V</div>
     <h1>Endocrine<br><em>Pharmacology</em></h1>
-    <p class="sub">Chapters 46–52, built as an study guide in the same four-stage format as your other systems: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies, and a spaced-repetition plan. The hypothalamic-pituitary axis, thyroid and antithyroid drugs, sex steroids and contraception, adrenal corticosteroids, the full diabetes armamentarium, and bone/mineral agents — the hormone systems you prescribe for and get examined on relentlessly.</p>
+    <p class="sub">Chapters 46–52 plus drugs affecting uterine motility, built as a study guide in the same four-stage format as your other systems: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies, and a spaced-repetition plan. The hypothalamic-pituitary axis, thyroid and antithyroid drugs, sex steroids and contraception, adrenal corticosteroids, the full diabetes armamentarium, bone/mineral agents, and oxytocics/tocolytics — the hormone systems you prescribe for and get examined on relentlessly.</p>
     <div class="meta">
-      <span class="chip">7 modules · full depth</span>
+      <span class="chip">8 modules · full depth</span>
       <span class="chip">working blurting gates</span>
-      <span class="chip">5 custom diagrams</span>
-      <span class="chip">7 quiz sets · 165 Q</span>
+      <span class="chip">6 custom diagrams</span>
+      <span class="chip">8 quiz sets · 180 Q</span>
     </div>
   </div>
-</header>
+
+    <div class="gp-stat-row">
+      <span class="gp-stat-pill">8 modules · full depth</span>
+      <span class="gp-stat-pill">working blurting gates</span>
+      <span class="gp-stat-pill">6 custom diagrams</span>
+      <span class="gp-stat-pill">8 quiz sets · 180 Q</span>
+    </div>
+  </header>
 
 <nav class="toc">
   <div class="wrap">
+    <a href="#mindmap">🗺️ Mind Map</a>
     <a href="#method">The method</a>
     <a class="key" href="#m51">51 · Diabetes</a>
     <a class="key" href="#m47">47 · Thyroid</a>
@@ -836,22 +1257,378 @@
     <a href="#m48">48 · Estrogens/Progestins</a>
     <a href="#m46">46 · Hypothal-Pituitary</a>
     <a href="#m49">49 · Androgens</a>
+    <a class="key" href="#m53">53 · Uterine Motility</a>
     <a href="#flashcards">🃏 Flashcards</a>
-    <a href="#quizzes">★ 165 Questions</a>
+    <a href="#quizzes">★ 180 Questions</a>
   </div>
 </nav>
 
 <main class="wrap">
 
-<section id="method" style="padding-top:30px">
-  <p class="lead">Each module runs four evidence-based stages — and the blurting gate matters most: retrieving <em>before</em> you read is what builds durable memory. Chapters are ordered by yield, Tier 1 first.</p>
-  <div class="method">
-    <div class="m m1"><h4>① 80/20 Map</h4><p>The 20% of facts that explain 80% of the pharmacology. The skeleton first.</p></div>
-    <div class="m m2"><h4>② Blurting Gate</h4><p>Dump everything you know <em>before</em> reading the notes. Active recall.</p></div>
-    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The mechanism in plain language, with a simple analogy.</p></div>
-    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>When to re-test, and one question linking this topic to another.</p></div>
+<section class="module mindmap-section" id="mindmap">
+<div class="mm-inner">
+  <div class="mm-intro">
+    <div class="mm-tag"><span>🗺️</span> Interactive Mind Map</div>
+    <h2>See the whole chapter at a glance</h2>
+    <p>Click a module below to branch into its subheadings — click a subheading to reveal the short topics and key formulas underneath it. Click anything again to collapse it.</p>
+    <div class="mm-actions">
+      <button id="mmExpandAll" class="mm-btn" type="button">Expand all</button>
+      <button id="mmCollapseAll" class="mm-btn" type="button">Collapse all</button>
+    </div>
   </div>
-  <p class="lead" style="margin-top:18px">Tier 1 (own cold): <strong>Diabetes, Thyroid, Adrenal corticosteroids</strong>. Tier 2: Bone/mineral, Estrogens &amp; progestins, Hypothalamic-pituitary axis. Tier 3 (framework): Androgens.</p>
+
+  <div class="mindmap" id="mindmapTree">
+    <div class="mm-root"><span class="mm-root-emoji">⚖️</span><span>Endocrine<br>Pharmacology</span></div>
+    <div class="mm-bus" aria-hidden="true"></div>
+    <div class="mm-branches">
+
+      <div class="mm-branch" style="--mm-c:#0f6b6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m51">
+          <span class="mm-mnum">51</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Endocrine Pancreas &amp; Pharmacotherapy of Diabetes</span><span class="mm-msub">Insulin and the non-insulin drug classes — which lever each one pulls on blood glucose, and which ones cause low blood sugar.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m51">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The non-insulin classes — the must-know grid</span><span class="mm-ssub">The seven oral/injectable drug families for type 2 diabetes, what each does to weight and hypoglycaemia risk, and the one standout fact for each.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Metformin lowers liver glucose output and improves insulin sensitivity; it's first-line and doesn't cause low blood sugar, but carries a lactic acidosis risk.</li>
+              <li>Sulfonylureas (glimepiride, gliclazide) and meglitinides (repaglinide) force the pancreas to release insulin regardless of glucose level, so they cause hypoglycaemia and weight gain.</li>
+              <li>TZDs (pioglitazone) improve insulin sensitivity but cause fluid retention that can worsen heart failure, plus fracture risk.</li>
+              <li>DPP-4 inhibitors (sitagliptin) and GLP-1 agonists (semaglutide, liraglutide) boost insulin only when glucose is actually high; GLP-1 drugs also cause weight loss and protect the heart.</li>
+              <li>SGLT2 inhibitors (dapagliflozin, empagliflozin) make the kidneys dump glucose into urine, with proven heart and kidney benefits.</li>
+              <li>α-glucosidase inhibitors (acarbose) slow carbohydrate breakdown in the gut, blunting the after-meal sugar spike.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Insulin preparations</span><span class="mm-ssub">The four speed categories of injectable insulin and how they're combined to mimic the body's natural pattern.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Rapid-acting (lispro, aspart, glulisine) is taken with meals to cover the food just eaten.</li>
+              <li>Short-acting (regular) is also a mealtime dose, and is the only insulin that can be given intravenously, used in diabetic ketoacidosis.</li>
+              <li>Intermediate-acting (NPH) gives rough basal cover but has a noticeable peak.</li>
+              <li>Long-acting (glargine, detemir, degludec) gives a flat, steady baseline level all day.</li>
+              <li>Pairing one long-acting basal dose with rapid-acting doses at meals is called a basal-bolus regimen.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Guiding primers — interrogate "why," not "what"</span><span class="mm-ssub">Three reasoning questions that connect each drug's mechanism to its side-effect pattern, rather than just naming the drug.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Why sulfonylureas cause hypoglycaemia while metformin and the incretin drugs largely don't.</li>
+              <li>Why GLP-1 agonists and SGLT2 inhibitors cause weight loss, while sulfonylureas and TZDs cause weight gain.</li>
+              <li>How an SGLT2 inhibitor can protect the heart and kidneys when its main job is just lowering glucose.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The safety line runs along glucose-dependence</span><span class="mm-ssub">The single idea that predicts almost the whole safety profile: does the drug force insulin out regardless of glucose level, or only respond when glucose is high?</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Sulfonylureas and meglitinides push insulin out no matter the glucose reading, which is exactly why they cause hypoglycaemia.</li>
+              <li>Incretins and SGLT2 inhibitors only act when glucose is genuinely elevated, or work through an unrelated pathway, so they rarely cause hypoglycaemia.</li>
+              <li>Metformin must be held before iodinated contrast dye and in kidney impairment because of lactic acidosis risk.</li>
+              <li>SGLT2 inhibitors can cause a form of DKA with normal blood sugar, genital fungal infections, and volume depletion.</li>
+              <li>GLP-1 agonists commonly cause nausea and should be avoided with a personal or family history of medullary thyroid cancer or MEN2.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#a8331f">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m47">
+          <span class="mm-mnum">47</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Thyroid &amp; Antithyroid Drugs</span><span class="mm-msub">Replacing thyroid hormone when there's too little, and the three different ways to rein it in when there's too much.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m47">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Hypothyroidism — replacement</span><span class="mm-ssub">The single drug used to top up low thyroid hormone, how it's dosed, and what interferes with absorbing it.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Levothyroxine (T4) is the drug of choice: long half-life, steady levels, and the body converts it to active T3 on its own.</li>
+              <li>Dosing is titrated against the TSH blood test, not the T4 level itself.</li>
+              <li>Take it on an empty stomach; calcium, iron, and PPIs all reduce how much gets absorbed.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Hyperthyroidism — three strategies</span><span class="mm-ssub">The three different approaches for an overactive thyroid: slow new hormone production, destroy the gland, or just calm the symptoms.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Thionamides (methimazole, propylthiouracil/PTU) block the enzyme thyroid peroxidase that builds new hormone; PTU additionally blocks the conversion of T4 to T3 in the body's tissues.</li>
+              <li>Beta-blockers (propranolol) give quick relief from tremor and a racing heart while the slower treatments take effect.</li>
+              <li>Radioactive iodine permanently destroys thyroid tissue and is a definitive fix, but commonly leads to needing hormone replacement afterward.</li>
+              <li>High-dose iodide (Lugol's solution, potassium iodide) temporarily shuts down hormone release — useful before surgery or in a thyroid storm.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Guiding primers</span><span class="mm-ssub">Three exam-style "why" questions linking replacement logic, monitoring choice, and PTU's extra role in an emergency.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Why levothyroxine (T4) rather than the active hormone T3 itself is the standard replacement.</li>
+              <li>Why dosing is titrated to TSH rather than T4, tying back to the feedback loops covered in the pituitary module.</li>
+              <li>What extra job PTU does in a thyroid storm beyond just blocking new hormone synthesis.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Top up what's missing, dial down what's excessive</span><span class="mm-ssub">The big-picture summary: hypothyroidism is a simple shortage to refill, hyperthyroidism is an oversupply you can attack from three different angles.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Either thionamide can cause agranulocytosis — patients should stop the drug and get a blood count checked if they develop sore throat plus fever.</li>
+              <li>During pregnancy, PTU is used in the first trimester (methimazole risks a birth defect called aplasia cutis), then switched to methimazole afterward.</li>
+              <li>Too much levothyroxine causes iatrogenic hyperthyroidism, including atrial fibrillation and bone loss.</li>
+              <li>Giving high-dose iodide before radioactive iodine treatment blocks the isotope's uptake, so the order of treatments matters.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#5b4a7a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m50">
+          <span class="mm-mnum">50</span>
+          <span class="mm-mtext"><span class="mm-mtitle">ACTH, Adrenal Steroids &amp; the Adrenal Cortex</span><span class="mm-msub">How corticosteroids are chosen by potency, and why nearly every one of their benefits comes with a matching downside.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m50">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Choosing a corticosteroid (potency grading)</span><span class="mm-ssub">The four main corticosteroid drugs ranked by how strong their glucose-raising versus salt-retaining effects are, and what each is used for.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Hydrocortisone is the reference-strength drug, keeps salt-retaining activity, and is used for acute adrenal insufficiency.</li>
+              <li>Prednisolone is about four times stronger and is the usual choice for everyday anti-inflammatory treatment.</li>
+              <li>Dexamethasone is roughly 25 times stronger with almost no salt-retaining effect, used for brain swelling and strong hormone suppression.</li>
+              <li>Fludrocortisone has strong salt-retaining activity and is used to replace mineralocorticoid in Addison's disease.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Glucocorticoid effects = their adverse effects (Cushingoid picture)</span><span class="mm-ssub">Every normal action of cortisol becomes a side effect when the dose is too high for too long — this list is essentially "Cushing's syndrome caused by a pill."</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Raised glucose production can tip into steroid-induced diabetes.</li>
+              <li>Breakdown of protein causes muscle wasting, thin skin, and poor wound healing.</li>
+              <li>Fat gets redistributed, producing a moon face, buffalo hump, and central weight gain.</li>
+              <li>The immune system is suppressed (raising infection risk) and bone is weakened (raising osteoporosis risk).</li>
+              <li>Salt and water retention can raise blood pressure and lower potassium.</li>
+              <li>The drug suppresses the patient's own adrenal axis, so the glands shrink — meaning it must never be stopped suddenly.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Guiding primers</span><span class="mm-ssub">Three "why" questions tying steroid withdrawal, drug potency differences, and the side-effect pattern back to normal physiology.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Why supplying steroid from outside the body makes the patient's own adrenal glands shrink.</li>
+              <li>Why dexamethasone causes barely any fluid retention compared with hydrocortisone.</li>
+              <li>Why almost all steroid side effects are really just normal cortisol physiology pushed too far.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">A single hormone driving the entire stress response</span><span class="mm-ssub">Cortisol's natural job is readying the body for stress, so giving it as a drug brings along the whole stress package, not just the wanted anti-inflammatory effect.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Stopping chronic glucocorticoids abruptly is never acceptable — it must be tapered to avoid an adrenal crisis.</li>
+              <li>Long-term use risks osteoporosis, steroid-induced diabetes, infections (including reactivating TB), cataracts, glaucoma, growth suppression in children, and peptic ulcers (worse with NSAIDs).</li>
+              <li>Patients on long-term steroids need extra "stress-dose" coverage during illness or surgery.</li>
+              <li>Mineralocorticoid (salt-retaining) activity differs by drug — dexamethasone has almost none.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#b9791a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m52">
+          <span class="mm-mnum">52</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Mineral Ion Homeostasis &amp; Bone Turnover</span><span class="mm-msub">The three hormones that keep blood calcium steady, plus how osteoporosis drugs either stop bone breakdown or build new bone.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m52">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Calcium-regulating hormones</span><span class="mm-ssub">Synthetic grouping from the module's opening table — the three natural hormones that raise or lower blood calcium, the foundation for understanding the drugs that follow.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>PTH raises calcium by pulling it from bone, increasing kidney reabsorption, and activating vitamin D.</li>
+              <li>Vitamin D (calcitriol) raises calcium and phosphate absorption from the gut.</li>
+              <li>Calcitonin lowers calcium by blocking the cells that break down bone (osteoclasts).</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Osteoporosis drugs</span><span class="mm-ssub">The six drugs/drug classes for osteoporosis, split between ones that slow bone breakdown and ones that actively build new bone.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Bisphosphonates (alendronate, zoledronate) are first-line; they inhibit the cells that break bone down.</li>
+              <li>Denosumab is an antibody that blocks the signal (RANKL) needed to form new bone-breaking cells.</li>
+              <li>Raloxifene is a SERM that acts like estrogen specifically on bone, protecting it.</li>
+              <li>Teriparatide is a PTH-based drug that, given intermittently, actually builds new bone (the anabolic option).</li>
+              <li>Romosozumab blocks a different signal (sclerostin) to stimulate bone formation.</li>
+              <li>Calcium plus vitamin D is the foundation that should always be co-prescribed with any of the above.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Guiding primers</span><span class="mm-ssub">Three "why" questions covering bisphosphonate dosing rules, the denosumab rebound effect, and the PTH paradox.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Why oral bisphosphonates must be taken upright, with water, on an empty stomach.</li>
+              <li>Why stopping denosumab triggers a rebound rise in fracture risk, unlike stopping a bisphosphonate.</li>
+              <li>How the same hormone, PTH, can both raise blood calcium and, given as a drug, build new bone.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Either slow the teardown or add more builders</span><span class="mm-ssub">The plain-language summary: bone is constantly being broken down and rebuilt, and osteoporosis happens when breakdown wins — drugs fix this by braking demolition or boosting construction.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Oral bisphosphonates risk oesophagitis, so patients must stay upright for 30 minutes after dosing with a full glass of water.</li>
+              <li>Long-term bisphosphonate use carries a small risk of jaw osteonecrosis and unusual femur fractures.</li>
+              <li>Stopping denosumab without starting a follow-on drug risks a rebound surge in spine fractures.</li>
+              <li>Correct any vitamin D or calcium deficiency before starting an antiresorptive drug, to avoid low blood calcium.</li>
+              <li>Teriparatide use is time-limited because of a bone cancer (osteosarcoma) signal seen in animal studies.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#2e8e8e">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m48">
+          <span class="mm-mnum">48</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Estrogens, Progestins &amp; the Female Reproductive Tract</span><span class="mm-msub">How contraceptive hormones switch off ovulation through feedback, plus the tissue-selective drugs (SERMs) used in cancer and bone disease.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m48">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Key drug groups</span><span class="mm-ssub">The five drug groups built on estrogen/progestin pathways — contraceptives, SERMs, aromatase inhibitors, and the drug used to end a pregnancy.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Combined oral contraceptives (ethinylestradiol plus a progestin) suppress ovulation by lowering FSH/LH and thicken cervical mucus.</li>
+              <li>Progestin-only methods (desogestrel, depot injections, the hormonal IUD) are used when estrogen is contraindicated.</li>
+              <li>SERMs (tamoxifen, raloxifene) act as an estrogen agonist in some tissues and an antagonist in others.</li>
+              <li>Aromatase inhibitors (anastrozole, letrozole) block estrogen production and are used in postmenopausal breast cancer.</li>
+              <li>Mifepristone blocks the progesterone receptor and is used to end a pregnancy.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">SERM tissue selectivity (high-yield)</span><span class="mm-ssub">A side-by-side comparison of how tamoxifen and raloxifene behave differently in the breast, bone, and lining of the womb — a classic exam contrast.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Tamoxifen blocks estrogen in the breast (treating ER-positive breast cancer) but acts like estrogen in bone (protective) and in the womb lining (raising cancer risk there).</li>
+              <li>Raloxifene blocks estrogen in the breast, acts like estrogen in bone (used for osteoporosis), and is neutral in the womb lining — no added cancer risk.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Guiding primers</span><span class="mm-ssub">Three "why" questions on feedback suppression of ovulation, how one molecule can act two opposite ways, and the clot risk of estrogen.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Why supplying estrogen/progestin from outside switches off the body's own ovulatory cycle.</li>
+              <li>How a single SERM molecule can block estrogen in one tissue while activating it in another.</li>
+              <li>Why estrogen-containing contraception raises the risk of blood clots (venous thromboembolism).</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Switching feedback off, and the SERM's "shape-shifting key"</span><span class="mm-ssub">Plain-language summary: contraception works by tricking the brain's feedback system, while SERMs work by fitting differently into different tissues.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Estrogen-containing contraceptives and HRT carry a blood-clot risk — avoided in smokers over 35, anyone with a prior clot, or migraine with aura.</li>
+              <li>Tamoxifen raises both womb-lining cancer risk and blood-clot risk.</li>
+              <li>Aromatase inhibitors cause osteoporosis because they strip away protective estrogen.</li>
+              <li>Enzyme-inducing drugs (rifampicin, certain anticonvulsants) commonly reduce how well contraceptives work.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#3a6b3a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m46">
+          <span class="mm-mnum">46</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Introduction to Endocrinology: The Hypothalamic-Pituitary Axis</span><span class="mm-msub">The master feedback hierarchy behind every hormone system, and the drugs that replace, mimic, or block signals at each rung.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m46">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The pituitary-targeting drugs</span><span class="mm-ssub">The six pituitary-related conditions and the drugs used for each, from growth hormone problems to inducing labour.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Growth hormone deficiency is treated with somatropin (recombinant GH replacement).</li>
+              <li>Acromegaly (GH excess) is treated by suppressing or blocking GH with octreotide, pegvisomant, or cabergoline.</li>
+              <li>Excess prolactin is treated with dopamine agonists (cabergoline, bromocriptine), since dopamine normally suppresses prolactin.</li>
+              <li>GnRH analogues (leuprolide) and gonadotropins are used for fertility or suppression — pulsatile dosing stimulates, continuous dosing suppresses.</li>
+              <li>Diabetes insipidus is treated with desmopressin, an ADH analogue that boosts kidney water reabsorption.</li>
+              <li>Oxytocin is used to induce or strengthen uterine contractions during labour.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Guiding primers</span><span class="mm-ssub">Three "why" questions on negative feedback stability, why GnRH's timing pattern flips its effect, and desmopressin's dual use.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Why a target gland's hormone feeding back "upstream" keeps the whole axis stable.</li>
+              <li>Why the timing pattern of GnRH delivery (pulsatile versus continuous) reverses its effect.</li>
+              <li>Why desmopressin treats both diabetes insipidus and nocturnal bed-wetting.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The control centre and its built-in thermostat</span><span class="mm-ssub">Plain-language summary: every endocrine axis is a chain with feedback built in, so treatment always means replacing, mimicking, or blocking a signal somewhere on that chain.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>GnRH analogues cause an initial surge ("flare") in sex hormones before suppression kicks in — covered with an anti-androgen in prostate cancer treatment.</li>
+              <li>Dopamine agonists (cabergoline) can cause nausea, low blood pressure on standing, and rarely heart valve damage or impulse-control problems.</li>
+              <li>Desmopressin carries a risk of low blood sodium from water retention.</li>
+              <li>This same feedback logic explains both the steroid taper (module 50) and the contraceptive mechanism (module 48).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#16344a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m49">
+          <span class="mm-mnum">49</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Androgens &amp; the Male Reproductive Tract</span><span class="mm-msub">Replacing testosterone when it's deficient, versus blocking it at one of three points when a condition is androgen-driven.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m49">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Replacing or blocking androgens</span><span class="mm-ssub">Synthetic grouping from the module's table — testosterone replacement on one side, and the three different levels at which androgen action can be blocked on the other.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Testosterone (gel or injection) replaces deficient hormone in male hypogonadism.</li>
+              <li>Finasteride and dutasteride block 5α-reductase, lowering the more potent DHT — used for enlarged prostate (BPH) and male-pattern baldness.</li>
+              <li>Flutamide and bicalutamide block the androgen receptor directly, used in prostate cancer.</li>
+              <li>GnRH analogues (leuprolide), given continuously, suppress testosterone production at the source for prostate cancer.</li>
+              <li>Abiraterone and ketoconazole block the enzymes that make androgens in the adrenal gland or a tumour.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Guiding primers</span><span class="mm-ssub">Three "why" questions on the dual benefit of 5α-reductase inhibition, why oral testosterone doesn't work well, and combination therapy in prostate cancer.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Why inhibiting 5α-reductase benefits both the prostate and the scalp.</li>
+              <li>Why oral testosterone performs poorly as a drug, tying back to first-pass metabolism.</li>
+              <li>Why a GnRH analogue is paired with an androgen-receptor blocker at the start of prostate cancer treatment.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Replace it, or cut it off at one of three points</span><span class="mm-ssub">Plain-language summary: testosterone is converted to the stronger DHT, so you can block production, block that conversion, or block the receptor — three separate places to intervene.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Finasteride and dutasteride are teratogenic — pregnant women must not handle crushed tablets because of the risk to a male fetus.</li>
+              <li>These drugs also lower PSA levels, so prostate cancer screening results need careful interpretation.</li>
+              <li>GnRH analogues cause an initial testosterone flare, so they're paired with an anti-androgen at the start of prostate cancer treatment.</li>
+              <li>Anabolic steroid abuse suppresses sperm production and harms the heart and liver.</li>
+              <li>Testosterone is contraindicated in prostate cancer.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#8a2d4a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m53">
+          <span class="mm-mnum">53</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#m53" style="color:inherit;text-decoration:none">Drugs Affecting Uterine Motility</a></span><span class="mm-msub">Oxytocics that make the uterus contract versus tocolytics that relax it — all governed by one lever, intracellular calcium.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m53">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Oxytocics — make it contract</span><span class="mm-ssub">Drugs used for induction of labour and postpartum haemorrhage, and the contraindications that decide between them.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Oxytocin (Gq → IP₃ → ↑Ca²⁺) — first-line for induction and postpartum haemorrhage; short half-life, given by infusion.</li>
+              <li>Ergometrine/methylergometrine — sustained tetanic contraction for PPH; contraindicated in hypertension/pre-eclampsia and never used to induce labour.</li>
+              <li>Prostaglandins: misoprostol (PGE₁), dinoprostone (PGE₂, cervical ripening), carboprost (PGF₂α, avoid in asthma).</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Tocolytics — make it relax</span><span class="mm-ssub">Uterine relaxants that delay preterm labour by ~48 hours to allow antenatal steroids.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>The 48-hour window exists to give antenatal corticosteroids for fetal lung maturation and arrange transfer.</li>
+              <li>β₂-agonists (ritodrine ↑cAMP) — now less favoured (pulmonary oedema, tachycardia); nifedipine and atosiban are preferred.</li>
+              <li>Magnesium sulphate — mainly fetal neuroprotection; indomethacin (↓prostaglandins) risks closing the fetal ductus arteriosus.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="method" style="padding-top:30px">
+  <p class="lead">Every module moves through the same four research-backed steps, and step two is the one that counts most: pulling facts out of memory <em>before</em> you've reviewed them is what makes the memory stick. Chapters appear in order of exam value, with Tier 1 leading.</p>
+  <div class="method">
+    <div class="m m1"><h4>① 80/20 Map</h4><p>The small slice of facts responsible for most of the pharmacology. Skeleton before detail.</p></div>
+    <div class="m m2"><h4>② Blurting Gate</h4><p>Empty your memory onto the page <em>before</em> looking at the notes. This is active recall.</p></div>
+    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>Mechanisms explained in everyday words, anchored by a simple analogy.</p></div>
+    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>A reminder of when to retest yourself, plus a question tying this topic to another one.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Tier 1 (know cold): <strong>Diabetes, Thyroid, Adrenal corticosteroids</strong>. Tier 2: Bone/mineral, Estrogens &amp; progestins, Hypothalamic-pituitary axis. Tier 3 (framework only): Androgens.</p>
 </section>
 
 <!-- ============ MODULE 51 — DIABETES ============ -->
@@ -867,7 +1644,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Type 1 diabetes is insulin <strong>deficiency</strong> (always needs insulin); type 2 is insulin <strong>resistance + relative deficiency</strong> — and every drug class is just a different lever on blood glucose: make more insulin, sensitise to it, slow glucose entry, dump glucose in urine, or replace insulin outright.</div>
+    <div class="pillar">Think of type 1 diabetes as an insulin <strong>shortage</strong> (insulin is non-negotiable for life), while type 2 combines insulin <strong>resistance with a partial shortfall</strong> — and each drug class simply pulls a different lever on blood glucose: boost insulin output, improve sensitivity to it, slow how fast glucose enters circulation, push glucose out through the kidneys, or supply insulin from outside the body.</div>
       <figure>
     <div class="fig-title">Figure 51·1 — Antidiabetic drug classes by target organ</div>
     <svg viewBox="0 0 840 320" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
@@ -891,7 +1668,7 @@
       <rect x="600" y="30" width="200" height="58" rx="9" fill="#fbe6ea" stroke="#c0485e"/><text x="700" y="50" text-anchor="middle" fill="#9c2f42" font-weight="700">Replacement</text><text x="700" y="68" text-anchor="middle" font-size="10" fill="#221a2b">exogenous insulin (all T1DM)</text><text x="700" y="82" text-anchor="middle" font-size="10" fill="#c0485e">rapid · short · intermediate · long</text>
       <line x1="600" y1="80" x2="490" y2="140" stroke="#c0485e" stroke-width="2"/>
     </svg>
-    <figcaption>Six levers on one target. Type 1 diabetes needs insulin replacement; type 2 picks from the other five according to the patient's dominant defect, comorbidities, and the agent's weight / hypoglycaemia / cardiorenal profile.</figcaption>
+    <figcaption>One target, six different levers. Insulin replacement is mandatory in type 1 diabetes; for type 2, the choice among the other five depends on the patient's main underlying problem, coexisting conditions, and each drug's profile for weight, hypoglycaemia, and heart/kidney effects.</figcaption>
   </figure>
     <h4>The non-insulin classes — the must-know grid</h4>
     <div class="tbl-scroll"><table>
@@ -923,7 +1700,7 @@
         <path d="M150,150 L210,120 L760,128 L790,150" fill="none" stroke="#0d7a63" stroke-width="2.5"/>
       </g>
     </svg>
-    <figcaption>Rapid-acting covers a meal; long-acting (glargine/detemir/degludec) gives flat basal cover. A basal-bolus regimen combines a long-acting basal with rapid-acting boluses at meals.</figcaption>
+    <figcaption>A rapid-acting dose handles a meal, whereas a long-acting one (glargine, detemir, degludec) provides a steady, flat baseline of coverage. Combining a long-acting basal dose with rapid-acting doses at mealtimes is what's called a basal-bolus regimen.</figcaption>
   </figure>
     <h4>Insulin preparations</h4>
     <div class="tbl-scroll"><table>
@@ -939,12 +1716,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A newly diagnosed type 2 diabetic who is overweight with established heart failure needs treatment. Blurt out the first-line drug, then the single class you would most want to ADD given the heart failure — and explain why a sulfonylurea would be a poor choice here on both counts (weight and a specific safety risk).</div>
-    <h4 style="color:var(--rose)">Guiding primers — ask "why," not "what"</h4>
+    <div class="blurt-prompt">Picture a newly diagnosed, overweight type 2 diabetic who already has heart failure. Without looking anything up, name the first-line drug, then the one additional class you'd most want to layer on top because of the heart failure — and justify why a sulfonylurea would be the wrong choice here for two separate reasons (weight and a specific safety concern).</div>
+    <h4 style="color:var(--rose)">Guiding primers — interrogate "why," not "what"</h4>
     <ul class="primers">
-      <li>Why does a sulfonylurea cause hypoglycaemia but metformin and the incretin drugs essentially don't?</li>
-      <li>Why do GLP-1 agonists and SGLT2 inhibitors cause weight loss while sulfonylureas and TZDs cause weight gain?</li>
-      <li>Why does an SGLT2 inhibitor protect the heart and kidney even though it's "just" a glucose-lowering drug?</li>
+      <li>Why do sulfonylureas trigger hypoglycaemia when metformin and the incretin-based drugs largely don't?</li>
+      <li>Why do GLP-1 agonists and SGLT2 inhibitors lead to weight loss, whereas sulfonylureas and TZDs lead to weight gain?</li>
+      <li>How can an SGLT2 inhibitor protect the heart and kidneys when its job is "merely" lowering glucose?</li>
     </ul>
   </div>
 
@@ -952,13 +1729,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Glucose-dependent vs glucose-independent is the safety divide</h4>
-    <p>The drugs split into those that push insulin out <em>regardless</em> of glucose (sulfonylureas, meglitinides — hence hypoglycaemia) and those that only act when glucose is high or work by other mechanisms (incretins, SGLT2, metformin — hence little hypo risk). That single distinction predicts most of the safety profile.</p>
+    <h4>The safety line runs along glucose-dependence</h4>
+    <p>One group of drugs forces insulin out <em>no matter what</em> the glucose reading is (sulfonylureas, meglitinides — which is why they cause hypoglycaemia), while the other group either responds only when glucose is actually elevated or works through an unrelated pathway (incretins, SGLT2 inhibitors, metformin — hence minimal hypoglycaemia risk). Almost the entire safety profile of this drug family can be predicted from that one split.</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — a factory and its glucose "thermostat"</div>
-      <p>Picture insulin release as a <span class="key">heater controlled by a thermostat reading blood glucose</span>. A <strong>sulfonylurea jams the heater ON</strong> regardless of the room temperature — great when it's cold (high glucose), dangerous when it's already warm (normal glucose) because it keeps blasting heat → hypoglycaemia. <strong>Incretin drugs (GLP-1, DPP-4) turn up the thermostat's <em>sensitivity</em></strong> — the heater fires harder only when it's genuinely cold, so it can't overshoot. <strong>Metformin</strong> doesn't touch the heater at all — it tells the liver to stop pouring in cold air (gluconeogenesis). <strong>SGLT2 inhibitors</strong> open a drain in the floor — excess glucose just runs out in the urine, independent of insulin entirely.</p>
+      <div class="alabel"><span>💡</span> The Analogy — a glucose-reading thermostat</div>
+      <p>Imagine insulin secretion as a <span class="key">heater hooked up to a thermostat that reads blood glucose</span>. A <strong>sulfonylurea wedges the heater permanently ON</strong> no matter the actual room temperature — useful when it's genuinely cold (glucose high), but risky once the room has already warmed up (glucose normal), since the heat keeps pouring in and causes hypoglycaemia. <strong>Incretin-based drugs (GLP-1, DPP-4) instead raise the thermostat's sensitivity</strong>, so the heater only kicks in harder when it's truly cold and can't overshoot. <strong>Metformin</strong> never touches the heater at all — instead it tells the liver to quit leaking cold air into the room (gluconeogenesis). <strong>SGLT2 inhibitors</strong> simply open a drain in the floor so surplus glucose escapes through the urine, completely bypassing insulin.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning — high-yield traps:</span> <strong>Metformin</strong> → lactic acidosis risk; hold before iodinated contrast and in renal impairment. <strong>SGLT2 inhibitors</strong> → euglycaemic DKA, genital mycotic infections, volume depletion. <strong>Pioglitazone (TZD)</strong> → fluid retention worsening heart failure, fracture risk, bladder-cancer signal. <strong>Sulfonylureas</strong> → hypoglycaemia (esp. elderly, renal impairment) and weight gain. Only <strong>regular insulin</strong> is given IV (for DKA). GLP-1 agonists → nausea, contraindicated with personal/family history of medullary thyroid carcinoma/MEN2.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — high-yield traps:</span> <strong>Metformin</strong> carries a lactic-acidosis risk; suspend it before iodinated contrast and in renal impairment. <strong>SGLT2 inhibitors</strong> can produce euglycaemic DKA, genital fungal infections, and volume depletion. <strong>Pioglitazone (a TZD)</strong> brings fluid retention that worsens heart failure, along with fracture risk and a bladder-cancer signal. <strong>Sulfonylureas</strong> cause hypoglycaemia (particularly in the elderly and those with renal impairment) plus weight gain. Of the insulins, only the <strong>regular</strong> form is given intravenously (for DKA). GLP-1 agonists commonly cause nausea and are off-limits with a personal or family history of medullary thyroid carcinoma or MEN2.</blockquote>
   </div>
   </details>
 
@@ -978,7 +1755,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Two clinical states, two treatment logics: <strong>hypothyroidism → replace</strong> (levothyroxine, T₄), and <strong>hyperthyroidism → suppress</strong> (thionamides block synthesis, radioiodine ablates, β-blockers control symptoms).</div>
+    <div class="pillar">There are two clinical pictures, each with its own treatment strategy: with <strong>hypothyroidism you replace</strong> what's missing (levothyroxine, T₄), and with <strong>hyperthyroidism you rein in</strong> the excess (thionamides interrupt hormone synthesis, radioiodine destroys the gland, β-blockers manage the symptoms).</div>
       <figure>
     <div class="fig-title">Figure 47·1 — Thyroid hormone synthesis &amp; where antithyroid drugs act</div>
     <svg viewBox="0 0 840 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
@@ -1000,7 +1777,7 @@
       <line x1="606" y1="166" x2="606" y2="146" stroke="#a8331f" stroke-width="1.5" stroke-dasharray="3 2"/>
       <text x="434" y="190" text-anchor="middle" fill="#0d7a63" font-size="11" font-weight="600">High-dose iodide → ⊣ release (Wolff-Chaikoff)</text>
     </svg>
-    <figcaption>Antithyroid drugs interrupt synthesis at different steps: thionamides block organification (peroxidase); PTU additionally blocks peripheral T₄→T₃; β-blockers control adrenergic symptoms; radioactive iodine ablates the gland.</figcaption>
+    <figcaption>Each antithyroid approach hits a different step in the pathway: thionamides stop organification by blocking peroxidase; PTU has the extra job of blocking peripheral T₄-to-T₃ conversion; β-blockers handle the adrenergic symptoms; and radioactive iodine simply destroys the gland.</figcaption>
   </figure>
     <h4>Hypothyroidism — replacement</h4>
     <ul>
@@ -1021,12 +1798,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A pregnant woman in her first trimester has hyperthyroidism. Blurt out which thionamide is preferred in the first trimester and why, which is preferred afterwards, and the single rare-but-lethal blood toxicity you must warn every patient on these drugs about.</div>
+    <div class="blurt-prompt">Consider a woman in her first trimester of pregnancy who develops hyperthyroidism. Without checking notes, state which thionamide is favoured during that first trimester and the reasoning, which one takes over afterward, and the one rare but potentially fatal blood disorder every patient on these drugs needs to be warned about.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why is levothyroxine (T₄) used for replacement rather than the active hormone T₃?</li>
-      <li>Why do you monitor TSH, not T₄, to titrate replacement (link to feedback loops, Module 46)?</li>
-      <li>Why does PTU have a special role in thyroid storm beyond just blocking synthesis?</li>
+      <li>Why is levothyroxine (T₄), not the active hormone T₃ itself, the standard replacement?</li>
+      <li>Why does titration rely on TSH rather than T₄ (think back to the feedback loops in Module 46)?</li>
+      <li>What extra role does PTU play in thyroid storm, beyond simply blocking new hormone synthesis?</li>
     </ul>
   </div>
 
@@ -1034,13 +1811,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Replace the deficient, throttle the excessive</h4>
-    <p>Hypothyroidism is simply too little hormone — give back T₄ and let the body convert what it needs to T₃. Hyperthyroidism is too much — you can stop the gland making it (thionamides), destroy the gland (radioiodine), or just blunt the adrenergic symptoms while you wait (β-blockers).</p>
+    <h4>Top up what's missing, dial down what's excessive</h4>
+    <p>Hypothyroidism is, at its core, a hormone shortfall — supply T₄ and let peripheral tissues convert what they need into T₃. Hyperthyroidism is the opposite problem — an oversupply — and you can address it by halting the gland's production (thionamides), destroying the gland outright (radioiodine), or simply easing the adrenergic symptoms while waiting for one of the slower approaches to work (β-blockers).</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — a furnace running the body's metabolism</div>
-      <p>Thyroid hormone is the <span class="key">thermostat setting for the body's whole furnace</span>. Hypothyroidism is a furnace set too low — sluggish, cold, slow heart, weight gain — so you simply turn the dial back up (levothyroxine). Hyperthyroidism is the furnace roaring out of control — hot, racing heart, weight loss. You can cut the fuel supply (thionamides block hormone synthesis), rip out the furnace entirely (radioiodine ablation), or — while those slow methods take effect — put a blanket over the alarm bells (β-blockers calm the racing heart and tremor without touching the furnace itself).</p>
+      <div class="alabel"><span>💡</span> The Analogy — a furnace driving the body's metabolism</div>
+      <p>Thyroid hormone acts like the <span class="key">dial that sets the body's overall furnace temperature</span>. A hypothyroid furnace is turned down too far — everything runs cold, sluggish, the heart slows, weight piles on — so the fix is simply turning that dial back up with levothyroxine. A hyperthyroid furnace, conversely, is blazing out of control — racing heart, heat intolerance, weight falling off. Your options are to cut off the fuel supply (thionamides interrupting synthesis), tear the furnace out altogether (radioiodine ablation), or, while waiting on those slower fixes, muffle the alarm bells without touching the furnace itself (β-blockers calming the tremor and tachycardia).</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> both thionamides can cause <strong>agranulocytosis</strong> (warn patients: sore throat + fever → stop and check FBC) and hepatotoxicity. In pregnancy: <strong>PTU in the first trimester</strong> (methimazole is teratogenic — aplasia cutis), then switch to methimazole. Over-replacement with levothyroxine → iatrogenic hyperthyroidism (AF, osteoporosis). High-dose iodide before radioiodine blocks its uptake — timing matters.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> either thionamide can produce <strong>agranulocytosis</strong> (tell patients that sore throat plus fever means stopping the drug and getting an FBC checked) as well as liver toxicity. During pregnancy, <strong>PTU is used in the first trimester</strong> (methimazole carries teratogenic risk — aplasia cutis) before switching to methimazole afterward. Excessive levothyroxine replacement produces iatrogenic hyperthyroidism (atrial fibrillation, osteoporosis). Giving high-dose iodide ahead of radioiodine will block the isotope's uptake, so sequencing matters.</blockquote>
   </div>
   </details>
 
@@ -1060,7 +1837,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">The adrenal cortex makes three steroid families (salt, sugar, sex); pharmacology centres on the <strong>glucocorticoids</strong> — superb anti-inflammatories whose every therapeutic action is shadowed by a predictable adverse effect, because they switch the body into a chronic "stress + high-cortisol" state.</div>
+    <div class="pillar">The adrenal cortex produces three families of steroids (salt, sugar, sex), and the pharmacology of interest is mostly about the <strong>glucocorticoids</strong> — excellent anti-inflammatory agents whose every benefit comes paired with a predictable downside, since they essentially lock the body into an ongoing "high-cortisol stress" state.</div>
       <figure>
     <div class="fig-title">Figure 50·1 — Adrenal cortex: three zones, three steroid families</div>
     <svg viewBox="0 0 820 220" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
@@ -1087,7 +1864,7 @@
       </g>
       <text x="410" y="208" text-anchor="middle" font-size="10.5" fill="#6d2f8f" font-style="italic">Mnemonic: "salt, sugar, sex — the deeper you go, the sweeter it gets"</text>
     </svg>
-    <figcaption>Synthetic corticosteroids are graded by their glucocorticoid vs mineralocorticoid potency — the basis for choosing among hydrocortisone, prednisolone, dexamethasone and fludrocortisone.</figcaption>
+    <figcaption>Synthetic corticosteroids are ranked according to how strongly glucocorticoid versus mineralocorticoid their activity is — and that ranking is what guides the choice between hydrocortisone, prednisolone, dexamethasone, and fludrocortisone.</figcaption>
   </figure>
     <h4>Choosing a corticosteroid (potency grading)</h4>
     <div class="tbl-scroll"><table>
@@ -1112,12 +1889,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A patient has been on oral prednisolone for three months and wants to stop because of weight gain. Blurt out why you must NEVER stop it abruptly — what has happened to their own adrenal glands — and what catastrophic event abrupt withdrawal could trigger.</div>
+    <div class="blurt-prompt">Suppose a patient who has been on oral prednisolone for three months wants to quit because of weight gain. Without looking it up, explain why stopping abruptly is never acceptable — what's happened to that patient's own adrenal glands in the meantime — and name the catastrophic event sudden withdrawal could set off.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does giving exogenous steroid shrink the patient's own adrenal glands (link to feedback, Mod 46)?</li>
-      <li>Why does dexamethasone barely cause fluid retention while hydrocortisone does?</li>
-      <li>Why are nearly all the "side effects" of steroids just their normal physiological actions in excess?</li>
+      <li>Why does supplying steroid from outside the body cause the patient's own adrenal glands to shrink (tie this back to feedback, Module 46)?</li>
+      <li>Why does dexamethasone produce barely any fluid retention compared with hydrocortisone?</li>
+      <li>Why are almost all steroid "side effects" really just normal physiology pushed into excess?</li>
     </ul>
   </div>
 
@@ -1125,13 +1902,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>One hormone, the whole stress programme</h4>
-    <p>Cortisol prepares the body for stress: raise blood glucose, free up amino acids and fat, and damp down inflammation. A therapeutic glucocorticoid exploits the anti-inflammatory part — but you can't take just that slice; the whole stress programme runs, which is why chronic use reproduces Cushing's syndrome. And because exogenous steroid suppresses ACTH, the adrenals stop working and atrophy.</p>
+    <h4>A single hormone driving the entire stress response</h4>
+    <p>Cortisol's job is to ready the body for stress: it raises blood glucose, mobilises amino acids and fat, and suppresses inflammation. When a glucocorticoid is given as therapy, you're trying to harness only the anti-inflammatory piece — but the whole stress package activates regardless, which explains why long-term use ends up recreating Cushing's syndrome. Meanwhile, since the exogenous steroid suppresses ACTH, the adrenal glands go idle and shrink.</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — outsourcing a factory until it shuts down</div>
-      <p>Your adrenal glands are a <span class="key">factory that the pituitary keeps busy by sending daily orders (ACTH)</span>. When you give long-term steroid from outside, the warehouse is always full, so the pituitary stops sending orders — and a factory with no orders for months <strong>lays off its workers and rusts shut</strong> (adrenal atrophy). If you then suddenly cut off the outside supply, there's no cortisol from either source — an <strong>adrenal crisis</strong>. That's why you must <em>taper</em>: gradually reducing the outside supply lets the pituitary start sending orders again and the factory slowly restart.</p>
+      <div class="alabel"><span>💡</span> The Analogy — a factory put out of work</div>
+      <p>Think of your adrenal glands as a <span class="key">factory kept running by daily purchase orders from the pituitary (ACTH)</span>. Supply steroid from outside for long enough, and the warehouse stays permanently stocked — so the pituitary quits placing orders, and a factory with no orders for months eventually <strong>furloughs its staff and seizes up</strong> (that's adrenal atrophy). Cut off the external supply abruptly at that point, and there's no cortisol coming from anywhere — an <strong>adrenal crisis</strong>. This is exactly why you <em>taper</em> instead: easing the external dose down slowly gives the pituitary time to resume ordering and lets the factory restart gradually.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>Never stop chronic glucocorticoids abruptly</strong> — taper to avoid adrenal crisis. Long-term effects: osteoporosis (give bone protection), steroid diabetes, infection (including reactivation of TB), cataracts/glaucoma, growth suppression in children, peptic ulcer risk (esp. with NSAIDs). During intercurrent illness/surgery, patients on long-term steroids need <strong>stress-dose</strong> cover. Mineralocorticoid effect varies by drug — dexamethasone has almost none.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>Abrupt discontinuation of chronic glucocorticoids is never acceptable</strong> — always taper to prevent adrenal crisis. Long-term consequences include osteoporosis (bone-protective measures are warranted), steroid-induced diabetes, infection risk (including TB reactivation), cataracts and glaucoma, growth suppression in children, and peptic ulcer risk that's compounded by NSAIDs. Patients on long-term steroids need extra <strong>stress-dose</strong> coverage during illness or surgery. The degree of mineralocorticoid activity differs by drug — dexamethasone has virtually none.</blockquote>
   </div>
   </details>
 
@@ -1151,7 +1928,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Serum calcium is held steady by <strong>three regulators</strong> (PTH ↑Ca, vitamin D ↑Ca absorption, calcitonin ↓Ca); osteoporosis drugs then split cleanly into <strong>antiresorptives</strong> (stop bone breakdown) and <strong>anabolics</strong> (build new bone).</div>
+    <div class="pillar">Serum calcium stays stable thanks to <strong>three regulating hormones</strong> (PTH raises Ca, vitamin D boosts Ca absorption, calcitonin lowers Ca); osteoporosis drugs then divide neatly into <strong>antiresorptives</strong> (which halt bone breakdown) and <strong>anabolic agents</strong> (which build fresh bone).</div>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Regulator</th><th>Action on calcium</th></tr></thead>
       <tbody>
@@ -1176,12 +1953,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A patient is prescribed an oral bisphosphonate for osteoporosis. Blurt out the very specific way they must take it (posture, timing, what with) and the two feared long-term toxicities — then explain the paradox that continuous PTH dissolves bone but intermittent PTH (teriparatide) builds it.</div>
+    <div class="blurt-prompt">Imagine a patient newly started on an oral bisphosphonate for osteoporosis. From memory, recall the precise way it must be taken (body position, timing, what to take it with) and the two dreaded long-term toxicities — then resolve the apparent contradiction that continuous PTH breaks bone down while intermittent PTH (teriparatide) builds it up.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why must oral bisphosphonates be taken upright with water on an empty stomach?</li>
-      <li>Why does stopping denosumab cause a rebound in fractures, unlike stopping a bisphosphonate?</li>
-      <li>Why does the same hormone (PTH) both raise serum calcium and, given as a drug, build bone?</li>
+      <li>Why do oral bisphosphonates need to be taken upright, with water, on an empty stomach?</li>
+      <li>Why does stopping denosumab trigger a rebound in fracture risk, unlike stopping a bisphosphonate?</li>
+      <li>How can the same hormone (PTH) both elevate serum calcium and, when given as a drug, build new bone?</li>
     </ul>
   </div>
 
@@ -1189,13 +1966,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Slow the demolition or hire the builders</h4>
-    <p>Bone is constantly remodelled by osteoclasts (demolition) and osteoblasts (construction). In osteoporosis demolition outpaces construction. Antiresorptives (bisphosphonates, denosumab) slow the demolition crew; anabolics (teriparatide) hire more builders. The PTH paradox: <em>continuous</em> high PTH favours resorption, but <em>intermittent</em> pulses favour formation.</p>
+    <h4>Either slow the teardown or add more builders</h4>
+    <p>Bone is in constant turnover, torn down by osteoclasts and rebuilt by osteoblasts. Osteoporosis happens when the teardown side wins out. Antiresorptive drugs (bisphosphonates, denosumab) put the brakes on the demolition crew, while anabolic drugs (teriparatide) recruit more builders. The PTH paradox is this: PTH held at a <em>constantly</em> high level favours breakdown, but delivered as <em>brief, intermittent</em> pulses it favours new bone formation instead.</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — a building under constant renovation</div>
-      <p>Bone is a <span class="key">building with a demolition crew and a construction crew always at work</span>. Osteoporosis is demolition winning. A <strong>bisphosphonate is like chaining the wrecking ball</strong> — it embeds in the bone and poisons osteoclasts that try to chew it, so demolition slows (and the effect lingers in the bone for years). <strong>Denosumab fires the demolition foreman</strong> (blocks RANKL) — but the moment you stop paying, the whole crew rushes back with a vengeance (rebound). <strong>Teriparatide</strong> is the clever twist: a quick daily visit from the site manager (a PTH pulse) motivates the <em>builders</em>, but if that manager never leaves (continuous PTH) they start directing demolition instead.</p>
+      <div class="alabel"><span>💡</span> The Analogy — a building under perpetual renovation</div>
+      <p>Picture bone as a <span class="key">building where a demolition crew and a construction crew are both perpetually on site</span>. Osteoporosis means demolition has the upper hand. A <strong>bisphosphonate effectively chains up the wrecking ball</strong> — it lodges inside bone tissue and poisons any osteoclast that tries to chew through it, slowing demolition for years afterward. <strong>Denosumab instead fires the demolition foreman</strong> (by blocking RANKL) — but stop paying for that and the crew comes roaring back even harder (the rebound effect). <strong>Teriparatide</strong> plays a different trick entirely: a brief daily visit from the site manager (one PTH pulse) energises the <em>builders</em>, but if that manager never goes home (PTH held constant) they end up directing demolition instead.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> oral bisphosphonates → <strong>oesophagitis</strong> (take upright, empty stomach, full glass of water, stay upright 30 min). Rare but classic: <strong>osteonecrosis of the jaw</strong> and <strong>atypical femoral fractures</strong> with prolonged use. Denosumab → <strong>rebound vertebral fractures on discontinuation</strong> — never stop without follow-on therapy. Correct vitamin D/calcium before starting antiresorptives (risk of hypocalcaemia). Teriparatide carries an osteosarcoma signal (limit duration).</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> oral bisphosphonates risk <strong>oesophagitis</strong> — hence the instructions to stay upright, take on an empty stomach with a full glass of water, and remain upright for 30 minutes. With extended use, watch for the classic but uncommon pair: <strong>osteonecrosis of the jaw</strong> and <strong>atypical femoral fractures</strong>. Stopping denosumab without a follow-on agent risks a <strong>rebound surge in vertebral fractures</strong> — never discontinue it in isolation. Vitamin D and calcium deficiency should be corrected before starting any antiresorptive, to avoid hypocalcaemia. Teriparatide use is time-limited because of an osteosarcoma signal.</blockquote>
   </div>
   </details>
 
@@ -1215,7 +1992,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Estrogen and progestin given exogenously exploit <strong>negative feedback</strong>: they suppress the hypothalamic-pituitary axis, switching off the LH surge so ovulation never happens — the core of hormonal contraception. The same hormones, used tissue-selectively (SERMs) or blocked (aromatase inhibitors), treat breast cancer and osteoporosis.</div>
+    <div class="pillar">Administering estrogen and progestin from outside the body takes advantage of <strong>negative feedback</strong>: the hypothalamic-pituitary axis gets suppressed, the LH surge never fires, and ovulation is prevented — which is the entire basis of hormonal contraception. Those same hormone pathways, approached either with tissue-selective drugs (SERMs) or by blocking synthesis (aromatase inhibitors), are also put to use against breast cancer and osteoporosis.</div>
     <h4>Key drug groups</h4>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Group</th><th>Examples</th><th>Use / mechanism</th></tr></thead>
@@ -1239,12 +2016,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">Explain how a combined pill prevents pregnancy using the word "feedback." Then blurt out why tamoxifen — a drug that <em>blocks</em> estrogen in the breast — paradoxically <em>raises</em> the risk of endometrial cancer.</div>
+    <div class="blurt-prompt">Using the term "feedback," describe how a combined contraceptive pill prevents pregnancy. Then, without consulting notes, explain why tamoxifen — a drug that <em>antagonises</em> estrogen in breast tissue — nonetheless <em>increases</em> endometrial cancer risk.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does adding exogenous estrogen/progestin stop the body's own ovulation cycle?</li>
-      <li>Why can one molecule (a SERM) be an estrogen blocker in one tissue and an activator in another?</li>
-      <li>Why does estrogen-containing contraception raise venous thromboembolism risk?</li>
+      <li>Why does supplying estrogen/progestin from outside switch off the body's own ovulatory cycle?</li>
+      <li>How can a single molecule (a SERM) block estrogen in one tissue while activating it in another?</li>
+      <li>Why does estrogen-containing contraception increase the risk of venous thromboembolism?</li>
     </ul>
   </div>
 
@@ -1252,13 +2029,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Feedback off, and the SERM "context-dependent key"</h4>
-    <p>A steady supply of exogenous estrogen + progestin convinces the hypothalamus and pituitary that hormone levels are already adequate, so they stop sending FSH/LH — no follicle matures, no LH surge, no ovulation. SERMs are cleverer: the same molecule behaves as an agonist or antagonist depending on which co-regulators a tissue expresses.</p>
+    <h4>Switching feedback off, and the SERM's "shape-shifting key"</h4>
+    <p>A constant supply of exogenous estrogen and progestin signals to the hypothalamus and pituitary that hormone levels are already sufficient, so FSH/LH output is suppressed — no follicle matures, no LH surge occurs, and ovulation doesn't happen. SERMs work through a more subtle trick: the identical molecule acts as either an agonist or antagonist depending on which co-regulator proteins a given tissue expresses.</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — a key that turns differently in different locks</div>
-      <p>A SERM is a <span class="key">master key cut to a strange shape</span>. In the breast lock it jams the mechanism so the real estrogen key can't turn it (antagonist — useful in ER-positive breast cancer). But the bone lock and the endometrial lock are built slightly differently, and in those the same strange key actually <strong>turns the mechanism on</strong> (agonist). That's why tamoxifen protects bone (good) yet stimulates the endometrium (raising cancer risk) — one key, three locks, three outcomes. For contraception, the logic is simpler feedback: keep the warehouse stocked with hormone and head office stops ordering new production (no ovulation).</p>
+      <div class="alabel"><span>💡</span> The Analogy — one key, several different locks</div>
+      <p>Think of a SERM as a <span class="key">master key cut to an unusual shape</span>. In the breast's lock, it jams the mechanism so the genuine estrogen key can't turn it — that's antagonism, which is exactly what's exploited in ER-positive breast cancer. But the locks in bone and the endometrium are shaped slightly differently, and there the same odd-shaped key actually <strong>engages the mechanism</strong> — agonism. That explains why tamoxifen is protective for bone yet stimulates the endometrium and raises cancer risk there: one key, three locks, three different results. Contraception runs on a simpler feedback logic instead: keep the hormone "warehouse" full, and headquarters stops placing new orders, so ovulation never gets triggered.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> estrogen-containing contraceptives/HRT → <strong>venous thromboembolism</strong> (avoid in smokers >35, prior VTE, migraine with aura). <strong>Tamoxifen</strong> → endometrial cancer + VTE risk. Aromatase inhibitors → osteoporosis (they remove protective estrogen). Mifepristone is a progesterone antagonist. Many interactions with enzyme inducers (rifampicin, certain anticonvulsants) reduce contraceptive efficacy.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> estrogen-containing contraceptives and HRT carry a <strong>venous thromboembolism</strong> risk (avoid in smokers over 35, those with prior VTE, or migraine with aura). <strong>Tamoxifen</strong> raises both endometrial cancer and VTE risk. Aromatase inhibitors cause osteoporosis by stripping away protective estrogen. Mifepristone works as a progesterone-receptor antagonist. Enzyme-inducing drugs (rifampicin, certain anticonvulsants) commonly interact to reduce contraceptive effectiveness.</blockquote>
   </div>
   </details>
 
@@ -1278,7 +2055,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Learn <strong>one ladder with a feedback loop</strong> — hypothalamus → pituitary → target gland, with the target hormone feeding back to switch the top off — and every endocrine drug becomes "replace the deficient, mimic the releaser, or block the excess" at a defined rung.</div>
+    <div class="pillar">Master <strong>a single hierarchy with a feedback loop</strong> — hypothalamus signals the pituitary, which signals the target gland, and the target gland's hormone loops back to switch off the top of the chain — and suddenly every endocrine drug reduces to "replace what's missing, mimic the releasing signal, or block the excess" at some specific rung of that ladder.</div>
       <figure>
     <div class="fig-title">Figure 46·1 — The hypothalamic-pituitary axis &amp; negative feedback</div>
     <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
@@ -1299,7 +2076,7 @@
       <text x="150" y="178" text-anchor="end" fill="#a8331f" font-size="10.5" font-weight="600">Antagonists: octreotide,</text>
       <text x="150" y="192" text-anchor="end" fill="#a8331f" font-size="10.5" font-weight="600">dopamine agonists, pegvisomant</text>
     </svg>
-    <figcaption>Every pituitary drug is positioned on this ladder: replace a deficient hormone, mimic a releasing factor, or block an excess. Negative feedback is why exogenous hormone shuts the axis down (the basis of steroid taper and contraceptive action).</figcaption>
+    <figcaption>Each pituitary-related drug fits somewhere on this ladder — replacing a deficient hormone, mimicking a releasing factor, or blocking an excess. Negative feedback explains why hormone supplied from outside shuts the axis down, which underlies both why steroids must be tapered and how contraception works.</figcaption>
   </figure>
     <h4>The pituitary-targeting drugs</h4>
     <div class="tbl-scroll"><table>
@@ -1317,12 +2094,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">Dopamine normally inhibits prolactin release. Blurt out what that predicts for two opposite drugs: (1) which drug class treats a prolactinoma, and (2) why antipsychotics that <em>block</em> dopamine cause galactorrhoea. Then explain why continuous GnRH suppresses the gonads while pulsatile GnRH stimulates them.</div>
+    <div class="blurt-prompt">Given that dopamine ordinarily suppresses prolactin release, work out what follows for two contrasting drugs: (1) which drug class is used to treat a prolactinoma, and (2) why antipsychotics that <em>antagonise</em> dopamine end up causing galactorrhoea. Then explain why continuous GnRH shuts the gonads down while pulsatile GnRH stimulates them.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does a target-gland hormone feeding back "upstream" stabilise the whole system?</li>
-      <li>Why does the <em>pattern</em> of GnRH delivery (pulsatile vs continuous) flip its effect?</li>
-      <li>Why is desmopressin used for both diabetes insipidus and bed-wetting?</li>
+      <li>Why does a target gland's hormone feeding back "upstream" keep the whole axis stable?</li>
+      <li>Why does the <em>timing pattern</em> of GnRH delivery (pulsatile versus continuous) reverse its effect?</li>
+      <li>Why is desmopressin used for both diabetes insipidus and nocturnal bed-wetting?</li>
     </ul>
   </div>
 
@@ -1330,13 +2107,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>The master gland and its thermostat</h4>
-    <p>The hypothalamus and pituitary sit atop each endocrine axis, and the target hormone feeds back to keep output stable. Pharmacology either supplies a missing hormone, mimics a releasing signal, or blocks an overactive one. Two quirks dominate exams: dopamine <em>inhibits</em> prolactin (so dopamine agonists treat prolactinomas, dopamine blockers raise prolactin), and GnRH effect depends on <em>pattern</em> — pulses stimulate, a continuous flood desensitises and shuts the gonads down.</p>
+    <h4>The control centre and its built-in thermostat</h4>
+    <p>Every endocrine axis is headed by the hypothalamus and pituitary, with the downstream hormone looping back to keep output steady. Drug therapy works by supplying a missing hormone, imitating a releasing signal, or suppressing an overactive one. Two exam favourites stand out: dopamine normally <em>suppresses</em> prolactin (which is why dopamine agonists treat prolactinomas, while dopamine-blocking drugs raise prolactin), and the effect of GnRH hinges on its <em>delivery pattern</em> — pulses are stimulatory, while a constant flood desensitises receptors and shuts the gonads down.</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — a thermostat-controlled heating system</div>
-      <p>An endocrine axis is a <span class="key">house thermostat</span>. The hypothalamus sets the target temperature, the pituitary is the relay that switches the boiler (target gland) on, and the room temperature (hormone level) feeds back to the thermostat to stop it overshooting — that's negative feedback. The GnRH quirk is like a <strong>doorbell</strong>: ringing it in normal rhythm (pulses) keeps summoning a response, but holding the button down continuously just makes everyone tune it out (desensitisation) — which is exactly how continuous GnRH analogues are used to <em>switch off</em> sex-hormone production in prostate cancer.</p>
+      <div class="alabel"><span>💡</span> The Analogy — a home heating thermostat</div>
+      <p>Picture an endocrine axis as a <span class="key">household thermostat system</span>. The hypothalamus sets the desired temperature, the pituitary is the relay switching the boiler (the target gland) on, and the resulting room temperature (hormone level) loops back to the thermostat to prevent overshoot — that's negative feedback in action. The GnRH quirk works like a <strong>doorbell</strong>: pressing it rhythmically (pulses) keeps prompting a response, but holding it down continuously just gets everyone to tune it out (desensitisation) — and that's precisely how continuous GnRH analogues are used to <em>switch off</em> sex-hormone production in prostate cancer.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> GnRH analogues cause an initial <strong>testosterone/estrogen "flare"</strong> before suppression — cover with an anti-androgen in prostate cancer. Dopamine agonists (cabergoline) → nausea, postural hypotension, rare valvulopathy/impulse-control disorders. Desmopressin → hyponatraemia (water retention). This axis logic underlies steroid-taper (Module 50) and contraceptive feedback (Module 48).</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> GnRH analogues trigger an initial <strong>flare</strong> in testosterone/estrogen before suppression sets in — cover this with an anti-androgen when treating prostate cancer. Dopamine agonists (cabergoline) can cause nausea, postural hypotension, and rarely valvulopathy or impulse-control disorders. Desmopressin risks hyponatraemia from water retention. This same axis logic underlies the steroid taper discussed in Module 50 and the contraceptive feedback mechanism in Module 48.</blockquote>
   </div>
   </details>
 
@@ -1356,7 +2133,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Two opposite goals: <strong>replace</strong> androgen in hypogonadism (testosterone), or <strong>block</strong> it in androgen-driven disease (BPH, prostate cancer, hirsutism) — and the blockers act at three points: synthesis, conversion to DHT, or the receptor.</div>
+    <div class="pillar">There are two opposing aims here: <strong>replacing</strong> androgen in hypogonadism (with testosterone), or <strong>blocking</strong> it in androgen-driven conditions (BPH, prostate cancer, hirsutism) — and the blocking drugs work at three distinct points: synthesis, conversion to DHT, or the receptor itself.</div>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Goal</th><th>Drug</th><th>Mechanism / use</th></tr></thead>
       <tbody>
@@ -1371,12 +2148,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A man is treated for both BPH and male-pattern baldness with the same single drug. Blurt out the drug, the enzyme it inhibits, and the active hormone whose production it reduces — then list the three different levels at which you could instead block androgens to treat prostate cancer.</div>
+    <div class="blurt-prompt">Picture a man whose BPH and male-pattern baldness are both being treated with a single drug. From memory, name that drug, the enzyme it inhibits, and the active hormone whose levels it lowers — then list the three separate levels at which androgens could instead be blocked to manage prostate cancer.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does blocking 5α-reductase help both the prostate and the scalp?</li>
-      <li>Why is testosterone itself a poor oral drug (link to first-pass metabolism, Gen Pharm)?</li>
-      <li>Why combine a GnRH analogue with an androgen-receptor blocker initially in prostate cancer?</li>
+      <li>Why does inhibiting 5α-reductase benefit both the prostate and the scalp?</li>
+      <li>Why does oral testosterone perform poorly as a drug (think back to first-pass metabolism in general pharmacology)?</li>
+      <li>Why is a GnRH analogue paired with an androgen-receptor blocker at the start of prostate cancer treatment?</li>
     </ul>
   </div>
 
@@ -1399,11 +2176,95 @@
 
 
 
+<!-- ============ MODULE 53 — DRUGS AFFECTING UTERINE MOTILITY ============ -->
+<section class="module" id="m53">
+  <div class="mod-head">
+    <div class="mod-num">53</div>
+    <div class="mod-titleblock">
+      <h2>Drugs Affecting Uterine Motility</h2>
+      <div class="mod-sub">Oxytocics that contract the uterus, tocolytics that relax it</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Foundation</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Every drug here either <strong>contracts the uterus (oxytocics)</strong> or <strong>relaxes it (tocolytics)</strong>, and both reduce to one switch: <strong>intracellular calcium</strong>. Raise myometrial Ca²⁺ (Gq → IP₃) and it contracts; lower it (cAMP/cGMP, or block Ca²⁺ entry) and it relaxes. Hang every drug on that single lever.</div>
+    <h4>Oxytocics (stimulate contraction)</h4>
+    <ul>
+      <li><strong>Oxytocin</strong> — first-line for induction/augmentation of labour and prevention/treatment of <strong>postpartum haemorrhage (PPH)</strong>; acts on Gq oxytocin receptors (↑IP₃/Ca²⁺). Short half-life → IV infusion; risk of water intoxication (ADH-like) and hypotension if bolused.</li>
+      <li><strong>Ergometrine / methylergometrine</strong> — powerful sustained tetanic contraction for PPH (often combined with oxytocin as <em>Syntometrine</em>); <strong>contraindicated in hypertension/pre-eclampsia</strong> (vasoconstriction) and <em>not</em> used to induce labour (sustained spasm harms the fetus).</li>
+      <li><strong>Prostaglandins:</strong> <strong>PGE₁ (misoprostol)</strong> — induction, PPH, medical abortion (with mifepristone); <strong>PGE₂ (dinoprostone)</strong> — cervical ripening; <strong>PGF₂α (carboprost)</strong> — refractory PPH (avoid in asthma — bronchospasm).</li>
+    </ul>
+    <h4>Tocolytics (suppress contraction — delay preterm labour ~48 h)</h4>
+    <ul>
+      <li><strong>Why only 48 hours?</strong> The window buys time for <strong>antenatal corticosteroids</strong> (fetal lung maturation) and in-utero transfer to neonatal care — not to prolong pregnancy indefinitely.</li>
+      <li><strong>β₂-agonists</strong> (ritodrine prototype, salbutamol, terbutaline) — ↑cAMP → ↓Ca²⁺; maternal tachycardia, pulmonary oedema, hyperglycaemia (now less favoured).</li>
+      <li><strong>Nifedipine</strong> (Ca²⁺-channel blocker) and <strong>atosiban</strong> (oxytocin-receptor antagonist) — preferred today (better maternal/fetal safety).</li>
+      <li><strong>Magnesium sulphate</strong> — competes with Ca²⁺; chiefly used for <strong>fetal neuroprotection</strong> in very preterm labour (and for eclampsia seizures).</li>
+      <li><strong>Indomethacin</strong> (COX inhibitor, ↓prostaglandins) and <strong>nitroglycerin</strong> (NO → ↑cGMP) are further options.</li>
+    </ul>
+    <figure>
+      <div class="fig-title">Figure 53·1 — The myometrial calcium switch: contract vs relax</div>
+      <svg viewBox="0 0 880 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+        <ellipse cx="440" cy="125" rx="120" ry="64" fill="#f4eefb" stroke="#5b4a7a" stroke-width="2"/>
+        <text x="440" y="120" text-anchor="middle" font-weight="700" fill="#3b2f7a">myometrial cell</text>
+        <text x="440" y="140" text-anchor="middle" font-size="10" fill="#5b4a7a">↑Ca²⁺ → MLCK → contraction</text>
+        <rect x="20" y="30" width="320" height="80" rx="10" fill="#fbe5ef" stroke="#b5246b"/>
+        <text x="180" y="52" text-anchor="middle" font-weight="700" fill="#b5246b">CONTRACT (oxytocics)</text>
+        <text x="40" y="74" font-size="10" fill="#7a1540">oxytocin · PGE/PGF (Gq → ↑IP₃ → ↑Ca²⁺)</text>
+        <text x="40" y="94" font-size="10" fill="#7a1540">ergometrine (sustained tetanic spasm)</text>
+        <rect x="540" y="30" width="320" height="80" rx="10" fill="#e0f0e9" stroke="#0d7a63"/>
+        <text x="700" y="52" text-anchor="middle" font-weight="700" fill="#0d7a63">RELAX (tocolytics)</text>
+        <text x="560" y="74" font-size="10" fill="#14432e">β₂-agonist ↑cAMP · NO ↑cGMP</text>
+        <text x="560" y="94" font-size="10" fill="#14432e">nifedipine ↓Ca²⁺ entry · atosiban blocks OT-R · MgSO₄</text>
+        <line x1="200" y1="110" x2="350" y2="120" stroke="#b5246b" stroke-width="2.5"/>
+        <line x1="680" y1="110" x2="540" y2="120" stroke="#0d7a63" stroke-width="2.5"/>
+        <text x="120" y="215" font-size="10.5" fill="#b5246b">↑ calcium = the uterus squeezes</text>
+        <text x="560" y="215" font-size="10.5" fill="#0d7a63">↓ calcium = the uterus rests</text>
+      </svg>
+      <figcaption>Contraction and relaxation are two ends of one lever — intracellular calcium. Oxytocics drive Ca²⁺ up (Gq/IP₃); tocolytics bring it down (cAMP, cGMP, or by blocking Ca²⁺ entry / the oxytocin receptor).</figcaption>
+    </figure>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A woman is haemorrhaging after delivery; her blood pressure is 165/110. Without looking, choose the oxytocic you would and would <em>not</em> give, and justify it. Then, for a different woman in threatened preterm labour at 30 weeks, name a preferred tocolytic and state the single most important thing the 48-hour delay is buying.</div>
+    <h4 style="color:var(--magenta)">Guiding primers — push for "why," not "what"</h4>
+    <ul class="primers">
+      <li>Why does <em>everything</em> in this chapter ultimately come back to myometrial calcium?</li>
+      <li>Why is ergometrine excellent for postpartum haemorrhage but forbidden for inducing labour and in pre-eclampsia?</li>
+      <li>Why do we bother delaying preterm labour by only 48 hours rather than trying to stop it altogether?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>The mechanism, step by step</h4>
+    <p>A myometrial cell contracts when intracellular <strong>calcium</strong> rises, activating <strong>myosin light-chain kinase</strong>. <strong>Oxytocin and prostaglandins</strong> bind Gq-coupled receptors → IP₃ → calcium release → contraction. To <em>relax</em> the uterus you do the opposite: <strong>β₂-agonists</strong> raise cAMP and <strong>NO donors</strong> raise cGMP (both lower available calcium), <strong>nifedipine</strong> blocks calcium entry, <strong>atosiban</strong> blocks the oxytocin receptor, and <strong>magnesium</strong> competes with calcium. One switch, pushed either way.</p>
+    <p>Clinically the choice is about <em>which</em> contraction you want. For <strong>postpartum haemorrhage</strong> you want the uterus to clamp down hard and stay clamped — oxytocin first, then ergometrine's sustained tetanic squeeze, then carboprost. For <strong>induction</strong> you want rhythmic, physiological contractions — oxytocin titrated by infusion, with prostaglandins to ripen the cervix first — never ergometrine, whose sustained spasm would asphyxiate the fetus.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a tap feeding a single reservoir</div>
+      <p>Think of myometrial calcium as <span class="key">water in a reservoir that powers a clenching fist</span>. Oxytocics open the inflow taps (Gq → Ca²⁺) so the fist clenches; tocolytics either close the taps (nifedipine, atosiban) or open a drain (cAMP/cGMP) so the fist relaxes. Ergometrine doesn't just fill the reservoir — it <span class="key">jams the fist permanently shut</span>, which is exactly what you want to stop bleeding but disastrous if a baby still has to pass through.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — match the drug to the situation:</span> <strong>Ergometrine is contraindicated in hypertension/pre-eclampsia</strong> (vasoconstriction → crisis) and must never induce labour. <strong>Carboprost (PGF₂α) is contraindicated in asthma</strong> (bronchospasm). <strong>Oxytocin</strong> bolused can cause hypotension and, in large volumes, water intoxication (ADH-like antidiuresis → hyponatraemia). Among tocolytics, β₂-agonists risk maternal <strong>pulmonary oedema</strong>, and indomethacin late in pregnancy can close the fetal <strong>ductus arteriosus</strong>.</blockquote>
+  </div>
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Revisit on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each pass, redraw the calcium-switch figure and recite the oxytocic-vs-tocolytic split with one contraindication for each key drug.</p>
+    <p class="bridge">Oxytocin's contractile effect is the basis of a classic laboratory assay: the <strong>isolated rat/guinea-pig uterus</strong> is a spasmogenic preparation used to bioassay oxytocics (and to demonstrate spasmolytics). See how the four-point bioassay quantifies this. (→ <a href="Experimental-Pharmacology_Learning-System.html#m4">Experimental Pharmacology · Module 4 (Bioassay)</a>)</p>
+  </div>
+  </details>
+</section>
+
+
 <!-- ============ FLASHCARDS ============ -->
 <section id="flashcards">
   <div class="wrap">
     <h2>🃏 Clinical Vignette Flashcards</h2>
-    <p class="fc-lead">Tap a card to reveal the answer, mechanism, clinical pearl, and exam trap. Twenty high-yield scenarios across Endocrine Pharmacology.</p>
+    <p class="fc-lead">Tap a card to reveal the answer, mechanism, clinical pearl, and exam trap. Twenty-eight high-yield scenarios across Endocrine Pharmacology, including drugs affecting uterine motility.</p>
     <div class="flashcards">
       <details class="flashcard">
         <summary>
@@ -1625,6 +2486,62 @@
           <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Also monitor for osteonecrosis of the jaw (ONJ): especially with IV bisphosphonates (zoledronic acid) used for malignancy. Risk factors: dental extraction, poor oral hygiene, corticosteroid use, chemotherapy. ONJ presents as exposed non-healing bone in the jaw. Dental clearance before starting IV bisphosphonates.</div>
         </div>
       </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">21</span><span class="fc-q">Immediately after delivery a woman has heavy uterine bleeding with a boggy, poorly contracted uterus. BP 110/70. What is first-line drug management and its mechanism? <em>(Module 53)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Uterine atony — the leading cause of <strong>postpartum haemorrhage (PPH)</strong>. First-line drug: <strong>oxytocin</strong> (IV/IM), which acts on Gq-coupled oxytocin receptors → ↑IP₃ → ↑intracellular Ca²⁺ → myometrial contraction that mechanically compresses the bleeding spiral arteries. Escalate to <strong>ergometrine</strong> (sustained tetanic contraction) and then <strong>carboprost (PGF₂α)</strong> or misoprostol (PGE₁) if bleeding continues, alongside uterine massage and fluid resuscitation.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> "Syntometrine" = oxytocin + ergometrine combined, giving oxytocin's fast onset plus ergometrine's sustained action. Avoid bolus oxytocin in haemodynamically unstable women — it causes vasodilation and hypotension; give a slow infusion.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">22</span><span class="fc-q">A woman with severe pre-eclampsia (BP 170/115) has postpartum haemorrhage. Which uterotonic must be avoided and why? <em>(Module 53)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Ergometrine / methylergometrine must be avoided</strong> — it causes generalised vasoconstriction and can precipitate a dangerous further rise in blood pressure, even a hypertensive crisis or stroke, in a woman who is already severely hypertensive. Use <strong>oxytocin</strong> (and prostaglandins if needed) instead.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Conversely, <strong>carboprost (PGF₂α) is contraindicated in asthma</strong> (bronchospasm). So in an asthmatic <em>and</em> hypertensive woman with PPH, oxytocin is the safe backbone and the others must be chosen with these contraindications in mind.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">23</span><span class="fc-q">Why is ergometrine excellent for postpartum haemorrhage but never used to induce labour? <em>(Module 53)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Ergometrine produces a <strong>powerful, sustained, tetanic uterine contraction</strong> rather than the rhythmic contractions of physiological labour. After delivery this is exactly what's needed — a clamped-down uterus stops bleeding. <em>Before</em> delivery, a sustained spasm would compress the placental vessels continuously and <strong>asphyxiate the fetus</strong> (and risk uterine rupture), so it is never used for induction. Induction uses titratable <strong>oxytocin</strong> (± prostaglandins for cervical ripening).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> The frog rectus / isolated-uterus preparations classically demonstrate this "spasmogenic" action — ergometrine and oxytocin contract, β₂-agonists relax (the spasmogenic/spasmolytic bioassay link).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">24</span><span class="fc-q">A woman in threatened preterm labour at 29 weeks is given a tocolytic. What is the single most important purpose of the ~48-hour delay it provides? <em>(Module 53)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">The delay buys time to administer <strong>antenatal corticosteroids</strong> (e.g. betamethasone/dexamethasone) for <strong>fetal lung maturation</strong> — reducing neonatal respiratory distress syndrome, intraventricular haemorrhage and mortality — and to arrange in-utero transfer to a unit with neonatal intensive care. Tocolytics do <em>not</em> meaningfully prolong pregnancy or improve outcomes beyond this window.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> The benefit of tocolysis is the steroid window, not stopping labour itself. Magnesium sulphate is given in very preterm labour additionally for <strong>fetal neuroprotection</strong> (reduces cerebral palsy), independent of any tocolytic effect.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">25</span><span class="fc-q">A 31-week pregnant woman is started on intravenous ritodrine for preterm labour and develops dyspnoea, tachycardia and crackles at the lung bases. What is happening? <em>(Module 53)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>β₂-agonist tocolytic adverse effects</strong> — ritodrine/salbutamol/terbutaline cause maternal <strong>tachycardia, and pulmonary oedema</strong> (fluid overload, especially with concurrent corticosteroids and IV fluids), plus <strong>hyperglycaemia</strong> and hypokalaemia. This is why β₂-agonists have largely been superseded by <strong>nifedipine</strong> or <strong>atosiban</strong>, which have better maternal/fetal safety profiles.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Mechanism of relaxation: β₂ stimulation → ↑cAMP → ↓intracellular Ca²⁺ → myometrial relaxation. The same Gs/cAMP pathway that relaxes bronchi relaxes the uterus.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">26</span><span class="fc-q">Compare the mechanisms of nifedipine and atosiban as tocolytics. <em>(Module 53)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Nifedipine</strong> is a dihydropyridine <strong>calcium-channel blocker</strong> — it blocks Ca²⁺ influx into myometrial cells, lowering intracellular calcium and relaxing the uterus (oral, cheap, effective; watch for maternal hypotension). <strong>Atosiban</strong> is a competitive <strong>oxytocin-receptor antagonist</strong> — it blocks oxytocin (and vasopressin) receptors, preventing the Gq → IP₃ → Ca²⁺ contraction signal (IV, very well tolerated, expensive). Both are first-choice modern tocolytics.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> The APOSTEL 8 trial found no superiority of atosiban over nifedipine — choice is often driven by route, cost and local protocol.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">27</span><span class="fc-q">Indomethacin is used as a tocolytic but is avoided after about 32 weeks' gestation. Why? <em>(Module 53)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Indomethacin is a <strong>COX inhibitor</strong> that reduces prostaglandin synthesis (prostaglandins drive uterine contraction). However, prostaglandins also keep the fetal <strong>ductus arteriosus</strong> patent — so indomethacin can cause <strong>premature closure/constriction of the ductus arteriosus</strong> (and oligohydramnios from reduced fetal renal perfusion), risks that rise with later gestation. It is therefore generally limited to earlier preterm labour and short courses.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> The same prostaglandin biology is used therapeutically elsewhere: a PGE₁ infusion (alprostadil) keeps the ductus <em>open</em> in duct-dependent congenital heart disease, while indomethacin/ibuprofen <em>close</em> a patent ductus arteriosus in neonates.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">28</span><span class="fc-q">A woman receiving a high-volume oxytocin infusion for labour augmentation becomes confused with a serum sodium of 122 mmol/L. Explain. <em>(Module 53)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Water intoxication / dilutional hyponatraemia.</strong> Oxytocin is structurally similar to <strong>vasopressin (ADH)</strong> and has intrinsic antidiuretic activity. Given in large doses with large volumes of electrolyte-free fluid over a prolonged labour, it promotes free-water retention → <strong>hyponatraemia</strong>, which can cause confusion, seizures and coma. Management: stop/reduce oxytocin, restrict fluids, careful correction of sodium.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Use the lowest effective oxytocin infusion rate in an isotonic, controlled-volume carrier, and monitor fluid balance in prolonged inductions to avoid this complication.</div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
@@ -1827,6 +2744,25 @@
       <div class="q"><div class="qq"><b>22</b>Ketoconazole's relevance to androgens?</div><div class="qa">At high dose it inhibits steroid (androgen) synthesis enzymes.</div></div>
     </div>
   </details>
+  <details class="quizset"><summary><span class="qs-num">8</span><span class="qs-title">Drugs Affecting Uterine Motility</span><span class="qs-meta">Module 53 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What single intracellular signal determines whether the myometrium contracts or relaxes?</div><div class="qa">Intracellular calcium — high Ca²⁺ contracts (via MLCK), low Ca²⁺ relaxes.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Receptor and signalling pathway of oxytocin on the uterus?</div><div class="qa">Gq-coupled oxytocin receptor → IP₃ → ↑intracellular Ca²⁺ → contraction.</div></div>
+      <div class="q"><div class="qq"><b>3</b>First-line drug for prevention/treatment of postpartum haemorrhage?</div><div class="qa">Oxytocin.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Why is ergometrine never used to induce labour?</div><div class="qa">It causes a sustained tetanic contraction that would asphyxiate the fetus (and risk rupture).</div></div>
+      <div class="q"><div class="qq"><b>5</b>In which condition is ergometrine contraindicated, and why?</div><div class="qa">Hypertension/pre-eclampsia — it causes vasoconstriction and can precipitate a crisis.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Which prostaglandin is used for cervical ripening?</div><div class="qa">PGE₂ (dinoprostone).</div></div>
+      <div class="q"><div class="qq"><b>7</b>Which uterotonic is contraindicated in asthma?</div><div class="qa">Carboprost (PGF₂α) — risk of bronchospasm.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Misoprostol (PGE₁) uses in obstetrics?</div><div class="qa">Induction of labour, PPH, and medical abortion (with mifepristone).</div></div>
+      <div class="q"><div class="qq"><b>9</b>Define a tocolytic and the typical duration of delay it provides.</div><div class="qa">A uterine relaxant that delays preterm labour by about 48 hours.</div></div>
+      <div class="q"><div class="qq"><b>10</b>What is the single most important purpose of that 48-hour delay?</div><div class="qa">To give antenatal corticosteroids for fetal lung maturation (and arrange transfer).</div></div>
+      <div class="q"><div class="qq"><b>11</b>Mechanism of β₂-agonist tocolytics (e.g. ritodrine)?</div><div class="qa">↑cAMP → ↓intracellular Ca²⁺ → myometrial relaxation.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Two serious maternal risks of β₂-agonist tocolytics?</div><div class="qa">Pulmonary oedema and tachycardia (also hyperglycaemia/hypokalaemia).</div></div>
+      <div class="q"><div class="qq"><b>13</b>Mechanism of atosiban?</div><div class="qa">Competitive oxytocin-receptor antagonist.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Besides tocolysis, why is magnesium sulphate given in very preterm labour?</div><div class="qa">Fetal neuroprotection (reduces cerebral palsy).</div></div>
+      <div class="q"><div class="qq"><b>15</b>Why is indomethacin avoided as a tocolytic in later gestation?</div><div class="qa">It can cause premature closure of the fetal ductus arteriosus (and oligohydramnios).</div></div>
+    </div>
+  </details>
 </section>
 
 </main>
@@ -1835,12 +2771,12 @@
   <div class="wrap">
     <div>
       <strong>Endocrine Pharmacology · Accelerated Learning System</strong><br>
-      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section V (Chs 46–52).<br>
+      <span class="src">Source: Standard pharmacology references — Section V.<br>
       Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
       Mnemonics are standard teaching aids. Verify all drug dosing against current local protocols before clinical use.</span>
     </div>
     <div class="src" style="text-align:right">
-      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Part of a comprehensive pharmacology learning series.<br>
       Built around active recall and spaced repetition.
     </div>
   </div>
@@ -1896,6 +2832,186 @@
 })();
 </script>
 
+<script>
+/* ---- GLASS / MOTION DEMO v3 — additive, does not touch the quiz logic above ---- */
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  var bigSel = 'section.module, .quiz-intro, #flashcards, details.quizset';
+  var smallSel = '.cog, .blurt-stage, .sched-stage, details.gate, details.qa, .flashcard, .tbl-scroll, .diagram-wrap, blockquote.warn, .analogy, div.q';
+
+  document.querySelectorAll(bigSel).forEach(function(el){ el.classList.add('gp-reveal'); });
+  document.querySelectorAll(smallSel).forEach(function(el){ el.classList.add('gp-reveal-soft'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -50px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal, .gp-reveal-soft');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 7) * 50 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // safety net — guarantee nothing is stuck invisible
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }, 2000);
+})();
+</script>
+
 <script src="learning-interactive.js"></script>
+<script src="gamify.js"></script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- populate chapters drawer from this page's existing (now hidden) chapter nav ----
+  var drawerLinks = document.getElementById('gpDrawerLinks');
+  var sourceNav = document.querySelector('nav.toc, .sticky-nav');
+  if (drawerLinks && sourceNav) {
+    var anchors = sourceNav.querySelectorAll('a');
+    anchors.forEach(function(a){ drawerLinks.appendChild(a.cloneNode(true)); });
+  }
+
+  // ---- drawer open/close ----
+  var drawer = document.getElementById('gpDrawer');
+  var overlay = document.getElementById('gpDrawerOverlay');
+  var openBtn = document.getElementById('gpDrawerToggle');
+  var closeBtn = document.getElementById('gpDrawerClose');
+  function openDrawer(){
+    if (drawer) drawer.classList.add('show');
+    if (overlay) overlay.classList.add('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','true');
+  }
+  function closeDrawer(){
+    if (drawer) drawer.classList.remove('show');
+    if (overlay) overlay.classList.remove('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','false');
+  }
+  if (openBtn) openBtn.addEventListener('click', function(){
+    if (drawer && drawer.classList.contains('show')) closeDrawer(); else openDrawer();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  if (drawerLinks) drawerLinks.addEventListener('click', function(e){
+    if (e.target && e.target.tagName === 'A') closeDrawer();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // ---- dark mode toggle, persisted (shared key with the hub pages) ----
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('gpDarkToggle');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function upd(){ if (darkBtn) darkBtn.textContent = isDark() ? '☀️' : '🌙'; }
+  function setTheme(m){
+    if (m === 'dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('pharm-theme', m); } catch(e){}
+    upd();
+  }
+  upd();
+  if (darkBtn) darkBtn.addEventListener('click', function(){ setTheme(isDark() ? 'light' : 'dark'); });
+
+  // ---- random quiz question ----
+  var randomBtn = document.getElementById('gpRandomQuiz');
+  if (randomBtn) randomBtn.addEventListener('click', function(){
+    var qs = Array.prototype.slice.call(document.querySelectorAll('.q, .quiz-item'));
+    if (!qs.length) return;
+    var pick = qs[Math.floor(Math.random() * qs.length)];
+    var trigger = pick.querySelector('.qq, .quiz-q');
+    if (trigger) trigger.click();
+    if (!pick.classList.contains('open')) pick.classList.add('open');
+    pick.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  // ---- expand/contract the floating toolbar itself ----
+  // Chapters (☰) and Back (←) always stay visible; every other control
+  // (nav/jump/search/tools merged in by learning-interactive.js) lives inside
+  // the collapsible .gp-toolbar-extra and only shows once expanded.
+  var expandBtn = document.getElementById('gpToolbarExpand');
+  var toolbarEl = document.querySelector('.gp-toolbar');
+  if (expandBtn && toolbarEl) expandBtn.addEventListener('click', function(){
+    var open = !toolbarEl.classList.contains('expanded');
+    toolbarEl.classList.toggle('expanded', open);
+    expandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var tree = document.getElementById('mindmapTree');
+  if(!tree) return;
+  function setExpanded(btn, open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var holder = btn.closest('.mm-branch, .mm-twig');
+    if(holder) holder.classList.toggle('mm-open', open);
+  }
+  tree.addEventListener('click', function(e){
+    var btn = e.target.closest('.mm-node');
+    if(!btn) return;
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setExpanded(btn, !isOpen);
+  });
+  var expandAllBtn = document.getElementById('mmExpandAll');
+  var collapseAllBtn = document.getElementById('mmCollapseAll');
+  if(expandAllBtn){
+    expandAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, true); });
+    });
+  }
+  if(collapseAllBtn){
+    collapseAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, false); });
+    });
+  }
+})();
+</script>
+
 </body>
 </html>

@@ -795,10 +795,433 @@
   }
   .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
 
+
+
+/* =========================================================================
+   GLASS / MOTION DEMO LAYER v3 — additive, appended after all base rules.
+   Uses this file's own tokens (--accent, --cool, --hero-gradient, etc.,
+   with safe fallbacks where a file doesn't define one) so colours/content
+   stay identical to the original. Shared across the whole Learning System
+   family for visual/motion consistency.
+   ========================================================================= */
+
+html{scroll-behavior:smooth}
+
+/* ---- ambient drifting blobs, colour-matched to this file's palette ---- */
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(75px); opacity:.30}
+.gp-ambient .b1{width:44vw;height:44vw; top:-14%; left:-12%; background:radial-gradient(circle,var(--accent-dark),transparent 70%); animation:gpDrift1 38s ease-in-out infinite}
+.gp-ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,var(--cool),transparent 70%); animation:gpDrift2 44s ease-in-out infinite}
+.gp-ambient .b3{width:42vw;height:42vw; bottom:-18%; left:18%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift3 40s ease-in-out infinite}
+.gp-ambient .b4{width:26vw;height:26vw; bottom:10%; right:8%; background:radial-gradient(circle,var(--cool-light,var(--cool)),transparent 70%); animation:gpDrift4 33s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,7vh) scale(1.12)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.12)}}
+@keyframes gpDrift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-4vw,-3vh) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+/* ---- scroll progress bar ---- */
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--accent-dark), var(--cool), var(--accent));
+  box-shadow:0 0 10px rgba(15,107,107,.45); transition:width .12s linear}
+
+/* ---- back-to-top, using the page's own hero gradient (with fallback) ---- */
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:var(--hero-gradient, linear-gradient(135deg, var(--accent-dark), var(--cool))); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.35); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+/* ---- stronger glass on the already-sticky nav ---- */
+.sticky-nav, nav.toc{
+  background:rgba(245,244,240,.62) !important;
+  backdrop-filter:blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(190%) !important;
+  box-shadow:0 4px 24px rgba(16,38,52,.08) !important;
+}
+nav.toc a{transition:color .2s, transform .2s}
+nav.toc a:hover{transform:translateY(-1px)}
+
+/* ---- hero entrance + glass stat strip ---- */
+header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpHeroIn{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+.chip{transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{transform:translateY(-2px) scale(1.04)}
+
+.gp-stat-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; position:relative}
+.gp-stat-pill{font-size:.78rem; font-weight:650; color:#fff; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.32); padding:6px 14px; border-radius:999px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; gap:6px}
+.gp-stat-pill b{color:#fff; font-weight:800}
+
+/* ---- generic scroll-reveal utilities (assigned by JS) ---- */
+.gp-reveal{opacity:0; transform:translateY(28px) scale(.985); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.34,1.2,.64,1)}
+.gp-reveal.in-view{opacity:1; transform:none}
+.gp-reveal-soft{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease}
+.gp-reveal-soft.in-view{opacity:1; transform:none}
+
+/* ---- module card + header glass sheen / hover glow ---- */
+section.module{transition:box-shadow .35s ease}
+section.module:hover{box-shadow:0 20px 48px rgba(16,38,52,.18)}
+.module-header, .mod-head{position:relative; overflow:hidden}
+.module-header::after, .mod-head::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(120deg, rgba(255,255,255,.20), transparent 45%, rgba(255,255,255,.06));
+}
+
+.cog, .blurt-stage, .sched-stage, .flashcard, .quiz-intro{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease
+}
+.cog:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--cool) 35%, transparent)}
+.cog.blurt:hover{box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 38%, transparent)}
+.blurt-stage:hover, .sched-stage:hover{transform:translateY(-3px)}
+.flashcard:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 30%, transparent)}
+
+/* =========================================================================
+   ANIMATED ACCORDIONS — CSS-grid height trick (no JS height math needed).
+   grid-auto-rows (not just grid-template-rows) is set too, so this stays
+   correct even when a gate/quizset/qa has more than one content child
+   (e.g. Neoplastic's details.gate > p, p, p). Works regardless of who
+   toggles [open]/.open (click, keyboard, or the existing inline JS),
+   because it keys off the attribute/class only.
+   ========================================================================= */
+details.gate, details.quizset, details.qa{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1), grid-auto-rows .45s cubic-bezier(.4,0,.2,1);
+}
+details.gate[open], details.quizset[open], details.qa[open]{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+details.gate > *:not(summary), details.quizset > *:not(summary), details.qa > *:not(summary){
+  overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s;
+}
+details.gate[open] > *:not(summary), details.quizset[open] > *:not(summary), details.qa[open] > *:not(summary){ opacity:1; }
+
+div.q{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1), box-shadow .25s ease;
+  border-radius:var(--radius-sm);
+}
+div.q.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; box-shadow:0 6px 18px -6px color-mix(in srgb, var(--cool) 30%, transparent); }
+div.q > .qa{
+  display:block !important; overflow:hidden; min-height:0; opacity:0;
+  transition:opacity .3s ease .05s;
+}
+div.q.open > .qa{ opacity:1; }
+/* same pattern for the alternate class names used in sibling files of this series */
+.quiz-item{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.quiz-item.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+.quiz-item > .quiz-a{ display:block !important; overflow:hidden; min-height:0; opacity:0; transition:opacity .3s ease .05s; }
+.quiz-item.open > .quiz-a{ opacity:1; }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal, .gp-reveal-soft{opacity:1 !important; transform:none !important; transition:none !important}
+  header.hero{animation:none}
+  details.gate, details.quizset, details.qa, div.q, .quiz-item{transition:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+
+/* TRUE FROSTED GLASS — translucent panels over the ambient blobs */
+body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; }
+.module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+.diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+.fc-back, .mnemonic, figure.dia {
+  background: color-mix(in srgb, white 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
+  .module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+  .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+  .fc-back, .mnemonic, figure.dia { background: white !important; }
+}
+
+/* =========================================================================
+   CONSOLIDATED TOOLBAR + CHAPTERS DRAWER + DARK MODE SKIN
+   Replaces the old standalone back button + horizontal sticky chapter bar
+   (which used to visually collide) with one floating icon toolbar plus a
+   toggleable left-hand chapters drawer. Additive, reuses this file's tokens.
+   ========================================================================= */
+.gp-toolbar{
+  position:fixed; top:16px; left:16px; z-index:300;
+  display:flex; align-items:center; gap:4px;
+  background:rgba(255,255,255,.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border:1px solid rgba(0,0,0,.10); border-radius:999px; padding:6px; box-shadow:0 6px 22px rgba(0,0,0,.16);
+}
+.gp-tool-btn{
+  width:38px; height:38px; border-radius:50%; border:none; background:transparent; color:#1c1917;
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease; padding:0;
+}
+.gp-tool-btn:hover{ background:rgba(0,0,0,.07); transform:translateY(-1px) scale(1.06); }
+.gp-tool-btn:active{ transform:scale(.9); }
+.gp-toolbar .gp-back-btn{ position:static; box-shadow:none; border:none; background:transparent; }
+.gp-toolbar .gp-back-btn:hover{ box-shadow:none; }
+@media (max-width:640px){ .gp-toolbar{ top:10px; left:10px; padding:4px; gap:2px; } .gp-tool-btn{ width:33px; height:33px; font-size:15px; } }
+@media (prefers-reduced-motion:reduce){ .gp-tool-btn{ transition:none; } }
+
+/* the old horizontal sticky chapter bar is replaced by the drawer below */
+.sticky-nav, nav.toc{ display:none !important; }
+
+/* ---- chapters drawer ---- */
+.gp-drawer-overlay{
+  position:fixed; inset:0; z-index:298; background:rgba(10,12,16,.32);
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.gp-drawer-overlay.show{ opacity:1; pointer-events:auto; }
+.gp-drawer{
+  position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw); z-index:299;
+  background:rgba(245,244,240,.90); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-right:1px solid rgba(0,0,0,.08); box-shadow:8px 0 32px rgba(0,0,0,.18);
+  transform:translateX(-104%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; padding:18px 0;
+}
+.gp-drawer.show{ transform:none; }
+.gp-drawer-head{
+  display:flex; align-items:center; justify-content:space-between; padding:0 18px 14px;
+  border-bottom:1px solid rgba(0,0,0,.08); font-weight:700; font-size:.95rem; color:var(--ink, #1c1917);
+  margin-bottom:6px;
+}
+.gp-drawer-close{ border:none; background:transparent; font-size:16px; cursor:pointer; color:var(--ink-soft, #555); padding:4px; }
+.gp-drawer-links{ display:flex; flex-direction:column; overflow-y:auto; padding:6px 10px; gap:2px; }
+.gp-drawer-links a{
+  display:block; padding:.55rem .75rem; border-radius:10px; text-decoration:none;
+  color:var(--ink-soft, #44403c); font-size:.88rem; font-weight:500; transition:background .18s ease, color .18s ease;
+  white-space:normal;
+}
+.gp-drawer-links a:hover{ background:rgba(0,0,0,.06); }
+.gp-drawer-links a.thesis-link{ color:var(--cool, var(--accent)); font-weight:600; }
+.gp-drawer-links a.key{ color:var(--accent-dark, var(--accent)); font-weight:600; }
+@media (prefers-reduced-motion:reduce){ .gp-drawer, .gp-drawer-overlay{ transition:none; } }
+
+html[data-theme="dark"] .gp-toolbar{ background:rgba(30,33,37,.78); border-color:rgba(255,255,255,.14); }
+html[data-theme="dark"] .gp-tool-btn{ color:#e7e9ec; }
+html[data-theme="dark"] .gp-tool-btn:hover{ background:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-back-btn{ background:transparent !important; }
+html[data-theme="dark"] .gp-drawer{ background:rgba(30,33,37,.92); border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-head{ color:#e7e9ec; border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-close{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a:hover{ background:rgba(255,255,255,.08); }
+
+/* ---- dark mode skin for the page itself ---- */
+html[data-theme="dark"] body{ background: color-mix(in srgb, #15171a 88%, transparent) !important; color:#cdd1d6; }
+html[data-theme="dark"] main{ color:#cdd1d6; }
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] h4{ color:#eef0f2; }
+html[data-theme="dark"] strong{ color: color-mix(in srgb, var(--accent-darker, var(--accent, #d4a847)) 55%, white 45%) !important; }
+html[data-theme="dark"] main a:not(.gp-drawer-links a){ color: color-mix(in srgb, var(--cool, var(--accent, #0f6b6b)) 60%, white 40%); }
+
+html[data-theme="dark"] .module, html[data-theme="dark"] section.module, html[data-theme="dark"] .blurt-prompt,
+html[data-theme="dark"] .primers li, html[data-theme="dark"] .sched-day, html[data-theme="dark"] .sched .day,
+html[data-theme="dark"] .bridge, html[data-theme="dark"] .diagram-wrap, html[data-theme="dark"] details.qsec,
+html[data-theme="dark"] details.quizset, html[data-theme="dark"] details.gate, html[data-theme="dark"] details.qa,
+html[data-theme="dark"] .quiz-q, html[data-theme="dark"] .qq, html[data-theme="dark"] .fc-back,
+html[data-theme="dark"] .mnemonic, html[data-theme="dark"] figure.dia, html[data-theme="dark"] .q, html[data-theme="dark"] .quiz-item{
+  background: color-mix(in srgb, #1e2125 70%, transparent) !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .qa, html[data-theme="dark"] .quiz-a{ color:#c4cad0 !important; }
+html[data-theme="dark"] table, html[data-theme="dark"] td, html[data-theme="dark"] th{ color:#c7cbd1 !important; border-color: rgba(255,255,255,.10) !important; }
+html[data-theme="dark"] blockquote{ border-color: rgba(255,255,255,.18) !important; }
+html[data-theme="dark"] .site-footer, html[data-theme="dark"] footer{ color:#9aa1a8 !important; }
+</style>
+  <style id="mindmap-style">
+/* =========================================================================
+   INTERACTIVE MIND MAP
+   Self-contained: scoped to #mindmap, reuses the page's own design tokens.
+   ========================================================================= */
+.mindmap-section .mm-inner { padding: 2.2rem 2rem 2.4rem; }
+
+.mm-intro { text-align: center; max-width: 700px; margin: 0 auto 2rem; }
+.mm-tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--cool-pale); color: var(--cool);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .35rem .85rem; border-radius: 999px; margin-bottom: .9rem;
+}
+.mm-intro h2 {
+  font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-2xl); color: var(--ink);
+  margin: 0 0 .6rem;
+}
+.mm-intro p { color: var(--ink-soft); font-size: var(--fs-sm); line-height: 1.6; margin: 0 0 1.1rem; }
+.mm-actions { display: flex; justify-content: center; gap: .6rem; }
+.mm-btn {
+  font-family: 'Inter', sans-serif; font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .03em; color: var(--accent-dark); background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: .5rem 1rem; cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.mm-btn:hover { background: var(--accent-pale); border-color: var(--accent); }
+
+/* Root node + connecting "bus" line ----------------------------------- */
+.mm-root {
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  width: fit-content; margin: 0 auto;
+  background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+  color: white; font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+  font-size: var(--fs-lg); text-align: center; line-height: 1.15;
+  padding: .85rem 1.6rem; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.mm-root-emoji { font-size: 1.4em; }
+.mm-bus { width: 2px; height: 22px; background: var(--border); margin: 0 auto; }
+
+.mm-branches {
+  display: grid; gap: .65rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { .mm-branches { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .mm-branches { grid-template-columns: 1fr; } }
+
+/* Branch card ------------------------------------------------------------ */
+.mm-branch {
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: white; align-self: start;
+  border-top: 3px solid var(--mm-c, var(--accent));
+}
+.mm-node {
+  width: 100%; display: flex; align-items: center; gap: .65rem;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Inter', sans-serif; color: var(--ink);
+}
+.mm-module {
+  padding: .8rem .9rem;
+}
+.mm-mnum {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 700;
+  color: white; background: var(--mm-c, var(--accent)); border-radius: 5px;
+  padding: 3px 6px; flex-shrink: 0;
+}
+.mm-mtext { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.mm-mtitle { font-weight: 700; font-size: var(--fs-sm); color: var(--ink); }
+.mm-msub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+.mm-chev {
+  flex-shrink: 0; color: var(--muted); font-size: .8rem;
+  transition: transform .25s ease;
+}
+.mm-module[aria-expanded="true"] .mm-chev,
+.mm-sub[aria-expanded="true"] .mm-chev { transform: rotate(90deg); color: var(--mm-c, var(--accent)); }
+.mm-module:hover, .mm-sub:hover { background: var(--cream); }
+
+/* Collapse mechanics — same animated-grid technique used elsewhere on this page */
+.mm-children {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  background: var(--cream);
+  transition: grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.mm-children > div { overflow: hidden; min-height: 0; }
+.mm-branch:has(.mm-module[aria-expanded="true"]) .mm-children { grid-template-rows: 1fr; }
+
+.mm-twig { border-top: 1px solid var(--border); }
+.mm-twig:first-child { border-top: 1px solid var(--border); }
+.mm-sub { padding: .6rem .9rem .6rem 1.5rem; font-size: .82rem; font-weight: 600; align-items: flex-start; }
+.mm-stext { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.mm-stitle { line-height: 1.3; }
+.mm-ssub { font-size: .7rem; font-weight: 400; color: var(--muted); line-height: 1.4; white-space: normal; }
+.mm-sub .mm-chev { margin-top: 2px; }
+
+.mm-leaves {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  list-style: none; margin: 0; padding: 0 1.1rem 0 2.2rem;
+  transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1), padding .35s ease;
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.55;
+}
+.mm-leaves > li { overflow: hidden; min-height: 0; }
+.mm-twig:has(.mm-sub[aria-expanded="true"]) .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
+.mm-leaves li {
+  position: relative; padding: .25rem 0 .25rem .85rem; border-bottom: 1px dashed var(--border);
+}
+.mm-leaves li:last-child { border-bottom: none; }
+.mm-leaves li::before {
+  content: '•'; position: absolute; left: 0; color: var(--mm-c, var(--accent)); font-weight: 700;
+}
+.mm-leaves li.mm-eq {
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent-darker);
+  background: var(--accent-pale); border-radius: 4px; padding: .35rem .5rem .35rem .85rem;
+  border-bottom: none; margin: .2rem 0;
+}
+.mm-leaves li.mm-eq::before { content: 'ƒ'; }
+
+/* Dark mode -------------------------------------------------------------- */
+html[data-theme="dark"] .mm-branch { background: #1e2125; border-color: rgba(255,255,255,.10); }
+html[data-theme="dark"] .mm-children { background: #181a1d; }
+html[data-theme="dark"] .mm-twig { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-leaves li { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-node { color: #d7dce1; }
+html[data-theme="dark"] .mm-mtitle { color: #eef1f4; }
+html[data-theme="dark"] .mm-module:hover, html[data-theme="dark"] .mm-sub:hover { background: rgba(255,255,255,.05); }
+html[data-theme="dark"] .mm-leaves { color: #b7bec5; }
+html[data-theme="dark"] .mm-leaves li.mm-eq { background: rgba(176,116,16,.18); color: #e8c98a; }
+html[data-theme="dark"] .mm-btn { background: #1e2125; color: #e8c98a; border-color: rgba(255,255,255,.15); }
+html[data-theme="dark"] .mm-btn:hover { background: rgba(176,116,16,.18); }
+html[data-theme="dark"] .mm-tag { background: rgba(15,107,107,.2); color: #6fc6c6; }
+html[data-theme="dark"] .mm-intro h2 { color: #eef1f4; }
+html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
+
+/* Reduced motion ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .mm-children, .mm-leaves, .mm-chev { transition: none; }
+}
+
+/* No-:has() fallback */
+.mm-branch.mm-open > .mm-children { grid-template-rows: 1fr; }
+.mm-twig.mm-open > .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
 </style>
   <link rel="stylesheet" href="learning-interactive.css">
+  <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<div class="gp-toolbar" role="toolbar" aria-label="Page controls">
+  <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
+  <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+  <button id="gpDarkToggle" class="gp-tool-btn" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  <button id="gpRandomQuiz" class="gp-tool-btn" type="button" title="Random quiz question" aria-label="Open a random quiz question">🎲</button>
+  <button id="gpToolbarExpand" class="gp-tool-btn gp-toolbar-expand" type="button" title="More controls" aria-label="Show more controls" aria-expanded="false">›</button>
+  <div class="gp-toolbar-extra" id="gpToolbarExtraOuter">
+    <div class="gp-toolbar-extra-inner" id="gpToolbarExtra"></div>
+  </div>
+</div>
+<div class="gp-drawer-overlay" id="gpDrawerOverlay"></div>
+<aside class="gp-drawer" id="gpDrawer" aria-label="Chapter index">
+  <div class="gp-drawer-head">
+    <span>Chapters</span>
+    <button id="gpDrawerClose" class="gp-drawer-close" type="button" aria-label="Close chapters index">✕</button>
+  </div>
+  <nav class="gp-drawer-links" id="gpDrawerLinks"></nav>
+</aside>
+
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
 
 <header class="hero">
   <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
@@ -815,7 +1238,7 @@
     </g>
   </svg>
   <div class="wrap">
-    <div class="eyebrow">Goodman &amp; Gilman · 14th Ed · Section IV</div>
+    <div class="eyebrow">Pharmacology Learning System · Section IV</div>
     <h1>Inflammation, Immunity<br><em>&amp; Hematopoiesis</em></h1>
     <p class="sub">Chapters 38–45, built as an study guide in the same four-stage format as your other systems: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies, and a spaced-repetition plan. The eicosanoid cascade, NSAIDs and gout, immunosuppressants, antihistamines, asthma/COPD therapy, and the anti-anaemia agents — the drugs you prescribe and get examined on constantly.</p>
     <div class="meta">
@@ -825,10 +1248,18 @@
       <span class="chip">8 quiz sets · 120 Q</span>
     </div>
   </div>
-</header>
+
+    <div class="gp-stat-row">
+      <span class="gp-stat-pill">8 modules · full depth</span>
+      <span class="gp-stat-pill">working blurting gates</span>
+      <span class="gp-stat-pill">5 custom diagrams + tables</span>
+      <span class="gp-stat-pill">8 quiz sets · 120 Q</span>
+    </div>
+  </header>
 
 <nav class="toc">
   <div class="wrap">
+    <a href="#mindmap">🗺️ Mind Map</a>
     <a href="#method">The method</a>
     <a class="key" href="#m41">41 · Eicosanoids</a>
     <a class="key" href="#m42">42 · NSAIDs &amp; Gout</a>
@@ -844,6 +1275,279 @@
 </nav>
 
 <main class="wrap">
+
+<section class="module mindmap-section" id="mindmap">
+<div class="mm-inner">
+  <div class="mm-intro">
+    <div class="mm-tag"><span>🗺️</span> Interactive Mind Map</div>
+    <h2>See the whole chapter at a glance</h2>
+    <p>Click a module below to branch into its subheadings — click a subheading to reveal the short topics and key formulas underneath it. Click anything again to collapse it.</p>
+    <div class="mm-actions">
+      <button id="mmExpandAll" class="mm-btn" type="button">Expand all</button>
+      <button id="mmCollapseAll" class="mm-btn" type="button">Collapse all</button>
+    </div>
+  </div>
+
+  <div class="mindmap" id="mindmapTree">
+    <div class="mm-root"><span class="mm-root-emoji">🩸</span><span>Inflammation, Immunity<br>&amp; Hematopoiesis</span></div>
+    <div class="mm-bus" aria-hidden="true"></div>
+    <div class="mm-branches">
+
+      <div class="mm-branch" style="--mm-c:#0f6b6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m41">
+          <span class="mm-mnum">41</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Lipid-Derived Autacoids — Eicosanoids &amp; PAF</span><span class="mm-msub">How arachidonic acid splits into two drug-targetable pathways — the chemistry behind NSAIDs, steroids, and asthma drugs.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m41">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Where the major drug classes act</span><span class="mm-ssub">Maps each drug class onto the enzyme it blocks. Focus on which step each class interrupts and how broad or narrow that effect is.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Glucocorticoids block phospholipase A₂ — this shuts down both downstream branches at once, the broadest effect</li>
+              <li>NSAIDs (non-selective) block COX-1 and COX-2 reversibly, lowering prostaglandins and thromboxane</li>
+              <li>Aspirin blocks COX irreversibly, so it knocks out thromboxane for the platelet's whole lifespan</li>
+              <li>Coxibs block COX-2 selectively, sparing the protective COX-1 activity in the stomach</li>
+              <li>Zileuton blocks 5-lipoxygenase, cutting off all leukotriene production</li>
+              <li>Montelukast/zafirlukast block the CysLT₁ receptor, stopping leukotriene-driven bronchospasm</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Key prostanoid actions to know</span><span class="mm-ssub">What each individual prostaglandin/thromboxane actually does in the body — useful for predicting both drug benefits and side effects.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>PGE₂ dilates vessels, raises the hypothalamic temperature set-point (fever), protects the stomach lining, and increases pain sensitivity</li>
+              <li>PGI₂ (prostacyclin, from endothelium) dilates vessels and stops platelets from clumping</li>
+              <li>TXA₂ (from platelets via COX-1) constricts vessels and promotes platelet clumping — its tug-of-war with PGI₂ explains how low-dose aspirin works</li>
+              <li>PGF₂α causes uterine contraction and narrows the airway</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#a8331f">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m42">
+          <span class="mm-mnum">42</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Pharmacotherapy of Inflammation, Fever, Pain &amp; Gout</span><span class="mm-msub">NSAIDs, acetaminophen, and gout drugs — why blocking one enzyme produces both the relief and the classic side effects.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m42">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">COX-1 vs COX-2 — the central distinction</span><span class="mm-ssub">The single table that explains why NSAIDs cause stomach and kidney problems while still working as anti-inflammatories.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>COX-1 is constitutive — always on in the stomach, platelets, and kidney doing housekeeping jobs</li>
+              <li>COX-2 is mostly inducible — switched on at sites of inflammation, pain, and fever</li>
+              <li>Blocking COX-1 produces adverse effects (ulcers, bleeding); blocking COX-2 produces the wanted benefit</li>
+              <li>Celecoxib is the selective COX-2 agent — spares the stomach but raises cardiovascular risk</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">NSAID effects vs toxicities (two sides of one coin)</span><span class="mm-ssub">Pairs each wanted NSAID effect with the toxicity that comes from blocking that same prostaglandin elsewhere.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Antiplatelet effect (↓TXA₂) is also the source of bleeding risk; aspirin's version is irreversible</li>
+              <li>Losing gastric PGE₂ causes peptic ulcers and GI bleeding</li>
+              <li>Losing renal PGE₂/PGI₂ causes sodium/water retention, acute kidney injury, and raised blood pressure</li>
+              <li>COX-2 selectivity removes the benefit but raises thrombosis, MI, and stroke risk</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Special agents</span><span class="mm-ssub">Aspirin and acetaminophen each behave differently from a typical NSAID — know what makes each one unique.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Aspirin permanently acetylates COX; platelets can't make new enzyme, so the effect lasts 7-10 days</li>
+              <li>Acetaminophen relieves pain/fever but is only a mild anti-inflammatory, working centrally, with no GI or antiplatelet effect</li>
+              <li>Acetaminophen overdose produces the toxic metabolite NAPQI, which causes liver damage</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Gout — acute vs chronic</span><span class="mm-ssub">Which drugs treat a flare right now versus which ones lower urate long-term — and why you don't mix up the timing.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Acute flare: NSAIDs (1st line), colchicine (binds tubulin, ↓ neutrophil migration), or glucocorticoids if those are contraindicated</li>
+              <li>Chronic urate-lowering: allopurinol/febuxostat inhibit xanthine oxidase to cut urate synthesis</li>
+              <li>Probenecid is uricosuric — reduces tubular urate reabsorption for under-excretors</li>
+              <li>Pegloticase/rasburicase (uricase) convert urate to allantoin for refractory cases or tumour lysis</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#b9791a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m44">
+          <span class="mm-mnum">44</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Pulmonary Pharmacology</span><span class="mm-msub">Asthma and COPD drugs split into quick-relief bronchodilators versus disease-modifying anti-inflammatory controllers.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m44">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The drug classes</span><span class="mm-ssub">Every reliever and controller drug class with its mechanism and where it fits in treatment — the table to memorise for this module.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>SABA (salbutamol): β₂-agonist, ↑cAMP, relaxes airway muscle — acute rescue</li>
+              <li>LABA (salmeterol, formoterol): long-acting β₂-agonist for maintenance, always paired with ICS</li>
+              <li>ICS (budesonide, fluticasone): ↓ transcription of inflammatory genes — the controller cornerstone</li>
+              <li>LAMA (tiotropium): muscarinic M₃ antagonist, COPD mainstay and asthma add-on</li>
+              <li>LTRA (montelukast): blocks the CysLT₁ receptor, used as an add-on for allergic/exercise triggers</li>
+              <li>Theophylline: PDE inhibition plus adenosine antagonism, narrow therapeutic index, rarely first line</li>
+              <li>Biologics (omalizumab anti-IgE, anti-IL-5): block specific Th2 mediators for severe eosinophilic/allergic disease</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Relievers address the symptom; controllers address the disease itself</span><span class="mm-ssub">The plain-language explanation of why a reliever alone is dangerous and an inhaled steroid is what actually changes the disease course.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>A β₂-agonist raises cAMP and relieves spasm within minutes but leaves inflammation untouched</li>
+              <li>Inhaled corticosteroids turn down the inflammatory gene programme over days to weeks, reducing how often attacks happen</li>
+              <li>Using a LABA alone (without ICS) raises the death rate in asthma — it must always be paired with a steroid</li>
+              <li>Theophylline has a narrow safety margin (nausea, arrhythmia, seizures) and its levels are very sensitive to CYP1A2 changes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#2e8e8e">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m45">
+          <span class="mm-mnum">45</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Hematopoietic Agents</span><span class="mm-msub">A matching game — identify the cause of an anaemia (or low cell count) and supply exactly what is missing.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m45">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The agents</span><span class="mm-ssub">Each blood-building drug, what deficiency or condition it treats, and the one safety fact that matters most for it.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Iron (oral ferrous, IV): treats microcytic anaemia; absorbed in the duodenum; causes constipation; IV used if malabsorption/intolerance</li>
+              <li>Vitamin B₁₂ (cobalamin): macrocytic anaemia with neurological signs; needs intrinsic factor; pernicious anaemia requires IM dosing</li>
+              <li>Folate: macrocytic anaemia with no neuro signs; periconceptual use prevents neural tube defects</li>
+              <li>Erythropoietin (epoetin, darbepoetin): for CKD/chemo anaemia; needs adequate iron stores; raises BP and thrombosis risk</li>
+              <li>G-CSF (filgrastim)/GM-CSF: stimulates neutrophil production for chemo-induced neutropenia</li>
+              <li>TPO agonists (romiplostim, eltrombopag): mimic thrombopoietin for thrombocytopenia (ITP)</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Replenish whatever's lacking — but pin down what that is first</span><span class="mm-ssub">Why B₁₂ deficiency causes nerve damage that folate deficiency doesn't, and why CKD anaemia is a signalling problem, not a raw-material problem.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Both B₁₂ and folate are needed for DNA synthesis, so a shortage of either causes macrocytic anaemia</li>
+              <li>Only B₁₂ also maintains the myelin sheath, which is why only its deficiency causes neurological symptoms</li>
+              <li>In CKD, the raw materials are present but the erythropoietin "signal to produce more red cells" is missing</li>
+              <li>Giving folate alone to a B₁₂-deficient patient can normalise the blood count while masking ongoing, potentially permanent nerve damage</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#5b4a7a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m39">
+          <span class="mm-mnum">39</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Immunosuppressants, Immunomodulation &amp; Tolerance</span><span class="mm-msub">Drugs arranged along the T-cell activation pathway, from blunt whole-body suppression to highly targeted biologics.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m39">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The classes</span><span class="mm-ssub">Five immunosuppressant classes with their mechanism and their one signature toxicity — the table tested most often.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Calcineurin inhibitors (ciclosporin, tacrolimus): ↓calcineurin → ↓IL-2 transcription; signature toxicity is nephrotoxicity, ↑BP, tremor</li>
+              <li>mTOR inhibitors (sirolimus, everolimus): block IL-2 signal transduction; cause hyperlipidaemia and impaired wound healing</li>
+              <li>Antiproliferatives (mycophenolate, azathioprine): ↓purine/DNA synthesis; cause myelosuppression and GI upset</li>
+              <li>Glucocorticoids (prednisolone): broad anti-inflammatory/transcriptional effect; cause Cushingoid features, osteoporosis, infection risk</li>
+              <li>Biologics (anti-TNF infliximab, anti-CD20 rituximab, anti-IL, belatacept): neutralise one specific target; risk TB reactivation and infusion reactions</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">It's all about how precisely the drug aims</span><span class="mm-ssub">Older drugs suppress immunity bluntly; newer biologics target one molecule — but every approach trades efficacy for a thinner immune defence.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Steroids and antiproliferatives suppress immunity broadly and non-selectively</li>
+              <li>Calcineurin inhibitors target the T-cell IL-2 signal with more precision</li>
+              <li>Biologics narrow the aim further, neutralising one named molecule</li>
+              <li>A rising creatinine on tacrolimus could mean either rejection or drug nephrotoxicity — drug-level monitoring is essential because it's hard to tell apart</li>
+              <li>Anti-TNF biologics can reactivate latent TB or hepatitis B, so screening is required first</li>
+              <li>Combining allopurinol with azathioprine can cause fatal myelosuppression (both act on xanthine oxidase)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#3a6b3a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m43">
+          <span class="mm-mnum">43</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Histamine, Bradykinin &amp; Their Antagonists</span><span class="mm-msub">Histamine receptor subtypes and the key practical contrast between older sedating and newer non-sedating antihistamines.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m43">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">1st vs 2nd generation H₁ antihistamines — the key contrast</span><span class="mm-ssub">The single property — crossing the blood-brain barrier — that explains every difference between the two generations.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>1st generation (diphenhydramine, chlorpheniramine, promethazine) crosses the BBB, causing sedation</li>
+              <li>1st generation also has antimuscarinic, antiemetic, and anti-motion-sickness actions</li>
+              <li>2nd generation (loratadine, cetirizine, fexofenadine) does not cross the BBB (more polar, P-gp substrate) so it is non-sedating</li>
+              <li>2nd generation is largely H₁-selective and preferred for daytime allergy use</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">One property explains the whole split</span><span class="mm-ssub">Why the same receptor target produces such different side-effect profiles depending on the drug's ability to enter the brain.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>1st-generation agents are lipophilic, crossing the BBB to cause sedation, and also block muscarinic receptors (dry mouth)</li>
+              <li>2nd-generation agents are designed not to cross the BBB, giving allergy relief without drowsiness</li>
+              <li>1st-gen antihistamines are risky in the elderly (confusion, falls, urinary retention, glaucoma) due to antimuscarinic load</li>
+              <li>Bradykinin (not histamine) mediates the ACE-inhibitor cough and angio-oedema, because ACE normally breaks bradykinin down</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#16344a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m38">
+          <span class="mm-mnum">38</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Introduction to Immunity &amp; Inflammation</span><span class="mm-msub">The framework for the whole section — innate vs adaptive immunity, and the four hypersensitivity reactions that drugs target.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m38">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Other high-yield points</span><span class="mm-ssub">Two extra concepts that come up constantly: cytokine storms and the immune checkpoint molecules behind cancer immunotherapy.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Cytokine storm: excessive cytokine release causes systemic inflammation, a target of drugs like anti-IL-6</li>
+              <li>Immune checkpoints (CTLA-4, PD-1/PD-L1) are "brakes" on T cells</li>
+              <li>Checkpoint inhibitors release those brakes for cancer immunotherapy, at the cost of autoimmune side effects</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Two arms, and what happens when they overreact</span><span class="mm-ssub">Innate immunity reacts fast without memory; adaptive immunity is slower but remembers — and the four hypersensitivity types are this system misfiring.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Innate immunity is fast and non-specific (neutrophils, macrophages, NK cells, complement) and has no memory</li>
+              <li>Adaptive immunity is slower, highly specific (T cells, B cells/antibodies), and forms memory — the basis of vaccines</li>
+              <li>Type I (anaphylactic/IgE): immediate, mast cell degranulation — anaphylaxis, atopy, asthma, urticaria</li>
+              <li>Type II (cytotoxic): antibody vs cell-surface antigen — haemolytic anaemia, Goodpasture, ITP</li>
+              <li>Type III (immune complex): antigen-antibody complexes deposit in tissue — serum sickness, SLE, post-strep glomerulonephritis</li>
+              <li>Type IV (delayed/T-cell): sensitised T cells, takes 2-3 days — contact dermatitis, TB test, transplant rejection</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#7a8a94">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m40">
+          <span class="mm-mnum">40</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Immune Globulins &amp; Vaccines</span><span class="mm-msub">Active immunisation (teach the body to make antibodies) versus passive immunisation (hand over ready-made ones) — slow-but-lasting versus fast-but-temporary.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m40">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Active vs passive immunisation</span><span class="mm-ssub">What's actually given in each approach, how fast it works, and how long the protection lasts — the core comparison table for this module.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Active (vaccine): gives antigen (live-attenuated, inactivated, subunit, or mRNA); slow onset (weeks) but long-lasting memory</li>
+              <li>Passive (immune globulin): gives pre-formed antibodies; immediate onset but short duration (weeks-months)</li>
+              <li>Passive use cases include post-exposure prophylaxis and immunodeficiency — e.g. rabies, tetanus, anti-D, RSV</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Teach vs hand-over</span><span class="mm-ssub">Why a rabies exposure needs both a vaccine and an immune globulin at the same time, and which vaccines you must avoid in pregnant or immunocompromised patients.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Live-attenuated vaccines (MMR, varicella, BCG) give strong lasting immunity but are contraindicated in pregnancy and immunocompromise</li>
+              <li>Inactivated/subunit/mRNA vaccines are safer for those groups but often need boosters</li>
+              <li>Anti-D (Rho) immune globulin is the classic passive-immunity example — prevents Rh sensitisation in pregnancy</li>
+              <li>In a rabies exposure you need both: the immune globulin protects immediately while the vaccine builds lasting immunity over the following weeks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
 
 <section id="method" style="padding-top:30px">
   <p class="lead">Same engine as your General Pharmacology, Neuropharmacology and Cardiovascular-Renal systems. Each module runs four evidence-based stages — and the blurting gate matters most: retrieving <em>before</em> you read is what builds durable memory. Chapters are ordered by yield, Tier 1 first.</p>
@@ -869,7 +1573,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Master <strong>one branching pathway</strong> and four chapters fall into place: arachidonic acid (freed by phospholipase A₂) splits down the <strong>COX branch</strong> (prostaglandins, prostacyclin, thromboxane) and the <strong>LOX branch</strong> (leukotrienes) — and every anti-inflammatory drug is just a named cut on this map.</div>
+    <div class="pillar">Get comfortable with <strong>a single branch point</strong> and four chapters' worth of material clicks together: once phospholipase A₂ frees arachidonic acid, it can travel down the <strong>COX branch</strong> (prostaglandins, prostacyclin, thromboxane) or the <strong>LOX branch</strong> (leukotrienes) — every anti-inflammatory drug is simply a specific block placed somewhere on this route.</div>
       <figure>
     <div class="fig-title">Figure 41·1 — The arachidonic acid cascade &amp; where drugs act</div>
     <svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
@@ -896,7 +1600,7 @@
       <text x="630" y="338" text-anchor="middle" fill="#3f4a44" font-size="10">LTB₄ (chemotaxis) · LTC₄/D₄/E₄ = CysLTs</text>
       <text x="630" y="354" text-anchor="middle" fill="#a8331f" font-size="10">⊣ montelukast (CysLT₁) — bronchospasm</text>
     </svg>
-    <figcaption>One precursor, two main branches. Glucocorticoids choke the whole cascade at PLA₂; NSAIDs block only the COX branch (leaving leukotrienes intact); leukotriene modifiers act on the LOX branch.</figcaption>
+    <figcaption>A single starting molecule, two downstream routes. Glucocorticoids shut down the entire cascade by acting at PLA₂; NSAIDs interrupt only the COX side (leukotriene production continues unaffected); leukotriene modifiers target the LOX side instead.</figcaption>
   </figure>
     <h4>Where the major drug classes act</h4>
     <div class="tbl-scroll"><table>
@@ -912,21 +1616,21 @@
     </table></div>
     <h4>Key prostanoid actions to know</h4>
     <ul>
-      <li><strong>PGE₂:</strong> vasodilation, fever (hypothalamus), gastric mucus/bicarbonate (protective), sensitises nociceptors → pain.</li>
-      <li><strong>PGI₂ (prostacyclin, endothelium):</strong> vasodilator, <em>inhibits</em> platelet aggregation.</li>
-      <li><strong>TXA₂ (platelets, COX-1):</strong> vasoconstrictor, <em>promotes</em> platelet aggregation — the PGI₂/TXA₂ balance is the basis of low-dose aspirin.</li>
-      <li><strong>PGF₂α:</strong> uterine contraction, bronchoconstriction.</li>
+      <li><strong>PGE₂:</strong> dilates vessels, raises hypothalamic temperature set-point (fever), supports protective gastric mucus/bicarbonate output, and sensitises pain receptors so you feel more pain.</li>
+      <li><strong>PGI₂ (prostacyclin, made by endothelium):</strong> dilates vessels and <em>blocks</em> platelets from clumping together.</li>
+      <li><strong>TXA₂ (made by platelets via COX-1):</strong> constricts vessels and <em>drives</em> platelet aggregation — this opposing PGI₂/TXA₂ pair is the reason low-dose aspirin works the way it does.</li>
+      <li><strong>PGF₂α:</strong> drives uterine contraction and narrows the airway.</li>
     </ul>
   </div>
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">Draw the arachidonic acid cascade from membrane phospholipid down to the two end-product families — and mark exactly where glucocorticoids, NSAIDs, aspirin, and montelukast each cut it. Why does a glucocorticoid suppress more of the response than an NSAID?</div>
-    <h4 style="color:var(--rust)">Guiding primers — ask "why," not "what"</h4>
+    <div class="blurt-prompt">Sketch the arachidonic acid pathway starting at the membrane phospholipid through to its two families of end products, marking exactly where glucocorticoids, NSAIDs, aspirin, and montelukast each interrupt it. Then explain why a glucocorticoid dampens the response more thoroughly than an NSAID does.</div>
+    <h4 style="color:var(--rust)">Guiding primers — chase the "why," not the "what"</h4>
     <ul class="primers">
-      <li>Why does blocking COX sometimes <em>worsen</em> asthma — what happens to arachidonic acid that can no longer go down the COX branch?</li>
-      <li>Why does the same molecule (PGE₂) cause both stomach protection and the pain/fever you take an NSAID to relieve?</li>
-      <li>Why does low-dose aspirin protect the heart while high-dose may not — what's the PGI₂/TXA₂ logic?</li>
+      <li>Why can blocking COX actually <em>make asthma worse</em> in some patients — where does the arachidonic acid go once it can't enter the COX branch?</li>
+      <li>Why does PGE₂ manage to both protect the stomach and generate the pain/fever an NSAID is meant to relieve?</li>
+      <li>Why is low-dose aspirin cardioprotective while a higher dose may lose that benefit — what's going on with the PGI₂/TXA₂ ratio?</li>
     </ul>
   </div>
 
@@ -934,13 +1638,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>The branch point is everything</h4>
-    <p>Phospholipase A₂ liberates arachidonic acid from the membrane; from there it can go down COX (→ prostanoids) or 5-LOX (→ leukotrienes). Because the two branches share one substrate pool, <strong>blocking one branch can shunt substrate down the other</strong> — the mechanism behind aspirin-exacerbated respiratory disease (more arachidonic acid → more leukotrienes → bronchospasm).</p>
+    <h4>Everything hinges on the fork in the road</h4>
+    <p>Once phospholipase A₂ cuts arachidonic acid free from the membrane, it can be routed through COX (yielding prostanoids) or through 5-LOX (yielding leukotrienes). Since both pathways draw from the same pool of substrate, <strong>shutting one down can push more material through the other</strong> — which is exactly what happens in aspirin-exacerbated respiratory disease (extra arachidonic acid gets diverted into leukotriene production, worsening bronchospasm).</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — a river that forks</div>
-      <p>Arachidonic acid is a <span class="key">river fed by one upstream dam</span> (phospholipase A₂). Downstream it forks into two channels: the COX channel (prostaglandins) and the LOX channel (leukotrienes). <strong>Glucocorticoids close the dam</strong> — both channels run dry, the broadest effect. <strong>NSAIDs dam only the COX channel</strong> — but the water still has to go somewhere, so it surges down the leukotriene channel (why NSAIDs can trigger bronchospasm in sensitive asthmatics). <strong>Montelukast</strong> doesn't touch the river at all — it just blocks the leukotriene "outflow valve" (the CysLT₁ receptor) at the destination.</p>
+      <div class="alabel"><span>💡</span> The Analogy — a forking river</div>
+      <p>Picture arachidonic acid as <span class="key">water flowing from a single dam upstream</span> (phospholipase A₂), which then splits into two downstream channels: one toward COX products (prostaglandins) and one toward LOX products (leukotrienes). <strong>Glucocorticoids seal the dam itself</strong> — both channels dry up, giving the broadest possible effect. <strong>NSAIDs only block the COX channel</strong> — the water still needs somewhere to go, so it gets forced into the leukotriene channel instead (this is why NSAIDs can provoke bronchospasm in susceptible asthmatics). <strong>Montelukast</strong> leaves the river alone entirely — it simply shuts the leukotriene "outflow valve" (the CysLT₁ receptor) downstream at its destination.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> PAF (platelet-activating factor) is a separate phospholipid mediator, not an eicosanoid, but it amplifies the same inflammatory response (bronchoconstriction, ↑vascular permeability). And remember the protective face of prostaglandins: COX-1-derived PGE₂/PGI₂ guard the gastric mucosa and maintain renal perfusion — which is exactly why blocking them causes the classic NSAID toxicities in the next module.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> PAF (platelet-activating factor) belongs to a different phospholipid family entirely — it isn't an eicosanoid — yet it reinforces the same inflammatory picture (airway narrowing, leakier vessels). Also keep in mind the helpful side of prostaglandins: PGE₂/PGI₂ made via COX-1 protect the stomach lining and keep blood flowing through the kidneys, which is precisely why interfering with them produces the classic NSAID toxicities covered in the next module.</blockquote>
   </div>
   </details>
 
@@ -960,7 +1664,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">NSAIDs block COX → less prostaglandin → the <strong>four therapeutic effects</strong> (analgesic, antipyretic, anti-inflammatory, antiplatelet) come bundled with <strong>four predictable toxicities</strong> (GI, renal, cardiovascular, bleeding) — because you've removed prostaglandins that were also doing useful housekeeping.</p></div>
+    <div class="pillar">By inhibiting COX, NSAIDs cut prostaglandin levels, which delivers <strong>four desired effects</strong> (analgesic, antipyretic, anti-inflammatory, antiplatelet) but always alongside <strong>four predictable downsides</strong> (GI, renal, cardiovascular, bleeding) — the same prostaglandins you've suppressed were quietly maintaining normal tissue function elsewhere.</p></div>
     <h4>COX-1 vs COX-2 — the central distinction</h4>
     <div class="tbl-scroll"><table>
       <thead><tr><th></th><th>COX-1 (constitutive)</th><th>COX-2 (inducible)</th></tr></thead>
@@ -985,8 +1689,8 @@
     </table></div>
     <h4>Special agents</h4>
     <ul>
-      <li><strong>Aspirin:</strong> irreversibly acetylates COX → platelets (anucleate) can't make new enzyme → effect lasts ~7–10 days. Low dose = cardioprotection.</li>
-      <li><strong>Acetaminophen/paracetamol:</strong> analgesic + antipyretic, <em>weak</em> anti-inflammatory; acts centrally; <strong>no</strong> GI/antiplatelet effects; overdose → hepatotoxic NAPQI.</li>
+      <li><strong>Aspirin:</strong> permanently acetylates COX through an irreversible reaction; since platelets have no nucleus, they cannot manufacture replacement enzyme, so the effect persists roughly 7–10 days. At low dose this is the basis of cardioprotection.</li>
+      <li><strong>Acetaminophen/paracetamol:</strong> relieves pain and fever but is only a <em>mild</em> anti-inflammatory; works through central mechanisms; produces <strong>none</strong> of the GI or antiplatelet effects; in overdose, the toxic metabolite NAPQI causes liver damage.</li>
     </ul>
     <h4>Gout — acute vs chronic</h4>
     <div class="tbl-scroll"><table>
@@ -1004,12 +1708,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A patient on an NSAID for arthritis develops a stomach ulcer, ankle swelling, and a rising creatinine. Blurt out the single mechanism that links all three to the drug — then explain why a COX-2-selective drug would fix the stomach but might threaten the heart.</div>
+    <div class="blurt-prompt">An arthritis patient taking an NSAID develops a stomach ulcer, swollen ankles, and a climbing creatinine. Recall the one mechanism tying all three together to the drug, then work out why switching to a COX-2-selective agent would solve the stomach problem yet could put the heart at risk.</div>
     <h4 style="color:var(--rust)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does aspirin's antiplatelet effect last over a week when the drug itself is cleared in hours?</li>
-      <li>Why must you never give an NSAID to start treating an <em>acute</em> gout flare with a urate-lowering drug like allopurinol?</li>
-      <li>Why is acetaminophen safe for the stomach and platelets but dangerous for the liver in overdose?</li>
+      <li>Why does aspirin keep suppressing platelets for over a week, well after the drug itself has left the bloodstream within hours?</li>
+      <li>Why should you avoid starting a urate-lowering drug such as allopurinol during an <em>acute</em> gout attack, rather than reaching for an NSAID first?</li>
+      <li>Why does acetaminophen spare the stomach and platelets yet pose a real danger to the liver when taken in excess?</li>
     </ul>
   </div>
 
@@ -1017,13 +1721,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Why one mechanism explains both benefit and harm</h4>
-    <p>Prostaglandins do two jobs: they <em>signal</em> inflammation, pain and fever (bad), and they <em>maintain</em> the gastric mucus barrier, renal perfusion and the platelet/endothelium balance (good). An NSAID can't tell the difference — block COX and you lose all of it at once. That's why the GI, renal and bleeding effects aren't side-effects in the usual sense; they're the <em>same</em> effect in a different tissue.</p>
+    <h4>A single mechanism produces both the help and the harm</h4>
+    <p>Prostaglandins perform two distinct roles: they <em>trigger</em> the inflammation/pain/fever response (unwanted), and they <em>preserve</em> the stomach's mucus barrier, kidney blood flow, and the clotting/anti-clotting balance between platelets and endothelium (wanted). An NSAID has no way to separate these roles — inhibiting COX removes both at once. So the GI, renal, and bleeding problems aren't really separate "side effects" — they're the identical mechanism playing out in a different organ.</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — firing the whole maintenance crew</div>
-      <p>Prostaglandins are a <span class="key">maintenance crew working all over a building</span>. At the inflamed site they're the ones ringing the fire alarm (pain, fever, swelling). But the same crew also reglazes the stomach lining, keeps the kidney's water pressure steady, and balances the "sticky vs slippery" setting of the blood. An NSAID <strong>fires the entire crew</strong> — the alarm stops (great), but no one is patching the stomach lining (ulcer), managing renal pressure (fluid retention, AKI) or balancing clotting (bleeding). A coxib fires <em>only the alarm-ringers</em> (COX-2), sparing the stomach crew — but it also removes the endothelium's anti-clotting signal (PGI₂) while leaving platelets' pro-clotting TXA₂ intact, tipping toward thrombosis.</p>
+      <div class="alabel"><span>💡</span> The Analogy — laying off an entire maintenance staff</div>
+      <p>Picture prostaglandins as a <span class="key">maintenance staff stationed throughout a building</span>. Where there's a problem, they trigger the fire alarm (pain, fever, swelling). But that same staff also resurfaces the stomach lining, regulates water pressure for the kidneys, and keeps the blood's "sticky versus slippery" setting balanced. An NSAID <strong>lays off the entire staff</strong> — the alarm goes quiet (good), but now nobody is repairing the stomach lining (ulcer risk), regulating kidney pressure (fluid retention, acute kidney injury), or maintaining clotting balance (bleeding risk). A coxib instead lays off <em>only the alarm-ringing staff</em> (COX-2), keeping the stomach crew intact — but it also eliminates the endothelium's clot-preventing signal (PGI₂) while platelets' clot-promoting TXA₂ remains on the job, pushing the balance toward dangerous clotting.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning — high-yield traps:</span> <strong>Aspirin in children</strong> with viral illness → <strong>Reye syndrome</strong> (avoid). NSAID "<strong>triple whammy</strong>" = NSAID + ACEi/ARB + diuretic → acute kidney injury. <strong>Allopurinol</strong> can precipitate an acute flare if started during one, and causes severe reactions (HLA-B*58:01); it also <strong>blocks metabolism of azathioprine/6-MP</strong> (both xanthine-oxidase substrates) → toxicity. Never give <strong>aspirin in gout</strong> — low doses are urate-retaining.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — high-yield traps:</span> Giving <strong>aspirin to children</strong> with a viral infection risks <strong>Reye syndrome</strong> — avoid it. The "<strong>triple whammy</strong>" combination — NSAID plus ACEi/ARB plus diuretic — can cause acute kidney injury. <strong>Allopurinol</strong> may trigger an acute flare if begun during one, can cause severe hypersensitivity reactions (associated with HLA-B*58:01), and additionally <strong>interferes with azathioprine/6-MP breakdown</strong> (both are cleared by xanthine oxidase), leading to toxicity. Avoid <strong>aspirin</strong> in gout patients altogether — at low doses it causes urate retention.</blockquote>
   </div>
   </details>
 
@@ -1043,7 +1747,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Asthma is <strong>two problems at once</strong> — acute bronchoconstriction and chronic inflammation — so therapy is two-pronged: <strong>relievers</strong> (bronchodilators) open the airway fast, while <strong>controllers</strong> (above all inhaled corticosteroids) treat the inflammation that drives the disease.</div>
+    <div class="pillar">Asthma actually presents <strong>two simultaneous problems</strong> — sudden airway narrowing and ongoing inflammation — which is why treatment splits into two arms: <strong>relievers</strong> (bronchodilators) rapidly reopen the airway, while <strong>controllers</strong> (inhaled corticosteroids being the most important) address the inflammation driving the condition.</div>
       <figure>
     <div class="fig-title">Figure 44·1 — Asthma: two problems, two drug strategies</div>
     <svg viewBox="0 0 820 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
@@ -1068,7 +1772,7 @@
       <text x="605" y="254" text-anchor="middle" font-size="11" fill="#15231c">Biologics: anti-IgE (omalizumab), anti-IL5</text>
       <text x="605" y="272" text-anchor="middle" font-size="10" fill="#3f4a44" font-style="italic">calm inflammation — slow, preventive</text>
     </svg>
-    <figcaption>The two-pronged logic of asthma therapy: relievers relax the muscle for fast rescue; controllers (above all inhaled corticosteroids) treat the underlying inflammation to prevent attacks.</figcaption>
+    <figcaption>Asthma treatment follows a two-track logic: relievers quickly relax the muscle for rescue purposes, while controllers (inhaled corticosteroids chief among them) address the underlying inflammation so attacks become less frequent.</figcaption>
   </figure>
     <h4>The drug classes</h4>
     <div class="tbl-scroll"><table>
@@ -1087,12 +1791,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A patient uses their blue salbutamol inhaler more and more often but keeps having night-time attacks. Blurt out which of the two asthma problems their reliever is <em>not</em> treating, and what drug class must be added — and why prescribing a LABA on its own would be dangerous.</div>
+    <div class="blurt-prompt">A patient reaches for their blue salbutamol inhaler more and more frequently yet still wakes with night-time attacks. Work out which of asthma's two underlying problems the reliever is failing to address, what drug class needs to be added, and why giving a LABA by itself would be hazardous.</div>
     <h4 style="color:var(--rust)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does a β₂-agonist relax bronchial muscle — what second messenger rises (link to Module 3 GPCRs)?</li>
-      <li>Why is an inhaled corticosteroid, not a bronchodilator, the drug that actually changes the disease course?</li>
-      <li>Why is COPD managed more with anticholinergics (LAMA) than asthma is?</li>
+      <li>What second messenger increases when a β₂-agonist binds its receptor, and how does that relax bronchial smooth muscle (tie this back to the GPCR material in Module 3)?</li>
+      <li>Why is it the inhaled corticosteroid, rather than a bronchodilator, that actually alters the long-term course of the disease?</li>
+      <li>Why do anticholinergics (LAMAs) play a bigger role in managing COPD than they do in asthma?</li>
     </ul>
   </div>
 
@@ -1100,13 +1804,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Relievers treat the symptom; controllers treat the disease</h4>
-    <p>A β₂-agonist raises cAMP in airway smooth muscle, relaxing the spasm within minutes — but it does nothing about the inflammation that caused the spasm. Inhaled corticosteroids switch off the inflammatory gene programme over days to weeks, shrinking the underlying problem so attacks become rarer.</p>
+    <h4>Relievers address the symptom; controllers address the disease itself</h4>
+    <p>A β₂-agonist boosts cAMP within airway smooth muscle, relieving the spasm in minutes, yet it leaves the underlying inflammation completely untouched. Inhaled corticosteroids instead turn down the inflammatory gene programme over a period of days to weeks, gradually shrinking the root problem so attacks happen less often.</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — fire alarm vs the fire</div>
-      <p>Think of an asthma attack as a <span class="key">building fire setting off a deafening alarm</span>. A reliever (salbutamol) is <strong>earplugs</strong> — instant relief from the noise, but the fire still burns. The inhaled corticosteroid is the <strong>fire crew putting out the actual flames</strong>. If a patient just keeps reaching for earplugs (overusing their blue inhaler), the fire grows unchecked — which is exactly why escalating reliever use is a red flag, and why a long-acting reliever (LABA) given <em>alone</em>, with no fire crew, can be lethal: it silences the warning while the disease worsens. LABAs must always ride with an ICS.</p>
+      <div class="alabel"><span>💡</span> The Analogy — muffling the alarm versus putting out the fire</div>
+      <p>Imagine an asthma attack as a <span class="key">fire inside a building that sets off a piercing alarm</span>. The reliever (salbutamol) acts like <strong>earplugs</strong> — the noise disappears instantly, but the fire keeps burning regardless. The inhaled corticosteroid, by contrast, is the <strong>crew that actually extinguishes the flames</strong>. If a patient relies only on the earplugs (overusing the blue inhaler), the fire spreads unchecked — which is why heavier reliever use is a warning sign, and why handing someone a long-acting reliever (LABA) with no fire crew at all can prove fatal: it mutes the alarm while the underlying disease keeps worsening. A LABA should therefore never be prescribed without an accompanying ICS.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>LABA monotherapy in asthma increases asthma deaths</strong> — always combine with an inhaled corticosteroid. <strong>Theophylline</strong> has a narrow therapeutic index (nausea, arrhythmia, seizures) and is a CYP1A2 substrate — levels rise with inhibitors and fall in smokers (induction). In COPD, the dominant bronchodilator tone is cholinergic, so <strong>LAMAs/SAMAs</strong> matter more than in asthma.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Using a <strong>LABA alone in asthma raises the death rate</strong> — it must always be paired with an inhaled corticosteroid. <strong>Theophylline</strong> carries a narrow margin between effective and toxic doses (nausea, arrhythmia, seizures) and is metabolised via CYP1A2, so levels climb with enzyme inhibitors and drop in smokers due to enzyme induction. Because COPD airway tone is predominantly cholinergic, <strong>LAMAs and SAMAs</strong> carry more weight there than they do in asthma.</blockquote>
   </div>
   </details>
 
@@ -1126,7 +1830,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">This chapter is a <strong>matching exercise</strong>: classify the anaemia by cause, then replace exactly what's missing — iron for microcytic, B₁₂/folate for macrocytic, erythropoietin for the anaemia of chronic kidney disease — plus growth factors (G-CSF) to rebuild white cells.</div>
+    <div class="pillar">Think of this chapter as a <strong>matching game</strong>: figure out the cause of the anaemia, then supply whatever is lacking — iron when cells are microcytic, B₁₂/folate when macrocytic, erythropoietin for the anaemia seen in chronic kidney disease — and use growth factors (G-CSF) to restore white-cell counts.</div>
       <figure>
     <div class="fig-title">Figure 45·1 — Match the anaemia to its agent</div>
     <svg viewBox="0 0 820 250" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
@@ -1146,7 +1850,7 @@
       <rect x="550" y="160" width="210" height="36" rx="7" fill="#fff" stroke="#b07410"/><text x="655" y="183" text-anchor="middle" fill="#8a5a0c" font-weight="700">Erythropoietin (ESA)</text>
       <text x="410" y="226" text-anchor="middle" font-size="11" fill="#3f4a44" font-style="italic">Plus growth factors: G-CSF (filgrastim) for neutropenia · TPO-agonists for thrombocytopenia</text>
     </svg>
-    <figcaption>The whole chapter is a matching exercise: classify the anaemia, then give back what is missing. Never give iron for a B₁₂ deficiency.</figcaption>
+    <figcaption>The entire chapter boils down to a matching task: identify the type of anaemia, then restore whatever is absent. Iron will not help a B₁₂ deficiency.</figcaption>
   </figure>
     <h4>The agents</h4>
     <div class="tbl-scroll"><table>
@@ -1164,12 +1868,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A patient has a macrocytic anaemia. Before reading on, blurt out the two vitamins that could be responsible, the single clinical feature that distinguishes them, and why giving the <em>wrong</em> one (folate alone) could leave the patient with permanent harm.</div>
+    <div class="blurt-prompt">A patient presents with macrocytic anaemia. Before continuing, identify the two vitamins that might be at fault, the one clinical sign that tells them apart, and why supplying the <em>wrong</em> one (folate by itself) could cause lasting harm.</div>
     <h4 style="color:var(--rust)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does a CKD patient become anaemic even with normal iron and B₁₂ — what does the kidney normally make?</li>
-      <li>Why does erythropoietin fail to work if iron stores are low?</li>
-      <li>Why does B₁₂ deficiency, but not folate deficiency, cause neurological damage?</li>
+      <li>What substance does the healthy kidney normally produce, and why does its absence make a CKD patient anaemic even when iron and B₁₂ levels are normal?</li>
+      <li>Why does erythropoietin stop working effectively when iron stores run low?</li>
+      <li>Why does a B₁₂ shortage cause neurological damage while a folate shortage does not?</li>
     </ul>
   </div>
 
@@ -1177,13 +1881,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Replace what's missing — but identify it first</h4>
-    <p>Both B₁₂ and folate are needed for DNA synthesis, so deficiency of either gives a <strong>macrocytic</strong> anaemia. But B₁₂ has a second job — maintaining the myelin sheath — so only B₁₂ deficiency causes neurological signs. Erythropoietin is the kidney's "build more red cells" signal; in CKD the factory has raw materials but no foreman.</p>
+    <h4>Replenish whatever's lacking — but pin down what that is first</h4>
+    <p>DNA synthesis depends on both B₁₂ and folate, so a shortage of either produces a <strong>macrocytic</strong> anaemia. B₁₂, however, has an additional role in maintaining the myelin sheath, which is why only its deficiency produces neurological symptoms. Erythropoietin functions as the kidney's signal to "produce more red cells"; in CKD the raw materials are present, but the signal itself is missing.</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — a factory missing different supplies</div>
-      <p>The bone marrow is a <span class="key">red-cell factory</span>. <strong>Iron</strong> is the raw brick — without it, cells come out small and pale (microcytic). <strong>B₁₂ and folate</strong> are the blueprints for copying DNA — without them, cells can't divide properly and come out large and immature (macrocytic). <strong>Erythropoietin</strong> is the foreman shouting "make more!" — in kidney disease the foreman is gone, so production stalls even though bricks and blueprints are plentiful. And the dangerous twist: B₁₂ also maintains the factory's <em>electrical wiring</em> (myelin). If you hand over only folate, you restock the blueprints and the anaemia improves — masking the fact that the wiring is still corroding, leading to irreversible neurological damage.</p>
+      <div class="alabel"><span>💡</span> The Analogy — a factory short on different supplies</div>
+      <p>Picture the bone marrow as a <span class="key">factory producing red cells</span>. <strong>Iron</strong> is the raw building material — without it, the cells that come off the line are small and pale (microcytic). <strong>B₁₂ and folate</strong> serve as the blueprints needed to copy DNA — lacking them, cells fail to divide correctly and emerge large and immature (macrocytic). <strong>Erythropoietin</strong> is the supervisor calling for increased output — in kidney disease that supervisor is absent, so production grinds to a halt even with plenty of materials and blueprints on hand. There's a further complication: B₁₂ also keeps the factory's <em>wiring</em> (myelin) in good repair. Supplying folate alone restocks the blueprints and the blood count improves, but it masks ongoing damage to the wiring — leading to neurological harm that can become permanent.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>Always check B₁₂ before treating macrocytic anaemia with folate</strong> — folate alone corrects the blood picture but lets subacute combined degeneration of the cord progress. <strong>Erythropoiesis-stimulating agents</strong> raise thrombosis/stroke risk and need adequate iron to work — don't over-correct haemoglobin. Oral iron is poorly tolerated (GI upset, black stools) and absorption is reduced by PPIs and antacids.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> <strong>Confirm B₁₂ status before treating macrocytic anaemia with folate</strong> — folate alone normalises the blood picture while subacute combined degeneration of the cord continues to progress. <strong>Erythropoiesis-stimulating agents</strong> increase the risk of thrombosis and stroke and depend on adequate iron stores to be effective — avoid over-correcting haemoglobin. Oral iron tends to be poorly tolerated (GI upset, dark stools), and PPIs/antacids reduce how well it's absorbed.</blockquote>
   </div>
   </details>
 
@@ -1203,7 +1907,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Lay the drugs along <strong>one T-cell activation cascade</strong>: block the IL-2 <em>signal</em> (calcineurin inhibitors), block the clone <em>expanding</em> (antiproliferatives/mTOR), neutralise specific <em>mediators</em> (biologics), or hit <em>everything</em> (glucocorticoids).</div>
+    <div class="pillar">Arrange these drugs along <strong>a single T-cell activation pathway</strong>: some interrupt the IL-2 <em>signal</em> (calcineurin inhibitors), some stop the clone from <em>expanding</em> (antiproliferatives/mTOR inhibitors), some neutralise specific <em>mediator molecules</em> (biologics), and some suppress <em>everything at once</em> (glucocorticoids).</div>
       <figure>
     <div class="fig-title">Figure 39·1 — Immunosuppressants by site of action</div>
     <svg viewBox="0 0 820 270" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
@@ -1223,7 +1927,7 @@
       <text x="115" y="200" text-anchor="middle" fill="#b07410" font-size="11" font-weight="600">⊣ Glucocorticoids (broad)</text>
       <text x="711" y="200" text-anchor="middle" fill="#5e2d52" font-size="11" font-weight="600">⊣ Biologics</text><text x="711" y="216" text-anchor="middle" font-size="10" fill="#3f4a44">anti-TNF, anti-IL, anti-CD20, costim. block</text>
     </svg>
-    <figcaption>Walk the activation cascade left to right and each drug class slots onto a step: calcineurin inhibitors stop the IL-2 signal, antiproliferatives stop the clone expanding, biologics neutralise specific mediators, steroids hit everything.</figcaption>
+    <figcaption>Following the activation pathway from left to right, each drug class fits a particular step: calcineurin inhibitors interrupt the IL-2 signal, antiproliferatives prevent clonal expansion, biologics neutralise particular mediators, and steroids suppress the whole process.</figcaption>
   </figure>
     <h4>The classes</h4>
     <div class="tbl-scroll"><table>
@@ -1240,12 +1944,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A kidney-transplant patient is on tacrolimus and their creatinine starts climbing. Blurt out the two opposite explanations this single finding could mean — and why that makes therapeutic drug monitoring essential for this whole class.</div>
+    <div class="blurt-prompt">A kidney-transplant recipient taking tacrolimus shows a rising creatinine. Identify the two opposing explanations that single finding could represent, and explain why this ambiguity makes therapeutic drug monitoring essential across the whole drug class.</div>
     <h4 style="color:var(--rust)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does blocking calcineurin specifically suppress T-cells rather than the whole body?</li>
-      <li>Why must you screen for latent TB before starting an anti-TNF biologic?</li>
-      <li>Why does allopurinol (Module 42) dangerously potentiate azathioprine?</li>
+      <li>Why does inhibiting calcineurin selectively suppress T-cells instead of affecting the entire body?</li>
+      <li>Why is screening for latent TB mandatory before starting an anti-TNF biologic?</li>
+      <li>Why does allopurinol (covered in Module 42) dangerously amplify azathioprine's effects?</li>
     </ul>
   </div>
 
@@ -1253,13 +1957,13 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Specificity is the whole game</h4>
-    <p>Older drugs (steroids, antiproliferatives) suppress immunity bluntly; calcineurin inhibitors were a leap because they target the T-cell IL-2 signal fairly selectively; biologics go further still, neutralising one named molecule. The trade-off across the board is infection and malignancy risk — you are, by design, weakening host defence.</p>
+    <h4>It's all about how precisely the drug aims</h4>
+    <p>Older agents (steroids, antiproliferatives) suppress immunity in a blunt, non-selective way; calcineurin inhibitors marked an advance by targeting the T-cell IL-2 signal with reasonable precision; biologics narrow the aim further still, neutralising a single named molecule. Across the board, the cost is the same — greater susceptibility to infection and malignancy, since host defence is being deliberately weakened.</p>
     <div class="analogy">
-      <div class="alabel"><span>💡</span> The Analogy — silencing an army's communications</div>
-      <p>An immune attack is an <span class="key">army mobilising</span>. Glucocorticoids are <strong>carpet jamming</strong> — they shut down every radio, friend and foe alike (effective but with collateral damage everywhere). Calcineurin inhibitors are a <strong>targeted strike on the recruitment office</strong> — they stop the "call to arms" signal (IL-2), so few new soldiers are activated. Antiproliferatives <strong>cut the supply line for building new troops</strong>. Biologics are a <strong>sniper</strong> taking out one specific commander (TNF, CD20). The more precise the weapon, the less collateral — but every one of them leaves the border less defended (infection).</p>
+      <div class="alabel"><span>💡</span> The Analogy — disrupting an army's communications</div>
+      <p>An immune response resembles an <span class="key">army mobilising for battle</span>. Glucocorticoids work like <strong>blanket radio jamming</strong> — every channel goes dead, friend and foe alike, which is effective but causes collateral damage everywhere. Calcineurin inhibitors are more like a <strong>precision strike on the recruitment office</strong> — they cut the "call to arms" signal (IL-2), so few fresh soldiers get activated. Antiproliferatives instead <strong>sever the supply line that builds new troops</strong>. Biologics act as a <strong>sniper</strong>, eliminating one specific commander (TNF, CD20). The sharper the weapon, the less collateral damage — but each approach still leaves the body's defences thinner (raising infection risk).</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> calcineurin inhibitors are themselves <strong>nephrotoxic</strong>, so a rising creatinine in a transplant patient is ambiguous — rejection or drug toxicity — hence mandatory drug levels. They are <strong>CYP3A4 substrates</strong> (interactions with azoles, macrolides, grapefruit). <strong>Anti-TNF agents reactivate latent TB and hepatitis B</strong> — screen first. And the allopurinol + azathioprine interaction (xanthine oxidase) can cause fatal myelosuppression.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> calcineurin inhibitors are themselves <strong>nephrotoxic</strong>, so when a transplant patient's creatinine rises, it's genuinely unclear whether this reflects rejection or drug toxicity — which is exactly why drug-level monitoring is mandatory. These agents are <strong>CYP3A4 substrates</strong> (so azoles, macrolides, and grapefruit all interact with them). <strong>Anti-TNF drugs can reactivate latent TB and hepatitis B</strong>, so screening beforehand is essential. And combining allopurinol with azathioprine (both act on xanthine oxidase) can produce fatal myelosuppression.</blockquote>
   </div>
   </details>
 
@@ -1279,7 +1983,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Histamine acts through four receptors, but two carry the clinical weight: <strong>H₁</strong> (allergy, the antihistamine target) and <strong>H₂</strong> (gastric acid). The exam payoff is the 1st- vs 2nd-generation antihistamine split.</div>
+    <div class="pillar">Histamine signals through four receptor subtypes, though only two matter clinically: <strong>H₁</strong> (the allergy pathway and antihistamine target) and <strong>H₂</strong> (gastric acid secretion). What's most testable is the contrast between 1st- and 2nd-generation antihistamines.</div>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Receptor</th><th>Main effects</th><th>Blocked by</th></tr></thead>
       <tbody>
@@ -1303,12 +2007,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">Two allergy patients take antihistamines: one is drowsy and dry-mouthed, the other isn't. Blurt out which generation each took and the single pharmacological property — about crossing one barrier — that explains the entire difference.</div>
+    <div class="blurt-prompt">Two allergy patients are each taking an antihistamine: one feels drowsy with a dry mouth, the other doesn't. Work out which generation each is on, and identify the single pharmacological property — related to crossing one particular barrier — that accounts for the entire difference.</div>
     <h4 style="color:var(--rust)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does diphenhydramine cause dry mouth and urinary retention as well as sedation?</li>
-      <li>Why can a 1st-gen antihistamine treat motion sickness when a 2nd-gen one can't (link to Module 12 ANS)?</li>
-      <li>Why does an ACE inhibitor cough involve bradykinin, mentioned in this chapter?</li>
+      <li>Why does diphenhydramine produce dry mouth and urinary retention in addition to drowsiness?</li>
+      <li>Why is a 1st-generation antihistamine useful for motion sickness while a 2nd-generation one is not (tie this to the ANS material in Module 12)?</li>
+      <li>Why does bradykinin, mentioned in this chapter, account for the cough seen with ACE inhibitors?</li>
     </ul>
   </div>
 
@@ -1878,12 +2582,12 @@
   <div class="wrap">
     <div>
       <strong>Inflammation, Immunity &amp; Hematopoiesis · Accelerated Learning System</strong><br>
-      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section IV (Chs 38–45).<br>
+      <span class="src">Source: Standard pharmacology references — Section IV.<br>
       Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
       Mnemonics are standard teaching aids. Verify all drug dosing against current local protocols before clinical use.</span>
     </div>
     <div class="src" style="text-align:right">
-      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Part of a comprehensive pharmacology learning series.<br>
       Built around active recall and spaced repetition.
     </div>
   </div>
@@ -1939,6 +2643,189 @@
 })();
 </script>
 
+<script>
+/* ---- GLASS / MOTION DEMO v3 — additive, does not touch the quiz logic above ---- */
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  var bigSel = 'section.module, .quiz-intro, #flashcards, details.quizset';
+  var smallSel = '.cog, .blurt-stage, .sched-stage, details.gate, details.qa, .flashcard, .tbl-scroll, .diagram-wrap, blockquote.warn, .analogy, div.q';
+
+  document.querySelectorAll(bigSel).forEach(function(el){ el.classList.add('gp-reveal'); });
+  document.querySelectorAll(smallSel).forEach(function(el){ el.classList.add('gp-reveal-soft'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -50px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal, .gp-reveal-soft');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 7) * 50 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // safety net — guarantee nothing is stuck invisible
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }, 2000);
+})();
+</script>
+
 <script src="learning-interactive.js"></script>
+<script src="gamify.js"></script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- populate chapters drawer from this page's existing (now hidden) chapter nav ----
+  var drawerLinks = document.getElementById('gpDrawerLinks');
+  var sourceNav = document.querySelector('nav.toc, .sticky-nav');
+  if (drawerLinks && sourceNav) {
+    var anchors = sourceNav.querySelectorAll('a');
+    anchors.forEach(function(a){ drawerLinks.appendChild(a.cloneNode(true)); });
+  }
+
+  // ---- drawer open/close ----
+  var drawer = document.getElementById('gpDrawer');
+  var overlay = document.getElementById('gpDrawerOverlay');
+  var openBtn = document.getElementById('gpDrawerToggle');
+  var closeBtn = document.getElementById('gpDrawerClose');
+  function openDrawer(){
+    if (drawer) drawer.classList.add('show');
+    if (overlay) overlay.classList.add('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','true');
+  }
+  function closeDrawer(){
+    if (drawer) drawer.classList.remove('show');
+    if (overlay) overlay.classList.remove('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','false');
+  }
+  if (openBtn) openBtn.addEventListener('click', function(){
+    if (drawer && drawer.classList.contains('show')) closeDrawer(); else openDrawer();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  if (drawerLinks) drawerLinks.addEventListener('click', function(e){
+    if (e.target && e.target.tagName === 'A') closeDrawer();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // ---- dark mode toggle, persisted (shared key with the hub pages) ----
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('gpDarkToggle');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function upd(){ if (darkBtn) darkBtn.textContent = isDark() ? '☀️' : '🌙'; }
+  function setTheme(m){
+    if (m === 'dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('pharm-theme', m); } catch(e){}
+    upd();
+  }
+  upd();
+  if (darkBtn) darkBtn.addEventListener('click', function(){ setTheme(isDark() ? 'light' : 'dark'); });
+
+  // ---- random quiz question ----
+  var randomBtn = document.getElementById('gpRandomQuiz');
+  if (randomBtn) randomBtn.addEventListener('click', function(){
+    var qs = Array.prototype.slice.call(document.querySelectorAll('.q, .quiz-item'));
+    if (!qs.length) return;
+    var pick = qs[Math.floor(Math.random() * qs.length)];
+    var trigger = pick.querySelector('.qq, .quiz-q');
+    if (trigger) trigger.click();
+    if (!pick.classList.contains('open')) pick.classList.add('open');
+    pick.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  // ---- expand/contract the floating toolbar itself ----
+  // Chapters (☰) and Back (←) always stay visible; every other control
+  // (nav/jump/search/tools merged in by learning-interactive.js) lives inside
+  // the collapsible .gp-toolbar-extra and only shows once expanded.
+  var expandBtn = document.getElementById('gpToolbarExpand');
+  var toolbarEl = document.querySelector('.gp-toolbar');
+  if (expandBtn && toolbarEl) expandBtn.addEventListener('click', function(){
+    var open = !toolbarEl.classList.contains('expanded');
+    toolbarEl.classList.toggle('expanded', open);
+    expandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var tree = document.getElementById('mindmapTree');
+  if(!tree) return;
+
+  function setExpanded(btn, open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var holder = btn.closest('.mm-branch, .mm-twig');
+    if(holder) holder.classList.toggle('mm-open', open);
+  }
+
+  tree.addEventListener('click', function(e){
+    var btn = e.target.closest('.mm-node');
+    if(!btn) return;
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setExpanded(btn, !isOpen);
+  });
+
+  var expandAllBtn = document.getElementById('mmExpandAll');
+  var collapseAllBtn = document.getElementById('mmCollapseAll');
+  if(expandAllBtn){
+    expandAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, true); });
+    });
+  }
+  if(collapseAllBtn){
+    collapseAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, false); });
+    });
+  }
+})();
+</script>
+
 </body>
 </html>

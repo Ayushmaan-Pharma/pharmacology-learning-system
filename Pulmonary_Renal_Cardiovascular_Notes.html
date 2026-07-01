@@ -6,147 +6,289 @@
 <title>Pulmonary, Renal &amp; Cardiovascular Pharmacology — PYQ Notes</title>
 <style>
   :root{
-    --bg:#fbfbfa; --panel:#ffffff; --ink:#1f2328;
-    --muted:#6b7280; --line:#e7e7e4; --accent:#2f6f5e; --accent-soft:#eaf4f0;
+    --bg:#f3f0e8; --panel:#ffffff;
+    --panel-glass: rgba(255,255,255,.58); --panel-glass-strong: rgba(255,255,255,.8);
+    --ink:#1f2328; --muted:#6b7280; --line:#e7e7e4; --line-glass: rgba(255,255,255,.7);
+    --accent:#2f6f5e; --accent-soft:#eaf4f0;
     --star:#d99a00; --shadow:0 1px 2px rgba(0,0,0,.04),0 1px 8px rgba(0,0,0,.03);
-    --radius:10px;
+    --shadow-lg:0 22px 60px rgba(31,40,45,.12), 0 4px 14px rgba(31,40,45,.06);
+    --radius:18px; --radius-sm:12px;
+    --ease:cubic-bezier(.4,0,.2,1); --ease-spring:cubic-bezier(.34,1.56,.64,1);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    margin:0; background:var(--bg); color:var(--ink);
+    margin:0; color:var(--ink); min-height:100vh;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(47,111,94,.07), transparent 60%),
+      var(--bg);
     font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing:antialiased;
+    transition:background .4s, color .25s;
   }
-  .wrap{max-width:880px; margin:0 auto; padding:40px 22px 120px}
-  header.top{margin-bottom:26px}
-  h1{font-size:1.7rem; font-weight:650; letter-spacing:-.02em; margin:0 0 4px}
-  .sub{color:var(--muted); font-size:.92rem; margin:0}
+
+  /* ---- ambient animated background blobs ---- */
+  .ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+  .ambient .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.32}
+  .ambient .b1{width:46vw;height:46vw; top:-14%; left:-12%; background:radial-gradient(circle,#2f7d6a,transparent 70%); animation:drift1 36s ease-in-out infinite}
+  .ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,#3f6cb0,transparent 70%); animation:drift2 42s ease-in-out infinite}
+  .ambient .b3{width:42vw;height:42vw; bottom:-16%; left:16%; background:radial-gradient(circle,#845bb0,transparent 70%); animation:drift3 39s ease-in-out infinite}
+  .ambient .b4{width:30vw;height:30vw; bottom:8%; right:6%; background:radial-gradient(circle,#b3852f,transparent 70%); animation:drift4 31s ease-in-out infinite}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(6vw,8vh) scale(1.12)}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-7vw,5vh) scale(1.08)}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-6vh) scale(1.1)}}
+  @keyframes drift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-5vw,-4vh) scale(1.15)}}
+  [data-theme="dark"] .ambient .blob{opacity:.42}
+  @media (prefers-reduced-motion:reduce){ .ambient .blob{animation:none} }
+
+  /* ---- scroll progress bar ---- */
+  .progress-bar{position:fixed; top:0; left:0; height:3px; width:0%; z-index:100;
+    background:linear-gradient(90deg,#2f7d6a,#3f6cb0,#845bb0,#b15068,#b3852f);
+    box-shadow:0 0 12px rgba(47,111,94,.5); transition:width .12s linear}
+
+  /* ---- back-to-top ---- */
+  .to-top{position:fixed; bottom:26px; right:26px; z-index:50; width:46px; height:46px; border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),#3f6cb0); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+    box-shadow:0 10px 26px rgba(0,0,0,.22); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+    transition:opacity .3s var(--ease), transform .3s var(--ease-spring)}
+  .to-top.show{opacity:1; transform:none; pointer-events:auto}
+  .to-top:hover{transform:translateY(-3px) scale(1.06)}
+  .to-top:active{transform:scale(.92)}
+
+  .wrap{max-width:900px; margin:0 auto; padding:40px 22px 130px; position:relative}
+
+  /* ---- hero header ---- */
+  header.top{
+    margin-bottom:10px; padding:30px 28px; border-radius:24px; position:relative; overflow:hidden;
+    background:linear-gradient(135deg, rgba(255,255,255,.68), rgba(255,255,255,.32));
+    backdrop-filter:blur(20px) saturate(170%); -webkit-backdrop-filter:blur(20px) saturate(170%);
+    border:1px solid var(--line-glass);
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.7);
+    animation:heroIn .7s var(--ease) both;
+  }
+  header.top::before{content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(120deg, rgba(47,111,94,.16), transparent 45%, rgba(132,91,176,.13));}
+  @keyframes heroIn{from{opacity:0; transform:translateY(-10px) scale(.98)} to{opacity:1; transform:none}}
+  h1{
+    font-size:1.95rem; font-weight:760; letter-spacing:-.02em; margin:0 0 6px; position:relative;
+    background:linear-gradient(100deg,#1f2328 8%,#2f7d6a 48%,#3f6cb0 92%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .sub{color:var(--muted); font-size:.93rem; margin:0; position:relative}
+  .stat-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; position:relative}
+  .stat-pill{font-size:.78rem; font-weight:650; color:var(--ink); background:rgba(255,255,255,.55);
+    border:1px solid var(--line-glass); padding:6px 14px; border-radius:999px; backdrop-filter:blur(8px);
+    display:flex; align-items:center; gap:6px}
+  .stat-pill b{color:var(--accent); font-weight:780}
+
+  /* ---- sticky glass toolbar ---- */
   .tools{
-    position:sticky; top:0; z-index:20; background:rgba(251,251,250,.86);
-    backdrop-filter:blur(8px); padding:14px 0; margin:18px 0 8px;
-    border-bottom:1px solid var(--line); display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    position:sticky; top:14px; z-index:20; margin:20px 0 14px; padding:14px 18px;
+    background:var(--panel-glass); backdrop-filter:blur(22px) saturate(180%); -webkit-backdrop-filter:blur(22px) saturate(180%);
+    border:1px solid var(--line-glass); border-radius:20px;
+    box-shadow:var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.55);
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    transition:box-shadow .3s var(--ease)
   }
   #search{
-    flex:1; min-width:200px; padding:10px 14px; border:1px solid var(--line);
-    border-radius:var(--radius); font-size:.95rem; background:var(--panel); color:var(--ink);
-    outline:none;
+    flex:1; min-width:200px; padding:11px 16px; border:1px solid var(--line-glass);
+    border-radius:999px; font-size:.95rem; background:rgba(255,255,255,.55); color:var(--ink); outline:none;
+    backdrop-filter:blur(8px); transition:box-shadow .25s var(--ease), border-color .25s, background .25s
   }
-  #search:focus{border-color:var(--accent)}
+  #search:focus{border-color:var(--accent); box-shadow:0 0 0 4px rgba(47,111,94,.18); background:rgba(255,255,255,.82)}
   .btn{
-    border:1px solid var(--line); background:var(--panel); color:var(--ink);
-    padding:9px 14px; border-radius:var(--radius); font-size:.85rem; cursor:pointer;
-    transition:.15s; white-space:nowrap;
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--ink);
+    padding:9px 16px; border-radius:999px; font-size:.85rem; cursor:pointer; white-space:nowrap;
+    backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s, border-color .2s, color .2s, background .2s
   }
-  .btn:hover{border-color:var(--accent); color:var(--accent)}
-  .count{color:var(--muted); font-size:.82rem; margin-left:2px}
+  .btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px); box-shadow:0 10px 22px rgba(0,0,0,.08)}
+  .btn:active{transform:translateY(0) scale(.96)}
+  #theme{transition:transform .5s var(--ease-spring)}
+  #theme.spin{transform:rotate(360deg)}
+  .count{color:var(--muted); font-size:.82rem; margin-left:2px; font-weight:560}
 
+  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
+  .chip{
+    border:1px solid var(--line-glass); background:rgba(255,255,255,.5); color:var(--muted);
+    padding:7px 15px; border-radius:999px; font-size:.81rem; cursor:pointer; backdrop-filter:blur(8px);
+    transition:transform .2s var(--ease-spring), box-shadow .25s var(--ease), background .25s, color .25s, border-color .25s
+  }
+  .chip:hover{transform:translateY(-1px); border-color:var(--accent); color:var(--accent)}
+  .chip:active{transform:scale(.95)}
+  .chip.active{background:linear-gradient(120deg,var(--accent),#3f6cb0); border-color:transparent; color:#fff;
+    box-shadow:0 6px 18px rgba(47,111,94,.35)}
+  .iconbtn{font-size:1rem; line-height:1}
+
+  .hint{color:var(--muted); font-size:.78rem; margin:10px 2px 4px}
+  .hint kbd, kbd{background:rgba(255,255,255,.6); border:1px solid var(--line-glass); border-radius:6px;
+    padding:1px 7px; font-size:.88em; font-family:inherit; box-shadow:0 1px 2px rgba(0,0,0,.06)}
+
+  /* ---- TOC: glass card grid ---- */
   .toc{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    padding:14px 18px; margin:14px 0 28px; box-shadow:var(--shadow);
+    display:flex; flex-wrap:wrap; gap:10px;
+    background:rgba(255,255,255,.5); border:1px solid var(--line-glass); border-radius:22px;
+    padding:18px 20px; margin:18px 0 32px; box-shadow:var(--shadow-lg);
+    backdrop-filter:blur(18px) saturate(160%); -webkit-backdrop-filter:blur(18px) saturate(160%);
   }
-  .toc h2{font-size:.78rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 8px}
-  .toc a{display:block; color:var(--ink); text-decoration:none; font-size:.9rem; padding:3px 0}
-  .toc a:hover{color:var(--accent)}
+  .toc h2{flex:1 0 100%; font-size:.74rem; text-transform:uppercase; letter-spacing:.1em; color:var(--muted); margin:0 0 4px}
+  .toc a{
+    flex:1 1 230px; display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--ink);
+    font-size:.88rem; font-weight:560; background:rgba(255,255,255,.55); border:1px solid var(--line-glass);
+    border-radius:14px; padding:10px 14px; backdrop-filter:blur(6px);
+    transition:transform .22s var(--ease-spring), box-shadow .25s, border-color .25s, background .25s
+  }
+  .toc a:hover{transform:translateY(-3px); box-shadow:0 12px 28px rgba(0,0,0,.10); border-color:var(--line)}
+  .toc .dot{display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:2px; flex-shrink:0;
+    box-shadow:0 0 0 3px rgba(255,255,255,.55)}
 
-  section.sec{margin:34px 0}
+  .nohit{text-align:center; color:var(--muted); padding:50px; display:none; font-size:.95rem}
+
+  /* ---- sections (scroll reveal) ---- */
+  section.sec{
+    margin:46px 0; opacity:0; transform:translateY(26px);
+    transition:opacity .6s var(--ease), transform .6s var(--ease)
+  }
+  section.sec.in-view{opacity:1; transform:none}
   .sec > h2{
-    font-size:1.12rem; font-weight:650; letter-spacing:-.01em; margin:0 0 4px;
-    padding-bottom:8px; border-bottom:2px solid var(--accent-soft);
+    font-size:1.18rem; font-weight:700; letter-spacing:-.01em; margin:0 0 6px;
+    padding:10px 14px 12px; border-left:4px solid var(--sec); border-bottom:2px solid var(--sec-soft);
+    background:linear-gradient(90deg, var(--sec-soft), transparent);
+    border-radius:0 12px 0 0;
   }
-  .sec-note{color:var(--muted); font-size:.84rem; margin:0 0 14px}
+  .sec-note{color:var(--muted); font-size:.85rem; margin:0 0 16px; padding-left:18px}
 
+  /* ---- question cards: glass-lite + height-animated accordion ---- */
   details.q{
-    background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
-    margin:9px 0; box-shadow:var(--shadow); overflow:hidden; transition:border-color .15s;
+    display:grid; grid-template-rows:auto 0fr;
+    background:linear-gradient(160deg, rgba(255,255,255,.86), rgba(255,255,255,.6));
+    border:1px solid var(--line); border-left:4px solid var(--sec); border-radius:16px;
+    margin:12px 0; box-shadow:var(--shadow); overflow:hidden;
+    opacity:0; transform:translateY(18px);
+    transition:opacity .5s var(--ease), transform .4s var(--ease-spring),
+               border-color .2s, box-shadow .35s var(--ease), grid-template-rows .45s var(--ease);
   }
-  details.q[open]{border-color:#d6e6e0}
+  details.q.in-view{opacity:1; transform:translateY(0)}
+  details.q:hover{transform:translateY(-2px); box-shadow:0 16px 36px -10px color-mix(in srgb, var(--sec) 38%, transparent), var(--shadow)}
+  details.q[open]{grid-template-rows:auto 1fr; border-color:color-mix(in srgb, var(--sec) 45%, var(--line))}
+  details.q.vignette{border-left:4px solid #c98a3c; background:linear-gradient(160deg, rgba(255,247,235,.92), rgba(255,255,255,.6))}
+
   summary.q-head{
-    list-style:none; cursor:pointer; padding:15px 18px; display:flex; gap:11px;
-    align-items:flex-start; font-weight:520; font-size:.97rem; user-select:none;
+    list-style:none; cursor:pointer; padding:16px 20px; display:flex; gap:12px;
+    align-items:flex-start; font-weight:560; font-size:.97rem; user-select:none;
+    border-radius:16px 16px 0 0; transition:background .25s ease;
   }
   summary.q-head::-webkit-details-marker{display:none}
-  summary.q-head:hover{background:#fcfdfc}
-  .chev{flex-shrink:0; display:inline-block; width:14px; margin-top:1px; color:var(--muted); transition:transform .2s; font-size:.8rem}
-  details.q[open] .chev{transform:rotate(90deg); color:var(--accent)}
-  .stars{flex-shrink:0; color:var(--star); font-size:.8rem; letter-spacing:1px; margin-top:2px; min-width:0}
+  summary.q-head:hover{background:linear-gradient(90deg, color-mix(in srgb, var(--sec) 9%, transparent), transparent)}
+  .chev{flex-shrink:0; display:inline-block; width:16px; margin-top:1px; color:var(--muted); font-size:.8rem;
+    transition:transform .35s var(--ease-spring), color .25s}
+  details.q[open] .chev{transform:rotate(90deg); color:var(--sec)}
+  .stars{flex-shrink:0; font-size:.82rem; letter-spacing:1px; margin-top:2px; min-width:0;
+    background:linear-gradient(100deg,#d99a00,#f0b94a); -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 1px 1px rgba(217,154,0,.22))}
   .q-text{flex:1}
-  .answer{
-    padding:4px 22px 20px 45px; border-top:1px solid var(--line); margin-top:-1px;
-    font-size:.93rem; color:#33383d;
-  }
-  .answer h4{
-    font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--accent);
-    margin:18px 0 7px;
-  }
+  .badge{display:inline-block; flex-shrink:0; background:linear-gradient(120deg,#f3e2c8,#ffe9c2); color:#8a5a16;
+    font-size:.6rem; font-weight:750; letter-spacing:.05em; text-transform:uppercase; padding:3px 8px; border-radius:6px; margin-top:1px}
+
+  details.q > .answer{overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s}
+  details.q[open] > .answer{opacity:1}
+  .answer{padding:6px 24px 22px 48px; border-top:1px solid var(--line); margin-top:-1px; font-size:.93rem; color:#33383d}
+  .answer h4{font-size:.86rem; text-transform:uppercase; letter-spacing:.05em; color:var(--sec); margin:18px 0 7px}
   .answer p{margin:9px 0}
   .answer ul,.answer ol{margin:8px 0; padding-left:20px}
   .answer li{margin:4px 0}
-  .answer b{font-weight:620}
-  .answer table{
-    width:100%; border-collapse:collapse; margin:12px 0; font-size:.85rem;
-  }
+  .answer b{font-weight:640}
+  .answer table{width:100%; border-collapse:collapse; margin:14px 0; font-size:.85rem; border-radius:10px; overflow:hidden; box-shadow:0 1px 5px rgba(0,0,0,.05)}
   .answer th,.answer td{border:1px solid var(--line); padding:7px 10px; text-align:left; vertical-align:top}
-  .answer th{background:var(--accent-soft); font-weight:600}
-  .answer .dia{
-    background:#f6f8f7; border:1px dashed #c7d6d0; border-radius:8px; padding:10px 14px;
-    margin:12px 0; font-size:.85rem; color:#4a5550;
-  }
-  .answer .dia b{color:var(--accent)}
-  .recent{background:#fbf6ec; border-left:3px solid var(--star); padding:8px 14px; border-radius:0 8px 8px 0; margin:12px 0}
+  .answer th{background:linear-gradient(120deg, var(--sec-soft), transparent); font-weight:650}
+  .answer .dia{background:linear-gradient(135deg,#f6f8f7,#eef4f1); border:1px dashed color-mix(in srgb, var(--sec) 45%, white);
+    border-radius:12px; padding:12px 16px; margin:14px 0; font-size:.85rem; color:#4a5550}
+  .answer .dia b{color:var(--sec)}
+  .recent{background:linear-gradient(120deg,#fbf6ec,#fff8e8); border-left:3px solid var(--star); padding:10px 16px;
+    border-radius:0 12px 12px 0; margin:14px 0; box-shadow:0 2px 10px rgba(217,154,0,.08)}
   .recent b{color:#9a7000}
+  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--sec); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
   .answer code{background:#f0f2f1; padding:1px 5px; border-radius:4px; font-size:.84em}
-  .nohit{text-align:center; color:var(--muted); padding:40px; display:none}
-  mark{background:#fff2a8; padding:0 1px}
-  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
-  @media (max-width:560px){.wrap{padding:24px 14px 90px} .answer{padding-left:18px}}
+  mark{background:linear-gradient(120deg,#fff2a8,#ffe27a); padding:0 2px; border-radius:3px}
+  .kbfocus{outline:2px solid var(--accent); outline-offset:3px; box-shadow:0 0 0 6px color-mix(in srgb, var(--accent) 18%, transparent)}
 
-  /* ---- v2 interactive additions ---- */
-  body{transition:background .25s, color .25s}
-  .chips{display:flex; gap:7px; flex-wrap:wrap; margin:2px 0 10px}
-  .chip{border:1px solid var(--line); background:var(--panel); color:var(--muted); padding:5px 13px; border-radius:999px; font-size:.8rem; cursor:pointer; transition:.15s}
-  .chip:hover{border-color:var(--accent); color:var(--accent)}
-  .chip.active{background:var(--accent); border-color:var(--accent); color:#fff}
-  .iconbtn{font-size:1rem; line-height:1}
-  details.q.vignette{border-left:3px solid #c98a3c}
-  .badge{display:inline-block; flex-shrink:0; background:#f3e2c8; color:#8a5a16; font-size:.6rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:3px 7px; border-radius:5px; margin-top:1px}
-  .kbfocus{outline:2px solid var(--accent); outline-offset:2px}
-  .answer .case-q{background:#f6f8f7; border-left:3px solid var(--accent); padding:9px 14px; border-radius:0 8px 8px 0; margin:2px 0 12px}
-  .hint{color:var(--muted); font-size:.78rem; margin:6px 0 0}
-  .hint kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.9em; font-family:inherit}
-  [data-theme="dark"]{--bg:#15171a; --panel:#1e2125; --ink:#e6e8ea; --muted:#9aa3ad; --line:#33373d; --accent:#5db89e; --accent-soft:#26342f; --star:#e0a93a; --shadow:0 1px 2px rgba(0,0,0,.35)}
-  [data-theme="dark"] .tools{background:rgba(21,23,26,.85)}
-  [data-theme="dark"] summary.q-head:hover{background:#23272c}
-  [data-theme="dark"] details.q[open]{border-color:#3a4a44}
+  footer{margin-top:70px; padding:24px 20px 6px; border-top:1px solid var(--line); color:var(--muted); font-size:.8rem; text-align:center}
+
+  @media (max-width:560px){
+    .wrap{padding:24px 14px 110px} .answer{padding-left:20px}
+    header.top{padding:22px 18px} .toc a{flex:1 1 100%}
+    .ambient .blob{filter:blur(40px)}
+  }
+
+  /* ---- dark theme ---- */
+  [data-theme="dark"]{
+    --bg:#0f1113; --panel:#1a1d21; --ink:#e6e8ea; --muted:#9aa3ad;
+    --line:#2c3036; --line-glass:rgba(255,255,255,.10);
+    --panel-glass:rgba(255,255,255,.06); --panel-glass-strong:rgba(255,255,255,.1);
+    --accent:#5db89e; --accent-soft:#1c2925; --star:#e0a93a;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+    --shadow-lg:0 24px 60px rgba(0,0,0,.55), 0 6px 16px rgba(0,0,0,.35);
+  }
+  [data-theme="dark"] body{background:radial-gradient(ellipse 80% 50% at 50% -10%, rgba(93,184,158,.08), transparent 60%), var(--bg)}
+  [data-theme="dark"] header.top{background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02))}
+  [data-theme="dark"] h1{background:linear-gradient(100deg,#e6e8ea 8%,#5db89e 48%,#8fb4e8 92%); -webkit-background-clip:text; background-clip:text; color:transparent}
+  [data-theme="dark"] .tools{background:var(--panel-glass)}
+  [data-theme="dark"] .stat-pill,[data-theme="dark"] .chip,[data-theme="dark"] .btn,[data-theme="dark"] #search,[data-theme="dark"] .toc,[data-theme="dark"] .toc a{
+    background:rgba(255,255,255,.05); border-color:var(--line-glass)}
+  [data-theme="dark"] details.q{background:linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015))}
+  [data-theme="dark"] details.q.vignette{background:linear-gradient(160deg, rgba(224,169,58,.09), rgba(255,255,255,.02))}
+  [data-theme="dark"] summary.q-head:hover{background:rgba(255,255,255,.04)}
   [data-theme="dark"] .answer{color:#cfd4d8}
-  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#23282c; border-color:#3a4a44; color:#bcc4c2}
-  [data-theme="dark"] .recent{background:#2a2519}
-  [data-theme="dark"] .answer code{background:#2a2e33}
+  [data-theme="dark"] .answer .dia,[data-theme="dark"] .answer .case-q{background:#1b201d; border-color:#33403a; color:#bcc4c2}
+  [data-theme="dark"] .recent{background:linear-gradient(120deg,#241f12,#1d1a10)}
+  [data-theme="dark"] .answer code{background:#23262a}
   [data-theme="dark"] mark{background:#7a6212; color:#fff}
   [data-theme="dark"] .badge{background:#3a2f1c; color:#e0a93a}
-
-  /* ---- per-section colour theming ---- */
-  .sec{--sec:var(--accent); --sec-soft:var(--accent-soft)}
-  .sec > h2{border-bottom:2px solid var(--sec)}
-  .sec details.q{border-left:4px solid var(--sec)}
-  .sec details.q[open]{border-left-color:var(--sec)}
-  .sec details.q[open] .chev{color:var(--sec)}
-  .sec .answer h4{color:var(--sec)}
-  .sec .answer th{background:var(--sec-soft)}
-  kbd{background:var(--panel); border:1px solid var(--line); border-radius:4px; padding:0 5px; font-size:.85em; font-family:inherit}
-  .toc a{display:flex; align-items:center}
-  .toc .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; flex-shrink:0}
   [data-theme="dark"] .sec > h2{filter:brightness(1.35)}
-  [data-theme="dark"] .sec .answer h4{filter:brightness(1.4)}
-  [data-theme="dark"] .sec .answer th{background:rgba(255,255,255,.06)}
-  [data-theme="dark"] .toc .dot{filter:brightness(1.3)}
+  [data-theme="dark"] .answer h4{filter:brightness(1.4)}
+  [data-theme="dark"] .answer th{background:rgba(255,255,255,.06)}
+  [data-theme="dark"] .toc .dot{filter:brightness(1.3); box-shadow:0 0 0 3px rgba(255,255,255,.12)}
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important}
+  }
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
 </style>
 </head>
 <body>
+<button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="toTop" class="to-top" title="Back to top" aria-label="Back to top">↑</button>
 <div class="wrap">
   <header class="top">
     <h1>Pulmonary, Renal &amp; Cardiovascular Pharmacology — Consolidated PYQ Notes</h1>
-    <p class="sub">Exam-oriented model answers · Goodman &amp; Gilman, Katzung, Rang &amp; Dale + current guidelines (GINA, ESC, ADA) · click any question to open the answer</p>
+    <p class="sub">Exam-oriented model answers · standard pharmacology references + current guidelines (GINA, ESC, ADA) · click any question to open the answer</p>
+    <div class="stat-row" id="statRow"></div>
   </header>
 
   <div class="tools">
@@ -214,8 +356,53 @@
     <ul><li><b>Hyperkalaemia</b> (key danger — esp. with ACEi/ARB/renal failure), metabolic acidosis.</li><li>Spironolactone: gynaecomastia, menstrual irregularity (eplerenone more selective → fewer).</li></ul>
     <h4>Diuretic resistance</h4>
     <p>Failure to achieve adequate diuresis despite full dose. Causes: poor adherence/excess Na intake, ↓ absorption (gut oedema), ↓ renal perfusion, nephron remodelling/distal hypertrophy, NSAIDs, hypoalbuminaemia, CKD. <b>Management:</b> IV/continuous infusion, ↑ dose, <b>sequential nephron blockade</b> (add thiazide/metolazone to loop), treat cause, restrict salt.</p>
-    <h4>Non-diuretic uses</h4>
-    <p>Acetazolamide — glaucoma, altitude sickness, epilepsy, alkalinise urine; mannitol — ↑ICP/cerebral oedema, acute glaucoma; thiazides — nephrogenic diabetes insipidus, idiopathic hypercalciuria/renal stones; loop — hypercalcaemia, hyperkalaemia.</p>
+    <h4>Non-diuretic uses of diuretics (expanded)</h4>
+    <table>
+      <tr><th>Diuretic</th><th>Non-diuretic use</th><th>Basis</th></tr>
+      <tr><td>Acetazolamide (CAI)</td><td>Glaucoma, acute mountain sickness (prophylaxis/treatment), epilepsy (absence — adjunct), urinary alkalinisation (cystinuria, methotrexate/salicylate excretion), metabolic alkalosis, hypokalaemic periodic paralysis, idiopathic intracranial hypertension (IIH)</td><td>↓CA → ↓HCO₃⁻ generation (ciliary body/CNS/renal)</td></tr>
+      <tr><td>Mannitol (osmotic)</td><td>↑ICP/cerebral oedema, acute angle-closure glaucoma (↓IOP), dialysis disequilibrium prophylaxis, prevention of AKI in select settings (rhabdomyolysis, contrast)</td><td>Osmotic water shift from brain/eye/cells</td></tr>
+      <tr><td>Loop diuretics</td><td>Acute pulmonary oedema (venodilation precedes diuresis), hypercalcaemia (with saline), severe hyperkalaemia, hyponatraemia (with hypertonic saline in SIADH)</td><td>NKCC2 block; venodilation (independent of diuresis)</td></tr>
+      <tr><td>Thiazides</td><td>Nephrogenic diabetes insipidus (paradoxical antidiuresis via ECF contraction → ↑PCT reabsorption), idiopathic hypercalciuria/recurrent renal stones, postmenopausal osteoporosis (↓Ca²⁺ excretion)</td><td>NCC block → mild volume contraction; ↑distal Ca²⁺ reabsorption</td></tr>
+    </table>
+    <h4>K⁺-sparing diuretics — non-diuretic / aldosterone-antagonist uses (expanded)</h4>
+    <table>
+      <tr><th>Drug</th><th>Key non-diuretic indication</th><th>Evidence/note</th></tr>
+      <tr><td>Spironolactone</td><td>Primary hyperaldosteronism (Conn's) — diagnostic &amp; therapeutic; resistant hypertension (4th-line add-on, PATHWAY-2); hirsutism/PCOS (anti-androgen); HFrEF mortality benefit</td><td>RALES (severe HFrEF); PATHWAY-2 (resistant HTN, best 4th add-on)</td></tr>
+      <tr><td>Eplerenone</td><td>Post-MI LV dysfunction/HF (selective MR antagonist, fewer anti-androgenic ADRs than spironolactone)</td><td>EPHESUS (post-MI), EMPHASIS-HF (mild HF)</td></tr>
+      <tr><td>Finerenone</td><td><b>Non-steroidal</b> MRA — diabetic CKD (slows progression, ↓CV events), now also HFmrEF/HFpEF</td><td>FIDELIO-DKD, FIGARO-DKD (pooled: FIDELITY); FINEARTS-HF (HFmrEF/HFpEF, 2024)</td></tr>
+      <tr><td>Amiloride</td><td>Liddle's syndrome (ENaC gain-of-function — pathognomonic response), lithium-induced nephrogenic DI (blocks ENaC-mediated lithium entry into principal cells)</td><td>Mechanism-based "magic bullet" for both conditions</td></tr>
+    </table>
+    <div class="recent"><b>Recent advances:</b> <b>ADVOR trial</b> (2022) — acetazolamide + loop diuretic in acute decompensated HF achieves faster, more effective decongestion than loop alone. <b>FINEARTS-HF</b> (2024) — finerenone reduces CV death/HF events across the LVEF spectrum (HFmrEF/HFpEF), extending non-steroidal MRA benefit beyond diabetic CKD. <b>FIDELITY</b> pooled analysis confirms finerenone's renal/CV benefit in diabetic CKD irrespective of baseline MRA use. <b>CONFIDENCE trial</b> (2024) — finerenone + empagliflozin combination produces greater albuminuria reduction than either alone in diabetic CKD, supporting combined non-steroidal MRA + SGLT2i strategy.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Erythropoietin &amp; erythropoiesis-stimulating agents (ESAs) — physiology, classification, clinical uses, adverse effects &amp; newer HIF-prolyl-hydroxylase inhibitors.</span></summary>
+  <div class="answer">
+    <h4>Physiology</h4>
+    <p>Erythropoietin (EPO) is a glycoprotein hormone produced mainly by <b>peritubular interstitial fibroblast-like cells of the renal cortex</b> (small amount from liver) in response to tissue hypoxia. Hypoxia stabilises <b>HIF (hypoxia-inducible factor)</b> — normally hydroxylated by <b>HIF-prolyl-hydroxylase (PHD)</b> enzymes and degraded via the VHL–proteasome pathway under normoxia — allowing HIF to transactivate the <i>EPO</i> gene. EPO binds the <b>EPO receptor</b> (homodimeric, JAK2-STAT5 coupled) on erythroid progenitors in bone marrow → ↑ proliferation/differentiation of CFU-E/proerythroblasts → ↑ RBC mass.</p>
+    <h4>Classification of erythropoiesis-stimulating agents (ESAs)</h4>
+    <table>
+      <tr><th>Generation/class</th><th>Drugs</th><th>t½ / dosing</th></tr>
+      <tr><td>Recombinant human EPO</td><td>Epoetin alfa, epoetin beta</td><td>t½ 4–13 h IV/SC; thrice-weekly (TIW)</td></tr>
+      <tr><td>Hyperglycosylated analogue</td><td>Darbepoetin alfa</td><td>t½ 24–36 h; once-weekly to once-fortnightly</td></tr>
+      <tr><td>PEGylated, continuous-erythropoietin-receptor activator</td><td>Methoxy-polyethylene glycol-epoetin beta</td><td>t½ ~130 h; once-monthly</td></tr>
+      <tr><td>HIF-prolyl-hydroxylase inhibitors (oral, newer class)</td><td>Roxadustat, daprodustat, vadadustat, desidustat, enarodustat</td><td>Oral, stabilise endogenous HIF → ↑ endogenous EPO + improve iron availability (↓hepcidin)</td></tr>
+    </table>
+    <h4>Clinical uses</h4>
+    <ul>
+      <li><b>Anaemia of chronic kidney disease</b> (dialysis &amp; non-dialysis) — primary indication.</li>
+      <li>Anaemia of chemotherapy (select solid-tumour, non-curative-intent settings), zidovudine (ZDV)-induced anaemia in HIV, anaemia of chronic disease/myelodysplasia (select cases).</li>
+      <li>Pre-operative autologous blood conservation; reduction of allogeneic transfusion in elective surgery.</li>
+    </ul>
+    <h4>Adverse effects &amp; black-box warnings</h4>
+    <ul>
+      <li><b>Hypertension</b> (most common; aggravation of pre-existing HTN), <b>thromboembolism/VTE</b>, increased cardiovascular events when Hb is normalised/over-corrected.</li>
+      <li>↑ <b>tumour progression/mortality risk</b> reported in some cancer-anaemia trials when targeting higher Hb — boxed warning against use for non-approved oncology indications/curative intent.</li>
+      <li><b>Pure red cell aplasia (PRCA)</b> — rare, due to neutralising anti-EPO antibodies (historically linked to a specific epoetin alfa formulation change).</li>
+      <li>Iron deficiency may unmask/worsen with rapid erythropoiesis — iron supplementation usually co-administered.</li>
+    </ul>
+    <h4>Monitoring &amp; target Hb</h4>
+    <p>Target Hb ~10–11.5 g/dL (avoid normalisation) per <b>CHOIR</b> &amp; <b>TREAT</b> trials, which showed higher CV risk/no benefit with higher Hb targets in CKD; <b>CREATE</b> trial similarly cautioned against early/complete correction.</p>
+    <div class="recent"><b>Recent advances:</b> Oral <b>HIF-PHIs</b> (roxadustat, daprodustat, desidustat) approved in several countries (incl. India — CDSCO approval of desidustat/roxadustat) as an oral alternative to injectable ESAs for CKD anaemia — stabilise HIF → ↑ endogenous EPO + improve iron utilisation (↓hepcidin, ↑ transferrin receptor). <b>ASCEND-ND/ASCEND-D</b> trials established daprodustat's cardiovascular non-inferiority to ESAs in dialysis-dependent &amp; non-dialysis CKD anaemia, supporting regulatory approval. A pooled network meta-analysis (~26 RCTs) found HIF-PHIs broadly comparable to ESAs in efficacy with a possible signal for ↑ vascular access thrombosis in haemodialysis patients — ongoing pharmacovigilance.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Physiology of urine formation &amp; drugs affecting it; inhibitors of renal epithelial Na⁺ channels &amp; high-ceiling (loop) diuretics with clinical applications.</span></summary>
@@ -266,9 +453,26 @@
       <li><b>ARNI (sacubitril/valsartan):</b> neprilysin inhibition ↑ natriuretic peptides (vasodilation, natriuresis, anti-remodelling) + AT1 blockade → <b>superior to enalapril</b> in HFrEF (PARADIGM-HF). Do <b>not</b> combine with ACEi (angioedema; 36-h washout).</li>
     </ul>
     <h4>Direct renin inhibitor</h4>
-    <p>Aliskiren blocks RAAS at the rate-limiting step; modest antihypertensive; limited use; not combined with ACEi/ARB in diabetics (ALTITUDE — harm).</p>
+    <p>Aliskiren blocks RAAS at the rate-limiting step (renin fingerprint: <b>↓plasma renin activity/PRA</b> but ↑plasma renin concentration/PRC, unlike ACEi/ARB which both ↑PRA via loss of negative feedback); modest antihypertensive; limited use; not combined with ACEi/ARB in diabetics (ALTITUDE — harm).</p>
     <h4>Triphasic response to angiotensin-II</h4>
     <p>IV Ang II classically gives: (1) <b>rapid pressor rise</b> (direct vasoconstriction via AT1); (2) a <b>brief secondary rise/plateau</b> from sympathetic facilitation &amp; catecholamine release; (3) a <b>delayed sustained pressor</b> via aldosterone-mediated Na/water retention. (Demonstrates Ang II's vascular, neural &amp; renal actions.)</p>
+    <h4>Landmark RAAS-blockade trials (high-yield)</h4>
+    <table>
+      <tr><th>Trial</th><th>Drug/class</th><th>Key finding</th></tr>
+      <tr><td>CONSENSUS</td><td>Enalapril (ACEi)</td><td>↓mortality in severe HF — first major ACEi-HF trial</td></tr>
+      <tr><td>SOLVD</td><td>Enalapril (ACEi)</td><td>↓mortality/hospitalisation across HF spectrum</td></tr>
+      <tr><td>SAVE</td><td>Captopril (ACEi)</td><td>Post-MI LV dysfunction — ↓mortality</td></tr>
+      <tr><td>AIRE</td><td>Ramipril (ACEi)</td><td>Post-MI HF — ↓mortality</td></tr>
+      <tr><td>HOPE</td><td>Ramipril (ACEi)</td><td>High-CV-risk patients without HF — ↓CV events (vascular-protective effect)</td></tr>
+      <tr><td>LIFE</td><td>Losartan vs atenolol (ARB)</td><td>↓stroke, more than expected from BP reduction alone — esp. LVH regression</td></tr>
+      <tr><td>RENAAL / IDNT</td><td>Losartan / irbesartan (ARB)</td><td>Slowed progression of diabetic nephropathy — renoprotection independent of BP</td></tr>
+      <tr><td>VALIANT</td><td>Valsartan vs captopril (ARB vs ACEi)</td><td>Post-MI — ARB non-inferior to ACEi</td></tr>
+      <tr><td>Val-HeFT / CHARM</td><td>Valsartan / candesartan (ARB)</td><td>Benefit in HF, esp. ACEi-intolerant patients</td></tr>
+      <tr><td>PARADIGM-HF</td><td>Sacubitril/valsartan (ARNI)</td><td>Superior to enalapril in HFrEF — practice-changing</td></tr>
+    </table>
+    <h4>ARB mechanistic note</h4>
+    <p>Losartan's active metabolite <b>EXP3174</b> is a more potent, longer-acting AT1 antagonist responsible for most of losartan's effect; ARBs as a class show <b>insurmountable antagonism</b> (slow dissociation from AT1) at higher doses, distinguishing them pharmacodynamically from purely competitive blockade.</p>
+    <div class="recent"><b>Recent advances:</b> <b>2022 AHA/ACC/HFSA HF guideline</b> elevated <b>ARNI to first-line</b> RAAS-blocking therapy in HFrEF (preferred over ACEi/ARB where feasible/affordable), reflecting PARADIGM-HF's mortality/hospitalisation benefit. A <b>2024 meta-analysis</b> of ARNI use in HF patients on dialysis suggested feasibility/benefit signal in this previously under-studied population (caution — limited RCT data, hyperkalaemia/hypotension risk). <b>PANORAMA-HF</b> (paediatric RCT) showed sacubitril/valsartan benefit over enalapril in children with HF due to systemic LV systolic dysfunction — first paediatric ARNI evidence. A large <b>network meta-analysis comparing ACEi-induced cough vs ARBs</b> confirmed significantly lower cough incidence with ARBs, reinforcing ARB preference in ACEi-intolerant (cough) patients while ACEi retains a slight edge in some outcome trials.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Pharmacotherapy of CHF — role of ARNI, SGLT2 inhibitors, β-blockers &amp; newer targets; recent advances &amp; current guidelines. Detailed pharmacology of β-blockers in CHF.</span></summary>
@@ -493,6 +697,43 @@
     <h4>Cytoprotective / metabolic agents</h4>
     <p>Improve myocardial energy efficiency without altering haemodynamics: <b>trimetazidine</b> (inhibits fatty-acid β-oxidation → shifts to glucose oxidation), <b>ranolazine</b> (late Na⁺ current inhibition → ↓ Ca²⁺ overload), perhexiline. Useful as add-on in refractory/microvascular angina.</p>
   </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Recent advances in the management of angina pectoris — limitations of conventional antianginals, newer non-haemodynamic agents in detail, prognosis-modifying strategies &amp; changing guideline philosophy.</span></summary>
+  <div class="answer">
+    <h4>Why "recent advances" matter — limitations of conventional therapy</h4>
+    <p>β-blockers/CCBs/nitrates relieve angina mainly by altering <b>haemodynamics</b> (↓HR, ↓contractility, ↓preload/afterload) — but many patients (diffuse CAD, microvascular angina, low BP/HR at baseline, intolerance) cannot tolerate further haemodynamic lowering, creating a need for <b>non-haemodynamic ("metabolic"/ion-channel)</b> antianginal agents that relieve ischaemia without lowering HR/BP further.</p>
+    <h4>Newer non-haemodynamic antianginal agents — detailed comparison</h4>
+    <table>
+      <tr><th>Drug</th><th>Mechanism</th><th>Dose/PK</th><th>Key caveat</th></tr>
+      <tr><td><b>Ranolazine</b></td><td>Inhibits late inward Na⁺ current (I<sub>Na-late</sub>) in ischaemic myocytes → ↓intracellular Na⁺/Ca²⁺ overload → improved diastolic relaxation &amp; wall tension, ↓O₂ demand, without ↓HR/BP</td><td>500–1000 mg BD; hepatic CYP3A4 metabolism</td><td>QT prolongation (caution with other QT-prolonging drugs); no mortality benefit shown</td></tr>
+      <tr><td><b>Ivabradine</b></td><td>Selective I<sub>f</sub> ("funny") channel blocker in SA node → pure HR reduction without negative inotropy/BP effect</td><td>5–7.5 mg BD; hepatic metabolism</td><td>Only effective in sinus rhythm; visual phosphenes (luminous phenomena), bradycardia</td></tr>
+      <tr><td><b>Nicorandil</b></td><td>Dual action — K-ATP channel opener (arteriolar dilation, mimics ischaemic preconditioning) + nitrate-like NO donor moiety (venodilation)</td><td>5–20 mg BD</td><td>Headache, GI/oral/anal ulceration (rare but distinctive ADR); flushing</td></tr>
+      <tr><td><b>Trimetazidine</b></td><td>Partial inhibition of fatty-acid β-oxidation (3-KAT inhibition) → shifts myocardial substrate use toward glucose oxidation → more O₂-efficient ATP generation</td><td>20 mg TDS / 35 mg MR BD</td><td>Avoid in Parkinson's disease/movement disorders (can worsen/precipitate parkinsonism); renal dose adjustment</td></tr>
+    </table>
+    <h4>Landmark trials</h4>
+    <table>
+      <tr><th>Trial</th><th>Drug</th><th>Key finding</th></tr>
+      <tr><td>MARISA, CARISA, ERICA</td><td>Ranolazine</td><td>↑exercise duration, ↓anginal frequency as monotherapy &amp; add-on; no mortality signal either way</td></tr>
+      <tr><td>MERLIN-TIMI 36</td><td>Ranolazine (post-ACS)</td><td>No reduction in CV death/MI but ↓recurrent ischaemia; confirmed antiarrhythmic-neutral safety</td></tr>
+      <tr><td>Fox et al. 2014 (SIGNIFY)</td><td>Ivabradine</td><td>No benefit (and possible harm — bradycardia/AF) in stable CAD without clinical HF — restricted ivabradine's angina indication to add-on, HR-control role only</td></tr>
+      <tr><td>IONA</td><td>Nicorandil</td><td>↓composite CV events in stable angina — some prognostic signal beyond symptom relief</td></tr>
+      <tr><td>ATPCI</td><td>Trimetazidine (post-PCI)</td><td>No benefit on recurrent angina/events in this population — tempered enthusiasm for routine post-PCI use</td></tr>
+    </table>
+    <h4>Prognosis-modifying advances (beyond symptom control)</h4>
+    <ul>
+      <li><b>Aggressive lipid lowering</b> — high-intensity statins ± ezetimibe ± PCSK9 inhibitors (alirocumab/evolocumab) / inclisiran to achieve very low LDL-C targets, shown to stabilise/regress plaque.</li>
+      <li><b>Revascularisation philosophy shift:</b> <b>ORBITA-2</b> (2023) — even in the absence of haemodynamically significant ischaemia by FFR criteria, PCI improved angina symptoms vs placebo in a sham-controlled trial, renewing debate on PCI's symptomatic (vs prognostic) role. <b>ORBITA-COSMIC</b> and related sham-controlled work continue refining which anatomical/functional subsets benefit from revascularisation.</li>
+      <li><b>SCOT-HEART</b> — CT coronary angiography-first diagnostic strategy improved long-term outcomes (MI/death) over functional testing alone in suspected stable angina, reshaping diagnostic-pathway guidelines.</li>
+      <li><b>AQUATIC</b> trial (ongoing/recent) — evaluating low-dose colchicine's anti-inflammatory effect added to standard secondary prevention in chronic coronary disease.</li>
+    </ul>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Ranolazine and ivabradine are the two prototypical "non-haemodynamic" antianginals — useful when HR/BP cannot be lowered further.</li>
+      <li>Ivabradine works only in sinus rhythm; nicorandil's distinctive ADR is mucosal ulceration; trimetazidine is contraindicated/cautioned in Parkinsonism.</li>
+      <li>None of ranolazine/ivabradine/trimetazidine/nicorandil has shown a clear mortality benefit — they remain add-on/symptom-relief agents, not prognosis-modifying first-line therapy (unlike statins/antiplatelets/revascularisation in appropriate patients).</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> The <b>2024 ESC chronic coronary syndromes (CCS) guideline</b> de-emphasised the rigid "β-blocker/CCB first, then add metabolic agent" hierarchy, instead recommending individualised first-line choice among β-blockers, CCBs, or even ranolazine/ivabradine/nicorandil based on HR, BP, comorbidity &amp; tolerability — a philosophical shift toward patient-tailored antianginal selection. <b>ORBITA-2</b> reignited debate on PCI's purely symptomatic benefit even without flow-limiting ischaemia. Ongoing trials (<b>AQUATIC</b> — colchicine) continue probing anti-inflammatory secondary prevention as the next prognosis-modifying frontier beyond lipid-lowering.</div>
+  </div></details>
 </section>
 
 <section class="sec" id="s4" style="--sec:#b15068;--sec-soft:#b1506826">
@@ -514,17 +755,27 @@
     <h4>Direct thrombin inhibitors</h4>
     <p>Dabigatran (oral), bivalirudin/argatroban (IV) — directly inhibit IIa; used in AF, VTE, PCI, HIT. <b>Reversal of dabigatran: idarucizumab.</b></p>
     <h4>Factor Xa inhibitors / NOACs (DOACs)</h4>
-    <p>Rivaroxaban, apixaban, edoxaban — oral, fixed dose, no routine monitoring, fewer interactions/bleeds than warfarin. Uses: AF stroke prevention, VTE treatment/prophylaxis. <b>Reversal: andexanet alfa</b> (or PCC).</p>
+    <p>Rivaroxaban, apixaban, edoxaban — oral, fixed dose, no routine monitoring, fewer interactions/bleeds than warfarin. Uses: AF stroke prevention, VTE treatment/prophylaxis. <b>Reversal:</b> PCC (4-factor) is now the practical mainstay — see critical update below on andexanet alfa.</p>
     <table>
       <tr><th>Feature</th><th>Warfarin</th><th>DOACs</th></tr>
       <tr><td>Monitoring</td><td>INR required</td><td>None routine</td></tr>
       <tr><td>Onset</td><td>Slow (need bridging)</td><td>Rapid</td></tr>
       <tr><td>Interactions</td><td>Many (diet/CYP)</td><td>Fewer</td></tr>
-      <tr><td>Reversal</td><td>Vitamin K, FFP/PCC</td><td>Idarucizumab / andexanet</td></tr>
+      <tr><td>Reversal</td><td>Vitamin K, FFP/PCC</td><td>Idarucizumab (dabigatran) / PCC (Xa-inhibitors)</td></tr>
     </table>
-    <h4>Reversal agents (summary)</h4>
-    <p>Protamine (heparin/LMWH), vitamin K + PCC/FFP (warfarin), idarucizumab (dabigatran), andexanet alfa (Xa inhibitors), platelet transfusion ± desmopressin (antiplatelets).</p>
-    <div class="recent"><b>Recent:</b> DOACs preferred over warfarin for non-valvular AF/VTE; <b>Factor XIa inhibitors</b> (asundexian, milvexian — trials) promise anticoagulation with less bleeding.</div>
+    <h4>Detailed pharmacokinetic comparison of DOACs (high-yield)</h4>
+    <table>
+      <tr><th>Drug</th><th>Target</th><th>Bioavailability</th><th>T<sub>max</sub></th><th>t½</th><th>Protein binding</th><th>Renal excretion</th><th>CYP/dosing note</th></tr>
+      <tr><td>Dabigatran</td><td>IIa (thrombin)</td><td>~6–7% (prodrug, P-gp substrate)</td><td>1–2 h</td><td>12–17 h</td><td>~35%</td><td>~80% (caution in CKD)</td><td>Not CYP-metabolised; avoid strong P-gp inhibitors in renal impairment</td></tr>
+      <tr><td>Rivaroxaban</td><td>Xa</td><td>~80–100% (with food for 15/20 mg)</td><td>2–4 h</td><td>5–9 h (11–13 h elderly)</td><td>~95%</td><td>~33%</td><td>CYP3A4/CYP2J2 + P-gp substrate</td></tr>
+      <tr><td>Apixaban</td><td>Xa</td><td>~50%</td><td>3–4 h</td><td>~12 h</td><td>~87%</td><td>~27%</td><td>CYP3A4 substrate; twice-daily dosing</td></tr>
+      <tr><td>Edoxaban</td><td>Xa</td><td>~62%</td><td>1–2 h</td><td>10–14 h</td><td>~55%</td><td>~50%</td><td>Minimal CYP; dose ↓ if CrCl &gt;95 mL/min (paradoxical efficacy loss — ENGAGE AF-TIMI 48)</td></tr>
+    </table>
+    <h4>Landmark DOAC trials</h4>
+    <p><b>RE-LY</b> (dabigatran), <b>ROCKET-AF</b> (rivaroxaban), <b>ARISTOTLE</b> (apixaban), <b>ENGAGE AF-TIMI 48</b> (edoxaban) — all established DOAC non-inferiority/superiority to warfarin for stroke prevention in non-valvular AF with consistently lower intracranial haemorrhage risk.</p>
+    <h4>Reversal agents (updated) &amp; the andexanet alfa withdrawal — critical update</h4>
+    <p>Protamine (heparin/LMWH), vitamin K + PCC/FFP (warfarin), <b>idarucizumab</b> (dabigatran — monoclonal antibody fragment, rapid/specific). <b>Andexanet alfa</b> (modified recombinant factor Xa decoy) was developed as the specific reversal agent for Xa inhibitors (rivaroxaban/apixaban) but was <b>withdrawn from the US market on 22 December 2025</b> after post-marketing data confirmed an unacceptable signal of thromboembolic events (the drug's mechanism — sequestering Xa inhibitor while itself being catalytically inactive — transiently tips haemostatic balance toward thrombosis). <b>4-factor PCC</b> is now the practical reversal option for life-threatening Xa-inhibitor-associated bleeding in most centres; <b>ciraparantag</b> (a small-molecule "universal" reversal agent binding heparins, LMWH, and both DTI/Xa-inhibitor DOACs) remains under regulatory review as a potential future single-agent alternative.</p>
+    <div class="recent"><b>Recent advances:</b> <b>Factor XI/XIa inhibitors</b> — abelacimab (mAb), asundexian, milvexian (oral small molecules) — aim to uncouple anticoagulation from bleeding risk by sparing the haemostatic (TF/VIIa-thrombin) pathway while blocking the contact-pathway-amplification loop. <b>AZALEA-TIMI 71</b> (abelacimab in AF) was stopped early for a marked bleeding reduction vs rivaroxaban. However, the <b>OCEANIC-AF</b> trial (asundexian vs apixaban in AF) was halted for <b>inferior efficacy</b> (more strokes/systemic embolism) despite less bleeding — a cautionary signal that FXIa inhibition may not suffice as monotherapy in all AF patients, tempering earlier optimism. <b>Critical safety update:</b> andexanet alfa's US withdrawal (Dec 2025) for thromboembolic risk has shifted reversal practice toward PCC, pending ciraparantag's potential approval.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★</span><span class="q-text">Recent advances in anticoagulation &amp; antiplatelet drugs; role in various cardiovascular disorders.</span></summary>
@@ -532,8 +783,8 @@
     <h4>Recent advances</h4>
     <ul>
       <li><b>DOACs</b> replacing warfarin (predictable, safer, no monitoring) for AF &amp; VTE.</li>
-      <li>Specific reversal agents (idarucizumab, andexanet alfa).</li>
-      <li><b>Factor XI/XIa inhibitors</b> (asundexian, milvexian, abelacimab) — uncouple thrombosis from bleeding (trials).</li>
+      <li>Specific reversal agents — idarucizumab (dabigatran) remains available; <b>andexanet alfa was withdrawn from the US market (22 Dec 2025)</b> after a confirmed thromboembolic safety signal — PCC is now the practical Xa-inhibitor reversal option, with ciraparantag (universal reversal) under review.</li>
+      <li><b>Factor XI/XIa inhibitors</b> (asundexian, milvexian, abelacimab) — aim to uncouple thrombosis from bleeding; <b>AZALEA-TIMI 71</b> (abelacimab) stopped early for bleeding benefit, but <b>OCEANIC-AF</b> (asundexian) halted for inferior stroke prevention vs apixaban — mixed picture for FXIa monotherapy.</li>
       <li>Ticagrelor &amp; prasugrel (faster, more potent P2Y12); <b>de-escalation &amp; shorter DAPT</b> strategies; vorapaxar (PAR-1).</li>
     </ul>
     <h4>Role in CV disorders</h4>
@@ -667,7 +918,7 @@
       <li>DOACs are first-line in nonvalvular AF and VTE; contraindicated in mechanical valves and pregnancy.</li>
       <li>Bivalirudin/fondaparinux/danaparoid are the agents of choice for HIT.</li>
     </ul>
-    <div class="recent"><b>Recent advances:</b> DOACs (apixaban, rivaroxaban, dabigatran, edoxaban) are now preferred over warfarin in nonvalvular AF and VTE for comparable/better efficacy with less intracranial bleeding; idarucizumab (dabigatran) and andexanet alfa (factor Xa inhibitors) are specific reversal agents.</div>
+    <div class="recent"><b>Recent advances:</b> DOACs (apixaban, rivaroxaban, dabigatran, edoxaban) are now preferred over warfarin in nonvalvular AF and VTE for comparable/better efficacy with less intracranial bleeding; idarucizumab remains the specific dabigatran-reversal agent, but <b>andexanet alfa was withdrawn from the US market on 22 Dec 2025</b> (thromboembolic safety signal) — PCC is now the practical reversal option for Xa-inhibitor bleeding pending newer agents (ciraparantag).</div>
   </div></details>
 </section>
 
@@ -704,6 +955,48 @@
       <tr><td>Tezepelumab</td><td>Anti-TSLP</td><td>Broad/severe</td></tr>
     </table>
     <p><b>Leukotriene modifiers:</b> oral add-on/alternative controller; useful in aspirin-exacerbated respiratory disease, exercise-induced asthma, allergic rhinitis (montelukast — neuropsychiatric warning).</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Immunomodulators (biologics &amp; non-biologic) in bronchial asthma — Type-2 immunopathology, individual agent mechanism/route/dose, biomarker-led positioning &amp; recent approvals.</span></summary>
+  <div class="answer">
+    <h4>Type-2 / Th2-ILC2 immunopathology — the rationale for biologics</h4>
+    <p>In allergic/eosinophilic ("Type-2-high") asthma, allergen/epithelial-damage signals (alarmins — TSLP, IL-25, IL-33) activate <b>Th2 cells and group-2 innate lymphoid cells (ILC2)</b> → release <b>IL-4, IL-5, IL-13</b> → IL-4/13 drive IgE class-switching (B cells) &amp; mucus/airway remodelling; IL-5 drives eosinophil maturation/survival/recruitment. Biologics block specific nodes in this cascade, allowing biomarker-guided (blood eosinophils, total/specific IgE, FeNO) selection of the right drug for the right phenotype.</p>
+    <h4>Biologics — detailed mechanism, route &amp; dosing</h4>
+    <table>
+      <tr><th>Biologic</th><th>Target</th><th>Route/frequency</th><th>Key biomarker / phenotype</th></tr>
+      <tr><td>Omalizumab</td><td>Anti-IgE (free IgE)</td><td>SC q2–4 wk (weight/IgE-based dosing)</td><td>Allergic asthma, total IgE 30–1500 IU/mL</td></tr>
+      <tr><td>Mepolizumab / Reslizumab</td><td>Anti-IL-5</td><td>SC q4wk (mepolizumab) / IV weight-based (reslizumab)</td><td>Eosinophilic, blood eos ≥150–300/µL</td></tr>
+      <tr><td>Benralizumab</td><td>Anti-IL-5Rα (also ↑NK-mediated eosinophil apoptosis)</td><td>SC q4wk ×3 then q8wk</td><td>Eosinophilic; near-complete eosinophil depletion</td></tr>
+      <tr><td>Dupilumab</td><td>Anti-IL-4Rα (blocks both IL-4 &amp; IL-13 signalling)</td><td>SC q2wk</td><td>Type-2 high (eos and/or FeNO elevated); also atopic dermatitis, CRSwNP, COPD (2024)</td></tr>
+      <tr><td>Tezepelumab</td><td>Anti-TSLP (upstream alarmin — blocks Th2 AND non-Th2 pathways)</td><td>SC q4wk</td><td>Broad/severe asthma <b>irrespective</b> of eosinophil/allergic phenotype — unique upstream target</td></tr>
+      <tr><td>Depemokimab</td><td>Ultra-long-acting anti-IL-5 (engineered for extended half-life)</td><td>SC, twice-yearly</td><td>Eosinophilic — first twice-yearly biologic in asthma</td></tr>
+    </table>
+    <h4>Non-biologic immunomodulators</h4>
+    <ul>
+      <li><b>Methotrexate, oral gold, ciclosporin:</b> historic steroid-sparing agents in severe asthma — largely abandoned due to toxicity/limited efficacy relative to biologics.</li>
+      <li><b>Macrolides (azithromycin):</b> anti-inflammatory/immunomodulatory (non-antibiotic mechanism) — reduces exacerbations in neutrophilic/non-eosinophilic severe asthma (AMAZES trial).</li>
+      <li><b>Bronchial thermoplasty:</b> non-pharmacological add-on (radiofrequency airway smooth-muscle ablation) for severe asthma refractory to maximal pharmacotherapy.</li>
+    </ul>
+    <h4>Step-care &amp; biomarker-led positioning (GINA Step 5)</h4>
+    <p>Biologic choice driven by phenotype: blood eosinophils ≥300/µL + allergic features → anti-IgE/anti-IL-5/anti-IL-4Rα; high eosinophils alone → anti-IL-5/5R; FeNO-high/Type-2 signature uncertain or non-eosinophilic → tezepelumab (broadest indication, efficacious even in low-eosinophil patients). All biologics are <b>add-on</b> to ICS-formoterol-based maintenance, not replacements; response typically assessed at 4 months.</p>
+    <h4>Recent approvals &amp; landmark trials</h4>
+    <table>
+      <tr><th>Trial/event</th><th>Significance</th></tr>
+      <tr><td>SWIFT-1 / SWIFT-2</td><td>Depemokimab phase-3 — twice-yearly dosing non-inferior exacerbation reduction vs standard anti-IL-5 dosing intervals</td></tr>
+      <tr><td>MANDARA</td><td>Head-to-head benralizumab vs mepolizumab in severe eosinophilic asthma — comparable efficacy/oral-steroid-sparing</td></tr>
+      <tr><td>SUNRISE</td><td>Dupilumab in uncontrolled moderate-severe asthma across broader eosinophil ranges</td></tr>
+      <tr><td>BE-REAL</td><td>Real-world benralizumab effectiveness data (exacerbations, OCS-sparing) outside trial settings</td></tr>
+      <tr><td>Depemokimab approval (Dec 2025)</td><td>First twice-yearly biologic approved for severe eosinophilic asthma — major adherence advantage</td></tr>
+      <tr><td>Dupilumab COPD approval (Sep 2024)</td><td>First biologic approved for COPD with Type-2 inflammation (eosinophilic phenotype) — extends Type-2 biologic paradigm beyond asthma</td></tr>
+    </table>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Tezepelumab is unique — targets the most upstream alarmin (TSLP) and works regardless of eosinophil count, unlike the other biologics which require a Type-2-high biomarker.</li>
+      <li>Benralizumab causes near-complete eosinophil depletion via enhanced NK-cell-mediated apoptosis (distinct from mepolizumab/reslizumab's IL-5-neutralisation mechanism).</li>
+      <li>Dupilumab is the only biologic also approved across an atopic triad (asthma, atopic dermatitis, CRSwNP) and now COPD.</li>
+      <li>All biologics are <b>add-on</b> therapy at GINA Step 5 — never substitute for ICS-based controller therapy.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> Depemokimab (twice-yearly anti-IL-5, approved Dec 2025) and dupilumab's COPD approval (Sep 2024) mark the newest frontier — extending durable, infrequent-dosing Type-2 biologics beyond classical eosinophilic asthma. Lunsekimig (a novel TSLP/IL-13 bispecific nanobody) and further anti-alarmin agents are in trials. The 2025 ACCP/CHEST severe-asthma guideline update reinforces biomarker-driven (not purely clinical) biologic selection algorithms. See also the asthma classification card above for the original biologics table (omalizumab/mepolizumab/dupilumab/tezepelumab) — this card expands the mechanism, dosing &amp; trial evidence in depth.</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Corticosteroids in COVID-19 management — rationale, evidence &amp; dosing.</span></summary>
@@ -804,6 +1097,21 @@
       <li><b>Profile:</b> weight-neutral, low hypoglycaemia, oral, well tolerated; modest HbA1c drop; CV-safe (neutral). Caution: pancreatitis; saxagliptin — ↑ HF hospitalisation signal.</li>
     </ul>
     <div class="recent"><b>Recent:</b> GLP-1 RAs &amp; tirzepatide transforming diabetes + obesity care; SGLT2i are now cardio-renal protective drugs; oral semaglutide available.</div>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Epalrestat — aldose reductase inhibitor for diabetic peripheral neuropathy; rationale, mechanism, evidence &amp; place in therapy.</span></summary>
+  <div class="answer">
+    <h4>Rationale</h4>
+    <p>In hyperglycaemia, excess intracellular glucose is shunted through the <b>polyol (sorbitol) pathway</b>: aldose reductase reduces glucose to sorbitol, which accumulates and contributes to osmotic/oxidative neuronal and microvascular injury — implicated in the pathogenesis of diabetic peripheral neuropathy.</p>
+    <h4>Mechanism</h4>
+    <p><b>Epalrestat</b> is an oral, reversible, non-competitive <b>aldose reductase inhibitor (ARI)</b> — the only ARI in continued clinical use worldwide (developed in Japan; brand ALRISTA). It blocks polyol-pathway flux but does <b>not lower blood glucose</b> — it is purely an adjunct targeting the complication pathway, not glycaemic control itself.</p>
+    <h4>Dose &amp; evidence</h4>
+    <p>50 mg three times daily, before meals. Clinical trials show modest but real improvement in nerve conduction velocity (NCV) and neuropathic symptoms compared with placebo, though effect sizes are limited.</p>
+    <h4>Pharmacokinetics &amp; adverse effects</h4>
+    <p>Nausea/vomiting, raised liver function tests, and a characteristic benign yellow-brown urine discolouration (harmless, but should be explained to patients to avoid alarm).</p>
+    <h4>Place in therapy</h4>
+    <p>Used as an <b>adjunct to optimal glycaemic control</b> (per DCCT/UKPDS evidence that tight glucose control remains the primary measure to prevent/slow diabetic neuropathy) — epalrestat does not replace glycaemic management.</p>
+    <div class="recent"><b>Recent advances:</b> The ARISE-HF trial tested a different ARI (AT-001) in diabetic cardiomyopathy and did not show a significant benefit on its primary endpoint [PMID 38597864]. A related ARI, govorestat (AT-007), was studied in galactosemia but received an FDA Complete Response Letter (Nov 2024) [PMID 38988185]. A combination signal between epalrestat and dapagliflozin (SGLT2 inhibitor) on neuropathy outcomes has been reported in early studies [PMID 39423107, 40301912].</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Classify hypolipidemic agents; MOA, pleiotropic effects, indications &amp; ADRs of statins; role of PCSK9 inhibitors &amp; newer LDL-lowering agents; controversies regarding the use of statins; note on newer targets.</span></summary>
@@ -987,7 +1295,9 @@
     <h4>Uses &amp; adverse effects</h4>
     <p>Uses: postmenopausal/age-related/glucocorticoid-induced osteoporosis, Paget disease, hypercalcaemia of malignancy, osteolytic metastases. ADRs: esophagitis/GI irritation (oral), osteonecrosis of the jaw (rare, more with IV in malignancy), atypical subtrochanteric fractures (long-term use), acute flu-like reaction with first IV dose, hypocalcaemia.</p>
     <p><b>Drug holiday:</b> after ~5 years oral (~3 years IV zoledronate) therapy in patients not at high fracture risk, to limit ONJ/atypical-fracture risk; high-risk patients continue.</p>
-    <div class="recent"><b>Recent advances:</b> ACP network meta-analysis (2023) confirms bisphosphonates/denosumab reduce hip, vertebral and clinical fractures; abaloparatide/teriparatide/sequential romosozumab→alendronate may outperform bisphosphonates in very-high-risk older women. Guidelines (Osteoporosis Canada 2023, Austrian Society 2024) have shifted to risk-targeted, FRAX-based treatment thresholds; "anabolic-first then antiresorptive" sequencing with mandatory bridging is now standard.</div>
+    <h4>ONJ incidence &amp; risk context</h4>
+    <p>Osteonecrosis of the jaw is rare in osteoporosis dosing (~1–2 per 100,000 patient-years) but far more frequent at the higher, more frequent oncology doses used for skeletal metastases; risk rises with dental extraction/invasive dental procedures during therapy — dental clearance before starting is prudent in high-risk patients.</p>
+    <div class="recent"><b>Recent advances:</b> ACP network meta-analysis (2023) confirms bisphosphonates/denosumab reduce hip, vertebral and clinical fractures; abaloparatide/teriparatide/sequential romosozumab→alendronate may outperform bisphosphonates in very-high-risk older women. Guidelines (Osteoporosis Canada 2023, Austrian Society 2024) have shifted to risk-targeted, FRAX-based treatment thresholds; "anabolic-first then antiresorptive" sequencing with mandatory bridging is now standard. A NEJM (2025) RCT supports infrequent (less-than-annual) zoledronate dosing for maintenance [PMID 39813642], reinforced by a separate six-monthly-vs-single-dose zoledronate trial [PMID 42187551]. A BMJ network meta-analysis compared bisphosphonates against anabolic agents head-to-head [PMID 37130601], and a further meta-analysis examined sequential anabolic-then-antiresorptive strategies [PMID 41105226]. A safety meta-analysis compared denosumab vs bisphosphonates [PMID 38733394], and atypical fractures have now been reported beyond the classic subtrochanteric femur site [PMID 39348435]; diabetes was identified as an independent risk factor raising ONJ risk [PMID 41794596]. The ASBMR/BHOF (2023) issued a goal-directed osteoporosis treatment statement [PMID 39073912], and an ONJ Taskforce dental-implant consensus addresses peri-implant management on bisphosphonate therapy [PMID 40335186]. India's DCGI approved a biosimilar denosumab (Aug 2021).</div>
   </div></details>
 
   <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★</span><span class="q-text">Radioactive iodine (¹³¹I) in thyroid disorders.</span></summary>
@@ -1086,6 +1396,44 @@
     </table>
     <h4>Potassium-channel modulators in peptic ulcer</h4>
     <p>The gastric proton pump is a <b>H⁺/K⁺-ATPase</b> that requires luminal K⁺ recycling (via KCNQ1 channels). <b>P-CABs (vonoprazan)</b> are <b>K⁺-competitive acid blockers</b> — they competitively block the K⁺-binding site of the pump → potent reversible acid suppression — representing the "potassium channel/site modulation" approach to acid-peptic disease.</p>
+  </div></details>
+
+  <details class="q"><summary class="q-head"><span class="chev">▸</span><span class="stars">★★★</span><span class="q-text">Anti-Helicobacter pylori therapy — rationale, drug classes, standard &amp; rescue eradication regimens, confirmation of cure &amp; recent guideline updates.</span></summary>
+  <div class="answer">
+    <h4>Rationale — why combination therapy is mandatory</h4>
+    <p><i>H. pylori</i> survives gastric acidity via <b>urease</b> (hydrolyses urea → ammonia, buffering the local microenvironment) and colonises beneath the mucus layer, partly shielded from luminal antibiotics. No single agent reliably eradicates it — <b>combination regimens</b> (acid suppression + ≥2 antibiotics, or bismuth-based quadruple therapy) are required to overcome resistance and achieve adequate mucosal antibiotic concentration.</p>
+    <h4>Drug classes used in eradication</h4>
+    <table>
+      <tr><th>Class</th><th>Drugs</th><th>Role</th></tr>
+      <tr><td>Acid suppressants</td><td>PPI (omeprazole/pantoprazole/esomeprazole) or P-CAB (vonoprazan)</td><td>↑ gastric pH → improves antibiotic stability/efficacy &amp; symptom relief</td></tr>
+      <tr><td>Antibiotics</td><td>Amoxicillin, clarithromycin, metronidazole, tetracycline, levofloxacin, tinidazole, rifabutin</td><td>Direct bactericidal action</td></tr>
+      <tr><td>Bismuth compounds</td><td>Bismuth subsalicylate/subcitrate</td><td>Local antibacterial + mucosal-protective; key in quadruple therapy</td></tr>
+    </table>
+    <h4>Standard eradication regimens</h4>
+    <table>
+      <tr><th>Regimen</th><th>Components</th><th>Duration</th><th>Note</th></tr>
+      <tr><td>Standard triple therapy</td><td>PPI + Amoxicillin + Clarithromycin</td><td>10–14 days</td><td>Avoid if clarithromycin resistance &gt;15% in the region (now widespread — declining first-line use)</td></tr>
+      <tr><td>Bismuth quadruple therapy</td><td>PPI + Bismuth + Tetracycline + Metronidazole</td><td>10–14 days</td><td>Preferred first-line where clarithromycin resistance is high or with prior macrolide exposure</td></tr>
+      <tr><td>Concomitant (non-bismuth quadruple)</td><td>PPI + Amoxicillin + Clarithromycin + Metronidazole/Tinidazole</td><td>10–14 days</td><td>Alternative first-line option</td></tr>
+      <tr><td>Sequential therapy</td><td>PPI+Amoxicillin (5 days) → PPI+Clarithromycin+Tinidazole (5 days)</td><td>10 days total</td><td>Improves outcomes over plain triple in some regions</td></tr>
+      <tr><td>Levofloxacin-based triple/quadruple</td><td>PPI + Levofloxacin + Amoxicillin (± bismuth)</td><td>10–14 days</td><td>Used as rescue/second-line</td></tr>
+    </table>
+    <h4>Salvage/rescue therapy rules</h4>
+    <ul>
+      <li><b>Never reuse the same antibiotic combination</b> after failure — switch class entirely.</li>
+      <li>After clarithromycin-based failure → bismuth quadruple or levofloxacin-based regimen.</li>
+      <li>After bismuth-quadruple failure → levofloxacin-based triple/quadruple or rifabutin-based regimen (high-level rescue).</li>
+      <li>Culture/susceptibility-guided therapy preferred after ≥2 failures where feasible.</li>
+    </ul>
+    <h4>Confirmation of cure</h4>
+    <p><b>Urea breath test</b> or <b>stool antigen test</b> performed ≥4 weeks after completing therapy and ≥2 weeks off PPI (PPIs suppress urease activity → false-negative); serology is not used to confirm cure (antibodies persist).</p>
+    <h4>High-yield exam pointers</h4>
+    <ul>
+      <li>Rising clarithromycin resistance has shifted many guidelines away from standard triple therapy as default first-line.</li>
+      <li>Bismuth quadruple therapy is now favoured first-line in high clarithromycin-resistance settings (much of Asia, including India).</li>
+      <li>Confirm-of-cure testing requires stopping PPI ≥2 weeks beforehand to avoid a false-negative urea breath/stool antigen test.</li>
+    </ul>
+    <div class="recent"><b>Recent advances:</b> The <b>Taipei Global Consensus II (2025)</b> and updated <b>ACG (2024) guideline</b> both reinforce susceptibility-guided/bismuth-quadruple-first strategies given rising antimicrobial resistance, and endorse <b>P-CAB (vonoprazan)-based regimens</b> as at least non-inferior, and in several trials superior, to PPI-based regimens for eradication — vonoprazan's acid-independent, rapid onset improves antibiotic stability throughout the dosing interval. The US FDA approved a <b>vonoprazan-amoxicillin-clarithromycin</b> combination (PHALCON-HP data, May 2022) as a first-line option, and a <b>vonoprazan-amoxicillin dual</b> regimen is increasingly used as a rescue option, simplifying rescue therapy while limiting antibiotic exposure. Newer P-CABs (tegoprazan, fexuprazan) are under evaluation in eradication regimens outside the US.</div>
   </div></details>
 </section>
 
@@ -1238,7 +1586,7 @@
   </div>
 
   <footer>
-    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: Goodman &amp; Gilman, Katzung, Rang &amp; Dale; GINA, ESC, ADA &amp; KDIGO guidelines.
+    Legend: ★★★ very high priority · ★★ high · ★ important · 🩺 clinical case. &nbsp;|&nbsp; Keyboard: <kbd>/</kbd> search · <kbd>R</kbd> random · <kbd>K/J</kbd> navigate · <kbd>Space</kbd> open · <kbd>D</kbd> dark. &nbsp;|&nbsp; Sources: standard pharmacology references; GINA, ESC, ADA &amp; KDIGO guidelines.
   </footer>
 </div>
 
@@ -1300,7 +1648,6 @@
     const vis = visible(); if(!vis.length) return;
     items.forEach(d=> d.open=false);
     const pick = vis[Math.floor(Math.random()*vis.length)];
-    pick.open = true;
     setKb(items.indexOf(pick));
   }
   document.getElementById('shuffle').onclick = randomQ;
@@ -1344,6 +1691,89 @@
   });
 
   apply();
+
+  /* ---- v3: glass / motion enhancements (additive — does not touch logic above) ---- */
+  const progressBar = document.getElementById('progressBar');
+  function updateProgress(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', ()=> requestAnimationFrame(updateProgress), {passive:true});
+  updateProgress();
+
+  const statRow = document.getElementById('statRow');
+  if(statRow){
+    const nQ = items.filter(d=> d.dataset.type!=='case').length;
+    const nCase = items.filter(d=> d.dataset.type==='case').length;
+    statRow.innerHTML =
+      '<span class="stat-pill">\u{1F4DA} <b>'+sections.length+'</b>&nbsp;sections</span>'+
+      '<span class="stat-pill">❓ <b>'+nQ+'</b>&nbsp;questions</span>'+
+      '<span class="stat-pill">\u{1FA7A} <b>'+nCase+'</b>&nbsp;cases</span>';
+  }
+
+  const toTopBtn = document.getElementById('toTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', ()=>{
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+  }
+
+  themeBtn.addEventListener('click', ()=>{
+    themeBtn.classList.add('spin');
+    setTimeout(()=> themeBtn.classList.remove('spin'), 500);
+  });
+
+  if('IntersectionObserver' in window){
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const secObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); secObserver.unobserve(en.target); } });
+    }, {threshold:0.08, rootMargin:'0px 0px -60px 0px'});
+    sections.forEach(s=> secObserver.observe(s));
+
+    const qObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); qObserver.unobserve(en.target); } });
+    }, {threshold:0.05, rootMargin:'0px 0px -40px 0px'});
+    items.forEach((d,i)=>{
+      if(!reduceMotion) d.style.transitionDelay = (i % 5) * 55 + 'ms';
+      qObserver.observe(d);
+    });
+  } else {
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }
+
+  // safety net — guarantee nothing stays invisible if something above misfires
+  setTimeout(()=>{
+    items.forEach(d=> d.classList.add('in-view'));
+    sections.forEach(s=> s.classList.add('in-view'));
+  }, 1600);
+
 </script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
 </body>
 </html>

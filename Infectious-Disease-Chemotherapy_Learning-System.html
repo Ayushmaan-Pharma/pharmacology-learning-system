@@ -795,10 +795,423 @@
   }
   .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
 
+
+
+/* =========================================================================
+   GLASS / MOTION DEMO LAYER v3 — additive, appended after all base rules.
+   Uses this file's own tokens (--accent, --cool, --hero-gradient, etc.,
+   with safe fallbacks where a file doesn't define one) so colours/content
+   stay identical to the original. Shared across the whole Learning System
+   family for visual/motion consistency.
+   ========================================================================= */
+
+html{scroll-behavior:smooth}
+
+/* ---- ambient drifting blobs, colour-matched to this file's palette ---- */
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(75px); opacity:.30}
+.gp-ambient .b1{width:44vw;height:44vw; top:-14%; left:-12%; background:radial-gradient(circle,var(--accent-dark),transparent 70%); animation:gpDrift1 38s ease-in-out infinite}
+.gp-ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,var(--cool),transparent 70%); animation:gpDrift2 44s ease-in-out infinite}
+.gp-ambient .b3{width:42vw;height:42vw; bottom:-18%; left:18%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift3 40s ease-in-out infinite}
+.gp-ambient .b4{width:26vw;height:26vw; bottom:10%; right:8%; background:radial-gradient(circle,var(--cool-light,var(--cool)),transparent 70%); animation:gpDrift4 33s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,7vh) scale(1.12)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.12)}}
+@keyframes gpDrift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-4vw,-3vh) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+/* ---- scroll progress bar ---- */
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--accent-dark), var(--cool), var(--accent));
+  box-shadow:0 0 10px rgba(15,107,107,.45); transition:width .12s linear}
+
+/* ---- back-to-top, using the page's own hero gradient (with fallback) ---- */
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:var(--hero-gradient, linear-gradient(135deg, var(--accent-dark), var(--cool))); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.35); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+/* ---- stronger glass on the already-sticky nav ---- */
+.sticky-nav, nav.toc{
+  background:rgba(245,244,240,.62) !important;
+  backdrop-filter:blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(190%) !important;
+  box-shadow:0 4px 24px rgba(16,38,52,.08) !important;
+}
+nav.toc a{transition:color .2s, transform .2s}
+nav.toc a:hover{transform:translateY(-1px)}
+
+/* ---- hero entrance + glass stat strip ---- */
+header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpHeroIn{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+.chip{transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{transform:translateY(-2px) scale(1.04)}
+
+.gp-stat-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; position:relative}
+.gp-stat-pill{font-size:.78rem; font-weight:650; color:#fff; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.32); padding:6px 14px; border-radius:999px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; gap:6px}
+.gp-stat-pill b{color:#fff; font-weight:800}
+
+/* ---- generic scroll-reveal utilities (assigned by JS) ---- */
+.gp-reveal{opacity:0; transform:translateY(28px) scale(.985); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.34,1.2,.64,1)}
+.gp-reveal.in-view{opacity:1; transform:none}
+.gp-reveal-soft{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease}
+.gp-reveal-soft.in-view{opacity:1; transform:none}
+
+/* ---- module card + header glass sheen / hover glow ---- */
+section.module{transition:box-shadow .35s ease}
+section.module:hover{box-shadow:0 20px 48px rgba(16,38,52,.18)}
+.module-header, .mod-head{position:relative; overflow:hidden}
+.module-header::after, .mod-head::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(120deg, rgba(255,255,255,.20), transparent 45%, rgba(255,255,255,.06));
+}
+
+.cog, .blurt-stage, .sched-stage, .flashcard, .quiz-intro{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease
+}
+.cog:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--cool) 35%, transparent)}
+.cog.blurt:hover{box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 38%, transparent)}
+.blurt-stage:hover, .sched-stage:hover{transform:translateY(-3px)}
+.flashcard:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 30%, transparent)}
+
+/* =========================================================================
+   ANIMATED ACCORDIONS — CSS-grid height trick (no JS height math needed).
+   grid-auto-rows (not just grid-template-rows) is set too, so this stays
+   correct even when a gate/quizset/qa has more than one content child
+   (e.g. Neoplastic's details.gate > p, p, p). Works regardless of who
+   toggles [open]/.open (click, keyboard, or the existing inline JS),
+   because it keys off the attribute/class only.
+   ========================================================================= */
+details.gate, details.quizset, details.qa{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1), grid-auto-rows .45s cubic-bezier(.4,0,.2,1);
+}
+details.gate[open], details.quizset[open], details.qa[open]{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+details.gate > *:not(summary), details.quizset > *:not(summary), details.qa > *:not(summary){
+  overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s;
+}
+details.gate[open] > *:not(summary), details.quizset[open] > *:not(summary), details.qa[open] > *:not(summary){ opacity:1; }
+
+div.q{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1), box-shadow .25s ease;
+  border-radius:var(--radius-sm);
+}
+div.q.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; box-shadow:0 6px 18px -6px color-mix(in srgb, var(--cool) 30%, transparent); }
+div.q > .qa{
+  display:block !important; overflow:hidden; min-height:0; opacity:0;
+  transition:opacity .3s ease .05s;
+}
+div.q.open > .qa{ opacity:1; }
+/* same pattern for the alternate class names used in sibling files of this series */
+.quiz-item{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.quiz-item.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+.quiz-item > .quiz-a{ display:block !important; overflow:hidden; min-height:0; opacity:0; transition:opacity .3s ease .05s; }
+.quiz-item.open > .quiz-a{ opacity:1; }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal, .gp-reveal-soft{opacity:1 !important; transform:none !important; transition:none !important}
+  header.hero{animation:none}
+  details.gate, details.quizset, details.qa, div.q, .quiz-item{transition:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+
+/* TRUE FROSTED GLASS — translucent panels over the ambient blobs */
+body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; }
+.module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+.diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+.fc-back, .mnemonic, figure.dia {
+  background: color-mix(in srgb, white 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
+  .module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+  .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+  .fc-back, .mnemonic, figure.dia { background: white !important; }
+}
+
+/* =========================================================================
+   CONSOLIDATED TOOLBAR + CHAPTERS DRAWER + DARK MODE SKIN
+   Replaces the old standalone back button + horizontal sticky chapter bar
+   (which used to visually collide) with one floating icon toolbar plus a
+   toggleable left-hand chapters drawer. Additive, reuses this file's tokens.
+   ========================================================================= */
+.gp-toolbar{
+  position:fixed; top:16px; left:16px; z-index:300;
+  display:flex; align-items:center; gap:4px;
+  background:rgba(255,255,255,.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border:1px solid rgba(0,0,0,.10); border-radius:999px; padding:6px; box-shadow:0 6px 22px rgba(0,0,0,.16);
+}
+.gp-tool-btn{
+  width:38px; height:38px; border-radius:50%; border:none; background:transparent; color:#1c1917;
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease; padding:0;
+}
+.gp-tool-btn:hover{ background:rgba(0,0,0,.07); transform:translateY(-1px) scale(1.06); }
+.gp-tool-btn:active{ transform:scale(.9); }
+.gp-toolbar .gp-back-btn{ position:static; box-shadow:none; border:none; background:transparent; }
+.gp-toolbar .gp-back-btn:hover{ box-shadow:none; }
+@media (max-width:640px){ .gp-toolbar{ top:10px; left:10px; padding:4px; gap:2px; } .gp-tool-btn{ width:33px; height:33px; font-size:15px; } }
+@media (prefers-reduced-motion:reduce){ .gp-tool-btn{ transition:none; } }
+
+/* the old horizontal sticky chapter bar is replaced by the drawer below */
+.sticky-nav, nav.toc{ display:none !important; }
+
+/* ---- chapters drawer ---- */
+.gp-drawer-overlay{
+  position:fixed; inset:0; z-index:298; background:rgba(10,12,16,.32);
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.gp-drawer-overlay.show{ opacity:1; pointer-events:auto; }
+.gp-drawer{
+  position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw); z-index:299;
+  background:rgba(245,244,240,.90); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-right:1px solid rgba(0,0,0,.08); box-shadow:8px 0 32px rgba(0,0,0,.18);
+  transform:translateX(-104%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; padding:18px 0;
+}
+.gp-drawer.show{ transform:none; }
+.gp-drawer-head{
+  display:flex; align-items:center; justify-content:space-between; padding:0 18px 14px;
+  border-bottom:1px solid rgba(0,0,0,.08); font-weight:700; font-size:.95rem; color:var(--ink, #1c1917);
+  margin-bottom:6px;
+}
+.gp-drawer-close{ border:none; background:transparent; font-size:16px; cursor:pointer; color:var(--ink-soft, #555); padding:4px; }
+.gp-drawer-links{ display:flex; flex-direction:column; overflow-y:auto; padding:6px 10px; gap:2px; }
+.gp-drawer-links a{
+  display:block; padding:.55rem .75rem; border-radius:10px; text-decoration:none;
+  color:var(--ink-soft, #44403c); font-size:.88rem; font-weight:500; transition:background .18s ease, color .18s ease;
+  white-space:normal;
+}
+.gp-drawer-links a:hover{ background:rgba(0,0,0,.06); }
+.gp-drawer-links a.thesis-link{ color:var(--cool, var(--accent)); font-weight:600; }
+.gp-drawer-links a.key{ color:var(--accent-dark, var(--accent)); font-weight:600; }
+@media (prefers-reduced-motion:reduce){ .gp-drawer, .gp-drawer-overlay{ transition:none; } }
+
+html[data-theme="dark"] .gp-toolbar{ background:rgba(30,33,37,.78); border-color:rgba(255,255,255,.14); }
+html[data-theme="dark"] .gp-tool-btn{ color:#e7e9ec; }
+html[data-theme="dark"] .gp-tool-btn:hover{ background:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-back-btn{ background:transparent !important; }
+html[data-theme="dark"] .gp-drawer{ background:rgba(30,33,37,.92); border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-head{ color:#e7e9ec; border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-close{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a:hover{ background:rgba(255,255,255,.08); }
+
+/* ---- dark mode skin for the page itself ---- */
+html[data-theme="dark"] body{ background: color-mix(in srgb, #15171a 88%, transparent) !important; color:#cdd1d6; }
+html[data-theme="dark"] main{ color:#cdd1d6; }
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] h4{ color:#eef0f2; }
+html[data-theme="dark"] strong{ color: color-mix(in srgb, var(--accent-darker, var(--accent, #d4a847)) 55%, white 45%) !important; }
+html[data-theme="dark"] main a:not(.gp-drawer-links a){ color: color-mix(in srgb, var(--cool, var(--accent, #0f6b6b)) 60%, white 40%); }
+
+html[data-theme="dark"] .module, html[data-theme="dark"] section.module, html[data-theme="dark"] .blurt-prompt,
+html[data-theme="dark"] .primers li, html[data-theme="dark"] .sched-day, html[data-theme="dark"] .sched .day,
+html[data-theme="dark"] .bridge, html[data-theme="dark"] .diagram-wrap, html[data-theme="dark"] details.qsec,
+html[data-theme="dark"] details.quizset, html[data-theme="dark"] details.gate, html[data-theme="dark"] details.qa,
+html[data-theme="dark"] .quiz-q, html[data-theme="dark"] .qq, html[data-theme="dark"] .fc-back,
+html[data-theme="dark"] .mnemonic, html[data-theme="dark"] figure.dia, html[data-theme="dark"] .q, html[data-theme="dark"] .quiz-item{
+  background: color-mix(in srgb, #1e2125 70%, transparent) !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .qa, html[data-theme="dark"] .quiz-a{ color:#c4cad0 !important; }
+html[data-theme="dark"] table, html[data-theme="dark"] td, html[data-theme="dark"] th{ color:#c7cbd1 !important; border-color: rgba(255,255,255,.10) !important; }
+html[data-theme="dark"] blockquote{ border-color: rgba(255,255,255,.18) !important; }
+html[data-theme="dark"] .site-footer, html[data-theme="dark"] footer{ color:#9aa1a8 !important; }
+</style>
+  <style id="mindmap-style">
+.mindmap-section .mm-inner { padding: 2.2rem 2rem 2.4rem; }
+
+.mm-intro { text-align: center; max-width: 700px; margin: 0 auto 2rem; }
+.mm-tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--cool-pale); color: var(--cool);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .35rem .85rem; border-radius: 999px; margin-bottom: .9rem;
+}
+.mm-intro h2 {
+  font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-2xl); color: var(--ink);
+  margin: 0 0 .6rem;
+}
+.mm-intro p { color: var(--ink-soft); font-size: var(--fs-sm); line-height: 1.6; margin: 0 0 1.1rem; }
+.mm-actions { display: flex; justify-content: center; gap: .6rem; }
+.mm-btn {
+  font-family: 'Inter', sans-serif; font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .03em; color: var(--accent-dark); background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: .5rem 1rem; cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.mm-btn:hover { background: var(--accent-pale); border-color: var(--accent); }
+
+.mm-root {
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  width: fit-content; margin: 0 auto;
+  background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+  color: white; font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+  font-size: var(--fs-lg); text-align: center; line-height: 1.15;
+  padding: .85rem 1.6rem; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.mm-root-emoji { font-size: 1.4em; }
+.mm-bus { width: 2px; height: 22px; background: var(--border); margin: 0 auto; }
+
+.mm-branches {
+  display: grid; gap: .65rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { .mm-branches { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .mm-branches { grid-template-columns: 1fr; } }
+
+.mm-branch {
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: white; align-self: start;
+  border-top: 3px solid var(--mm-c, var(--accent));
+}
+.mm-node {
+  width: 100%; display: flex; align-items: center; gap: .65rem;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Inter', sans-serif; color: var(--ink);
+}
+.mm-module {
+  padding: .8rem .9rem;
+}
+.mm-mnum {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 700;
+  color: white; background: var(--mm-c, var(--accent)); border-radius: 5px;
+  padding: 3px 6px; flex-shrink: 0;
+}
+.mm-mtext { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.mm-mtitle { font-weight: 700; font-size: var(--fs-sm); color: var(--ink); }
+.mm-msub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+.mm-chev {
+  flex-shrink: 0; color: var(--muted); font-size: .8rem;
+  transition: transform .25s ease;
+}
+.mm-module[aria-expanded="true"] .mm-chev,
+.mm-sub[aria-expanded="true"] .mm-chev { transform: rotate(90deg); color: var(--mm-c, var(--accent)); }
+.mm-module:hover, .mm-sub:hover { background: var(--cream); }
+
+.mm-children {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  background: var(--cream);
+  transition: grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.mm-children > div { overflow: hidden; min-height: 0; }
+.mm-branch:has(.mm-module[aria-expanded="true"]) .mm-children { grid-template-rows: 1fr; }
+
+.mm-twig { border-top: 1px solid var(--border); }
+.mm-twig:first-child { border-top: 1px solid var(--border); }
+.mm-sub { padding: .6rem .9rem .6rem 1.5rem; font-size: .82rem; font-weight: 600; align-items: flex-start; }
+.mm-stext { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.mm-stitle { line-height: 1.3; }
+.mm-ssub { font-size: .7rem; font-weight: 400; color: var(--muted); line-height: 1.4; white-space: normal; }
+.mm-sub .mm-chev { margin-top: 2px; }
+
+.mm-leaves {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  list-style: none; margin: 0; padding: 0 1.1rem 0 2.2rem;
+  transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1), padding .35s ease;
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.55;
+}
+.mm-leaves > li { overflow: hidden; min-height: 0; }
+.mm-twig:has(.mm-sub[aria-expanded="true"]) .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
+.mm-leaves li {
+  position: relative; padding: .25rem 0 .25rem .85rem; border-bottom: 1px dashed var(--border);
+}
+.mm-leaves li:last-child { border-bottom: none; }
+.mm-leaves li::before {
+  content: '•'; position: absolute; left: 0; color: var(--mm-c, var(--accent)); font-weight: 700;
+}
+.mm-leaves li.mm-eq {
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent-darker);
+  background: var(--accent-pale); border-radius: 4px; padding: .35rem .5rem .35rem .85rem;
+  border-bottom: none; margin: .2rem 0;
+}
+.mm-leaves li.mm-eq::before { content: 'ƒ'; }
+
+html[data-theme="dark"] .mm-branch { background: #1e2125; border-color: rgba(255,255,255,.10); }
+html[data-theme="dark"] .mm-children { background: #181a1d; }
+html[data-theme="dark"] .mm-twig { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-leaves li { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-node { color: #d7dce1; }
+html[data-theme="dark"] .mm-mtitle { color: #eef1f4; }
+html[data-theme="dark"] .mm-module:hover, html[data-theme="dark"] .mm-sub:hover { background: rgba(255,255,255,.05); }
+html[data-theme="dark"] .mm-leaves { color: #b7bec5; }
+html[data-theme="dark"] .mm-leaves li.mm-eq { background: rgba(176,116,16,.18); color: #e8c98a; }
+html[data-theme="dark"] .mm-btn { background: #1e2125; color: #e8c98a; border-color: rgba(255,255,255,.15); }
+html[data-theme="dark"] .mm-btn:hover { background: rgba(176,116,16,.18); }
+html[data-theme="dark"] .mm-tag { background: rgba(15,107,107,.2); color: #6fc6c6; }
+html[data-theme="dark"] .mm-intro h2 { color: #eef1f4; }
+html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-children, .mm-leaves, .mm-chev { transition: none; }
+}
+
+.mm-branch.mm-open > .mm-children { grid-template-rows: 1fr; }
+.mm-twig.mm-open > .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
 </style>
   <link rel="stylesheet" href="learning-interactive.css">
+  <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<div class="gp-toolbar" role="toolbar" aria-label="Page controls">
+  <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
+  <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+  <button id="gpDarkToggle" class="gp-tool-btn" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  <button id="gpRandomQuiz" class="gp-tool-btn" type="button" title="Random quiz question" aria-label="Open a random quiz question">🎲</button>
+  <button id="gpToolbarExpand" class="gp-tool-btn gp-toolbar-expand" type="button" title="More controls" aria-label="Show more controls" aria-expanded="false">›</button>
+  <div class="gp-toolbar-extra" id="gpToolbarExtraOuter">
+    <div class="gp-toolbar-extra-inner" id="gpToolbarExtra"></div>
+  </div>
+</div>
+<div class="gp-drawer-overlay" id="gpDrawerOverlay"></div>
+<aside class="gp-drawer" id="gpDrawer" aria-label="Chapter index">
+  <div class="gp-drawer-head">
+    <span>Chapters</span>
+    <button id="gpDrawerClose" class="gp-drawer-close" type="button" aria-label="Close chapters index">✕</button>
+  </div>
+  <nav class="gp-drawer-links" id="gpDrawerLinks"></nav>
+</aside>
+
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
 
 <header class="hero">
   <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
@@ -839,7 +1252,7 @@
     </g>
   </svg>
   <div class="wrap">
-    <div class="eyebrow">Goodman &amp; Gilman · 14th Ed · Section VII</div>
+    <div class="eyebrow">Pharmacology Learning System · Section VII</div>
     <h1>Chemotherapy of Infectious Diseases<br><em>an accelerated learning system</em></h1>
     <p class="sub">Chapters 56–68 rebuilt as a high-yield active-recall engine. Master the pharmacodynamics of antibiotic action (T&gt;MIC, Cmax, AUC), structural disruptors, translation blockers, antifungals, antivirals, HIV regimens, and antiparasitic drugs without passive rereading.</p>
     <div class="thesis">🎯 <span>High-Yield core: <b>Ch 56 PK/PD indices</b>, <b>Ch 58 cell envelope inhibitors</b>, and <b>Ch 64 HIV regimens</b> provide the framework for clinicial microbiology and ward rotations.</span></div>
@@ -850,10 +1263,18 @@
       <span class="chip">5 quiz sets × 20 Q</span>
     </div>
   </div>
-</header>
+
+    <div class="gp-stat-row">
+      <span class="gp-stat-pill">13 chapters · 8 modules</span>
+      <span class="gp-stat-pill">5 custom SVG diagrams</span>
+      <span class="gp-stat-pill">active-recall blurting gates</span>
+      <span class="gp-stat-pill">5 quiz sets × 20 Q</span>
+    </div>
+  </header>
 
 <nav class="toc">
   <div class="wrap">
+    <a href="#mindmap">🗺️ Mind Map</a>
     <a href="#method">The method</a>
     <a class="thesis-link" href="#m56">56 · Principles</a>
     <a class="key" href="#m57">57 · DNA Disruptors</a>
@@ -870,13 +1291,255 @@
 
 <main class="wrap">
 
+<section class="module mindmap-section" id="mindmap">
+<div class="mm-inner">
+  <div class="mm-intro">
+    <div class="mm-tag"><span>🗺️</span> Interactive Mind Map</div>
+    <h2>See the whole chapter at a glance</h2>
+    <p>Click a module below to branch into its subheadings — click a subheading to reveal the short topics and key formulas underneath it. Click anything again to collapse it.</p>
+    <div class="mm-actions">
+      <button id="mmExpandAll" class="mm-btn" type="button">Expand all</button>
+      <button id="mmCollapseAll" class="mm-btn" type="button">Collapse all</button>
+    </div>
+  </div>
+
+  <div class="mindmap" id="mindmapTree">
+    <div class="mm-root"><span class="mm-root-emoji">🦠</span><span>Chemotherapy of<br>Infectious Diseases</span></div>
+    <div class="mm-bus" aria-hidden="true"></div>
+    <div class="mm-branches">
+
+      <div class="mm-branch" style="--mm-c:#0f6b6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m56">
+          <span class="mm-mnum">56</span>
+          <span class="mm-mtext"><span class="mm-mtitle">General Principles of Antimicrobial Therapy</span><span class="mm-msub">How dosing strategy and resistance mechanisms together decide whether a drug actually clears an infection.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m56">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The Three PK/PD Efficacy Indices</span><span class="mm-ssub">Which of three patterns (peak level, time above MIC, or total daily exposure) predicts whether a drug class kills well — and how that decides the dosing schedule.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Cmax/MIC = concentration-dependent killing (aminoglycosides, daptomycin, fluoroquinolones) — dose high, once daily</li>
+              <li>T &gt; MIC = time-dependent killing (β-lactams) — dose frequently or infuse longer</li>
+              <li>AUC24/MIC = exposure-dependent killing (vancomycin, tetracyclines, macrolides, linezolid) — tune total daily dose</li>
+              <li class="mm-eq">Cmax/MIC, T&gt;MIC, AUC24/MIC — the three PK/PD indices</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Major Mechanisms of Bacterial Resistance</span><span class="mm-ssub">The four basic tricks bacteria use to survive a drug that should otherwise kill them — know one example of each.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Enzymatic inactivation: drug is destroyed (β-lactamases; aminoglycoside-modifying enzymes)</li>
+              <li>Target site modification: drug's binding site changes shape (gyrA mutation, mecA/PBP2a in MRSA, VanA in VRE)</li>
+              <li>Reduced permeability: bacterium blocks the drug's entry point (porin loss blocks carbapenems)</li>
+              <li>Active efflux: bacterium pumps the drug back out (Tet efflux pumps)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#a8331f">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m57">
+          <span class="mm-mnum">57</span>
+          <span class="mm-mtext"><span class="mm-mtitle">DNA Disruptors — Sulfonamides, Quinolones &amp; Nitroimidazoles</span><span class="mm-msub">Three different ways to stop bacteria from copying or building DNA, plus the dangerous drug interactions each one causes.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m57">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The Three Major Classes</span><span class="mm-ssub">Folate antagonists starve DNA-building blocks, quinolones jam the DNA-untangling enzymes, and nitroimidazoles generate radicals that shred anaerobic DNA.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Sulfamethoxazole blocks DHPS; trimethoprim blocks DHFR — paired as TMP-SMX (Bactrim) for sequential, synergistic blockade</li>
+              <li>Sulfonamide ADRs: crystalluria, Stevens-Johnson syndrome, G6PD hemolysis, neonatal kernicterus, hyperkalemia</li>
+              <li>Fluoroquinolones block DNA gyrase (Gram-negatives) and topoisomerase IV (Gram-positives)</li>
+              <li>Quinolone ADRs: tendon rupture, QTc prolongation, aortic dissection risk — avoid in kids/pregnancy</li>
+              <li>Metronidazole/tinidazole: activated by anaerobic PFOR enzyme into DNA-damaging free radicals; causes metallic taste and disulfiram-like alcohol reaction</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#5b4a7a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m58">
+          <span class="mm-mnum">58</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Cell Envelope Disruptors — β-Lactams, Glycopeptides &amp; Lipopeptides</span><span class="mm-msub">How three drug families break the bacterial cell wall or membrane until the cell bursts from its own internal pressure.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m58">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The Three Major Classes &amp; Targets</span><span class="mm-ssub">β-lactams jam the wall-building enzyme, vancomycin blocks the wall building-block directly, and daptomycin punches holes straight through the membrane.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>β-lactams (penicillins, cephalosporins, carbapenems, monobactams) bind PBPs, blocking wall cross-linking; resistance via β-lactamases or altered PBPs (MRSA)</li>
+              <li>Vancomycin binds D-Ala-D-Ala on wall precursors (Gram-positive only); VanA gene swaps the target for VRE resistance; causes Red Man Syndrome</li>
+              <li>Daptomycin punctures the membrane in a calcium-dependent way (covers MRSA/VRSA/VRE); inactivated by lung surfactant so never use for pneumonia; watch for myopathy</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Cephalosporin Generations Cheat Sheet</span><span class="mm-ssub">Each generation of cephalosporin trades some Gram-positive coverage for broader Gram-negative reach — know what each one adds.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>1st gen (cefazolin): PEcK coverage (Proteus, E. coli, Klebsiella); surgical prophylaxis go-to</li>
+              <li>2nd gen (cefoxitin): adds anaerobic coverage (B. fragilis)</li>
+              <li>3rd gen (ceftriaxone, ceftazidime): ceftriaxone crosses the BBB and needs no renal adjustment; ceftazidime adds Pseudomonas</li>
+              <li>4th gen (cefepime): broad Gram-positive plus Gram-negative including Pseudomonas</li>
+              <li>5th gen (ceftaroline): the only cephalosporin that covers MRSA, but no Pseudomonas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#b9791a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m59_60">
+          <span class="mm-mnum">59·60</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Protein Synthesis Inhibitors &amp; Miscellaneous Antibacterials</span><span class="mm-msub">Drugs that jam either half of the bacterial ribosome to stop it making proteins, plus a last-resort class for resistant Gram-negatives.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m59_60">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Ribosomal Targets &amp; Classifications</span><span class="mm-ssub">Five drug classes split between the ribosome's two subunits — each has its own signature side effect worth memorizing.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>30S: Aminoglycosides (gentamicin) — irreversible, causes nephrotoxicity (reversible) and ototoxicity (irreversible); needs oxygen so useless against anaerobes</li>
+              <li>30S: Tetracyclines (doxycycline) — reversible, blocks tRNA entry; chelates calcium/magnesium so avoid dairy/antacids; stains kids' teeth</li>
+              <li>50S: Macrolides (azithromycin) — blocks translocation; QTc prolongation, clarithromycin inhibits CYP3A4</li>
+              <li>50S: Clindamycin — blocks peptide bond formation; covers anaerobes above the diaphragm but high C. diff risk</li>
+              <li>50S: Linezolid — blocks 70S complex assembly; covers MRSA/VRE; causes thrombocytopenia and serotonin syndrome risk</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Miscellaneous Class: Polymyxins</span><span class="mm-ssub">A detergent-like, last-resort drug class reserved for multi-drug resistant Gram-negative infections, at the cost of significant kidney and nerve toxicity.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Polymyxin B / Colistin bind lipid A of LPS, disrupting the Gram-negative outer membrane</li>
+              <li>Used as salvage therapy for multi-drug resistant Gram-negatives (e.g., KPC-producing Klebsiella)</li>
+              <li>High rates of nephrotoxicity (acute tubular necrosis) and neurotoxicity (neuromuscular blockade)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#2e8e8e">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m61">
+          <span class="mm-mnum">61</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Antifungal Chemotherapy — Polyenes, Azoles &amp; Echinocandins</span><span class="mm-msub">How four antifungal classes exploit the differences between fungal and human cells — ergosterol and the chitin/glucan wall.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m61">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The Four Key Classes</span><span class="mm-ssub">Each class hits a different fungal-specific target — membrane sterol, sterol synthesis, wall glucan, or DNA synthesis — which is why their side-effect profiles differ so much.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Polyenes (Amphotericin B) bind ergosterol directly, forming pores; causes infusion fevers, nephrotoxicity, hypokalemia/hypomagnesemia</li>
+              <li>Azoles (fluconazole, voriconazole) inhibit 14α-demethylase (CYP51), blocking ergosterol synthesis; hepatotoxicity, QTc changes, voriconazole causes visual disturbances</li>
+              <li>Echinocandins (caspofungin) inhibit β-(1,3)-D-glucan synthase, blocking cell wall synthesis; very well tolerated</li>
+              <li>Flucytosine (5-FC) is converted by fungal cytosine deaminase to 5-FU, blocking DNA synthesis; causes reversible bone marrow suppression</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#3a6b3a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m62_63">
+          <span class="mm-mnum">62·63</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Antivirals — Herpes, Influenza &amp; Viral Hepatitis (HBV/HCV)</span><span class="mm-msub">How drugs selectively target virus-only enzymes to stop herpes, flu, and hepatitis B/C from replicating, sparing normal host cells.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m62_63">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Anti-Herpesvirus &amp; CMV Agents</span><span class="mm-ssub">Acyclovir-type drugs only get switched on inside infected cells, which is exactly what makes them so selective and safe.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Acyclovir activated by viral thymidine kinase, then blocks viral DNA polymerase causing chain termination</li>
+              <li>Valacyclovir is a prodrug of acyclovir with much higher oral bioavailability</li>
+              <li>Acyclovir ADR: crystalline nephropathy with IV use — prevent with hydration</li>
+              <li>Ganciclovir/valganciclovir (CMV) activated by viral UL97 kinase; causes severe bone marrow suppression</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Anti-Influenza Agents</span><span class="mm-ssub">Two different ways to stop flu virus from spreading — block its release from cells, or block it from starting transcription.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Oseltamivir (Tamiflu) and zanamivir: neuraminidase inhibitors — trap newly made virus particles on the host cell surface</li>
+              <li>Baloxavir marboxil: blocks the cap-dependent endonuclease, stopping viral transcription from starting</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Hepatitis B &amp; C Agents</span><span class="mm-ssub">Hepatitis B can only be suppressed long-term, while hepatitis C can actually be cured with a three-pronged combination of direct-acting drugs.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>HBV: tenofovir, entecavir suppress replication indefinitely but rarely cure (persistent cccDNA)</li>
+              <li>HCV: curable with direct-acting antivirals (DAAs) combining three mechanisms</li>
+              <li>NS3/4A protease inhibitors ("-previr") stop viral polyprotein processing</li>
+              <li>NS5A inhibitors ("-asvir") block viral assembly; NS5B inhibitors ("-buvir") terminate RNA synthesis</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#16344a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m64">
+          <span class="mm-mnum">64</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Antiretroviral Therapy (ART) — Chemotherapy of HIV</span><span class="mm-msub">The four drug classes that each block a different stage of the HIV life cycle, combined into modern multi-drug regimens.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m64">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The Four Principal Drug Classes in ART</span><span class="mm-ssub">NRTIs, NNRTIs, INSTIs, and PIs each block a separate step HIV needs to copy itself and infect new cells — know one signature toxicity per class.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>NRTIs (tenofovir, abacavir): chain-terminate viral DNA; abacavir needs HLA-B*5701 testing first; mitochondrial toxicity</li>
+              <li>NNRTIs (efavirenz): bind allosterically near reverse transcriptase; efavirenz causes vivid dreams/neuropsychiatric effects</li>
+              <li>INSTIs (dolutegravir, bictegravir): block integrase, preventing viral DNA from entering host genome; well tolerated, first-line anchor</li>
+              <li>PIs (darunavir, ritonavir): block viral protease so virions stay immature; cause metabolic syndrome, lipodystrophy</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Entry and Fusion Inhibitors</span><span class="mm-ssub">Two older agents that block the virus from ever getting into the CD4 cell in the first place, rather than acting after entry.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Maraviroc: CCR5 co-receptor antagonist, blocks gp120 binding; needs a tropism assay first</li>
+              <li>Enfuvirtide: gp41 fusion inhibitor, given subcutaneously, prevents entry into the CD4 cell</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#7a8a94">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m65_68">
+          <span class="mm-mnum">65·68</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Mycobacterial &amp; Antiparasitic Chemotherapy</span><span class="mm-msub">TB first-line therapy plus the main drugs used against malaria, other protozoa, and worms — each hits a unique target the parasite needs to survive.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m65_68">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">1. Tuberculosis First-Line Regimen: "RIPE"</span><span class="mm-ssub">The four-drug TB combination, and the one distinctive toxicity that makes each drug easy to recognize on an exam.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Isoniazid (INH): blocks mycolic acid synthesis (InhA); causes peripheral neuropathy from vitamin B6 depletion — prevent with pyridoxine</li>
+              <li>Rifampin (RIF): blocks bacterial RNA polymerase; turns urine/tears/sweat orange-red; potent CYP inducer</li>
+              <li>Pyrazinamide (PZA): works in acidic macrophage phagosomes; causes hyperuricemia/gout</li>
+              <li>Ethambutol (EMB): blocks arabinogalactan synthesis; causes optic neuritis (red-green color blindness)</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">2. Malaria Chemotherapy</span><span class="mm-ssub">Three drugs that each attack the malaria parasite differently — free radicals, toxic heme buildup, or clearing the dormant liver stage.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Artemisinins (artesunate): iron-activated free radicals damage parasite proteins; first-line combination therapy (ACT)</li>
+              <li>Chloroquine: blocks heme crystallization into hemozoin, letting toxic heme build up; PfCRT transporter pumps it out causing resistance</li>
+              <li>Primaquine/tafenoquine: clears dormant liver hypnozoites (P. vivax/ovale); must screen for G6PD deficiency first</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">3. Antiprotozoal &amp; Antihelminthic Agents</span><span class="mm-ssub">A grab-bag of drugs for protozoa and worms, working through DNA damage, microtubule disruption, or paralyzing the parasite's muscles.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Metronidazole/tinidazole: DNA strand breakers for amebiasis, giardiasis, trichomoniasis</li>
+              <li>Albendazole/mebendazole: block β-tubulin polymerization, stopping microtubule assembly and glucose uptake in worms</li>
+              <li>Ivermectin: opens glutamate-gated chloride channels, causing flaccid paralysis (strongyloidiasis, scabies, filariasis)</li>
+              <li>Praziquantel: increases calcium permeability, causing spastic paralysis of tapeworms and flukes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
 <section id="method" style="padding-top:30px">
-  <p class="lead">Each module runs four evidence-based stages to lock in clinical pharmacology. Standard active-recall gates force your brain to retrieve structural/pharmacokinetic knowledge before reading the notes, optimizing long-term retention.</p>
+  <p class="lead">Every module works through four research-backed steps designed to cement clinical pharmacology knowledge. Built-in recall checkpoints make you pull structural and pharmacokinetic details from memory before you ever see the written explanation, which is what drives durable retention.</p>
   <div class="method">
-    <div class="m m1"><h4>① 80/20 Map</h4><p>The 20% of core concepts that govern 80% of clinical decisions and drug mechanisms.</p></div>
-    <div class="m m2"><h4>② Blurting Gate</h4><p>Force active recall. Jot down mechanisms and side effects <em>before</em> opening details.</p></div>
-    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>Mechanisms explained in plain, intuitive language, anchored by memorable analogies.</p></div>
-    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>Spaced testing checkpoints and cross-system clinical connections.</p></div>
+    <div class="m m1"><h4>① 80/20 Map</h4><p>The small slice of core ideas responsible for most clinical decisions and drug mechanisms.</p></div>
+    <div class="m m2"><h4>② Blurting Gate</h4><p>Retrieve first, read second — write out mechanisms and side effects <em>before</em> the explanation is revealed.</p></div>
+    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>Dense mechanisms translated into everyday language, tied to analogies that stick.</p></div>
+    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>Recurring review checkpoints plus links across body systems.</p></div>
   </div>
 </section>
 
@@ -893,22 +1556,22 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Every antimicrobial's clinical efficacy is determined by its <strong>pharmacokinetic/pharmacodynamic (PK/PD) index</strong>. Matching the correct drug exposure to the pathogen's Minimum Inhibitory Concentration (MIC) is the basis of dosing, resistance prevention, and clinical success.</div>
+    <div class="pillar">How well an antimicrobial works clinically comes down to its <strong>pharmacokinetic/pharmacodynamic (PK/PD) index</strong> — getting the right drug exposure relative to the pathogen's Minimum Inhibitory Concentration (MIC) is what dosing strategy, resistance prevention, and ultimately treatment success all rest on.</div>
     <h4>The Three PK/PD Efficacy Indices</h4>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Index</th><th>Description</th><th>Antibiotic Classes</th><th>Clinical Dosing Strategy</th></tr></thead>
       <tbody>
-        <tr><td><strong>C<sub>max</sub> / MIC</strong></td><td>Concentration-dependent killing: Higher peak drug level yields rapid bacterial death.</td><td>Aminoglycosides, Daptomycin, Fluoroquinolones</td><td>High-dose, once-daily (maximizes peak concentration while minimizing toxicity).</td></tr>
-        <tr><td><strong>T &gt; MIC</strong></td><td>Time-dependent killing: Efficacy depends on the <em>duration</em> concentration remains above MIC.</td><td>β-lactams (Penicillins, Ceph, Carbapenems)</td><td>Frequent dosing or extended/continuous infusions (maintains level above MIC).</td></tr>
-        <tr><td><strong>AUC<sub>24</sub> / MIC</strong></td><td>Exposure-dependent killing: Driven by total cumulative drug exposure over 24h.</td><td>Vancomycin, Tetracyclines, Macrolides, Linezolid</td><td>Optimize daily dosage amount (often guided by therapeutic drug monitoring).</td></tr>
+        <tr><td><strong>C<sub>max</sub> / MIC</strong></td><td>Concentration-dependent killing: the higher the peak level, the faster bacteria die.</td><td>Aminoglycosides, Daptomycin, Fluoroquinolones</td><td>High-dose, once-daily (pushes the peak up while keeping toxicity in check).</td></tr>
+        <tr><td><strong>T &gt; MIC</strong></td><td>Time-dependent killing: what matters is how long the concentration stays above the MIC.</td><td>β-lactams (Penicillins, Ceph, Carbapenems)</td><td>Frequent dosing or extended/continuous infusions (keeps levels above MIC longer).</td></tr>
+        <tr><td><strong>AUC<sub>24</sub> / MIC</strong></td><td>Exposure-dependent killing: governed by the total drug exposure accumulated across 24 hours.</td><td>Vancomycin, Tetracyclines, Macrolides, Linezolid</td><td>Tune the total daily dose (often with therapeutic drug monitoring as a guide).</td></tr>
       </tbody>
     </table></div>
     <h4>Major Mechanisms of Bacterial Resistance</h4>
     <ul>
-      <li><strong>Enzymatic Inactivation:</strong> Destroys the drug before it acts. E.g., β-lactamases cleaving penicillin rings; aminoglycoside-modifying enzymes (acetyltransferases).</li>
-      <li><strong>Target Site Modification:</strong> Altering the structure of the drug's target, lowering affinity. E.g., mutations in gyrA (quinolone resistance); mecA gene encoding PBP2a (MRSA); VanA gene converting D-Ala-D-Ala to D-Ala-D-Lac (VRE).</li>
-      <li><strong>Reduced Permeability:</strong> Closing entry channels. E.g., porin loss in Gram-negative outer membranes (blocks carbapenems).</li>
-      <li><strong>Active Efflux:</strong> Pumping drugs out. E.g., Tet efflux pumps in Enterobacterales.</li>
+      <li><strong>Enzymatic Inactivation:</strong> The drug gets chemically destroyed before it can act. E.g., β-lactamases cleaving penicillin rings; aminoglycoside-modifying enzymes (acetyltransferases).</li>
+      <li><strong>Target Site Modification:</strong> The drug's binding target changes shape so the drug binds less tightly. E.g., mutations in gyrA (quinolone resistance); mecA gene encoding PBP2a (MRSA); VanA gene converting D-Ala-D-Ala to D-Ala-D-Lac (VRE).</li>
+      <li><strong>Reduced Permeability:</strong> The bacterium shuts the doors the drug would enter through. E.g., porin loss in Gram-negative outer membranes (blocks carbapenems).</li>
+      <li><strong>Active Efflux:</strong> The bacterium actively ejects the drug once it gets in. E.g., Tet efflux pumps in Enterobacterales.</li>
     </ul>
   </div>
 
@@ -958,17 +1621,17 @@
       <text x="535" y="75" fill="#475569" font-size="10.5">· Time-dependent: Prolonged Time > MIC</text>
       <text x="535" y="90" fill="#475569" font-size="10.5">· Exposure-dependent: Optimized AUC/MIC</text>
     </svg>
-    <figcaption>Efficacy depends on the index. Aminoglycosides require high peaks (Cmax), while Penicillins require sustained exposure above the MIC threshold (Time &gt; MIC).</figcaption>
+    <figcaption>Which index matters changes the goal: aminoglycosides need a tall peak (Cmax), whereas penicillins need the concentration to stay above the MIC threshold for as long as possible (Time &gt; MIC).</figcaption>
   </figure>
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">You are treating a patient with Pseudomonas bacteremia. You have two options for administering Piperacillin-Tazobactam: an infusion run over 30 minutes every 6 hours, or an extended infusion run over 4 hours every 8 hours. Before reading the notes, write down: which administration method is pharmacodynamically superior, and why? Refer to the PK/PD indices.</div>
+    <div class="blurt-prompt">A patient with Pseudomonas bacteremia needs Piperacillin-Tazobactam, and two infusion schedules are on the table: a 30-minute infusion every 6 hours, or a 4-hour extended infusion every 8 hours. Before reading further, jot down which schedule wins out pharmacodynamically, and why — tie your answer back to the PK/PD indices.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>Which PK/PD index governs the efficacy of β-lactam antibiotics?</li>
-      <li>What is the Post-Antibiotic Effect (PAE), and do Gram-negative organisms show a significant PAE with β-lactams?</li>
-      <li>How does extending the infusion duration affect the Time &gt; MIC?</li>
+      <li>Which PK/PD index controls how well β-lactam antibiotics work?</li>
+      <li>What does Post-Antibiotic Effect (PAE) mean, and is it substantial for Gram-negative organisms exposed to β-lactams?</li>
+      <li>What happens to Time &gt; MIC when you stretch out the infusion duration?</li>
     </ul>
   </div>
 
@@ -977,17 +1640,17 @@
     <div class="cog feyn">
       <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
       <h4>Mechanism &amp; Dosing Dynamics</h4>
-      <p>β-lactams are <strong>strictly time-dependent killers (T &gt; MIC)</strong>. Once the drug concentration exceeds 4 times the MIC of the pathogen, increasing the concentration further does <em>not</em> increase the rate of bacterial killing. Furthermore, β-lactams have <strong>minimal to no post-antibiotic effect (PAE)</strong> against Gram-negative bacilli like <em>Pseudomonas</em>. Therefore, if blood levels drop below the MIC between doses, the bacteria immediately resume multiplying. Extending the infusion (e.g., over 4 hours) keeps the concentration above the MIC for a much larger percentage of the dosing interval than a rapid 30-minute bolus, directly translating to superior clinical cure rates in severe infections.</p>
+      <p><strong>β-lactams kill purely on a time-dependent basis (T &gt; MIC)</strong>. Past about four times the pathogen's MIC, pushing the concentration any higher buys you nothing extra in killing speed. On top of that, β-lactams carry <strong>essentially no post-antibiotic effect (PAE)</strong> against Gram-negative rods such as <em>Pseudomonas</em> — so the moment blood levels dip below the MIC between doses, the organism starts growing again right away. Stretching the infusion out (say, to 4 hours) holds the concentration above the MIC for a far greater share of the dosing interval compared with a quick 30-minute bolus, and that translates into better cure rates in serious infections.</p>
       <div class="analogy">
         <div class="alabel"><span>💡</span> The Analogy — The Drowning vs. The Siege</div>
-        <p>Think of killing bacteria as keeping them submerged underwater. 
+        <p>Picture bacterial killing as a matter of keeping the enemy underwater.
           <ul>
-            <li><strong>Concentration-dependent drugs</strong> (like aminoglycosides) act like <strong>depth charges</strong>: You drop one massive bomb (high $C_{max}$), creating a shockwave that obliterates the target instantly, even if the water returns to normal shortly after (PAE).</li>
-            <li><strong>Time-dependent drugs</strong> (like β-lactams) act like <strong>flooding the chamber</strong>: You must keep the water level just above their heads (the MIC line) for as long as possible. A short, high-pressure spray (bolus) wastes water out of the drainage pipes; an extended, slow-release flow (extended infusion) keeps them continuously submerged without needing higher total doses.</li>
+            <li><strong>Concentration-dependent drugs</strong> (like aminoglycosides) work like <strong>a single depth charge</strong>: one enormous blast (high $C_{max}$) sends a shockwave that wipes out the target instantly, and the effect lingers even once the water settles back down (PAE).</li>
+            <li><strong>Time-dependent drugs</strong> (like β-lactams) work like <strong>filling a flooding chamber</strong>: the water level has to stay just over their heads (the MIC line) for as much time as possible. A brief, forceful spray (bolus) drains away through the pipes wastefully, while a slow, steady, extended flow keeps them submerged continuously without needing a larger total volume.</li>
           </ul>
         </p>
       </div>
-      <blockquote class="warn"><span class="wl">⚠️ Warning — The Bacteriostatic vs. Bactericidal Myth:</span> While medical boards distinguish between bactericidal (kills bacteria) and bacteriostatic (stops growth) agents, this distinction is host-dependent. In immunocompetent hosts, bacteriostatic drugs are equally effective. However, in <strong>neutropenic, endocarditis, or meningitis patients</strong>, bactericidal agents are strictly required because the host's immune system cannot assist in clearance.</blockquote>
+      <blockquote class="warn"><span class="wl">⚠️ Warning — The Bacteriostatic vs. Bactericidal Myth:</span> Boards love to separate bactericidal agents (kill bacteria outright) from bacteriostatic ones (just halt growth), but whether that distinction actually matters depends on the host. In someone with a functioning immune system, bacteriostatic drugs work just as well. The exception is <strong>neutropenic patients, or those with endocarditis or meningitis</strong> — there, bactericidal drugs become mandatory because the host's own defenses can't pick up the slack in clearing the organism.</blockquote>
     </div>
   </details>
 
@@ -1007,26 +1670,26 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">DNA replication is shut down via two main strategies: <strong>inhibiting nucleotide precursor synthesis</strong> (folate pathway) or <strong>physically jamming the replication machinery</strong> (topoisomerase blockers and DNA-strand breakers).</div>
+    <div class="pillar">There are two main routes to shutting down DNA replication: <strong>cutting off the supply of nucleotide building blocks</strong> (via the folate pathway) or <strong>jamming the replication hardware directly</strong> (via topoisomerase blockers and agents that break DNA strands).</div>
     <h4>The Three Major Classes</h4>
     <ul>
       <li><strong>Folate Antagonists (Sulfonamides &amp; Trimethoprim):</strong>
         <ul>
-          <li><strong>Mechanism:</strong> Sulfamethoxazole (SMX) is a PABA analog that inhibits <strong>dihydropteroate synthase (DHPS)</strong>. Trimethoprim (TMP) inhibits <strong>dihydrofolate reductase (DHFR)</strong>. </li>
-          <li><strong>Synergy:</strong> Combined as TMP-SMX (Bactrim) for a synergistic <strong>sequential blockade</strong> of tetrahydrofolate synthesis, preventing thymidine production.</li>
-          <li><strong>Key ADRs:</strong> Crystalluria, <strong>Stevens-Johnson Syndrome (SJS/TEN)</strong>, hemolytic anemia in <strong>G6PD deficiency</strong>, kernicterus in neonates (displaces bilirubin from albumin), and hyperkalemia (TMP blocks ENaC channels in the collecting duct).</li>
+          <li><strong>Mechanism:</strong> Sulfamethoxazole (SMX) mimics PABA and blocks <strong>dihydropteroate synthase (DHPS)</strong>; Trimethoprim (TMP) separately blocks <strong>dihydrofolate reductase (DHFR)</strong>.</li>
+          <li><strong>Synergy:</strong> Pairing them as TMP-SMX (Bactrim) produces a synergistic <strong>sequential blockade</strong> that shuts down tetrahydrofolate synthesis and, with it, thymidine production.</li>
+          <li><strong>Key ADRs:</strong> Crystalluria, <strong>Stevens-Johnson Syndrome (SJS/TEN)</strong>, hemolytic anemia in those with <strong>G6PD deficiency</strong>, neonatal kernicterus (bilirubin gets displaced off albumin), and hyperkalemia (TMP blocks collecting-duct ENaC channels).</li>
         </ul>
       </li>
       <li><strong>Fluoroquinolones ("-floxacin": Ciprofloxacin, Levofloxacin, Moxifloxacin):</strong>
         <ul>
-          <li><strong>Mechanism:</strong> Inhibit <strong>DNA gyrase</strong> (prevents relaxation of supercoiled DNA, primary in Gram-negatives) and <strong>Topoisomerase IV</strong> (prevents decatenation of daughter chromosomes, primary in Gram-positives).</li>
-          <li><strong>Key ADRs:</strong> <strong>Tendonitis and tendon rupture</strong> (collagen degradation), <strong>QTc prolongation</strong> (blocks hERG $K^+$ channels), aortic aneurysm dissection, dysglycemia, and chondrotoxicity (contraindicated in children/pregnancy).</li>
+          <li><strong>Mechanism:</strong> Block <strong>DNA gyrase</strong> (stops supercoiled DNA from relaxing — the main target in Gram-negatives) and <strong>Topoisomerase IV</strong> (stops daughter chromosomes from separating — the main target in Gram-positives).</li>
+          <li><strong>Key ADRs:</strong> <strong>Tendonitis and tendon rupture</strong> (from collagen breakdown), <strong>QTc prolongation</strong> (via hERG $K^+$ channel block), aortic aneurysm/dissection, dysglycemia, and cartilage toxicity (so avoid in children and pregnancy).</li>
         </ul>
       </li>
       <li><strong>Nitroimidazoles (Metronidazole, Tinidazole):</strong>
         <ul>
-          <li><strong>Mechanism:</strong> Prodrug. In anaerobes, the nitro group is reduced by <strong>pyruvate:ferredoxin oxidoreductase (PFOR)</strong> to form toxic nitro free radicals that cause DNA strand breaks.</li>
-          <li><strong>Key ADRs:</strong> Metallic taste, <strong>disulfiram-like reaction</strong> with alcohol (blocks aldehyde dehydrogenase), and peripheral neuropathy.</li>
+          <li><strong>Mechanism:</strong> Inactive until activated — anaerobic organisms reduce the drug's nitro group via <strong>pyruvate:ferredoxin oxidoreductase (PFOR)</strong>, generating toxic free radicals that break DNA strands.</li>
+          <li><strong>Key ADRs:</strong> Metallic taste, an alcohol-triggered <strong>disulfiram-like reaction</strong> (aldehyde dehydrogenase blockade), and peripheral neuropathy.</li>
         </ul>
       </li>
     </ul>
@@ -1075,17 +1738,17 @@
         <text x="440" y="160" text-anchor="middle" fill="#534549" font-size="8" font-weight="400">Blocks DHFR enzyme</text>
       </g>
     </svg>
-    <figcaption>Sequential blockade of folate synthesis. SMX blocks the first step (DHPS), while TMP blocks the second (DHFR), turning bacteriostatic single agents into a bactericidal combination.</figcaption>
+    <figcaption>Folate synthesis gets blocked sequentially — SMX hits the first step (DHPS) and TMP hits the second (DHFR), and together these individually bacteriostatic drugs become bactericidal.</figcaption>
   </figure>
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">An elderly patient on warfarin is prescribed Bactrim (TMP-SMX) for a urinary tract infection. A few days later, they present to the ED with extensive hematuria and an INR of 9.5. Before opening the notes, explain the molecular mechanism behind this severe drug interaction, and name another class of DNA disruptors that causes this exact same interaction.</div>
+    <div class="blurt-prompt">An older patient already on warfarin starts Bactrim (TMP-SMX) for a UTI, then turns up in the ED days later with marked hematuria and an INR of 9.5. Before reading on, work out the molecular basis for this dangerous interaction, and identify another class of DNA disruptors that produces the identical effect.</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>How is warfarin metabolized in the liver, and what enzyme is responsible?</li>
-      <li>How does TMP-SMX affect cytochrome P450 enzymes?</li>
-      <li>What is the effect of fluoroquinolones (like ciprofloxacin) on CYP enzymes?</li>
+      <li>Which hepatic enzyme handles warfarin metabolism?</li>
+      <li>What does TMP-SMX do to that cytochrome P450 enzyme?</li>
+      <li>Do fluoroquinolones (e.g., ciprofloxacin) have a similar effect on CYP enzymes?</li>
     </ul>
   </div>
 
@@ -1094,19 +1757,19 @@
     <div class="cog feyn">
       <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
       <h4>Mechanism &amp; High-Yield ADR Interactions</h4>
-      <p>Both <strong>TMP-SMX</strong> and <strong>Fluoroquinolones</strong> are potent inhibitors of <strong>CYP2C9</strong>, the primary enzyme responsible for metabolizing S-warfarin (the active isomer). Inhibiting CYP2C9 dramatically increases warfarin concentrations, spiking the INR and causing life-threatening bleeding. 
-      Furthermore, metronidazole also inhibits CYP2C9, creating a "triple trap" of common antimicrobial classes that destabilize warfarin therapy. Always reduce the warfarin dose empirically by 30-50% when starting these drugs.</p>
+      <p>Both <strong>TMP-SMX</strong> and <strong>Fluoroquinolones</strong> strongly inhibit <strong>CYP2C9</strong> — the enzyme mainly tasked with breaking down S-warfarin, the more active isomer. Block CYP2C9 and warfarin levels climb sharply, sending the INR up and risking life-threatening hemorrhage.
+      Metronidazole adds a third culprit, since it also inhibits CYP2C9 — together these three common antimicrobial classes form a "triple trap" for warfarin patients. As a precaution, cut the warfarin dose by roughly 30-50% empirically whenever starting any of them.</p>
       <div class="analogy">
         <div class="alabel"><span>💡</span> The Analogy — Cutting the Power vs. Jamming the Gears</div>
-        <p>Imagine the bacterium is a factory printing copies of its blueprint (DNA):
+        <p>Picture the bacterium as a factory churning out copies of its blueprint (DNA):
           <ul>
-            <li><strong>Folate antagonists</strong> (Bactrim) act by <strong>cutting off the ink supply</strong> (nucleotides). Without folate, the factory runs out of raw materials to print DNA.</li>
-            <li><strong>Fluoroquinolones</strong> act by <strong>clamping the spooling gears</strong>. DNA replication requires untwisting the DNA strands; DNA gyrase acts as the detangler. Quinolones lock this enzyme in place, creating double-stranded breaks that fracture the chromosome.</li>
-            <li><strong>Metronidazole</strong> acts like a <strong>magnetic storm</strong> that is only switched on inside anaerobes. Its nitro group is reduced to a highly reactive radical that physically shreds the DNA helices beyond repair.</li>
+            <li><strong>Folate antagonists</strong> (Bactrim) work by <strong>cutting the ink supply</strong> (nucleotides) — no folate means no raw material left to print new DNA.</li>
+            <li><strong>Fluoroquinolones</strong> work by <strong>jamming the spooling gears</strong>. Untwisting the DNA strands during replication needs a detangler — DNA gyrase. Quinolones freeze that enzyme in place, snapping the chromosome with double-stranded breaks.</li>
+            <li><strong>Metronidazole</strong> behaves like a <strong>magnetic storm</strong> that only activates inside anaerobic cells. Its nitro group turns into a highly reactive radical that tears the DNA helix apart beyond repair.</li>
           </ul>
         </p>
       </div>
-      <blockquote class="warn"><span class="wl">⚠️ Warning — The G6PD Hemolysis Trap:</span> Sulfonamides (and dapsone) are strong oxidants. In patients with <strong>G6PD deficiency</strong>, red blood cells cannot regenerate NADPH to maintain glutathione levels. Exposing these cells to sulfonamides leads to oxidative stress, Heinz body formation, and severe <strong>hemolytic anemia</strong>. Always screen high-risk patients.</blockquote>
+      <blockquote class="warn"><span class="wl">⚠️ Warning — The G6PD Hemolysis Trap:</span> Sulfonamides (along with dapsone) act as strong oxidizing agents. People with <strong>G6PD deficiency</strong> can't regenerate enough NADPH to keep glutathione levels up, so when their red cells encounter sulfonamides, the result is oxidative damage, Heinz body formation, and potentially severe <strong>hemolytic anemia</strong>. Screen anyone at elevated risk before starting therapy.</blockquote>
     </div>
   </details>
 
@@ -1126,88 +1789,83 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Bacterial cells are under high osmotic pressure. Disrupting the structural integrity of the peptidoglycan cell wall or depolarizing the cell membrane leads to osmotic lysis and rapid cell death.</div>
+    <div class="pillar">Bacteria live under substantial internal osmotic pressure, so anything that weakens the peptidoglycan wall's structural integrity, or that depolarizes the cell membrane, triggers osmotic rupture and quick cell death.</div>
     <h4>The Three Major Classes &amp; Targets</h4>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Class</th><th>Subclass / Example</th><th>Target / Mechanism</th><th>Spectrum highlights</th><th>Key Resistance / ADRs</th></tr></thead>
       <tbody>
-        <tr><td><strong>β-Lactams</strong></td><td>Penicillins, Cephalosporins, Carbapenems, Monobactams</td><td>Bind <strong>Penicillin-Binding Proteins (PBPs)</strong>; inhibit transpeptidation (cross-linking of peptidoglycan).</td><td>Broad (generation-dependent). Carbapenems are the widest. Monobactams (Aztreonam) Gram-negative only.</td><td><strong>β-lactamase cleavage</strong>; altered PBPs (MRSA). Hypersensitivity (10% cross-reactivity ceiling).</td></tr>
-        <tr><td><strong>Glycopeptides</strong></td><td>Vancomycin</td><td>Binds to the <strong>D-Ala-D-Ala</strong> terminus of cell wall precursors; sterically hinders polymerization.</td><td>Gram-positive only (too large to cross Gram-negative outer membrane).</td><td><strong>VanA gene</strong>: D-Ala-D-Ala converted to <strong>D-Ala-D-Lac</strong> (VRE). <strong>Red Man Syndrome</strong> (infusion reaction); Nephrotoxicity.</td></tr>
-        <tr><td><strong>Lipopeptides</strong></td><td>Daptomycin</td><td>Inserts lipid tail into cell membrane in a <strong>calcium-dependent</strong> manner, causing rapid depolarization and ion leakage.</td><td>Gram-positive only (including MRSA, VRSA, and VRE).</td><td>Inactivated by <strong>pulmonary surfactant</strong> (never use for pneumonia). <strong>Myopathy</strong> (monitor CPK weekly).</td></tr>
+        <tr><td><strong>β-Lactams</strong></td><td>Penicillins, Cephalosporins, Carbapenems, Monobactams</td><td>Attach to <strong>Penicillin-Binding Proteins (PBPs)</strong>, blocking transpeptidation (the cross-linking step of peptidoglycan assembly).</td><td>Coverage breadth varies by generation. Carbapenems cover the most. Monobactams (Aztreonam) are Gram-negative only.</td><td><strong>β-lactamase cleavage</strong>; altered PBPs (MRSA). Hypersensitivity (cross-reactivity ceiling around 10%).</td></tr>
+        <tr><td><strong>Glycopeptides</strong></td><td>Vancomycin</td><td>Latches onto the <strong>D-Ala-D-Ala</strong> end of cell wall precursor units, physically blocking polymerization.</td><td>Gram-positive only — the molecule is too big to cross the Gram-negative outer membrane.</td><td><strong>VanA gene</strong>: swaps D-Ala-D-Ala for <strong>D-Ala-D-Lac</strong> (VRE). <strong>Red Man Syndrome</strong> (infusion reaction); Nephrotoxicity.</td></tr>
+        <tr><td><strong>Lipopeptides</strong></td><td>Daptomycin</td><td>Drives a lipid tail into the cell membrane in a <strong>calcium-dependent</strong> fashion, rapidly depolarizing it and causing ion leakage.</td><td>Gram-positive only (covers MRSA, VRSA, and VRE).</td><td>Inactivated by <strong>pulmonary surfactant</strong> (never use for pneumonia). <strong>Myopathy</strong> (monitor CPK weekly).</td></tr>
       </tbody>
     </table></div>
     <h4>Cephalosporin Generations Cheat Sheet</h4>
     <ul>
-      <li><strong>1st Gen (Cefazolin, Cephalexin):</strong> PEcK (Proteus, E. coli, Klebsiella). Used for surgical prophylaxis.</li>
-      <li><strong>2nd Gen (Cefoxitin, Cefotetan):</strong> Added anaerobes (B. fragilis). Risk of disulfiram-like reactions and bleeding.</li>
-      <li><strong>3rd Gen (Ceftriaxone, Ceftazidime):</strong> Ceftriaxone is workhorse (crosses BBB; biliary excretion, no renal adjustment). <strong>Ceftazidime covers Pseudomonas</strong>.</li>
-      <li><strong>4th Gen (Cefepime):</strong> Broad Gram-positive + Gram-negative coverage, including <strong>Pseudomonas</strong>.</li>
-      <li><strong>5th Gen (Ceftaroline):</strong> Only cephalosporin that covers <strong>MRSA</strong> (binds PBP2a). Does not cover Pseudomonas.</li>
+      <li><strong>1st Gen (Cefazolin, Cephalexin):</strong> Remember PEcK (Proteus, E. coli, Klebsiella). Go-to for surgical prophylaxis.</li>
+      <li><strong>2nd Gen (Cefoxitin, Cefotetan):</strong> Picks up anaerobic coverage (B. fragilis), but carries a risk of disulfiram-like reactions and bleeding.</li>
+      <li><strong>3rd Gen (Ceftriaxone, Ceftazidime):</strong> Ceftriaxone is the workhorse here — crosses the BBB, clears via bile, no renal dose adjustment needed. <strong>Ceftazidime adds Pseudomonas coverage</strong>.</li>
+      <li><strong>4th Gen (Cefepime):</strong> Broad coverage spanning Gram-positive and Gram-negative organisms, <strong>Pseudomonas</strong> included.</li>
+      <li><strong>5th Gen (Ceftaroline):</strong> The one cephalosporin that covers <strong>MRSA</strong> (it binds PBP2a), but it does not touch Pseudomonas.</li>
     </ul>
   </div>
 
   <figure>
     <div class="fig-title">Figure 58·1 — Cell Wall and Membrane Targets of Peptidoglycan Inhibitors</div>
-    <svg viewBox="0 0 880 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+    <svg viewBox="0 0 920 230" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
       <!-- Peptidoglycan Chains -->
       <g stroke="#312e81" stroke-width="1.5">
-        <rect x="50" y="30" width="300" height="20" rx="3" fill="#e0e7ff"/><text x="200" y="44" text-anchor="middle" fill="#1e1b4b" font-weight="600">Peptidoglycan Polymer (NAG-NAM)</text>
-        <rect x="50" y="90" width="300" height="20" rx="3" fill="#e0e7ff"/><text x="200" y="104" text-anchor="middle" fill="#1e1b4b" font-weight="600">Peptidoglycan Polymer (NAG-NAM)</text>
+        <rect x="30" y="50" width="300" height="24" rx="4" fill="#e0e7ff"/><text x="180" y="66" text-anchor="middle" fill="#1e1b4b" font-weight="600">Peptidoglycan Polymer (NAG-NAM)</text>
+        <rect x="30" y="150" width="300" height="24" rx="4" fill="#e0e7ff"/><text x="180" y="166" text-anchor="middle" fill="#1e1b4b" font-weight="600">Peptidoglycan Polymer (NAG-NAM)</text>
       </g>
-      
-      <!-- Amino acid cross-links -->
-      <line x1="120" y1="50" x2="120" y2="90" stroke="#0f766e" stroke-width="3" stroke-dasharray="2 2"/>
-      <line x1="280" y1="50" x2="280" y2="90" stroke="#0f766e" stroke-width="3"/>
-      <text x="280" y="74" fill="#0f766e" font-weight="700" font-size="9">Cross-link</text>
-      
-      <!-- Target of Beta-lactam -->
-      <rect x="80" y="55" width="80" height="30" rx="4" fill="#ffe4e6" stroke="#be123c" stroke-width="1.5"/>
-      <text x="120" y="68" text-anchor="middle" fill="#be123c" font-size="9.5" font-weight="700">β-LACTAMS</text>
-      <text x="120" y="78" text-anchor="middle" fill="#be123c" font-size="8">blocks PBP enzyme</text>
-      
-      <!-- Target of Vancomycin -->
-      <g transform="translate(360, 40)">
-        <path d="M 0,25 L 30,10 L 30,40 Z" fill="#ffe4e6" stroke="#be123c" stroke-width="1.5"/>
-        <circle cx="5" cy="25" r="5" fill="#be123c"/>
-        <text x="40" y="22" font-weight="700" fill="#be123c" font-size="10">VANCOMYCIN</text>
-        <text x="40" y="33" fill="#534549" font-size="8.5">caps D-Ala-D-Ala tail</text>
-      </g>
-      
+
+      <!-- Amino acid cross-links: dashed = the one beta-lactams block; solid = an intact link, capped by vancomycin -->
+      <line x1="100" y1="74" x2="100" y2="150" stroke="#0f766e" stroke-width="3" stroke-dasharray="2 2"/>
+      <line x1="270" y1="74" x2="270" y2="150" stroke="#0f766e" stroke-width="3"/>
+      <text x="280" y="116" fill="#0f766e" font-weight="700" font-size="9">Cross-link</text>
+
+      <!-- Target of beta-lactams: sits directly over the link it blocks -->
+      <rect x="58" y="85" width="86" height="36" rx="5" fill="#ffe4e6" stroke="#be123c" stroke-width="1.5"/>
+      <text x="101" y="99" text-anchor="middle" fill="#be123c" font-size="9.5" font-weight="700">β-LACTAMS</text>
+      <text x="101" y="111" text-anchor="middle" fill="#be123c" font-size="8">blocks PBP enzyme</text>
+
+      <!-- Target of vancomycin: a cap sitting exactly on the D-Ala-D-Ala tail at the base of the intact link -->
+      <circle cx="270" cy="150" r="8" fill="#ffe4e6" stroke="#be123c" stroke-width="1.5"/>
+      <path d="M 277,146 L 420,108" fill="none" stroke="#be123c" stroke-width="1.3" stroke-dasharray="3 3"/>
+      <rect x="420" y="78" width="200" height="56" rx="6" fill="#ffe4e6" stroke="#be123c" stroke-width="1.5"/>
+      <text x="520" y="96" text-anchor="middle" font-weight="700" fill="#be123c" font-size="10">VANCOMYCIN</text>
+      <text x="520" y="110" text-anchor="middle" fill="#534549" font-size="8.5">Caps the D-Ala-D-Ala tail —</text>
+      <text x="520" y="122" text-anchor="middle" fill="#534549" font-size="8.5">physically blocks cross-linking</text>
+
       <!-- Cell Membrane (Daptomycin) -->
-      <g transform="translate(550, 20)">
-        <!-- Phospholipid bilayer -->
-        <rect x="0" y="60" width="300" height="15" fill="#99f6e4" stroke="#0f766e"/>
-        <rect x="0" y="90" width="300" height="15" fill="#99f6e4" stroke="#0f766e"/>
-        <text x="150" y="82" text-anchor="middle" fill="#115e59" font-weight="600" font-size="9.5">Cell Membrane Bilayer</text>
-        
-        <!-- Daptomycin Insertion -->
-        <g fill="#be123c">
-          <path d="M 50,20 C 50,75 60,75 60,75 L 55,85 L 45,75 Z"/>
-          <circle cx="50" cy="15" r="7"/>
-          <text x="50" y="17" text-anchor="middle" fill="#fff" font-size="8" font-weight="700">Ca²⁺</text>
-        </g>
-        <text x="75" y="30" font-weight="700" fill="#be123c" font-size="10">DAPTOMYCIN</text>
-        <text x="75" y="42" fill="#534549" font-size="8.5">Inserts tail, leaks K⁺ ions</text>
-        
-        <!-- Ion leakage -->
-        <g stroke="#d97706" stroke-width="1.5" fill="none">
-          <path d="M 120,95 Q 140,120 160,140" marker-end="url(#arrow)"/>
-          <circle cx="160" cy="140" r="8" fill="#fffbeb" stroke="#d97706"/>
-          <text x="160" y="143" text-anchor="middle" fill="#d97706" font-size="8" font-weight="700">K⁺</text>
-        </g>
-      </g>
+      <rect x="620" y="80" width="240" height="14" fill="#99f6e4" stroke="#0f766e"/>
+      <rect x="620" y="120" width="240" height="14" fill="#99f6e4" stroke="#0f766e"/>
+      <text x="740" y="106" text-anchor="middle" fill="#115e59" font-weight="600" font-size="9.5">Cell Membrane Bilayer</text>
+
+      <!-- Daptomycin insertion: Ca2+-anchored tail punches through both leaflets -->
+      <circle cx="670" cy="50" r="9" fill="#be123c"/>
+      <line x1="670" y1="59" x2="670" y2="140" stroke="#be123c" stroke-width="4"/>
+      <circle cx="670" cy="140" r="4" fill="#be123c"/>
+      <path d="M 676,140 Q 700,158 722,168" fill="none" stroke="#d97706" stroke-width="1.5"/>
+      <circle cx="735" cy="178" r="10" fill="#fffbeb" stroke="#d97706" stroke-width="1.3"/>
+      <text x="735" y="181" text-anchor="middle" fill="#d97706" font-size="8.5" font-weight="700">K⁺</text>
+
+      <path d="M 679,46 L 770,40" fill="none" stroke="#be123c" stroke-width="1.3" stroke-dasharray="3 3"/>
+      <rect x="770" y="18" width="140" height="50" rx="6" fill="#ffe4e6" stroke="#be123c" stroke-width="1.5"/>
+      <text x="840" y="36" text-anchor="middle" font-weight="700" fill="#be123c" font-size="10">DAPTOMYCIN</text>
+      <text x="840" y="50" text-anchor="middle" fill="#534549" font-size="8.3">Ca²⁺-anchored tail</text>
+      <text x="840" y="61" text-anchor="middle" fill="#534549" font-size="8.3">punctures the membrane</text>
     </svg>
-    <figcaption>β-lactams inhibit the PBP cross-linking enzyme directly. Vancomycin binds the substrate (D-Ala-D-Ala peptide terminus) to physically block cross-linking. Daptomycin uses calcium to anchor into the lipid membrane, causing rapid ion leakage.</figcaption>
+    <figcaption>β-lactams target the cross-linking enzyme (PBP) itself. Vancomycin instead grabs the substrate (the D-Ala-D-Ala peptide end) to physically prevent cross-linking. Daptomycin uses calcium as an anchor to embed in the lipid membrane, triggering quick ion leakage.</figcaption>
   </figure>
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A patient is admitted with severe MRSA bacteremia and concomitant lobar pneumonia. The junior resident suggests starting IV Daptomycin because it has excellent bactericidal activity against MRSA. Before revealing the notes, evaluate this decision. Will daptomycin cure the pneumonia? Why or why not?</div>
+    <div class="blurt-prompt">A patient is admitted with both severe MRSA bacteremia and lobar pneumonia at the same time. A junior resident proposes IV Daptomycin, citing its strong bactericidal action against MRSA. Before reading on, weigh in on this plan: would daptomycin actually clear the pneumonia, and why or why not?</div>
     <h4 style="color:var(--rose)">Guiding primers</h4>
     <ul class="primers">
-      <li>What is pulmonary surfactant, and what is its biochemical composition?</li>
-      <li>How does daptomycin interact with surfactant?</li>
-      <li>What drug would be an appropriate alternative to cover MRSA in the lungs?</li>
+      <li>What is pulmonary surfactant made of biochemically?</li>
+      <li>What happens when daptomycin encounters surfactant?</li>
+      <li>Which alternative agent would adequately cover MRSA in lung tissue?</li>
     </ul>
   </div>
 
@@ -1216,18 +1874,18 @@
     <div class="cog feyn">
       <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
       <h4>Mechanism &amp; Surfactant Inactivation</h4>
-      <p><strong>Daptomycin must never be used for pneumonia</strong>. While it effectively targets MRSA in blood and tissues, it is immediately sequestered and <strong>inactivated by pulmonary surfactant</strong> in the alveoli. The lipid tail of daptomycin binds to surfactant phospholipids, preventing it from inserting into the bacterial membrane. For MRSA pneumonia, use <strong>Linezolid</strong> (excellent lung penetration) or <strong>Vancomycin</strong> (standard IV therapy).</p>
+      <p><strong>Pneumonia is an absolute no for daptomycin</strong>. It works well against MRSA in the bloodstream and most tissues, but the alveoli are a different story — <strong>pulmonary surfactant immediately soaks it up and inactivates it</strong>. The drug's lipid tail binds surfactant phospholipids instead of the bacterial membrane, so it never gets where it needs to go. For MRSA pneumonia, reach for <strong>Linezolid</strong> (penetrates lung tissue well) or <strong>Vancomycin</strong> (the standard IV option).</p>
       <div class="analogy">
         <div class="alabel"><span>💡</span> The Analogy — Bricklayers and Balloon Poppers</div>
-        <p>Think of the bacterial outer wall as a brick house under high water pressure:
+        <p>Picture the bacterial outer wall as a brick house holding back high water pressure:
           <ul>
-            <li><strong>β-lactams</strong> act like <strong>stealing the mortar</strong> from the bricklayers (transpeptidase / PBPs). As the wall is built without mortar, the internal osmotic pressure bursts the cell open.</li>
-            <li><strong>Vancomycin</strong> acts like <strong>capping the ends of the bricks</strong> (D-Ala-D-Ala). The bricklayers are active, but they cannot hook the bricks together. Because vancomycin is a massive molecule, it cannot pass through the outer membrane of Gram-negative bacteria, explaining its strictly Gram-positive spectrum.</li>
-            <li><strong>Daptomycin</strong> acts like <strong>piercing a hole in a balloon</strong>. It doesn't care about the brick wall; it drops a calcium anchor into the inner cell membrane, creating a leak channel where potassium pours out. Without the electrical gradient, the cell dies instantly.</li>
+            <li><strong>β-lactams</strong> work by <strong>stealing the mortar</strong> from the bricklayers (transpeptidase / PBPs). The wall keeps getting built without mortar, and the internal osmotic pressure eventually bursts it open.</li>
+            <li><strong>Vancomycin</strong> works by <strong>capping the ends of the bricks</strong> (D-Ala-D-Ala). The bricklayers are still on the job, but they have nothing to hook the bricks together with. Since vancomycin is a bulky molecule, it can't get through the outer membrane of Gram-negative organisms — hence its strictly Gram-positive reach.</li>
+            <li><strong>Daptomycin</strong> works more like <strong>puncturing a balloon</strong>. It ignores the brick wall entirely and drives a calcium anchor straight into the inner membrane, opening a channel that potassium pours out of. Lose that electrical gradient and the cell dies almost immediately.</li>
           </ul>
         </p>
       </div>
-      <blockquote class="warn"><span class="wl">⚠️ Warning — The Ceftazidime vs. Penicillin Allergy Exception:</span> While the overall cross-reactivity rate between penicillins and cephalosporins is low (~3%), <strong>Aztreonam</strong> (a monobactam) is the only β-lactam safe in penicillin-anaphylactic patients. However, there is one critical exception: <strong>Aztreonam shares an identical side chain with Ceftazidime</strong>. Do not give Aztreonam to a patient with a confirmed ceftazidime allergy, as cross-reactivity is nearly 100%.</blockquote>
+      <blockquote class="warn"><span class="wl">⚠️ Warning — The Ceftazidime vs. Penicillin Allergy Exception:</span> Even though penicillin-cephalosporin cross-reactivity is generally low (around 3%), <strong>Aztreonam</strong> (a monobactam) stands out as the one β-lactam considered safe for patients with documented penicillin anaphylaxis. There's a catch, though: <strong>Aztreonam's side chain is identical to Ceftazidime's</strong>, so a patient with a confirmed ceftazidime allergy should not receive Aztreonam — cross-reactivity there approaches 100%.</blockquote>
     </div>
   </details>
 
@@ -1247,7 +1905,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Bacterial translation can be selectively blocked by targeting either the <strong>30S subunit</strong> or the <strong>50S subunit</strong> of the 70S ribosome. This blocks protein synthesis, halting bacterial growth.</div>
+    <div class="pillar">Targeting either the <strong>30S subunit</strong> or the <strong>50S subunit</strong> of the bacterial 70S ribosome selectively shuts down translation, which in turn stops protein synthesis and halts bacterial growth.</div>
     <h4>Ribosomal Targets &amp; Classifications</h4>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Ribosomal Subunit</th><th>Antibiotic Class</th><th>Key Drugs</th><th>Mechanism of Action</th><th>High-Yield Clinical Pearls</th></tr></thead>
@@ -1269,44 +1927,43 @@
 
   <figure>
     <div class="fig-title">Figure 60·1 — Ribosomal Translation Target Sites of 30S and 50S Inhibitors</div>
-    <svg viewBox="0 0 880 240" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+    <svg viewBox="0 0 920 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
       <!-- 50S Subunit -->
-      <path d="M 150,120 C 150,40 450,40 450,120 Z" fill="rgba(15,118,110,0.1)" stroke="#0f766e" stroke-width="2"/>
-      <text x="300" y="75" font-weight="700" fill="#0f766e" font-size="14">50S Subunit</text>
-      
+      <path d="M 140,150 C 140,60 380,60 380,150 Z" fill="rgba(15,118,110,0.1)" stroke="#0f766e" stroke-width="2"/>
+      <text x="260" y="100" text-anchor="middle" font-weight="700" fill="#0f766e" font-size="14">50S Subunit</text>
+
       <!-- 30S Subunit -->
-      <rect x="180" y="125" width="240" height="70" rx="10" fill="rgba(49,46,129,0.1)" stroke="#312e81" stroke-width="2"/>
-      <text x="300" y="160" font-weight="700" fill="#312e81" font-size="14">30S Subunit</text>
-      
+      <rect x="170" y="155" width="240" height="70" rx="10" fill="rgba(49,46,129,0.1)" stroke="#312e81" stroke-width="2"/>
+      <text x="290" y="192" text-anchor="middle" font-weight="700" fill="#312e81" font-size="14">30S Subunit</text>
+
       <!-- mRNA strand -->
-      <line x1="100" y1="122" x2="500" y2="122" stroke="#be123c" stroke-width="3"/>
-      <text x="110" y="137" font-weight="700" fill="#be123c">mRNA</text>
-      
-      <!-- Drug targets callout lines -->
-      <!-- 30S inhibitors -->
-      <g transform="translate(600, 140)">
-        <rect x="0" y="0" width="240" height="85" rx="6" fill="#e0e7ff" stroke="#312e81"/>
-        <text x="120" y="20" text-anchor="middle" font-weight="700" fill="#312e81" font-size="12">30S Inhibitors</text>
-        <text x="20" y="45" font-weight="600" fill="#1e1b4b">Aminoglycosides:</text>
-        <text x="130" y="45" fill="#4b5563">freezes initiation, mRNA misreading</text>
-        <text x="20" y="65" font-weight="600" fill="#1e1b4b">Tetracyclines:</text>
-        <text x="110" y="65" fill="#4b5563">blocks aminoacyl-tRNA A-site binding</text>
-        <!-- Connector line to 30S -->
-        <path d="M 0,42 L -250,0" fill="none" stroke="#312e81" stroke-width="1.5" stroke-dasharray="3 3"/>
-      </g>
-      
+      <line x1="100" y1="150" x2="420" y2="150" stroke="#be123c" stroke-width="3"/>
+      <text x="108" y="168" font-weight="700" fill="#be123c">mRNA</text>
+
       <!-- 50S inhibitors -->
-      <g transform="translate(600, 15)">
-        <rect x="0" y="0" width="240" height="105" rx="6" fill="#ccfbf1" stroke="#0f766e"/>
-        <text x="120" y="20" text-anchor="middle" font-weight="700" fill="#0f766e" font-size="12">50S Inhibitors</text>
-        <text x="20" y="45" font-weight="600" fill="#115e59">Macrolides:</text>
-        <text x="90" y="45" fill="#4b5563">blocks translocation step</text>
-        <text x="20" y="65" font-weight="600" fill="#115e59">Clindamycin:</text>
-        <text x="100" y="65" fill="#4b5563">blocks peptide bond synthesis</text>
-        <text x="20" y="85" font-weight="600" fill="#115e59">Linezolid:</text>
-        <text x="85" y="85" fill="#4b5563">prevents 70S complex initiation</text>
-        <!-- Connector line to 50S -->
-        <path d="M 0,52 L -250,20" fill="none" stroke="#0f766e" stroke-width="1.5" stroke-dasharray="3 3"/>
+      <g transform="translate(500, 20)">
+        <rect x="0" y="0" width="380" height="115" rx="8" fill="#ccfbf1" stroke="#0f766e"/>
+        <text x="190" y="22" text-anchor="middle" font-weight="700" fill="#0f766e" font-size="12">50S Inhibitors</text>
+        <text x="18" y="48" font-weight="600" fill="#115e59" font-size="9">Macrolides:</text>
+        <text x="105" y="48" fill="#4b5563" font-size="8.5">blocks the translocation step</text>
+        <text x="18" y="70" font-weight="600" fill="#115e59" font-size="9">Clindamycin:</text>
+        <text x="115" y="70" fill="#4b5563" font-size="8.5">blocks peptide bond synthesis</text>
+        <text x="18" y="92" font-weight="600" fill="#115e59" font-size="9">Linezolid:</text>
+        <text x="98" y="92" fill="#4b5563" font-size="8.5">prevents 70S complex initiation</text>
+        <!-- Connector line — points into the 50S dome -->
+        <path d="M 0,50 L -200,70" fill="none" stroke="#0f766e" stroke-width="1.5" stroke-dasharray="3 3"/>
+      </g>
+
+      <!-- 30S inhibitors -->
+      <g transform="translate(500, 150)">
+        <rect x="0" y="0" width="380" height="95" rx="8" fill="#e0e7ff" stroke="#312e81"/>
+        <text x="190" y="22" text-anchor="middle" font-weight="700" fill="#312e81" font-size="12">30S Inhibitors</text>
+        <text x="18" y="48" font-weight="600" fill="#1e1b4b" font-size="9">Aminoglycosides:</text>
+        <text x="150" y="48" fill="#4b5563" font-size="8.5">freezes initiation, mRNA misreading</text>
+        <text x="18" y="72" font-weight="600" fill="#1e1b4b" font-size="9">Tetracyclines:</text>
+        <text x="125" y="72" fill="#4b5563" font-size="8.5">blocks aminoacyl-tRNA A-site binding</text>
+        <!-- Connector line — points into the 30S box -->
+        <path d="M 0,40 L -210,40" fill="none" stroke="#312e81" stroke-width="1.5" stroke-dasharray="3 3"/>
       </g>
     </svg>
     <figcaption>Ribosomal translation inhibition. 30S blockers frozen initiation or tRNA binding, while 50S blockers halt peptide elongation, translocation, or complex assembly.</figcaption>
@@ -1546,55 +2203,59 @@
 
   <figure>
     <div class="fig-title">Figure 64·1 — HIV Life Cycle and Antiretroviral Drug Targets</div>
-    <svg viewBox="0 0 880 300" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+    <svg viewBox="0 0 960 330" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+      <!-- Everything below sits on one left-to-right timeline at y=160, so each
+           stage of the life cycle visibly hands off to the next, in order. -->
+
       <!-- Host Cell Boundary -->
-      <path d="M 100,50 C 350,50 350,280 100,280" fill="none" stroke="#64748b" stroke-width="3"/>
-      <text x="70" y="270" fill="#64748b" font-weight="600">Host Cell (CD4+ T-cell)</text>
-      
-      <!-- Virion Entry -->
-      <circle cx="20" cy="120" r="16" fill="#e0e7ff" stroke="#312e81" stroke-width="1.5"/>
-      <path d="M 36,120 L 100,120" stroke="#312e81" stroke-width="2" stroke-dasharray="2 2"/>
-      
-      <!-- Entry Blocker callout -->
-      <rect x="25" y="145" width="85" height="35" rx="5" fill="#ffe4e6" stroke="#be123c"/>
-      <text x="67" y="158" text-anchor="middle" fill="#be123c" font-size="9" font-weight="700">MARAVIROC</text>
-      <text x="67" y="170" text-anchor="middle" fill="#be123c" font-size="8">Blocks CCR5</text>
-      
+      <rect x="110" y="60" width="640" height="250" rx="22" fill="none" stroke="#64748b" stroke-width="2.5"/>
+      <text x="118" y="50" fill="#64748b" font-weight="600" font-size="10.5">Host Cell (CD4&#43; T-cell)</text>
+
+      <!-- Free virion, outside the cell -->
+      <circle cx="40" cy="160" r="18" fill="#e0e7ff" stroke="#312e81" stroke-width="1.5"/>
+      <text x="40" y="195" text-anchor="middle" fill="#312e81" font-size="9" font-weight="600">HIV Virion</text>
+
+      <!-- Entry into the cell, straight into reverse transcription -->
+      <path d="M 58,160 L 180,160" fill="none" stroke="#312e81" stroke-width="2" stroke-dasharray="2 2"/>
+
+      <!-- Entry blocker: points exactly at the membrane-crossing point -->
+      <rect x="10" y="200" width="95" height="42" rx="6" fill="#ffe4e6" stroke="#be123c" stroke-width="1.5"/>
+      <text x="57" y="216" text-anchor="middle" fill="#be123c" font-size="9.5" font-weight="700">MARAVIROC</text>
+      <text x="57" y="230" text-anchor="middle" fill="#be123c" font-size="8">Blocks CCR5</text>
+      <path d="M 57,200 L 110,160" fill="none" stroke="#be123c" stroke-width="1.3" stroke-dasharray="2 2"/>
+
       <!-- Reverse Transcription -->
-      <g transform="translate(180, 80)">
-        <rect x="0" y="0" width="130" height="50" rx="6" fill="#ccfbf1" stroke="#0f766e"/>
-        <text x="65" y="20" text-anchor="middle" font-weight="700" fill="#115e59">Reverse Trans.</text>
-        <text x="65" y="33" text-anchor="middle" fill="#0f766e" font-size="9">NRTIs (terminators)</text>
-        <text x="65" y="43" text-anchor="middle" fill="#0f766e" font-size="9">NNRTIs (allosteric)</text>
-        <path d="M -80,40 L 0,25" stroke="#0f766e" stroke-width="1.5" stroke-dasharray="2 2"/>
-      </g>
-      
-      <!-- Integration -->
-      <g transform="translate(360, 110)">
-        <!-- Host Nucleus -->
-        <circle cx="100" cy="50" r="45" fill="none" stroke="#64748b" stroke-width="1.5"/>
-        <text x="100" y="30" text-anchor="middle" fill="#64748b" font-size="9">Nucleus</text>
-        
-        <!-- Integrase Blocker -->
-        <rect x="50" y="60" width="100" height="35" rx="5" fill="#ffe4e6" stroke="#be123c"/>
-        <text x="100" y="73" text-anchor="middle" fill="#be123c" font-size="9" font-weight="700">INSTIs</text>
-        <text x="100" y="85" text-anchor="middle" fill="#be123c" font-size="8">e.g. Dolutegravir</text>
-        <path d="M -50,-5 L 50,75" stroke="#be123c" stroke-width="1.5" stroke-dasharray="2 2"/>
-      </g>
-      
-      <!-- Assembly and Protease Cleavage -->
-      <g transform="translate(560, 180)">
-        <rect x="0" y="0" width="140" height="50" rx="6" fill="#ccfbf1" stroke="#0f766e"/>
-        <text x="70" y="20" text-anchor="middle" font-weight="700" fill="#115e59">Viral Assembly</text>
-        <text x="70" y="33" text-anchor="middle" fill="#be123c" font-size="9" font-weight="700">PROTEASE INHIBITORS</text>
-        <text x="70" y="43" text-anchor="middle" fill="#be123c" font-size="8">e.g. Darunavir</text>
-        <path d="M -100,-25 L 0,25" stroke="#0f766e" stroke-width="1.5" stroke-dasharray="2 2"/>
-      </g>
-      
-      <!-- Release and Maturity -->
-      <circle cx="780" cy="180" r="16" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.5"/>
-      <text x="780" y="210" text-anchor="middle" fill="#115e59" font-size="10" font-weight="600">Mature Virion</text>
-      <path d="M 700,205 Q 730,205 764,188" stroke="#0f766e" stroke-width="2" stroke-dasharray="2 2"/>
+      <rect x="180" y="129" width="150" height="62" rx="6" fill="#ccfbf1" stroke="#0f766e"/>
+      <text x="255" y="148" text-anchor="middle" font-weight="700" fill="#115e59" font-size="10.5">Reverse Trans.</text>
+      <text x="255" y="163" text-anchor="middle" fill="#0f766e" font-size="8.3">NRTIs (terminators)</text>
+      <text x="255" y="175" text-anchor="middle" fill="#0f766e" font-size="8.3">NNRTIs (allosteric)</text>
+
+      <!-- Hand-off into the nucleus for integration -->
+      <path d="M 330,160 L 390,160" fill="none" stroke="#0f766e" stroke-width="2" stroke-dasharray="2 2"/>
+
+      <!-- Host Nucleus -->
+      <circle cx="460" cy="160" r="70" fill="none" stroke="#64748b" stroke-width="1.5"/>
+      <text x="460" y="100" text-anchor="middle" fill="#64748b" font-size="10">Nucleus</text>
+
+      <!-- Integrase blocker: points straight up into the nucleus -->
+      <rect x="400" y="246" width="120" height="44" rx="6" fill="#ffe4e6" stroke="#be123c" stroke-width="1.5"/>
+      <text x="460" y="264" text-anchor="middle" fill="#be123c" font-size="9.5" font-weight="700">INSTIs</text>
+      <text x="460" y="278" text-anchor="middle" fill="#be123c" font-size="8">e.g. Dolutegravir</text>
+      <path d="M 460,246 L 460,230" fill="none" stroke="#be123c" stroke-width="1.3" stroke-dasharray="2 2"/>
+
+      <!-- Integrated provirus is transcribed/translated, then exits the nucleus for assembly -->
+      <path d="M 530,160 L 560,160" fill="none" stroke="#0f766e" stroke-width="2" stroke-dasharray="2 2"/>
+
+      <!-- Viral Assembly + Protease Cleavage -->
+      <rect x="560" y="129" width="150" height="62" rx="6" fill="#ccfbf1" stroke="#0f766e"/>
+      <text x="635" y="148" text-anchor="middle" font-weight="700" fill="#115e59" font-size="10.5">Viral Assembly</text>
+      <text x="635" y="162" text-anchor="middle" fill="#be123c" font-size="8" font-weight="700">PROTEASE INHIBITORS</text>
+      <text x="635" y="175" text-anchor="middle" fill="#be123c" font-size="8">e.g. Darunavir</text>
+
+      <!-- Budding out of the cell to release a mature virion -->
+      <path d="M 710,160 L 800,160" fill="none" stroke="#0f766e" stroke-width="2" stroke-dasharray="2 2"/>
+      <circle cx="850" cy="160" r="18" fill="#ccfbf1" stroke="#0f766e" stroke-width="1.5"/>
+      <text x="850" y="195" text-anchor="middle" fill="#115e59" font-size="10" font-weight="600">Mature Virion</text>
     </svg>
     <figcaption>The HIV life cycle and drug classes. Modern therapy blocks multiple stages: viral entry (Maraviroc), reverse transcription (NRTIs/NNRTIs), integration (INSTIs), and maturation (Protease Inhibitors).</figcaption>
   </figure>
@@ -2108,12 +2769,12 @@
   <div class="wrap">
     <div>
       <strong>Infectious Disease Chemotherapy · Accelerated Learning System</strong><br>
-      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section VII (Chs 56–68).<br>
+      <span class="src">Source: Standard pharmacology references — Section VII.<br>
       Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
       Always verify all clinical dosing and guidelines against current local hospital protocols before clinical application.</span>
     </div>
     <div class="src" style="text-align:right">
-      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Part of a comprehensive pharmacology learning series.<br>
       Built around active recall and spaced repetition.
     </div>
   </div>
@@ -2169,6 +2830,186 @@
 })();
 </script>
 
+<script>
+/* ---- GLASS / MOTION DEMO v3 — additive, does not touch the quiz logic above ---- */
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  var bigSel = 'section.module, .quiz-intro, #flashcards, details.quizset';
+  var smallSel = '.cog, .blurt-stage, .sched-stage, details.gate, details.qa, .flashcard, .tbl-scroll, .diagram-wrap, blockquote.warn, .analogy, div.q';
+
+  document.querySelectorAll(bigSel).forEach(function(el){ el.classList.add('gp-reveal'); });
+  document.querySelectorAll(smallSel).forEach(function(el){ el.classList.add('gp-reveal-soft'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -50px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal, .gp-reveal-soft');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 7) * 50 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // safety net — guarantee nothing is stuck invisible
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }, 2000);
+})();
+</script>
+
 <script src="learning-interactive.js"></script>
+<script src="gamify.js"></script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- populate chapters drawer from this page's existing (now hidden) chapter nav ----
+  var drawerLinks = document.getElementById('gpDrawerLinks');
+  var sourceNav = document.querySelector('nav.toc, .sticky-nav');
+  if (drawerLinks && sourceNav) {
+    var anchors = sourceNav.querySelectorAll('a');
+    anchors.forEach(function(a){ drawerLinks.appendChild(a.cloneNode(true)); });
+  }
+
+  // ---- drawer open/close ----
+  var drawer = document.getElementById('gpDrawer');
+  var overlay = document.getElementById('gpDrawerOverlay');
+  var openBtn = document.getElementById('gpDrawerToggle');
+  var closeBtn = document.getElementById('gpDrawerClose');
+  function openDrawer(){
+    if (drawer) drawer.classList.add('show');
+    if (overlay) overlay.classList.add('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','true');
+  }
+  function closeDrawer(){
+    if (drawer) drawer.classList.remove('show');
+    if (overlay) overlay.classList.remove('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','false');
+  }
+  if (openBtn) openBtn.addEventListener('click', function(){
+    if (drawer && drawer.classList.contains('show')) closeDrawer(); else openDrawer();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  if (drawerLinks) drawerLinks.addEventListener('click', function(e){
+    if (e.target && e.target.tagName === 'A') closeDrawer();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // ---- dark mode toggle, persisted (shared key with the hub pages) ----
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('gpDarkToggle');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function upd(){ if (darkBtn) darkBtn.textContent = isDark() ? '☀️' : '🌙'; }
+  function setTheme(m){
+    if (m === 'dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('pharm-theme', m); } catch(e){}
+    upd();
+  }
+  upd();
+  if (darkBtn) darkBtn.addEventListener('click', function(){ setTheme(isDark() ? 'light' : 'dark'); });
+
+  // ---- random quiz question ----
+  var randomBtn = document.getElementById('gpRandomQuiz');
+  if (randomBtn) randomBtn.addEventListener('click', function(){
+    var qs = Array.prototype.slice.call(document.querySelectorAll('.q, .quiz-item'));
+    if (!qs.length) return;
+    var pick = qs[Math.floor(Math.random() * qs.length)];
+    var trigger = pick.querySelector('.qq, .quiz-q');
+    if (trigger) trigger.click();
+    if (!pick.classList.contains('open')) pick.classList.add('open');
+    pick.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  // ---- expand/contract the floating toolbar itself ----
+  // Chapters (☰) and Back (←) always stay visible; every other control
+  // (nav/jump/search/tools merged in by learning-interactive.js) lives inside
+  // the collapsible .gp-toolbar-extra and only shows once expanded.
+  var expandBtn = document.getElementById('gpToolbarExpand');
+  var toolbarEl = document.querySelector('.gp-toolbar');
+  if (expandBtn && toolbarEl) expandBtn.addEventListener('click', function(){
+    var open = !toolbarEl.classList.contains('expanded');
+    toolbarEl.classList.toggle('expanded', open);
+    expandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var tree = document.getElementById('mindmapTree');
+  if(!tree) return;
+  function setExpanded(btn, open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var holder = btn.closest('.mm-branch, .mm-twig');
+    if(holder) holder.classList.toggle('mm-open', open);
+  }
+  tree.addEventListener('click', function(e){
+    var btn = e.target.closest('.mm-node');
+    if(!btn) return;
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setExpanded(btn, !isOpen);
+  });
+  var expandAllBtn = document.getElementById('mmExpandAll');
+  var collapseAllBtn = document.getElementById('mmCollapseAll');
+  if(expandAllBtn){
+    expandAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, true); });
+    });
+  }
+  if(collapseAllBtn){
+    collapseAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, false); });
+    });
+  }
+})();
+</script>
+
 </body>
 </html>

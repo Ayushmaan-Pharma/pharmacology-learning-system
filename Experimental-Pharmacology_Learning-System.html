@@ -838,10 +838,423 @@
   }
   .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
 
+
+
+/* =========================================================================
+   GLASS / MOTION DEMO LAYER v3 — additive, appended after all base rules.
+   Uses this file's own tokens (--accent, --cool, --hero-gradient, etc.,
+   with safe fallbacks where a file doesn't define one) so colours/content
+   stay identical to the original. Shared across the whole Learning System
+   family for visual/motion consistency.
+   ========================================================================= */
+
+html{scroll-behavior:smooth}
+
+/* ---- ambient drifting blobs, colour-matched to this file's palette ---- */
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(75px); opacity:.30}
+.gp-ambient .b1{width:44vw;height:44vw; top:-14%; left:-12%; background:radial-gradient(circle,var(--accent-dark),transparent 70%); animation:gpDrift1 38s ease-in-out infinite}
+.gp-ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,var(--cool),transparent 70%); animation:gpDrift2 44s ease-in-out infinite}
+.gp-ambient .b3{width:42vw;height:42vw; bottom:-18%; left:18%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift3 40s ease-in-out infinite}
+.gp-ambient .b4{width:26vw;height:26vw; bottom:10%; right:8%; background:radial-gradient(circle,var(--cool-light,var(--cool)),transparent 70%); animation:gpDrift4 33s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,7vh) scale(1.12)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.12)}}
+@keyframes gpDrift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-4vw,-3vh) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+/* ---- scroll progress bar ---- */
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--accent-dark), var(--cool), var(--accent));
+  box-shadow:0 0 10px rgba(15,107,107,.45); transition:width .12s linear}
+
+/* ---- back-to-top, using the page's own hero gradient (with fallback) ---- */
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:var(--hero-gradient, linear-gradient(135deg, var(--accent-dark), var(--cool))); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.35); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+/* ---- stronger glass on the already-sticky nav ---- */
+.sticky-nav, nav.toc{
+  background:rgba(245,244,240,.62) !important;
+  backdrop-filter:blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(190%) !important;
+  box-shadow:0 4px 24px rgba(16,38,52,.08) !important;
+}
+nav.toc a{transition:color .2s, transform .2s}
+nav.toc a:hover{transform:translateY(-1px)}
+
+/* ---- hero entrance + glass stat strip ---- */
+header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpHeroIn{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+.chip{transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{transform:translateY(-2px) scale(1.04)}
+
+.gp-stat-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; position:relative}
+.gp-stat-pill{font-size:.78rem; font-weight:650; color:#fff; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.32); padding:6px 14px; border-radius:999px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; gap:6px}
+.gp-stat-pill b{color:#fff; font-weight:800}
+
+/* ---- generic scroll-reveal utilities (assigned by JS) ---- */
+.gp-reveal{opacity:0; transform:translateY(28px) scale(.985); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.34,1.2,.64,1)}
+.gp-reveal.in-view{opacity:1; transform:none}
+.gp-reveal-soft{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease}
+.gp-reveal-soft.in-view{opacity:1; transform:none}
+
+/* ---- module card + header glass sheen / hover glow ---- */
+section.module{transition:box-shadow .35s ease}
+section.module:hover{box-shadow:0 20px 48px rgba(16,38,52,.18)}
+.module-header, .mod-head{position:relative; overflow:hidden}
+.module-header::after, .mod-head::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(120deg, rgba(255,255,255,.20), transparent 45%, rgba(255,255,255,.06));
+}
+
+.cog, .blurt-stage, .sched-stage, .flashcard, .quiz-intro{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease
+}
+.cog:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--cool) 35%, transparent)}
+.cog.blurt:hover{box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 38%, transparent)}
+.blurt-stage:hover, .sched-stage:hover{transform:translateY(-3px)}
+.flashcard:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 30%, transparent)}
+
+/* =========================================================================
+   ANIMATED ACCORDIONS — CSS-grid height trick (no JS height math needed).
+   grid-auto-rows (not just grid-template-rows) is set too, so this stays
+   correct even when a gate/quizset/qa has more than one content child
+   (e.g. Neoplastic's details.gate > p, p, p). Works regardless of who
+   toggles [open]/.open (click, keyboard, or the existing inline JS),
+   because it keys off the attribute/class only.
+   ========================================================================= */
+details.gate, details.quizset, details.qa{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1), grid-auto-rows .45s cubic-bezier(.4,0,.2,1);
+}
+details.gate[open], details.quizset[open], details.qa[open]{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+details.gate > *:not(summary), details.quizset > *:not(summary), details.qa > *:not(summary){
+  overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s;
+}
+details.gate[open] > *:not(summary), details.quizset[open] > *:not(summary), details.qa[open] > *:not(summary){ opacity:1; }
+
+div.q{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1), box-shadow .25s ease;
+  border-radius:var(--radius-sm);
+}
+div.q.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; box-shadow:0 6px 18px -6px color-mix(in srgb, var(--cool) 30%, transparent); }
+div.q > .qa{
+  display:block !important; overflow:hidden; min-height:0; opacity:0;
+  transition:opacity .3s ease .05s;
+}
+div.q.open > .qa{ opacity:1; }
+/* same pattern for the alternate class names used in sibling files of this series */
+.quiz-item{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.quiz-item.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+.quiz-item > .quiz-a{ display:block !important; overflow:hidden; min-height:0; opacity:0; transition:opacity .3s ease .05s; }
+.quiz-item.open > .quiz-a{ opacity:1; }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal, .gp-reveal-soft{opacity:1 !important; transform:none !important; transition:none !important}
+  header.hero{animation:none}
+  details.gate, details.quizset, details.qa, div.q, .quiz-item{transition:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+
+/* TRUE FROSTED GLASS — translucent panels over the ambient blobs */
+body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; }
+.module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+.diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+.fc-back, .mnemonic, figure.dia {
+  background: color-mix(in srgb, white 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
+  .module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+  .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+  .fc-back, .mnemonic, figure.dia { background: white !important; }
+}
+
+/* =========================================================================
+   CONSOLIDATED TOOLBAR + CHAPTERS DRAWER + DARK MODE SKIN
+   Replaces the old standalone back button + horizontal sticky chapter bar
+   (which used to visually collide) with one floating icon toolbar plus a
+   toggleable left-hand chapters drawer. Additive, reuses this file's tokens.
+   ========================================================================= */
+.gp-toolbar{
+  position:fixed; top:16px; left:16px; z-index:300;
+  display:flex; align-items:center; gap:4px;
+  background:rgba(255,255,255,.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border:1px solid rgba(0,0,0,.10); border-radius:999px; padding:6px; box-shadow:0 6px 22px rgba(0,0,0,.16);
+}
+.gp-tool-btn{
+  width:38px; height:38px; border-radius:50%; border:none; background:transparent; color:#1c1917;
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease; padding:0;
+}
+.gp-tool-btn:hover{ background:rgba(0,0,0,.07); transform:translateY(-1px) scale(1.06); }
+.gp-tool-btn:active{ transform:scale(.9); }
+.gp-toolbar .gp-back-btn{ position:static; box-shadow:none; border:none; background:transparent; }
+.gp-toolbar .gp-back-btn:hover{ box-shadow:none; }
+@media (max-width:640px){ .gp-toolbar{ top:10px; left:10px; padding:4px; gap:2px; } .gp-tool-btn{ width:33px; height:33px; font-size:15px; } }
+@media (prefers-reduced-motion:reduce){ .gp-tool-btn{ transition:none; } }
+
+/* the old horizontal sticky chapter bar is replaced by the drawer below */
+.sticky-nav, nav.toc{ display:none !important; }
+
+/* ---- chapters drawer ---- */
+.gp-drawer-overlay{
+  position:fixed; inset:0; z-index:298; background:rgba(10,12,16,.32);
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.gp-drawer-overlay.show{ opacity:1; pointer-events:auto; }
+.gp-drawer{
+  position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw); z-index:299;
+  background:rgba(245,244,240,.90); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-right:1px solid rgba(0,0,0,.08); box-shadow:8px 0 32px rgba(0,0,0,.18);
+  transform:translateX(-104%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; padding:18px 0;
+}
+.gp-drawer.show{ transform:none; }
+.gp-drawer-head{
+  display:flex; align-items:center; justify-content:space-between; padding:0 18px 14px;
+  border-bottom:1px solid rgba(0,0,0,.08); font-weight:700; font-size:.95rem; color:var(--ink, #1c1917);
+  margin-bottom:6px;
+}
+.gp-drawer-close{ border:none; background:transparent; font-size:16px; cursor:pointer; color:var(--ink-soft, #555); padding:4px; }
+.gp-drawer-links{ display:flex; flex-direction:column; overflow-y:auto; padding:6px 10px; gap:2px; }
+.gp-drawer-links a{
+  display:block; padding:.55rem .75rem; border-radius:10px; text-decoration:none;
+  color:var(--ink-soft, #44403c); font-size:.88rem; font-weight:500; transition:background .18s ease, color .18s ease;
+  white-space:normal;
+}
+.gp-drawer-links a:hover{ background:rgba(0,0,0,.06); }
+.gp-drawer-links a.thesis-link{ color:var(--cool, var(--accent)); font-weight:600; }
+.gp-drawer-links a.key{ color:var(--accent-dark, var(--accent)); font-weight:600; }
+@media (prefers-reduced-motion:reduce){ .gp-drawer, .gp-drawer-overlay{ transition:none; } }
+
+html[data-theme="dark"] .gp-toolbar{ background:rgba(30,33,37,.78); border-color:rgba(255,255,255,.14); }
+html[data-theme="dark"] .gp-tool-btn{ color:#e7e9ec; }
+html[data-theme="dark"] .gp-tool-btn:hover{ background:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-back-btn{ background:transparent !important; }
+html[data-theme="dark"] .gp-drawer{ background:rgba(30,33,37,.92); border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-head{ color:#e7e9ec; border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-close{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a:hover{ background:rgba(255,255,255,.08); }
+
+/* ---- dark mode skin for the page itself ---- */
+html[data-theme="dark"] body{ background: color-mix(in srgb, #15171a 88%, transparent) !important; color:#cdd1d6; }
+html[data-theme="dark"] main{ color:#cdd1d6; }
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] h4{ color:#eef0f2; }
+html[data-theme="dark"] strong{ color: color-mix(in srgb, var(--accent-darker, var(--accent, #d4a847)) 55%, white 45%) !important; }
+html[data-theme="dark"] main a:not(.gp-drawer-links a){ color: color-mix(in srgb, var(--cool, var(--accent, #0f6b6b)) 60%, white 40%); }
+
+html[data-theme="dark"] .module, html[data-theme="dark"] section.module, html[data-theme="dark"] .blurt-prompt,
+html[data-theme="dark"] .primers li, html[data-theme="dark"] .sched-day, html[data-theme="dark"] .sched .day,
+html[data-theme="dark"] .bridge, html[data-theme="dark"] .diagram-wrap, html[data-theme="dark"] details.qsec,
+html[data-theme="dark"] details.quizset, html[data-theme="dark"] details.gate, html[data-theme="dark"] details.qa,
+html[data-theme="dark"] .quiz-q, html[data-theme="dark"] .qq, html[data-theme="dark"] .fc-back,
+html[data-theme="dark"] .mnemonic, html[data-theme="dark"] figure.dia, html[data-theme="dark"] .q, html[data-theme="dark"] .quiz-item{
+  background: color-mix(in srgb, #1e2125 70%, transparent) !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .qa, html[data-theme="dark"] .quiz-a{ color:#c4cad0 !important; }
+html[data-theme="dark"] table, html[data-theme="dark"] td, html[data-theme="dark"] th{ color:#c7cbd1 !important; border-color: rgba(255,255,255,.10) !important; }
+html[data-theme="dark"] blockquote{ border-color: rgba(255,255,255,.18) !important; }
+html[data-theme="dark"] .site-footer, html[data-theme="dark"] footer{ color:#9aa1a8 !important; }
+</style>
+  <style id="mindmap-style">
+.mindmap-section .mm-inner { padding: 2.2rem 2rem 2.4rem; }
+
+.mm-intro { text-align: center; max-width: 700px; margin: 0 auto 2rem; }
+.mm-tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--cool-pale); color: var(--cool);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .35rem .85rem; border-radius: 999px; margin-bottom: .9rem;
+}
+.mm-intro h2 {
+  font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-2xl); color: var(--ink);
+  margin: 0 0 .6rem;
+}
+.mm-intro p { color: var(--ink-soft); font-size: var(--fs-sm); line-height: 1.6; margin: 0 0 1.1rem; }
+.mm-actions { display: flex; justify-content: center; gap: .6rem; }
+.mm-btn {
+  font-family: 'Inter', sans-serif; font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .03em; color: var(--accent-dark); background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: .5rem 1rem; cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.mm-btn:hover { background: var(--accent-pale); border-color: var(--accent); }
+
+.mm-root {
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  width: fit-content; margin: 0 auto;
+  background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+  color: white; font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+  font-size: var(--fs-lg); text-align: center; line-height: 1.15;
+  padding: .85rem 1.6rem; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.mm-root-emoji { font-size: 1.4em; }
+.mm-bus { width: 2px; height: 22px; background: var(--border); margin: 0 auto; }
+
+.mm-branches {
+  display: grid; gap: .65rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { .mm-branches { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .mm-branches { grid-template-columns: 1fr; } }
+
+.mm-branch {
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: white; align-self: start;
+  border-top: 3px solid var(--mm-c, var(--accent));
+}
+.mm-node {
+  width: 100%; display: flex; align-items: center; gap: .65rem;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Inter', sans-serif; color: var(--ink);
+}
+.mm-module {
+  padding: .8rem .9rem;
+}
+.mm-mnum {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 700;
+  color: white; background: var(--mm-c, var(--accent)); border-radius: 5px;
+  padding: 3px 6px; flex-shrink: 0;
+}
+.mm-mtext { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.mm-mtitle { font-weight: 700; font-size: var(--fs-sm); color: var(--ink); }
+.mm-msub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+.mm-chev {
+  flex-shrink: 0; color: var(--muted); font-size: .8rem;
+  transition: transform .25s ease;
+}
+.mm-module[aria-expanded="true"] .mm-chev,
+.mm-sub[aria-expanded="true"] .mm-chev { transform: rotate(90deg); color: var(--mm-c, var(--accent)); }
+.mm-module:hover, .mm-sub:hover { background: var(--cream); }
+
+.mm-children {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  background: var(--cream);
+  transition: grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.mm-children > div { overflow: hidden; min-height: 0; }
+.mm-branch:has(.mm-module[aria-expanded="true"]) .mm-children { grid-template-rows: 1fr; }
+
+.mm-twig { border-top: 1px solid var(--border); }
+.mm-twig:first-child { border-top: 1px solid var(--border); }
+.mm-sub { padding: .6rem .9rem .6rem 1.5rem; font-size: .82rem; font-weight: 600; align-items: flex-start; }
+.mm-stext { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.mm-stitle { line-height: 1.3; }
+.mm-ssub { font-size: .7rem; font-weight: 400; color: var(--muted); line-height: 1.4; white-space: normal; }
+.mm-sub .mm-chev { margin-top: 2px; }
+
+.mm-leaves {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  list-style: none; margin: 0; padding: 0 1.1rem 0 2.2rem;
+  transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1), padding .35s ease;
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.55;
+}
+.mm-leaves > li { overflow: hidden; min-height: 0; }
+.mm-twig:has(.mm-sub[aria-expanded="true"]) .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
+.mm-leaves li {
+  position: relative; padding: .25rem 0 .25rem .85rem; border-bottom: 1px dashed var(--border);
+}
+.mm-leaves li:last-child { border-bottom: none; }
+.mm-leaves li::before {
+  content: '•'; position: absolute; left: 0; color: var(--mm-c, var(--accent)); font-weight: 700;
+}
+.mm-leaves li.mm-eq {
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent-darker);
+  background: var(--accent-pale); border-radius: 4px; padding: .35rem .5rem .35rem .85rem;
+  border-bottom: none; margin: .2rem 0;
+}
+.mm-leaves li.mm-eq::before { content: 'ƒ'; }
+
+html[data-theme="dark"] .mm-branch { background: #1e2125; border-color: rgba(255,255,255,.10); }
+html[data-theme="dark"] .mm-children { background: #181a1d; }
+html[data-theme="dark"] .mm-twig { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-leaves li { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-node { color: #d7dce1; }
+html[data-theme="dark"] .mm-mtitle { color: #eef1f4; }
+html[data-theme="dark"] .mm-module:hover, html[data-theme="dark"] .mm-sub:hover { background: rgba(255,255,255,.05); }
+html[data-theme="dark"] .mm-leaves { color: #b7bec5; }
+html[data-theme="dark"] .mm-leaves li.mm-eq { background: rgba(176,116,16,.18); color: #e8c98a; }
+html[data-theme="dark"] .mm-btn { background: #1e2125; color: #e8c98a; border-color: rgba(255,255,255,.15); }
+html[data-theme="dark"] .mm-btn:hover { background: rgba(176,116,16,.18); }
+html[data-theme="dark"] .mm-tag { background: rgba(15,107,107,.2); color: #6fc6c6; }
+html[data-theme="dark"] .mm-intro h2 { color: #eef1f4; }
+html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-children, .mm-leaves, .mm-chev { transition: none; }
+}
+
+.mm-branch.mm-open > .mm-children { grid-template-rows: 1fr; }
+.mm-twig.mm-open > .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
 </style>
   <link rel="stylesheet" href="learning-interactive.css">
+  <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<div class="gp-toolbar" role="toolbar" aria-label="Page controls">
+  <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
+  <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+  <button id="gpDarkToggle" class="gp-tool-btn" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  <button id="gpRandomQuiz" class="gp-tool-btn" type="button" title="Random quiz question" aria-label="Open a random quiz question">🎲</button>
+  <button id="gpToolbarExpand" class="gp-tool-btn gp-toolbar-expand" type="button" title="More controls" aria-label="Show more controls" aria-expanded="false">›</button>
+  <div class="gp-toolbar-extra" id="gpToolbarExtraOuter">
+    <div class="gp-toolbar-extra-inner" id="gpToolbarExtra"></div>
+  </div>
+</div>
+<div class="gp-drawer-overlay" id="gpDrawerOverlay"></div>
+<aside class="gp-drawer" id="gpDrawer" aria-label="Chapter index">
+  <div class="gp-drawer-head">
+    <span>Chapters</span>
+    <button id="gpDrawerClose" class="gp-drawer-close" type="button" aria-label="Close chapters index">✕</button>
+  </div>
+  <nav class="gp-drawer-links" id="gpDrawerLinks"></nav>
+</aside>
+
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
 
 <header class="hero">
   <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
@@ -854,9 +1267,9 @@
     <g fill="#5fb892"><circle cx="260" cy="28" r="4"/><circle cx="560" cy="66" r="3.5"/><circle cx="900" cy="34" r="4"/></g>
   </svg>
   <div class="wrap">
-    <div class="eyebrow">Medhi &amp; Prakash · Experimental &amp; Clinical Pharmacology</div>
+    <div class="eyebrow">Pharmacology Learning System · Experimental &amp; Clinical Pharmacology</div>
     <h1>Experimental &amp; Clinical Pharmacology<br><em>an accelerated learning system</em></h1>
-    <p class="sub">The whole practical manual — laboratory animals, bioassay, isolated-tissue and in-vivo models, toxicology, biostatistics and clinical pharmacology — organized as a study guide: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies that make the methods stick, and a spaced-repetition plan to help you remember it. The experiments, models and calculations every postgraduate viva and practical exam is built on.</p>
+    <p class="sub">Everything from the practical manual — animal handling, bioassay, isolated-tissue and in-vivo work, toxicology, biostatistics and clinical pharmacology — packaged as a study system: 80/20 high-yield maps, blurting gates that demand recall before any reading happens, plain-language analogies to lock the methods in, and a spaced-repetition schedule so it actually sticks. This covers the experiments, models and calculations that postgraduate vivas and practicals are built around.</p>
     <div class="meta">
       <span class="chip">11 modules · full depth</span>
       <span class="chip">14 diagrams</span>
@@ -865,10 +1278,18 @@
       <span class="chip">13 quiz sets × 20 Q</span>
     </div>
   </div>
-</header>
+
+    <div class="gp-stat-row">
+      <span class="gp-stat-pill">11 modules · full depth</span>
+      <span class="gp-stat-pill">14 diagrams</span>
+      <span class="gp-stat-pill">blurting gates + analogies</span>
+      <span class="gp-stat-pill">28 flashcards</span>
+    </div>
+  </header>
 
 <nav class="toc">
   <div class="wrap">
+    <a href="#mindmap">🗺️ Mind Map</a>
     <a href="#method">The method</a>
     <a class="key" href="#m1">1 · Lab Animals &amp; Ethics</a>
     <a class="key" href="#m2">2 · Dose Calculation</a>
@@ -888,15 +1309,541 @@
 
 <main class="wrap">
 
-<section id="method" style="padding-top:30px">
-  <p class="lead">Each module runs four evidence-based stages. The blurting gate matters most — retrieving <em>before</em> you read is what builds durable memory. Modules are ordered by yield, Tier 1 first.</p>
-  <div class="method">
-    <div class="m m1"><h4>① 80/20 Map</h4><p>The 20% of ideas that explain 80% of the practical. The skeleton first.</p></div>
-    <div class="m m2"><h4>② Blurting Gate</h4><p>Dump everything you know <em>before</em> reading the notes. Active recall.</p></div>
-    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The method and mechanism in plain language, explained with a simple analogy.</p></div>
-    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>When to re-test, and one question linking this topic to another.</p></div>
+<section class="module mindmap-section" id="mindmap">
+<div class="mm-inner">
+  <div class="mm-intro">
+    <div class="mm-tag"><span>🗺️</span> Interactive Mind Map</div>
+    <h2>See the whole chapter at a glance</h2>
+    <p>Click a module below to branch into its subheadings — click a subheading to reveal the short topics and key formulas underneath it. Click anything again to collapse it.</p>
+    <div class="mm-actions">
+      <button id="mmExpandAll" class="mm-btn" type="button">Expand all</button>
+      <button id="mmCollapseAll" class="mm-btn" type="button">Collapse all</button>
+    </div>
   </div>
-  <p class="lead" style="margin-top:18px">Tier 1 (own cold): <strong>Bioassay, Isolated-tissue preparations, In-vivo screening models, Dose calculation, Toxicology, Biostatistics, Clinical PK</strong>. Tier 2: Laboratory instruments, Pyrogen testing &amp; cell culture. Tier 3 (framework only): Protocol/thesis writing, biomedical waste, recent advances.</p>
+
+  <div class="mindmap" id="mindmapTree">
+    <div class="mm-root"><span class="mm-root-emoji">🧪</span><span>Experimental &amp;<br>Clinical Pharmacology</span></div>
+    <div class="mm-bus" aria-hidden="true"></div>
+    <div class="mm-branches">
+
+      <!-- m1 -->
+      <div class="mm-branch" style="--mm-c:#0f6b6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m1">
+          <span class="mm-mnum">01</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Laboratory animals, handling &amp; ethics</span><span class="mm-msub">Choosing a species, dosing routes, blood draws, and the ethics committees that must approve any of it.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m1">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">Which animal suits which job, how routes rank by speed, volume limits, blood-draw sites, and the 3Rs/CPCSEA ethics framework.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Species choice depends on the job: mice/rats for screening, guinea pig for histamine-sensitive ileum work, rabbit for pyrogen/eye tests, frog for rectus abdominis and isolated heart.</li>
+              <li>Speed and predictability rank by route: IV fastest and fully absorbed, then IP, then SC/IM, then oral slowest and most variable.</li>
+              <li>Safe injection volume is capped by the animal's weight and route — exceeding it risks pain, a skewed result, or death.</li>
+              <li>Blood-draw site depends on volume needed and whether the animal must survive (retro-orbital/tail/saphenous for survival; cardiac puncture if terminal).</li>
+              <li>The 3Rs (Replacement, Reduction, Refinement) are enforced in India through CPCSEA oversight and the institution's own IAEC.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Common laboratory animals and their signature uses</span><span class="mm-ssub">A reference table matching each common lab animal to its typical weight and the experiments it's classically used for.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Mouse (20–30 g): general screening, analgesia tests, MES/PTZ seizure models, LD₅₀ toxicity.</li>
+              <li>Rat (150–250 g): behaviour tests, blood pressure, ulcer/colitis models, uterus &amp; fundus assays.</li>
+              <li>Guinea pig (300–600 g): ileum bioassay, tracheal chain, anaphylaxis, local anaesthetic wheal.</li>
+              <li>Rabbit (1.5–3 kg): pyrogen test, eye experiments, blood pressure.</li>
+              <li>Frog: rectus abdominis, isolated perfused heart, gastrocnemius–sciatic nerve prep.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Routes of administration — approximate maximum volumes</span><span class="mm-ssub">How much fluid can safely go into a mouse or rat by each route, and which routes are fast vs slow.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>IV (tail vein): ~0.2 mL mouse / ~0.5 mL rat — instant, 100% bioavailable, must be non-irritant.</li>
+              <li>IP: ~1 mL mouse / ~5 mL rat — fast, large volume, but passes through the liver's portal circulation first.</li>
+              <li>SC: ~0.5 mL mouse / ~1–2 mL rat — slow depot release at the scruff of the neck.</li>
+              <li>IM: ~0.05 mL mouse / ~0.1 mL rat — limited by small muscle mass.</li>
+              <li>Oral (gavage): ~0.5 mL mouse / ~5 mL rat — slowest and most variable route.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Routes — different on-ramps to the same highway</span><span class="mm-ssub">A plain-language picture of why IV, IP, SC/IM and oral dosing differ so much in speed and predictability.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>IV puts the drug straight onto the "highway" of systemic circulation — immediate, 100% of dose reaches the blood.</li>
+              <li>IP is a faster "slip-road" but runs past the liver's portal first-pass, so some drug is lost en route.</li>
+              <li>SC and IM act like quiet side-streets, releasing the drug slowly and steadily.</li>
+              <li>Oral dosing takes the longest route, through gut and liver — slowest, least predictable, yet the most common route for real medicines.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The 3Rs &amp; CPCSEA — the animal house's rulebook</span><span class="mm-ssub">The ethical principles behind every animal study, and which Indian bodies approve and police them.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Replacement: use cell culture, computer models, or simpler organisms instead of animals whenever possible.</li>
+              <li>Reduction: use no more animals than careful statistics genuinely require.</li>
+              <li>Refinement: cut pain and distress through analgesia, careful handling, and humane endpoints.</li>
+              <li>Every protocol needs sign-off from the institution's IAEC, operating under national CPCSEA guidelines.</li>
+              <li>Safety warning: overshooting safe injection volume can both harm the animal and distort the data; animals can also carry zoonotic infections, so gloving and hygiene matter.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m2 -->
+      <div class="mm-branch" style="--mm-c:#a8331f">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m2">
+          <span class="mm-mnum">02</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Dose calculation &amp; interspecies extrapolation</span><span class="mm-msub">Why a mouse dose can't just be carried over to a human in mg/kg, and the maths that converts one to the other.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m2">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">The core idea that doses should scale by body surface area, not weight, plus the Human Equivalent Dose formula.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Smaller animals have more surface area relative to mass and a faster metabolism, so they need a larger dose per kilogram.</li>
+              <li>K<sub>m</sub> factor = body weight (kg) ÷ surface area (m²); it's a constant for a given species.</li>
+              <li class="mm-eq">HED (mg/kg) = Animal dose (mg/kg) × (Animal K<sub>m</sub> ÷ Human K<sub>m</sub>)</li>
+              <li>Allometric scaling: physiological variables rise with body weight raised to a power — roughly 0.75 for metabolic rate, roughly 0.67 for surface area.</li>
+              <li>Paget &amp; Barnes tables give the same conversion using pre-built factors instead of calculating K<sub>m</sub> directly.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">K<sub>m</sub> factors (FDA guidance)</span><span class="mm-ssub">A reference table of the K<sub>m</sub> conversion number for each common species, used to calculate a Human Equivalent Dose.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Mouse 0.02 kg → K<sub>m</sub> = 3; Rat 0.15 kg → K<sub>m</sub> = 6.</li>
+              <li>Guinea pig 0.40 kg → K<sub>m</sub> = 8; Rabbit 1.8 kg → K<sub>m</sub> = 12.</li>
+              <li>Monkey 3 kg → K<sub>m</sub> = 12; Dog 10 kg → K<sub>m</sub> = 20.</li>
+              <li>Human adult 60 kg → K<sub>m</sub> = 37; Child 20 kg → K<sub>m</sub> = 25.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Why surface area wins over weight</span><span class="mm-ssub">The biological reason small animals burn through drugs faster, worked through with a real mouse-to-human dose example.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>A mouse has far more surface area relative to its bulk, so it sheds heat and clears drug much faster than a person.</li>
+              <li>Surface area itself rises roughly as (body weight)^0.67, which is exactly what the K<sub>m</sub> factor captures.</li>
+              <li class="mm-eq">Worked example: 50 mg/kg mouse dose × (3 ÷ 37) = 4.05 mg/kg HED ≈ 243 mg at 60 kg; ÷10 safety factor ≈ 24 mg first-in-human dose.</li>
+              <li>Warning: carrying a dose across species by plain mg/kg overdoses the human — always route through K<sub>m</sub> and then apply a safety factor.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m3 -->
+      <div class="mm-branch" style="--mm-c:#5b4a7a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m3">
+          <span class="mm-mnum">03</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Bioassay</span><span class="mm-msub">How an unknown drug's strength is measured by comparing its biological effect against a known standard.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m3">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">The core bioassay principle, the graded-vs-quantal response split, the four matching methods, and the antagonist assay.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Core principle: the unknown is measured against a standard under matched conditions, reading out the biological response itself.</li>
+              <li>Graded response: a continuous, dose-dependent reading on one tissue (e.g. how much an ileum contracts).</li>
+              <li>Quantal (all-or-none) response: each animal simply responds or doesn't; probit analysis on this data gives ED₅₀/LD₅₀.</li>
+              <li>The four matching methods: matching, bracketing, interpolation, and multiple-point (three-point/four-point) assays.</li>
+              <li>Antagonist bioassay: strength expressed as pA₂, derived from how far the agonist's dose–response curve shifts right (Schild analysis).</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Types of bioassay at a glance</span><span class="mm-ssub">A side-by-side comparison of the five ways to compare an unknown sample against a known standard.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Matching: adjust the unknown until its response visually matches a known standard dose — quick but crude.</li>
+              <li>Bracketing: find two standard doses that respond just above and just below the unknown.</li>
+              <li>Interpolation: read the unknown's response straight off the standard's log dose–response curve (most common method).</li>
+              <li>Three-point assay: two standard doses plus one unknown, allowing a validity (parallelism) check.</li>
+              <li>Four-point (2+2) assay: two doses each of standard and unknown — most accurate, tests parallelism and gives a potency ratio with statistics.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Graded vs quantal — two different ways to score a response</span><span class="mm-ssub">The distinction between measuring one tissue's strength of response versus counting how many animals cross a yes/no threshold.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Graded response works like a dimmer switch: the same tissue contracts more as dose climbs, tracing a full dose–response curve.</li>
+              <li>Quantal response works like a light switch across a population: each animal is marked yes/no, and the proportion crossing the threshold at each dose builds a cumulative curve.</li>
+              <li>The ED₅₀ or LD₅₀ emerges from that cumulative quantal curve.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The four matching methods — narrowing in on the unknown</span><span class="mm-ssub">How each of the four comparison methods actually pins down the unknown's strength, and why parallel curves matter.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Matching simply eyeballs the two responses until they look equal.</li>
+              <li>Bracketing pins the unknown between one dose that's clearly larger and one that's clearly smaller.</li>
+              <li>Interpolation treats the full standard curve as a measuring ruler — but only the linear (~20–80%) middle stretch can be trusted.</li>
+              <li>Multiple-point assays alternate standard and unknown doses; if their log dose–response lines run parallel, the gap between them gives the potency ratio directly — and that parallelism is itself proof the assay is valid.</li>
+              <li>Warning: a bioassay only holds up when standard and unknown act through the same mechanism on the same tissue — non-parallel curves mean the potency figure is meaningless.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m4 -->
+      <div class="mm-branch" style="--mm-c:#b9791a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m4">
+          <span class="mm-mnum">04</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Isolated tissue preparations (in vitro)</span><span class="mm-msub">How a living strip of organ tissue is kept alive outside the body in an organ bath and used to test drug responses.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m4">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">What an organ bath needs to keep tissue alive, the role of the lever, and the standard dosing cycle.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>The organ bath needs the right PSS, correct temperature (37°C mammalian, 32°C rat uterus, room temp for frog), constant aeration, and a fixed contact time.</li>
+              <li>Which PSS to use depends on the tissue — Tyrode, Ringer, Krebs, De Jalon and Locke differ in ions, glucose, and buffer.</li>
+              <li>Every tissue responds to a characteristic agonist through a specific receptor — this is what the bioassay rests on.</li>
+              <li class="mm-eq">Magnification = writing-arm length ÷ tissue-arm length</li>
+              <li>Dose cycle: add dose, record peak, wash, then rest before the next dose — this sequence must stay constant for a valid curve.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Physiological salt solutions — which fluid for which tissue</span><span class="mm-ssub">A reference table matching the correct bathing solution, temperature, and aeration to each tissue type.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Tyrode — guinea-pig ileum/mammalian gut, glucose + bicarbonate buffer, air or carbogen, 37°C.</li>
+              <li>Krebs(-Henseleit) — most mammalian smooth/cardiac muscle, bicarbonate buffer + glucose, carbogen (95% O₂/5% CO₂), 37°C.</li>
+              <li>De Jalon — rat uterus, low Ca²⁺, needs an oestrogen-primed animal, air, 32°C.</li>
+              <li>Ringer — frog heart/rectus and other amphibian tissue, simple salts, no glucose needed, air, room temperature.</li>
+              <li>Locke — mammalian (rabbit) heart, glucose-containing, air/O₂, 37°C.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Signature tissue–agonist–receptor pairs</span><span class="mm-ssub">Which drug classically triggers which tissue preparation, and via which receptor — a frequently tested matching list.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Guinea-pig ileum responds to histamine (H₁) and acetylcholine (muscarinic M₃).</li>
+              <li>Rat fundus strip responds to 5-HT/serotonin via 5-HT₂ receptors.</li>
+              <li>Rat uterus (De Jalon) responds to acetylcholine, oxytocin, and 5-HT via M₃/oxytocin receptors.</li>
+              <li>Guinea-pig atria respond to adrenaline (rate &amp; force) via β₁-adrenergic receptors.</li>
+              <li>Frog rectus abdominis responds to acetylcholine via depolarising nicotinic (N<sub>M</sub>) receptors.</li>
+              <li>Guinea-pig tracheal chain responds to histamine/agonists (H₁) and relaxants (β₂).</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The organ bath functions as life support</span><span class="mm-ssub">Why isolated tissue needs ions, glucose, oxygen, pH buffering and warmth, and what goes wrong if any of these is missing.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Removed tissue needs everything blood normally supplied: ions for excitability, glucose for fuel, oxygen via aeration, buffered pH, and matching body temperature.</li>
+              <li>Bicarbonate buffers only hold pH 7.4 as long as CO₂ keeps bubbling through — which is why Krebs solution specifically needs carbogen, not plain air.</li>
+              <li>Warning: a flat or fading trace usually means a failed preparation (wrong PSS, no aeration, wrong temperature, tissue fatigue), not an inactive drug — always confirm the tissue still responds to a standard dose first.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m5 -->
+      <div class="mm-branch" style="--mm-c:#2e8e8e">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m5">
+          <span class="mm-mnum">05</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Laboratory instruments &amp; analytical techniques</span><span class="mm-msub">The tools used to separate a mixture into its components and then measure how much of a target substance is present.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m5">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">The two jobs every analytical technique does — separating a mixture, or detecting/measuring a component — and the main tools for each.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Chromatography (TLC, column, GC, HPLC) works like a race between a mobile phase carrying the sample and a stationary phase holding it back.</li>
+              <li>HPLC is column chromatography run under high pressure — the standard tool for measuring drug levels in plasma/urine, underpinning most PK assays.</li>
+              <li class="mm-eq">Beer–Lambert law: A = ε·c·l (absorbance is proportional to concentration)</li>
+              <li>ELISA measures proteins/hormones/antibodies via an enzyme-driven colour change; PCR amplifies and quantifies specific DNA/RNA.</li>
+              <li>Centrifugation separates components by density — plasma from cells, or organelles via differential/density-gradient spins.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Technique → what it measures → principle</span><span class="mm-ssub">A reference table linking each analytical technique to what it's used for and the physical principle behind it.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>TLC/paper chromatography: identity and purity (Rf value) via differential migration on a thin layer.</li>
+              <li>Column &amp; HPLC: drug concentration in plasma/urine via high-pressure partition between phases.</li>
+              <li>Gas chromatography (GC): volatile compounds via vapour-phase separation, often paired with mass spec (GC-MS).</li>
+              <li>UV–Vis spectrophotometry: concentration of a coloured/UV-absorbing solute via the Beer–Lambert law.</li>
+              <li>ELISA: proteins/hormones/antibodies via enzyme-linked antigen–antibody colour reaction.</li>
+              <li>PCR/RT-PCR: specific DNA/RNA via thermal-cycle amplification; electrophoresis separates by size and charge; centrifuge separates by density.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Chromatography — a contest that turns into a race</span><span class="mm-ssub">Why molecules that stick to the column come out later, and how a detector peak's area tells you how much of each compound is present.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>The mobile phase carries molecules forward; the stationary phase tries to hold them back — whichever pulls harder wins for that molecule.</li>
+              <li>Molecules clinging to the stationary phase fall behind, so a mixture that entered as one blend exits spread out over time.</li>
+              <li>A detector records each compound as a peak; the peak's area corresponds to the quantity present.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Beer–Lambert — using colour as a measuring stick</span><span class="mm-ssub">How a spectrophotometer turns the darkness of a coloured solution into an exact concentration reading.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li class="mm-eq">A = ε·c·l — absorbance rises in lockstep with concentration and path length.</li>
+              <li>Known standards build a calibration curve; the unknown's absorbance is mapped onto that curve to read off its concentration.</li>
+              <li>Warning: a reading above the topmost standard (outside the linear range) falsely reads low — dilute and rerun rather than trusting it directly.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m6 -->
+      <div class="mm-branch" style="--mm-c:#3a6b3a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m6">
+          <span class="mm-mnum">06</span>
+          <span class="mm-mtext"><span class="mm-mtitle">In-vivo animal disease &amp; screening models</span><span class="mm-msub">How diseases like epilepsy, hypertension, or inflammation are artificially recreated in animals to test new drugs.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m6">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield CNS models (most examined)</span><span class="mm-ssub">The classic brain/behaviour tests used to screen for muscle relaxants, stimulants, anticonvulsants, and analgesics.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Rotarod: fall-off time measures motor coordination — screens muscle relaxants and sedatives.</li>
+              <li>Actophotometer: locomotor count distinguishes CNS stimulants (increase) from depressants (decrease).</li>
+              <li>MES (maximal electroshock): abolishing tonic hind-limb extension screens drugs for grand-mal epilepsy (e.g. phenytoin).</li>
+              <li>PTZ (pentylenetetrazole): raised seizure threshold screens drugs for absence/myoclonic epilepsy (e.g. ethosuximide, valproate).</li>
+              <li>Hot-plate/tail-flick = central (opioid) analgesia; acetic-acid writhing = peripheral (NSAID) analgesia; Straub tail = opioid sign; haloperidol catalepsy = antipsychotic sign.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Models by system — induce → screen → measure</span><span class="mm-ssub">A reference table of how cardiovascular, GI, and inflammation diseases are induced in animals and what's measured.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>CVS: isoproterenol injection models MI (screens cardioprotectives); DOCA+salt models hypertension; FeCl₃ on a vessel models thrombosis.</li>
+              <li>GIT: pylorus ligation/ethanol/NSAID models ulcers; TNBS or acetic acid models colitis; cerulein models pancreatitis.</li>
+              <li>Inflammation: carrageenan into the paw models acute inflammation (measures paw oedema volume); cotton pellet implant models chronic inflammation (measures granuloma dry weight).</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">A model is a rehearsal of the disease</span><span class="mm-ssub">Why a good animal model needs to actually resemble the human disease's mechanism, not just look similar on the surface.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Since you can't wait for natural disease, you stage a controlled rehearsal of one measurable feature (an electric jolt for a seizure, an irritant for inflammation).</li>
+              <li>MES evokes a spreading tonic–clonic seizure (like grand mal), so drugs blocking its spread (phenytoin) score positive; PTZ lowers seizure threshold (like absence epilepsy), so threshold-raising drugs (ethosuximide) score positive there.</li>
+              <li>Warning: a model has face validity (looks like the disease), construct validity (same mechanism), and predictive validity (results translate to patients) — many compounds fail in humans because the model only had face validity.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m7 -->
+      <div class="mm-branch" style="--mm-c:#16344a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m7">
+          <span class="mm-mnum">07</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Toxicology study &amp; safety testing</span><span class="mm-msub">How a new drug is tested for harm — across increasing durations of exposure, and for special risks like cancer or birth defects.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m7">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">The toxicity testing duration ladder, the special studies on top of it, and how LD₅₀ is defined and now tested more humanely.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Acute toxicity: single (or 24h) dose, gives LD₅₀ and dose range, tested in at least 2 species.</li>
+              <li>Sub-acute/sub-chronic: repeated dosing for ~14–90 days to find target organs and a NOAEL (no-observed-adverse-effect level).</li>
+              <li>Chronic: months to a lifetime, supports long-term human use.</li>
+              <li>Special toxicology: reproductive/teratogenicity (Segments I–III), genotoxicity (Ames test), carcinogenicity (2-year rodent bioassay).</li>
+              <li>LD₅₀ = dose killing 50% of animals; modern OECD guidance prefers humane fixed-dose/up-and-down methods using far fewer animals, all under GLP.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Study type → duration → purpose</span><span class="mm-ssub">A reference table laying out each toxicity study's typical duration and exactly what it's meant to find out.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Acute (single dose/24h): LD₅₀, dose range, immediate target organs.</li>
+              <li>Sub-acute (14–28 days): repeated-dose target organs, dose selection.</li>
+              <li>Sub-chronic (~90 days): NOAEL, organ toxicity with extended exposure.</li>
+              <li>Chronic (6 months–2 years): long-term safety for chronic human use.</li>
+              <li>Reproductive (Seg I–III): teratogenicity and reproductive harm; Genotoxicity (Ames etc.): mutagenic potential; Carcinogenicity (~2 yr rodent): tumour induction.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">LD₅₀ — the population's tipping point</span><span class="mm-ssub">What LD₅₀ actually means statistically, and why a steep versus shallow dose–mortality curve tells you something different.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>The fraction of animals dying climbs along an S-shaped dose–mortality curve as dose increases.</li>
+              <li>LD₅₀ is the dose at that curve's midpoint — the single number summarising acute lethality.</li>
+              <li>A steep curve means the population is uniform in sensitivity; a shallow curve means wide variation.</li>
+              <li>The same logic with a therapeutic endpoint gives ED₅₀; the ratio of LD₅₀ to ED₅₀ is the therapeutic index.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The Ames test — borrowing bacteria to spot mutagens</span><span class="mm-ssub">How a cheap bacterial test predicts whether a chemical might cause cancer in humans, long before an expensive rodent study.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Most carcinogens are also mutagens (they damage DNA).</li>
+              <li>The Ames test uses Salmonella strains that can't make histidine; if the test chemical mutates their DNA back to working, colonies grow on histidine-free plates.</li>
+              <li>More colonies = more mutagenic — a fast, cheap early-warning before committing to a 2-year rodent carcinogenicity study.</li>
+              <li>Warning: classical LD₅₀ needs large animal numbers and varies by species/strain/sex/age/route, so regulators now favour fixed-dose and up-and-down methods (OECD), all under Good Laboratory Practice (GLP).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m8 -->
+      <div class="mm-branch" style="--mm-c:#7a8a94">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m8">
+          <span class="mm-mnum">08</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Pyrogen testing &amp; cell culture</span><span class="mm-msub">Proving an injectable medicine won't cause fever, and growing living cells outside the body for testing.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m8">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">What pyrogens are, the two main tests for detecting them, and the basics of growing and measuring cells in culture.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Pyrogens are fever-producing contaminants, chiefly bacterial endotoxin (lipopolysaccharide) from Gram-negative cell walls.</li>
+              <li>Rabbit pyrogen test: inject the product IV into rabbits and measure the rise in body temperature (in-vivo, whole-response test).</li>
+              <li>LAL (Limulus Amebocyte Lysate)/Bacterial Endotoxin Test: endotoxin clots a lysate from horseshoe-crab blood — fast, sensitive, in-vitro, the modern replacement.</li>
+              <li>Cell culture: primary (fresh, finite) vs continuous/immortal lines, grown in medium + serum at 37°C/5% CO₂ under strict aseptic technique.</li>
+              <li>MTT assay measures viability: living cells reduce yellow MTT dye to purple formazan, and absorbance is proportional to viable cell count.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Pyrogens — the heat-stable saboteur</span><span class="mm-ssub">Why "sterile" isn't the same as "pyrogen-free," and how the horseshoe-crab-based LAL test catches what sterilising misses.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Sterilising kills bacteria but endotoxin (their cell-wall debris) is heat-stable and survives autoclaving.</li>
+              <li>Even dead bacteria leave behind endotoxin that triggers fever through the host's own cytokines.</li>
+              <li>The LAL test exploits horseshoe-crab immunity: their blood cells clot on contact with endotoxin, so a clot in the tube signals contamination.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Cell culture — a body in a bottle</span><span class="mm-ssub">What conditions cells need to survive outside the body, and how the MTT assay tells you whether a drug is killing them.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Growing cells outside the body requires a nutrient medium, serum (FBS) for growth factors, buffered pH via 5% CO₂, and 37°C warmth — all kept sterile.</li>
+              <li>A single contaminating bacterium or fungus can outgrow the cell culture overnight if asepsis fails.</li>
+              <li>In the MTT assay, only metabolically active cells turn the dye purple — a darker well means more living cells, and a drug that lightens the well is cytotoxic.</li>
+              <li>Warning: contamination (bacteria, fungi, mycoplasma) is the most common disaster in culture and is only prevented by aseptic technique, not cured afterward.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m9 -->
+      <div class="mm-branch" style="--mm-c:#102634">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m9">
+          <span class="mm-mnum">09</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Biostatistics in pharmacology</span><span class="mm-msub">How to pick the right statistical test, and what a p-value really tells you about whether a result is real.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m9">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">The three questions that decide which statistical test to use, plus the meaning of the p-value and the two types of error.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Data types: qualitative (nominal &amp; ordinal) vs quantitative (discrete &amp; continuous) — this drives everything else.</li>
+              <li>Descriptive statistics (mean±SD, median, proportion) vs inferential statistics (tests and confidence intervals that generalise to the population).</li>
+              <li>Parametric tests (t-test, ANOVA, Pearson) suit normal data; non-parametric tests (Mann-Whitney, Wilcoxon, Kruskal-Wallis, Spearman) suit skewed/ordinal data.</li>
+              <li>Categorical comparisons use chi-square (large counts) or Fisher's exact test (small counts).</li>
+              <li class="mm-eq">Power = 1 − β; Type I error = α (false positive); Type II error = β (false negative)</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Scenario → test</span><span class="mm-ssub">A reference table matching common experimental comparisons to their correct parametric and non-parametric tests.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>2 independent groups: unpaired (Student's) t-test, or Mann-Whitney U if non-parametric.</li>
+              <li>2 paired measurements: paired t-test, or Wilcoxon signed-rank if non-parametric.</li>
+              <li>≥3 independent groups: one-way ANOVA (+post-hoc), or Kruskal-Wallis if non-parametric.</li>
+              <li>≥3 paired/repeated groups: repeated-measures ANOVA, or Friedman if non-parametric.</li>
+              <li>Association of 2 numerical variables: Pearson correlation/regression, or Spearman rank if non-parametric; proportions/categories: chi-square or Fisher's exact.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The p-value — how surprised should you be?</span><span class="mm-ssub">A plain explanation of what a p-value actually measures, why running too many t-tests inflates false positives, and the dangers of underpowered studies.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>The p-value answers: if the drug truly did nothing, how often would chance alone produce a difference this big?</li>
+              <li>It is NOT the probability the drug works, and a non-significant result doesn't prove there's no effect — it may just mean too few animals (low power).</li>
+              <li>Running many t-tests instead of one ANOVA inflates the false-positive rate (three tests ≈ 14% overall risk instead of 5%).</li>
+              <li>Warning: testing many outcomes guarantees some "significant" results by chance (p-hacking) — pre-specify the primary endpoint and calculate sample size before the experiment, not after.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m10 -->
+      <div class="mm-branch" style="--mm-c:#8a3e6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m10">
+          <span class="mm-mnum">10</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Clinical pharmacology &amp; PK/PD</span><span class="mm-msub">Reading the plasma drug-concentration curve in real patients, and knowing which drugs need their blood levels monitored.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m10">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">The four key numbers read off a plasma concentration-time curve, and when therapeutic drug monitoring becomes necessary.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>C<sub>max</sub> and T<sub>max</sub> describe absorption — a faster, bigger peak means faster, fuller absorption.</li>
+              <li class="mm-eq">Bioavailability F = AUC(oral) ÷ AUC(IV)</li>
+              <li>t½ (from the terminal slope) sets the dosing interval and time to steady state (≈4–5 half-lives).</li>
+              <li>Compartment models: one-compartment (single exponential decay) vs two-compartment (rapid distribution then slower elimination).</li>
+              <li>TDM (therapeutic drug monitoring) is reserved for narrow-therapeutic-index drugs where blood level predicts effect/toxicity better than dose alone.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Drugs that classically need therapeutic drug monitoring</span><span class="mm-ssub">A reference list of drugs where blood-level testing is routine because the safe and toxic doses are dangerously close.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Digoxin: narrow window — toxicity (arrhythmia) overlaps with the therapeutic level.</li>
+              <li>Lithium: very narrow index, renal handling, dangerous toxicity.</li>
+              <li>Phenytoin: zero-order kinetics — small dose changes cause large level changes.</li>
+              <li>Theophylline (narrow window, many interactions); aminoglycosides (nephro/ototoxic, trough levels guide safety); vancomycin; cyclosporine/tacrolimus; carbamazepine/valproate.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Representative clinical (volunteer) experiments</span><span class="mm-ssub">Examples of the kinds of drug-effect experiments run in healthy human volunteers across different body systems.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Cardiovascular: standardised BP measurement, effect of posture/exercise/propranolol on BP/HR, GTN response, ECG.</li>
+              <li>Respiratory: salbutamol vs placebo on PEFR; lung function testing after exercise.</li>
+              <li>Kidney: frusemide effect on urine volume and Na⁺/K⁺ excretion, comparing diuretic classes.</li>
+              <li>Eye (autonomic): hyoscine/tropicamide (mydriatic) vs pilocarpine (miotic) effects on pupil diameter and accommodation.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Reading the curve</span><span class="mm-ssub">A plain explanation of what the rise, peak, and fall of the plasma drug curve represent, and how half-life is calculated from it.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>The climb is absorption outpacing elimination; the peak (C<sub>max</sub> at T<sub>max</sub>) is where they balance; the fall is elimination taking over.</li>
+              <li>AUC (area under the curve) is total exposure, estimated by summing thin trapezoids between sample points.</li>
+              <li class="mm-eq">t½ = 0.693 / k (k = elimination rate constant from the log-linear terminal slope)</li>
+              <li>Warning: two formulations can share the same AUC yet differ in C<sub>max</sub>/T<sub>max</sub> — important when speed of onset matters; a TDM level is only meaningful if drawn at the right time (steady state, correct trough).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- m11 -->
+      <div class="mm-branch" style="--mm-c:#4a6fa5">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m11">
+          <span class="mm-mnum">11</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Protocol &amp; thesis writing, biomedical waste &amp; recent advances</span><span class="mm-msub">The paperwork and rules that wrap around every experiment, plus newer drug-discovery methods that need less animal testing.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m11">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">The standard structure of a research protocol, biomedical waste rules, and what impact factor and computational pharmacology mean.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Protocol anatomy: title → rationale/background → aim &amp; objectives → hypothesis → literature review → methodology → ethics/IAEC → references.</li>
+              <li>Biomedical waste (India, BMW Rules 2016) uses four colour-coded streams for disposal.</li>
+              <li>Impact factor = average citations a journal's recent articles receive per year — a metric of the journal, not of any one paper.</li>
+              <li>Computational pharmacology: in-silico screening, molecular docking, and QSAR predict drug activity before any wet-lab experiment.</li>
+              <li>New paradigms: translational medicine (bench to bedside), reverse pharmacology (clinical lead to mechanism), microdosing/Phase 0 (a sub-pharmacological human dose to read early PK).</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Biomedical waste — colour coding (BMW Rules 2016)</span><span class="mm-ssub">A reference table of which bin colour each type of medical/lab waste goes into, and how it gets treated afterward.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Yellow: anatomical waste, soiled waste, expired medicines, chemical/microbiology waste → incineration/deep burial.</li>
+              <li>Red: contaminated recyclable plastics (tubing, IV sets, gloves, catheters) → autoclave/disinfect, then recycle.</li>
+              <li>White (puncture-proof): sharps — needles, syringes, scalpels, blades → autoclave/dry heat, then shred.</li>
+              <li>Blue: broken/discarded glass and metallic body implants → disinfect, then recycle.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The protocol is a blueprint; the colours are a sorting reflex</span><span class="mm-ssub">Why every decision in a study must be made before it starts, and the logic behind the four waste-bin colours.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>A protocol forces every decision — question, design, sample size, success criteria — to be fixed before any animal or money is spent, so the study can't be quietly reshaped to fit the result.</li>
+              <li>Waste colours are a safety reflex: yellow for biological/chemical material to destroy, red for disinfect-and-reuse plastics, white for anything that can stab you, blue for glass and metal.</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Microdosing &amp; in-silico — failing cheaply and early</span><span class="mm-ssub">How computer modelling and tiny test doses in humans let researchers drop a failing drug before committing to expensive full trials.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>In-silico docking ranks candidate molecules against a target's structure before any chemical synthesis.</li>
+              <li>Microdosing (Phase 0) gives a human a dose so tiny (~1%) it can't cause a pharmacological effect, yet ultra-sensitive assays can still trace its PK.</li>
+              <li>This lets researchers drop a drug with poor human kinetics before committing to an expensive full Phase I trial.</li>
+              <li>Warning: impact factor rates a journal, not the quality of any single paper — and waste segregation must happen at the point of generation, not afterward.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="method" style="padding-top:30px">
+  <p class="lead">Every module follows the same four-stage, evidence-based sequence. The blurting gate is the part that counts most — pulling information out of memory <em>before</em> you read is what makes it durable. Modules run in order of exam yield, Tier 1 first.</p>
+  <div class="method">
+    <div class="m m1"><h4>① 80/20 Map</h4><p>The handful of ideas that account for most of the practical's substance — the skeleton, laid out first.</p></div>
+    <div class="m m2"><h4>② Blurting Gate</h4><p>Empty out everything you already know <em>before</em> touching the notes. This is active recall.</p></div>
+    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The method and the underlying mechanism, put in everyday words and tied to a simple analogy.</p></div>
+    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>A schedule for when to re-test yourself, plus a question that connects this topic to the next.</p></div>
+  </div>
+  <p class="lead" style="margin-top:18px">Tier 1 (know cold): <strong>Bioassay, Isolated-tissue preparations, In-vivo screening models, Dose calculation, Toxicology, Biostatistics, Clinical PK</strong>. Tier 2: Laboratory instruments, Pyrogen testing &amp; cell culture. Tier 3 (just know the framework): Protocol/thesis writing, biomedical waste, recent advances.</p>
 </section>
 
 <!-- ============ MODULE 1 — LAB ANIMALS, HANDLING & ETHICS ============ -->
@@ -912,14 +1859,14 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Every experiment begins with three decisions: <strong>which animal, by which route, and under whose ethical approval</strong>. Master species selection, the routes-and-volumes table, blood-collection sites and the <strong>3Rs / CPCSEA</strong> framework and you can set up almost any protocol in the manual.</div>
+    <div class="pillar">Three choices have to be made before any experiment can start: <strong>the animal, the route, and who signs off ethically</strong>. Once you have a handle on choosing species, the routes-and-volumes table, where to draw blood, and the <strong>3Rs / CPCSEA</strong> framework, you can put together almost any protocol in the manual.</div>
     <h4>The high-yield elements</h4>
     <ul>
-      <li><strong>Species are chosen for fitness-to-purpose:</strong> mouse &amp; rat for general screening, guinea pig for the histamine-sensitive ileum and anaphylaxis, rabbit for pyrogen testing and the eye, frog for the rectus abdominis and isolated heart.</li>
-      <li><strong>Route dictates speed &amp; predictability:</strong> IV (instant, 100% bioavailable) &gt; IP (fast, large volume, but portal first-pass) &gt; SC/IM &gt; oral (slowest, variable).</li>
-      <li><strong>Injection volume is capped</strong> by body weight and route — exceeding it causes pain, dilution artefacts or death.</li>
-      <li><strong>Blood collection</strong> site depends on volume needed and whether the animal must survive (retro-orbital, tail vein, saphenous vs terminal cardiac puncture).</li>
-      <li><strong>Ethics is non-negotiable:</strong> the <strong>3Rs</strong> (Replacement, Reduction, Refinement) operationalised in India through <strong>CPCSEA</strong> and the institutional <strong>IAEC</strong>.</li>
+      <li><strong>The species depends on the job at hand:</strong> mice and rats cover general screening, the guinea pig is used for its histamine-sensitive ileum and for anaphylaxis work, the rabbit is reached for in pyrogen testing and eye studies, and the frog supplies the rectus abdominis and the isolated heart.</li>
+      <li><strong>Speed and predictability track the route:</strong> IV sits at the top (instant, fully bioavailable), then IP (fast and able to take a larger volume, though it passes through the portal circulation first), then SC/IM, with oral trailing as the slowest and most variable.</li>
+      <li><strong>How much you can inject is limited</strong> by the animal's weight and the chosen route — go over that limit and you risk pain, a diluted/skewed result, or the animal's death.</li>
+      <li><strong>Where you draw blood</strong> comes down to how much you need and whether the animal has to live afterward (retro-orbital, tail vein, or saphenous for survival; terminal cardiac puncture otherwise).</li>
+      <li><strong>Ethical clearance isn't optional:</strong> the <strong>3Rs</strong> (Replacement, Reduction, Refinement) are put into practice in India through <strong>CPCSEA</strong> oversight and the institution's own <strong>IAEC</strong>.</li>
     </ul>
     <figure>
     <div class="fig-title">Figure 1·1 — The 3Rs and the approval pathway</div>
@@ -967,12 +1914,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">You are handed a 25 g mouse and must give a drug intraperitoneally, then collect a survival blood sample an hour later. Before reading on, blurt out: the five route abbreviations and roughly the maximum volume you could give a mouse by each; two survival blood-collection sites; and the committee whose approval the whole protocol needs. Where does your map go blank?</div>
-    <h4 style="color:var(--coral)">Guiding primers — ask "why," not "what"</h4>
+    <div class="blurt-prompt">Picture a 25 g mouse: you need to dose it intraperitoneally, then draw a survival blood sample an hour afterward. Without looking ahead, try to recall: all five route abbreviations and a rough ceiling on volume for each in a mouse; two sites you could draw survival blood from; and which committee has to clear the protocol in the first place. Notice where your recall gives out.</div>
+    <h4 style="color:var(--coral)">Guiding primers — push for "why," not "what"</h4>
     <ul class="primers">
-      <li>Why is IP absorption faster than SC but less predictable than IV — what does the portal circulation do to an IP dose?</li>
-      <li>Why does the same drug need a higher dose <em>per kg</em> in a mouse than in a human?</li>
-      <li>Why is euthanasia by gradually rising CO₂ considered more humane than a sudden high concentration?</li>
+      <li>What does the portal circulation do to a dose given IP that makes it faster than SC yet less predictable than IV?</li>
+      <li>Why does a mouse need a larger dose <em>per kg</em> of body weight than a human would, for the same drug?</li>
+      <li>What makes a slow, gradual rise in CO₂ a more humane euthanasia method than jumping straight to a high concentration?</li>
     </ul>
   </div>
 
@@ -980,22 +1927,22 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Routes — a race to the bloodstream</h4>
-    <p>Think of each route as a different <strong>on-ramp to the highway</strong> of the systemic circulation. <strong>IV</strong> drops the car straight onto the highway (instant, full speed, 100% bioavailable). <strong>IP</strong> is a wide slip-road that funnels through the liver toll-booth first (portal first-pass), so it is fast and takes a big volume but loses some drug. <strong>SC and IM</strong> are quiet side-streets — slow, steady release. <strong>Oral</strong> is the scenic route through the gut and liver: slowest and most variable, but the way real medicines are usually taken.</p>
-    <h4>The 3Rs &amp; CPCSEA — the rules of the animal house</h4>
-    <p>The <strong>3Rs</strong> are the ethical operating system: <strong>Replacement</strong> (use cell culture, computer models or lower organisms if you possibly can), <strong>Reduction</strong> (use the smallest number of animals that still gives valid statistics — this is why good experimental design and sample-size calculation <em>is</em> an ethical act), and <strong>Refinement</strong> (minimise pain and distress — analgesia, gentle handling, humane endpoints). In India the institutional <strong>IAEC</strong> approves and monitors each protocol under national <strong>CPCSEA</strong> guidelines.</p>
+    <h4>Routes — different on-ramps to the same highway</h4>
+    <p>Picture the systemic circulation as a highway and each route of administration as a different way onto it. <strong>IV</strong> puts the car directly onto the highway at full speed — immediate, with 100% of the dose reaching the blood. <strong>IP</strong> is a broad slip-road that runs past the liver's toll-booth first (the portal first-pass), so it's quick and can carry a larger volume, but some drug is lost along the way. <strong>SC and IM</strong> behave like quiet side-streets, releasing the drug slowly and steadily. <strong>Oral</strong> dosing takes the long way through the gut and liver — the slowest, least predictable route, yet the one ordinary medicines almost always use.</p>
+    <h4>The 3Rs &amp; CPCSEA — the animal house's rulebook</h4>
+    <p>The <strong>3Rs</strong> form the ethical backbone of any animal work: <strong>Replacement</strong> (turn to cell culture, computational models, or simpler organisms whenever that's possible), <strong>Reduction</strong> (use no more animals than the statistics genuinely require — which is exactly why careful design and sample-size calculations count as an ethical step, not just a statistical one), and <strong>Refinement</strong> (cut down on pain and distress through analgesia, careful handling, and humane endpoints). Within India, each protocol gets approval and ongoing oversight from the institution's <strong>IAEC</strong>, operating under the national <strong>CPCSEA</strong> guidelines.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — the animal house as a regulated kitchen</div>
-      <p>Running an animal experiment is like running a <span class="key">licensed commercial kitchen</span>. You can't just cook however you like: an inspector (CPCSEA) sets the rules, a local manager (IAEC) signs off every recipe (protocol) before you start, you must waste as little as possible (Reduction), substitute lab-grown ingredients where you can (Replacement), and keep everything clean and humane (Refinement). Skip the paperwork and the kitchen is shut down — no approval, no experiment, no publishable data.</p>
+      <p>An animal lab runs much like a <span class="key">licensed commercial kitchen</span>: you don't get to cook however you please. An outside inspector (CPCSEA) writes the rules, a local manager (IAEC) has to approve every recipe (protocol) before cooking starts, waste has to be kept to a minimum (Reduction), lab-grown substitutes replace real ingredients wherever feasible (Replacement), and cleanliness and humane treatment are non-negotiable (Refinement). Skip the paperwork, and the kitchen gets shut down — no sign-off means no experiment and no data you can publish.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning — volume &amp; zoonosis traps:</span> exceeding the safe injection volume dilutes the drug and injures the animal — a "negative result" may simply be a volume artefact. Handle animals as potential sources of <strong>zoonoses</strong> (e.g., lymphocytic choriomeningitis, leptospirosis, rat-bite fever, salmonella) — gloves, no eating in the animal house, prompt wound care.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — volume &amp; zoonosis traps:</span> pushing past the safe injection volume both dilutes the drug and harms the animal, so what looks like a "negative result" might just be an artefact of too much fluid. Treat animals as possible carriers of <strong>zoonoses</strong> (e.g., lymphocytic choriomeningitis, leptospirosis, rat-bite fever, salmonella): glove up, never eat in the animal facility, and treat wounds right away.</blockquote>
   </div>
   </details>
 
   <div class="cog spaced">
     <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
-    <p>Re-test this map on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each time, redraw the routes-and-volumes table from memory before checking.</p>
-    <p class="bridge">If a mouse screening dose works, how do you turn that mg/kg into a safe <em>first dose in humans</em> — and why can't you simply use the same mg/kg? (→ Module 2)</p>
+    <p>Come back to this map on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>, and each time try to reconstruct the routes-and-volumes table from memory before you check it.</p>
+    <p class="bridge">Once a screening dose works in a mouse, what's the path from that mg/kg figure to a safe <em>starting dose in humans</em> — and why doesn't carrying the same mg/kg across species work? (→ Module 2)</p>
   </div>
 </section>
 
@@ -1012,14 +1959,14 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Doses do <strong>not</strong> scale linearly with body weight across species — they scale with <strong>body surface area</strong>, because metabolic rate does. The whole topic reduces to one idea (surface-area scaling) and one equation (the <strong>Human Equivalent Dose</strong> via K<sub>m</sub> factors).</div>
+    <div class="pillar">Body weight is <strong>not</strong> what dose scales with across species — <strong>body surface area</strong> is, because that's what metabolic rate tracks. Strip the topic down and it's really just one idea (scaling by surface area) plus one equation (the <strong>Human Equivalent Dose</strong>, calculated through K<sub>m</sub> factors).</div>
     <h4>The high-yield elements</h4>
     <ul>
-      <li><strong>Why surface area:</strong> smaller animals have a larger surface-area-to-mass ratio and a faster metabolic rate, so they clear drugs faster and need a <em>higher</em> dose per kg.</li>
-      <li><strong>K<sub>m</sub> factor</strong> = body weight (kg) ÷ surface area (m²); it is fixed for each species.</li>
+      <li><strong>The reason it's surface area:</strong> smaller animals carry more surface area relative to their mass and run a faster metabolism, which clears drugs quicker and means they need a <em>larger</em> dose per kilogram.</li>
+      <li><strong>K<sub>m</sub> factor</strong> is body weight (kg) divided by surface area (m²), and stays constant for a given species.</li>
       <li><strong>HED equation:</strong> HED (mg/kg) = Animal dose (mg/kg) × (Animal K<sub>m</sub> ÷ Human K<sub>m</sub>).</li>
-      <li><strong>Allometric scaling:</strong> physiological variables scale with body weight raised to an exponent (~0.75 for metabolic rate, ~0.67 for surface area).</li>
-      <li><strong>Paget &amp; Barnes</strong> conversion tables give the same answer through tabulated factors instead of K<sub>m</sub>.</li>
+      <li><strong>Allometric scaling:</strong> physiological variables rise with body weight to some exponent (roughly 0.75 for metabolic rate, roughly 0.67 for surface area).</li>
+      <li><strong>Paget &amp; Barnes</strong> tables reach the same conversion using pre-tabulated factors rather than working through K<sub>m</sub> directly.</li>
     </ul>
     <figure>
     <div class="fig-title">Figure 2·1 — Converting an animal dose to a Human Equivalent Dose</div>
@@ -1035,7 +1982,7 @@
         <path d="M200,99 H268"/><path d="M470,99 H538"/><path d="M720,99 H758"/>
       </g>
     </svg>
-    <figcaption>A 50 mg/kg mouse dose is <em>not</em> 50 mg/kg in humans — divide by the surface-area (K<sub>m</sub>) ratio first. The HED is the starting point for a safe first-in-human dose (further reduced by a safety factor, usually ÷10).</figcaption>
+    <figcaption>50 mg/kg in a mouse does <em>not</em> translate to 50 mg/kg in a person — the surface-area (K<sub>m</sub>) ratio has to be applied first. The resulting HED becomes the basis for a safe first-in-human dose, which is then cut further by a safety factor (typically ÷10).</figcaption>
   </figure>
     <h4>K<sub>m</sub> factors (FDA guidance)</h4>
     <div class="tbl-scroll"><table>
@@ -1055,12 +2002,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A drug is effective at 50 mg/kg in mice. Before reading on, blurt out the full chain to a starting human dose: which body measurement (not weight) doses actually scale with, the exact HED equation, the K<sub>m</sub> values for mouse and human, and the safety factor you'd apply before the first human dose. Compute the answer for a 60 kg adult.</div>
+    <div class="blurt-prompt">Suppose a drug works at 50 mg/kg in mice. Without checking ahead, try to walk the entire chain to a starting human dose yourself: the body measurement (not weight) that dose actually tracks, the precise HED equation, the K<sub>m</sub> values for both mouse and human, and the safety factor applied before dosing the first human. Work it through for a 60 kg adult.</div>
     <h4 style="color:var(--coral)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does a mouse need a far higher mg/kg dose than a human for the same effect — what is faster about a mouse?</li>
-      <li>Why is K<sub>m</sub> defined as weight ÷ surface area, and why is it constant within a species?</li>
-      <li>Why divide the HED by a further safety factor before the first-in-human dose?</li>
+      <li>What's faster in a mouse that forces it to need a much higher mg/kg dose than a human for an equivalent effect?</li>
+      <li>Why is K<sub>m</sub> defined as weight divided by surface area, and why does that value stay fixed within one species?</li>
+      <li>What's the reason for applying an extra safety factor on top of the HED before the first human dose?</li>
     </ul>
   </div>
 
@@ -1068,22 +2015,22 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Why surface area, not weight</h4>
-    <p>Metabolic rate — how fast the body's furnace burns, and therefore how fast it clears a drug — tracks <strong>surface area</strong>, not mass. A mouse is almost all surface: it loses heat fast, runs a furious metabolism, and chews through a drug far quicker than a human. So to reach the same tissue concentration you must give it a <em>higher</em> dose per kilogram. Surface area scales as roughly (body weight)<sup>0.67</sup>, which is exactly what the K<sub>m</sub> factor packages up for you.</p>
+    <h4>Why surface area wins over weight</h4>
+    <p>How fast the body's internal "furnace" runs — and so how fast a drug gets cleared — follows <strong>surface area</strong> rather than mass. A mouse is almost all surface relative to its bulk: it sheds heat quickly, its metabolism runs hot, and it burns through a drug much faster than a person does. That means matching the same tissue concentration calls for a <em>bigger</em> dose per kilogram in the mouse. Surface area itself rises roughly as (body weight)<sup>0.67</sup>, and that relationship is exactly what the K<sub>m</sub> factor bundles together.</p>
     <div class="eq"><span class="tag">EQ 2·1</span> HED (mg/kg) = Animal dose (mg/kg) × (K<sub>m</sub> animal ÷ K<sub>m</sub> human)</div>
-    <p>For the mouse example: 50 × (3 ÷ 37) = <strong>4.05 mg/kg</strong> → × 60 kg ≈ <strong>243 mg</strong> total, then ÷10 safety factor ≈ a <strong>~24 mg</strong> first-in-human dose.</p>
+    <p>Working the mouse example through: 50 × (3 ÷ 37) = <strong>4.05 mg/kg</strong>, which becomes roughly <strong>243 mg</strong> total at 60 kg; dividing by the ÷10 safety factor leaves a first-in-human dose of around <strong>24 mg</strong>.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — small engines rev higher</div>
-      <p>Picture a <span class="key">tiny scooter engine next to a truck engine</span>. The scooter is small but revs at a furious RPM; the truck is huge but turns over slowly. Fuel use isn't proportional to engine <em>weight</em> — it's proportional to how hard the engine is working, which tracks its surface-to-volume ratio. The mouse is the screaming little scooter: per kilogram it burns through drug far faster than the lumbering human truck, so it needs proportionally more fuel (dose) to keep running.</p>
+      <p>Set a <span class="key">tiny scooter engine beside a truck engine</span>. The scooter is small but spins at a furious RPM; the truck is massive but turns over lazily. Fuel consumption doesn't track engine <em>weight</em> — it tracks how hard the engine works, which in turn tracks its surface-to-volume ratio. The mouse plays the part of the screaming scooter: pound for pound it burns through drug much faster than the lumbering human truck, so it needs proportionally more fuel — i.e., dose — to keep going.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning — the linear-scaling trap:</span> never extrapolate doses by simple mg/kg across species — it badly <em>over</em>-doses humans when scaling up from rodents. Always go through surface area (K<sub>m</sub>) and then apply a safety factor. This is precisely the error that has caused first-in-human disasters.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — the linear-scaling trap:</span> carrying a dose across species by plain mg/kg is a mistake to avoid — going from rodent to human this way ends up badly overdosing the person. Route the calculation through surface area (K<sub>m</sub>) every time, then apply the safety factor. This exact mistake is behind real first-in-human disasters.</blockquote>
   </div>
   </details>
 
   <div class="cog spaced">
     <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
-    <p>Re-test on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each time, recompute the mouse → human conversion cold, including the safety factor.</p>
-    <p class="bridge">If you can now set a dose, how do you actually <em>measure</em> a drug's potency on a piece of tissue — and how do you compare an unknown sample to a standard? (→ Module 3)</p>
+    <p>Cycle back through this on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>, redoing the mouse-to-human conversion from scratch each time, safety factor included.</p>
+    <p class="bridge">Now that a dose can be set, how is a drug's potency actually <em>measured</em> on a tissue sample — and how does an unknown get compared against a standard? (→ Module 3)</p>
   </div>
 </section>
 
@@ -1100,14 +2047,14 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">A bioassay measures the <strong>potency or concentration of an unknown by the size of the biological response it produces</strong>, always <em>by comparison with a standard of the same substance on the same tissue</em>. The exam reduces to two distinctions — <strong>graded vs quantal</strong> response, and the <strong>four matching methods</strong> — plus the antagonist assay.</div>
+    <div class="pillar">A bioassay works out the <strong>potency or concentration of an unknown from the size of the biological response it triggers</strong>, always judged <em>against a standard of the identical substance on the identical tissue</em>. For exam purposes it boils down to two distinctions — <strong>graded vs quantal</strong> response — and the <strong>four matching methods</strong>, with the antagonist assay added on.</div>
     <h4>The high-yield elements</h4>
     <ul>
-      <li><strong>Core principle:</strong> compare unknown to standard under identical conditions; the response is the read-out, not a chemical reaction.</li>
-      <li><strong>Graded response:</strong> response increases with dose on a continuous scale (e.g., height of ileum contraction) — used for most tissue assays.</li>
-      <li><strong>Quantal (all-or-none) response:</strong> each animal either does or doesn't respond (death, convulsion) — yields ED₅₀ / LD₅₀ by probit analysis.</li>
-      <li><strong>The matching methods:</strong> <em>matching</em>, <em>bracketing</em>, <em>interpolation</em>, and <em>multiple-point</em> (three-point &amp; four-point) assays.</li>
-      <li><strong>Antagonist bioassay:</strong> quantifies antagonist strength as <strong>pA₂</strong> from the parallel rightward shift of the agonist dose–response curve (Schild analysis).</li>
+      <li><strong>Core principle:</strong> the unknown gets measured against the standard under matched conditions; what's read out is the biological response itself, not any chemical reaction.</li>
+      <li><strong>Graded response:</strong> the response climbs with dose on a continuous scale (say, how much an ileum contracts) — this is how most tissue assays work.</li>
+      <li><strong>Quantal (all-or-none) response:</strong> each animal simply responds or doesn't (dies, convulses, etc.) — probit analysis on this kind of data produces the ED₅₀ / LD₅₀.</li>
+      <li><strong>The matching methods:</strong> <em>matching</em>, <em>bracketing</em>, <em>interpolation</em>, and the <em>multiple-point</em> assays (three-point and four-point).</li>
+      <li><strong>Antagonist bioassay:</strong> the antagonist's strength is expressed as <strong>pA₂</strong>, derived from how far the agonist's dose–response curve shifts rightward in parallel (Schild analysis).</li>
     </ul>
     <figure>
     <div class="fig-title">Figure 3·1 — Reading an unknown by interpolation</div>
@@ -1123,7 +2070,7 @@
       <text x="390" y="244" font-size="11" fill="#3c4a54" text-anchor="middle">log dose of standard →</text>
       <text x="540" y="60" font-size="11" fill="#0a4f54" font-style="italic">standard log dose–response</text>
     </svg>
-    <figcaption>Interpolation assay: the unknown's response is dropped onto the standard's log dose–response curve and read back to a dose. Valid only over the linear (≈20–80%) portion of the curve.</figcaption>
+    <figcaption>Interpolation assay: the unknown's response gets placed against the standard's log dose–response curve and converted back into a dose figure. This only holds up across the linear (≈20–80%) stretch of the curve.</figcaption>
   </figure>
     <h4>Types of bioassay at a glance</h4>
     <div class="tbl-scroll"><table>
@@ -1140,12 +2087,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">You are given a guinea-pig ileum in an organ bath, a standard histamine solution, and a tube of "unknown" histamine. Before reading on, blurt out the whole assay: what you plot on each axis, which assay type uses the standard curve to read the unknown, why you only trust the middle of the curve, and what the four-point design adds that interpolation doesn't.</div>
+    <div class="blurt-prompt">Imagine you've got a guinea-pig ileum mounted in an organ bath, a standard histamine solution, and a tube labeled "unknown" histamine. Without consulting the notes, reconstruct the entire assay in your head: what goes on each axis, which method reads the unknown off the standard curve, why only the curve's middle section can be trusted, and what extra the four-point design buys you that interpolation can't.</div>
     <h4 style="color:var(--coral)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why must the standard and unknown be the <em>same substance</em> tested on the <em>same tissue</em> — what assumption breaks otherwise?</li>
-      <li>Why is only the 20–80% (linear log) portion of the dose–response curve used for interpolation?</li>
-      <li>Why does the four-point assay let you <em>check the assay's own validity</em> while the interpolation assay cannot?</li>
+      <li>What assumption collapses if the standard and unknown aren't the <em>same substance</em> tested on the <em>same tissue</em>?</li>
+      <li>What limits interpolation to the 20–80% (linear log) stretch of the dose–response curve?</li>
+      <li>What lets a four-point assay <em>verify its own validity</em> in a way the interpolation assay simply cannot?</li>
     </ul>
   </div>
 
@@ -1153,22 +2100,22 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Graded vs quantal — two ways to count a response</h4>
-    <p>A <strong>graded</strong> response is a dimmer switch: the same tissue gives a bigger contraction to a bigger dose, so one preparation traces out a whole dose–response curve. A <strong>quantal</strong> response is a light switch in a population: each animal is scored yes/no (convulsed / didn't, died / survived), and you count <em>how many</em> cross the threshold at each dose to build a cumulative curve that yields the <strong>ED₅₀</strong> or <strong>LD₅₀</strong>.</p>
-    <h4>The four matching methods — closing in on the unknown</h4>
-    <p><strong>Matching</strong> eyeballs equality. <strong>Bracketing</strong> traps the unknown between a standard dose that is clearly bigger and one clearly smaller. <strong>Interpolation</strong> uses the full standard curve as a ruler. The <strong>multiple-point</strong> assays (three- and four-point) interleave standard and unknown doses so that, if their log dose–response lines are <em>parallel</em>, the horizontal gap between them <em>is</em> the log potency ratio — and parallelism itself becomes the built-in proof the assay is valid.</p>
+    <h4>Graded vs quantal — two different ways to score a response</h4>
+    <p>A <strong>graded</strong> response works like a dimmer switch: the same piece of tissue contracts more as the dose climbs, letting a single preparation trace an entire dose–response curve. A <strong>quantal</strong> response behaves like a light switch applied across a population: every animal is simply marked yes or no (convulsed or not, died or survived), and tallying <em>how many</em> cross the threshold at each dose builds a cumulative curve from which the <strong>ED₅₀</strong> or <strong>LD₅₀</strong> emerges.</p>
+    <h4>The four matching methods — narrowing in on the unknown</h4>
+    <p><strong>Matching</strong> simply eyeballs the two until they look equal. <strong>Bracketing</strong> pins the unknown between one standard dose that's obviously larger and one that's obviously smaller. <strong>Interpolation</strong> treats the full standard curve as a measuring ruler. The <strong>multiple-point</strong> assays (three-point and four-point) alternate standard and unknown doses so that, provided their log dose–response lines run <em>parallel</em>, the horizontal distance separating them gives the log potency ratio directly — with that same parallelism serving as built-in proof the assay holds up.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — weighing on a balance</div>
-      <p>Bioassay is weighing an <span class="key">unknown object on an old two-pan balance</span> using known weights. <em>Matching</em> = swap weights until the pans level. <em>Bracketing</em> = find the weight just too heavy and the one just too light. <em>Interpolation</em> = calibrate a spring scale with known weights, then read the unknown off the dial. The <em>four-point</em> assay is weighing each object twice and checking the scale is linear before you trust the number — slower, but you'd stake an exam answer on it.</p>
+      <p>Doing a bioassay is like weighing an <span class="key">unknown object on an old-fashioned two-pan balance</span> against known weights. <em>Matching</em> means swapping weights in and out until the pans even out. <em>Bracketing</em> means finding the weight that's just a touch too heavy and the one just a touch too light. <em>Interpolation</em> means calibrating a spring scale against known weights first, then reading the unknown straight off the dial. The <em>four-point</em> assay weighs each object twice over and checks the scale's linearity before trusting any number — it takes longer, but it's the version you'd want backing up an exam answer.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning — the comparison trap:</span> a bioassay is only valid if standard and unknown act through the <strong>same mechanism on the same tissue</strong> (parallel curves). Off the linear range, or with non-parallel curves, the potency estimate is meaningless. Biological variation is the unavoidable source of error — controlled by randomisation, replication and using one tissue as its own control.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — the comparison trap:</span> a bioassay only holds up when the standard and the unknown work through the <strong>same mechanism on the same tissue</strong> (curves running parallel). Step outside the linear range, or get non-parallel curves, and the potency figure means nothing. Biological variation can never be eliminated entirely — it's kept in check through randomisation, repetition, and letting each tissue serve as its own control.</blockquote>
   </div>
   </details>
 
   <div class="cog spaced">
     <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
-    <p>Re-test on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each time, list the five methods and sketch the interpolation read-off from memory.</p>
-    <p class="bridge">The bioassay needs a living, responsive strip of tissue — so what actually keeps that ileum or uterus alive and twitching in the bath, and which solution do you bathe it in? (→ Module 4)</p>
+    <p>Loop back on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>, each time listing all five methods and sketching the interpolation read-off purely from memory.</p>
+    <p class="bridge">A bioassay depends on a live, responsive piece of tissue — so what keeps that ileum or uterus alive and twitching inside the bath, and what solution does it sit in? (→ Module 4)</p>
   </div>
 </section>
 
@@ -1185,14 +2132,14 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">An <strong>organ bath</strong> keeps a strip of tissue alive in warmed, aerated <strong>physiological salt solution (PSS)</strong>; you add an agonist, and a <strong>lever (or transducer)</strong> magnifies the contraction onto a kymograph. The exam wants the <strong>right PSS for the right tissue</strong> and the <strong>signature agonist–receptor pair</strong> of each preparation.</div>
+    <div class="pillar">An <strong>organ bath</strong> sustains a strip of tissue in warmed, aerated <strong>physiological salt solution (PSS)</strong>; an agonist gets added, and a <strong>lever (or transducer)</strong> blows up the resulting contraction onto a kymograph trace. What matters for exams is knowing the <strong>correct PSS for each tissue</strong> and the <strong>characteristic agonist–receptor pairing</strong> for every preparation.</div>
     <h4>The high-yield elements</h4>
     <ul>
-      <li><strong>Organ-bath essentials:</strong> correct PSS, <strong>temperature</strong> (37 °C mammalian, 32 °C rat uterus, room temp frog), continuous <strong>aeration</strong> (air, or carbogen 95% O₂ / 5% CO₂ for bicarbonate buffers), and a fixed <strong>contact time</strong>.</li>
-      <li><strong>PSS is chosen by tissue:</strong> Tyrode, Ringer, Krebs, De Jalon, Locke each differ in ions, glucose and buffer.</li>
-      <li><strong>Each tissue has a signature agonist</strong> acting on a specific receptor (the basis of the bioassay).</li>
-      <li><strong>The lever magnifies</strong> tiny movements; <em>magnification = writing-arm length ÷ tissue-arm length</em>.</li>
-      <li><strong>Dose cycle:</strong> add dose → record peak → wash → rest → next dose, kept constant for valid curves.</li>
+      <li><strong>What the organ bath needs:</strong> the appropriate PSS, the right <strong>temperature</strong> (37 °C for mammalian tissue, 32 °C for the rat uterus, room temperature for frog tissue), constant <strong>aeration</strong> (plain air, or carbogen — 95% O₂ / 5% CO₂ — for bicarbonate-buffered solutions), and a fixed <strong>contact time</strong>.</li>
+      <li><strong>The PSS depends on the tissue:</strong> Tyrode, Ringer, Krebs, De Jalon and Locke solutions differ from one another in their ions, glucose content, and buffer.</li>
+      <li><strong>Every tissue responds to a characteristic agonist</strong> through a particular receptor — this is what the bioassay rests on.</li>
+      <li><strong>The lever amplifies</strong> tiny movements; <em>magnification equals the writing-arm length divided by the tissue-arm length</em>.</li>
+      <li><strong>Dose cycle:</strong> dose is added, the peak is recorded, the tissue is washed, then rested before the next dose — this sequence must stay constant for the curve to be valid.</li>
     </ul>
     <figure>
     <div class="fig-title">Figure 4·1 — The organ bath &amp; frontal writing lever</div>
@@ -1214,7 +2161,7 @@
       <line x1="135" y1="200" x2="135" y2="220" stroke="#36a07c" stroke-width="3"/>
       <text x="150" y="214" font-size="9" fill="#0a4f54">aeration (O₂)</text>
     </svg>
-    <figcaption>Tissue is anchored at the bottom and tied to the short arm of a lever; the long writing arm magnifies its contraction onto a rotating kymograph drum. Magnification = long-arm ÷ short-arm length.</figcaption>
+    <figcaption>The tissue is fixed at the bottom and connected to the lever's short arm; the long writing arm then blows up its contraction onto a rotating kymograph drum. Magnification = long-arm length ÷ short-arm length.</figcaption>
   </figure>
     <h4>Physiological salt solutions — which fluid for which tissue</h4>
     <div class="tbl-scroll"><table>
@@ -1243,12 +2190,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">Set up a rat-uterus experiment in your head. Before reading on, blurt out: which physiological salt solution and what temperature, what hormonal pre-treatment the animal needs, two agonists that contract it, why the bath must be aerated, and how the lever turns a 2 mm contraction into a 2 cm trace.</div>
+    <div class="blurt-prompt">Mentally assemble a rat-uterus experiment from scratch. Before checking the answer, recall: which PSS and what temperature it runs at, what hormone the animal needs beforehand, two agonists that make it contract, why aeration of the bath is essential, and how the lever converts a 2 mm contraction into a 2 cm trace.</div>
     <h4 style="color:var(--coral)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does a bicarbonate-buffered solution (Krebs) need carbogen rather than plain air bubbling through it?</li>
-      <li>Why is the rat uterus run at 32 °C and primed with oestrogen, unlike the 37 °C ileum?</li>
-      <li>Why must the dose cycle (contact time, wash, rest) be kept identical for every dose?</li>
+      <li>What makes carbogen necessary rather than plain air for a bicarbonate-buffered solution like Krebs?</li>
+      <li>What's behind running the rat uterus at 32 °C with oestrogen priming, when the ileum runs at 37 °C without it?</li>
+      <li>Why does every dose in the cycle need the exact same contact time, wash, and rest period?</li>
     </ul>
   </div>
 
@@ -1256,21 +2203,21 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>The organ bath is life support</h4>
-    <p>A strip of gut, uterus or atrium is a living thing torn from its body — to keep it responsive you must replace everything its blood used to provide: the right <strong>ions</strong> (for excitability and contraction), <strong>glucose</strong> (fuel), <strong>oxygen</strong> (bubbled in), a buffered <strong>pH</strong>, and body <strong>temperature</strong>. That is exactly what the PSS + water jacket + aeration deliver. Bicarbonate buffers only hold pH 7.4 while CO₂ is bubbled through them — which is why Krebs needs <em>carbogen</em>, not plain air.</p>
+    <h4>The organ bath functions as life support</h4>
+    <p>A piece of gut, uterus, or atrium is living tissue removed from the body it once belonged to — staying responsive means substituting everything the blood used to supply: the correct <strong>ions</strong> (needed for excitability and contraction), <strong>glucose</strong> (fuel), <strong>oxygen</strong> (delivered by bubbling), buffered <strong>pH</strong>, and matching body <strong>temperature</strong>. The PSS, the water jacket, and the aeration together provide exactly that. Bicarbonate buffers can only hold pH at 7.4 as long as CO₂ keeps bubbling through — which explains why Krebs solution specifically needs <em>carbogen</em> rather than ordinary air.</p>
     <div class="eq"><span class="tag">EQ 4·1</span> Magnification = length of writing arm ÷ length of tissue (effort) arm</div>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — an aquarium with a pen attached</div>
-      <p>The organ bath is a <span class="key">tiny, temperature-controlled aquarium</span> for one piece of muscle. The PSS is its sea-water, the aeration is its air-stone, the water jacket is its heater. Tied to the muscle is a long see-saw with a pen on the far end: when the muscle twitches a fraction of a millimetre, the far end of the see-saw swings centimetres across a smoked drum — the same trick as a long-handled spanner turning a small wrist movement into a big turn. Change the sea-water wrong (wrong ions, no oxygen, wrong temperature) and the fish — your tissue — simply stops responding.</p>
+      <p>Think of the organ bath as a <span class="key">miniature, temperature-controlled aquarium</span> built for a single piece of muscle. The PSS plays the role of seawater, the aeration acts as the air-stone, and the water jacket serves as the heater. The muscle is hooked to a long see-saw with a pen at its far end: a twitch of a fraction of a millimetre at the muscle becomes a swing of several centimetres across a smoked drum at the pen — the same principle as a long wrench turning a small hand movement into a large rotation. Get the seawater wrong — bad ions, no oxygen, wrong temperature — and the fish, meaning your tissue, simply stops reacting.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning — the dead-tissue trap:</span> a flat or fading trace usually means the <em>preparation</em> failed, not the drug — wrong PSS, no aeration, wrong temperature, or the tissue fatigued from too-short rest periods. Always confirm the tissue still responds to a standard agonist dose before concluding a test drug is inactive.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — the dead-tissue trap:</span> when a trace goes flat or fades, the cause is usually a failed <em>preparation</em> rather than an inactive drug — think wrong PSS, missing aeration, wrong temperature, or tissue fatigue from rest periods that were too short. Confirm the tissue still reacts to a standard agonist dose before deciding a test drug has no effect.</blockquote>
   </div>
   </details>
 
   <div class="cog spaced">
     <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
-    <p>Re-test on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each time, reproduce both tables (PSS and tissue–agonist pairs) from memory.</p>
-    <p class="bridge">The lever and kymograph are old-school. What modern instruments replace the smoked drum, and how do you actually <em>quantify</em> a drug in plasma — by HPLC, spectrophotometry or ELISA? (→ Module 5)</p>
+    <p>Revisit this on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>, reconstructing both tables — PSS choices and tissue–agonist pairs — purely from memory each time.</p>
+    <p class="bridge">The lever-and-kymograph setup is old technology. What instruments have taken over from the smoked drum today, and how is a drug actually <em>quantified</em> in plasma — HPLC, spectrophotometry, or ELISA? (→ Module 5)</p>
   </div>
 </section>
 
@@ -1287,14 +2234,14 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Almost every analytical method is one of two jobs: <strong>separate a mixture</strong>, then <strong>detect &amp; quantify</strong> the component you care about. Chromatography (TLC, column, GC, HPLC) separates; spectrophotometry, ELISA and PCR detect and measure.</div>
+    <div class="pillar">Nearly every analytical technique performs one of two jobs: <strong>pulling apart a mixture</strong>, or then <strong>detecting and measuring</strong> the component that matters. Chromatography (TLC, column, GC, HPLC) handles the separating; spectrophotometry, ELISA, and PCR handle the detecting and measuring.</div>
     <h4>The high-yield elements</h4>
     <ul>
-      <li><strong>Chromatography = a race</strong> between a mobile phase carrying the sample and a stationary phase holding it back; components that stick more move slower and separate.</li>
-      <li><strong>HPLC</strong> = high-pressure column chromatography — the workhorse for measuring drug levels in plasma/urine (the basis of most PK assays).</li>
-      <li><strong>Spectrophotometry</strong> obeys the <strong>Beer–Lambert law</strong>: absorbance ∝ concentration, so a calibration curve converts absorbance to concentration.</li>
-      <li><strong>ELISA</strong> quantifies proteins/hormones/antibodies by an enzyme-linked colour change; <strong>PCR</strong> amplifies and quantifies specific DNA/RNA.</li>
-      <li><strong>Centrifugation</strong> separates by density (plasma vs cells; differential/density-gradient for organelles).</li>
+      <li><strong>Chromatography works like a race</strong> between a mobile phase that carries the sample along and a stationary phase that holds it back; whatever sticks more travels slower, and that's what separates the components.</li>
+      <li><strong>HPLC</strong> is column chromatography run under high pressure — it's the standard tool for measuring drug levels in plasma or urine, underpinning most PK assays.</li>
+      <li><strong>Spectrophotometry</strong> follows the <strong>Beer–Lambert law</strong>: absorbance rises proportionally with concentration, which is why a calibration curve can convert one into the other.</li>
+      <li><strong>ELISA</strong> measures proteins, hormones, or antibodies via an enzyme-driven colour change; <strong>PCR</strong> amplifies and then quantifies a specific stretch of DNA or RNA.</li>
+      <li><strong>Centrifugation</strong> separates components by density (plasma from cells; differential or density-gradient spins for organelles).</li>
     </ul>
     <figure>
     <div class="fig-title">Figure 5·1 — Separate, then detect (HPLC) &amp; the Beer–Lambert law</div>
@@ -1314,7 +2261,7 @@
       <text x="650" y="172" font-size="13" fill="#0a4f54">A = ε · c · l</text>
       <text x="650" y="190" font-size="9.5" fill="#3c4a54">absorbance ∝ concentration</text>
     </svg>
-    <figcaption>HPLC pumps the sample through a column that separates components by how strongly each sticks; the detector turns each into a peak whose area is proportional to amount. Spectrophotometers use the Beer–Lambert law to convert absorbance to concentration via a standard curve.</figcaption>
+    <figcaption>In HPLC, the sample is pumped through a column that separates its components according to how strongly each one binds; each component then shows up at the detector as a peak whose area corresponds to how much is present. Spectrophotometers, meanwhile, rely on the Beer–Lambert law and a standard curve to translate absorbance into concentration.</figcaption>
   </figure>
     <h4>Technique → what it measures → principle</h4>
     <div class="tbl-scroll"><table>
@@ -1334,12 +2281,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">You must measure phenytoin in a rat's plasma. Before reading on, blurt out: which instrument you'd choose and why, the two jobs any such method must do, the law that lets a spectrophotometer turn a colour into a concentration, and how a calibration (standard) curve is used to read the unknown.</div>
+    <div class="blurt-prompt">Say you need to measure phenytoin levels in a rat's plasma. Before reading further, work out: which instrument you'd pick and your reasoning, the two jobs any analytical method must accomplish, the law letting a spectrophotometer convert colour into concentration, and how a calibration (standard) curve gets used to read off the unknown.</div>
     <h4 style="color:var(--coral)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does a more strongly retained compound come off an HPLC column <em>later</em> — what is competing for it?</li>
-      <li>Why must absorbance readings stay in the linear (low) range for Beer–Lambert to hold?</li>
-      <li>Why is ELISA preferred over HPLC for measuring a hormone present at picogram levels?</li>
+      <li>What's competing for a compound that makes it come off an HPLC column <em>later</em> when it's more strongly retained?</li>
+      <li>Why does Beer–Lambert only hold true while absorbance readings stay in the linear, low-concentration range?</li>
+      <li>What makes ELISA the better choice over HPLC when a hormone is present only at picogram levels?</li>
     </ul>
   </div>
 
@@ -1347,22 +2294,22 @@
     <summary>✓ I've blurted — reveal the plain-language notes</summary>
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
-    <h4>Chromatography — a tug-of-war that becomes a race</h4>
-    <p>Every chromatographic method is a <strong>tug-of-war between two phases</strong> for each molecule. The <em>mobile phase</em> tries to wash the molecule along; the <em>stationary phase</em> tries to hold it back. Molecules that bind the stationary phase strongly lag; those that prefer the mobile phase sprint ahead — so a mixture that went in together comes out separated in time. The detector at the finish line records each as a peak, and the peak's <strong>area is proportional to how much</strong> of that compound there was.</p>
-    <h4>Beer–Lambert — colour as a ruler</h4>
-    <p>Shine light through a solution and some is absorbed; the more concentrated and the longer the path, the more is swallowed. <strong>A = ε·c·l</strong> says absorbance rises in step with concentration, so you build a <strong>calibration curve</strong> from known standards and simply read the unknown's absorbance back to a concentration.</p>
+    <h4>Chromatography — a contest that turns into a race</h4>
+    <p>Every chromatographic technique pits <strong>two phases against each other</strong> over each molecule in the sample. The <em>mobile phase</em> attempts to carry the molecule forward; the <em>stationary phase</em> attempts to keep hold of it. Molecules that cling tightly to the stationary phase fall behind, while those drawn more to the mobile phase move ahead quickly — so a mixture that entered as one blend exits spread out over time. A detector positioned at the end records each compound as a peak, and that peak's <strong>area corresponds to the quantity</strong> present.</p>
+    <h4>Beer–Lambert — using colour as a measuring stick</h4>
+    <p>When light passes through a solution, part of it gets absorbed; greater concentration and a longer path both mean more absorption. The relationship <strong>A = ε·c·l</strong> means absorbance climbs in lockstep with concentration, so known standards are used to build a <strong>calibration curve</strong>, and the unknown's absorbance is simply mapped back onto that curve to get its concentration.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — a cross-country race with sticky mud</div>
-      <p>Picture runners (the molecules) crossing a muddy field (the column). The <span class="key">mud (stationary phase) grabs some runners more than others</span>; a strong wind at their backs (mobile phase) pushes everyone forward. Runners who don't stick to mud finish first; sticky ones straggle in later — so a pack that started together arrives strung out, one compound at a time. Count the size of each group as it crosses the line and you know not just <em>who</em> was in the race but <em>how many</em>.</p>
+      <p>Imagine runners (standing in for the molecules) crossing a muddy field (the column). The <span class="key">mud — the stationary phase — clings to some runners more than others</span>, while a tailwind (the mobile phase) pushes everyone onward regardless. Runners unaffected by the mud cross the line first; the ones who get bogged down trail in later — so a group that set off together ends up spread out, arriving one at a time. Tally how many cross the finish line in each cluster, and you learn not just <em>which</em> runners were racing but <em>how many</em> of each.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning — the calibration trap:</span> any quantitative method is only as good as its standard curve. Reading an unknown that lies <em>above</em> the top standard (out of the linear range) gives a falsely low result; samples must be diluted back into range, and the curve must be run with each batch.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — the calibration trap:</span> a quantitative method can never be more reliable than its standard curve. An unknown reading <em>above</em> the topmost standard (outside the linear range) will falsely read low; such samples need diluting back into range, and the calibration curve has to be rerun with every batch.</blockquote>
   </div>
   </details>
 
   <div class="cog spaced">
     <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
-    <p>Re-test on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each time, group the techniques into "separate" vs "detect" from memory.</p>
-    <p class="bridge">You can now measure a drug — but to test whether it <em>works</em>, you need a disease to treat. How do you make a mouse epileptic, hypertensive or arthritic on demand? (→ Module 6)</p>
+    <p>Return to this on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>, sorting the techniques into "separate" vs "detect" from memory each time.</p>
+    <p class="bridge">Measuring a drug is one thing — proving it <em>works</em> means having a disease model to test it against. How is a mouse made epileptic, hypertensive, or arthritic on cue? (→ Module 6)</p>
   </div>
 </section>
 
@@ -1379,7 +2326,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">Every screening model follows one logic: <strong>induce a measurable feature of the human disease, give the test drug, and measure whether the endpoint changes</strong>. Learn the model–endpoint–drug-class triad for each system and you can answer almost any in-vivo question.</div>
+    <div class="pillar">A single logic underlies every screening model: <strong>bring about a measurable sign of the human disease, administer the test drug, then check whether that measurable endpoint shifts</strong>. Get comfortable with the model–endpoint–drug-class triad for each body system and almost any in-vivo question becomes answerable.</div>
     <h4>The high-yield CNS models (most examined)</h4>
     <ul>
       <li><strong>Rotarod</strong> — fall-off time = motor coordination → screens <em>muscle relaxants</em> &amp; sedatives.</li>
@@ -1403,7 +2350,7 @@
       </g>
       <g stroke="#14432e" stroke-width="2" fill="none" marker-end="url(#are6)"><path d="M190,55 H298"/><path d="M500,55 H598"/><path d="M190,145 H298"/><path d="M500,145 H598"/></g>
     </svg>
-    <figcaption>MES models grand-mal seizures (predicts phenytoin-type drugs); PTZ models absence/myoclonic seizures (predicts ethosuximide). Valproate is positive in both — the clue that it is broad-spectrum.</figcaption>
+    <figcaption>MES is the model for grand-mal seizures (it picks out phenytoin-type drugs); PTZ models absence/myoclonic seizures (it picks out ethosuximide). Valproate tests positive in both screens — a sign of its broad-spectrum action.</figcaption>
   </figure>
     <h4>Models by system — induce → screen → measure</h4>
     <div class="tbl-scroll"><table>
@@ -2473,7 +3420,7 @@
   <div class="wrap">
     <div>
       <strong>Experimental &amp; Clinical Pharmacology · Accelerated Learning System</strong><br>
-      <span class="src">Source: <em>Practical Manual of Experimental and Clinical Pharmacology</em> — Bikash Medhi &amp; Ajay Prakash (1st Edition, 2010).<br>
+      <span class="src">Source: Standard practical &amp; clinical pharmacology references.<br>
       Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
       Mnemonics are standard teaching aids. Verify all drug dosing, animal procedures and protocols against current local and ethical (CPCSEA/IAEC) guidelines.</span>
     </div>
@@ -2520,6 +3467,185 @@
 })();
 </script>
 
+<script>
+/* ---- GLASS / MOTION DEMO v3 — additive, does not touch the quiz logic above ---- */
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  var bigSel = 'section.module, .quiz-intro, #flashcards, details.quizset';
+  var smallSel = '.cog, .blurt-stage, .sched-stage, details.gate, details.qa, .flashcard, .tbl-scroll, .diagram-wrap, blockquote.warn, .analogy, div.q';
+
+  document.querySelectorAll(bigSel).forEach(function(el){ el.classList.add('gp-reveal'); });
+  document.querySelectorAll(smallSel).forEach(function(el){ el.classList.add('gp-reveal-soft'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -50px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal, .gp-reveal-soft');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 7) * 50 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // safety net — guarantee nothing is stuck invisible
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }, 2000);
+})();
+</script>
+
 <script src="learning-interactive.js"></script>
+<script src="gamify.js"></script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- populate chapters drawer from this page's existing (now hidden) chapter nav ----
+  var drawerLinks = document.getElementById('gpDrawerLinks');
+  var sourceNav = document.querySelector('nav.toc, .sticky-nav');
+  if (drawerLinks && sourceNav) {
+    var anchors = sourceNav.querySelectorAll('a');
+    anchors.forEach(function(a){ drawerLinks.appendChild(a.cloneNode(true)); });
+  }
+
+  // ---- drawer open/close ----
+  var drawer = document.getElementById('gpDrawer');
+  var overlay = document.getElementById('gpDrawerOverlay');
+  var openBtn = document.getElementById('gpDrawerToggle');
+  var closeBtn = document.getElementById('gpDrawerClose');
+  function openDrawer(){
+    if (drawer) drawer.classList.add('show');
+    if (overlay) overlay.classList.add('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','true');
+  }
+  function closeDrawer(){
+    if (drawer) drawer.classList.remove('show');
+    if (overlay) overlay.classList.remove('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','false');
+  }
+  if (openBtn) openBtn.addEventListener('click', function(){
+    if (drawer && drawer.classList.contains('show')) closeDrawer(); else openDrawer();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  if (drawerLinks) drawerLinks.addEventListener('click', function(e){
+    if (e.target && e.target.tagName === 'A') closeDrawer();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // ---- dark mode toggle, persisted (shared key with the hub pages) ----
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('gpDarkToggle');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function upd(){ if (darkBtn) darkBtn.textContent = isDark() ? '☀️' : '🌙'; }
+  function setTheme(m){
+    if (m === 'dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('pharm-theme', m); } catch(e){}
+    upd();
+  }
+  upd();
+  if (darkBtn) darkBtn.addEventListener('click', function(){ setTheme(isDark() ? 'light' : 'dark'); });
+
+  // ---- random quiz question ----
+  var randomBtn = document.getElementById('gpRandomQuiz');
+  if (randomBtn) randomBtn.addEventListener('click', function(){
+    var qs = Array.prototype.slice.call(document.querySelectorAll('.q, .quiz-item'));
+    if (!qs.length) return;
+    var pick = qs[Math.floor(Math.random() * qs.length)];
+    var trigger = pick.querySelector('.qq, .quiz-q');
+    if (trigger) trigger.click();
+    if (!pick.classList.contains('open')) pick.classList.add('open');
+    pick.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  // ---- expand/contract the floating toolbar itself ----
+  // Chapters (☰) and Back (←) always stay visible; every other control
+  // (nav/jump/search/tools merged in by learning-interactive.js) lives inside
+  // the collapsible .gp-toolbar-extra and only shows once expanded.
+  var expandBtn = document.getElementById('gpToolbarExpand');
+  var toolbarEl = document.querySelector('.gp-toolbar');
+  if (expandBtn && toolbarEl) expandBtn.addEventListener('click', function(){
+    var open = !toolbarEl.classList.contains('expanded');
+    toolbarEl.classList.toggle('expanded', open);
+    expandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var tree = document.getElementById('mindmapTree');
+  if(!tree) return;
+  function setExpanded(btn, open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var holder = btn.closest('.mm-branch, .mm-twig');
+    if(holder) holder.classList.toggle('mm-open', open);
+  }
+  tree.addEventListener('click', function(e){
+    var btn = e.target.closest('.mm-node');
+    if(!btn) return;
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setExpanded(btn, !isOpen);
+  });
+  var expandAllBtn = document.getElementById('mmExpandAll');
+  var collapseAllBtn = document.getElementById('mmCollapseAll');
+  if(expandAllBtn){
+    expandAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, true); });
+    });
+  }
+  if(collapseAllBtn){
+    collapseAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, false); });
+    });
+  }
+})();
+</script>
 </body>
 </html>

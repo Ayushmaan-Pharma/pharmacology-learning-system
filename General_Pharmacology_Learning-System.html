@@ -837,10 +837,436 @@
   }
   .fc-pearl strong, .fc-trap strong { display: block; margin-bottom: .2rem; }
 
+
+
+/* =========================================================================
+   GLASS / MOTION DEMO LAYER v3 — additive, appended after all base rules.
+   Uses this file's own tokens (--accent, --cool, --hero-gradient, etc.,
+   with safe fallbacks where a file doesn't define one) so colours/content
+   stay identical to the original. Shared across the whole Learning System
+   family for visual/motion consistency.
+   ========================================================================= */
+
+html{scroll-behavior:smooth}
+
+/* ---- ambient drifting blobs, colour-matched to this file's palette ---- */
+.gp-ambient{position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none}
+.gp-ambient .blob{position:absolute; border-radius:50%; filter:blur(75px); opacity:.30}
+.gp-ambient .b1{width:44vw;height:44vw; top:-14%; left:-12%; background:radial-gradient(circle,var(--accent-dark),transparent 70%); animation:gpDrift1 38s ease-in-out infinite}
+.gp-ambient .b2{width:38vw;height:38vw; top:6%; right:-14%; background:radial-gradient(circle,var(--cool),transparent 70%); animation:gpDrift2 44s ease-in-out infinite}
+.gp-ambient .b3{width:42vw;height:42vw; bottom:-18%; left:18%; background:radial-gradient(circle,var(--accent),transparent 70%); animation:gpDrift3 40s ease-in-out infinite}
+.gp-ambient .b4{width:26vw;height:26vw; bottom:10%; right:8%; background:radial-gradient(circle,var(--cool-light,var(--cool)),transparent 70%); animation:gpDrift4 33s ease-in-out infinite}
+@keyframes gpDrift1{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(5vw,7vh) scale(1.12)}}
+@keyframes gpDrift2{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-6vw,4vh) scale(1.08)}}
+@keyframes gpDrift3{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(4vw,-5vh) scale(1.12)}}
+@keyframes gpDrift4{0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(-4vw,-3vh) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){ .gp-ambient .blob{animation:none} }
+
+/* ---- scroll progress bar ---- */
+.gp-progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:200;
+  background:linear-gradient(90deg, var(--accent-dark), var(--cool), var(--accent));
+  box-shadow:0 0 10px rgba(15,107,107,.45); transition:width .12s linear}
+
+/* ---- back-to-top, using the page's own hero gradient (with fallback) ---- */
+.gp-to-top{position:fixed; bottom:26px; right:26px; z-index:90; width:46px; height:46px; border-radius:50%;
+  background:var(--hero-gradient, linear-gradient(135deg, var(--accent-dark), var(--cool))); color:#fff; border:none; font-size:1.2rem; cursor:pointer;
+  box-shadow:0 10px 26px rgba(16,38,52,.35); opacity:0; transform:translateY(16px) scale(.85); pointer-events:none;
+  transition:opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1)}
+.gp-to-top.show{opacity:1; transform:none; pointer-events:auto}
+.gp-to-top:hover{transform:translateY(-3px) scale(1.06)}
+.gp-to-top:active{transform:scale(.92)}
+
+/* ---- stronger glass on the already-sticky nav ---- */
+.sticky-nav, nav.toc{
+  background:rgba(245,244,240,.62) !important;
+  backdrop-filter:blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(190%) !important;
+  box-shadow:0 4px 24px rgba(16,38,52,.08) !important;
+}
+nav.toc a{transition:color .2s, transform .2s}
+nav.toc a:hover{transform:translateY(-1px)}
+
+/* ---- hero entrance + glass stat strip ---- */
+header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
+@keyframes gpHeroIn{from{opacity:0; transform:translateY(-14px)} to{opacity:1; transform:none}}
+.chip{transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{transform:translateY(-2px) scale(1.04)}
+
+.gp-stat-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; position:relative}
+.gp-stat-pill{font-size:.78rem; font-weight:650; color:#fff; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.32); padding:6px 14px; border-radius:999px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  display:flex; align-items:center; gap:6px}
+.gp-stat-pill b{color:#fff; font-weight:800}
+
+/* ---- generic scroll-reveal utilities (assigned by JS) ---- */
+.gp-reveal{opacity:0; transform:translateY(28px) scale(.985); transition:opacity .6s cubic-bezier(.4,0,.2,1), transform .55s cubic-bezier(.34,1.2,.64,1)}
+.gp-reveal.in-view{opacity:1; transform:none}
+.gp-reveal-soft{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease}
+.gp-reveal-soft.in-view{opacity:1; transform:none}
+
+/* ---- module card + header glass sheen / hover glow ---- */
+section.module{transition:box-shadow .35s ease}
+section.module:hover{box-shadow:0 20px 48px rgba(16,38,52,.18)}
+.module-header, .mod-head{position:relative; overflow:hidden}
+.module-header::after, .mod-head::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:linear-gradient(120deg, rgba(255,255,255,.20), transparent 45%, rgba(255,255,255,.06));
+}
+
+.cog, .blurt-stage, .sched-stage, .flashcard, .quiz-intro{
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease, border-color .3s ease
+}
+.cog:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--cool) 35%, transparent)}
+.cog.blurt:hover{box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 38%, transparent)}
+.blurt-stage:hover, .sched-stage:hover{transform:translateY(-3px)}
+.flashcard:hover{transform:translateY(-3px); box-shadow:0 14px 32px -8px color-mix(in srgb, var(--accent) 30%, transparent)}
+
+/* =========================================================================
+   ANIMATED ACCORDIONS — CSS-grid height trick (no JS height math needed).
+   grid-auto-rows (not just grid-template-rows) is set too, so this stays
+   correct even when a gate/quizset/qa has more than one content child
+   (e.g. Neoplastic's details.gate > p, p, p). Works regardless of who
+   toggles [open]/.open (click, keyboard, or the existing inline JS),
+   because it keys off the attribute/class only.
+   ========================================================================= */
+details.gate, details.quizset, details.qa{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1), grid-auto-rows .45s cubic-bezier(.4,0,.2,1);
+}
+details.gate[open], details.quizset[open], details.qa[open]{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+details.gate > *:not(summary), details.quizset > *:not(summary), details.qa > *:not(summary){
+  overflow:hidden; min-height:0; opacity:0; transition:opacity .35s ease .08s;
+}
+details.gate[open] > *:not(summary), details.quizset[open] > *:not(summary), details.qa[open] > *:not(summary){ opacity:1; }
+
+div.q{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1), box-shadow .25s ease;
+  border-radius:var(--radius-sm);
+}
+div.q.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; box-shadow:0 6px 18px -6px color-mix(in srgb, var(--cool) 30%, transparent); }
+div.q > .qa{
+  display:block !important; overflow:hidden; min-height:0; opacity:0;
+  transition:opacity .3s ease .05s;
+}
+div.q.open > .qa{ opacity:1; }
+/* same pattern for the alternate class names used in sibling files of this series */
+.quiz-item{
+  display:grid; grid-template-rows:auto 0fr; grid-auto-rows:0fr; overflow:hidden;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1), grid-auto-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.quiz-item.open{ grid-template-rows:auto 1fr; grid-auto-rows:1fr; }
+.quiz-item > .quiz-a{ display:block !important; overflow:hidden; min-height:0; opacity:0; transition:opacity .3s ease .05s; }
+.quiz-item.open > .quiz-a{ opacity:1; }
+
+@media (prefers-reduced-motion:reduce){
+  .gp-reveal, .gp-reveal-soft{opacity:1 !important; transform:none !important; transition:none !important}
+  header.hero{animation:none}
+  details.gate, details.quizset, details.qa, div.q, .quiz-item{transition:none}
+}
+
+
+/* =========================================================================
+   UNIVERSAL "BACK" BUTTON — additive, every page in the site gets this.
+   Goes to wherever the user actually came from (browser history), which is
+   independent of any fixed "back to hub" link the page may already have.
+   ========================================================================= */
+.gp-back-btn{
+  position:fixed; top:16px; left:16px; z-index:101;
+  width:42px; height:42px; border-radius:50%;
+  border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
+  font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
+  box-shadow:0 4px 16px rgba(0,0,0,.14);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
+}
+.gp-back-btn:hover{ transform:translateY(-2px) scale(1.05); box-shadow:0 8px 22px rgba(0,0,0,.20); }
+.gp-back-btn:active{ transform:scale(.92); }
+html[data-theme="dark"] .gp-back-btn{
+  background:rgba(30,33,37,.78); color:#e7e9ec; border-color:rgba(255,255,255,.14);
+}
+@media (max-width:640px){ .gp-back-btn{ width:38px; height:38px; top:10px; left:10px; font-size:16px; } }
+@media (prefers-reduced-motion:reduce){ .gp-back-btn{ transition:none; } }
+
+/* TRUE FROSTED GLASS — translucent panels over the ambient blobs */
+body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; }
+.module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+.diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+.fc-back, .mnemonic, figure.dia {
+  background: color-mix(in srgb, white 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
+  .module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
+  .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
+  .fc-back, .mnemonic, figure.dia { background: white !important; }
+}
+
+/* =========================================================================
+   CONSOLIDATED TOOLBAR + CHAPTERS DRAWER + DARK MODE SKIN
+   Replaces the old standalone back button + horizontal sticky chapter bar
+   (which used to visually collide) with one floating icon toolbar plus a
+   toggleable left-hand chapters drawer. Additive, reuses this file's tokens.
+   ========================================================================= */
+.gp-toolbar{
+  position:fixed; top:16px; left:16px; z-index:300;
+  display:flex; align-items:center; gap:4px;
+  background:rgba(255,255,255,.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
+  border:1px solid rgba(0,0,0,.10); border-radius:999px; padding:6px; box-shadow:0 6px 22px rgba(0,0,0,.16);
+}
+.gp-tool-btn{
+  width:38px; height:38px; border-radius:50%; border:none; background:transparent; color:#1c1917;
+  font-size:17px; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1), background .2s ease; padding:0;
+}
+.gp-tool-btn:hover{ background:rgba(0,0,0,.07); transform:translateY(-1px) scale(1.06); }
+.gp-tool-btn:active{ transform:scale(.9); }
+.gp-toolbar .gp-back-btn{ position:static; box-shadow:none; border:none; background:transparent; }
+.gp-toolbar .gp-back-btn:hover{ box-shadow:none; }
+@media (max-width:640px){ .gp-toolbar{ top:10px; left:10px; padding:4px; gap:2px; } .gp-tool-btn{ width:33px; height:33px; font-size:15px; } }
+@media (prefers-reduced-motion:reduce){ .gp-tool-btn{ transition:none; } }
+
+/* the old horizontal sticky chapter bar is replaced by the drawer below */
+.sticky-nav, nav.toc{ display:none !important; }
+
+/* ---- chapters drawer ---- */
+.gp-drawer-overlay{
+  position:fixed; inset:0; z-index:298; background:rgba(10,12,16,.32);
+  opacity:0; pointer-events:none; transition:opacity .3s ease;
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+}
+.gp-drawer-overlay.show{ opacity:1; pointer-events:auto; }
+.gp-drawer{
+  position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw); z-index:299;
+  background:rgba(245,244,240,.90); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-right:1px solid rgba(0,0,0,.08); box-shadow:8px 0 32px rgba(0,0,0,.18);
+  transform:translateX(-104%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; padding:18px 0;
+}
+.gp-drawer.show{ transform:none; }
+.gp-drawer-head{
+  display:flex; align-items:center; justify-content:space-between; padding:0 18px 14px;
+  border-bottom:1px solid rgba(0,0,0,.08); font-weight:700; font-size:.95rem; color:var(--ink, #1c1917);
+  margin-bottom:6px;
+}
+.gp-drawer-close{ border:none; background:transparent; font-size:16px; cursor:pointer; color:var(--ink-soft, #555); padding:4px; }
+.gp-drawer-links{ display:flex; flex-direction:column; overflow-y:auto; padding:6px 10px; gap:2px; }
+.gp-drawer-links a{
+  display:block; padding:.55rem .75rem; border-radius:10px; text-decoration:none;
+  color:var(--ink-soft, #44403c); font-size:.88rem; font-weight:500; transition:background .18s ease, color .18s ease;
+  white-space:normal;
+}
+.gp-drawer-links a:hover{ background:rgba(0,0,0,.06); }
+.gp-drawer-links a.thesis-link{ color:var(--cool, var(--accent)); font-weight:600; }
+.gp-drawer-links a.key{ color:var(--accent-dark, var(--accent)); font-weight:600; }
+@media (prefers-reduced-motion:reduce){ .gp-drawer, .gp-drawer-overlay{ transition:none; } }
+
+html[data-theme="dark"] .gp-toolbar{ background:rgba(30,33,37,.78); border-color:rgba(255,255,255,.14); }
+html[data-theme="dark"] .gp-tool-btn{ color:#e7e9ec; }
+html[data-theme="dark"] .gp-tool-btn:hover{ background:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-back-btn{ background:transparent !important; }
+html[data-theme="dark"] .gp-drawer{ background:rgba(30,33,37,.92); border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-head{ color:#e7e9ec; border-color:rgba(255,255,255,.10); }
+html[data-theme="dark"] .gp-drawer-close{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a{ color:#c4cad0; }
+html[data-theme="dark"] .gp-drawer-links a:hover{ background:rgba(255,255,255,.08); }
+
+/* ---- dark mode skin for the page itself ---- */
+html[data-theme="dark"] body{ background: color-mix(in srgb, #15171a 88%, transparent) !important; color:#cdd1d6; }
+html[data-theme="dark"] main{ color:#cdd1d6; }
+html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] h4{ color:#eef0f2; }
+html[data-theme="dark"] strong{ color: color-mix(in srgb, var(--accent-darker, var(--accent, #d4a847)) 55%, white 45%) !important; }
+html[data-theme="dark"] main a:not(.gp-drawer-links a){ color: color-mix(in srgb, var(--cool, var(--accent, #0f6b6b)) 60%, white 40%); }
+
+html[data-theme="dark"] .module, html[data-theme="dark"] section.module, html[data-theme="dark"] .blurt-prompt,
+html[data-theme="dark"] .primers li, html[data-theme="dark"] .sched-day, html[data-theme="dark"] .sched .day,
+html[data-theme="dark"] .bridge, html[data-theme="dark"] .diagram-wrap, html[data-theme="dark"] details.qsec,
+html[data-theme="dark"] details.quizset, html[data-theme="dark"] details.gate, html[data-theme="dark"] details.qa,
+html[data-theme="dark"] .quiz-q, html[data-theme="dark"] .qq, html[data-theme="dark"] .fc-back,
+html[data-theme="dark"] .mnemonic, html[data-theme="dark"] figure.dia, html[data-theme="dark"] .q, html[data-theme="dark"] .quiz-item{
+  background: color-mix(in srgb, #1e2125 70%, transparent) !important;
+  border-color: rgba(255,255,255,.10) !important;
+}
+html[data-theme="dark"] .qa, html[data-theme="dark"] .quiz-a{ color:#c4cad0 !important; }
+html[data-theme="dark"] table, html[data-theme="dark"] td, html[data-theme="dark"] th{ color:#c7cbd1 !important; border-color: rgba(255,255,255,.10) !important; }
+html[data-theme="dark"] blockquote{ border-color: rgba(255,255,255,.18) !important; }
+html[data-theme="dark"] .site-footer, html[data-theme="dark"] footer{ color:#9aa1a8 !important; }
+</style>
+  <style id="mindmap-style">
+/* =========================================================================
+   INTERACTIVE MIND MAP — General Pharmacology (pilot)
+   Self-contained: scoped to #mindmap, reuses the page's own design tokens.
+   ========================================================================= */
+.mindmap-section .mm-inner { padding: 2.2rem 2rem 2.4rem; }
+
+.mm-intro { text-align: center; max-width: 700px; margin: 0 auto 2rem; }
+.mm-tag {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--cool-pale); color: var(--cool);
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .35rem .85rem; border-radius: 999px; margin-bottom: .9rem;
+}
+.mm-intro h2 {
+  font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-2xl); color: var(--ink);
+  margin: 0 0 .6rem;
+}
+.mm-intro p { color: var(--ink-soft); font-size: var(--fs-sm); line-height: 1.6; margin: 0 0 1.1rem; }
+.mm-actions { display: flex; justify-content: center; gap: .6rem; }
+.mm-btn {
+  font-family: 'Inter', sans-serif; font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: .03em; color: var(--accent-dark); background: white;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  padding: .5rem 1rem; cursor: pointer; transition: background .15s ease, border-color .15s ease;
+}
+.mm-btn:hover { background: var(--accent-pale); border-color: var(--accent); }
+
+/* Root node + connecting "bus" line ----------------------------------- */
+.mm-root {
+  display: flex; align-items: center; justify-content: center; gap: .55rem;
+  width: fit-content; margin: 0 auto;
+  background: linear-gradient(90deg, var(--accent-darker), var(--cool));
+  color: white; font-family: 'Fraunces', Georgia, serif; font-weight: 700;
+  font-size: var(--fs-lg); text-align: center; line-height: 1.15;
+  padding: .85rem 1.6rem; border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.mm-root-emoji { font-size: 1.4em; }
+.mm-bus { width: 2px; height: 22px; background: var(--border); margin: 0 auto; }
+
+.mm-branches {
+  display: grid; gap: .65rem;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 900px) { .mm-branches { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .mm-branches { grid-template-columns: 1fr; } }
+
+/* Branch card ------------------------------------------------------------ */
+.mm-branch {
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: white; align-self: start;
+  border-top: 3px solid var(--mm-c, var(--accent));
+}
+.mm-node {
+  width: 100%; display: flex; align-items: center; gap: .65rem;
+  background: none; border: none; cursor: pointer; text-align: left;
+  font-family: 'Inter', sans-serif; color: var(--ink);
+}
+.mm-module {
+  padding: .8rem .9rem;
+}
+.mm-mnum {
+  font-family: 'JetBrains Mono', monospace; font-size: .68rem; font-weight: 700;
+  color: white; background: var(--mm-c, var(--accent)); border-radius: 5px;
+  padding: 3px 6px; flex-shrink: 0;
+}
+.mm-mtext { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.mm-mtitle { font-weight: 700; font-size: var(--fs-sm); color: var(--ink); }
+.mm-msub { font-size: .72rem; color: var(--muted); margin-top: 1px; }
+.mm-chev {
+  flex-shrink: 0; color: var(--muted); font-size: .8rem;
+  transition: transform .25s ease;
+}
+.mm-module[aria-expanded="true"] .mm-chev,
+.mm-sub[aria-expanded="true"] .mm-chev { transform: rotate(90deg); color: var(--mm-c, var(--accent)); }
+.mm-module:hover, .mm-sub:hover { background: var(--cream); }
+
+/* Collapse mechanics — same animated-grid technique used by .gate/.q elsewhere on this page */
+.mm-children {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  background: var(--cream);
+  transition: grid-template-rows .4s cubic-bezier(.4,0,.2,1);
+}
+.mm-children > div { overflow: hidden; min-height: 0; }
+.mm-branch:has(.mm-module[aria-expanded="true"]) .mm-children { grid-template-rows: 1fr; }
+
+.mm-twig { border-top: 1px solid var(--border); }
+.mm-twig:first-child { border-top: 1px solid var(--border); }
+.mm-sub { padding: .6rem .9rem .6rem 1.5rem; font-size: .82rem; font-weight: 600; align-items: flex-start; }
+.mm-stext { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.mm-stitle { line-height: 1.3; }
+.mm-ssub { font-size: .7rem; font-weight: 400; color: var(--muted); line-height: 1.4; white-space: normal; }
+.mm-sub .mm-chev { margin-top: 2px; }
+
+.mm-leaves {
+  display: grid; grid-template-rows: 0fr; grid-auto-rows: 0fr; overflow: hidden;
+  list-style: none; margin: 0; padding: 0 1.1rem 0 2.2rem;
+  transition: grid-template-rows .35s cubic-bezier(.4,0,.2,1), padding .35s ease;
+  font-size: .8rem; color: var(--ink-soft); line-height: 1.55;
+}
+.mm-leaves > li { overflow: hidden; min-height: 0; }
+.mm-twig:has(.mm-sub[aria-expanded="true"]) .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
+.mm-leaves li {
+  position: relative; padding: .25rem 0 .25rem .85rem; border-bottom: 1px dashed var(--border);
+}
+.mm-leaves li:last-child { border-bottom: none; }
+.mm-leaves li::before {
+  content: '•'; position: absolute; left: 0; color: var(--mm-c, var(--accent)); font-weight: 700;
+}
+.mm-leaves li.mm-eq {
+  font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--accent-darker);
+  background: var(--accent-pale); border-radius: 4px; padding: .35rem .5rem .35rem .85rem;
+  border-bottom: none; margin: .2rem 0;
+}
+.mm-leaves li.mm-eq::before { content: 'ƒ'; }
+
+/* Dark mode -------------------------------------------------------------- */
+html[data-theme="dark"] .mm-branch { background: #1e2125; border-color: rgba(255,255,255,.10); }
+html[data-theme="dark"] .mm-children { background: #181a1d; }
+html[data-theme="dark"] .mm-twig { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-leaves li { border-color: rgba(255,255,255,.08); }
+html[data-theme="dark"] .mm-node { color: #d7dce1; }
+html[data-theme="dark"] .mm-mtitle { color: #eef1f4; }
+html[data-theme="dark"] .mm-module:hover, html[data-theme="dark"] .mm-sub:hover { background: rgba(255,255,255,.05); }
+html[data-theme="dark"] .mm-leaves { color: #b7bec5; }
+html[data-theme="dark"] .mm-leaves li.mm-eq { background: rgba(176,116,16,.18); color: #e8c98a; }
+html[data-theme="dark"] .mm-btn { background: #1e2125; color: #e8c98a; border-color: rgba(255,255,255,.15); }
+html[data-theme="dark"] .mm-btn:hover { background: rgba(176,116,16,.18); }
+html[data-theme="dark"] .mm-tag { background: rgba(15,107,107,.2); color: #6fc6c6; }
+html[data-theme="dark"] .mm-intro h2 { color: #eef1f4; }
+html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
+
+/* Reduced motion ---------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .mm-children, .mm-leaves, .mm-chev { transition: none; }
+}
+
+/* No-:has() fallback — most current evergreen browsers support :has(), but
+   keep an explicit class-toggle path as a safety net (set by the JS below
+   in addition to aria-expanded, costs nothing, guarantees the reveal works
+   even on a browser without :has() support). */
+.mm-branch.mm-open > .mm-children { grid-template-rows: 1fr; }
+.mm-twig.mm-open > .mm-leaves { grid-template-rows: 1fr; padding: .25rem 1.1rem .85rem 2.2rem; }
 </style>
   <link rel="stylesheet" href="learning-interactive.css">
+  <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<div class="gp-toolbar" role="toolbar" aria-label="Page controls">
+  <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
+  <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
+  <button id="gpDarkToggle" class="gp-tool-btn" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+  <button id="gpRandomQuiz" class="gp-tool-btn" type="button" title="Random quiz question" aria-label="Open a random quiz question">🎲</button>
+  <button id="gpToolbarExpand" class="gp-tool-btn gp-toolbar-expand" type="button" title="More controls" aria-label="Show more controls" aria-expanded="false">›</button>
+  <div class="gp-toolbar-extra" id="gpToolbarExtraOuter">
+    <div class="gp-toolbar-extra-inner" id="gpToolbarExtra"></div>
+  </div>
+</div>
+<div class="gp-drawer-overlay" id="gpDrawerOverlay"></div>
+<aside class="gp-drawer" id="gpDrawer" aria-label="Chapter index">
+  <div class="gp-drawer-head">
+    <span>Chapters</span>
+    <button id="gpDrawerClose" class="gp-drawer-close" type="button" aria-label="Close chapters index">✕</button>
+  </div>
+  <nav class="gp-drawer-links" id="gpDrawerLinks"></nav>
+</aside>
+
+
+<div class="gp-progress" id="gpProgressBar"></div>
+<div class="gp-ambient" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">↑</button>
 
 <header class="hero">
   <div style="position:relative;z-index:2;text-align:center;margin-bottom:10px">
@@ -853,7 +1279,7 @@
     <g fill="#7fc4bf"><circle cx="280" cy="18" r="4"/><circle cx="600" cy="66" r="3.5"/><circle cx="960" cy="38" r="4"/></g>
   </svg>
   <div class="wrap">
-    <div class="eyebrow">Goodman &amp; Gilman · 14th Ed · Section I</div>
+    <div class="eyebrow">Pharmacology Learning System · Section I</div>
     <h1>General Pharmacology<br><em>an accelerated learning system</em></h1>
     <p class="sub">The foundations — Chapters 1–9 — organized as a study guide: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies that make the mechanisms clear, and a spaced-repetition plan to help you remember it. Pharmacokinetics, pharmacodynamics, metabolism and toxicology: the principles every other drug chapter is built on.</p>
     <div class="meta">
@@ -863,10 +1289,18 @@
       <span class="chip">10 quiz sets × 20 Q</span>
     </div>
   </div>
-</header>
+
+    <div class="gp-stat-row">
+      <span class="gp-stat-pill">9 modules · full depth</span>
+      <span class="gp-stat-pill">15 diagrams</span>
+      <span class="gp-stat-pill">blurting gates + analogies</span>
+      <span class="gp-stat-pill">10 quiz sets × 20 Q</span>
+    </div>
+  </header>
 
 <nav class="toc">
   <div class="wrap">
+    <a href="#mindmap">🗺️ Mind Map</a>
     <a href="#method">The method</a>
     <a class="key" href="#m2">2 · Pharmacokinetics</a>
     <a class="key" href="#m3">3 · Pharmacodynamics</a>
@@ -884,13 +1318,395 @@
 
 <main class="wrap">
 
+<section class="module mindmap-section" id="mindmap">
+<div class="mm-inner">
+  <div class="mm-intro">
+    <div class="mm-tag"><span>🗺️</span> Interactive Mind Map</div>
+    <h2>See the whole chapter at a glance</h2>
+    <p>Click a module below to branch into its subheadings — click a subheading to reveal the short topics and key formulas underneath it. Click anything again to collapse it.</p>
+    <div class="mm-actions">
+      <button id="mmExpandAll" class="mm-btn" type="button">Expand all</button>
+      <button id="mmCollapseAll" class="mm-btn" type="button">Collapse all</button>
+    </div>
+  </div>
+
+  <div class="mindmap" id="mindmapTree">
+    <div class="mm-root"><span class="mm-root-emoji">💊</span><span>General<br>Pharmacology</span></div>
+    <div class="mm-bus" aria-hidden="true"></div>
+    <div class="mm-branches">
+
+      <!-- ===== M2 — PHARMACOKINETICS (Tier 1) ===== -->
+      <div class="mm-branch" style="--mm-c:#0f6b6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m2">
+          <span class="mm-mnum">02</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Pharmacokinetics</span><span class="mm-msub">what the body does to the drug</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m2">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">The skeleton of the whole chapter: how drugs move, the 4 core parameters, and the two kinetic models that govern dosing.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Drug transport: passive diffusion (non-saturable) vs carrier-mediated SLC/ABC (saturable)</li>
+              <li>pH partitioning / ion trapping — ionised drug gets stuck on whichever side it ionises in</li>
+              <li>Four parameters: F, V<sub>d</sub>, CL, t½</li>
+              <li>Order of kinetics: first-order (most drugs) vs zero-order (ethanol, phenytoin, high-dose aspirin)</li>
+              <li>Steady state reached in ≈ 4–5 half-lives</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Drug transport across membranes</span><span class="mm-ssub">Five routes a drug can cross a membrane by — focus: which are saturable/carrier-mediated vs passive, and why that matters for interactions.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Passive diffusion — no energy, no carrier, non-saturable</li>
+              <li>Paracellular — through intercellular gaps, size-limited</li>
+              <li>Facilitated diffusion — SLC carrier, saturable (e.g. OCT1 → metformin)</li>
+              <li>Active transport (1°) — ABC pump, ATP-driven (e.g. P-gp exports digoxin)</li>
+              <li>Active transport (2°) — coupled to an ion gradient (e.g. NCX, SERT)</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The four key PK parameters</span><span class="mm-ssub">F, V<sub>d</sub>, CL, t½ defined as formulas — focus: what each one physically represents and how it's calculated from data.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li class="mm-eq">F = AUC<sub>oral</sub> / AUC<sub>IV</sub></li>
+              <li class="mm-eq">V<sub>d</sub> = Amount / C<sub>p</sub></li>
+              <li class="mm-eq">CL = CL<sub>renal</sub> + CL<sub>hepatic</sub> + CL<sub>other</sub></li>
+              <li class="mm-eq">t½ ≈ 0.693 · V<sub>d</sub> / CL</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">pH partitioning &amp; ion trapping</span><span class="mm-ssub">How a drug's ionisation state at a given pH traps it on one side of a membrane — focus: the equation itself and its use in toxicology.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li class="mm-eq">EQ 2·1 — log([protonated]/[unprotonated]) = pK<sub>a</sub> − pH</li>
+              <li>Acids accumulate on the basic side; bases accumulate on the acidic side</li>
+              <li>Basis of urinary alkalinisation speeding up salicylate excretion</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The parameters interlock</span><span class="mm-ssub">Connects V<sub>d</sub>, CL, and t½ to real dosing decisions — focus: how V<sub>d</sub> sets the loading dose and CL sets the maintenance dose.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>V<sub>d</sub> sets the loading dose (peak concentration)</li>
+              <li>CL sets the maintenance dose (steady-state concentration)</li>
+              <li class="mm-eq">EQ 2·3 — C<sub>ss</sub> = (F × Dose) / (CL × τ)</li>
+              <li class="mm-eq">EQ 2·15 — t½ = 0.693 · V<sub>d</sub> / CL</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Order of kinetics</span><span class="mm-ssub">First-order vs zero-order elimination — focus: telling the two apart by curve shape and naming the classic zero-order drugs.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>First-order: constant <em>fraction</em>/time · exponential curve · fixed t½</li>
+              <li>Zero-order: constant <em>amount</em>/time · straight line · enzyme-saturated</li>
+              <li>Zero-order drugs: ethanol, phenytoin, high-dose aspirin, theophylline</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== M3 — PHARMACODYNAMICS (Tier 1) ===== -->
+      <div class="mm-branch" style="--mm-c:#a8331f">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m3">
+          <span class="mm-mnum">03</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Pharmacodynamics</span><span class="mm-msub">what the drug does to the body</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m3">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Receptor superfamilies</span><span class="mm-ssub">The four receptor classes a drug can act on — focus: their signalling speed, from millisecond ion channels to day-long nuclear receptors.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>GPCR (7-TM) → G-protein → second messengers, seconds timescale</li>
+              <li>Ligand-gated ion channel → direct ionotropic gating, milliseconds</li>
+              <li>Enzyme-linked (RTK) → kinase cascade, minutes–hours</li>
+              <li>Nuclear receptor → alters gene transcription, hours–days</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The core vocabulary</span><span class="mm-ssub">Affinity, potency, and efficacy defined and distinguished — focus: not confusing &quot;how tightly it binds&quot; with &quot;how well it works&quot;.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Affinity — tightness of binding, measured by K<sub>d</sub> (lower = tighter)</li>
+              <li>Potency — dose needed for an effect, measured by EC₅₀ / ED₅₀</li>
+              <li>Efficacy — the maximal effect possible, E<sub>max</sub></li>
+              <li>Spare receptors — exist when EC₅₀ &lt; K<sub>d</sub></li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">G-protein signalling</span><span class="mm-ssub">The three GPCR pathways (G<sub>s</sub>, G<sub>i/o</sub>, G<sub>q</sub>) and their downstream messengers — focus: matching each pathway to its receptor examples.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>G<sub>s</sub> → adenylyl cyclase ↑ → cAMP ↑ → PKA (β-adrenergic, D₁, H₂)</li>
+              <li>G<sub>i/o</sub> → adenylyl cyclase ↓ → cAMP ↓ (M₂/M₄, α₂, μ-opioid, D₂)</li>
+              <li>G<sub>q</sub> → PLC-β → IP₃ (→Ca²⁺) + DAG (→PKC) (α₁, M₁/M₃, H₁, AT₁)</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Potency vs efficacy</span><span class="mm-ssub">Reading a dose-response curve correctly — focus: potency is left-right position, efficacy is ceiling height, and the two are independent.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Potency = left-right curve position (dose); efficacy = curve height (ceiling)</li>
+              <li>Greater potency ≠ better drug — efficacy &amp; therapeutic index matter more</li>
+              <li>Furosemide: less potent than thiazides, but greater maximal effect</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The agonist–antagonist spectrum</span><span class="mm-ssub">Every category between full agonist and inverse agonist — focus: how competitive vs non-competitive antagonism changes the curve shape.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Full agonist — 100% E<sub>max</sub></li>
+              <li>Partial agonist — submaximal E<sub>max</sub> even at full occupancy</li>
+              <li>Antagonist — 0 intrinsic effect, just blocks</li>
+              <li>Inverse agonist — pushes activity below resting baseline</li>
+              <li>Competitive antagonism → parallel right shift, E<sub>max</sub> unchanged, surmountable</li>
+              <li>Non-competitive / irreversible → E<sub>max</sub> ↓, not surmountable</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Quantal curves &amp; therapeutic index</span><span class="mm-ssub">Safety margins expressed as ratios — focus: the TI and certain-safety-factor formulas, plus the classic narrow-TI drug list.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li class="mm-eq">TI = LD₅₀ / ED₅₀</li>
+              <li class="mm-eq">Certain Safety Factor = LD₁ / ED₉₉</li>
+              <li>Narrow-TI drugs: warfarin, digoxin, lithium, phenytoin, theophylline, aminoglycosides</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">GPCR signalling cascade</span><span class="mm-ssub">The agonist-to-effect chain step by step — focus: where phosphodiesterase inhibitors intervene to prolong the signal.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Agonist → GPCR → G<sub>s</sub>·GTP → adenylyl cyclase → cAMP ↑ → PKA → effect</li>
+              <li>PDE breaks down cAMP — inhibiting it (caffeine, sildenafil, milrinone) prolongs the signal</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== M5 — DRUG METABOLISM (Tier 1) ===== -->
+      <div class="mm-branch" style="--mm-c:#5b4a7a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m5">
+          <span class="mm-mnum">05</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Drug Metabolism</span><span class="mm-msub">biotransformation</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m5">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">Phase 1 vs Phase 2 reactions and why CYP3A4 dominates — focus: telling induction and inhibition apart by speed and direction of effect.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Phase 1 (oxidation/reduction/hydrolysis) — CYP450, FMO, epoxide hydrolase; can activate prodrugs</li>
+              <li>Phase 2 (conjugation) — UGT, SULT, NAT, GST, TPMT; almost always inactivates</li>
+              <li>CYP3A4 alone metabolises &gt;50% of clinical drugs</li>
+              <li>Induction — slow, ↓ drug level vs Inhibition — fast, ↑ drug level (inverts for prodrugs)</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Key CYP isoforms</span><span class="mm-ssub">The six CYP enzymes worth memorising — focus: their signature substrates and which ones are highly polymorphic (vary by genetics).</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>CYP3A4/5 — &gt;50% of drugs; grapefruit inhibits</li>
+              <li>CYP2D6 — codeine, β-blockers; highly polymorphic (PM↔UM)</li>
+              <li>CYP2C9 — warfarin (S), phenytoin, NSAIDs</li>
+              <li>CYP2C19 — clopidogrel, PPIs; PM → clopidogrel failure</li>
+              <li>CYP1A2 — theophylline, caffeine; induced by smoking</li>
+              <li>CYP2E1 — ethanol, paracetamol → NAPQI; induced by chronic alcohol</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Induction vs inhibition</span><span class="mm-ssub">Two opposite ways drugs alter enzyme activity — focus: the mnemonic inducer/inhibitor lists and classic interaction pairs like rifampin or alcohol.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Induction (days–weeks): more enzyme → ↓ drug level → loss of efficacy</li>
+              <li>Inhibition (hours): enzyme blocked → ↑ drug level → toxicity</li>
+              <li>Inducers — "CRAP GPS" (Carbamazepine, Rifampin, Alcohol-chronic, Phenytoin, Griseofulvin/Phenobarbital, Smoking, St John's wort)</li>
+              <li>Inhibitors — "SICKFACES.COM"</li>
+              <li>Classic pair: rifampin → oral-contraceptive failure; chronic alcohol + paracetamol → NAPQI hepatotoxicity</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== M9 — CLINICAL TOXICOLOGY (Tier 1) ===== -->
+      <div class="mm-branch" style="--mm-c:#b9791a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m9">
+          <span class="mm-mnum">09</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Principles of Clinical Toxicology</span><span class="mm-msub">dose-response · poisoning · antidotes</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m9">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">The overdose-management framework — focus: the treatment ladder and which poisons activated charcoal can't bind.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>LD₅₀ = dose lethal to 50%; curve slope matters as much as position</li>
+              <li>Management ladder: stabilise → decontaminate → antidote → enhance elimination → support</li>
+              <li>Activated charcoal binds most toxins, NOT metals, alcohols, hydrocarbons, caustics, lithium, iron</li>
+              <li>Acetaminophen: the saturated-pathway paradigm → CYP2E1 → NAPQI → glutathione depletion → necrosis</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Antidotes — must-know table</span><span class="mm-ssub">Ten poison–antidote pairs — focus: matching each toxin straight to its specific reversal agent.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Paracetamol → N-acetylcysteine (replenishes glutathione)</li>
+              <li>Opioids → Naloxone (μ-antagonist)</li>
+              <li>Benzodiazepines → Flumazenil (GABA<sub>A</sub> antagonist)</li>
+              <li>Organophosphate → Atropine + Pralidoxime</li>
+              <li>Methanol / ethylene glycol → Fomepizole</li>
+              <li>Iron → Deferoxamine</li>
+              <li>Warfarin → Vitamin K + FFP/PCC</li>
+              <li>Heparin → Protamine</li>
+              <li>Digoxin → Digoxin-specific Fab</li>
+              <li>Cyanide → Hydroxocobalamin / thiosulfate</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Acetaminophen — saturation paradigm</span><span class="mm-ssub">Why a normal dose is safe but overdose is toxic — focus: the glutathione-depletion mechanism that flips a safe drug dangerous.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Therapeutic dose → glucuronide/sulfate handle it, minimal NAPQI</li>
+              <li>Overdose → conjugation saturates → CYP2E1 makes excess NAPQI → glutathione runs out → necrosis</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Enhanced elimination</span><span class="mm-ssub">When and how to actively remove a drug from the body — focus: which drug properties make a poison dialysable vs not.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Urinary alkalinisation (NaHCO₃) — weak acids: salicylate, phenobarbital</li>
+              <li>Haemodialysis favours low V<sub>d</sub>, low protein binding, low MW, water-soluble drugs (lithium, salicylate, methanol, ethylene glycol, theophylline, valproate, metformin, barbiturates)</li>
+              <li>NOT dialysable: large-V<sub>d</sub> or highly protein-bound (digoxin, TCAs, benzodiazepines)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== M4 — TRANSPORTERS (Tier 2) ===== -->
+      <div class="mm-branch" style="--mm-c:#2e8e8e">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m4">
+          <span class="mm-mnum">04</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Membrane Transporters &amp; Drug Response</span><span class="mm-msub">SLC uptake · ABC efflux</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m4">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Transporter superfamilies</span><span class="mm-ssub">The two transporter families that move drugs across membranes — focus: SLC uptake carriers vs ABC efflux pumps like P-glycoprotein.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>SLC (solute carriers) — uptake: OATP (statins), OCT (metformin), OAT, PEPT</li>
+              <li>ABC (ATP-binding cassette) — efflux: P-glycoprotein (ABCB1/MDR1), MRP, BCRP</li>
+              <li>P-gp limits gut absorption, guards the BBB, drives tumour multidrug resistance</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Clinical relevance</span><span class="mm-ssub">Real drug-interaction examples caused by transporters — focus: how blocking P-gp or a renal transporter changes another drug's level.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Verapamil inhibits P-gp → raises digoxin levels</li>
+              <li>OATP1B1 variant → increased statin myopathy risk</li>
+              <li>Probenecid blocks renal organic-anion transport → prolongs penicillin's action</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== M7 — PHARMACOGENETICS (Tier 2) ===== -->
+      <div class="mm-branch" style="--mm-c:#3a6b3a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m7">
+          <span class="mm-mnum">07</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Pharmacogenetics &amp; Pharmacogenomics</span><span class="mm-msub">genetic variation in drug response</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m7">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Metabolizer phenotypes</span><span class="mm-ssub">The poor-to-ultrarapid metabolizer spectrum — focus: why the same phenotype causes opposite outcomes for a prodrug vs an active drug.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Spectrum: poor → intermediate → extensive (normal) → ultrarapid</li>
+              <li>For a prodrug (e.g. codeine), the consequences invert vs an active drug</li>
+              <li>Codeine UM → opioid toxicity; codeine PM → no analgesia</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Test-before-prescribe pairs</span><span class="mm-ssub">Genetic tests that must precede certain prescriptions — focus: matching each gene variant to its drug and the risk it predicts.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>HLA-B*57:01 → abacavir (hypersensitivity)</li>
+              <li>HLA-B*15:02 → carbamazepine (SJS/TEN, Asian ancestry)</li>
+              <li>TPMT → azathioprine/6-MP (severe myelosuppression if low activity)</li>
+              <li>UGT1A1*28 → irinotecan (↑ neutropenia, diarrhoea)</li>
+              <li>G6PD deficiency → primaquine, rasburicase, sulfa (haemolysis)</li>
+              <li>VKORC1 + CYP2C9 → warfarin maintenance dose</li>
+              <li>NAT2 slow acetylators → isoniazid (neuropathy/hepatitis)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== M1 — DRUG DISCOVERY (Tier 3) ===== -->
+      <div class="mm-branch" style="--mm-c:#16344a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m1">
+          <span class="mm-mnum">01</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Drug Discovery &amp; Development</span><span class="mm-msub">plants to computer-aided design</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m1">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Pipeline vocabulary</span><span class="mm-ssub">The drug development pipeline from target to market — focus: what separates an IND filing from an NDA filing.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Target ID → Lead/HTS → Preclinical → IND → Clinical I–III → NDA → Phase IV</li>
+              <li>IND filed before human trials; NDA filed before marketing</li>
+              <li>Biologics → biosimilars (not identical generics)</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Clinical trial phases</span><span class="mm-ssub">Phases I through IV defined — focus: the goal, population size, and type of question each phase is built to answer.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Phase I — 20–100 healthy volunteers — safety, PK, tolerable dose</li>
+              <li>Phase II — 100–500 patients — efficacy + dose-finding</li>
+              <li>Phase III — 1000s of patients — confirm efficacy vs standard, rarer ADRs</li>
+              <li>Phase IV — population, post-approval — long-term safety surveillance</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== M6 — GI MICROBIOME (Tier 3) ===== -->
+      <div class="mm-branch" style="--mm-c:#7a8a94">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m6">
+          <span class="mm-mnum">06</span>
+          <span class="mm-mtext"><span class="mm-mtitle">The GI Microbiome &amp; Drug Response</span><span class="mm-msub">the "forgotten organ" of metabolism</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m6">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Mechanisms</span><span class="mm-ssub">How gut bacteria alter drug activity — focus: enterohepatic recirculation, prodrug activation, and antibiotic-disrupted metabolism.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>β-glucuronidase deconjugates glucuronides → regenerates active drug → enterohepatic recirculation</li>
+              <li><em>Eggerthella lenta</em> inactivates digoxin — antibiotics that suppress it raise digoxin levels</li>
+              <li>Sulfasalazine — prodrug cleaved by gut bacteria into 5-ASA (active) + sulfapyridine</li>
+              <li>Antibiotics disrupt the microbiome and can alter co-administered drug metabolism</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== M8 — POSTMARKETING DRUG SAFETY (Tier 3) ===== -->
+      <div class="mm-branch" style="--mm-c:#102634">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m8">
+          <span class="mm-mnum">08</span>
+          <span class="mm-mtext"><span class="mm-mtitle">Postmarketing Drug Safety</span><span class="mm-msub">pharmacovigilance · ADRs</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m8">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">ADR types</span><span class="mm-ssub">The Type A vs Type B framework for adverse drug reactions — focus: predictable, dose-related reactions vs rare, idiosyncratic ones.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Type A (Augmented) — predictable, dose-related, common, low mortality (warfarin bleeding)</li>
+              <li>Type B (Bizarre) — idiosyncratic, not dose-related, rare, higher mortality (penicillin anaphylaxis, SJS)</li>
+            </ul>
+          </div>
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Pharmacovigilance</span><span class="mm-ssub">How drug safety is monitored after approval — focus: spontaneous reporting systems and what triggers a market withdrawal.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Spontaneous reporting (FDA FAERS; India's PvPI/IPC) generates safety signals</li>
+              <li>Black box warning = strongest label caution</li>
+              <li>Persistent signals → withdrawal (terfenadine, cerivastatin, rofecoxib)</li>
+              <li>Genetic variants (e.g. TPMT) are recognised ADR risk factors</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</section>
+
 <section id="method" style="padding-top:30px">
-  <p class="lead">Each module runs four evidence-based stages. The blurting gate matters most — retrieving <em>before</em> you read is what builds durable memory. Chapters are ordered by yield, Tier 1 first.</p>
+  <p class="lead">Every module works through four research-backed stages, and the blurting step counts most: pulling information out of memory <em>before</em> you've read anything is what makes it stick. Chapters appear in order of payoff, with Tier 1 leading.</p>
   <div class="method">
-    <div class="m m1"><h4>① 80/20 Map</h4><p>The 20% of ideas that explain 80% of the pharmacology. The skeleton first.</p></div>
-    <div class="m m2"><h4>② Blurting Gate</h4><p>Dump everything you know <em>before</em> reading the notes. Active recall.</p></div>
-    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The mechanism in plain language, with a simple analogy.</p></div>
-    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>When to re-test, and one question linking this topic to another.</p></div>
+    <div class="m m1"><h4>① 80/20 Map</h4><p>The small slice of ideas responsible for most of the pharmacology — the skeleton you build everything else onto.</p></div>
+    <div class="m m2"><h4>② Blurting Gate</h4><p>Empty your head of everything you already know <em>before</em> reading further — this is active recall in action.</p></div>
+    <div class="m m3"><h4>③ Plain-Language Notes</h4><p>The mechanism explained simply, anchored to an everyday analogy.</p></div>
+    <div class="m m4"><h4>④ Spaced + Bridge</h4><p>A re-test schedule plus a question connecting this topic to the next one.</p></div>
   </div>
   <p class="lead" style="margin-top:18px">Tier 1 (own cold): <strong>Pharmacokinetics, Pharmacodynamics, Metabolism, Toxicology</strong>. Tier 2: Transporters, Pharmacogenetics. Tier 3 (framework only): Drug Discovery, Microbiome, Drug Safety.</p>
 </section>
@@ -908,14 +1724,14 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">All of pharmacokinetics reduces to <strong>four parameters</strong> — bioavailability (F), volume of distribution (V<sub>d</sub>), clearance (CL) and half-life (t½) — and the handful of equations that link a dose to a plasma concentration over time.</div>
+    <div class="pillar">Pharmacokinetics as a whole boils down to <strong>four parameters</strong> — bioavailability (F), volume of distribution (V<sub>d</sub>), clearance (CL) and half-life (t½) — together with a small set of equations connecting a given dose to the plasma concentration it produces over time.</div>
     <h4>The high-yield elements</h4>
     <ul>
-      <li><strong>Drug transport:</strong> passive diffusion favours small, lipophilic, non-ionised molecules; carrier-mediated transport (SLC uptake, ABC efflux) is saturable and selective.</li>
-      <li><strong>pH partitioning / ion trapping:</strong> a drug is trapped where it is more ionised — <em>acids accumulate in basic compartments, bases in acidic ones</em>.</li>
+      <li><strong>Drug transport:</strong> molecules that are small, lipophilic and non-ionised cross membranes easily by passive diffusion, while carrier-mediated routes (SLC uptake, ABC efflux) are selective and can be overwhelmed at high concentrations (saturable).</li>
+      <li><strong>pH partitioning / ion trapping:</strong> wherever a drug becomes more ionised, it gets stuck there — <em>so acids build up on the basic side, bases on the acidic side</em>.</li>
       <li><strong>The four parameters:</strong> F (fraction reaching circulation), V<sub>d</sub> (apparent volume), CL (volume cleared/time), t½ (derived from the other two).</li>
-      <li><strong>Order of kinetics:</strong> first-order (constant fraction/time, most drugs) vs zero-order (constant amount/time — ethanol, phenytoin, high-dose aspirin).</li>
-      <li><strong>Steady state</strong> ≈ 4–5 half-lives; loading dose fills V<sub>d</sub>, maintenance dose matches CL.</li>
+      <li><strong>Order of kinetics:</strong> most drugs eliminate a constant fraction per unit time (first-order); a few — ethanol, phenytoin, high-dose aspirin — eliminate a constant amount per unit time instead (zero-order).</li>
+      <li><strong>Steady state</strong> is reached after roughly 4–5 half-lives; a loading dose fills the volume of distribution, while the maintenance dose is set to match clearance.</li>
     </ul>
     <figure>
     <div class="fig-title">Figure 2·1 — The LADME journey</div>
@@ -942,7 +1758,7 @@
       </g>
       <text x="450" y="20" text-anchor="middle" font-size="11" fill="#3a4a55" font-style="italic">"L" = Liberation precedes Absorption for solid dosage forms</text>
     </svg>
-    <figcaption>Free (unbound) drug in the central compartment equilibrates with the site of action, tissue stores, and the eliminating organs. Only free drug acts, distributes and is cleared.</figcaption>
+    <figcaption>The unbound fraction circulating in the central compartment comes to equilibrium with the receptor site, tissue depots and the organs responsible for elimination — it is only this free portion that produces effects, redistributes, or gets cleared.</figcaption>
   </figure>
     <h4>Drug transport across membranes</h4>
     <div class="tbl-scroll"><table>
@@ -969,12 +1785,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">A drug is given orally and you need to predict its plasma level over the next 24 hours. Before reading on, blurt out the four parameters you'd need to know — and for each, state the one thing it controls (peak? steady state? time to reach it?). Where does your map go blank?</div>
+    <div class="blurt-prompt">Suppose you've given an oral dose and need to forecast the plasma concentration over the coming day. Before continuing, try to recall the four parameters that determine this — and for each one, name the single thing it governs (the peak level? the steady-state level? how long it takes to get there?). Notice exactly where your recall fails.</div>
     <h4 style="color:var(--coral)">Guiding primers — ask "why," not "what"</h4>
     <ul class="primers">
-      <li>Why does alkalinising the urine speed up excretion of a weak acid like aspirin — what happens to its ionisation in the tubule?</li>
-      <li>Why is half-life a <em>derived</em> parameter rather than an independent one — what two things actually move it?</li>
-      <li>Why does a small dose increase cause a disproportionate, dangerous rise in phenytoin levels but not in most drugs?</li>
+      <li>Alkalinising the urine accelerates excretion of a weak acid such as aspirin — what is happening to its ionisation state inside the renal tubule that explains this?</li>
+      <li>Half-life is described as a <em>derived</em> quantity rather than an independent one — which two variables actually determine it?</li>
+      <li>A modest increase in phenytoin dose can trigger a dangerously disproportionate rise in its level, unlike most drugs — why?</li>
     </ul>
   </div>
 
@@ -983,7 +1799,7 @@
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
     <h4>pH partitioning &amp; ion trapping</h4>
-    <p>Weak acids and bases exist as a lipid-soluble <strong>non-ionised</strong> form (crosses membranes) and a poorly diffusible <strong>ionised</strong> form. The ratio is set by the <strong>Henderson–Hasselbalch</strong> relationship, and a drug accumulates wherever it becomes more ionised.</p>
+    <p>Both weak acids and weak bases can exist in a <strong>non-ionised</strong>, fat-soluble state that passes through membranes, or in an <strong>ionised</strong> state that cannot diffuse easily. The <strong>Henderson–Hasselbalch</strong> equation determines the proportion of each, and the compartment where the drug becomes more ionised is the compartment where it piles up.</p>
     <div class="eq"><span class="tag">EQ 2·1</span> log([protonated]/[unprotonated]) = pK<sub>a</sub> − pH</div>
     <figure>
     <div class="fig-title">Figure 2·3 — Ion trapping of a weak acid (pKa 4.4)</div>
@@ -1010,10 +1826,10 @@
         <text x="430" y="150" font-size="11" fill="#3a4a55">(7.4 − 1.4 = 6 pH units = 10⁶).</text>
       </g>
     </svg>
-    <figcaption>The 6-unit pH gradient produces a millionfold difference in the trapped ionised species, even though diffusible HA is equal on both sides.</figcaption>
+    <figcaption>Although the freely diffusible HA concentration is identical on both sides, the 6-unit pH gradient drives a million-fold disparity in the trapped, ionised species.</figcaption>
   </figure>
     <h4>The parameters interlock</h4>
-    <p><strong>V<sub>d</sub> governs the loading dose</strong> (the peak you reach), <strong>CL governs the maintenance dose</strong> (the steady state you hold), and their ratio sets the half-life. t½ is therefore a consequence, not a cause.</p>
+    <p>It is <strong>V<sub>d</sub> that determines the loading dose</strong> (i.e., the peak concentration), while <strong>CL determines the maintenance dose</strong> (i.e., the steady-state concentration) — and the half-life simply falls out of the ratio between the two. In other words, t½ is downstream of V<sub>d</sub> and CL, not an independent driver.</p>
     <figure>
     <div class="fig-title">Figure 2·4 — How the four parameters interlock</div>
     <svg viewBox="0 0 860 200" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
@@ -1033,7 +1849,7 @@
         <path d="M600,104 H658"/>
       </g>
     </svg>
-    <figcaption>V<sub>d</sub> governs the loading dose (peak); CL governs the maintenance dose (steady state). Their ratio sets the half-life.</figcaption>
+    <figcaption>The loading dose is set by V<sub>d</sub> (the peak), the maintenance dose by CL (the steady state) — and dividing one by the other gives the half-life.</figcaption>
   </figure>
     <div class="eq"><span class="tag">EQ 2·3</span> C<sub>ss</sub> = (F × Dose) / (CL × τ)&nbsp;&nbsp;|&nbsp;&nbsp;<span class="tag" style="border:none">EQ 2·15</span> t½ = 0.693 · V<sub>d</sub>/CL</div>
     <h4>Order of kinetics</h4>
@@ -1059,15 +1875,15 @@
       <text x="200" y="120" font-size="11" fill="#0a4f54" font-style="italic">e⁻ᵏᵗ</text>
       <text x="600" y="100" font-size="11" fill="#a8331f" font-style="italic">enzyme saturated</text>
     </svg>
-    <figcaption>Most drugs at therapeutic doses follow first-order kinetics. Ethanol, phenytoin and high-dose aspirin show zero-order (Michaelis–Menten / saturation) kinetics — a fixed amount cleared per hour regardless of concentration.</figcaption>
+    <figcaption>At usual therapeutic doses, the great majority of drugs obey first-order kinetics, but ethanol, phenytoin and high-dose aspirin instead follow zero-order (Michaelis–Menten / saturation) kinetics, clearing a fixed quantity each hour no matter what the concentration is.</figcaption>
   </figure>
 
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — a sink with a drain</div>
-      <p>Picture the body as a <span class="key">sink being filled by a tap and emptied by a drain</span>. The <strong>tap rate</strong> is your dose × bioavailability. The <strong>size of the sink</strong> is the volume of distribution — a big sink (lipophilic drug spread into tissues) means the same dose barely raises the water level. The <strong>drain width</strong> is clearance. <strong>Steady state</strong> is when the water level holds constant because inflow equals outflow — and it always takes about four "drain-times" (half-lives) to get there, no matter how hard you open the tap.</p>
-      <p>First-order kinetics is a normal drain: the fuller the sink, the faster it empties (constant <em>fraction</em>). Zero-order is a <strong>drain clogged to a fixed trickle</strong> — it removes the same <em>amount</em> per minute regardless of how full the sink is, so a little extra inflow overflows the basin fast. That's phenytoin and ethanol.</p>
+      <p>Imagine the body as a <span class="key">basin that's filling from a tap while draining at the same time</span>. How fast the tap runs equals dose × bioavailability. The basin's size stands for the volume of distribution — a large basin (because a lipophilic drug has spread out into the tissues) means even a sizeable dose barely budges the water level. The drain's width represents clearance. You reach <strong>steady state</strong> once the water level stops changing because what's flowing in equals what's draining out — and getting there always takes about four "drain cycles" (half-lives), regardless of how vigorously you're filling the basin.</p>
+      <p>An ordinary drain behaves like first-order kinetics: the fuller the basin gets, the faster it empties, since a constant <em>fraction</em> drains each minute. A drain that's narrowed to a fixed trickle behaves like zero-order kinetics instead — it lets out the same <em>amount</em> per minute no matter the water level, so even a little extra inflow causes the basin to overflow quickly. Phenytoin and ethanol behave this way.</p>
     </div>
-    <blockquote class="warn"><span class="wl">⚠️ Warning — the zero-order trap:</span> <strong>ethanol, phenytoin and high-dose aspirin</strong> (also theophylline) saturate their elimination, so small dose increases produce disproportionate, non-linear rises in plasma level → toxicity. For high-extraction drugs (propranolol, lidocaine, morphine) clearance is flow-limited with large first-pass; for low-extraction drugs it's capacity-limited and vulnerable to enzyme induction/inhibition.</blockquote>
+    <blockquote class="warn"><span class="wl">⚠️ Warning — the zero-order trap:</span> elimination becomes saturated for <strong>ethanol, phenytoin and high-dose aspirin</strong> (also theophylline), meaning even a small bump in dose can produce a steep, non-linear jump in plasma level and tip into toxicity. Drugs with high hepatic extraction (propranolol, lidocaine, morphine) have clearance limited mainly by blood flow and undergo substantial first-pass loss; low-extraction drugs are instead limited by enzyme capacity and are therefore more easily disrupted by induction or inhibition.</blockquote>
   </div>
   </details>
 
@@ -1087,7 +1903,7 @@
 
   <div class="cog map">
     <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
-    <div class="pillar">The whole chapter is a vocabulary you must own cold — <strong>affinity, potency, efficacy, agonist/antagonist</strong> — plus the four receptor families and the G-protein second messengers that turn binding into a response.</div>
+    <div class="pillar">This entire topic rests on a vocabulary you need to know without hesitation — <strong>affinity, potency, efficacy, agonist/antagonist</strong> — together with the four receptor families and the G-protein second messengers that convert binding into a measurable response.</div>
     <h4>Receptor superfamilies</h4>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Family</th><th>Mechanism</th><th>Time scale</th><th>Examples</th></tr></thead>
@@ -1112,7 +1928,7 @@
       <!-- nuclear -->
       <g transform="translate(650,0)"><circle cx="40" cy="50" r="9" fill="#a8331f"/><path d="M40,60 V100" stroke="#a8331f" stroke-dasharray="3 3"/><ellipse cx="120" cy="120" rx="70" ry="45" fill="#ece7f3" stroke="#5b4a7a"/><text x="120" y="115" text-anchor="middle" font-size="9" fill="#5b4a7a">nucleus</text><path d="M100,130 q20,-8 40,0" stroke="#5b4a7a" fill="none"/><text x="120" y="178" text-anchor="middle" font-weight="600">Nuclear receptor</text></g>
     </svg>
-    <figcaption>Surface receptors (channel, GPCR, RTK) transduce extracellular signals; nuclear receptors bind lipophilic ligands that cross the membrane and act as transcription factors.</figcaption>
+    <figcaption>Receptors sitting at the cell surface (ion channels, GPCRs, RTKs) convert outside signals into inside ones, whereas nuclear receptors instead bind lipophilic ligands that have crossed the membrane, then function directly as transcription factors.</figcaption>
   </figure>
     <h4>The core vocabulary</h4>
     <div class="tbl-scroll"><table>
@@ -1137,12 +1953,12 @@
 
   <div class="cog blurt">
     <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
-    <div class="blurt-prompt">Two drugs act on the same receptor. One reaches a higher maximum effect; the other works at a far lower dose. Blurt out which property each demonstrates (potency vs efficacy), draw the two dose-response curves, and say which property actually matters more for choosing a drug.</div>
+    <div class="blurt-prompt">Imagine two drugs targeting the identical receptor: one achieves a taller maximal effect, while the other needs only a much smaller dose to work. Try to identify which property each one is demonstrating (potency versus efficacy), sketch the two dose-response curves, and decide which property weighs more heavily when picking a drug.</div>
     <h4 style="color:var(--coral)">Guiding primers</h4>
     <ul class="primers">
-      <li>Why does a competitive antagonist shift the curve right but a non-competitive one lower the ceiling — what's different about how they let go?</li>
-      <li>Why can a partial agonist behave as an antagonist when a full agonist is also present?</li>
-      <li>Why does chronic β-blockade cause rebound tachycardia when stopped — what did the receptors do?</li>
+      <li>A competitive antagonist pushes the curve rightward, while a non-competitive one drags the ceiling down instead — what difference in how each one detaches from the receptor explains that?</li>
+      <li>Under what circumstance can a partial agonist behave like an antagonist when a full agonist is present too?</li>
+      <li>Stopping long-term β-blockade can trigger rebound tachycardia — what changed at the receptor level to cause that?</li>
     </ul>
   </div>
 
@@ -1151,7 +1967,7 @@
   <div class="cog feyn">
     <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
     <h4>Potency vs efficacy — don't confuse them</h4>
-    <p><strong>Potency</strong> is about <em>dose</em> (where the curve sits left–right); <strong>efficacy</strong> is about <em>maximal effect</em> (how high the ceiling). A more potent drug is not better — efficacy and therapeutic index matter more. Furosemide is less potent but more efficacious than thiazides.</p>
+    <p><strong>Potency</strong> concerns <em>dose</em> — it's the left-right position of the curve — while <strong>efficacy</strong> concerns the <em>maximal effect</em>, i.e., the height of the ceiling. Greater potency doesn't make a drug superior; efficacy and therapeutic index carry more weight. Furosemide, for instance, is the less potent option compared to thiazides yet produces a greater maximal effect.</p>
     <figure>
     <div class="fig-title">Figure 3·6 — Graded dose-response: potency vs efficacy</div>
     <svg viewBox="0 0 760 260" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif">
@@ -1173,7 +1989,7 @@
       <text x="40" y="130" font-size="11" fill="#3a4a55" transform="rotate(-90 40 130)">% effect</text>
       <text x="390" y="240" font-size="11" fill="#3a4a55">log [dose] →</text>
     </svg>
-    <figcaption>A and B reach the same ceiling (equal efficacy) but B sits to the right (lower potency). C plateaus below maximum — lower efficacy, the signature of a partial agonist.</figcaption>
+    <figcaption>Curves A and B top out at the same ceiling, meaning equal efficacy, though B is shifted to the right, meaning lower potency. Curve C flattens out before reaching that maximum — that's reduced efficacy, the hallmark of a partial agonist.</figcaption>
   </figure>
     <h4>The agonist–antagonist spectrum</h4>
     <figure>
@@ -1190,7 +2006,7 @@
       <text x="20" y="55" font-size="9" fill="#3a4a55">effect</text>
       <text x="32" y="118" font-size="9" fill="#3a4a55">basal</text>
     </svg>
-    <figcaption>An inverse agonist reduces <em>constitutive</em> (basal) receptor activity below the no-drug baseline; in systems without basal tone it behaves like a neutral antagonist.</figcaption>
+    <figcaption>An inverse agonist pushes <em>constitutive</em> (basal) receptor activity below where it sits with no drug present at all; if a system has no baseline tone to begin with, the inverse agonist simply looks like a neutral antagonist.</figcaption>
   </figure>
     <div class="tbl-scroll"><table>
       <thead><tr><th>Antagonism</th><th>Effect on agonist curve</th><th>Surmountable?</th></tr></thead>
@@ -1482,7 +2298,7 @@
     <figure>
     <div class="fig-title">Figure 4·1 — SLC vs ABC at a cell</div>
     <svg viewBox="0 0 760 180" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
-      <rect x="120" y="60" width="520" height="26" fill="#e3efed"/><text x="130" y="77" font-size="9" fill="#0a4f54">plasma membrane</text>
+      <rect x="120" y="60" width="520" height="26" fill="#e3efed"/><text x="375" y="77" text-anchor="middle" font-size="9" fill="#0a4f54">plasma membrane</text>
       <defs>
         <marker id="ai" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0f6b6b"/></marker>
         <marker id="ao" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a8331f"/></marker>
@@ -2293,12 +3109,12 @@
   <div class="wrap">
     <div>
       <strong>General Pharmacology · Accelerated Learning System</strong><br>
-      <span class="src">Source: <em>Goodman &amp; Gilman's The Pharmacological Basis of Therapeutics</em>, 14th ed., Section I (Chs 1–9).<br>
+      <span class="src">Source: Standard pharmacology references — Section I.<br>
       Learning design: Pareto (80/20) · active recall &amp; blurting · worked examples · spaced repetition + interleaving.<br>
       Mnemonics are standard teaching aids. Verify all drug dosing against current local protocols before clinical use.</span>
     </div>
     <div class="src" style="text-align:right">
-      Part of the Goodman &amp; Gilman 14th Edition learning series.<br>
+      Part of a comprehensive pharmacology learning series.<br>
       Built around active recall and spaced repetition.
     </div>
   </div>
@@ -2354,6 +3170,190 @@
 })();
 </script>
 
+<script>
+/* ---- GLASS / MOTION DEMO v3 — additive, does not touch the quiz logic above ---- */
+(function(){
+  var progressBar = document.getElementById('gpProgressBar');
+  function updateProgress(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if(progressBar) progressBar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(updateProgress); }, {passive:true});
+  updateProgress();
+
+  var toTopBtn = document.getElementById('gpToTop');
+  if(toTopBtn){
+    document.addEventListener('scroll', function(){
+      if(window.scrollY > 480) toTopBtn.classList.add('show'); else toTopBtn.classList.remove('show');
+    }, {passive:true});
+    toTopBtn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+  }
+
+  var bigSel = 'section.module, .quiz-intro, #flashcards, details.quizset';
+  var smallSel = '.cog, .blurt-stage, .sched-stage, details.gate, details.qa, .flashcard, .tbl-scroll, .diagram-wrap, blockquote.warn, .analogy, div.q';
+
+  document.querySelectorAll(bigSel).forEach(function(el){ el.classList.add('gp-reveal'); });
+  document.querySelectorAll(smallSel).forEach(function(el){ el.classList.add('gp-reveal-soft'); });
+
+  if('IntersectionObserver' in window){
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('in-view'); obs.unobserve(en.target); }
+      });
+    }, {threshold:0.06, rootMargin:'0px 0px -50px 0px'});
+    var revealEls = document.querySelectorAll('.gp-reveal, .gp-reveal-soft');
+    revealEls.forEach(function(el, i){
+      if(!reduceMotion) el.style.transitionDelay = (i % 7) * 50 + 'ms';
+      obs.observe(el);
+    });
+  } else {
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  // safety net — guarantee nothing is stuck invisible
+  setTimeout(function(){
+    document.querySelectorAll('.gp-reveal, .gp-reveal-soft').forEach(function(el){ el.classList.add('in-view'); });
+  }, 2000);
+})();
+</script>
+
 <script src="learning-interactive.js"></script>
+<script src="gamify.js"></script>
+<script>
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(!b) return;
+  b.addEventListener('click', function(){
+    if (window.history.length > 1) {
+      window.history.back();
+      return;
+    }
+    // No real browser history (e.g. page opened directly as a file) —
+    // fall back to this page's own nearest "back to hub/library" link.
+    var links = document.querySelectorAll('a[href]');
+    for (var i = 0; i < links.length; i++) {
+      var t = (links[i].textContent || '').trim();
+      if (/\u2190|hub|library/i.test(t)) {
+        window.location.href = links[i].getAttribute('href');
+        return;
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- populate chapters drawer from this page's existing (now hidden) chapter nav ----
+  var drawerLinks = document.getElementById('gpDrawerLinks');
+  var sourceNav = document.querySelector('nav.toc, .sticky-nav');
+  if (drawerLinks && sourceNav) {
+    var anchors = sourceNav.querySelectorAll('a');
+    anchors.forEach(function(a){ drawerLinks.appendChild(a.cloneNode(true)); });
+  }
+
+  // ---- drawer open/close ----
+  var drawer = document.getElementById('gpDrawer');
+  var overlay = document.getElementById('gpDrawerOverlay');
+  var openBtn = document.getElementById('gpDrawerToggle');
+  var closeBtn = document.getElementById('gpDrawerClose');
+  function openDrawer(){
+    if (drawer) drawer.classList.add('show');
+    if (overlay) overlay.classList.add('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','true');
+  }
+  function closeDrawer(){
+    if (drawer) drawer.classList.remove('show');
+    if (overlay) overlay.classList.remove('show');
+    if (openBtn) openBtn.setAttribute('aria-expanded','false');
+  }
+  if (openBtn) openBtn.addEventListener('click', function(){
+    if (drawer && drawer.classList.contains('show')) closeDrawer(); else openDrawer();
+  });
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+  if (drawerLinks) drawerLinks.addEventListener('click', function(e){
+    if (e.target && e.target.tagName === 'A') closeDrawer();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeDrawer();
+  });
+
+  // ---- dark mode toggle, persisted (shared key with the hub pages) ----
+  var root = document.documentElement;
+  var darkBtn = document.getElementById('gpDarkToggle');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function upd(){ if (darkBtn) darkBtn.textContent = isDark() ? '☀️' : '🌙'; }
+  function setTheme(m){
+    if (m === 'dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme');
+    try { localStorage.setItem('pharm-theme', m); } catch(e){}
+    upd();
+  }
+  upd();
+  if (darkBtn) darkBtn.addEventListener('click', function(){ setTheme(isDark() ? 'light' : 'dark'); });
+
+  // ---- random quiz question ----
+  var randomBtn = document.getElementById('gpRandomQuiz');
+  if (randomBtn) randomBtn.addEventListener('click', function(){
+    var qs = Array.prototype.slice.call(document.querySelectorAll('.q, .quiz-item'));
+    if (!qs.length) return;
+    var pick = qs[Math.floor(Math.random() * qs.length)];
+    var trigger = pick.querySelector('.qq, .quiz-q');
+    if (trigger) trigger.click();
+    if (!pick.classList.contains('open')) pick.classList.add('open');
+    pick.scrollIntoView({behavior:'smooth', block:'center'});
+  });
+
+  // ---- expand/contract the floating toolbar itself ----
+  // Chapters (☰) and Back (←) always stay visible; every other control
+  // (nav/jump/search/tools merged in by learning-interactive.js) lives inside
+  // the collapsible .gp-toolbar-extra and only shows once expanded.
+  var expandBtn = document.getElementById('gpToolbarExpand');
+  var toolbarEl = document.querySelector('.gp-toolbar');
+  if (expandBtn && toolbarEl) expandBtn.addEventListener('click', function(){
+    var open = !toolbarEl.classList.contains('expanded');
+    toolbarEl.classList.toggle('expanded', open);
+    expandBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+<script>
+(function(){
+  // ---- Interactive mind map: click-to-expand module → subheading → leaves ----
+  var tree = document.getElementById('mindmapTree');
+  if(!tree) return;
+
+  function setExpanded(btn, open){
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    var holder = btn.closest('.mm-branch, .mm-twig');
+    if(holder) holder.classList.toggle('mm-open', open);
+  }
+
+  tree.addEventListener('click', function(e){
+    var btn = e.target.closest('.mm-node');
+    if(!btn) return;
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    setExpanded(btn, !isOpen);
+  });
+
+  var expandAllBtn = document.getElementById('mmExpandAll');
+  var collapseAllBtn = document.getElementById('mmCollapseAll');
+  if(expandAllBtn){
+    expandAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, true); });
+    });
+  }
+  if(collapseAllBtn){
+    collapseAllBtn.addEventListener('click', function(){
+      tree.querySelectorAll('.mm-node').forEach(function(b){ setExpanded(b, false); });
+    });
+  }
+})();
+</script>
+
 </body>
 </html>
