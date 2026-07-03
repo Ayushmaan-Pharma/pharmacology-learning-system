@@ -1232,6 +1232,105 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
   <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<!-- PSM-NAV-START :: unified section menu (injected, self-contained) -->
+<div id="psm-root">
+  <button id="psm-launcher" type="button" aria-haspopup="true" aria-expanded="false" title="Jump to any section">
+    <span class="psm-ico">&#9776;</span><span class="psm-lbl">Sections</span><span class="psm-caret">&#9662;</span>
+  </button>
+  <div id="psm-overlay" hidden></div>
+  <nav id="psm-panel" hidden aria-label="Study sections">
+    <div class="psm-grp">
+      <p class="psm-h">Study Hub</p>
+      <a data-file="index.html" href="index.html">&#127968; Home</a>
+      <a data-file="learning.html" href="learning.html">&#128218; Learning Systems</a>
+      <a data-file="questions.html" href="questions.html">&#10067; Question Bank</a>
+      <a data-file="review.html" href="review.html">&#128257; Spaced Repetition</a>
+      <a data-file="Pharmacology_Flashcards.html" href="Pharmacology_Flashcards.html">&#127183; Flashcards</a>
+      <a data-file="index_pyq.html" href="index_pyq.html">&#128196; PYQ Notes Library</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">Learning Systems</p>
+      <a data-file="General_Pharmacology_Learning-System.html" href="General_Pharmacology_Learning-System.html">General Pharmacology</a>
+      <a data-file="Neuropharmacology-ANS_Learning-System.html" href="Neuropharmacology-ANS_Learning-System.html">Neuropharmacology &amp; ANS</a>
+      <a data-file="Cardiovascular-Renal_Pharmacology_Learning-System.html" href="Cardiovascular-Renal_Pharmacology_Learning-System.html">Cardiovascular &amp; Renal</a>
+      <a data-file="Inflammation-Immunity-Hematopoiesis_Learning-System.html" href="Inflammation-Immunity-Hematopoiesis_Learning-System.html">Inflammation, Immunity &amp; Heme</a>
+      <a data-file="Endocrine-Pharmacology_Learning-System.html" href="Endocrine-Pharmacology_Learning-System.html">Endocrine</a>
+      <a data-file="Gastrointestinal_Pharmacology_Learning-System.html" href="Gastrointestinal_Pharmacology_Learning-System.html">Gastrointestinal</a>
+      <a data-file="Infectious-Disease-Chemotherapy_Learning-System.html" href="Infectious-Disease-Chemotherapy_Learning-System.html">Infectious Disease Chemo</a>
+      <a data-file="Neoplastic-Disease-Pharmacology_Learning-System.html" href="Neoplastic-Disease-Pharmacology_Learning-System.html">Neoplastic Disease</a>
+      <a data-file="Special-Systems_Pharmacology_Learning-System.html" href="Special-Systems_Pharmacology_Learning-System.html">Special Systems</a>
+      <a data-file="Experimental-Pharmacology_Learning-System.html" href="Experimental-Pharmacology_Learning-System.html">Experimental &amp; Clinical</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">PYQ Notes</p>
+      <a data-file="General_Pharmacology_Notes.html" href="General_Pharmacology_Notes.html">General Pharmacology</a>
+      <a data-file="Autonomic_Receptor_Pharmacology_Notes.html" href="Autonomic_Receptor_Pharmacology_Notes.html">Autonomic, Receptor &amp; Neuro</a>
+      <a data-file="Pulmonary_Renal_Cardiovascular_Notes.html" href="Pulmonary_Renal_Cardiovascular_Notes.html">Pulmonary, Renal &amp; CVS</a>
+      <a data-file="Neoplastic_Disease_Pharmacotherapy_Notes.html" href="Neoplastic_Disease_Pharmacotherapy_Notes.html">Neoplastic Disease</a>
+      <a data-file="Special_Systems_Pharmacology_Notes.html" href="Special_Systems_Pharmacology_Notes.html">Special Systems</a>
+      <a data-file="Miscellaneous_Pharmacology_Notes.html" href="Miscellaneous_Pharmacology_Notes.html">Miscellaneous</a>
+    </div>
+  </nav>
+</div>
+<style>
+  #psm-root{font-family:'Inter',system-ui,-apple-system,sans-serif;}
+  #psm-launcher{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:2147482000;
+    display:inline-flex;align-items:center;gap:.4em;padding:7px 14px;border-radius:999px;cursor:pointer;
+    background:rgba(28,25,23,.92);color:#FBF7F0;border:1px solid rgba(212,168,71,.55);
+    font-size:.82rem;font-weight:500;letter-spacing:.01em;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s ease,box-shadow .15s ease,background .15s ease;}
+  #psm-launcher:hover{transform:translateX(-50%) translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.24);background:rgba(28,25,23,1);}
+  #psm-launcher .psm-ico{color:#D4A847;font-size:.9rem;line-height:1;}
+  #psm-launcher .psm-caret{font-size:.65rem;opacity:.7;transition:transform .18s ease;}
+  #psm-root.open #psm-launcher .psm-caret{transform:rotate(180deg);}
+  #psm-overlay{position:fixed;inset:0;z-index:2147482001;background:rgba(10,10,12,.28);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+  #psm-panel{position:fixed;top:54px;left:50%;transform:translateX(-50%) translateY(-6px);z-index:2147482002;
+    width:min(560px,92vw);max-height:min(74vh,620px);overflow-y:auto;opacity:0;pointer-events:none;
+    background:#FBF7F0;color:#1C1917;border:1px solid #E7DDD0;border-radius:16px;
+    box-shadow:0 24px 60px rgba(0,0,0,.24),0 6px 16px rgba(0,0,0,.12);
+    padding:14px 16px 18px;transition:opacity .18s ease,transform .18s ease;
+    display:grid;grid-template-columns:1fr 1fr;gap:4px 22px;align-content:start;}
+  #psm-root.open #psm-panel{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+  #psm-panel .psm-grp:first-child{grid-column:1 / -1;}
+  #psm-panel .psm-h{font-family:'JetBrains Mono','SFMono-Regular',monospace;font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:#A8A29E;margin:10px 6px 4px;}
+  #psm-panel .psm-grp:first-child .psm-h{margin-top:2px;}
+  #psm-panel .psm-grp:first-child{display:grid;grid-template-columns:1fr 1fr;gap:2px 22px;}
+  #psm-panel .psm-grp:first-child .psm-h{grid-column:1 / -1;}
+  #psm-panel a{display:block;text-decoration:none;color:#1C1917;font-size:.86rem;line-height:1.35;
+    padding:7px 10px;border-radius:9px;transition:background .12s ease,color .12s ease;}
+  #psm-panel a:hover{background:#F0E9DD;}
+  #psm-panel a.psm-active{background:#1C1917;color:#FBF7F0;font-weight:600;}
+  @media (max-width:560px){
+    #psm-panel{grid-template-columns:1fr;}
+    #psm-panel .psm-grp:first-child,#psm-panel .psm-grp:first-child{grid-template-columns:1fr;}
+    #psm-launcher .psm-lbl{display:none;}
+    #psm-launcher{padding:8px 12px;}
+  }
+  @media print{#psm-root{display:none!important;}}
+</style>
+<script>
+(function(){
+  var root=document.getElementById('psm-root');
+  if(!root||root.dataset.init)return; root.dataset.init='1';
+  var btn=document.getElementById('psm-launcher'),
+      panel=document.getElementById('psm-panel'),
+      ov=document.getElementById('psm-overlay');
+  function here(){var p=location.pathname.split('/').pop();return p?decodeURIComponent(p):'index.html';}
+  var cur=here();
+  root.querySelectorAll('#psm-panel a').forEach(function(a){
+    if(a.getAttribute('data-file')===cur){a.classList.add('psm-active');}
+  });
+  function open(){root.classList.add('open');panel.hidden=false;ov.hidden=false;btn.setAttribute('aria-expanded','true');}
+  function close(){root.classList.remove('open');btn.setAttribute('aria-expanded','false');
+    setTimeout(function(){if(!root.classList.contains('open')){panel.hidden=true;ov.hidden=true;}},200);}
+  btn.addEventListener('click',function(e){e.stopPropagation();root.classList.contains('open')?close():open();});
+  ov.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&root.classList.contains('open'))close();});
+})();
+</script>
+<!-- PSM-NAV-END -->
+
 <div class="gp-toolbar" role="toolbar" aria-label="Page controls">
   <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
   <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
@@ -1271,19 +1370,19 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
     <h1>Experimental &amp; Clinical Pharmacology<br><em>an accelerated learning system</em></h1>
     <p class="sub">Everything from the practical manual — animal handling, bioassay, isolated-tissue and in-vivo work, toxicology, biostatistics and clinical pharmacology — packaged as a study system: 80/20 high-yield maps, blurting gates that demand recall before any reading happens, plain-language analogies to lock the methods in, and a spaced-repetition schedule so it actually sticks. This covers the experiments, models and calculations that postgraduate vivas and practicals are built around.</p>
     <div class="meta">
-      <span class="chip">11 modules · full depth</span>
-      <span class="chip">14 diagrams</span>
+      <span class="chip">13 modules · full depth</span>
+      <span class="chip">16 diagrams</span>
       <span class="chip">blurting gates + analogies</span>
-      <span class="chip">28 flashcards</span>
-      <span class="chip">13 quiz sets × 20 Q</span>
+      <span class="chip">38 flashcards</span>
+      <span class="chip">17 quiz sets · 327 Q</span>
     </div>
   </div>
 
     <div class="gp-stat-row">
-      <span class="gp-stat-pill">11 modules · full depth</span>
-      <span class="gp-stat-pill">14 diagrams</span>
+      <span class="gp-stat-pill">13 modules · full depth</span>
+      <span class="gp-stat-pill">16 diagrams</span>
       <span class="gp-stat-pill">blurting gates + analogies</span>
-      <span class="gp-stat-pill">28 flashcards</span>
+      <span class="gp-stat-pill">38 flashcards · 327 quiz</span>
     </div>
   </header>
 
@@ -1302,8 +1401,10 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
     <a class="key" href="#m9">9 · Biostatistics</a>
     <a class="key" href="#m10">10 · Clinical PK/PD</a>
     <a href="#m11">11 · Protocol &amp; Advances</a>
+    <a class="key" href="#m12">12 · Flow Cytometry/RT-PCR</a>
+    <a class="key" href="#m13">13 · Practical Exam Bridge</a>
     <a href="#flashcards">🃏 Flashcards</a>
-    <a href="#quizzes">★ 260 Questions</a>
+    <a href="#quizzes">★ 327 Questions</a>
   </div>
 </nav>
 
@@ -1830,6 +1931,42 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
         </div>
       </div>
 
+      <div class="mm-branch" style="--mm-c:#1f7d5e">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m12">
+          <span class="mm-mnum">12</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#m12" style="color:inherit;text-decoration:none">Flow Cytometry, RT-PCR &amp; Cell-Based Assays</a></span><span class="mm-msub">Counting single cells, reading gene expression, and testing drugs in cultured cells.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m12">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The high-yield elements</span><span class="mm-ssub">Three bench methods, three questions.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Flow cytometry: forward scatter = size, side scatter = granularity, fluorescent anti-CD antibodies = cell identity; Annexin V/PI apoptosis quadrants.</li>
+              <li>RT-qPCR: RNA → cDNA → amplify; lower Ct = more template; normalise to a housekeeping gene (ΔΔCt).</li>
+              <li>Cell-based assays: MTT/MTS viability, proliferation, reporter-gene and receptor-binding assays (link to cell culture &amp; pyrogen testing).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#b4532a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m13">
+          <span class="mm-mnum">13</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#m13" style="color:inherit;text-decoration:none">MD Practical Examination Bridge</a></span><span class="mm-msub">The recurring isolated-organ, bioassay, behavioural and calculation stations of the practical exam.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m13">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">The exam-day toolkit</span><span class="mm-ssub">Five families of station.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Isolated organ: Langendorff heart (rate/force/coronary flow); Dale's vasomotor reversal (adrenaline reversed by α-block, noradrenaline not).</li>
+              <li>Bioassay: four-point (2+2) needs parallel lines; pA₂ = antagonist potency (doubling of agonist dose).</li>
+              <li>Behavioural: rota-rod, actophotometer, Eddy's hot plate; plus protocol/IND-NDA drafting, critical appraisal, and HPLC/PK calculations (loading = Vd×C; maintenance rate = CL×C).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
@@ -2275,6 +2412,21 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
         <tr><td>PCR / RT-PCR</td><td>Specific DNA / RNA (gene expression)</td><td>Thermal-cycle amplification</td></tr>
         <tr><td>Electrophoresis</td><td>Separates proteins / nucleic acids by size &amp; charge</td><td>Migration in a gel under an electric field</td></tr>
         <tr><td>Centrifuge</td><td>Plasma vs cells; organelles</td><td>Sedimentation by density &amp; g-force</td></tr>
+        <tr><td><strong>NMR spectroscopy</strong></td><td>Molecular structure / drug identification</td><td>Nuclei in a magnetic field resonate at frequencies set by their chemical environment</td></tr>
+        <tr><td><strong>Mass spectrometry (GC-MS, LC-MS)</strong></td><td>Identity + quantification at trace level</td><td>Ionise → separate by mass/charge (m/z); coupled to GC (volatiles) or LC — confirmatory gold standard</td></tr>
+        <tr><td><strong>RIA</strong> (radioimmunoassay)</td><td>Hormones/drugs at pg–ng levels</td><td>Competition between labelled (radioactive) and unlabelled antigen for antibody</td></tr>
+        <tr><td><strong>Immunoaffinity chromatography</strong></td><td>Purify one specific analyte</td><td>Antibody bound to the column captures only its antigen; the rest washes through</td></tr>
+        <tr><td><strong>Atomic absorption spectrometry (AAS)</strong></td><td>Metals (e.g. lead in water/blood)</td><td>Atomised sample absorbs element-specific wavelength; absorbance ∝ metal concentration</td></tr>
+      </tbody>
+    </table></div>
+    <h4>RIA vs ELISA — the classic comparison</h4>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Feature</th><th>RIA</th><th>ELISA</th></tr></thead>
+      <tbody>
+        <tr><td>Label</td><td>Radioisotope (e.g. ¹²⁵I)</td><td>Enzyme → colour/fluorescence</td></tr>
+        <tr><td>Sensitivity</td><td>Very high (pg)</td><td>High (comparable, no radiation)</td></tr>
+        <tr><td>Hazard / disposal</td><td>Radiation, short shelf-life</td><td>Safe, long shelf-life — now preferred</td></tr>
+        <tr><td>Format</td><td>Competitive</td><td>Competitive or sandwich</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -2302,6 +2454,9 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
       <div class="alabel"><span>💡</span> The Analogy — a cross-country race with sticky mud</div>
       <p>Imagine runners (standing in for the molecules) crossing a muddy field (the column). The <span class="key">mud — the stationary phase — clings to some runners more than others</span>, while a tailwind (the mobile phase) pushes everyone onward regardless. Runners unaffected by the mud cross the line first; the ones who get bogged down trail in later — so a group that set off together ends up spread out, arriving one at a time. Tally how many cross the finish line in each cluster, and you learn not just <em>which</em> runners were racing but <em>how many</em> of each.</p>
     </div>
+    <h4>Structure ID, trace metals, and doing it under GLP</h4>
+    <p>Beyond separation and simple detection, three heavier tools appear in the MD syllabus. <strong>NMR spectroscopy</strong> reads how atomic nuclei resonate in a magnetic field to deduce a molecule's <em>structure</em> — the definitive way to confirm what a compound actually is. <strong>Mass spectrometry</strong> ionises molecules and sorts the fragments by mass-to-charge ratio; coupled to GC or LC it becomes the <strong>confirmatory gold standard</strong> for identifying and quantifying drugs and metabolites at trace levels. <strong>Atomic absorption spectrometry</strong> measures a specific metal (a practical-exam favourite is <em>lead in water or blood</em>) by how much element-specific light the atomised sample absorbs. For antibody-based assays, <strong>RIA</strong> (radiolabelled) was the original ultra-sensitive method but has largely been replaced by <strong>ELISA</strong> (enzyme label — safer, no radiation).</p>
+    <p>None of these numbers mean anything unless the method is trustworthy. <strong>Good Laboratory Practice (GLP)</strong> governs how safety data are generated and recorded, and every quantitative assay must undergo <strong>analytical method validation</strong> — demonstrating accuracy, precision, specificity, linearity, limit of detection/quantification, and robustness — before its results can be relied upon.</p>
     <blockquote class="warn"><span class="wl">⚠️ Warning — the calibration trap:</span> a quantitative method can never be more reliable than its standard curve. An unknown reading <em>above</em> the topmost standard (outside the linear range) will falsely read low; such samples need diluting back into range, and the calibration curve has to be rerun with every batch.</blockquote>
   </div>
   </details>
@@ -2364,6 +2519,18 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
         <tr><td>GIT</td><td>Cerulein</td><td>Anti-pancreatitis</td><td>Amylase/lipase, oedema</td></tr>
         <tr><td>Inflammation</td><td>Carrageenan into paw</td><td>Acute anti-inflammatories (NSAIDs)</td><td>Paw oedema volume (plethysmometer)</td></tr>
         <tr><td>Inflammation</td><td>Cotton pellet implant</td><td>Chronic anti-inflammatories</td><td>Granuloma dry weight</td></tr>
+        <tr><td>Endocrine</td><td>Streptozotocin / alloxan rat</td><td>Antidiabetics</td><td>Blood glucose</td></tr>
+        <tr><td>Eye</td><td>β-blocker on rabbit eye</td><td>Antiglaucoma</td><td>Intraocular pressure reduction</td></tr>
+        <tr><td>Eye</td><td>Galactosemic rat</td><td>Anticataract</td><td>Lens opacity</td></tr>
+        <tr><td>Helminths</td><td><em>Pheretima posthuma</em> (earthworm)</td><td>Anthelmintics</td><td>Time to paralysis / death</td></tr>
+        <tr><td>CVS</td><td>Isoproterenol cardiotoxicity</td><td>Cardioprotective / antihypertensive</td><td>MI markers (CK-MB, troponin, histology)</td></tr>
+        <tr><td>Lipid</td><td>Triton / high-fat hyperlipidemic rat</td><td>Antihyperlipidemics</td><td>Serum cholesterol &amp; triglycerides</td></tr>
+        <tr><td>Respiratory</td><td>Histamine aerosol / ovalbumin sensitisation</td><td>Antiasthmatics</td><td>Bronchoconstriction (preconvulsion time)</td></tr>
+        <tr><td>Respiratory</td><td>Ammonia / citric-acid aerosol</td><td>Cough suppressants (antitussives)</td><td>Cough frequency</td></tr>
+        <tr><td>Endocrine</td><td>Thyroidectomy / hyperthyroid model</td><td>Antithyroid / thyroid replacement</td><td>Serum T4 / TSH</td></tr>
+        <tr><td>Endocrine</td><td>Adrenalectomy</td><td>Corticosteroid replacement</td><td>Survival / serum corticosterone</td></tr>
+        <tr><td>Endocrine</td><td>Gonadectomy (castration/ovariectomy)</td><td>Sex-hormone replacement</td><td>End-organ (accessory sex organ) weight</td></tr>
+        <tr><td>Endocrine</td><td>Posterior pituitary preparation</td><td>Vasopressin / oxytocin</td><td>Urine output / isolated uterus contraction</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -2640,6 +2807,13 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
     <p>Start by assuming the drug does nothing (the <strong>null hypothesis</strong>). The p-value answers: <em>if that were true, how often would chance alone produce a difference at least this big?</em> A p of 0.03 means "only 3% of the time" — surprising enough that we reject the null. It is <strong>not</strong> the probability the drug works, and a non-significant p doesn't prove no effect — it may just mean too few animals (low power).</p>
     <div class="eq"><span class="tag">EQ 9·1</span> Power = 1 − β&nbsp;&nbsp;|&nbsp;&nbsp;Type I = α (false positive)&nbsp;·&nbsp;Type II = β (false negative)</div>
     <p>Running many t-tests instead of one ANOVA inflates the chance of a false positive — each test carries its own 5% risk, so three tests ≈ 14% overall. ANOVA tests all groups at once and post-hoc corrections rein the error back in.</p>
+    <h4>Meta-analysis — pooling many trials into one answer</h4>
+    <p>A <strong>meta-analysis</strong> statistically combines the results of several studies (usually from a systematic review) into a single pooled effect estimate — increasing power and precision beyond any single trial. Two models decide how the studies are weighted:</p>
+    <ul>
+      <li><strong>Fixed-effect model</strong> assumes every study is estimating the <em>same</em> true effect, and differences are due to chance alone — appropriate only when studies are very similar.</li>
+      <li><strong>Random-effects model</strong> assumes the true effect <em>varies</em> between studies (different populations, doses, settings) and estimates an average of that distribution — the safer default when studies differ.</li>
+    </ul>
+    <p>The pooled result is displayed on a <strong>forest plot</strong>: each study is a box (its size ∝ its weight) with a horizontal confidence-interval line, and the pooled estimate is the <strong>diamond</strong> at the bottom; a vertical "line of no effect" (RR/OR = 1, or difference = 0) shows at a glance which studies — and the pooled estimate — are significant. <strong>Heterogeneity</strong> (how much studies genuinely disagree) is quantified by <strong>I²</strong>: roughly &lt;25% low, ~50% moderate, &gt;75% high — high I² argues for a random-effects model and caution in pooling. A <strong>funnel plot</strong> checks for <strong>publication bias</strong>: plotting effect size against study precision should give a symmetrical inverted funnel; asymmetry (missing small negative studies) suggests bias. Use a meta-analysis when several comparable trials exist and you need the most precise, generalisable estimate; rely on a single large well-conducted RCT when the trials are too few or too heterogeneous to combine meaningfully.</p>
     <div class="analogy">
       <div class="alabel"><span>💡</span> The Analogy — signal through static</div>
       <p>Statistics is <span class="key">trying to hear a faint signal through radio static</span>. The treatment effect is the signal; biological variation is the static. The t-statistic is essentially signal ÷ noise. You can hear a weak signal two ways: make the signal louder (a bigger effect) or turn the static down (less variability or — the lever you control — a <strong>bigger sample</strong>, which averages the noise away). The p-value just tells you how likely the "signal" you heard was actually random crackle.</p>
@@ -2836,11 +3010,172 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
   </div>
 </section>
 
+<!-- ============ MODULE 12 — FLOW CYTOMETRY, RT-PCR & CELL-BASED ASSAYS ============ -->
+<section class="module" id="m12">
+  <div class="mod-head">
+    <div class="mod-num">12</div>
+    <div class="mod-titleblock">
+      <h2>Flow Cytometry, RT-PCR &amp; Cell-Based Assays</h2>
+      <div class="mod-sub">Counting cells, reading genes, and testing drugs in a dish</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Practicals</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Three modern bench methods dominate the semester practicals: <strong>flow cytometry</strong> (interrogates thousands of single cells one by one), <strong>RT-qPCR</strong> (measures how strongly a gene is expressed), and <strong>cell-based assays</strong> (test a drug's effect — viability, apoptosis, proliferation — in cultured cells). Each answers a different question about the same experiment.</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>Flow cytometry</strong> streams single cells past a laser; scattered light gives size (<strong>forward scatter</strong>) and granularity (<strong>side scatter</strong>), while fluorophore-tagged antibodies against <strong>surface markers (CD antigens)</strong> identify and count cell types (immunophenotyping — e.g. CD4 count in HIV, leukaemia panels).</li>
+      <li><strong>Apoptosis assay:</strong> <strong>Annexin V</strong> binds externalised phosphatidylserine (early apoptosis) and a viability dye (<strong>PI / 7-AAD</strong>) marks late/necrotic cells — the classic quadrant plot.</li>
+      <li><strong>FACS</strong> (fluorescence-activated cell sorting) physically separates the cells of interest.</li>
+      <li><strong>RT-qPCR workflow:</strong> extract RNA → reverse-transcribe to cDNA → amplify with a fluorescent reporter → the <strong>Ct (cycle threshold)</strong> is inversely proportional to starting mRNA (more template → lower Ct); normalise to a housekeeping gene (ΔΔCt).</li>
+      <li><strong>Cell-based assays:</strong> viability/cytotoxicity (MTT/MTS), proliferation, reporter-gene and receptor-binding assays — the front line of <em>in-vitro</em> screening (ties to cell culture &amp; the pyrogen/LAL work in Module 8).</li>
+    </ul>
+    <figure>
+      <div class="fig-title">Figure 12·1 — Flow cytometry: one cell, many readouts</div>
+      <svg viewBox="0 0 860 210" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+        <defs><marker id="fc12" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#14432e"/></marker></defs>
+        <rect x="20" y="70" width="120" height="46" rx="8" fill="#14432e"/><text x="80" y="90" text-anchor="middle" fill="#fff">Cell stream</text><text x="80" y="106" text-anchor="middle" fill="#a9d8c5" font-size="9">single file</text>
+        <circle cx="200" cy="93" r="16" fill="#f7e9e1" stroke="#b4532a"/><text x="200" y="97" text-anchor="middle" font-size="9" fill="#b4532a">laser</text>
+        <rect x="270" y="40" width="160" height="40" rx="8" fill="#e0efe8" stroke="#1f7d5e"/><text x="350" y="58" text-anchor="middle" font-size="10" fill="#14432e">Forward scatter</text><text x="350" y="72" text-anchor="middle" font-size="9" fill="#3c4a54">= cell size</text>
+        <rect x="270" y="90" width="160" height="40" rx="8" fill="#e0efe8" stroke="#1f7d5e"/><text x="350" y="108" text-anchor="middle" font-size="10" fill="#14432e">Side scatter</text><text x="350" y="122" text-anchor="middle" font-size="9" fill="#3c4a54">= granularity</text>
+        <rect x="270" y="140" width="160" height="40" rx="8" fill="#fbf0dc" stroke="#b9791a"/><text x="350" y="158" text-anchor="middle" font-size="10" fill="#b9791a">Fluorescence</text><text x="350" y="172" text-anchor="middle" font-size="9" fill="#3c4a54">= CD markers</text>
+        <rect x="480" y="55" width="170" height="110" rx="8" fill="#fff" stroke="#3c4a54"/>
+        <line x1="500" y1="150" x2="640" y2="150" stroke="#3c4a54"/><line x1="500" y1="150" x2="500" y2="65" stroke="#3c4a54"/>
+        <text x="565" y="50" text-anchor="middle" font-size="9" fill="#14432e">Apoptosis quadrants</text>
+        <text x="520" y="80" font-size="8.5" fill="#3c4a54">late apo</text><text x="610" y="80" font-size="8.5" fill="#b4532a">necrotic</text>
+        <text x="516" y="140" font-size="8.5" fill="#1f7d5e">live</text><text x="600" y="140" font-size="8.5" fill="#b9791a">early apo</text>
+        <line x1="570" y1="65" x2="570" y2="150" stroke="#7b8a93" stroke-dasharray="3 2"/><line x1="500" y1="105" x2="640" y2="105" stroke="#7b8a93" stroke-dasharray="3 2"/>
+        <text x="662" y="90" font-size="8.5" fill="#3c4a54">Annexin V →</text><text x="662" y="150" font-size="8.5" fill="#3c4a54">↑ PI</text>
+        <g stroke="#14432e" stroke-width="1.8" fill="none" marker-end="url(#fc12)"><path d="M140,93 H182"/><path d="M216,80 C240,60 250,60 268,60"/><path d="M216,93 C240,105 250,110 268,110"/><path d="M216,106 C240,150 250,158 268,160"/><path d="M430,110 H478"/></g>
+      </svg>
+      <figcaption>Each cell scatters light (size &amp; granularity) and emits fluorescence from bound antibodies — so one pass reads cell identity, count and state (e.g. Annexin V/PI apoptosis quadrants) across thousands of cells.</figcaption>
+    </figure>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">You treat a cancer cell line with a candidate drug and want to prove it kills cells by apoptosis and downregulates a target gene. Before reading on, blurt out: which assay proves apoptosis (and the two stains used), what forward vs side scatter tell you, and the RT-qPCR workflow with what a lower Ct means.</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does Annexin V mark <em>early</em> apoptosis while PI enters only <em>later</em>?</li>
+      <li>Why is a <em>lower</em> Ct value evidence of <em>more</em> starting template?</li>
+      <li>Why must RT-qPCR results be normalised to a housekeeping gene?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Flow cytometry — a turnstile that inspects every cell</h4>
+    <p>Cells are forced into single file and shot past a laser one at a time. The light that scatters <em>forward</em> scales with cell size; light scattered to the <em>side</em> reflects internal complexity/granularity. Meanwhile, antibodies tagged with different fluorophores stick to specific <strong>CD surface markers</strong>, so each cell also reports its identity by which colours it emits. Combine these and you can count and classify thousands of cells per second — the basis of a CD4 count, a leukaemia immunophenotype, or an <strong>apoptosis assay</strong> where Annexin V (early, binds flipped-out phosphatidylserine) and a DNA dye like PI (late, enters only once the membrane fails) sort cells into live / early-apoptotic / late-apoptotic / necrotic quadrants.</p>
+    <h4>RT-qPCR — counting a gene's messages</h4>
+    <p>To measure how active a gene is, you capture its mRNA, copy it into stable cDNA (<strong>reverse transcription</strong>), then amplify with a fluorescent reporter. The cycle at which fluorescence crosses a threshold — the <strong>Ct</strong> — tells you how much you started with: abundant template crosses early (low Ct), scarce template late (high Ct). Comparing to a housekeeping gene (ΔΔCt) corrects for how much RNA you loaded.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — an airport security lane</div>
+      <p>Flow cytometry is an <span class="key">airport scanner reading each passenger in single file</span>: a body scanner notes size and bulk (forward/side scatter), while coloured badges (fluorescent antibodies) reveal each person's role (CD markers). RT-qPCR is different — it's like <span class="key">photocopying a message and timing how quickly a legible stack appears</span>: start with many copies and the stack forms in few rounds (low Ct); start with one and it takes many.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> flow cytometry needs a <strong>single-cell suspension</strong> and careful <strong>compensation</strong> for spectral overlap between fluorophores, plus proper isotype/unstained controls — sloppy gating invents cell populations. In RT-qPCR, genomic-DNA contamination and an unstable housekeeping gene are the classic sources of false expression changes.</blockquote>
+  </div>
+  </details>
+
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Re-test on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each time, redraw the flow-cytometry readouts and the RT-qPCR workflow, and define Ct cold.</p>
+    <p class="bridge">Cell-based assays depend on sterile, endotoxin-free culture — the pyrogen testing and cell-culture principles you met earlier. (→ <a href="#m8">Module 8 · Cell Culture &amp; Pyrogen Testing</a>)</p>
+  </div>
+</section>
+
+<!-- ============ MODULE 13 — MD PRACTICAL EXAMINATION BRIDGE ============ -->
+<section class="module" id="m13">
+  <div class="mod-head">
+    <div class="mod-num">13</div>
+    <div class="mod-titleblock">
+      <h2>MD Practical Examination Bridge</h2>
+      <div class="mod-sub">Isolated organ, bioassay, behavioural &amp; clinical stations — the exam-day toolkit</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Exam-critical</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">The MD practical is a set of recurring stations. Master the logic of five families — <strong>isolated-organ preparations, bioassay, behavioural models, protocol/critical-appraisal exercises, and PK/HPLC calculations</strong> — and you can reason through any station, even an unfamiliar one.</div>
+    <h4>Isolated-organ &amp; whole-animal classics</h4>
+    <ul>
+      <li><strong>Langendorff isolated heart</strong> — retrograde aortic perfusion keeps a heart beating <em>ex vivo</em>; measures rate, force and coronary flow → screens inotropes/chronotropes and cardioprotection.</li>
+      <li><strong>Dale's vasomotor reversal</strong> — adrenaline raises BP, but after an <strong>α-blocker</strong> its β₂ vasodilation is unmasked, so adrenaline now <em>lowers</em> BP (reversal); noradrenaline is not reversed (no β₂).</li>
+      <li><strong>Rota-rod</strong> (motor coordination / muscle relaxants), <strong>actophotometer</strong> (locomotor activity — stimulants vs depressants), <strong>Eddy's hot plate</strong> (central/opioid analgesia).</li>
+    </ul>
+    <h4>Bioassay &amp; potency</h4>
+    <ul>
+      <li><strong>Four-point (2+2) bioassay</strong> — two doses of standard and two of test on an isolated tissue (guinea-pig ileum for ACh/histamine, rat fundus for 5-HT) give parallel log dose–response lines → estimate the unknown's potency.</li>
+      <li><strong>pA₂ (Schild)</strong> — the potency of a competitive antagonist: the negative log of the antagonist concentration that requires a <strong>doubling</strong> of agonist dose to restore the original response (e.g. pA₂ of atropine vs ACh).</li>
+    </ul>
+    <h4>Protocol, appraisal &amp; calculations</h4>
+    <ul>
+      <li><strong>Drafting</strong> an IND/NDA outline or a study protocol (objective, design, endpoints, ethics, statistics).</li>
+      <li><strong>Critical appraisal</strong> of a paper — study design, bias, validity, and whether conclusions follow from the data.</li>
+      <li><strong>PK/HPLC worked examples</strong> — read a chromatogram/standard curve, then compute half-life, clearance, V<sub>d</sub>, AUC or a loading/maintenance dose.</li>
+    </ul>
+    <figure>
+      <div class="fig-title">Figure 13·1 — Dale's vasomotor reversal &amp; the four-point bioassay</div>
+      <svg viewBox="0 0 860 210" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+        <text x="215" y="24" text-anchor="middle" font-weight="700" fill="#14432e">Dale's vasomotor reversal</text>
+        <line x1="40" y1="150" x2="400" y2="150" stroke="#3c4a54"/><line x1="40" y1="150" x2="40" y2="40" stroke="#3c4a54"/><text x="30" y="45" font-size="9" fill="#3c4a54" text-anchor="end">BP</text>
+        <path d="M60,120 C90,60 120,60 150,120" fill="none" stroke="#14432e" stroke-width="2"/><text x="105" y="45" font-size="9" fill="#14432e" text-anchor="middle">adrenaline ↑BP</text>
+        <path d="M230,120 C260,175 290,175 320,120" fill="none" stroke="#b4532a" stroke-width="2"/><text x="285" y="192" font-size="9" fill="#b4532a" text-anchor="middle">after α-block: adrenaline ↓BP</text>
+        <text x="640" y="24" text-anchor="middle" font-weight="700" fill="#14432e">Four-point bioassay</text>
+        <line x1="470" y1="160" x2="840" y2="160" stroke="#3c4a54"/><line x1="470" y1="160" x2="470" y2="40" stroke="#3c4a54"/>
+        <text x="655" y="178" font-size="9" fill="#3c4a54" text-anchor="middle">log dose →</text><text x="462" y="45" font-size="9" fill="#3c4a54" text-anchor="end">response</text>
+        <line x1="500" y1="140" x2="820" y2="60" stroke="#1f7d5e" stroke-width="2"/><text x="640" y="92" font-size="9" fill="#1f7d5e">standard (S1,S2)</text>
+        <line x1="540" y1="140" x2="840" y2="70" stroke="#b9791a" stroke-width="2" stroke-dasharray="5 3"/><text x="700" y="120" font-size="9" fill="#b9791a">test (T1,T2) — parallel</text>
+        <circle cx="500" cy="140" r="3" fill="#1f7d5e"/><circle cx="660" cy="100" r="3" fill="#1f7d5e"/><circle cx="540" cy="140" r="3" fill="#b9791a"/><circle cx="700" cy="105" r="3" fill="#b9791a"/>
+      </svg>
+      <figcaption>Left: after α-blockade, adrenaline's pressor effect flips to a depressor effect (β₂ unmasked) — Dale's reversal (noradrenaline is not reversed). Right: two doses each of standard and test give parallel log dose–response lines, from which the test's potency is read off.</figcaption>
+    </figure>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">At an exam station you're shown a tracing where adrenaline raises BP, an antagonist is added, and adrenaline now lowers BP. Name the phenomenon, the antagonist class, and why noradrenaline wouldn't behave this way. Then outline how a four-point bioassay estimates an unknown's potency, and define pA₂.</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does α-blockade convert adrenaline from a pressor to a depressor, but leave noradrenaline a pressor?</li>
+      <li>Why must the standard and test dose–response lines be <em>parallel</em> for a valid bioassay?</li>
+      <li>Why is pA₂ defined at the antagonist concentration that requires a <em>doubling</em> of the agonist dose?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Isolated organs — pharmacology with the confounders removed</h4>
+    <p>An isolated preparation (Langendorff heart, guinea-pig ileum, rat fundus) lets you study a drug's action on <em>one tissue</em> free of reflexes, hormones and metabolism. The <strong>Langendorff</strong> heart is perfused backwards down the aorta so the coronary arteries fill and the heart keeps beating, letting you read rate, force and coronary flow directly. <strong>Dale's reversal</strong> is a beautiful demonstration of mixed receptor action: adrenaline hits both α (vasoconstriction) and β₂ (vasodilation); normally α dominates and BP rises, but block α and the previously hidden β₂ effect takes over, so the <em>same</em> adrenaline now drops BP. Noradrenaline has negligible β₂ action, so blocking α just abolishes its effect — no reversal.</p>
+    <h4>Bioassay — measuring by comparison</h4>
+    <p>When you can't easily measure a substance chemically, you measure it by the <strong>size of the biological response</strong> it produces, compared against a known standard on the same tissue. The <strong>four-point assay</strong> uses two doses each of standard and test; if the log dose–response lines are parallel (same mechanism), the horizontal distance between them gives the potency ratio. The <strong>pA₂</strong> summarises a competitive antagonist's strength: it's the negative logarithm of the antagonist concentration that forces you to double the agonist dose to get the original response — a higher pA₂ means a more potent antagonist.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — weighing on a balance scale</div>
+      <p>A bioassay is a <span class="key">balance scale</span>: you don't read the unknown's weight directly, you find how much of a known standard produces the <em>same</em> tilt (response) on the same tissue. Parallel dose–response lines are the guarantee that you're comparing like with like — two weights measured on the same, evenly-calibrated scale.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> a bioassay is only valid if the standard and test act by the <strong>same mechanism</strong> (parallel lines) on a <strong>sensitive, well-set-up tissue</strong>; non-parallel lines invalidate the potency estimate. In PK calculations, watch units and remember loading dose = V<sub>d</sub> × target concentration, maintenance rate = CL × target concentration.</blockquote>
+  </div>
+  </details>
+
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Re-test on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Rehearse Dale's reversal, the four-point bioassay logic and the pA₂ definition, and work one PK calculation each pass.</p>
+    <p class="bridge">The quantitative bioassay methods here build directly on the dose–response and standard-vs-test principles introduced earlier. (→ <a href="#m3">Module 3 · Bioassay Principles</a>)</p>
+  </div>
+</section>
+
 <!-- ============ FLASHCARDS ============ -->
 <section id="flashcards">
   <div class="wrap">
     <h2>🃏 Practical &amp; Viva Flashcards</h2>
-    <p class="fc-lead">Tap a card to reveal the full answer, a practical pearl, and a common exam trap. Twenty-eight high-yield scenarios spanning lab animals, bioassay, isolated tissue, in-vivo models, toxicology, statistics and clinical pharmacology.</p>
+    <p class="fc-lead">Tap a card to reveal the full answer, a practical pearl, and a common exam trap. Thirty-eight high-yield scenarios spanning lab animals, bioassay, isolated tissue, in-vivo models, toxicology, statistics, clinical pharmacology, flow cytometry/RT-PCR and the practical-exam stations.</p>
     <div class="flashcards">
 
       <details class="flashcard"><summary><span class="fc-num">01</span><span class="fc-q">A drug is active at 50 mg/kg in mice. What is the approximate human equivalent dose for a 60 kg adult, and why isn't it simply 50 mg/kg?</span></summary><div class="fc-back">
@@ -3010,6 +3345,48 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
         <div class="fc-pearl">💎 <strong>Practical Pearl:</strong> Yellow = incineration/deep burial; Red = autoclave→recycle; White = autoclave→shred; Blue = disinfect→recycle.</div>
         <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Segregate at the <em>point of generation</em>; never put sharps into the red plastics bin.</div>
       </div></details>
+      <details class="flashcard"><summary><span class="fc-num">29</span><span class="fc-q">You treat a cell line with a candidate drug and need to prove the cells die by apoptosis rather than necrosis. Which flow-cytometry assay, and how are the quadrants read? <em>(Module 12)</em></span></summary><div class="fc-back">
+        <div class="fc-answer">An <strong>Annexin V / PI (or 7-AAD) apoptosis assay</strong>. <strong>Annexin V</strong> binds phosphatidylserine flipped to the outer membrane in <em>early</em> apoptosis; <strong>PI</strong> enters only once the membrane is compromised (<em>late</em> apoptosis/necrosis). Quadrants: Annexin⁻/PI⁻ = live; Annexin⁺/PI⁻ = early apoptotic; Annexin⁺/PI⁺ = late apoptotic; Annexin⁻/PI⁺ = necrotic.</div>
+        <div class="fc-pearl">💎 <strong>Practical Pearl:</strong> Forward scatter = cell size, side scatter = granularity; fluorescent anti-CD antibodies identify cell type (immunophenotyping).</div>
+        <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Requires a single-cell suspension and fluorophore compensation + proper controls — poor gating invents populations.</div>
+      </div></details>
+      <details class="flashcard"><summary><span class="fc-num">30</span><span class="fc-q">In an RT-qPCR experiment, the treated sample has a lower Ct for the target gene than the control. What does that mean? <em>(Module 12)</em></span></summary><div class="fc-back">
+        <div class="fc-answer">A <strong>lower Ct (cycle threshold) means MORE starting template</strong> — fluorescence crosses the threshold in fewer cycles because there was more of that mRNA to begin with. So the target gene is <strong>more highly expressed</strong> in the treated sample (after normalising to a housekeeping gene by the ΔΔCt method).</div>
+        <div class="fc-pearl">💎 <strong>Practical Pearl:</strong> Workflow: extract RNA → reverse-transcribe to cDNA → amplify with a fluorescent reporter → read Ct.</div>
+        <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Genomic-DNA contamination or an unstable housekeeping gene are the classic causes of false expression changes.</div>
+      </div></details>
+      <details class="flashcard"><summary><span class="fc-num">31</span><span class="fc-q">What do forward scatter and side scatter measure in flow cytometry, and how are specific cell types identified? <em>(Module 12)</em></span></summary><div class="fc-back">
+        <div class="fc-answer"><strong>Forward scatter (FSC)</strong> ∝ cell <strong>size</strong>; <strong>side scatter (SSC)</strong> ∝ internal <strong>granularity/complexity</strong>. Specific cell types are identified by <strong>fluorophore-tagged antibodies against surface CD markers</strong> (immunophenotyping) — e.g. CD4 counts in HIV, leukaemia/lymphoma panels.</div>
+        <div class="fc-pearl">💎 <strong>Practical Pearl:</strong> FACS additionally sorts and physically collects the cells of interest.</div>
+      </div></details>
+      <details class="flashcard"><summary><span class="fc-num">32</span><span class="fc-q">Which assay is used for a quick in-vitro readout of drug cytotoxicity/viability, and what is the principle? <em>(Module 12)</em></span></summary><div class="fc-back">
+        <div class="fc-answer">The <strong>MTT (or MTS) assay</strong>. Metabolically active (living) cells reduce the tetrazolium dye to a coloured formazan product; the absorbance is proportional to the number of viable cells, so a fall in signal indicates cytotoxicity.</div>
+        <div class="fc-pearl">💎 <strong>Practical Pearl:</strong> Other cell-based assays: proliferation (BrdU), reporter-gene, and receptor-binding assays — the front line of in-vitro screening.</div>
+      </div></details>
+      <details class="flashcard"><summary><span class="fc-num">33</span><span class="fc-q">Why must RT-qPCR expression results be normalised to a housekeeping gene? <em>(Module 12)</em></span></summary><div class="fc-back">
+        <div class="fc-answer">The amount of total RNA captured and reverse-transcribed varies between samples. A <strong>housekeeping gene</strong> (e.g. GAPDH, β-actin) is assumed constant across conditions, so expressing the target relative to it (ΔΔCt) corrects for loading differences and isolates the true change in the target.</div>
+        <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> If the housekeeping gene is itself affected by the treatment, the normalisation is invalid — validate reference genes for your system.</div>
+      </div></details>
+      <details class="flashcard"><summary><span class="fc-num">34</span><span class="fc-q">An exam tracing shows adrenaline raising BP; after a drug is given, adrenaline now lowers BP. Name the phenomenon and the drug class, and state what happens with noradrenaline. <em>(Module 13)</em></span></summary><div class="fc-back">
+        <div class="fc-answer"><strong>Dale's vasomotor reversal</strong> after an <strong>α-blocker</strong>. Adrenaline acts on both α (vasoconstriction) and β₂ (vasodilation); normally α dominates (BP rises), but with α blocked the β₂ vasodilation is unmasked, so adrenaline now <em>lowers</em> BP. <strong>Noradrenaline is NOT reversed</strong> — it has negligible β₂ action, so α-blockade merely abolishes its pressor effect.</div>
+        <div class="fc-pearl">💎 <strong>Practical Pearl:</strong> This is the classic demonstration that adrenaline is a mixed α/β agonist.</div>
+      </div></details>
+      <details class="flashcard"><summary><span class="fc-num">35</span><span class="fc-q">Describe the Langendorff preparation and what it is used to measure. <em>(Module 13)</em></span></summary><div class="fc-back">
+        <div class="fc-answer">The <strong>Langendorff isolated heart</strong> is perfused <em>retrogradely</em> down the aorta, which closes the aortic valve and drives perfusate into the coronary arteries, keeping the heart beating <em>ex vivo</em>. It measures <strong>heart rate, contractile force and coronary flow</strong> free of systemic reflexes — used to screen inotropes/chronotropes and study ischaemia-reperfusion/cardioprotection.</div>
+        <div class="fc-pearl">💎 <strong>Practical Pearl:</strong> Because it removes neural/hormonal confounders, effects seen are direct actions on the myocardium/coronaries.</div>
+      </div></details>
+      <details class="flashcard"><summary><span class="fc-num">36</span><span class="fc-q">Explain how a four-point (2+2) bioassay estimates the potency of an unknown, and the key validity requirement. <em>(Module 13)</em></span></summary><div class="fc-back">
+        <div class="fc-answer">Two doses of the <strong>standard</strong> and two of the <strong>test</strong> are applied to a sensitive isolated tissue to construct two log dose–response lines. If the lines are <strong>parallel</strong> (same mechanism), the horizontal distance between them gives the <strong>potency ratio</strong>, from which the unknown's concentration is calculated.</div>
+        <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Non-parallel lines invalidate the assay — they indicate the standard and test are not acting by the same mechanism.</div>
+      </div></details>
+      <details class="flashcard"><summary><span class="fc-num">37</span><span class="fc-q">Define pA₂ and what a higher pA₂ indicates, using atropine vs acetylcholine as the example. <em>(Module 13)</em></span></summary><div class="fc-back">
+        <div class="fc-answer"><strong>pA₂</strong> is the negative logarithm of the molar concentration of a <strong>competitive antagonist</strong> that requires a <strong>doubling</strong> of the agonist dose to restore the original response (a dose-ratio of 2). A <strong>higher pA₂ = a more potent antagonist</strong>. For atropine antagonising acetylcholine on guinea-pig ileum, the pA₂ quantifies atropine's affinity.</div>
+        <div class="fc-pearl">💎 <strong>Practical Pearl:</strong> pA₂ is derived from a Schild plot; for a purely competitive antagonist the Schild slope ≈ 1.</div>
+      </div></details>
+      <details class="flashcard"><summary><span class="fc-num">38</span><span class="fc-q">At a PK station you must give a loading and maintenance regimen. State the two formulae and the parameters each needs. <em>(Module 13)</em></span></summary><div class="fc-back">
+        <div class="fc-answer"><strong>Loading dose = V<sub>d</sub> × target plasma concentration ÷ bioavailability (F)</strong> — achieves the target level immediately (needs V<sub>d</sub>). <strong>Maintenance dosing rate = CL × target concentration ÷ F</strong> — replaces what is cleared (needs clearance). Half-life (t½ = 0.693 × V<sub>d</sub> ÷ CL) sets the dosing interval and time to steady state (~4–5 half-lives).</div>
+        <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Loading dose depends on V<sub>d</sub> (not clearance); maintenance rate depends on clearance (not V<sub>d</sub>) — mixing these up is the classic error.</div>
+      </div></details>
 
     </div>
   </div>
@@ -3018,7 +3395,7 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
 <!-- ============ QUIZZES ============ -->
 <section class="quizzes" id="quizzes">
   <div class="quiz-intro">
-    <h2>★ 300 Self-Test Questions</h2>
+    <h2>★ 327 Self-Test Questions</h2>
     <p>Fifteen sets of twenty, mapped to the modules. Cover the answer strip, commit out loud, then reveal. Struggling to retrieve is the point — that's what builds durable memory.</p>
   </div>
 
@@ -3409,6 +3786,45 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
       <div class="q"><div class="qq"><b>18</b>Why microdose?</div><div class="qa">To drop poor-pharmacokinetic candidates cheaply with minimal subject risk.</div></div>
       <div class="q"><div class="qq"><b>19</b>What does analytical toxicology do?</div><div class="qa">Detects and quantifies poisons/drugs in body fluids.</div></div>
       <div class="q"><div class="qq"><b>20</b>Why critically appraise promotional product literature?</div><div class="qa">Marketing claims may overstate the underlying evidence.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">16</span><span class="qs-title">Flow Cytometry, RT-PCR &amp; Cell-Based Assays</span><span class="qs-meta">Module 12 · 12 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What do forward and side scatter measure in flow cytometry?</div><div class="qa">Forward scatter = cell size; side scatter = internal granularity/complexity.</div></div>
+      <div class="q"><div class="qq"><b>2</b>How are specific cell types identified in flow cytometry?</div><div class="qa">Fluorophore-tagged antibodies against surface CD markers (immunophenotyping).</div></div>
+      <div class="q"><div class="qq"><b>3</b>Which two stains define the apoptosis assay, and what does each mark?</div><div class="qa">Annexin V (early apoptosis — externalised phosphatidylserine) and PI/7-AAD (late apoptosis/necrosis — membrane compromise).</div></div>
+      <div class="q"><div class="qq"><b>4</b>What is FACS?</div><div class="qa">Fluorescence-activated cell sorting — flow cytometry that also physically separates cells of interest.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Give the RT-qPCR workflow.</div><div class="qa">Extract RNA → reverse-transcribe to cDNA → amplify with a fluorescent reporter → read the Ct.</div></div>
+      <div class="q"><div class="qq"><b>6</b>What does a lower Ct value indicate?</div><div class="qa">More starting template — i.e. higher expression of that transcript.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Why normalise RT-qPCR data to a housekeeping gene?</div><div class="qa">To correct for differences in RNA input between samples (ΔΔCt method).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Principle of the MTT/MTS viability assay?</div><div class="qa">Living cells reduce tetrazolium to coloured formazan; absorbance ∝ viable cell number.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Name two other cell-based assay types.</div><div class="qa">Proliferation (BrdU), reporter-gene or receptor-binding assays.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Why is fluorophore "compensation" needed?</div><div class="qa">To correct spectral overlap between fluorophores so signals aren't misattributed.</div></div>
+      <div class="q"><div class="qq"><b>11</b>What sample preparation does flow cytometry require?</div><div class="qa">A single-cell suspension.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Two classic causes of false RT-qPCR expression changes?</div><div class="qa">Genomic-DNA contamination and an unstable/inappropriate housekeeping gene.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">17</span><span class="qs-title">MD Practical Examination Bridge</span><span class="qs-meta">Module 13 · 15 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What is Dale's vasomotor reversal?</div><div class="qa">After α-blockade, adrenaline's pressor effect flips to a depressor effect (β₂ vasodilation unmasked).</div></div>
+      <div class="q"><div class="qq"><b>2</b>Why is noradrenaline not reversed by an α-blocker?</div><div class="qa">It has negligible β₂ activity, so α-blockade merely abolishes its pressor effect.</div></div>
+      <div class="q"><div class="qq"><b>3</b>How is the Langendorff heart perfused, and why?</div><div class="qa">Retrogradely down the aorta — this shuts the aortic valve and drives perfusate into the coronaries, keeping the heart beating ex vivo.</div></div>
+      <div class="q"><div class="qq"><b>4</b>What three parameters does the Langendorff preparation measure?</div><div class="qa">Heart rate, contractile force, and coronary flow.</div></div>
+      <div class="q"><div class="qq"><b>5</b>Outline the four-point (2+2) bioassay.</div><div class="qa">Two doses each of standard and test on a sensitive tissue give parallel log dose–response lines; the horizontal gap gives the potency ratio.</div></div>
+      <div class="q"><div class="qq"><b>6</b>What is the key validity requirement of a bioassay?</div><div class="qa">The standard and test dose–response lines must be parallel (same mechanism).</div></div>
+      <div class="q"><div class="qq"><b>7</b>Define pA₂.</div><div class="qa">The negative log of the competitive-antagonist concentration requiring a doubling of agonist dose to restore the original response.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Does a higher pA₂ mean a stronger or weaker antagonist?</div><div class="qa">Stronger (more potent) antagonist.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Which tissues are used to bioassay ACh/histamine and 5-HT?</div><div class="qa">Guinea-pig ileum (ACh, histamine) and rat fundus (5-HT).</div></div>
+      <div class="q"><div class="qq"><b>10</b>What does the rota-rod assess?</div><div class="qa">Motor coordination — screening muscle relaxants/sedatives.</div></div>
+      <div class="q"><div class="qq"><b>11</b>What does Eddy's hot plate test?</div><div class="qa">Central (opioid) analgesia.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Write the loading-dose formula.</div><div class="qa">Loading dose = V<sub>d</sub> × target concentration ÷ bioavailability.</div></div>
+      <div class="q"><div class="qq"><b>13</b>Write the maintenance-rate formula.</div><div class="qa">Maintenance dosing rate = clearance × target concentration ÷ bioavailability.</div></div>
+      <div class="q"><div class="qq"><b>14</b>Which parameter governs loading dose vs maintenance rate?</div><div class="qa">Loading dose depends on V<sub>d</sub>; maintenance rate depends on clearance.</div></div>
+      <div class="q"><div class="qq"><b>15</b>Name three things to check when critically appraising a paper.</div><div class="qa">Study design/bias, internal &amp; external validity, and whether the conclusions follow from the data.</div></div>
     </div>
   </details>
 

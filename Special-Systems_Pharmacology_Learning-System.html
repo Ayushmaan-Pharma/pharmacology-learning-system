@@ -918,6 +918,105 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
   <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<!-- PSM-NAV-START :: unified section menu (injected, self-contained) -->
+<div id="psm-root">
+  <button id="psm-launcher" type="button" aria-haspopup="true" aria-expanded="false" title="Jump to any section">
+    <span class="psm-ico">&#9776;</span><span class="psm-lbl">Sections</span><span class="psm-caret">&#9662;</span>
+  </button>
+  <div id="psm-overlay" hidden></div>
+  <nav id="psm-panel" hidden aria-label="Study sections">
+    <div class="psm-grp">
+      <p class="psm-h">Study Hub</p>
+      <a data-file="index.html" href="index.html">&#127968; Home</a>
+      <a data-file="learning.html" href="learning.html">&#128218; Learning Systems</a>
+      <a data-file="questions.html" href="questions.html">&#10067; Question Bank</a>
+      <a data-file="review.html" href="review.html">&#128257; Spaced Repetition</a>
+      <a data-file="Pharmacology_Flashcards.html" href="Pharmacology_Flashcards.html">&#127183; Flashcards</a>
+      <a data-file="index_pyq.html" href="index_pyq.html">&#128196; PYQ Notes Library</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">Learning Systems</p>
+      <a data-file="General_Pharmacology_Learning-System.html" href="General_Pharmacology_Learning-System.html">General Pharmacology</a>
+      <a data-file="Neuropharmacology-ANS_Learning-System.html" href="Neuropharmacology-ANS_Learning-System.html">Neuropharmacology &amp; ANS</a>
+      <a data-file="Cardiovascular-Renal_Pharmacology_Learning-System.html" href="Cardiovascular-Renal_Pharmacology_Learning-System.html">Cardiovascular &amp; Renal</a>
+      <a data-file="Inflammation-Immunity-Hematopoiesis_Learning-System.html" href="Inflammation-Immunity-Hematopoiesis_Learning-System.html">Inflammation, Immunity &amp; Heme</a>
+      <a data-file="Endocrine-Pharmacology_Learning-System.html" href="Endocrine-Pharmacology_Learning-System.html">Endocrine</a>
+      <a data-file="Gastrointestinal_Pharmacology_Learning-System.html" href="Gastrointestinal_Pharmacology_Learning-System.html">Gastrointestinal</a>
+      <a data-file="Infectious-Disease-Chemotherapy_Learning-System.html" href="Infectious-Disease-Chemotherapy_Learning-System.html">Infectious Disease Chemo</a>
+      <a data-file="Neoplastic-Disease-Pharmacology_Learning-System.html" href="Neoplastic-Disease-Pharmacology_Learning-System.html">Neoplastic Disease</a>
+      <a data-file="Special-Systems_Pharmacology_Learning-System.html" href="Special-Systems_Pharmacology_Learning-System.html">Special Systems</a>
+      <a data-file="Experimental-Pharmacology_Learning-System.html" href="Experimental-Pharmacology_Learning-System.html">Experimental &amp; Clinical</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">PYQ Notes</p>
+      <a data-file="General_Pharmacology_Notes.html" href="General_Pharmacology_Notes.html">General Pharmacology</a>
+      <a data-file="Autonomic_Receptor_Pharmacology_Notes.html" href="Autonomic_Receptor_Pharmacology_Notes.html">Autonomic, Receptor &amp; Neuro</a>
+      <a data-file="Pulmonary_Renal_Cardiovascular_Notes.html" href="Pulmonary_Renal_Cardiovascular_Notes.html">Pulmonary, Renal &amp; CVS</a>
+      <a data-file="Neoplastic_Disease_Pharmacotherapy_Notes.html" href="Neoplastic_Disease_Pharmacotherapy_Notes.html">Neoplastic Disease</a>
+      <a data-file="Special_Systems_Pharmacology_Notes.html" href="Special_Systems_Pharmacology_Notes.html">Special Systems</a>
+      <a data-file="Miscellaneous_Pharmacology_Notes.html" href="Miscellaneous_Pharmacology_Notes.html">Miscellaneous</a>
+    </div>
+  </nav>
+</div>
+<style>
+  #psm-root{font-family:'Inter',system-ui,-apple-system,sans-serif;}
+  #psm-launcher{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:2147482000;
+    display:inline-flex;align-items:center;gap:.4em;padding:7px 14px;border-radius:999px;cursor:pointer;
+    background:rgba(28,25,23,.92);color:#FBF7F0;border:1px solid rgba(212,168,71,.55);
+    font-size:.82rem;font-weight:500;letter-spacing:.01em;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s ease,box-shadow .15s ease,background .15s ease;}
+  #psm-launcher:hover{transform:translateX(-50%) translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.24);background:rgba(28,25,23,1);}
+  #psm-launcher .psm-ico{color:#D4A847;font-size:.9rem;line-height:1;}
+  #psm-launcher .psm-caret{font-size:.65rem;opacity:.7;transition:transform .18s ease;}
+  #psm-root.open #psm-launcher .psm-caret{transform:rotate(180deg);}
+  #psm-overlay{position:fixed;inset:0;z-index:2147482001;background:rgba(10,10,12,.28);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+  #psm-panel{position:fixed;top:54px;left:50%;transform:translateX(-50%) translateY(-6px);z-index:2147482002;
+    width:min(560px,92vw);max-height:min(74vh,620px);overflow-y:auto;opacity:0;pointer-events:none;
+    background:#FBF7F0;color:#1C1917;border:1px solid #E7DDD0;border-radius:16px;
+    box-shadow:0 24px 60px rgba(0,0,0,.24),0 6px 16px rgba(0,0,0,.12);
+    padding:14px 16px 18px;transition:opacity .18s ease,transform .18s ease;
+    display:grid;grid-template-columns:1fr 1fr;gap:4px 22px;align-content:start;}
+  #psm-root.open #psm-panel{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+  #psm-panel .psm-grp:first-child{grid-column:1 / -1;}
+  #psm-panel .psm-h{font-family:'JetBrains Mono','SFMono-Regular',monospace;font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:#A8A29E;margin:10px 6px 4px;}
+  #psm-panel .psm-grp:first-child .psm-h{margin-top:2px;}
+  #psm-panel .psm-grp:first-child{display:grid;grid-template-columns:1fr 1fr;gap:2px 22px;}
+  #psm-panel .psm-grp:first-child .psm-h{grid-column:1 / -1;}
+  #psm-panel a{display:block;text-decoration:none;color:#1C1917;font-size:.86rem;line-height:1.35;
+    padding:7px 10px;border-radius:9px;transition:background .12s ease,color .12s ease;}
+  #psm-panel a:hover{background:#F0E9DD;}
+  #psm-panel a.psm-active{background:#1C1917;color:#FBF7F0;font-weight:600;}
+  @media (max-width:560px){
+    #psm-panel{grid-template-columns:1fr;}
+    #psm-panel .psm-grp:first-child,#psm-panel .psm-grp:first-child{grid-template-columns:1fr;}
+    #psm-launcher .psm-lbl{display:none;}
+    #psm-launcher{padding:8px 12px;}
+  }
+  @media print{#psm-root{display:none!important;}}
+</style>
+<script>
+(function(){
+  var root=document.getElementById('psm-root');
+  if(!root||root.dataset.init)return; root.dataset.init='1';
+  var btn=document.getElementById('psm-launcher'),
+      panel=document.getElementById('psm-panel'),
+      ov=document.getElementById('psm-overlay');
+  function here(){var p=location.pathname.split('/').pop();return p?decodeURIComponent(p):'index.html';}
+  var cur=here();
+  root.querySelectorAll('#psm-panel a').forEach(function(a){
+    if(a.getAttribute('data-file')===cur){a.classList.add('psm-active');}
+  });
+  function open(){root.classList.add('open');panel.hidden=false;ov.hidden=false;btn.setAttribute('aria-expanded','true');}
+  function close(){root.classList.remove('open');btn.setAttribute('aria-expanded','false');
+    setTimeout(function(){if(!root.classList.contains('open')){panel.hidden=true;ov.hidden=true;}},200);}
+  btn.addEventListener('click',function(e){e.stopPropagation();root.classList.contains('open')?close():open();});
+  ov.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&root.classList.contains('open'))close();});
+})();
+</script>
+<!-- PSM-NAV-END -->
+
 <div class="gp-toolbar" role="toolbar" aria-label="Page controls">
   <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
   <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
@@ -955,15 +1054,15 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
     <span class="chip tier1">⭐ Tier 1 — Ch.74 Ocular</span>
     <span class="chip tier2">⭐⭐ Tier 2 — Ch.75 Dermatological</span>
     <span class="chip tier3">📐 Tier 3 — Ch.76 Environmental</span>
-    <span class="chip">3 Modules · 45 Quiz Q&amp;As · 4 SVG Diagrams</span>
+    <span class="chip">7 Modules · 92 Quiz Q&amp;As · 8 SVG Diagrams</span>
     <span class="chip">🎨 Saffron × Rust × Deep Teal Palette</span>
   </div>
 
     <div class="gp-stat-row">
-      <span class="gp-stat-pill">⭐ Tier 1 — Ch.74 Ocular</span>
-      <span class="gp-stat-pill">⭐⭐ Tier 2 — Ch.75 Dermatological</span>
-      <span class="gp-stat-pill">📐 Tier 3 — Ch.76 Environmental</span>
-      <span class="gp-stat-pill">3 Modules · 45 Quiz Q&As · 4 SVG Diagrams</span>
+      <span class="gp-stat-pill">⭐ Tier 1 — Ocular · Special Populations · Poisoning</span>
+      <span class="gp-stat-pill">⭐⭐ Tier 2 — Dermatological · Vitamins/Obesity</span>
+      <span class="gp-stat-pill">📐 Tier 3 — Environmental · Nobel Laureates</span>
+      <span class="gp-stat-pill">7 Modules (Ch.74–80) · 92 Quiz Q&As · 8 SVG Diagrams</span>
     </div>
   </header>
 
@@ -997,10 +1096,12 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
   <a class="nav-link" href="#ch74">Ch.74 Ocular</a>
   <a class="nav-link" href="#ch75">Ch.75 Dermatological</a>
   <a class="nav-link" href="#ch76">Ch.76 Environmental</a>
+  <a class="nav-link" href="#ch77">Ch.77 Vitamins/Obesity</a>
+  <a class="nav-link" href="#ch78">Ch.78 Special Populations</a>
+  <a class="nav-link" href="#ch79">Ch.79 Poisoning</a>
+  <a class="nav-link" href="#ch80">Ch.80 Nobel Laureates</a>
   <a class="nav-link" href="#flashcards">🃏 Flashcards</a>
-  <a class="nav-link" href="#quiz74">Quiz Ocular</a>
-  <a class="nav-link" href="#quiz75">Quiz Derm</a>
-  <a class="nav-link" href="#quiz76">Quiz Environ</a>
+  <a class="nav-link" href="#quiz79">Quiz Poisoning</a>
 </nav>
 
 <main class="container">
@@ -1161,6 +1262,74 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
               <li>Hepatitis B also makes the liver produce more of the enzyme that turns aflatoxin into its cancer-causing form, while reducing the enzyme that detoxifies it.</li>
               <li>Hepatitis B kills liver cells, forcing the survivors to multiply quickly — spreading any aflatoxin-caused mutations faster.</li>
               <li>Result: aflatoxin alone raises liver cancer risk about 3-fold, hepatitis B alone about 7-fold, but together the risk rises 59-fold — far more than simply adding the two.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#E8A020">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-ch77">
+          <span class="mm-mnum">77</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#ch77" style="color:inherit;text-decoration:none">Vitamins, Minerals &amp; Obesity</a></span><span class="mm-msub">Fat- vs water-soluble vitamins, their deficiency/toxicity syndromes, and modern anti-obesity drugs.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-ch77">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Vitamins &amp; obesity drugs</span><span class="mm-ssub">Solubility predicts the clinical problem; incretins dominate obesity therapy.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Fat-soluble A, D, E, K are stored → toxicity risk and deficiency in fat malabsorption; water-soluble B/C → deficiency syndromes (beriberi, pellagra, scurvy, megaloblastic anaemia).</li>
+              <li>GLP-1 agonists (semaglutide) &amp; GIP/GLP-1 (tirzepatide): insulin secretion, slowed gastric emptying, appetite suppression; orlistat = lipase inhibitor (supplement A, D, E, K).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#0D5C63">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-ch78">
+          <span class="mm-mnum">78</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#ch78" style="color:inherit;text-decoration:none">Pharmacotherapy in Special Populations</a></span><span class="mm-msub">Paediatric, geriatric, pregnancy, hepatic and renal dosing — plus pharmacogenomics.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-ch78">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Which ADME step changes?</span><span class="mm-ssub">Adjust dose by matching the altered step to the population.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Paediatric: immature metabolism (grey-baby), bilirubin displacement (kernicterus); geriatric: reduced clearance, Beers list, "start low go slow".</li>
+              <li>Pregnancy teratogens (warfarin, ACEi, valproate, isotretinoin, tetracyclines); hepatic (Child-Pugh) and renal (eGFR) dose adjustment; pharmacogenomics (TPMT, HLA-B*57:01).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#B8450A">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-ch79">
+          <span class="mm-mnum">79</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#ch79" style="color:inherit;text-decoration:none">Clinical Poisoning &amp; Antidotes</a></span><span class="mm-msub">The systematic five-step approach, toxidromes, antidotes, decontamination and enhanced elimination.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-ch79">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Approach to the poisoned patient</span><span class="mm-ssub">Supportive care saves most; antidotes are the high-yield exception.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Five steps: resuscitate → identify (toxidrome) → decontaminate → antidote → enhance elimination; charcoal binds most toxins but not metals/alcohols/hydrocarbons/caustics/lithium/iron.</li>
+              <li>Key antidotes with mechanisms (NAC, naloxone, atropine+pralidoxime, fomepizole, deferoxamine, digoxin-Fab); dialysable toxins (salicylate, lithium, methanol, valproate); PIC duties.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#7B7B99">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-ch80">
+          <span class="mm-mnum">80</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#ch80" style="color:inherit;text-decoration:none">Nobel Laureates &amp; Landmark Discoveries</a></span><span class="mm-msub">The people and discoveries behind modern pharmacology — a viva favourite.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-ch80">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Landmark discoveries</span><span class="mm-ssub">Each opened a whole field of drugs.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Dale &amp; Loewi (neurotransmission), James Black (β-blocker + H₂-blocker, rational design), Sutherland (cAMP), Gilman &amp; Rodbell (G-proteins).</li>
+              <li>Yalow (radioimmunoassay), Allison &amp; Honjo (checkpoint inhibitors); Ram Nath Chopra — father of Indian pharmacology.</li>
             </ul>
           </div>
         </div>
@@ -1430,7 +1599,7 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
 <section id="flashcards">
   <div class="wrap">
     <h2>🃏 Clinical Vignette Flashcards</h2>
-    <p class="fc-lead">Click any card to see the answer, the underlying mechanism, a clinical pearl, and a common exam pitfall. Twenty high-yield scenarios covering ocular, dermatological, and environmental/toxicology pharmacology.</p>
+    <p class="fc-lead">Click any card to see the answer, the underlying mechanism, a clinical pearl, and a common exam pitfall. Forty high-yield scenarios spanning ocular, dermatological and environmental toxicology, plus vitamins/obesity, special populations, clinical poisoning and landmark discoveries.</p>
     <div class="flashcards">
       <details class="flashcard">
         <summary>
@@ -1650,6 +1819,146 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
           <div class="fc-answer">Amiodarone is a potent inhibitor of <strong>CYP2C9</strong> (the major enzyme metabolising the active S-warfarin enantiomer) and also inhibits CYP3A4 (R-warfarin). Result: dramatically reduced warfarin metabolism → warfarin accumulates → excessive anticoagulation → INR rises. Importantly, amiodarone has a half-life of <strong>40–55 days</strong> (due to massive tissue distribution — adipose tissue, liver, lungs) — the CYP2C9 inhibition PERSISTS for months after stopping amiodarone. Management: (1) Hold 1–2 warfarin doses; (2) Reduce warfarin dose by 30–50% when amiodarone is started; (3) Monitor INR weekly until stable; (4) Remember that warfarin dose requirements will gradually increase again over months if amiodarone is stopped (as CYP2C9 inhibition wanes).</div>
           <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Amiodarone's extraordinary half-life (40–55 days) means: (1) Weeks to reach therapeutic antiarrhythmic levels (IV loading used for acute arrhythmias); (2) Drug interactions and adverse effects persist long after cessation; (3) Amiodarone pulmonary toxicity, thyroid dysfunction, and hepatotoxicity may appear or worsen months after stopping. Monitor TFTs, LFTs, CXR every 6 months during treatment.</div>
           <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Amiodarone is an iodine-rich drug (~37% iodine by weight) → can cause both <strong>hypo- and hyperthyroidism</strong>. Type 1 amiodarone-induced thyrotoxicosis (AIT) — iodine-induced excess thyroid hormone synthesis in pre-existing thyroid disease (treat with thionamides). Type 2 AIT — destructive thyroiditis from iodine toxicity (treat with corticosteroids). Distinguishing the two requires thyroid imaging and colour flow Doppler.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">21</span><span class="fc-q">A patient with chronic cholestatic liver disease develops easy bruising and a prolonged prothrombin time that corrects with parenteral vitamin K. Explain. <em>(Ch 77)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Vitamin K deficiency from fat malabsorption.</strong> Vitamin K is fat-soluble and needs bile for absorption; cholestasis impairs this → deficiency of the vitamin-K-dependent clotting factors <strong>II, VII, IX, X</strong> → prolonged PT/INR and bleeding. Because the defect is substrate deficiency (not liver synthetic failure), parenteral vitamin K corrects it.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> If the PT does NOT correct with vitamin K, the problem is hepatocellular synthetic failure, not simple deficiency. The other fat-soluble vitamins (A, D, E) are also depleted in fat malabsorption.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">22</span><span class="fc-q">Why must folic acid never be given alone to a patient with an unexplained megaloblastic anaemia? <em>(Ch 77)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">If the cause is <strong>vitamin B12 deficiency</strong>, folate will correct the anaemia (masking it) but the <strong>neurological damage — subacute combined degeneration of the cord — progresses unchecked</strong> and may become irreversible. Always check B12 and folate together and replace B12 first (or both).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> B12 deficiency causes neuro signs (dorsal column/pyramidal); folate deficiency causes neural-tube defects in pregnancy but not SCD.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">23</span><span class="fc-q">An obese patient with type 2 diabetes is started on semaglutide and loses substantial weight. What is the mechanism and a key contraindication? <em>(Ch 77)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Semaglutide is a <strong>GLP-1 receptor agonist</strong>: it stimulates glucose-dependent insulin secretion, <strong>slows gastric emptying</strong>, and acts centrally to <strong>suppress appetite</strong> — together reducing intake and body weight. Contraindicated with a personal/family history of <strong>medullary thyroid carcinoma or MEN2</strong> (rodent C-cell tumour signal); also caution re pancreatitis.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Tirzepatide adds GIP agonism for even greater weight loss; GI upset is the commonest adverse effect of this class.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">24</span><span class="fc-q">A patient on orlistat for obesity develops night blindness and a prolonged INR. Why? <em>(Ch 77)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Orlistat inhibits <strong>intestinal/pancreatic lipase</strong>, blocking dietary fat absorption — and with it the absorption of the <strong>fat-soluble vitamins A, D, E and K</strong>. Vitamin A deficiency → night blindness; vitamin K deficiency → reduced clotting factors → prolonged INR. Supplement fat-soluble vitamins, taken separated from the drug.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Orlistat's hallmark side effect is steatorrhoea (oily, fatty stools) from unabsorbed fat.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">25</span><span class="fc-q">An alcoholic patient is brought in confused; the intern is about to start IV dextrose. What must be given first and why? <em>(Ch 77)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Thiamine (vitamin B1) before glucose.</strong> A glucose load in a thiamine-deficient patient consumes the last thiamine (a cofactor for glucose metabolism) and can precipitate <strong>Wernicke encephalopathy</strong> (ophthalmoplegia, ataxia, confusion), which may progress to irreversible Korsakoff psychosis.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Thiamine deficiency also causes beriberi — "wet" (high-output cardiac failure) and "dry" (peripheral neuropathy).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">26</span><span class="fc-q">A neonate given chloramphenicol develops abdominal distension, cyanosis and cardiovascular collapse. Name the syndrome and its mechanism. <em>(Ch 78)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Grey-baby syndrome.</strong> Neonates have <strong>immature hepatic glucuronidation</strong> (and reduced renal excretion), so chloramphenicol accumulates to toxic levels → circulatory collapse, grey discolouration, hypotension. It illustrates how immature metabolism makes a normal weight-scaled dose dangerous.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Also avoid sulfonamides in neonates — they displace bilirubin from albumin and, with an immature blood-brain barrier, risk kernicterus.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">27</span><span class="fc-q">An 82-year-old on multiple medications keeps falling. Which drug classes named in the Beers criteria should you review first? <em>(Ch 78)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">The <strong>Beers criteria</strong> flag potentially inappropriate medicines in older adults: <strong>long-acting benzodiazepines</strong> and Z-drugs (sedation, falls), <strong>strong anticholinergics</strong> (confusion, retention), and <strong>NSAIDs</strong> (GI bleeding, renal/CV risk). Reduced clearance and increased sensitivity mean "start low, go slow" and regular deprescribing review.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Increased body fat raises the volume of distribution of lipophilic drugs (e.g. diazepam), prolonging their effect in the elderly.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">28</span><span class="fc-q">A woman planning pregnancy is on several drugs. Which classic teratogens must be switched, and give one harm of each? <em>(Ch 78)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Switch the classic teratogens: <strong>warfarin</strong> (nasal/skeletal defects), <strong>ACE inhibitors/ARBs</strong> (renal dysgenesis, oligohydramnios in 2nd/3rd trimester), <strong>valproate</strong> (neural tube defects, neurodevelopmental harm), <strong>isotretinoin</strong> (severe craniofacial/cardiac/CNS defects), <strong>tetracyclines</strong> (teeth/bone), <strong>methotrexate</strong> and <strong>thalidomide</strong> (phocomelia).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> ACE inhibitor fetopathy is a 2nd/3rd-trimester effect — the drug must be stopped as soon as pregnancy is planned/confirmed.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">29</span><span class="fc-q">A patient with eGFR 25 needs an aminoglycoside. How do you adjust dosing and why? <em>(Ch 78)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Aminoglycosides are <strong>renally excreted and nephrotoxic</strong>. In renal impairment, <strong>reduce the dose and/or extend the dosing interval</strong> guided by eGFR/CrCl and therapeutic drug monitoring (trough levels), and avoid other nephrotoxins. The goal is effective peak concentrations without accumulation.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> eGFR is preferred over serum creatinine alone because creatinine varies with muscle mass, age and sex.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">30</span><span class="fc-q">Before starting azathioprine, a clinician checks an enzyme level. Which enzyme, and why does it matter? <em>(Ch 78)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>TPMT (thiopurine methyltransferase).</strong> Patients with low/absent TPMT activity cannot inactivate azathioprine/6-mercaptopurine → drug accumulates → severe, potentially fatal <strong>myelosuppression</strong>. Genotyping/phenotyping guides dose reduction or avoidance — a classic pharmacogenomic example.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Other genotype-guided drugs: HLA-B*57:01 (abacavir), HLA-B*15:02 (carbamazepine SJS), CYP2C19 (clopidogrel).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">31</span><span class="fc-q">A farmer arrives drowsy, sweating, with pinpoint pupils, copious secretions and muscle fasciculations. Diagnosis, antidotes, and the atropine end-point? <em>(Ch 79)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Organophosphate poisoning</strong> (cholinergic toxidrome — DUMBELS/SLUDGE). Antidotes: <strong>atropine</strong> (blocks muscarinic effects) titrated to <strong>drying of bronchial secretions</strong> (the key end-point, not pupils or heart rate) + <strong>pralidoxime</strong> to reactivate acetylcholinesterase before "ageing". Add airway protection, decontamination, and benzodiazepines for seizures.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Pralidoxime must be given early — once the phosphorylated enzyme "ages" it can no longer be reactivated.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">32</span><span class="fc-q">An unconscious patient with respiratory depression and pinpoint pupils wakes after naloxone but re-sedates 30 minutes later. Why, and what do you do? <em>(Ch 79)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Opioid overdose (the triad: coma, pinpoint pupils, respiratory depression). Naloxone reversed it, but its <strong>half-life is shorter than most opioids</strong>, so as it wears off the opioid re-occupies the μ-receptor → re-sedation. Manage with <strong>repeat naloxone doses or a continuous infusion</strong> and prolonged observation (especially long-acting opioids/fentanyl).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> The same short-half-life caveat applies to flumazenil for benzodiazepines.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">33</span><span class="fc-q">A patient takes a large paracetamol overdose. Which antidote, how does it work, and why does timing matter? <em>(Ch 79)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>N-acetylcysteine (NAC)</strong> — it <strong>replenishes hepatic glutathione</strong>, which neutralises the toxic metabolite NAPQI formed when the normal conjugation pathways saturate. It is most effective when given early (within ~8 hours), but is still given late in significant ingestions; the treatment nomogram guides the decision.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Activated charcoal helps only if given early after ingestion; it does not replace NAC.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">34</span><span class="fc-q">Which poisonings are effectively treated with haemodialysis, and what physicochemical properties allow it? <em>(Ch 79)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Dialysable toxins are <strong>small, water-soluble, low protein-bound, and have a low volume of distribution</strong>: <strong>salicylate, lithium, methanol, ethylene glycol, valproate, metformin, theophylline</strong>. A large volume of distribution or high protein binding (e.g. digoxin, TCAs) makes dialysis ineffective because most drug sits in tissue, not plasma.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Urinary alkalinisation (bicarbonate) enhances renal elimination of weak acids such as salicylate and phenobarbital via ion trapping.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">35</span><span class="fc-q">Which common poisons are NOT adsorbed by activated charcoal? <em>(Ch 79)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Activated charcoal does <strong>not bind metals, alcohols, hydrocarbons, caustics, lithium or iron</strong>. It is most useful given early for many drug overdoses; multiple-dose charcoal additionally interrupts enterohepatic recycling (theophylline, carbamazepine, dapsone, phenobarbital, quinine).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Charcoal is contraindicated/ineffective for caustic ingestion and where the airway is unprotected in a drowsy patient (aspiration risk).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">36</span><span class="fc-q">Whose frog-heart experiment proved chemical neurotransmission, and what was "Vagusstoff"? <em>(Ch 80)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Otto Loewi</strong> (with Henry Dale, Nobel 1936). Stimulating the vagus of one frog heart released a substance ("<strong>Vagusstoff</strong>") that slowed a second heart when the perfusate was transferred — proving nerves signal chemically. Vagusstoff was later identified as <strong>acetylcholine</strong>, founding autonomic pharmacology.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Dale's classification of cholinergic vs adrenergic transmission underlies the entire ANS drug map.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">37</span><span class="fc-q">Which two landmark drugs did James Black design, and why is his work called "rational drug design"? <em>(Ch 80)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Propranolol</strong> (the first β-adrenergic blocker) and <strong>cimetidine</strong> (the first H₂-receptor antagonist). Rather than screening by chance, Black started from a defined receptor and <strong>engineered molecules to block it</strong> — the birth of rational, receptor-based drug design (Nobel 1988).</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Both drugs founded whole therapeutic classes (β-blockers in cardiology; H₂-blockers in peptic ulcer disease).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">38</span><span class="fc-q">Who discovered cyclic AMP, who discovered G-proteins, and why do these matter for pharmacology? <em>(Ch 80)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Earl Sutherland</strong> discovered cyclic AMP as a second messenger (Nobel 1971); <strong>Alfred Gilman and Martin Rodbell</strong> discovered G-proteins (Nobel 1994). Together they explained the intracellular machinery that receptors switch on — the basis of <strong>GPCR pharmacology</strong>, the largest single class of drug targets.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Don't swap them — cAMP = Sutherland; G-proteins = Gilman &amp; Rodbell.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">39</span><span class="fc-q">Who developed the radioimmunoassay, and why was it transformative? <em>(Ch 80)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Rosalyn Yalow</strong> (Nobel 1977, with the work done alongside Solomon Berson, who had died). The <strong>radioimmunoassay (RIA)</strong> used antibody binding with a radiolabelled tracer to measure hormones, drugs and other molecules at <strong>extremely low concentrations</strong> — revolutionising endocrinology and therapeutic drug monitoring.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> RIA is the conceptual ancestor of ELISA and modern immunoassays.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">40</span><span class="fc-q">Which discovery by Allison and Honjo reshaped oncology, and name the "father of Indian pharmacology". <em>(Ch 80)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">James <strong>Allison</strong> and Tasuku <strong>Honjo</strong> discovered <strong>immune checkpoint inhibition</strong> (CTLA-4 and PD-1 respectively; Nobel 2018) → checkpoint-inhibitor drugs (ipilimumab, nivolumab, pembrolizumab) that release the immune system against cancer. The "father of Indian pharmacology" is <strong>Colonel Sir Ram Nath Chopra</strong>.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Checkpoint inhibitors cause characteristic immune-related adverse events (colitis, thyroiditis, pneumonitis, hepatitis).</div>
         </div>
       </details>
     </div>
@@ -2029,6 +2338,22 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
           </tbody>
         </table>
       </div>
+
+      <p><strong>Acute clinical poisoning — management beyond the heavy metals (high-yield emergency table):</strong></p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Poison</th><th>Key features</th><th>Specific management</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Organophosphate (OPC)</strong></td><td>Cholinergic crisis (DUMBELS/SLUDGE) — miosis, bronchorrhoea, bradycardia, fasciculations, ↓consciousness</td><td><strong>Atropine</strong> titrated to drying of secretions (the key endpoint, not pupils/HR) + <strong>pralidoxime</strong> (2-PAM) to reactivate AChE <em>before ageing</em>; decontaminate, secure airway, benzodiazepines for seizures</td></tr>
+            <tr><td><strong>Paracetamol</strong></td><td>Early silent; 24–72 h hepatotoxicity → fulminant liver failure; use nomogram</td><td><strong>N-acetylcysteine</strong> (replenishes glutathione — most effective &lt;8 h; still give late)</td></tr>
+            <tr><td><strong>Salicylate</strong></td><td>Tinnitus, hyperpnoea, mixed respiratory alkalosis + high-anion-gap metabolic acidosis, hyperthermia</td><td><strong>Urinary alkalinisation</strong> with sodium bicarbonate (ion-trapping ↑ renal excretion); correct K⁺; <strong>haemodialysis</strong> if severe</td></tr>
+            <tr><td><strong>Digoxin</strong></td><td>Nausea, xanthopsia, arrhythmia (any type), hyperkalaemia (acute — a mortality marker)</td><td><strong>Digoxin-specific antibody (Fab) fragments</strong>; correct hypokalaemia/hypomagnesaemia; avoid calcium in acute toxicity</td></tr>
+            <tr><td><strong>Aluminium phosphide</strong> ("rice tablet", ALP)</td><td>Liberates <strong>phosphine gas</strong> → mitochondrial cytochrome-c-oxidase block → refractory shock, metabolic acidosis, arrhythmia; very high mortality; no true antidote</td><td><strong>Supportive only</strong> — aggressive haemodynamic support, correct acidosis; coconut oil/KMnO₄ gastric lavage described; magnesium for arrhythmias</td></tr>
+            <tr><td><strong>Lead</strong></td><td>Abdominal colic, anaemia (basophilic stippling), neuropathy, encephalopathy (children)</td><td><strong>Chelation</strong>: oral <strong>succimer (DMSA)</strong> for BLL 45–70; <strong>CaNa₂EDTA ± dimercaprol</strong> for severe/encephalopathy (see chelation table above)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:0.92em;color:#3D3D55"><em>Note:</em> the full systematic approach to the poisoned patient, decontamination and enhanced-elimination methods, and the role of the poison information centre are developed in <a href="#ch79">Chapter 79 · Clinical Poisoning &amp; Antidotes</a>.</p>
     </div>
   </div>
 
@@ -2123,6 +2448,541 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
       <div class="quiz-item"><div class="quiz-q">13. Deferoxamine is described as having "extraordinarily high" affinity for iron. Quantify this and explain why it doesn't remove iron from haemoglobin.</div><div class="quiz-a">Deferoxamine Ka for Fe³⁺ = <strong>10³¹ M⁻¹</strong> vs. Ca²⁺ = 10² M⁻¹ — approximately 10²⁹ greater selectivity for iron. It does NOT remove iron from haemoglobin or cytochromes because these proteins coordinate iron within a specific protein tertiary structure (porphyrin + protein coordination) that is thermodynamically and kinetically stable — haem iron is not "free" iron accessible to the chelator. Deferoxamine chelates only iron in its free, transferrin, ferritin, and haemosiderin forms.</div></div>
       <div class="quiz-item"><div class="quiz-q">14. Describe the immunotoxic mechanism of TCDD and its primary cellular target.</div><div class="quiz-a">TCDD (2,3,7,8-tetrachlorodibenzo-p-dioxin) binds the <strong>aryl hydrocarbon receptor (AhR)</strong> with extremely high affinity and is resistant to CYP-mediated metabolism → sustained AhR activation (unlike other AhR ligands). In T cells: promotes newly activated CD4⁺ T cells → regulatory T cell phenotype (immunosuppression). Also inhibits B cell antibody production, induces tolerogenic dendritic cells, alters CD8⁺ antiviral responses. Most consistent human finding: ↓ CD4⁺ T helper cell subsets. TCDD has human half-life of 7–11 years (extremely persistent).</div></div>
       <div class="quiz-item"><div class="quiz-q">15. A chemopreventive strategy uses chlorophyllin for aflatoxin-exposed populations. What is its mechanism?</div><div class="quiz-a">Chlorophyllin (water-soluble chlorophyll salts) acts as an <strong>"interceptor molecule"</strong> — it tightly binds aflatoxin B₁ in the GI tract, forming a complex that is not absorbed (reduces bioavailability of aflatoxin). Additionally: inhibits CYP activity → less metabolic activation; acts as antioxidant (↓ ROS). Phase II clinical trial: 100 mg chlorophyllin with each meal → significant ↓ in urinary aflatoxin-N7-guanine adducts (direct measure of DNA damage reduced). This is a primary prevention strategy for HCC in aflatoxin-endemic regions.</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE — CHAPTER 77: VITAMINS, MINERALS & OBESITY PHARMACOTHERAPY
+     TIER 2
+═══════════════════════════════════════════ -->
+<section class="module" id="ch77">
+  <div class="module-header">
+    <div class="module-tier">Tier 2 — High Exam Yield</div>
+    <h2>Chapter 77: Vitamins, Minerals &amp; Obesity Pharmacotherapy</h2>
+    <p>Fat- vs water-soluble vitamins, deficiency/toxicity syndromes, minerals, and the modern anti-obesity drugs</p>
+  </div>
+
+  <!-- STAGE 1: MAP -->
+  <div class="stage">
+    <div class="cog">
+      <div class="stage-label">🧭 80/20 High-Yield Map</div>
+      <div class="pillar">Two ideas carry this chapter: (1) vitamins split into <strong>fat-soluble (A, D, E, K — stored, so toxicity matters)</strong> and <strong>water-soluble (B-complex, C — excreted, so deficiency matters)</strong>; and (2) modern obesity pharmacotherapy is now dominated by the <strong>incretin (GLP-1 / GIP) agonists</strong>, with older agents (orlistat) as adjuncts.</div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px">
+          <rect width="700" height="250" fill="#F8F4EE" rx="10"/>
+          <text x="350" y="25" text-anchor="middle" font-family="Fraunces,serif" font-size="15" font-weight="700" fill="#1A1A2E">Vitamins: Solubility Determines the Clinical Problem</text>
+          <rect x="20" y="45" width="320" height="185" fill="#FEF3DC" rx="8" stroke="#E8A020" stroke-width="2"/>
+          <text x="180" y="66" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#B8450A">FAT-SOLUBLE (A D E K)</text>
+          <text x="180" y="84" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#3D3D55">stored in liver/fat → TOXICITY is the risk</text>
+          <text x="34" y="106" font-family="Inter" font-size="9.5" fill="#1A1A2E">A: night blindness/xerophthalmia ↔ teratogen, ↑ICP</text>
+          <text x="34" y="124" font-family="Inter" font-size="9.5" fill="#1A1A2E">D: rickets/osteomalacia ↔ hypercalcaemia</text>
+          <text x="34" y="142" font-family="Inter" font-size="9.5" fill="#1A1A2E">E: haemolysis/neuropathy ↔ bleeding (↓vit K)</text>
+          <text x="34" y="160" font-family="Inter" font-size="9.5" fill="#1A1A2E">K: bleeding (↓II,VII,IX,X) ↔ (given for warfarin)</text>
+          <text x="34" y="184" font-family="Inter" font-size="9" fill="#B8450A">Absorbed with dietary fat → deficient in fat</text>
+          <text x="34" y="198" font-family="Inter" font-size="9" fill="#B8450A">malabsorption (coeliac, cholestasis, cystic fibrosis)</text>
+          <rect x="360" y="45" width="320" height="185" fill="#D6F0F3" rx="8" stroke="#0D5C63" stroke-width="2"/>
+          <text x="520" y="66" text-anchor="middle" font-family="Inter" font-size="12" font-weight="700" fill="#0D5C63">WATER-SOLUBLE (B, C)</text>
+          <text x="520" y="84" text-anchor="middle" font-family="Inter" font-size="9.5" fill="#3D3D55">excreted → DEFICIENCY is the risk</text>
+          <text x="374" y="106" font-family="Inter" font-size="9.5" fill="#1A1A2E">B1 thiamine: Wernicke-Korsakoff, beriberi</text>
+          <text x="374" y="124" font-family="Inter" font-size="9.5" fill="#1A1A2E">B3 niacin: pellagra (3 Ds)</text>
+          <text x="374" y="142" font-family="Inter" font-size="9.5" fill="#1A1A2E">B6: neuropathy (INH); B9/B12: megaloblastic anaemia</text>
+          <text x="374" y="160" font-family="Inter" font-size="9.5" fill="#1A1A2E">B12: subacute combined degeneration</text>
+          <text x="374" y="184" font-family="Inter" font-size="9.5" fill="#1A1A2E">C: scurvy (collagen, perifollicular haemorrhage)</text>
+          <text x="374" y="202" font-family="Inter" font-size="9" fill="#0D5C63">Generally low toxicity (excess excreted)</text>
+        </svg>
+        <div class="diagram-caption">Figure 77-A: Solubility predicts the clinical problem — store it and you can overdose (A, D, E, K); flush it and you run short (B, C).</div>
+      </div>
+
+      <p><strong>Deficiency &amp; toxicity — must-know syndromes:</strong></p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Vitamin</th><th>Deficiency</th><th>Toxicity / note</th></tr></thead>
+          <tbody>
+            <tr><td><strong>A (retinol)</strong></td><td>Night blindness, xerophthalmia, Bitot spots</td><td>Teratogenic (isotretinoin), ↑ICP, hepatotoxicity; used in APML (ATRA)</td></tr>
+            <tr><td><strong>D</strong></td><td>Rickets (children), osteomalacia (adults)</td><td>Hypercalcaemia, nephrocalcinosis</td></tr>
+            <tr><td><strong>K</strong></td><td>Bleeding — ↓ factors II, VII, IX, X; haemorrhagic disease of newborn</td><td>Antidote to warfarin over-anticoagulation</td></tr>
+            <tr><td><strong>B1 (thiamine)</strong></td><td>Wernicke-Korsakoff, wet/dry beriberi</td><td>Give <em>before</em> glucose in malnourished/alcoholic patients</td></tr>
+            <tr><td><strong>B3 (niacin)</strong></td><td>Pellagra: dermatitis, diarrhoea, dementia</td><td>Flushing (prostaglandin) at pharmacologic dose</td></tr>
+            <tr><td><strong>B9 / B12</strong></td><td>Megaloblastic anaemia; B12 → subacute combined degeneration; folate → NTD</td><td>Never give folate alone in B12 deficiency (worsens neuro damage)</td></tr>
+            <tr><td><strong>C (ascorbate)</strong></td><td>Scurvy — bleeding gums, perifollicular haemorrhage, poor healing</td><td>Cofactor for collagen hydroxylation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Anti-obesity pharmacotherapy (adjunct to diet/exercise, BMI ≥30 or ≥27 with comorbidity):</strong></p>
+      <ul>
+        <li><strong>GLP-1 receptor agonists</strong> — <strong>liraglutide</strong> (daily), <strong>semaglutide</strong> (weekly) — enhance glucose-dependent insulin secretion, slow gastric emptying, ↑satiety centrally → substantial weight loss. GI side effects; caution/CI with personal/family medullary thyroid carcinoma or MEN2 (rodent C-cell signal); pancreatitis risk.</li>
+        <li><strong>Dual GIP + GLP-1 agonist</strong> — <strong>tirzepatide</strong> — even greater weight loss.</li>
+        <li><strong>Orlistat</strong> — intestinal/pancreatic <strong>lipase inhibitor</strong> → blocks fat absorption; side effects steatorrhoea, ↓fat-soluble vitamin absorption (supplement A, D, E, K).</li>
+        <li><strong>Others:</strong> phentermine-topiramate, naltrexone-bupropion (centrally acting appetite suppressants).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 2: RECALL -->
+  <div class="stage">
+    <div class="blurt-stage">
+      <div class="stage-label">🧠 Active Recall Gate</div>
+      <div class="blurt-prompt"><strong>Clinical scenario:</strong> Close the guide. For 5 minutes, write: (1) the four fat-soluble vitamins and one deficiency + one toxicity for each; (2) why fat-soluble vitamins are the ones you worry about in cholestasis and in overdose; (3) the mechanism of GLP-1 agonists in obesity and one important contraindication; (4) which vitamins orlistat depletes.</div>
+      <ul class="primers">
+        <li>Why does fat-soluble vitamin deficiency cluster with fat malabsorption (coeliac, cystic fibrosis, cholestasis) but rarely with a normal diet?</li>
+        <li>Why must thiamine be given before glucose in an alcoholic patient?</li>
+        <li>Why do GLP-1 agonists cause weight loss as well as glucose lowering?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 3: FEYNMAN -->
+  <div class="stage">
+    <details class="gate">
+      <summary>✓ I've blurted — reveal the Plain-Language Notes for Ch.77 Vitamins, Minerals &amp; Obesity</summary>
+      <div class="feynman-content">
+        <h4>Solubility is destiny</h4>
+        <p>Fat-soluble vitamins (A, D, E, K) are absorbed with dietary fat and stored in liver and adipose tissue. Two consequences follow: they become <strong>deficient whenever fat absorption fails</strong> (cholestasis, coeliac disease, cystic fibrosis, orlistat), and because they are <strong>stored rather than excreted, they can accumulate to toxic levels</strong>. Water-soluble vitamins (B-complex, C) are not stored to any great extent — excess is excreted in urine — so the dominant clinical issue is <strong>deficiency</strong>, and toxicity is rare.</p>
+        <h4>Incretins and appetite</h4>
+        <p>GLP-1 is a gut hormone released after eating. GLP-1 receptor agonists exploit three of its actions: <strong>glucose-dependent insulin release</strong> (so little hypoglycaemia alone), <strong>slowed gastric emptying</strong>, and <strong>central appetite suppression</strong> in the hypothalamus. Together these cut calorie intake and produce clinically important weight loss — which is why drugs first developed for type 2 diabetes became landmark obesity treatments. Tirzepatide adds GIP agonism for a larger effect.</p>
+        <div class="analogy">
+          Think of the vitamins like two kinds of household supplies. Fat-soluble vitamins are the <strong>canned goods in the pantry</strong> — they keep for months (storage), so you rarely run out, but you <em>can</em> over-stock to the point of harm. Water-soluble vitamins are <strong>fresh milk</strong> — they don't keep, the excess is poured away daily, so the real danger is simply running out.
+        </div>
+        <blockquote class="warn">
+          Never give <strong>folic acid alone</strong> to correct a megaloblastic anaemia before excluding B12 deficiency — folate will fix the anaemia but the untreated B12 deficiency can progress to irreversible subacute combined degeneration of the cord. Check both. And in a malnourished or alcoholic patient, give <strong>thiamine before glucose</strong> to avoid precipitating Wernicke encephalopathy.
+        </blockquote>
+        <blockquote class="warn">
+          GLP-1 and GIP/GLP-1 agonists are contraindicated where there is a personal or family history of <strong>medullary thyroid carcinoma or MEN2</strong> (rodent C-cell tumour signal), and carry a risk of pancreatitis and significant GI effects. Orlistat causes steatorrhoea and depletes fat-soluble vitamins — supplement A, D, E, K, taken apart from the drug.
+        </blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- STAGE 4: SPACED REP -->
+  <div class="stage">
+    <div class="sched-stage">
+      <div class="stage-label">🔄 Spaced Repetition Schedule</div>
+      <div class="sched">
+        <div class="sched-day"><strong>Day 1</strong> Recall the fat- vs water-soluble split with one deficiency and one toxicity for each fat-soluble vitamin.</div>
+        <div class="sched-day"><strong>Day 3</strong> Explain the three actions of GLP-1 agonists and name their contraindication; list which vitamins orlistat depletes.</div>
+        <div class="sched-day"><strong>Day 7</strong> Match deficiency syndromes to vitamins: pellagra, scurvy, beriberi, subacute combined degeneration, rickets.</div>
+        <div class="sched-day"><strong>Day 21</strong> Integrate: a patient after bariatric surgery presents with anaemia and neuropathy — which micronutrients would you check and why?</div>
+      </div>
+      <div class="bridge">
+        <strong>Clinical Bridge:</strong> Dose adjustment of fat-soluble vitamins and many drugs changes across life stages and organ impairment — the pharmacokinetic logic of altered absorption, distribution and clearance is developed for paediatric, geriatric, hepatic and renal patients in <a href="#ch78">Chapter 78 · Pharmacotherapy in Special Populations</a>.
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ CH77 -->
+  <div class="stage" id="quiz77">
+    <div class="quizset">
+      <div class="quizset-title">📝 Quiz — Chapter 77 Vitamins, Minerals &amp; Obesity (12 Questions)</div>
+      <div class="quiz-item"><div class="quiz-q">1. Name the four fat-soluble vitamins and state why toxicity is a particular concern for them.</div><div class="quiz-a"><strong>A, D, E, K.</strong> They are stored in liver and adipose tissue rather than excreted, so excess accumulates and can cause toxicity.</div></div>
+      <div class="quiz-item"><div class="quiz-q">2. Why do fat-soluble vitamin deficiencies cluster with fat malabsorption?</div><div class="quiz-a">They require dietary fat for absorption, so any cause of fat malabsorption (cholestasis, coeliac disease, cystic fibrosis, orlistat) reduces their uptake.</div></div>
+      <div class="quiz-item"><div class="quiz-q">3. Deficiency and a toxicity of vitamin A.</div><div class="quiz-a">Deficiency: night blindness/xerophthalmia. Toxicity: teratogenicity, raised intracranial pressure, hepatotoxicity.</div></div>
+      <div class="quiz-item"><div class="quiz-q">4. Which clotting factors depend on vitamin K?</div><div class="quiz-a">Factors II, VII, IX, X (and proteins C and S).</div></div>
+      <div class="quiz-item"><div class="quiz-q">5. What triad characterises pellagra and which vitamin is deficient?</div><div class="quiz-a">Dermatitis, diarrhoea, dementia (the 3 Ds); niacin (vitamin B3) deficiency.</div></div>
+      <div class="quiz-item"><div class="quiz-q">6. Why must folate not be given alone in an unexplained megaloblastic anaemia?</div><div class="quiz-a">If B12 deficiency is the cause, folate corrects the anaemia but the neurological damage (subacute combined degeneration) progresses unchecked.</div></div>
+      <div class="quiz-item"><div class="quiz-q">7. Which vitamin is a cofactor for collagen hydroxylation, and what is its deficiency?</div><div class="quiz-a">Vitamin C; deficiency causes scurvy (bleeding gums, perifollicular haemorrhage, poor wound healing).</div></div>
+      <div class="quiz-item"><div class="quiz-q">8. State the three weight-relevant actions of GLP-1 receptor agonists.</div><div class="quiz-a">Glucose-dependent insulin secretion, slowed gastric emptying, and central appetite suppression.</div></div>
+      <div class="quiz-item"><div class="quiz-q">9. Name a weekly GLP-1 agonist and the dual GIP/GLP-1 agonist used for obesity.</div><div class="quiz-a">Semaglutide (weekly GLP-1); tirzepatide (dual GIP + GLP-1).</div></div>
+      <div class="quiz-item"><div class="quiz-q">10. Key contraindication to GLP-1/GIP agonists?</div><div class="quiz-a">Personal or family history of medullary thyroid carcinoma or MEN2 (also caution re pancreatitis).</div></div>
+      <div class="quiz-item"><div class="quiz-q">11. Mechanism and main side effect of orlistat, and what must be supplemented?</div><div class="quiz-a">Inhibits intestinal/pancreatic lipase → blocks fat absorption; causes steatorrhoea; supplement fat-soluble vitamins A, D, E, K.</div></div>
+      <div class="quiz-item"><div class="quiz-q">12. Why give thiamine before glucose in an alcoholic patient?</div><div class="quiz-a">A glucose load consumes remaining thiamine and can precipitate Wernicke encephalopathy.</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE — CHAPTER 78: PHARMACOTHERAPY IN SPECIAL POPULATIONS
+     TIER 1
+═══════════════════════════════════════════ -->
+<section class="module" id="ch78">
+  <div class="module-header">
+    <div class="module-tier">Tier 1 — Very High Exam Yield</div>
+    <h2>Chapter 78: Pharmacotherapy in Special Populations</h2>
+    <p>Paediatric, geriatric, pregnancy/lactation, hepatic and renal dosing — and pharmacogenomics</p>
+  </div>
+
+  <!-- STAGE 1: MAP -->
+  <div class="stage">
+    <div class="cog">
+      <div class="stage-label">🧭 80/20 High-Yield Map</div>
+      <div class="pillar">Every special population changes one or more steps of <strong>ADME</strong>, so the drug you'd give a healthy adult must be re-thought. The exam-critical anchors are: <strong>paediatric</strong> immature metabolism, <strong>geriatric</strong> polypharmacy (Beers), <strong>pregnancy</strong> teratogens, <strong>hepatic</strong> (Child-Pugh) and <strong>renal</strong> (eGFR) dose adjustment.</div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px">
+          <rect width="700" height="250" fill="#F8F4EE" rx="10"/>
+          <text x="350" y="24" text-anchor="middle" font-family="Fraunces,serif" font-size="15" font-weight="700" fill="#1A1A2E">Special Populations: Which ADME Step Changes</text>
+          <rect x="15" y="40" width="220" height="95" fill="#D6F0F3" rx="8" stroke="#0D5C63" stroke-width="2"/>
+          <text x="125" y="59" text-anchor="middle" font-family="Inter" font-size="11.5" font-weight="700" fill="#0D5C63">PAEDIATRIC</text>
+          <text x="26" y="78" font-family="Inter" font-size="9" fill="#1A1A2E">Immature CYP &amp; conjugation</text>
+          <text x="26" y="93" font-family="Inter" font-size="9" fill="#1A1A2E">↑ body water, ↓ protein binding</text>
+          <text x="26" y="108" font-family="Inter" font-size="9" fill="#1A1A2E">Immature renal clearance</text>
+          <text x="26" y="125" font-family="Inter" font-size="8.5" fill="#B8450A">grey-baby (chloramphenicol), kernicterus</text>
+          <rect x="245" y="40" width="220" height="95" fill="#FEF3DC" rx="8" stroke="#E8A020" stroke-width="2"/>
+          <text x="355" y="59" text-anchor="middle" font-family="Inter" font-size="11.5" font-weight="700" fill="#B8450A">GERIATRIC</text>
+          <text x="256" y="78" font-family="Inter" font-size="9" fill="#1A1A2E">↓ renal &amp; hepatic clearance</text>
+          <text x="256" y="93" font-family="Inter" font-size="9" fill="#1A1A2E">↑ fat → ↑ Vd of lipophilic drugs</text>
+          <text x="256" y="108" font-family="Inter" font-size="9" fill="#1A1A2E">Polypharmacy, ↑ sensitivity</text>
+          <text x="256" y="125" font-family="Inter" font-size="8.5" fill="#B8450A">Beers list; "start low, go slow"</text>
+          <rect x="475" y="40" width="210" height="95" fill="#F4FAF5" rx="8" stroke="#2E7D52" stroke-width="2"/>
+          <text x="580" y="59" text-anchor="middle" font-family="Inter" font-size="11.5" font-weight="700" fill="#2E7D52">PREGNANCY</text>
+          <text x="486" y="78" font-family="Inter" font-size="9" fill="#1A1A2E">↑ Vd, ↑ GFR, ↑ metabolism</text>
+          <text x="486" y="93" font-family="Inter" font-size="9" fill="#1A1A2E">Placental transfer</text>
+          <text x="486" y="108" font-family="Inter" font-size="8.5" fill="#B8450A">Teratogens: warfarin, ACEi,</text>
+          <text x="486" y="121" font-family="Inter" font-size="8.5" fill="#B8450A">valproate, isotretinoin, tetracycline</text>
+          <rect x="15" y="150" width="330" height="85" fill="#FFF0EB" rx="8" stroke="#B8450A" stroke-width="2"/>
+          <text x="180" y="169" text-anchor="middle" font-family="Inter" font-size="11.5" font-weight="700" fill="#B8450A">HEPATIC (Child-Pugh)</text>
+          <text x="26" y="188" font-family="Inter" font-size="9" fill="#1A1A2E">↓ first-pass, ↓ metabolism, ↓ albumin</text>
+          <text x="26" y="203" font-family="Inter" font-size="9" fill="#1A1A2E">Avoid high hepatic-extraction &amp; sedating drugs</text>
+          <text x="26" y="221" font-family="Inter" font-size="8.5" fill="#3D3D55">Child-Pugh grades severity (A/B/C)</text>
+          <rect x="355" y="150" width="330" height="85" fill="#ECE7F3" rx="8" stroke="#5b4a7a" stroke-width="2"/>
+          <text x="520" y="169" text-anchor="middle" font-family="Inter" font-size="11.5" font-weight="700" fill="#5b4a7a">RENAL (eGFR)</text>
+          <text x="366" y="188" font-family="Inter" font-size="9" fill="#1A1A2E">↓ clearance of renally-excreted drugs</text>
+          <text x="366" y="203" font-family="Inter" font-size="9" fill="#1A1A2E">Adjust dose/interval by eGFR/CrCl</text>
+          <text x="366" y="221" font-family="Inter" font-size="8.5" fill="#3D3D55">Watch: aminoglycosides, vancomycin, metformin, digoxin</text>
+        </svg>
+        <div class="diagram-caption">Figure 78-A: For each special population, ask "which ADME step is altered?" — then adjust dose, interval, or drug choice.</div>
+      </div>
+
+      <p><strong>High-yield rules:</strong></p>
+      <ul>
+        <li><strong>Paediatric:</strong> dose by <strong>weight (mg/kg)</strong> or body surface area; neonates have immature glucuronidation → <em>grey-baby syndrome</em> with chloramphenicol; avoid drugs displacing bilirubin (sulfonamides → kernicterus).</li>
+        <li><strong>Geriatric:</strong> apply the <strong>Beers criteria</strong> (avoid long-acting benzodiazepines, strong anticholinergics, NSAIDs); "start low, go slow"; review for polypharmacy.</li>
+        <li><strong>Pregnancy:</strong> know the classic teratogens — <strong>warfarin, ACE inhibitors/ARBs, valproate, isotretinoin, tetracyclines, methotrexate, thalidomide</strong>; prefer agents with an established safety record.</li>
+        <li><strong>Hepatic impairment:</strong> graded by <strong>Child-Pugh</strong>; reduce/avoid drugs with high hepatic metabolism and those precipitating encephalopathy (sedatives).</li>
+        <li><strong>Renal impairment:</strong> adjust dose/interval by <strong>eGFR/CrCl</strong>; caution with renally-cleared drugs and nephrotoxins (aminoglycosides, vancomycin, NSAIDs, contrast, metformin — lactic acidosis).</li>
+        <li><strong>Pharmacogenomics tie-in:</strong> genotype can dictate dose (TPMT → thiopurines, CYP2C19 → clopidogrel, HLA-B*57:01 → abacavir, HLA-B*15:02 → carbamazepine).</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 2: RECALL -->
+  <div class="stage">
+    <div class="blurt-stage">
+      <div class="stage-label">🧠 Active Recall Gate</div>
+      <div class="blurt-prompt"><strong>Clinical scenario:</strong> Close the guide. Write for 5 minutes: (1) which ADME steps change in a neonate, an 85-year-old, and a pregnant woman; (2) five drugs you must avoid in pregnancy; (3) how you decide the dose of a renally-cleared antibiotic in a patient with eGFR 25; (4) two genotype-guided prescribing examples.</div>
+      <ul class="primers">
+        <li>Why can a "normal adult dose" cause toxicity in a neonate even after scaling for weight?</li>
+        <li>Why does the Beers list single out anticholinergics and long-acting benzodiazepines in the elderly?</li>
+        <li>Why is eGFR (not serum creatinine alone) the better guide to renal dose adjustment?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 3: FEYNMAN -->
+  <div class="stage">
+    <details class="gate">
+      <summary>✓ I've blurted — reveal the Plain-Language Notes for Ch.78 Special Populations</summary>
+      <div class="feynman-content">
+        <h4>One question unlocks every special population: which ADME step changed?</h4>
+        <p>A neonate has immature metabolising enzymes and immature kidneys, a higher proportion of body water and less plasma protein — so drugs cleared by conjugation (chloramphenicol) accumulate, and highly protein-bound drugs displace bilirubin. An older adult has declining renal and hepatic clearance, more body fat (so lipophilic drugs like diazepam have a larger volume of distribution and linger), and heightened sensitivity — hence "start low, go slow" and the Beers list of drugs to avoid. In pregnancy, increased volume of distribution, GFR and hepatic metabolism can <em>lower</em> some drug levels, while placental transfer exposes the fetus to teratogens.</p>
+        <h4>Organ impairment: match the failing organ to the clearance route</h4>
+        <p>If the liver is failing (graded by <strong>Child-Pugh</strong>), drugs it metabolises accumulate and first-pass falls, so hepatically-cleared and sedating drugs are risky. If the kidney is failing (graded by <strong>eGFR/CrCl</strong>), renally-excreted drugs accumulate, so you cut the dose or lengthen the interval and avoid nephrotoxins. The unifying skill is to identify a drug's main elimination route and match it to the impaired organ.</p>
+        <div class="analogy">
+          Think of the body as a factory with an intake dock, storage, a processing plant (liver) and a waste-disposal unit (kidney). Each special population is a factory with one department running differently — a trainee crew (neonate, slow processing), an ageing plant (elderly, everything slower), or a plant temporarily rerouting resources (pregnancy). Fix the dose by asking which department is off-spec, not by using the standard settings.
+        </div>
+        <blockquote class="warn">
+          Classic pregnancy teratogens to memorise: <strong>warfarin</strong> (nasal/skeletal defects), <strong>ACE inhibitors/ARBs</strong> (renal dysgenesis, oligohydramnios — 2nd/3rd trimester), <strong>valproate</strong> (neural tube defects, neurodevelopmental harm — highest of any AED), <strong>isotretinoin</strong> (severe craniofacial/cardiac/CNS), <strong>tetracyclines</strong> (teeth/bone), <strong>methotrexate</strong> and <strong>thalidomide</strong> (phocomelia). Also remember metformin's lactic-acidosis risk when eGFR falls, and hold it around iodinated contrast.
+        </blockquote>
+        <blockquote class="warn">
+          Pharmacogenomics can convert a standard dose into a toxic one: <strong>TPMT</strong> deficiency → azathioprine/6-MP myelosuppression; <strong>CYP2D6</strong> ultra-rapid metabolisers → codeine toxicity; <strong>HLA-B*57:01</strong> → abacavir hypersensitivity; <strong>HLA-B*15:02</strong> → carbamazepine SJS. Genotype where indicated before prescribing.
+        </blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- STAGE 4: SPACED REP -->
+  <div class="stage">
+    <div class="sched-stage">
+      <div class="stage-label">🔄 Spaced Repetition Schedule</div>
+      <div class="sched">
+        <div class="sched-day"><strong>Day 1</strong> Recall which ADME step changes in neonates, the elderly, pregnancy, hepatic and renal impairment.</div>
+        <div class="sched-day"><strong>Day 3</strong> List the classic pregnancy teratogens and the Beers-list drugs to avoid in the elderly.</div>
+        <div class="sched-day"><strong>Day 7</strong> Explain how you dose a renally-cleared drug by eGFR and name the tools grading hepatic (Child-Pugh) and renal (eGFR) function.</div>
+        <div class="sched-day"><strong>Day 21</strong> Integrate: an 80-year-old with eGFR 28 on warfarin needs a new antibiotic and analgesia — talk through your choices and adjustments.</div>
+      </div>
+      <div class="bridge">
+        <strong>Clinical Bridge:</strong> Dose individualisation in these populations rests on the core pharmacokinetic principles of clearance, half-life and volume of distribution — revisit renal and hepatic dose-adjustment logic in <a href="General_Pharmacology_Learning-System.html#m2">General Pharmacology · Pharmacokinetics</a>.
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ CH78 -->
+  <div class="stage" id="quiz78">
+    <div class="quizset">
+      <div class="quizset-title">📝 Quiz — Chapter 78 Pharmacotherapy in Special Populations (12 Questions)</div>
+      <div class="quiz-item"><div class="quiz-q">1. What is the single most useful question when dosing any special population?</div><div class="quiz-a">Which ADME step (absorption, distribution, metabolism, excretion) is altered — then adjust dose, interval or drug choice accordingly.</div></div>
+      <div class="quiz-item"><div class="quiz-q">2. Why does chloramphenicol cause grey-baby syndrome in neonates?</div><div class="quiz-a">Immature hepatic glucuronidation (and renal excretion) → drug accumulates → circulatory collapse.</div></div>
+      <div class="quiz-item"><div class="quiz-q">3. Why are sulfonamides avoided in neonates?</div><div class="quiz-a">They displace bilirubin from albumin → risk of kernicterus (immature BBB).</div></div>
+      <div class="quiz-item"><div class="quiz-q">4. What do the Beers criteria describe?</div><div class="quiz-a">Potentially inappropriate medications to avoid in older adults (e.g. long-acting benzodiazepines, strong anticholinergics, NSAIDs).</div></div>
+      <div class="quiz-item"><div class="quiz-q">5. Why do lipophilic drugs like diazepam have a prolonged effect in the elderly?</div><div class="quiz-a">Increased body fat raises their volume of distribution and, with reduced clearance, prolongs half-life.</div></div>
+      <div class="quiz-item"><div class="quiz-q">6. Name five drugs contraindicated in pregnancy.</div><div class="quiz-a">Warfarin, ACE inhibitors/ARBs, valproate, isotretinoin, tetracyclines (also methotrexate, thalidomide).</div></div>
+      <div class="quiz-item"><div class="quiz-q">7. Which teratogen causes renal dysgenesis and oligohydramnios in the 2nd/3rd trimester?</div><div class="quiz-a">ACE inhibitors (and ARBs).</div></div>
+      <div class="quiz-item"><div class="quiz-q">8. Which score grades severity of hepatic impairment for dosing?</div><div class="quiz-a">The Child-Pugh score (classes A/B/C).</div></div>
+      <div class="quiz-item"><div class="quiz-q">9. How is a renally-cleared drug adjusted in a patient with eGFR 25?</div><div class="quiz-a">Reduce the dose and/or lengthen the dosing interval based on eGFR/CrCl, and avoid nephrotoxins.</div></div>
+      <div class="quiz-item"><div class="quiz-q">10. Why hold metformin when eGFR is low or around iodinated contrast?</div><div class="quiz-a">Reduced renal clearance risks metformin accumulation and lactic acidosis.</div></div>
+      <div class="quiz-item"><div class="quiz-q">11. Give two genotype-guided prescribing examples.</div><div class="quiz-a">TPMT before azathioprine/6-MP; HLA-B*57:01 before abacavir (also CYP2C19–clopidogrel, HLA-B*15:02–carbamazepine).</div></div>
+      <div class="quiz-item"><div class="quiz-q">12. Why is eGFR preferred over serum creatinine alone for dose adjustment?</div><div class="quiz-a">Creatinine varies with muscle mass/age/sex; eGFR estimates actual filtration, better reflecting drug clearance capacity.</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE — CHAPTER 79: CLINICAL POISONING & ANTIDOTES
+     TIER 1
+═══════════════════════════════════════════ -->
+<section class="module" id="ch79">
+  <div class="module-header">
+    <div class="module-tier">Tier 1 — Very High Exam Yield</div>
+    <h2>Chapter 79: Clinical Poisoning &amp; Antidotes</h2>
+    <p>The systematic approach to the poisoned patient, toxidromes, antidotes, decontamination, enhanced elimination, and the poison information centre</p>
+  </div>
+
+  <!-- STAGE 1: MAP -->
+  <div class="stage">
+    <div class="cog">
+      <div class="stage-label">🧭 80/20 High-Yield Map</div>
+      <div class="pillar">Poisoning management is a fixed five-step algorithm — <strong>resuscitate → identify (toxidrome) → decontaminate → give a specific antidote if one exists → enhance elimination</strong> — wrapped in supportive care. Most patients are saved by good supportive care; a minority have a specific antidote, and those are the exam favourites.</div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 210" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px">
+          <rect width="700" height="210" fill="#F8F4EE" rx="10"/>
+          <text x="350" y="24" text-anchor="middle" font-family="Fraunces,serif" font-size="15" font-weight="700" fill="#1A1A2E">The Poisoned-Patient Algorithm</text>
+          <rect x="15" y="45" width="125" height="70" fill="#0D5C63" rx="8"/><text x="77" y="72" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="white">1 Resuscitate</text><text x="77" y="90" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#D6F0F3">ABC, glucose,</text><text x="77" y="102" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#D6F0F3">seizures, temp</text>
+          <rect x="152" y="45" width="125" height="70" fill="#D6F0F3" rx="8" stroke="#0D5C63" stroke-width="1.5"/><text x="214" y="72" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#0D5C63">2 Identify</text><text x="214" y="90" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#1A1A2E">toxidrome, gaps,</text><text x="214" y="102" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#1A1A2E">levels/ECG</text>
+          <rect x="289" y="45" width="125" height="70" fill="#FEF3DC" rx="8" stroke="#E8A020" stroke-width="1.5"/><text x="351" y="72" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#B8450A">3 Decontam.</text><text x="351" y="90" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#1A1A2E">charcoal, skin/eye,</text><text x="351" y="102" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#1A1A2E">rarely lavage</text>
+          <rect x="426" y="45" width="125" height="70" fill="#F4FAF5" rx="8" stroke="#2E7D52" stroke-width="1.5"/><text x="488" y="72" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#2E7D52">4 Antidote</text><text x="488" y="90" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#1A1A2E">if one exists</text><text x="488" y="102" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#1A1A2E">(see table)</text>
+          <rect x="563" y="45" width="122" height="70" fill="#FFF0EB" rx="8" stroke="#B8450A" stroke-width="1.5"/><text x="624" y="72" text-anchor="middle" font-family="Inter" font-size="11" font-weight="700" fill="#B8450A">5 Enhance</text><text x="624" y="90" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#1A1A2E">alkalinise, MDAC,</text><text x="624" y="102" text-anchor="middle" font-family="Inter" font-size="8.5" fill="#1A1A2E">dialysis</text>
+          <g stroke="#7B7B99" stroke-width="2" fill="none"><path d="M140,80 H150"/><path d="M277,80 H287"/><path d="M414,80 H424"/><path d="M551,80 H561"/></g>
+          <rect x="15" y="130" width="670" height="30" fill="white" rx="6" stroke="#7B7B99"/><text x="350" y="149" text-anchor="middle" font-family="Inter" font-size="10" fill="#1A1A2E">Activated charcoal binds most toxins — NOT metals, alcohols, hydrocarbons, caustics, lithium, iron ("PHAILS" won't bind)</text>
+          <rect x="15" y="168" width="670" height="30" fill="#FEF3DC" rx="6" stroke="#E8A020"/><text x="350" y="187" text-anchor="middle" font-family="Inter" font-size="10" font-weight="700" fill="#B8450A">Dialysable (low Vd, low protein-binding, small, water-soluble): salicylate, lithium, methanol, ethylene glycol, valproate, metformin, theophylline</text>
+        </svg>
+        <div class="diagram-caption">Figure 79-A: The universal five-step approach. Steps 1–2 save most lives; steps 4–5 are the high-yield specifics.</div>
+      </div>
+
+      <p><strong>Toxidromes — read the syndrome, name the poison:</strong></p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Toxidrome</th><th>Signs</th><th>Typical agents</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Cholinergic</strong></td><td>DUMBELS/SLUDGE, miosis, bronchorrhoea, bradycardia, fasciculations</td><td>Organophosphates, carbamates</td></tr>
+            <tr><td><strong>Anticholinergic</strong></td><td>"Hot, dry, red, blind, mad" — mydriasis, dry skin, retention, delirium, tachycardia</td><td>Atropine, TCAs, antihistamines, datura</td></tr>
+            <tr><td><strong>Opioid</strong></td><td>Coma, pinpoint pupils, respiratory depression</td><td>Morphine, heroin, fentanyl</td></tr>
+            <tr><td><strong>Sympathomimetic</strong></td><td>Agitation, mydriasis, tachycardia, hypertension, hyperthermia, sweating</td><td>Amphetamines, cocaine</td></tr>
+            <tr><td><strong>Sedative-hypnotic</strong></td><td>CNS depression, normal pupils, ↓RR</td><td>Benzodiazepines, barbiturates, alcohol</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Core antidote table (mechanism = the exam point):</strong></p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Poison</th><th>Antidote</th><th>Mechanism</th></tr></thead>
+          <tbody>
+            <tr><td>Paracetamol</td><td>N-acetylcysteine</td><td>Replenishes glutathione (neutralises NAPQI)</td></tr>
+            <tr><td>Opioids</td><td>Naloxone</td><td>Competitive μ-receptor antagonist</td></tr>
+            <tr><td>Benzodiazepines</td><td>Flumazenil</td><td>GABA<sub>A</sub> benzodiazepine-site antagonist (caution: seizures)</td></tr>
+            <tr><td>Organophosphate</td><td>Atropine + pralidoxime</td><td>Muscarinic block + reactivates AChE before ageing</td></tr>
+            <tr><td>Methanol / ethylene glycol</td><td>Fomepizole (or ethanol)</td><td>Inhibits alcohol dehydrogenase</td></tr>
+            <tr><td>Iron</td><td>Deferoxamine</td><td>Chelation</td></tr>
+            <tr><td>Digoxin</td><td>Digoxin-specific Fab</td><td>Antibody binding</td></tr>
+            <tr><td>Warfarin</td><td>Vitamin K + PCC/FFP</td><td>Restores clotting factors</td></tr>
+            <tr><td>Heparin</td><td>Protamine</td><td>Chemical (electrostatic) antagonist</td></tr>
+            <tr><td>Cyanide</td><td>Hydroxocobalamin, Na thiosulfate/nitrite</td><td>Binds/detoxifies CN⁻</td></tr>
+            <tr><td>Methaemoglobinaemia</td><td>Methylene blue</td><td>Reduces Fe³⁺ → Fe²⁺</td></tr>
+            <tr><td>β-blocker / CCB</td><td>Glucagon / high-dose insulin</td><td>Bypass β-receptor; inotropy/metabolic support</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Poison Information Centre (PIC) duties:</strong> 24-hour telephone advice to clinicians and the public on identification, risk assessment and management of poisoning; maintaining a toxicology database; <strong>toxicovigilance</strong> (surveillance of poisoning trends); training and public education; and supporting analytical toxicology services.</p>
+    </div>
+  </div>
+
+  <!-- STAGE 2: RECALL -->
+  <div class="stage">
+    <div class="blurt-stage">
+      <div class="stage-label">🧠 Active Recall Gate</div>
+      <div class="blurt-prompt"><strong>Clinical scenario:</strong> An unconscious patient arrives after an unknown overdose. Close the guide and write for 5 minutes: (1) the five-step algorithm in order; (2) what activated charcoal does NOT bind; (3) five poison–antidote pairs with the antidote's mechanism; (4) which toxins are effectively dialysed and why.</div>
+      <ul class="primers">
+        <li>Why does the resuscitation step precede any attempt to identify or antidote the poison?</li>
+        <li>Why does a large volume of distribution make haemodialysis useless despite a "high" blood level?</li>
+        <li>Why do you titrate atropine in organophosphate poisoning to <em>drying of secretions</em> rather than to pupil size or heart rate?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 3: FEYNMAN -->
+  <div class="stage">
+    <details class="gate">
+      <summary>✓ I've blurted — reveal the Plain-Language Notes for Ch.79 Clinical Poisoning &amp; Antidotes</summary>
+      <div class="feynman-content">
+        <h4>Supportive care first — antidotes are the exception</h4>
+        <p>The single most important message in clinical toxicology is that <strong>most poisoned patients recover on good supportive care alone</strong> — airway, breathing, circulation, glucose, temperature, and treatment of seizures. Only a minority of poisons have a specific antidote. So the algorithm always starts with resuscitation, then identification via the <strong>toxidrome</strong> (the pattern of vitals, pupils, skin and secretions), plus targeted tests (anion/osmolar gaps, ECG, and levels where a threshold exists — paracetamol, salicylate, lithium, digoxin, iron, carboxyhaemoglobin, methanol/ethylene glycol).</p>
+        <h4>Decontamination and enhanced elimination — when they actually help</h4>
+        <p><strong>Activated charcoal</strong> adsorbs many drugs if given early, but it does <em>not</em> bind metals, alcohols, hydrocarbons, caustics, lithium or iron. <strong>Enhanced elimination</strong> is reserved for specific toxins: urinary alkalinisation for weak acids (salicylate, phenobarbital); multiple-dose charcoal to interrupt enterohepatic recycling (theophylline, carbamazepine, dapsone); and haemodialysis for small, water-soluble, low-protein-bound, low-volume-of-distribution toxins (salicylate, lithium, methanol, ethylene glycol, valproate, metformin, theophylline).</p>
+        <div class="analogy">
+          Managing a poisoning is like fighting a house fire. First you get everyone out and stabilise the building (resuscitation) — that saves most lives. Then you work out what's burning (the toxidrome). Only some fires need a special extinguisher (an antidote); for the rest, water and ventilation (supportive care and, occasionally, dialysis) do the job. Reaching for the special extinguisher before securing the building is a classic error.
+        </div>
+        <blockquote class="warn">
+          Naloxone and flumazenil both wear off faster than the drugs they reverse — observe for re-sedation and re-dose or infuse. Give <strong>flumazenil cautiously</strong>: in a chronic benzodiazepine user or mixed overdose (e.g. with a TCA) it can precipitate seizures. In organophosphate poisoning, titrate <strong>atropine to secretion control</strong> and give pralidoxime <em>before enzyme ageing</em>.
+        </blockquote>
+        <blockquote class="warn">
+          Aluminium phosphide and cyanide are rapidly lethal mitochondrial poisons with narrow windows — cyanide has antidotes (hydroxocobalamin), but aluminium phosphide has essentially none, so management is aggressive supportive care. Always involve the <strong>Poison Information Centre</strong> early for risk assessment.
+        </blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- STAGE 4: SPACED REP -->
+  <div class="stage">
+    <div class="sched-stage">
+      <div class="stage-label">🔄 Spaced Repetition Schedule</div>
+      <div class="sched">
+        <div class="sched-day"><strong>Day 1</strong> Recall the five-step algorithm and the list of toxins charcoal does not bind.</div>
+        <div class="sched-day"><strong>Day 3</strong> Reproduce the antidote table with mechanisms; recite the five toxidromes.</div>
+        <div class="sched-day"><strong>Day 7</strong> List the dialysable toxins and explain the Vd/protein-binding logic; describe PIC duties.</div>
+        <div class="sched-day"><strong>Day 21</strong> Integrate: a farmer presents drowsy, sweating, with pinpoint pupils and bronchorrhoea — work through identification, antidotes and monitoring.</div>
+      </div>
+      <div class="bridge">
+        <strong>Clinical Bridge:</strong> The antidote mechanisms here are the applied face of the pharmacodynamic and pharmacokinetic principles built earlier — competitive antagonism (naloxone), chemical antagonism (protamine, chelators) and enhanced elimination all trace back to <a href="General_Pharmacology_Learning-System.html#m9">General Pharmacology · Clinical Toxicology</a>, and opioid reversal to <a href="Neuropharmacology-ANS_Learning-System.html#m23">Neuropharmacology · Opioid Analgesics</a>.
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ CH79 -->
+  <div class="stage" id="quiz79">
+    <div class="quizset">
+      <div class="quizset-title">📝 Quiz — Chapter 79 Clinical Poisoning &amp; Antidotes (15 Questions)</div>
+      <div class="quiz-item"><div class="quiz-q">1. State the five-step approach to the poisoned patient in order.</div><div class="quiz-a">Resuscitate (ABC) → identify (toxidrome/tests) → decontaminate → specific antidote if available → enhance elimination — all with supportive care.</div></div>
+      <div class="quiz-item"><div class="quiz-q">2. Which classes of toxin does activated charcoal NOT bind?</div><div class="quiz-a">Metals, alcohols, hydrocarbons, caustics, lithium and iron.</div></div>
+      <div class="quiz-item"><div class="quiz-q">3. Antidote and mechanism for paracetamol poisoning.</div><div class="quiz-a">N-acetylcysteine — replenishes glutathione to neutralise NAPQI.</div></div>
+      <div class="quiz-item"><div class="quiz-q">4. Two-drug antidote for organophosphate poisoning and what each does.</div><div class="quiz-a">Atropine (blocks muscarinic effects) + pralidoxime (reactivates AChE before ageing).</div></div>
+      <div class="quiz-item"><div class="quiz-q">5. What is the atropine end-point in organophosphate poisoning?</div><div class="quiz-a">Drying of bronchial/oral secretions (not pupil size or heart rate).</div></div>
+      <div class="quiz-item"><div class="quiz-q">6. Antidote for methanol/ethylene glycol and its mechanism.</div><div class="quiz-a">Fomepizole (or ethanol) — inhibits alcohol dehydrogenase, blocking toxic metabolite formation.</div></div>
+      <div class="quiz-item"><div class="quiz-q">7. Describe the opioid toxidrome and its antidote's pitfall.</div><div class="quiz-a">Coma, pinpoint pupils, respiratory depression; naloxone works but is short-acting → re-sedation, re-dose/infuse.</div></div>
+      <div class="quiz-item"><div class="quiz-q">8. Why is flumazenil used cautiously?</div><div class="quiz-a">It can precipitate seizures in chronic benzodiazepine users or mixed (e.g. TCA) overdose.</div></div>
+      <div class="quiz-item"><div class="quiz-q">9. Which toxins are effectively removed by haemodialysis, and what properties allow it?</div><div class="quiz-a">Salicylate, lithium, methanol, ethylene glycol, valproate, metformin, theophylline — small, water-soluble, low protein-binding, low Vd.</div></div>
+      <div class="quiz-item"><div class="quiz-q">10. Why is a drug with a large volume of distribution poorly dialysed?</div><div class="quiz-a">Most of it sits in tissues, not plasma, so little is accessible to the dialyser.</div></div>
+      <div class="quiz-item"><div class="quiz-q">11. Antidote for digoxin toxicity and for iron overdose.</div><div class="quiz-a">Digoxin-specific Fab fragments; deferoxamine (chelation) for iron.</div></div>
+      <div class="quiz-item"><div class="quiz-q">12. Antidote for cyanide poisoning.</div><div class="quiz-a">Hydroxocobalamin (also sodium thiosulfate/nitrite).</div></div>
+      <div class="quiz-item"><div class="quiz-q">13. Describe the anticholinergic toxidrome.</div><div class="quiz-a">Hot (hyperthermia), dry skin, flushed, mydriasis/blind, urinary retention, delirium ("mad"), tachycardia.</div></div>
+      <div class="quiz-item"><div class="quiz-q">14. Which enhanced-elimination method suits salicylate, and why?</div><div class="quiz-a">Urinary alkalinisation with bicarbonate — ion-trapping of the weak acid increases renal excretion.</div></div>
+      <div class="quiz-item"><div class="quiz-q">15. Name three duties of a poison information centre.</div><div class="quiz-a">24-hour advice on poisoning management, maintaining a toxicology database, and toxicovigilance/public education (plus supporting analytical toxicology).</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE — CHAPTER 80: NOBEL LAUREATES & LANDMARK DISCOVERIES
+     TIER 3
+═══════════════════════════════════════════ -->
+<section class="module" id="ch80">
+  <div class="module-header">
+    <div class="module-tier">Tier 3 — Framework / Conceptual</div>
+    <h2>Chapter 80: Nobel Laureates &amp; Landmark Discoveries</h2>
+    <p>The people and discoveries behind modern pharmacology — a viva and MCQ favourite</p>
+  </div>
+
+  <!-- STAGE 1: MAP -->
+  <div class="stage">
+    <div class="cog">
+      <div class="stage-label">🧭 80/20 High-Yield Map</div>
+      <div class="pillar">Pharmacology's history clusters around a few landmark ideas: <strong>chemical neurotransmission</strong>, <strong>receptors and rational drug design</strong>, <strong>second messengers and G-proteins</strong>, <strong>the radioimmunoassay</strong>, and <strong>immune checkpoint therapy</strong>. Know who did what and why it mattered.</div>
+
+      <div class="diagram-wrap">
+        <svg viewBox="0 0 700 230" xmlns="http://www.w3.org/2000/svg" width="100%" style="max-width:700px">
+          <rect width="700" height="230" fill="#F8F4EE" rx="10"/>
+          <text x="350" y="24" text-anchor="middle" font-family="Fraunces,serif" font-size="15" font-weight="700" fill="#1A1A2E">Landmark Discoveries That Built Pharmacology</text>
+          <rect x="15" y="42" width="330" height="55" fill="#D6F0F3" rx="8" stroke="#0D5C63" stroke-width="1.5"/><text x="28" y="62" font-family="Inter" font-size="10.5" font-weight="700" fill="#0D5C63">Dale &amp; Loewi (1936)</text><text x="28" y="80" font-family="Inter" font-size="9" fill="#1A1A2E">Chemical neurotransmission — "Vagusstoff" = ACh</text><text x="28" y="92" font-family="Inter" font-size="8.5" fill="#3D3D55">→ the whole of autonomic pharmacology</text>
+          <rect x="355" y="42" width="330" height="55" fill="#FEF3DC" rx="8" stroke="#E8A020" stroke-width="1.5"/><text x="368" y="62" font-family="Inter" font-size="10.5" font-weight="700" fill="#B8450A">James Black (1988)</text><text x="368" y="80" font-family="Inter" font-size="9" fill="#1A1A2E">Rational design: propranolol (β-blocker), cimetidine (H₂)</text><text x="368" y="92" font-family="Inter" font-size="8.5" fill="#3D3D55">→ receptor-based drug design</text>
+          <rect x="15" y="105" width="330" height="55" fill="#F4FAF5" rx="8" stroke="#2E7D52" stroke-width="1.5"/><text x="28" y="125" font-family="Inter" font-size="10.5" font-weight="700" fill="#2E7D52">Sutherland (1971) · Gilman &amp; Rodbell (1994)</text><text x="28" y="143" font-family="Inter" font-size="9" fill="#1A1A2E">cAMP second messenger; G-proteins</text><text x="28" y="155" font-family="Inter" font-size="8.5" fill="#3D3D55">→ signal transduction / GPCR pharmacology</text>
+          <rect x="355" y="105" width="330" height="55" fill="#ECE7F3" rx="8" stroke="#5b4a7a" stroke-width="1.5"/><text x="368" y="125" font-family="Inter" font-size="10.5" font-weight="700" fill="#5b4a7a">Rosalyn Yalow (1977)</text><text x="368" y="143" font-family="Inter" font-size="9" fill="#1A1A2E">Radioimmunoassay (RIA)</text><text x="368" y="155" font-family="Inter" font-size="8.5" fill="#3D3D55">→ measuring hormones/drugs at tiny concentrations</text>
+          <rect x="15" y="168" width="670" height="50" fill="#FFF0EB" rx="8" stroke="#B8450A" stroke-width="1.5"/><text x="28" y="188" font-family="Inter" font-size="10.5" font-weight="700" fill="#B8450A">Allison &amp; Honjo (2018)</text><text x="28" y="205" font-family="Inter" font-size="9" fill="#1A1A2E">Immune checkpoint inhibition (CTLA-4, PD-1) → ipilimumab, nivolumab/pembrolizumab — a new era of cancer immunotherapy</text>
+        </svg>
+        <div class="diagram-caption">Figure 80-A: Each discovery opened a whole field of drugs — neurotransmission, receptor design, signal transduction, assay, and immuno-oncology.</div>
+      </div>
+
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Discovery / laureate</th><th>Contribution</th><th>Why it matters</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Henry Dale &amp; Otto Loewi</strong></td><td>Chemical transmission at nerve endings (ACh, "Vagusstoff")</td><td>Foundation of autonomic pharmacology</td></tr>
+            <tr><td><strong>James Black</strong></td><td>Propranolol (β-blocker) and cimetidine (H₂-blocker)</td><td>Rational, receptor-based drug design</td></tr>
+            <tr><td><strong>Earl Sutherland</strong></td><td>Cyclic AMP as a second messenger</td><td>Explained how hormones act inside cells</td></tr>
+            <tr><td><strong>Gilman &amp; Rodbell</strong></td><td>G-proteins as signal transducers</td><td>Basis of GPCR pharmacology (largest drug-target class)</td></tr>
+            <tr><td><strong>Rosalyn Yalow</strong></td><td>Radioimmunoassay (RIA)</td><td>Ultra-sensitive measurement of hormones and drugs</td></tr>
+            <tr><td><strong>Allison &amp; Honjo</strong></td><td>Immune checkpoint inhibition (CTLA-4, PD-1)</td><td>Launched modern cancer immunotherapy</td></tr>
+            <tr><td><strong>Indian pioneers</strong></td><td>Ram Nath Chopra ("father of Indian pharmacology"); U.K. Sheth, Nityanand and others</td><td>Built Indian pharmacology, medicinal-plant research and drug regulation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 2: RECALL -->
+  <div class="stage">
+    <div class="blurt-stage">
+      <div class="stage-label">🧠 Active Recall Gate</div>
+      <div class="blurt-prompt"><strong>Viva scenario:</strong> Close the guide. Name the scientists behind: (1) the discovery of chemical neurotransmission; (2) the first β-blocker and H₂-blocker; (3) cyclic AMP; (4) G-proteins; (5) the radioimmunoassay; (6) immune checkpoint therapy. Add the "father of Indian pharmacology".</div>
+      <ul class="primers">
+        <li>Why was James Black's work the birth of "rational drug design" rather than serendipity?</li>
+        <li>Why did the discovery of cAMP and G-proteins transform how we understand drug action?</li>
+        <li>Why did checkpoint inhibition win a Nobel Prize so soon after its clinical arrival?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- STAGE 3: FEYNMAN -->
+  <div class="stage">
+    <details class="gate">
+      <summary>✓ I've blurted — reveal the Plain-Language Notes for Ch.80 Nobel Laureates</summary>
+      <div class="feynman-content">
+        <h4>A short history of big ideas</h4>
+        <p>Loewi's frog-heart experiment proved that nerves talk to organs by releasing a chemical ("Vagusstoff", later identified as acetylcholine) — with Dale's receptor work, this founded autonomic pharmacology. James Black then showed you could <strong>design</strong> a drug against a specific receptor rather than stumble upon it: propranolol for β-receptors and cimetidine for histamine H₂-receptors, two of the most influential drugs ever made. Sutherland's cyclic AMP and the Gilman/Rodbell G-proteins explained the machinery <em>inside</em> the cell that a receptor switches on — the basis of most modern drug targets. Yalow's radioimmunoassay made it possible to measure hormones and drugs at vanishingly small concentrations, and Allison and Honjo's checkpoint discoveries (CTLA-4, PD-1) unleashed the immune system against cancer.</p>
+        <div class="analogy">
+          These discoveries are like the invention of the alphabet, then grammar, then the printing press for pharmacology: neurotransmission gave us the letters (chemical signals), receptors and second messengers gave us the grammar (how signals combine), and rational design plus immunotherapy were the printing press — turning understanding into a flood of new medicines.
+        </div>
+        <blockquote class="warn">
+          Common viva confusions: cyclic AMP = <strong>Sutherland</strong>; G-proteins = <strong>Gilman &amp; Rodbell</strong>; radioimmunoassay = <strong>Yalow</strong> (Berson had died, so was not named). James Black won for <em>both</em> the β-blocker and the H₂-antagonist. The "father of Indian pharmacology" is <strong>Col. Sir Ram Nath Chopra</strong>.
+        </blockquote>
+      </div>
+    </details>
+  </div>
+
+  <!-- STAGE 4: SPACED REP -->
+  <div class="stage">
+    <div class="sched-stage">
+      <div class="stage-label">🔄 Spaced Repetition Schedule</div>
+      <div class="sched">
+        <div class="sched-day"><strong>Day 1</strong> Match each laureate to their discovery from memory.</div>
+        <div class="sched-day"><strong>Day 3</strong> Explain why James Black's work is called "rational drug design".</div>
+        <div class="sched-day"><strong>Day 7</strong> Recall the second-messenger/G-protein and RIA discoverers and one clinical application of each.</div>
+        <div class="sched-day"><strong>Day 21</strong> Integrate: trace how checkpoint inhibition moved from a Nobel-winning idea to drugs used in the clinic (link to the Neoplastic guide).</div>
+      </div>
+      <div class="bridge">
+        <strong>Clinical Bridge:</strong> The checkpoint-inhibitor discovery underlies a whole class of modern anticancer drugs — see the immunotherapy agents in the Neoplastic Disease guide, and the G-protein/second-messenger story that underpins receptor pharmacology in General Pharmacology.
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ CH80 -->
+  <div class="stage" id="quiz80">
+    <div class="quizset">
+      <div class="quizset-title">📝 Quiz — Chapter 80 Nobel Laureates &amp; Landmark Discoveries (8 Questions)</div>
+      <div class="quiz-item"><div class="quiz-q">1. Who demonstrated chemical neurotransmission, and with what famous experiment?</div><div class="quiz-a">Otto Loewi (with Henry Dale) — the frog-heart "Vagusstoff" experiment identifying acetylcholine.</div></div>
+      <div class="quiz-item"><div class="quiz-q">2. Which two landmark drugs did James Black design, and why is his work significant?</div><div class="quiz-a">Propranolol (β-blocker) and cimetidine (H₂-blocker) — the birth of rational, receptor-based drug design.</div></div>
+      <div class="quiz-item"><div class="quiz-q">3. Who discovered cyclic AMP as a second messenger?</div><div class="quiz-a">Earl Sutherland.</div></div>
+      <div class="quiz-item"><div class="quiz-q">4. Who won the Nobel Prize for discovering G-proteins?</div><div class="quiz-a">Alfred Gilman and Martin Rodbell.</div></div>
+      <div class="quiz-item"><div class="quiz-q">5. Who developed the radioimmunoassay?</div><div class="quiz-a">Rosalyn Yalow.</div></div>
+      <div class="quiz-item"><div class="quiz-q">6. Which discovery by Allison and Honjo transformed oncology, and name a resulting drug class?</div><div class="quiz-a">Immune checkpoint inhibition (CTLA-4, PD-1) → checkpoint inhibitors (ipilimumab, nivolumab, pembrolizumab).</div></div>
+      <div class="quiz-item"><div class="quiz-q">7. Who is regarded as the "father of Indian pharmacology"?</div><div class="quiz-a">Colonel Sir Ram Nath Chopra.</div></div>
+      <div class="quiz-item"><div class="quiz-q">8. Why did the discovery of G-proteins and second messengers matter for drug development?</div><div class="quiz-a">It revealed the intracellular signalling machinery that receptors control — the basis of GPCR pharmacology, the largest class of drug targets.</div></div>
     </div>
   </div>
 </section>

@@ -1199,6 +1199,105 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
   <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<!-- PSM-NAV-START :: unified section menu (injected, self-contained) -->
+<div id="psm-root">
+  <button id="psm-launcher" type="button" aria-haspopup="true" aria-expanded="false" title="Jump to any section">
+    <span class="psm-ico">&#9776;</span><span class="psm-lbl">Sections</span><span class="psm-caret">&#9662;</span>
+  </button>
+  <div id="psm-overlay" hidden></div>
+  <nav id="psm-panel" hidden aria-label="Study sections">
+    <div class="psm-grp">
+      <p class="psm-h">Study Hub</p>
+      <a data-file="index.html" href="index.html">&#127968; Home</a>
+      <a data-file="learning.html" href="learning.html">&#128218; Learning Systems</a>
+      <a data-file="questions.html" href="questions.html">&#10067; Question Bank</a>
+      <a data-file="review.html" href="review.html">&#128257; Spaced Repetition</a>
+      <a data-file="Pharmacology_Flashcards.html" href="Pharmacology_Flashcards.html">&#127183; Flashcards</a>
+      <a data-file="index_pyq.html" href="index_pyq.html">&#128196; PYQ Notes Library</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">Learning Systems</p>
+      <a data-file="General_Pharmacology_Learning-System.html" href="General_Pharmacology_Learning-System.html">General Pharmacology</a>
+      <a data-file="Neuropharmacology-ANS_Learning-System.html" href="Neuropharmacology-ANS_Learning-System.html">Neuropharmacology &amp; ANS</a>
+      <a data-file="Cardiovascular-Renal_Pharmacology_Learning-System.html" href="Cardiovascular-Renal_Pharmacology_Learning-System.html">Cardiovascular &amp; Renal</a>
+      <a data-file="Inflammation-Immunity-Hematopoiesis_Learning-System.html" href="Inflammation-Immunity-Hematopoiesis_Learning-System.html">Inflammation, Immunity &amp; Heme</a>
+      <a data-file="Endocrine-Pharmacology_Learning-System.html" href="Endocrine-Pharmacology_Learning-System.html">Endocrine</a>
+      <a data-file="Gastrointestinal_Pharmacology_Learning-System.html" href="Gastrointestinal_Pharmacology_Learning-System.html">Gastrointestinal</a>
+      <a data-file="Infectious-Disease-Chemotherapy_Learning-System.html" href="Infectious-Disease-Chemotherapy_Learning-System.html">Infectious Disease Chemo</a>
+      <a data-file="Neoplastic-Disease-Pharmacology_Learning-System.html" href="Neoplastic-Disease-Pharmacology_Learning-System.html">Neoplastic Disease</a>
+      <a data-file="Special-Systems_Pharmacology_Learning-System.html" href="Special-Systems_Pharmacology_Learning-System.html">Special Systems</a>
+      <a data-file="Experimental-Pharmacology_Learning-System.html" href="Experimental-Pharmacology_Learning-System.html">Experimental &amp; Clinical</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">PYQ Notes</p>
+      <a data-file="General_Pharmacology_Notes.html" href="General_Pharmacology_Notes.html">General Pharmacology</a>
+      <a data-file="Autonomic_Receptor_Pharmacology_Notes.html" href="Autonomic_Receptor_Pharmacology_Notes.html">Autonomic, Receptor &amp; Neuro</a>
+      <a data-file="Pulmonary_Renal_Cardiovascular_Notes.html" href="Pulmonary_Renal_Cardiovascular_Notes.html">Pulmonary, Renal &amp; CVS</a>
+      <a data-file="Neoplastic_Disease_Pharmacotherapy_Notes.html" href="Neoplastic_Disease_Pharmacotherapy_Notes.html">Neoplastic Disease</a>
+      <a data-file="Special_Systems_Pharmacology_Notes.html" href="Special_Systems_Pharmacology_Notes.html">Special Systems</a>
+      <a data-file="Miscellaneous_Pharmacology_Notes.html" href="Miscellaneous_Pharmacology_Notes.html">Miscellaneous</a>
+    </div>
+  </nav>
+</div>
+<style>
+  #psm-root{font-family:'Inter',system-ui,-apple-system,sans-serif;}
+  #psm-launcher{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:2147482000;
+    display:inline-flex;align-items:center;gap:.4em;padding:7px 14px;border-radius:999px;cursor:pointer;
+    background:rgba(28,25,23,.92);color:#FBF7F0;border:1px solid rgba(212,168,71,.55);
+    font-size:.82rem;font-weight:500;letter-spacing:.01em;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s ease,box-shadow .15s ease,background .15s ease;}
+  #psm-launcher:hover{transform:translateX(-50%) translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.24);background:rgba(28,25,23,1);}
+  #psm-launcher .psm-ico{color:#D4A847;font-size:.9rem;line-height:1;}
+  #psm-launcher .psm-caret{font-size:.65rem;opacity:.7;transition:transform .18s ease;}
+  #psm-root.open #psm-launcher .psm-caret{transform:rotate(180deg);}
+  #psm-overlay{position:fixed;inset:0;z-index:2147482001;background:rgba(10,10,12,.28);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+  #psm-panel{position:fixed;top:54px;left:50%;transform:translateX(-50%) translateY(-6px);z-index:2147482002;
+    width:min(560px,92vw);max-height:min(74vh,620px);overflow-y:auto;opacity:0;pointer-events:none;
+    background:#FBF7F0;color:#1C1917;border:1px solid #E7DDD0;border-radius:16px;
+    box-shadow:0 24px 60px rgba(0,0,0,.24),0 6px 16px rgba(0,0,0,.12);
+    padding:14px 16px 18px;transition:opacity .18s ease,transform .18s ease;
+    display:grid;grid-template-columns:1fr 1fr;gap:4px 22px;align-content:start;}
+  #psm-root.open #psm-panel{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+  #psm-panel .psm-grp:first-child{grid-column:1 / -1;}
+  #psm-panel .psm-h{font-family:'JetBrains Mono','SFMono-Regular',monospace;font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:#A8A29E;margin:10px 6px 4px;}
+  #psm-panel .psm-grp:first-child .psm-h{margin-top:2px;}
+  #psm-panel .psm-grp:first-child{display:grid;grid-template-columns:1fr 1fr;gap:2px 22px;}
+  #psm-panel .psm-grp:first-child .psm-h{grid-column:1 / -1;}
+  #psm-panel a{display:block;text-decoration:none;color:#1C1917;font-size:.86rem;line-height:1.35;
+    padding:7px 10px;border-radius:9px;transition:background .12s ease,color .12s ease;}
+  #psm-panel a:hover{background:#F0E9DD;}
+  #psm-panel a.psm-active{background:#1C1917;color:#FBF7F0;font-weight:600;}
+  @media (max-width:560px){
+    #psm-panel{grid-template-columns:1fr;}
+    #psm-panel .psm-grp:first-child,#psm-panel .psm-grp:first-child{grid-template-columns:1fr;}
+    #psm-launcher .psm-lbl{display:none;}
+    #psm-launcher{padding:8px 12px;}
+  }
+  @media print{#psm-root{display:none!important;}}
+</style>
+<script>
+(function(){
+  var root=document.getElementById('psm-root');
+  if(!root||root.dataset.init)return; root.dataset.init='1';
+  var btn=document.getElementById('psm-launcher'),
+      panel=document.getElementById('psm-panel'),
+      ov=document.getElementById('psm-overlay');
+  function here(){var p=location.pathname.split('/').pop();return p?decodeURIComponent(p):'index.html';}
+  var cur=here();
+  root.querySelectorAll('#psm-panel a').forEach(function(a){
+    if(a.getAttribute('data-file')===cur){a.classList.add('psm-active');}
+  });
+  function open(){root.classList.add('open');panel.hidden=false;ov.hidden=false;btn.setAttribute('aria-expanded','true');}
+  function close(){root.classList.remove('open');btn.setAttribute('aria-expanded','false');
+    setTimeout(function(){if(!root.classList.contains('open')){panel.hidden=true;ov.hidden=true;}},200);}
+  btn.addEventListener('click',function(e){e.stopPropagation();root.classList.contains('open')?close():open();});
+  ov.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&root.classList.contains('open'))close();});
+})();
+</script>
+<!-- PSM-NAV-END -->
+
 <div class="gp-toolbar" role="toolbar" aria-label="Page controls">
   <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
   <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
@@ -1811,10 +1910,32 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
       <p>Imagine an asthma attack as a <span class="key">fire inside a building that sets off a piercing alarm</span>. The reliever (salbutamol) acts like <strong>earplugs</strong> — the noise disappears instantly, but the fire keeps burning regardless. The inhaled corticosteroid, by contrast, is the <strong>crew that actually extinguishes the flames</strong>. If a patient relies only on the earplugs (overusing the blue inhaler), the fire spreads unchecked — which is why heavier reliever use is a warning sign, and why handing someone a long-acting reliever (LABA) with no fire crew at all can prove fatal: it mutes the alarm while the underlying disease keeps worsening. A LABA should therefore never be prescribed without an accompanying ICS.</p>
     </div>
     <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Using a <strong>LABA alone in asthma raises the death rate</strong> — it must always be paired with an inhaled corticosteroid. <strong>Theophylline</strong> carries a narrow margin between effective and toxic doses (nausea, arrhythmia, seizures) and is metabolised via CYP1A2, so levels climb with enzyme inhibitors and drop in smokers due to enzyme induction. Because COPD airway tone is predominantly cholinergic, <strong>LAMAs and SAMAs</strong> carry more weight there than they do in asthma.</blockquote>
+
+    <h4>The GINA stepwise ladder — escalate control, not just relief</h4>
+    <p>Modern asthma management is built around <strong>inhaled corticosteroid (ICS)-containing treatment at every step</strong> — GINA no longer endorses SABA-only therapy, because relying on a reliever alone leaves the inflammation untreated and increases the risk of severe exacerbations. Treatment steps up if control is poor and steps down once stable.</p>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Step</th><th>Preferred controller</th><th>Reliever</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>As-needed low-dose ICS-formoterol</td><td>ICS-formoterol (or SABA + ICS)</td></tr>
+        <tr><td><strong>2</strong></td><td>Low-dose ICS daily (or as-needed ICS-formoterol)</td><td>As-needed ICS-formoterol / SABA</td></tr>
+        <tr><td><strong>3</strong></td><td>Low-dose ICS-LABA</td><td>As-needed ICS-formoterol / SABA</td></tr>
+        <tr><td><strong>4</strong></td><td>Medium-dose ICS-LABA (± LAMA / LTRA)</td><td>As-needed ICS-formoterol / SABA</td></tr>
+        <tr><td><strong>5</strong></td><td>High-dose ICS-LABA + add-on LAMA and/or <strong>biologic</strong> (anti-IgE/anti-IL-5/anti-IL-4Rα); phenotype first</td><td>As-needed ICS-formoterol / SABA</td></tr>
+      </tbody>
+    </table></div>
+    <p><strong>Class quick-reference:</strong> <strong>SABA</strong> (salbutamol) &amp; <strong>SAMA</strong> (ipratropium) for acute relief; <strong>LABA</strong> (salmeterol, formoterol) &amp; <strong>LAMA</strong> (tiotropium) for maintenance; <strong>ICS</strong> (budesonide, fluticasone, beclometasone) the anti-inflammatory backbone. <strong>Leukotriene modifiers:</strong> montelukast/zafirlukast (CysLT₁ antagonists) and zileuton (5-lipoxygenase inhibitor) — useful in allergic and exercise-induced asthma and in aspirin-exacerbated respiratory disease. <strong>Biologics</strong> for severe disease: <strong>omalizumab</strong> (anti-IgE, allergic asthma), <strong>mepolizumab/reslizumab</strong> (anti-IL-5) and benralizumab (anti-IL-5Rα) for eosinophilic asthma, and dupilumab (anti-IL-4Rα).</p>
+
+    <h4>Cough drugs — suppress, expel, or thin</h4>
+    <p>Match the drug to the cough. <strong>Antitussives (cough suppressants)</strong> quiet a <em>dry, unproductive</em> cough by dampening the cough reflex — centrally acting <strong>codeine/dextromethorphan</strong> (opioid cough-centre suppression) and peripherally acting demulcents. <strong>Expectorants</strong> (guaifenesin, bromhexine) increase the <em>volume/fluidity of secretions</em> so a <em>productive</em> cough clears mucus more easily. <strong>Mucolytics</strong> (<strong>N-acetylcysteine</strong>, ambroxol, carbocisteine, dornase alfa in cystic fibrosis) <em>break down</em> mucus by cleaving disulfide bonds (or DNA), lowering its viscosity.</p>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> Never suppress a <strong>productive</strong> cough with an antitussive — retained secretions worsen infection. Codeine-based antitussives are contraindicated in young children and depend on CYP2D6 (ultra-rapid metabolisers risk toxicity).</blockquote>
   </div>
   </details>
 
-  
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Revisit on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each pass, rebuild the GINA step ladder, the reliever-vs-controller class list, and the antitussive/expectorant/mucolytic split.</p>
+    <p class="bridge">The airways aren't the only pulmonary target — the pulmonary <em>vasculature</em> has its own drug classes. For pulmonary arterial hypertension (prostacyclins, endothelin antagonists, PDE5 inhibitors, riociguat), see the cardiovascular guide. (→ <a href="Cardiovascular-Renal_Pharmacology_Learning-System.html#m35">Cardiovascular-Renal · Module 35 (Pulmonary Hypertension)</a>)</p>
+  </div>
 </section>
 
 <!-- ============ MODULE 45 — HEMATOPOIETIC AGENTS ============ -->

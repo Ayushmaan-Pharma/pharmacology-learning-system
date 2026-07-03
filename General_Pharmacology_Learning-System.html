@@ -1244,6 +1244,105 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
   <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<!-- PSM-NAV-START :: unified section menu (injected, self-contained) -->
+<div id="psm-root">
+  <button id="psm-launcher" type="button" aria-haspopup="true" aria-expanded="false" title="Jump to any section">
+    <span class="psm-ico">&#9776;</span><span class="psm-lbl">Sections</span><span class="psm-caret">&#9662;</span>
+  </button>
+  <div id="psm-overlay" hidden></div>
+  <nav id="psm-panel" hidden aria-label="Study sections">
+    <div class="psm-grp">
+      <p class="psm-h">Study Hub</p>
+      <a data-file="index.html" href="index.html">&#127968; Home</a>
+      <a data-file="learning.html" href="learning.html">&#128218; Learning Systems</a>
+      <a data-file="questions.html" href="questions.html">&#10067; Question Bank</a>
+      <a data-file="review.html" href="review.html">&#128257; Spaced Repetition</a>
+      <a data-file="Pharmacology_Flashcards.html" href="Pharmacology_Flashcards.html">&#127183; Flashcards</a>
+      <a data-file="index_pyq.html" href="index_pyq.html">&#128196; PYQ Notes Library</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">Learning Systems</p>
+      <a data-file="General_Pharmacology_Learning-System.html" href="General_Pharmacology_Learning-System.html">General Pharmacology</a>
+      <a data-file="Neuropharmacology-ANS_Learning-System.html" href="Neuropharmacology-ANS_Learning-System.html">Neuropharmacology &amp; ANS</a>
+      <a data-file="Cardiovascular-Renal_Pharmacology_Learning-System.html" href="Cardiovascular-Renal_Pharmacology_Learning-System.html">Cardiovascular &amp; Renal</a>
+      <a data-file="Inflammation-Immunity-Hematopoiesis_Learning-System.html" href="Inflammation-Immunity-Hematopoiesis_Learning-System.html">Inflammation, Immunity &amp; Heme</a>
+      <a data-file="Endocrine-Pharmacology_Learning-System.html" href="Endocrine-Pharmacology_Learning-System.html">Endocrine</a>
+      <a data-file="Gastrointestinal_Pharmacology_Learning-System.html" href="Gastrointestinal_Pharmacology_Learning-System.html">Gastrointestinal</a>
+      <a data-file="Infectious-Disease-Chemotherapy_Learning-System.html" href="Infectious-Disease-Chemotherapy_Learning-System.html">Infectious Disease Chemo</a>
+      <a data-file="Neoplastic-Disease-Pharmacology_Learning-System.html" href="Neoplastic-Disease-Pharmacology_Learning-System.html">Neoplastic Disease</a>
+      <a data-file="Special-Systems_Pharmacology_Learning-System.html" href="Special-Systems_Pharmacology_Learning-System.html">Special Systems</a>
+      <a data-file="Experimental-Pharmacology_Learning-System.html" href="Experimental-Pharmacology_Learning-System.html">Experimental &amp; Clinical</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">PYQ Notes</p>
+      <a data-file="General_Pharmacology_Notes.html" href="General_Pharmacology_Notes.html">General Pharmacology</a>
+      <a data-file="Autonomic_Receptor_Pharmacology_Notes.html" href="Autonomic_Receptor_Pharmacology_Notes.html">Autonomic, Receptor &amp; Neuro</a>
+      <a data-file="Pulmonary_Renal_Cardiovascular_Notes.html" href="Pulmonary_Renal_Cardiovascular_Notes.html">Pulmonary, Renal &amp; CVS</a>
+      <a data-file="Neoplastic_Disease_Pharmacotherapy_Notes.html" href="Neoplastic_Disease_Pharmacotherapy_Notes.html">Neoplastic Disease</a>
+      <a data-file="Special_Systems_Pharmacology_Notes.html" href="Special_Systems_Pharmacology_Notes.html">Special Systems</a>
+      <a data-file="Miscellaneous_Pharmacology_Notes.html" href="Miscellaneous_Pharmacology_Notes.html">Miscellaneous</a>
+    </div>
+  </nav>
+</div>
+<style>
+  #psm-root{font-family:'Inter',system-ui,-apple-system,sans-serif;}
+  #psm-launcher{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:2147482000;
+    display:inline-flex;align-items:center;gap:.4em;padding:7px 14px;border-radius:999px;cursor:pointer;
+    background:rgba(28,25,23,.92);color:#FBF7F0;border:1px solid rgba(212,168,71,.55);
+    font-size:.82rem;font-weight:500;letter-spacing:.01em;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s ease,box-shadow .15s ease,background .15s ease;}
+  #psm-launcher:hover{transform:translateX(-50%) translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.24);background:rgba(28,25,23,1);}
+  #psm-launcher .psm-ico{color:#D4A847;font-size:.9rem;line-height:1;}
+  #psm-launcher .psm-caret{font-size:.65rem;opacity:.7;transition:transform .18s ease;}
+  #psm-root.open #psm-launcher .psm-caret{transform:rotate(180deg);}
+  #psm-overlay{position:fixed;inset:0;z-index:2147482001;background:rgba(10,10,12,.28);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+  #psm-panel{position:fixed;top:54px;left:50%;transform:translateX(-50%) translateY(-6px);z-index:2147482002;
+    width:min(560px,92vw);max-height:min(74vh,620px);overflow-y:auto;opacity:0;pointer-events:none;
+    background:#FBF7F0;color:#1C1917;border:1px solid #E7DDD0;border-radius:16px;
+    box-shadow:0 24px 60px rgba(0,0,0,.24),0 6px 16px rgba(0,0,0,.12);
+    padding:14px 16px 18px;transition:opacity .18s ease,transform .18s ease;
+    display:grid;grid-template-columns:1fr 1fr;gap:4px 22px;align-content:start;}
+  #psm-root.open #psm-panel{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+  #psm-panel .psm-grp:first-child{grid-column:1 / -1;}
+  #psm-panel .psm-h{font-family:'JetBrains Mono','SFMono-Regular',monospace;font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:#A8A29E;margin:10px 6px 4px;}
+  #psm-panel .psm-grp:first-child .psm-h{margin-top:2px;}
+  #psm-panel .psm-grp:first-child{display:grid;grid-template-columns:1fr 1fr;gap:2px 22px;}
+  #psm-panel .psm-grp:first-child .psm-h{grid-column:1 / -1;}
+  #psm-panel a{display:block;text-decoration:none;color:#1C1917;font-size:.86rem;line-height:1.35;
+    padding:7px 10px;border-radius:9px;transition:background .12s ease,color .12s ease;}
+  #psm-panel a:hover{background:#F0E9DD;}
+  #psm-panel a.psm-active{background:#1C1917;color:#FBF7F0;font-weight:600;}
+  @media (max-width:560px){
+    #psm-panel{grid-template-columns:1fr;}
+    #psm-panel .psm-grp:first-child,#psm-panel .psm-grp:first-child{grid-template-columns:1fr;}
+    #psm-launcher .psm-lbl{display:none;}
+    #psm-launcher{padding:8px 12px;}
+  }
+  @media print{#psm-root{display:none!important;}}
+</style>
+<script>
+(function(){
+  var root=document.getElementById('psm-root');
+  if(!root||root.dataset.init)return; root.dataset.init='1';
+  var btn=document.getElementById('psm-launcher'),
+      panel=document.getElementById('psm-panel'),
+      ov=document.getElementById('psm-overlay');
+  function here(){var p=location.pathname.split('/').pop();return p?decodeURIComponent(p):'index.html';}
+  var cur=here();
+  root.querySelectorAll('#psm-panel a').forEach(function(a){
+    if(a.getAttribute('data-file')===cur){a.classList.add('psm-active');}
+  });
+  function open(){root.classList.add('open');panel.hidden=false;ov.hidden=false;btn.setAttribute('aria-expanded','true');}
+  function close(){root.classList.remove('open');btn.setAttribute('aria-expanded','false');
+    setTimeout(function(){if(!root.classList.contains('open')){panel.hidden=true;ov.hidden=true;}},200);}
+  btn.addEventListener('click',function(e){e.stopPropagation();root.classList.contains('open')?close():open();});
+  ov.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&root.classList.contains('open'))close();});
+})();
+</script>
+<!-- PSM-NAV-END -->
+
 <div class="gp-toolbar" role="toolbar" aria-label="Page controls">
   <button id="gpDrawerToggle" class="gp-tool-btn" type="button" title="Chapters / index" aria-label="Open chapters index" aria-expanded="false">☰</button>
   <button id="gpBackBtn" class="gp-tool-btn gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
@@ -1281,20 +1380,20 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
   <div class="wrap">
     <div class="eyebrow">Pharmacology Learning System · Section I</div>
     <h1>General Pharmacology<br><em>an accelerated learning system</em></h1>
-    <p class="sub">The foundations — Chapters 1–9 — organized as a study guide: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies that make the mechanisms clear, and a spaced-repetition plan to help you remember it. Pharmacokinetics, pharmacodynamics, metabolism and toxicology: the principles every other drug chapter is built on.</p>
+    <p class="sub">The foundations — Chapters 1–9 plus the MD allied sciences (Paper I/IV) — organized as a study guide: 80/20 high-yield maps, blurting gates that force recall before you read, plain analogies that make the mechanisms clear, and a spaced-repetition plan to help you remember it. Pharmacokinetics, pharmacodynamics, metabolism and toxicology, then molecular biology, phytochemistry, drug regulations &amp; pharmacoeconomics, and research communication.</p>
     <div class="meta">
-      <span class="chip">9 modules · full depth</span>
-      <span class="chip">15 diagrams</span>
+      <span class="chip">13 modules · full depth</span>
+      <span class="chip">19 diagrams</span>
       <span class="chip">blurting gates + analogies</span>
-      <span class="chip">10 quiz sets × 20 Q</span>
+      <span class="chip">14 quiz sets · 244 Q</span>
     </div>
   </div>
 
     <div class="gp-stat-row">
-      <span class="gp-stat-pill">9 modules · full depth</span>
-      <span class="gp-stat-pill">15 diagrams</span>
+      <span class="gp-stat-pill">13 modules · full depth</span>
+      <span class="gp-stat-pill">Chapters 1–9 + Allied Sciences</span>
       <span class="gp-stat-pill">blurting gates + analogies</span>
-      <span class="gp-stat-pill">10 quiz sets × 20 Q</span>
+      <span class="gp-stat-pill">14 quiz sets · 244 Q</span>
     </div>
   </header>
 
@@ -1311,8 +1410,12 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
     <a href="#m1">1 · Drug Discovery</a>
     <a href="#m6">6 · Microbiome</a>
     <a href="#m8">8 · Drug Safety</a>
+    <a class="key" href="#m10">10 · Molecular Bio</a>
+    <a href="#m11">11 · Phytochemistry</a>
+    <a class="key" href="#m12">12 · Regulations/Econ</a>
+    <a href="#m13">13 · Teaching/Research</a>
     <a href="#flashcards">🃏 Flashcards</a>
-    <a href="#quizzes">★ 200 Questions</a>
+    <a href="#quizzes">★ 244 Questions</a>
   </div>
 </nav>
 
@@ -1690,6 +1793,78 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
               <li>Black box warning = strongest label caution</li>
               <li>Persistent signals → withdrawal (terfenadine, cerivastatin, rofecoxib)</li>
               <li>Genetic variants (e.g. TPMT) are recognised ADR risk factors</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#0f6b6b">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m10">
+          <span class="mm-mnum">10</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#m10" style="color:inherit;text-decoration:none">Molecular Biology in Pharmacology</a></span><span class="mm-msub">PCR/RT-PCR, the three blots, antibodies, gene silencing — the toolkit for finding and validating targets.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m10">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Techniques by molecule</span><span class="mm-ssub">Match each technique to the molecule it interrogates along the central dogma.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>DNA: PCR, Southern blot · RNA: RT-qPCR, Northern blot · Protein: Western blot, ELISA ("SNoW DRoP")</li>
+              <li>Monoclonal (one epitope, reproducible) vs polyclonal (many epitopes, sensitive) antibodies</li>
+              <li>Gene silencing (antisense/RNAi) and knockout animals validate a target causally</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#3a6b3a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m11">
+          <span class="mm-mnum">11</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#m11" style="color:inherit;text-decoration:none">Phytochemistry &amp; Herbal Standardisation</a></span><span class="mm-msub">Constituent classes, extraction, and how a herbal batch is standardised for reproducible potency.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m11">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Standardisation essentials</span><span class="mm-ssub">Turning a variable botanical into a consistent medicine.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Constituent classes: alkaloids, glycosides, flavonoids/tannins, terpenoids, saponins</li>
+              <li>Extraction: maceration (static) vs percolation (flowing, exhaustive)</li>
+              <li>Standardise via HPTLC fingerprint + marker compound assay; reverse pharmacology from traditional use</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#b9791a">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m12">
+          <span class="mm-mnum">12</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#m12" style="color:inherit;text-decoration:none">Indian Drug Regulations &amp; Pharmacoeconomics</a></span><span class="mm-msub">The legal/quality framework and the economic tools that decide price and value for money.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m12">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Regulation &amp; economics</span><span class="mm-ssub">Two frameworks governing a drug after approval.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>Drugs &amp; Cosmetics Act (Schedules H/X/M); CDSCO/DCGI regulator</li>
+              <li>DPCO price control (NPPA) applied to NLEM essential medicines; rational prescribing</li>
+              <li>Pharmacoeconomics: cost-minimisation / effectiveness / utility (QALY) / benefit; ICER</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="mm-branch" style="--mm-c:#7a8a94">
+        <button class="mm-node mm-module" type="button" aria-expanded="false" aria-controls="mmc-m13">
+          <span class="mm-mnum">13</span>
+          <span class="mm-mtext"><span class="mm-mtitle"><a href="#m13" style="color:inherit;text-decoration:none">Teaching, Research Communication &amp; Microteaching</a></span><span class="mm-msub">The academic skills of the MD pharmacologist — writing, presenting and teaching science.</span></span>
+          <span class="mm-chev">▸</span>
+        </button>
+        <div class="mm-children" id="mmc-m13">
+          <div class="mm-twig">
+            <button class="mm-node mm-sub" type="button" aria-expanded="false"><span class="mm-stext"><span class="mm-stitle">Communicate &amp; teach</span><span class="mm-ssub">The core academic competencies.</span></span><span class="mm-chev">▸</span></button>
+            <ul class="mm-leaves">
+              <li>IMRaD manuscript structure (Introduction, Methods, Results, Discussion — the "hourglass")</li>
+              <li>Lecture &amp; practical demonstration ("see one, do one, teach one"); conference oral vs poster</li>
+              <li>Microteaching cycle: plan → teach → feedback → re-teach; record-keeping &amp; research integrity</li>
             </ul>
           </div>
         </div>
@@ -2270,10 +2445,37 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
       <p>The liver detoxifies paracetamol through <span class="key">two wide main drains</span> (glucuronidation, sulfation) and one small <strong>hazardous-waste pipe</strong> (CYP2E1 → NAPQI), which is normally neutralised by a tank of cleaner (glutathione). In overdose the two main drains <strong>clog and back up</strong>, forcing the flood through the hazardous pipe — and the cleaner tank empties. Now raw toxin (NAPQI) corrodes the building (hepatocytes). N-acetylcysteine is a <strong>tanker refilling the cleaner</strong> before the corrosion is fatal.</p>
     </div>
     <blockquote class="warn"><span class="wl">⚠️ Warning — the dialysis trap:</span> large-V<sub>d</sub> or highly protein-bound drugs (digoxin, TCAs, benzodiazepines) are <strong>NOT</strong> effectively dialysed — most of the drug sits in tissue, not plasma. And note the toxicology link to earlier chapters: many antidotes are <em>chemical</em> antagonists (chelators, protamine) or <em>physiological</em> antagonists from the pharmacodynamics chapter.</blockquote>
+
+    <h4>Deep dive — recognising the poisoned patient (toxidromes)</h4>
+    <p>The fastest way to identify an unknown poison is to read the <strong>toxidrome</strong> — the syndrome of vital signs, pupils and secretions it produces.</p>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Poison</th><th>Key clinical features</th><th>Antidote</th></tr></thead>
+      <tbody>
+        <tr><td>Organophosphate (OPC)</td><td>Cholinergic crisis — SLUDGE/DUMBELS: miosis, salivation, lacrimation, bronchorrhoea, bradycardia, fasciculations</td><td>Atropine + pralidoxime</td></tr>
+        <tr><td>Paracetamol</td><td>Early: none/nausea; 24–72 h: RUQ pain, transaminitis → fulminant liver failure</td><td>N-acetylcysteine</td></tr>
+        <tr><td>Salicylate</td><td>Tinnitus, hyperventilation, mixed respiratory alkalosis + metabolic acidosis, hyperthermia</td><td>Alkalinisation ± dialysis</td></tr>
+        <tr><td>TCA</td><td>Anticholinergic + wide QRS, hypotension, seizures, arrhythmia</td><td>Sodium bicarbonate</td></tr>
+        <tr><td>Iron</td><td>Vomiting/GI bleeding → shock → metabolic acidosis → hepatic failure</td><td>Deferoxamine</td></tr>
+        <tr><td>Carbon monoxide</td><td>Headache, confusion, cherry-red skin, falsely normal SpO₂; ↑carboxyhaemoglobin</td><td>100% O₂ ± hyperbaric</td></tr>
+        <tr><td>Methanol / ethylene glycol</td><td>High anion-gap + osmolar-gap acidosis; methanol → blindness, ethylene glycol → renal failure (oxalate crystals)</td><td>Fomepizole (or ethanol) ± dialysis</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4>Applied analytical toxicology</h4>
+    <p>Analytical toxicology confirms and quantifies exposure. <strong>Screening</strong> uses rapid immunoassays (urine drug screens) — sensitive but prone to cross-reactivity and false positives. <strong>Confirmation/quantification</strong> uses chromatography with detection — <strong>GC-MS</strong> (the confirmatory gold standard), <strong>LC-MS/MS</strong>, and HPLC — plus <strong>atomic absorption spectrometry / ICP-MS</strong> for heavy metals. Quantitative levels guide treatment where a nomogram or threshold exists (paracetamol, salicylate, lithium, digoxin, iron, carboxyhaemoglobin, methanol/ethylene glycol) — for most other drugs, management is clinical, not level-driven.</p>
+
+    <h4>Toxicovigilance vs pharmacovigilance</h4>
+    <p><strong>Pharmacovigilance</strong> is the science of detecting, assessing and preventing <em>adverse drug reactions from medicines used at therapeutic doses</em> (spontaneous ADR reporting, signal detection; in India, PvPI). <strong>Toxicovigilance</strong> is broader — the active surveillance of the <em>toxic effects of all chemicals</em> (drug overdoses, pesticides, household and industrial chemicals, envenomation, environmental toxins), typically coordinated through <strong>poison information centres</strong>. In short: pharmacovigilance watches therapeutic medicines; toxicovigilance watches poisons and toxic exposures of every kind.</p>
   </div>
   </details>
 
-  
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Revisit on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each pass, reconstruct the toxidrome table and the antidote table from memory, and state the pharmacovigilance-vs-toxicovigilance distinction in one sentence.</p>
+    <p class="bridge">The systematic approach to the poisoned patient — and the running of a poison information centre — is developed in full in the Special Systems guide, where each antidote's mechanism is worked through. (→ <a href="Special-Systems_Pharmacology_Learning-System.html#ch79">Special Systems · Clinical Poisoning &amp; Antidotes</a>)</p>
+  </div>
+
+
 </section>
 
 <!-- ============ MODULE 4 — TRANSPORTERS ============ -->
@@ -2490,10 +2692,35 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
       <p>Drug development is a <span class="key">brutal audition with rounds of cuts</span>. Thousands of molecules try out; medicinal chemistry is the rehearsal that polishes a few. Preclinical is the <strong>screen test on animals</strong>. Phase I asks "will it harm a healthy person?", Phase II "can it actually act?", Phase III "is it better than what we already cast?" — and only then does it get the part (NDA). Phase IV is the <strong>reviews after opening night</strong>, when rare flaws finally show in a huge audience.</p>
     </div>
     <blockquote class="warn"><span class="wl">⚠️ Warning:</span> attrition is enormous and the timeline is ~10–15 years — most candidates fail. And because trials are short and modest in size, rare or delayed harms are precisely what Phase IV pharmacovigilance (Ch 8) exists to catch.</blockquote>
+
+    <h4>Deep dive — MD allied-sciences detail</h4>
+    <p><strong>Regulatory applications (India + US).</strong> An <strong>IND</strong> (Investigational New Drug) is filed <em>before</em> first-in-human testing; in India this is a <strong>CT/BA-BE application to CDSCO/DCGI</strong> (New Drugs &amp; Clinical Trials Rules 2019), in the US an IND to the <strong>USFDA</strong>. It packages preclinical pharmacology/toxicology, manufacturing (CMC) and the clinical protocol. An <strong>NDA</strong> (New Drug Application — India: to CDSCO; US: to FDA) is filed <em>before</em> marketing and contains the full efficacy/safety dossier. Biologics follow a BLA/biosimilar pathway.</p>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>Milestone</th><th>Filed when</th><th>India / US authority</th></tr></thead>
+      <tbody>
+        <tr><td>IND (CT application)</td><td>Before human trials</td><td>CDSCO/DCGI · USFDA</td></tr>
+        <tr><td>NDA</td><td>Before marketing</td><td>CDSCO · USFDA</td></tr>
+        <tr><td>Phase IV / PSUR</td><td>After approval</td><td>PvPI (India) · FDA MedWatch</td></tr>
+      </tbody>
+    </table></div>
+
+    <p><strong>Lead identification &amp; optimisation.</strong> <strong>High-throughput screening (HTS)</strong> tests huge compound libraries against a target in automated <em>in-vitro</em> assays; hits are confirmed <em>in vivo</em>. Oral drug-likeness is predicted by <strong>Lipinski's Rule of Five</strong>: poor absorption is likely if <strong>MW &gt; 500, logP &gt; 5, H-bond donors &gt; 5, H-bond acceptors &gt; 10</strong> (all thresholds are multiples of five). The <strong>Irwin test</strong> is a systematic first <em>in-vivo</em> observational screen in rodents — it records behavioural, neurological and autonomic signs plus gross toxicity across escalating doses to flag a compound's pharmacological profile and a safe starting dose range.</p>
+
+    <p><strong>Preclinical PK/PD and safety.</strong> Preclinical work characterises <strong>ADME/PK</strong> (absorption, distribution, metabolism, excretion) and <strong>PD</strong> (dose-response, mechanism) in at least two species, plus acute, sub-chronic and chronic toxicity, genotoxicity, reproductive toxicity and carcinogenicity, all under <strong>GLP</strong>. The no-observed-adverse-effect level (NOAEL) drives the human equivalent dose and first-in-human starting dose.</p>
+
+    <p><strong>Bioequivalence study design.</strong> A generic must show its rate and extent of absorption match the reference product. Typically a <strong>randomised, two-period, two-sequence crossover</strong> in healthy volunteers, comparing three PK parameters: <strong>AUC</strong> (extent of absorption), <strong>C<sub>max</sub></strong> (peak — rate) and <strong>T<sub>max</sub></strong> (time to peak). Bioequivalence is accepted when the 90% confidence interval of the test/reference ratio of AUC and C<sub>max</sub> falls within <strong>80–125%</strong>.</p>
+
+    <p><strong>Research ethics &amp; governance.</strong> Human research follows the <strong>Declaration of Helsinki</strong> (WMA — informed consent, risk-benefit, independent ethics review, vulnerable-group protection) operationalised through <strong>ICH-GCP (E6)</strong>. Animal studies in India require <strong>CPCSEA</strong> oversight and <strong>IAEC</strong> (Institutional Animal Ethics Committee) approval, applying the <strong>3Rs — Replacement, Reduction, Refinement</strong>.</p>
   </div>
   </details>
 
-  
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Revisit on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each pass, recite the IND-vs-NDA distinction, Lipinski's four thresholds, the three bioequivalence parameters (AUC, C<sub>max</sub>, T<sub>max</sub>) and the 80–125% rule.</p>
+    <p class="bridge">Once a molecule is discovered and tested, it must clear the national regulatory and pricing system before it reaches patients — see how India's Drugs &amp; Cosmetics Act, DPCO and NLEM govern that final step. (→ <a href="#m12">Module 12 · Indian Drug Regulations &amp; Pharmacoeconomics</a>)</p>
+  </div>
+
+
 </section>
 
 <!-- ============ MODULE 6 — GI MICROBIOME ============ -->
@@ -2607,11 +2834,304 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
 
 
 
+<!-- ============ MODULE 10 — MOLECULAR BIOLOGY IN PHARMACOLOGY ============ -->
+<section class="module" id="m10">
+  <div class="mod-head">
+    <div class="mod-num">10</div>
+    <div class="mod-titleblock">
+      <h2>Molecular Biology in Pharmacology</h2>
+      <div class="mod-sub">The lab toolkit behind target discovery and validation</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Allied science</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Modern pharmacology runs on a handful of molecular techniques that let you find a target, prove a drug acts on it, and measure the response. Anchor each technique to the <strong>molecule it detects</strong> — DNA, RNA, or protein — and the toolkit organises itself.</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>PCR</strong> amplifies a DNA sequence exponentially (denature → anneal → extend, driven by Taq polymerase); <strong>RT-PCR / qPCR</strong> first reverse-transcribes RNA to cDNA, then amplifies — used to <em>quantify gene expression</em>.</li>
+      <li><strong>The three blots</strong> — "SNoW DRoP": <strong>S</strong>outhern = <strong>D</strong>NA, <strong>N</strong>orthern = <strong>R</strong>NA, <strong>W</strong>estern = <strong>P</strong>rotein (detected with antibodies).</li>
+      <li><strong>Antibodies as tools:</strong> <strong>monoclonal</strong> (single B-cell clone, one epitope — reproducible, hybridoma technology) vs <strong>polyclonal</strong> (many clones, many epitopes — cheaper, more avid but variable).</li>
+      <li><strong>Protein purification</strong> — chromatography (size-exclusion, ion-exchange, affinity) to isolate a receptor/enzyme for study.</li>
+      <li><strong>Antisense oligonucleotides &amp; RNAi (siRNA)</strong> silence a specific gene's mRNA — used to validate a target (and as drugs themselves, e.g. nusinersen).</li>
+      <li><strong>Gene knockout / knock-in animals</strong> (and CRISPR) confirm a gene's role in a drug response; <strong>proteomics</strong> (2-D gels, mass spectrometry) maps the whole protein complement.</li>
+      <li><strong>Receptor identification:</strong> radioligand binding assays (B<sub>max</sub>, K<sub>d</sub>), cloning and expression systems.</li>
+    </ul>
+    <figure>
+      <div class="fig-title">Figure 10·1 — Match the technique to the molecule it detects</div>
+      <svg viewBox="0 0 860 180" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="12">
+        <defs><marker id="mb10" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0f6b6b"/></marker></defs>
+        <rect x="30" y="60" width="180" height="60" rx="9" fill="#16344a"/><text x="120" y="86" text-anchor="middle" fill="#fff" font-weight="700">DNA</text><text x="120" y="106" text-anchor="middle" fill="#8fd4ce" font-size="10">Southern blot · PCR</text>
+        <rect x="340" y="60" width="180" height="60" rx="9" fill="#e3efed" stroke="#0f6b6b"/><text x="430" y="86" text-anchor="middle" fill="#0a4f54" font-weight="700">RNA</text><text x="430" y="106" text-anchor="middle" fill="#3a4a55" font-size="10">Northern blot · RT-qPCR</text>
+        <rect x="650" y="60" width="180" height="60" rx="9" fill="#fbf0dc" stroke="#b9791a"/><text x="740" y="86" text-anchor="middle" fill="#b9791a" font-weight="700">PROTEIN</text><text x="740" y="106" text-anchor="middle" fill="#3a4a55" font-size="10">Western blot · ELISA</text>
+        <g stroke="#0f6b6b" stroke-width="2" marker-end="url(#mb10)"><line x1="210" y1="90" x2="338" y2="90"/><line x1="520" y1="90" x2="648" y2="90"/></g>
+        <text x="275" y="80" text-anchor="middle" font-size="9" fill="#3a4a55">transcription</text>
+        <text x="585" y="80" text-anchor="middle" font-size="9" fill="#3a4a55">translation</text>
+        <text x="430" y="150" text-anchor="middle" font-size="10.5" fill="#16344a">"SNoW DRoP": Southern→DNA · Northern→RNA · Western→Protein</text>
+      </svg>
+      <figcaption>The central dogma is also the map of the lab: each blot interrogates one step, and the "SNoW DRoP" mnemonic fixes which is which.</figcaption>
+    </figure>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A researcher wants to prove a new drug works by silencing a particular gene's product. Without looking, name a technique to (a) measure how much of that gene's mRNA is present, (b) detect the protein it makes, and (c) knock the gene down to confirm its role. Then explain monoclonal vs polyclonal antibodies.</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does RT-PCR need an extra step (reverse transcription) that ordinary PCR does not?</li>
+      <li>Why is a monoclonal antibody more <em>reproducible</em> but a polyclonal often more <em>sensitive</em>?</li>
+      <li>Why does knocking out a gene provide stronger evidence of a target's role than merely correlating its expression?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>How the toolkit fits together</h4>
+    <p>The techniques line up along the <strong>central dogma</strong>. To ask "is the <em>gene</em> there / mutated?", use PCR and Southern blot. To ask "is it being <em>expressed</em>, and how much?", reverse-transcribe the RNA and quantify it with RT-qPCR (or a Northern blot). To ask "is the <em>protein</em> made and functional?", use a Western blot or ELISA with antibodies. To <em>prove causation</em> — that this gene's product mediates the drug's effect — silence it (antisense/siRNA) or delete it (knockout), and see the response disappear.</p>
+    <p><strong>Antibodies</strong> are the workhorses of protein detection. A <strong>monoclonal</strong> antibody comes from a single immortalised B-cell clone (hybridoma), recognises one epitope, and is exquisitely specific and reproducible — ideal for assays and as therapeutics ("-mab"). A <strong>polyclonal</strong> antiserum contains many antibodies against many epitopes of the antigen: cheaper and often more avid/sensitive, but batch-to-batch variable.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — three detectives for three witnesses</div>
+      <p>Think of a gene's information passing through three witnesses — the <span class="key">blueprint (DNA), the memo (RNA), and the finished product (protein)</span>. Each blot is a detective who only interviews one witness: Southern grills the blueprint, Northern the memo, Western the product. A monoclonal antibody is a detective trained to recognise <em>one</em> exact face; a polyclonal team recognises the suspect from many angles but sometimes mistakes a look-alike.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> don't confuse <em>expression</em> with <em>function</em> — high mRNA (RT-qPCR) doesn't guarantee active protein (post-transcriptional and post-translational control intervene). And PCR's exquisite sensitivity is also its weakness: contamination gives false positives, so controls are essential.</blockquote>
+  </div>
+  </details>
+
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Revisit on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Each pass, recite "SNoW DRoP", the RT-PCR extra step, and monoclonal-vs-polyclonal.</p>
+    <p class="bridge">These same techniques — RT-PCR, flow cytometry, cell-based assays — are the hands-on tools of the experimental pharmacology practical syllabus. (→ <a href="Experimental-Pharmacology_Learning-System.html#m12">Experimental Pharmacology · Flow Cytometry &amp; RT-PCR</a>)</p>
+  </div>
+  </details>
+</section>
+
+<!-- ============ MODULE 11 — PHYTOCHEMISTRY & HERBAL DRUG STANDARDISATION ============ -->
+<section class="module" id="m11">
+  <div class="mod-head">
+    <div class="mod-num">11</div>
+    <div class="mod-titleblock">
+      <h2>Phytochemistry &amp; Herbal Drug Standardisation</h2>
+      <div class="mod-sub">From plant to reproducible, quality-controlled medicine</div>
+    </div>
+    <span class="tier tier-2">Tier 2 · Allied science</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Herbal drugs are complex mixtures, so the whole discipline is about <strong>reproducibility</strong>: know the classes of active constituents, how they're extracted, and how a batch is <strong>standardised</strong> against a marker compound so every dose is the same.</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>Constituent classes:</strong> <strong>alkaloids</strong> (N-containing, basic — morphine, atropine, quinine), <strong>glycosides</strong> (sugar + aglycone — digoxin, sennosides), <strong>flavonoids &amp; tannins</strong> (polyphenols, antioxidant/astringent), <strong>terpenoids &amp; volatile oils</strong>, <strong>saponins</strong>, <strong>resins</strong>.</li>
+      <li><strong>Extraction:</strong> <strong>maceration</strong> (soak the drug in solvent, static — simple, for readily soluble/thermolabile constituents) vs <strong>percolation</strong> (solvent flows continuously through the drug bed — more exhaustive, the basis of tinctures).</li>
+      <li><strong>Standardisation</strong> ensures identity, purity and consistent potency: <strong>HPTLC fingerprinting</strong> gives a characteristic chromatographic "barcode" of the extract; a <strong>marker compound</strong> is assayed to fix potency.</li>
+      <li><strong>Marker compounds in biological fluids</strong> allow pharmacokinetic/quality tracking of a herbal after dosing.</li>
+      <li><strong>Reverse pharmacology</strong> — start from a traditionally-used plant with known human use and work <em>backwards</em> to the active molecule and mechanism (the opposite of the m1 forward pipeline).</li>
+    </ul>
+    <figure>
+      <div class="fig-title">Figure 11·1 — Plant to standardised medicine</div>
+      <svg viewBox="0 0 860 150" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+        <defs><marker id="ph11" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#3a6b3a"/></marker></defs>
+        <g text-anchor="middle" font-weight="600">
+          <rect x="20" y="55" width="140" height="48" rx="8" fill="#3a6b3a"/><text x="90" y="76" fill="#fff" font-size="11">Plant material</text><text x="90" y="92" fill="#cfe9d6" font-size="9">crude drug</text>
+          <rect x="200" y="55" width="160" height="48" rx="8" fill="#e3efed" stroke="#0f6b6b"/><text x="280" y="76" fill="#0a4f54" font-size="11">Extraction</text><text x="280" y="92" fill="#3a4a55" font-size="9">maceration / percolation</text>
+          <rect x="400" y="55" width="180" height="48" rx="8" fill="#fbf0dc" stroke="#b9791a"/><text x="490" y="76" fill="#b9791a" font-size="11">HPTLC fingerprint</text><text x="490" y="92" fill="#3a4a55" font-size="9">+ marker assay</text>
+          <rect x="620" y="55" width="200" height="48" rx="8" fill="#16344a"/><text x="720" y="76" fill="#fff" font-size="11">Standardised extract</text><text x="720" y="92" fill="#8fd4ce" font-size="9">consistent potency</text>
+        </g>
+        <g stroke="#3a6b3a" stroke-width="2" marker-end="url(#ph11)"><line x1="160" y1="79" x2="198" y2="79"/><line x1="360" y1="79" x2="398" y2="79"/><line x1="580" y1="79" x2="618" y2="79"/></g>
+      </svg>
+      <figcaption>Standardisation converts a variable botanical into a reproducible medicine: extraction pulls out the constituents, HPTLC fingerprints the mixture, and a marker compound fixes the dose.</figcaption>
+    </figure>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A company sells a turmeric extract and claims every capsule is identical. Without looking, explain how they would <em>prove</em> that (extraction method, fingerprinting, marker compound), and give the class of active constituent for morphine, digoxin and quinine.</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does a herbal drug need "standardisation" when a single-molecule drug does not?</li>
+      <li>Why choose percolation over maceration when you need exhaustive extraction?</li>
+      <li>Why is "reverse pharmacology" an attractive shortcut for drugs from traditional medicine?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Why standardisation is the whole game</h4>
+    <p>A synthetic drug is one defined molecule, so quality control is straightforward. A herbal medicine is a <strong>mixture of dozens of constituents</strong> whose proportions vary with soil, season, and processing — so the central problem is making every batch behave the same. You extract the constituents (maceration for simple soaking; percolation for a thorough, flowing extraction), then create an <strong>HPTLC fingerprint</strong> — a chromatographic pattern that acts like a barcode confirming identity — and <strong>assay a marker compound</strong> to pin down potency. Tracking that marker in blood or urine lets you follow the product's pharmacokinetics.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — a wine, not a spirit</div>
+      <p>A single-molecule drug is like <span class="key">pure distilled spirit — one compound, easy to check</span>. A herbal extract is like <span class="key">a wine</span>: hundreds of components in shifting proportions. To sell a consistent wine you fingerprint its profile and measure a signature compound each vintage — exactly what HPTLC and marker assays do for a herbal drug.</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> "natural" is not "safe" — herbals carry real risks of <strong>adulteration, heavy-metal contamination, and herb–drug interactions</strong> (e.g. St John's Wort is a potent CYP3A4/P-gp inducer that lowers levels of many drugs). Standardisation and pharmacovigilance apply to herbals too.</blockquote>
+  </div>
+  </details>
+
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Revisit on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Recite the constituent classes, maceration-vs-percolation, and the standardisation trio (extract → HPTLC → marker).</p>
+    <p class="bridge">Reverse pharmacology is the mirror image of the forward discovery pipeline you mapped in Module 1 — both routes must still clear the same clinical trials and regulation. (→ <a href="#m1">Module 1 · Drug Discovery &amp; Development</a>)</p>
+  </div>
+</section>
+
+<!-- ============ MODULE 12 — INDIAN DRUG REGULATIONS & PHARMACOECONOMICS ============ -->
+<section class="module" id="m12">
+  <div class="mod-head">
+    <div class="mod-num">12</div>
+    <div class="mod-titleblock">
+      <h2>Indian Drug Regulations &amp; Pharmacoeconomics</h2>
+      <div class="mod-sub">How a drug is legally sold, priced and valued for money</div>
+    </div>
+    <span class="tier tier-1">Tier 1 · Paper IV</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">Two systems govern a drug after approval: a <strong>legal/quality framework</strong> (what may be sold, and how) and an <strong>economic framework</strong> (what it costs and whether it's worth it). Learn the key Acts and the two headline pharmacoeconomic tools and this whole Paper IV topic falls into place.</div>
+    <h4>Regulation &amp; access</h4>
+    <ul>
+      <li><strong>Drugs &amp; Cosmetics Act 1940 (&amp; Rules 1945)</strong> — the master law regulating import, manufacture, distribution and sale of drugs in India; <strong>schedules</strong> classify drugs (e.g. <strong>Schedule H/H1</strong> prescription-only, <strong>Schedule X</strong> narcotic/psychotropic, <strong>Schedule M</strong> GMP).</li>
+      <li><strong>CDSCO / DCGI</strong> — the central regulator; <strong>New Drugs &amp; Clinical Trials Rules 2019</strong> govern approvals and trials.</li>
+      <li><strong>DPCO (Drug Price Control Order)</strong>, administered by the <strong>NPPA</strong>, caps the price of scheduled essential medicines.</li>
+      <li><strong>NLEM (National List of Essential Medicines)</strong> — the medicines that satisfy priority healthcare needs (selected on efficacy, safety, cost-effectiveness); the price-control list is drawn from it. Mirrors the WHO Essential Medicines concept.</li>
+      <li><strong>Drug utilisation studies</strong> and <strong>rational prescribing</strong> (WHO: right drug, right dose, right duration, lowest cost) promote effective, safe, economical use.</li>
+    </ul>
+    <h4>Pharmacoeconomics</h4>
+    <ul>
+      <li><strong>Cost-minimisation</strong> (equal outcomes → compare cost), <strong>cost-effectiveness (CEA)</strong> — cost per natural unit (e.g. per mmHg, per life saved), <strong>cost–utility (CUA)</strong> — cost per <strong>QALY</strong> (quality-adjusted life-year), and <strong>cost–benefit (CBA)</strong> — both in money.</li>
+      <li><strong>QALY</strong> = years of life × quality weight (0 = death, 1 = perfect health); the <strong>ICER</strong> (incremental cost-effectiveness ratio) = Δcost ÷ Δeffect compares a new drug with the standard against a willingness-to-pay threshold.</li>
+    </ul>
+    <figure>
+      <div class="fig-title">Figure 12·1 — The four pharmacoeconomic analyses by how outcomes are measured</div>
+      <svg viewBox="0 0 860 170" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+        <rect x="20" y="40" width="195" height="90" rx="9" fill="#e3efed" stroke="#0f6b6b"/><text x="117" y="64" text-anchor="middle" font-weight="700" fill="#0a4f54">Cost-minimisation</text><text x="117" y="88" text-anchor="middle" font-size="10" fill="#3a4a55">outcomes assumed equal</text><text x="117" y="106" text-anchor="middle" font-size="10" fill="#3a4a55">→ just compare cost</text>
+        <rect x="225" y="40" width="195" height="90" rx="9" fill="#fbf0dc" stroke="#b9791a"/><text x="322" y="64" text-anchor="middle" font-weight="700" fill="#b9791a">Cost-effectiveness</text><text x="322" y="88" text-anchor="middle" font-size="10" fill="#3a4a55">natural units</text><text x="322" y="106" text-anchor="middle" font-size="10" fill="#3a4a55">cost per life-year / mmHg</text>
+        <rect x="430" y="40" width="195" height="90" rx="9" fill="#ece7f3" stroke="#5b4a7a"/><text x="527" y="64" text-anchor="middle" font-weight="700" fill="#5b4a7a">Cost–utility</text><text x="527" y="88" text-anchor="middle" font-size="10" fill="#3a4a55">quality-adjusted</text><text x="527" y="106" text-anchor="middle" font-size="10" fill="#3a4a55">cost per QALY</text>
+        <rect x="635" y="40" width="195" height="90" rx="9" fill="#16344a"/><text x="732" y="64" text-anchor="middle" font-weight="700" fill="#fff">Cost–benefit</text><text x="732" y="88" text-anchor="middle" font-size="10" fill="#8fd4ce">outcomes in money</text><text x="732" y="106" text-anchor="middle" font-size="10" fill="#8fd4ce">net monetary benefit</text>
+      </svg>
+      <figcaption>The four analyses differ only in how the <em>outcome</em> is expressed — from "assumed equal" through natural units and QALYs to pure money. Cost–utility (QALY) is the health-economics standard.</figcaption>
+    </figure>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">A new anticancer drug costs ten times the standard but adds quality-adjusted life. Without looking, name the pharmacoeconomic analysis best suited to judge it and the metric it uses, then name the Indian Act that would let the government cap its price and the list that defines "essential".</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why is a QALY more informative than simply counting life-years gained?</li>
+      <li>Why does India control the price only of medicines on the NLEM-derived schedule rather than all drugs?</li>
+      <li>Why is "rational prescribing" an economic <em>and</em> a clinical goal?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Two frameworks, one goal — safe, effective, affordable medicines</h4>
+    <p>The <strong>Drugs &amp; Cosmetics Act</strong> is the legal backbone: it decides what can be manufactured and sold and under what conditions, using <strong>schedules</strong> to set the rules for each class (prescription-only H/H1, GMP standards under M, narcotics under X). The <strong>DPCO</strong>, enforced by the NPPA, then caps prices of the essential medicines listed via the <strong>NLEM</strong>, so priority drugs stay affordable. <strong>Pharmacoeconomics</strong> asks the separate question "is this drug worth its cost?" — comparing a new therapy with the standard by dividing the extra cost by the extra benefit (the <strong>ICER</strong>). When benefit is measured in <strong>QALYs</strong>, we can compare wildly different treatments on one scale.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — value for money on a health budget</div>
+      <p>A health system shops with a fixed budget. Cost-effectiveness is the <span class="key">price tag per unit of health</span> (₹ per life-year); the QALY is a smart price tag that also counts <em>quality</em>, not just length, of life. The ICER is the extra you pay for switching to a fancier option — and the willingness-to-pay threshold is the most you're prepared to spend per QALY before saying "not worth it."</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> don't confuse the analyses — <strong>cost-effectiveness</strong> uses natural units (life-years, mmHg) while <strong>cost–utility</strong> uses QALYs; <strong>cost–benefit</strong> puts everything in money. And price control (DPCO) is a legal/economic tool, separate from the scientific selection of essential medicines (NLEM) — though the two are linked.</blockquote>
+  </div>
+  </details>
+
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Revisit on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Recite the four analyses by outcome-type, the QALY definition, and the D&amp;C Act / DPCO / NLEM roles.</p>
+    <p class="bridge">Regulation is the last gate of the journey that begins with drug discovery — the IND/NDA process in Module 1 hands the approved drug to this legal and pricing system. (→ <a href="#m1">Module 1 · Drug Discovery &amp; Development</a>)</p>
+  </div>
+</section>
+
+<!-- ============ MODULE 13 — TEACHING, RESEARCH COMMUNICATION & MICROTEACHING ============ -->
+<section class="module" id="m13">
+  <div class="mod-head">
+    <div class="mod-num">13</div>
+    <div class="mod-titleblock">
+      <h2>Teaching, Research Communication &amp; Microteaching</h2>
+      <div class="mod-sub">The academic skills of the MD pharmacologist</div>
+    </div>
+    <span class="tier tier-3">Tier 3 · Framework</span>
+  </div>
+
+  <div class="cog map">
+    <div class="tag"><span>🧭</span> Section 1 · The 80/20 High-Yield Map</div>
+    <div class="pillar">An MD pharmacologist is also a teacher and a communicator of science. The high-yield items are the <strong>IMRaD</strong> structure of a paper, the essentials of <strong>lecture and practical-demonstration delivery</strong>, and the concept of <strong>microteaching</strong> for skill refinement.</div>
+    <h4>The high-yield elements</h4>
+    <ul>
+      <li><strong>IMRaD</strong> — the universal manuscript structure: <strong>I</strong>ntroduction (why), <strong>M</strong>ethods (how), <strong>R</strong>esults (what was found), <strong>a</strong>nd <strong>D</strong>iscussion (what it means) — plus title, abstract, references.</li>
+      <li><strong>Lecture delivery:</strong> set clear learning objectives, structure (intro–body–summary), use of audiovisual aids, active engagement, and assessment of understanding.</li>
+      <li><strong>Practical demonstration:</strong> show → explain → let the learner do → give feedback (see one, do one, teach one).</li>
+      <li><strong>Conference presentation:</strong> oral (focused, time-limited talk) and poster (concise visual summary); handling questions.</li>
+      <li><strong>Record-keeping:</strong> accurate lab notebooks/data records — essential for GLP/GCP, reproducibility and research integrity.</li>
+      <li><strong>Microteaching:</strong> a short (~5–10 min) focused teaching episode to a small group, on <em>one</em> skill (e.g. explaining, questioning), followed by structured feedback and re-teaching — used in MD training and viva preparation.</li>
+    </ul>
+    <figure>
+      <div class="fig-title">Figure 13·1 — The IMRaD hourglass and the microteaching cycle</div>
+      <svg viewBox="0 0 860 170" xmlns="http://www.w3.org/2000/svg" font-family="Inter,sans-serif" font-size="11">
+        <g text-anchor="middle" font-weight="600">
+          <rect x="20" y="30" width="120" height="34" rx="7" fill="#16344a"/><text x="80" y="52" fill="#fff" font-size="10.5">Introduction</text>
+          <rect x="45" y="70" width="70" height="30" rx="7" fill="#e3efed" stroke="#0f6b6b"/><text x="80" y="90" fill="#0a4f54" font-size="10">Methods</text>
+          <rect x="45" y="104" width="70" height="30" rx="7" fill="#fbf0dc" stroke="#b9791a"/><text x="80" y="124" fill="#b9791a" font-size="10">Results</text>
+          <rect x="20" y="140" width="120" height="26" rx="7" fill="#3a6b3a"/><text x="80" y="158" fill="#fff" font-size="10.5">Discussion</text>
+          <text x="80" y="20" fill="#3a4a55" font-size="9">broad → narrow → broad</text>
+        </g>
+        <g text-anchor="middle" font-weight="600" font-size="10.5">
+          <text x="500" y="24" fill="#16344a" font-weight="700">Microteaching cycle</text>
+          <rect x="300" y="50" width="110" height="40" rx="8" fill="#e3efed" stroke="#0f6b6b"/><text x="355" y="74" fill="#0a4f54">Plan skill</text>
+          <rect x="450" y="50" width="110" height="40" rx="8" fill="#fbf0dc" stroke="#b9791a"/><text x="505" y="74" fill="#b9791a">Teach (5–10 min)</text>
+          <rect x="600" y="50" width="110" height="40" rx="8" fill="#ece7f3" stroke="#5b4a7a"/><text x="655" y="74" fill="#5b4a7a">Feedback</text>
+          <rect x="450" y="110" width="110" height="40" rx="8" fill="#3a6b3a"/><text x="505" y="134" fill="#fff">Re-teach</text>
+          <g stroke="#7b8a93" stroke-width="1.6" fill="none"><path d="M410,70 H448"/><path d="M560,70 H598"/><path d="M655,90 V120 H562"/><path d="M450,130 H410 V90"/></g>
+        </g>
+      </svg>
+      <figcaption>IMRaD funnels from broad context to specific results and back out to meaning; microteaching is a tight plan–teach–feedback–re-teach loop that hones a single teaching skill.</figcaption>
+    </figure>
+  </div>
+
+  <div class="cog blurt">
+    <div class="tag"><span>🧠</span> Section 2 · Active Recall &amp; Blurting Gate</div>
+    <div class="blurt-prompt">You must write up your thesis experiment and later teach it to juniors. Without looking, name the four sections of a scientific paper in order and what each contains, and describe how a microteaching session is run.</div>
+    <h4 style="color:var(--coral)">Guiding primers</h4>
+    <ul class="primers">
+      <li>Why does the IMRaD structure move from broad to narrow and back to broad (the "hourglass")?</li>
+      <li>Why does microteaching deliberately isolate a <em>single</em> skill and keep the session very short?</li>
+      <li>Why is meticulous record-keeping an ethical, not merely administrative, requirement?</li>
+    </ul>
+  </div>
+
+  <details class="gate">
+    <summary>✓ I've blurted — reveal the plain-language notes</summary>
+  <div class="cog feyn">
+    <div class="tag"><span>📝</span> Section 3 · Plain-Language Notes</div>
+    <h4>Communicating and teaching science</h4>
+    <p>A research paper follows <strong>IMRaD</strong> because it mirrors the logic of inquiry: the Introduction sets the question (broad), Methods and Results narrow to exactly what you did and found, and the Discussion widens back out to what it means for the field. Teaching uses the same disciplined structure — clear objectives, a logical body, active engagement, and a check of understanding. A <strong>practical demonstration</strong> works best as "show, explain, let them do, give feedback." <strong>Microteaching</strong> takes this further: instead of a whole lecture, you rehearse <em>one</em> teaching skill in a brief episode, get structured feedback, then re-teach — a fast, low-stakes way to build competence, widely used in MD training and viva preparation.</p>
+    <div class="analogy">
+      <div class="alabel"><span>💡</span> The Analogy — rehearsing one scene, not the whole play</div>
+      <p>Microteaching is like <span class="key">an actor rehearsing a single difficult scene</span> repeatedly with a coach, rather than running the entire play each time. By isolating one skill (explaining, or questioning) in a five-minute take with immediate feedback, improvement is fast and focused — then the polished skills combine into a full performance (the real lecture).</p>
+    </div>
+    <blockquote class="warn"><span class="wl">⚠️ Warning:</span> in research communication, integrity is paramount — <strong>accurate record-keeping</strong> underpins reproducibility, and fabrication, falsification or plagiarism are serious misconduct. Authorship should reflect genuine contribution (ICMJE criteria).</blockquote>
+  </div>
+  </details>
+
+  <div class="cog spaced">
+    <div class="tag"><span>🔁</span> Section 4 · Spaced Repetition &amp; Bridge</div>
+    <p>Revisit on <strong>Day 1 · Day 3 · Day 7 · Day 21</strong>. Recite the IMRaD sections and the microteaching cycle each pass.</p>
+    <p class="bridge">Communicating results well depends on sound study design and statistics — the critical-appraisal and biostatistics skills built in the experimental guide feed directly into the Methods and Results you write. (→ <a href="Experimental-Pharmacology_Learning-System.html#m9">Experimental Pharmacology · Biostatistics</a>)</p>
+  </div>
+</section>
+
 <!-- ============ FLASHCARDS ============ -->
 <section id="flashcards">
   <div class="wrap">
     <h2>🃏 Clinical Vignette Flashcards</h2>
-    <p class="fc-lead">Tap a card to reveal the full answer, mechanism, clinical pearl, and exam trap. Twenty high-yield scenarios covering the core concepts of General Pharmacology.</p>
+    <p class="fc-lead">Tap a card to reveal the full answer, mechanism, clinical pearl, and exam trap. Forty high-yield scenarios covering the core concepts of General Pharmacology plus the allied sciences (molecular biology, phytochemistry, regulations &amp; research).</p>
     <div class="flashcards">
       <details class="flashcard">
         <summary>
@@ -2833,14 +3353,154 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
           <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Ticagrelor and prasugrel do NOT require metabolic activation — they are direct-acting P2Y12 inhibitors. They are NOT affected by CYP2C19 status or PPIs. Prasugrel is contraindicated in prior TIA/stroke and age >75 (excess bleeding risk).</div>
         </div>
       </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">21</span><span class="fc-q">A researcher wants to quantify how much of a target gene's messenger RNA is present in treated vs untreated cells. Which technique, and what extra step does it need vs ordinary PCR? <em>(Module 10)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>RT-qPCR</strong> (reverse-transcription quantitative PCR). Because PCR amplifies DNA, RNA must first be converted to <strong>complementary DNA (cDNA) by reverse transcriptase</strong> — the extra step ordinary PCR doesn't need — before real-time amplification quantifies expression.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> High mRNA does not guarantee functional protein (post-transcriptional/translational control) — confirm protein with a Western blot or ELISA.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">22</span><span class="fc-q">Match the three classic blots to the molecule each detects, and give the mnemonic. <em>(Module 10)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Southern = DNA, Northern = RNA, Western = protein</strong> (detected with antibodies). Mnemonic <strong>"SNoW DRoP"</strong>: <u>S</u>outhern–<u>D</u>NA, <u>N</u>orthern–<u>R</u>NA, <u>W</u>estern–<u>P</u>rotein.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> They line up along the central dogma — DNA → (transcription) → RNA → (translation) → protein.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">23</span><span class="fc-q">Contrast monoclonal and polyclonal antibodies for a research assay. <em>(Module 10)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Monoclonal</strong> — from a single B-cell clone (hybridoma), recognises one epitope; highly specific and reproducible, ideal for standardised assays and as therapeutics ("-mab"). <strong>Polyclonal</strong> — a mixture recognising many epitopes; cheaper, often more sensitive/avid, but batch-variable.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Monoclonal ≠ more sensitive; it is more <em>specific/reproducible</em>. Polyclonals are frequently more sensitive because they bind multiple epitopes.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">24</span><span class="fc-q">How would you prove a candidate gene actually mediates a drug's effect rather than just being associated with it? <em>(Module 10)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Silence or delete the gene and show the drug response disappears: <strong>antisense oligonucleotides or RNAi (siRNA)</strong> to knock down the mRNA, or a <strong>gene-knockout animal / CRISPR</strong> to remove it. Loss of effect on removal is causal evidence, unlike mere expression correlation.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Antisense/RNAi are also drugs themselves (e.g. nusinersen for SMA; patisiran siRNA).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">25</span><span class="fc-q">Which technique quantifies a receptor's number and affinity, and what two parameters does it yield? <em>(Module 10)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">A <strong>radioligand binding assay</strong> yields <strong>B<sub>max</sub></strong> (maximum binding sites → receptor density) and <strong>K<sub>d</sub></strong> (dissociation constant → affinity; lower K<sub>d</sub> = higher affinity). Proteomics (2-D gels, mass spectrometry) maps the broader protein complement.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> B<sub>max</sub> tracks with receptor up/down-regulation (e.g. β-receptor changes in heart failure).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">26</span><span class="fc-q">A company must guarantee every batch of a herbal extract is equivalent. What three steps achieve standardisation? <em>(Module 11)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">(1) <strong>Extraction</strong> (maceration or percolation) to pull out constituents; (2) <strong>HPTLC fingerprinting</strong> — a chromatographic "barcode" confirming identity and consistency; (3) assay of a <strong>marker compound</strong> to fix potency. Together these convert a variable botanical into a reproducible medicine.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Tracking the marker compound in blood/urine allows pharmacokinetic and quality monitoring of the herbal product.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">27</span><span class="fc-q">Give the active-constituent class for morphine, digoxin and quinine. <em>(Module 11)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Morphine — alkaloid</strong> (nitrogen-containing, basic). <strong>Digoxin — (cardiac) glycoside</strong> (sugar + aglycone). <strong>Quinine — alkaloid</strong>. Other classes: flavonoids/tannins (polyphenols), terpenoids/volatile oils, saponins, resins.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Glycosides yield a sugar plus an aglycone on hydrolysis; the aglycone usually carries the activity (e.g. digoxigenin).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">28</span><span class="fc-q">Distinguish maceration from percolation as extraction methods. <em>(Module 11)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Maceration</strong> — the drug is soaked in a fixed volume of solvent and left standing (static); simple, gentle, good for readily soluble or thermolabile constituents but less exhaustive. <strong>Percolation</strong> — solvent flows continuously through a packed bed of drug; more exhaustive extraction and the basis of tinctures.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Choose percolation when you need to extract nearly all of the active constituent; maceration when simplicity or heat-sensitivity matters.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">29</span><span class="fc-q">What is "reverse pharmacology" and how does it differ from the classic discovery pipeline? <em>(Module 11)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Reverse pharmacology</strong> starts from a plant/preparation already used in humans (traditional medicine) with observed clinical effect and works <em>backwards</em> to isolate the active molecule and define its mechanism. The classic (forward) pipeline starts from a molecular target and moves forward to a drug. Both must still pass the same preclinical and clinical evaluation.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Artemisinin (from Artemisia annua, traditional Chinese medicine) is a landmark reverse-pharmacology success.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">30</span><span class="fc-q">Why is "natural" not the same as "safe" for a herbal product? <em>(Module 11)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Herbals carry real risks: <strong>adulteration, heavy-metal contamination, batch variability, and herb–drug interactions</strong>. A classic example is <strong>St John's Wort</strong>, a potent CYP3A4 and P-glycoprotein inducer that lowers plasma levels of many drugs (ciclosporin, oral contraceptives, warfarin, some antiretrovirals).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Standardisation and pharmacovigilance apply to herbal medicines too — being plant-derived does not exempt a product from quality control or ADR reporting.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">31</span><span class="fc-q">A new drug adds quality-adjusted survival at ten times the cost of the standard. Which pharmacoeconomic analysis judges it, and what metric? <em>(Module 12)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>Cost–utility analysis</strong>, using the <strong>QALY</strong> (quality-adjusted life-year). The <strong>ICER</strong> = Δcost ÷ Δeffect (cost per QALY gained) compares it with the standard against a willingness-to-pay threshold.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> QALY = years of life × quality weight (0 = death, 1 = perfect health), so it captures both length and quality of life on one scale.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">32</span><span class="fc-q">Distinguish cost-minimisation, cost-effectiveness, cost–utility and cost–benefit analyses. <em>(Module 12)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">They differ only in how the <em>outcome</em> is measured: <strong>cost-minimisation</strong> — outcomes assumed equal, compare cost only; <strong>cost-effectiveness</strong> — natural units (cost per life-year, per mmHg); <strong>cost–utility</strong> — cost per QALY; <strong>cost–benefit</strong> — outcomes valued in money (net monetary benefit).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Cost-effectiveness uses natural units; only cost–<em>utility</em> uses QALYs — a very common MCQ distractor.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">33</span><span class="fc-q">Which Indian Act regulates the manufacture and sale of drugs, and what do Schedules H, X and M cover? <em>(Module 12)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">The <strong>Drugs &amp; Cosmetics Act 1940</strong> (with Rules 1945). <strong>Schedule H/H1</strong> — prescription-only drugs (H1 for certain antibiotics/psychotropics needing extra record-keeping); <strong>Schedule X</strong> — narcotic/psychotropic drugs with stricter controls; <strong>Schedule M</strong> — Good Manufacturing Practices.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> The central regulator is CDSCO/DCGI; clinical trials and approvals run under the New Drugs &amp; Clinical Trials Rules 2019.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">34</span><span class="fc-q">What are the NLEM and DPCO, and how are they linked? <em>(Module 12)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">The <strong>NLEM (National List of Essential Medicines)</strong> lists medicines meeting priority healthcare needs, chosen on efficacy, safety and cost-effectiveness. The <strong>DPCO (Drug Price Control Order)</strong>, enforced by the <strong>NPPA</strong>, caps the prices of scheduled medicines drawn from the NLEM — so essential drugs stay affordable.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> The NLEM mirrors the WHO Essential Medicines List concept; selection is scientific, price control is the economic tool applied to it.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">35</span><span class="fc-q">Define rational prescribing in the WHO sense. <em>(Module 12)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Prescribing the <strong>right drug, at the right dose, for the right duration, at the lowest cost</strong> to the patient and community — matched to the clinical need, with adequate information and follow-up. Drug-utilisation studies measure how prescribing compares with this standard.</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Rational prescribing is simultaneously a clinical goal (safety/efficacy) and an economic one (avoiding waste and irrational polypharmacy).</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">36</span><span class="fc-q">Name the four sections of a scientific paper (IMRaD) and what each contains. <em>(Module 13)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer"><strong>I</strong>ntroduction (the question/rationale), <strong>M</strong>ethods (how the study was done — reproducibly), <strong>R</strong>esults (what was found, without interpretation), <strong>D</strong>iscussion (what it means, limitations, implications) — framed by title, abstract and references.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> IMRaD is an "hourglass" — broad context → narrow specifics → broad meaning.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">37</span><span class="fc-q">What is microteaching and why is it used in MD training? <em>(Module 13)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">A short (~5–10 minute) focused teaching episode to a small group practising <strong>one</strong> teaching skill (e.g. explaining, questioning), followed by structured feedback and <strong>re-teaching</strong>. Isolating a single skill in a brief, low-stakes loop makes improvement fast and targeted — useful for viva and teaching preparation.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> The cycle is plan → teach → feedback → re-teach.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">38</span><span class="fc-q">What is the "see one, do one, teach one" model of a practical demonstration? <em>(Module 13)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">An apprenticeship approach to teaching a skill: <strong>demonstrate</strong> it (show), <strong>explain</strong> the steps, <strong>let the learner perform</strong> it, then <strong>give feedback</strong> — progressing to the learner teaching it themselves, which consolidates mastery.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Effective demonstrations pair clear learning objectives with immediate, specific feedback.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">39</span><span class="fc-q">Why is accurate record-keeping an ethical requirement in pharmacology research? <em>(Module 13)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">Complete, contemporaneous records underpin <strong>reproducibility</strong> and are mandated by GLP/GCP; they protect against error and allow audit. Fabrication, falsification and plagiarism are serious research misconduct, and authorship must reflect genuine contribution (ICMJE criteria).</div>
+          <div class="fc-trap">⚠️ <strong>Exam Trap:</strong> Poor record-keeping is not just untidy — it undermines data integrity and can invalidate a study or trigger misconduct proceedings.</div>
+        </div>
+      </details>
+      <details class="flashcard">
+        <summary><span class="fc-num">40</span><span class="fc-q">What are the two main formats for presenting research at a conference, and how do they differ? <em>(Module 13)</em></span></summary>
+        <div class="fc-back">
+          <div class="fc-answer">An <strong>oral presentation</strong> — a focused, time-limited talk with slides, ending in question handling — and a <strong>poster</strong> — a concise visual summary (aims, methods, key results, conclusion) discussed one-to-one at a poster session. Oral suits a clear headline message; posters suit detailed data and networking.</div>
+          <div class="fc-pearl">💎 <strong>Clinical Pearl:</strong> Both demand ruthless prioritisation of the key message — the same discipline as writing a good abstract.</div>
+        </div>
+      </details>
     </div>
   </div>
 </section>
 <!-- ============ QUIZZES ============ -->
 <section class="quizzes" id="quizzes">
   <div class="quiz-intro">
-    <h2>★ 200 Self-Test Questions</h2>
-    <p>Ten sets of twenty, mapped to the spaced-repetition days in each module. Cover the green answer strip, commit out loud, then reveal. Struggling to retrieve is the point — that's what builds durable memory.</p>
+    <h2>★ 244 Self-Test Questions</h2>
+    <p>Fourteen sets mapped to the spaced-repetition days in each module — ten core sets of twenty plus four allied-science sets (molecular biology, phytochemistry, regulations/pharmacoeconomics, teaching &amp; research). Cover the green answer strip, commit out loud, then reveal. Struggling to retrieve is the point — that's what builds durable memory.</p>
   </div>
   <details class="quizset" open>
     <summary><span class="qs-num">1</span><span class="qs-title">Pharmacokinetics I — Membrane transport &amp; ADME</span><span class="qs-meta">Ch 2 · 20 Q</span></summary>
@@ -3099,6 +3759,74 @@ html[data-theme="dark"] .mm-intro p { color: #aab1b8; }
       <div class="q"><div class="qq"><b>18</b>Phenytoin shows a sudden jump from therapeutic to toxic levels with small dose increases — why?</div><div class="qa">It follows zero-order (saturable) kinetics at therapeutic doses.</div></div>
       <div class="q"><div class="qq"><b>19</b>A test for HLA-B*57:01 is ordered before which drug?</div><div class="qa">Abacavir (to prevent hypersensitivity).</div></div>
       <div class="q"><div class="qq"><b>20</b>State the master equation linking maintenance dose to clearance and target level.</div><div class="qa">Dosing rate = CL × Css(target); equivalently Css = F·Dose/(CL·τ).</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">11</span><span class="qs-title">Molecular Biology in Pharmacology</span><span class="qs-meta">Ch 10 · 12 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What does PCR do, and which enzyme drives it?</div><div class="qa">Exponentially amplifies a target DNA sequence; driven by a thermostable DNA polymerase (Taq).</div></div>
+      <div class="q"><div class="qq"><b>2</b>What extra step does RT-PCR require versus ordinary PCR, and why?</div><div class="qa">Reverse transcription of RNA to cDNA first — because PCR amplifies DNA, not RNA.</div></div>
+      <div class="q"><div class="qq"><b>3</b>What is qPCR used to measure?</div><div class="qa">Gene expression — the quantity of a specific transcript (real-time amplification).</div></div>
+      <div class="q"><div class="qq"><b>4</b>Southern, Northern and Western blots detect what, respectively?</div><div class="qa">DNA, RNA, and protein ("SNoW DRoP").</div></div>
+      <div class="q"><div class="qq"><b>5</b>How are proteins detected on a Western blot?</div><div class="qa">With specific antibodies.</div></div>
+      <div class="q"><div class="qq"><b>6</b>Monoclonal vs polyclonal antibody — key difference?</div><div class="qa">Monoclonal recognises one epitope (specific, reproducible); polyclonal recognises many epitopes (often more sensitive, but variable).</div></div>
+      <div class="q"><div class="qq"><b>7</b>Name two ways to silence a specific gene's product.</div><div class="qa">Antisense oligonucleotides and RNA interference (siRNA).</div></div>
+      <div class="q"><div class="qq"><b>8</b>How does a knockout animal help validate a drug target?</div><div class="qa">Deleting the gene should abolish the drug's effect — causal, not just correlational, evidence.</div></div>
+      <div class="q"><div class="qq"><b>9</b>What two parameters does a radioligand binding assay yield?</div><div class="qa">B<sub>max</sub> (receptor number) and K<sub>d</sub> (affinity).</div></div>
+      <div class="q"><div class="qq"><b>10</b>Give one technique used in proteomics.</div><div class="qa">Two-dimensional gel electrophoresis or mass spectrometry.</div></div>
+      <div class="q"><div class="qq"><b>11</b>Name a therapeutic antisense/RNAi drug.</div><div class="qa">Nusinersen (antisense, SMA) or patisiran (siRNA).</div></div>
+      <div class="q"><div class="qq"><b>12</b>Why doesn't high mRNA guarantee active protein?</div><div class="qa">Post-transcriptional and post-translational control can alter protein amount and activity.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">12</span><span class="qs-title">Phytochemistry &amp; Herbal Standardisation</span><span class="qs-meta">Ch 11 · 10 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Why do herbal drugs specifically need "standardisation"?</div><div class="qa">They are complex, variable mixtures — standardisation ensures consistent identity, purity and potency.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Constituent class of morphine and quinine?</div><div class="qa">Alkaloids (nitrogen-containing, basic).</div></div>
+      <div class="q"><div class="qq"><b>3</b>Constituent class of digoxin?</div><div class="qa">A (cardiac) glycoside — sugar + aglycone.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Maceration vs percolation?</div><div class="qa">Maceration = static soaking in solvent; percolation = continuous solvent flow through the drug bed (more exhaustive).</div></div>
+      <div class="q"><div class="qq"><b>5</b>What does HPTLC fingerprinting provide?</div><div class="qa">A characteristic chromatographic "barcode" confirming identity/consistency of an extract.</div></div>
+      <div class="q"><div class="qq"><b>6</b>What is a marker compound used for?</div><div class="qa">Assaying it fixes/standardises the extract's potency (and tracks PK in fluids).</div></div>
+      <div class="q"><div class="qq"><b>7</b>Define reverse pharmacology.</div><div class="qa">Starting from a traditionally-used plant with known human effect and working back to the active molecule and mechanism.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Give a landmark reverse-pharmacology drug.</div><div class="qa">Artemisinin (from Artemisia annua).</div></div>
+      <div class="q"><div class="qq"><b>9</b>Name a herb–drug interaction of major clinical importance.</div><div class="qa">St John's Wort induces CYP3A4/P-gp → lowers levels of many drugs (ciclosporin, OCPs, warfarin).</div></div>
+      <div class="q"><div class="qq"><b>10</b>Two safety hazards of herbal products besides interactions?</div><div class="qa">Adulteration and heavy-metal contamination (plus batch variability).</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">13</span><span class="qs-title">Indian Drug Regulations &amp; Pharmacoeconomics</span><span class="qs-meta">Ch 12 · 12 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>Which Act regulates manufacture and sale of drugs in India?</div><div class="qa">The Drugs &amp; Cosmetics Act 1940 (with Rules 1945).</div></div>
+      <div class="q"><div class="qq"><b>2</b>What does Schedule H (H1) cover?</div><div class="qa">Prescription-only drugs (H1 adds extra record-keeping for certain antibiotics/psychotropics).</div></div>
+      <div class="q"><div class="qq"><b>3</b>What does Schedule M specify?</div><div class="qa">Good Manufacturing Practices.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Which body is the central drug regulator?</div><div class="qa">CDSCO, headed by the DCGI.</div></div>
+      <div class="q"><div class="qq"><b>5</b>What does the DPCO do, and who enforces it?</div><div class="qa">Caps prices of scheduled essential medicines; enforced by the NPPA.</div></div>
+      <div class="q"><div class="qq"><b>6</b>What is the NLEM?</div><div class="qa">National List of Essential Medicines — priority medicines chosen on efficacy, safety and cost-effectiveness.</div></div>
+      <div class="q"><div class="qq"><b>7</b>Define a QALY.</div><div class="qa">Quality-adjusted life-year = life-years × quality weight (0 = death, 1 = perfect health).</div></div>
+      <div class="q"><div class="qq"><b>8</b>Which analysis uses cost per QALY?</div><div class="qa">Cost–utility analysis.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Which analysis uses natural units (e.g. cost per life-year)?</div><div class="qa">Cost-effectiveness analysis.</div></div>
+      <div class="q"><div class="qq"><b>10</b>What does the ICER measure?</div><div class="qa">Incremental cost-effectiveness ratio = Δcost ÷ Δeffect (extra cost per extra unit of benefit).</div></div>
+      <div class="q"><div class="qq"><b>11</b>Cost–benefit analysis expresses outcomes in what unit?</div><div class="qa">Money.</div></div>
+      <div class="q"><div class="qq"><b>12</b>Define rational prescribing (WHO).</div><div class="qa">Right drug, right dose, right duration, lowest cost — matched to clinical need.</div></div>
+    </div>
+  </details>
+
+  <details class="quizset">
+    <summary><span class="qs-num">14</span><span class="qs-title">Teaching, Research Communication &amp; Microteaching</span><span class="qs-meta">Ch 13 · 10 Q</span></summary>
+    <div class="qbody">
+      <div class="q"><div class="qq"><b>1</b>What does IMRaD stand for?</div><div class="qa">Introduction, Methods, Results, and Discussion.</div></div>
+      <div class="q"><div class="qq"><b>2</b>Which IMRaD section states the study question/rationale?</div><div class="qa">The Introduction.</div></div>
+      <div class="q"><div class="qq"><b>3</b>Which section must allow the study to be reproduced?</div><div class="qa">The Methods.</div></div>
+      <div class="q"><div class="qq"><b>4</b>Where is interpretation of findings placed?</div><div class="qa">The Discussion (Results report findings without interpretation).</div></div>
+      <div class="q"><div class="qq"><b>5</b>Why is IMRaD called an "hourglass"?</div><div class="qa">It moves from broad context → narrow specifics → broad meaning.</div></div>
+      <div class="q"><div class="qq"><b>6</b>What is microteaching?</div><div class="qa">A short (~5–10 min) focused episode practising one teaching skill, with feedback and re-teaching.</div></div>
+      <div class="q"><div class="qq"><b>7</b>State the microteaching cycle.</div><div class="qa">Plan → teach → feedback → re-teach.</div></div>
+      <div class="q"><div class="qq"><b>8</b>Summarise the practical-demonstration model.</div><div class="qa">"See one, do one, teach one" — demonstrate, explain, let the learner do, give feedback.</div></div>
+      <div class="q"><div class="qq"><b>9</b>Name the two main conference presentation formats.</div><div class="qa">Oral presentation and poster.</div></div>
+      <div class="q"><div class="qq"><b>10</b>Why is accurate record-keeping an ethical requirement?</div><div class="qa">It underpins reproducibility and data integrity (GLP/GCP); guards against misconduct.</div></div>
     </div>
   </details>
 </section>

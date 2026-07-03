@@ -538,6 +538,105 @@ html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
   <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
 </head>
 <body>
+<!-- PSM-NAV-START :: unified section menu (injected, self-contained) -->
+<div id="psm-root">
+  <button id="psm-launcher" type="button" aria-haspopup="true" aria-expanded="false" title="Jump to any section">
+    <span class="psm-ico">&#9776;</span><span class="psm-lbl">Sections</span><span class="psm-caret">&#9662;</span>
+  </button>
+  <div id="psm-overlay" hidden></div>
+  <nav id="psm-panel" hidden aria-label="Study sections">
+    <div class="psm-grp">
+      <p class="psm-h">Study Hub</p>
+      <a data-file="index.html" href="index.html">&#127968; Home</a>
+      <a data-file="learning.html" href="learning.html">&#128218; Learning Systems</a>
+      <a data-file="questions.html" href="questions.html">&#10067; Question Bank</a>
+      <a data-file="review.html" href="review.html">&#128257; Spaced Repetition</a>
+      <a data-file="Pharmacology_Flashcards.html" href="Pharmacology_Flashcards.html">&#127183; Flashcards</a>
+      <a data-file="index_pyq.html" href="index_pyq.html">&#128196; PYQ Notes Library</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">Learning Systems</p>
+      <a data-file="General_Pharmacology_Learning-System.html" href="General_Pharmacology_Learning-System.html">General Pharmacology</a>
+      <a data-file="Neuropharmacology-ANS_Learning-System.html" href="Neuropharmacology-ANS_Learning-System.html">Neuropharmacology &amp; ANS</a>
+      <a data-file="Cardiovascular-Renal_Pharmacology_Learning-System.html" href="Cardiovascular-Renal_Pharmacology_Learning-System.html">Cardiovascular &amp; Renal</a>
+      <a data-file="Inflammation-Immunity-Hematopoiesis_Learning-System.html" href="Inflammation-Immunity-Hematopoiesis_Learning-System.html">Inflammation, Immunity &amp; Heme</a>
+      <a data-file="Endocrine-Pharmacology_Learning-System.html" href="Endocrine-Pharmacology_Learning-System.html">Endocrine</a>
+      <a data-file="Gastrointestinal_Pharmacology_Learning-System.html" href="Gastrointestinal_Pharmacology_Learning-System.html">Gastrointestinal</a>
+      <a data-file="Infectious-Disease-Chemotherapy_Learning-System.html" href="Infectious-Disease-Chemotherapy_Learning-System.html">Infectious Disease Chemo</a>
+      <a data-file="Neoplastic-Disease-Pharmacology_Learning-System.html" href="Neoplastic-Disease-Pharmacology_Learning-System.html">Neoplastic Disease</a>
+      <a data-file="Special-Systems_Pharmacology_Learning-System.html" href="Special-Systems_Pharmacology_Learning-System.html">Special Systems</a>
+      <a data-file="Experimental-Pharmacology_Learning-System.html" href="Experimental-Pharmacology_Learning-System.html">Experimental &amp; Clinical</a>
+    </div>
+    <div class="psm-grp">
+      <p class="psm-h">PYQ Notes</p>
+      <a data-file="General_Pharmacology_Notes.html" href="General_Pharmacology_Notes.html">General Pharmacology</a>
+      <a data-file="Autonomic_Receptor_Pharmacology_Notes.html" href="Autonomic_Receptor_Pharmacology_Notes.html">Autonomic, Receptor &amp; Neuro</a>
+      <a data-file="Pulmonary_Renal_Cardiovascular_Notes.html" href="Pulmonary_Renal_Cardiovascular_Notes.html">Pulmonary, Renal &amp; CVS</a>
+      <a data-file="Neoplastic_Disease_Pharmacotherapy_Notes.html" href="Neoplastic_Disease_Pharmacotherapy_Notes.html">Neoplastic Disease</a>
+      <a data-file="Special_Systems_Pharmacology_Notes.html" href="Special_Systems_Pharmacology_Notes.html">Special Systems</a>
+      <a data-file="Miscellaneous_Pharmacology_Notes.html" href="Miscellaneous_Pharmacology_Notes.html">Miscellaneous</a>
+    </div>
+  </nav>
+</div>
+<style>
+  #psm-root{font-family:'Inter',system-ui,-apple-system,sans-serif;}
+  #psm-launcher{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:2147482000;
+    display:inline-flex;align-items:center;gap:.4em;padding:7px 14px;border-radius:999px;cursor:pointer;
+    background:rgba(28,25,23,.92);color:#FBF7F0;border:1px solid rgba(212,168,71,.55);
+    font-size:.82rem;font-weight:500;letter-spacing:.01em;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    box-shadow:0 4px 16px rgba(0,0,0,.18);transition:transform .15s ease,box-shadow .15s ease,background .15s ease;}
+  #psm-launcher:hover{transform:translateX(-50%) translateY(-1px);box-shadow:0 8px 22px rgba(0,0,0,.24);background:rgba(28,25,23,1);}
+  #psm-launcher .psm-ico{color:#D4A847;font-size:.9rem;line-height:1;}
+  #psm-launcher .psm-caret{font-size:.65rem;opacity:.7;transition:transform .18s ease;}
+  #psm-root.open #psm-launcher .psm-caret{transform:rotate(180deg);}
+  #psm-overlay{position:fixed;inset:0;z-index:2147482001;background:rgba(10,10,12,.28);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}
+  #psm-panel{position:fixed;top:54px;left:50%;transform:translateX(-50%) translateY(-6px);z-index:2147482002;
+    width:min(560px,92vw);max-height:min(74vh,620px);overflow-y:auto;opacity:0;pointer-events:none;
+    background:#FBF7F0;color:#1C1917;border:1px solid #E7DDD0;border-radius:16px;
+    box-shadow:0 24px 60px rgba(0,0,0,.24),0 6px 16px rgba(0,0,0,.12);
+    padding:14px 16px 18px;transition:opacity .18s ease,transform .18s ease;
+    display:grid;grid-template-columns:1fr 1fr;gap:4px 22px;align-content:start;}
+  #psm-root.open #psm-panel{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+  #psm-panel .psm-grp:first-child{grid-column:1 / -1;}
+  #psm-panel .psm-h{font-family:'JetBrains Mono','SFMono-Regular',monospace;font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:#A8A29E;margin:10px 6px 4px;}
+  #psm-panel .psm-grp:first-child .psm-h{margin-top:2px;}
+  #psm-panel .psm-grp:first-child{display:grid;grid-template-columns:1fr 1fr;gap:2px 22px;}
+  #psm-panel .psm-grp:first-child .psm-h{grid-column:1 / -1;}
+  #psm-panel a{display:block;text-decoration:none;color:#1C1917;font-size:.86rem;line-height:1.35;
+    padding:7px 10px;border-radius:9px;transition:background .12s ease,color .12s ease;}
+  #psm-panel a:hover{background:#F0E9DD;}
+  #psm-panel a.psm-active{background:#1C1917;color:#FBF7F0;font-weight:600;}
+  @media (max-width:560px){
+    #psm-panel{grid-template-columns:1fr;}
+    #psm-panel .psm-grp:first-child,#psm-panel .psm-grp:first-child{grid-template-columns:1fr;}
+    #psm-launcher .psm-lbl{display:none;}
+    #psm-launcher{padding:8px 12px;}
+  }
+  @media print{#psm-root{display:none!important;}}
+</style>
+<script>
+(function(){
+  var root=document.getElementById('psm-root');
+  if(!root||root.dataset.init)return; root.dataset.init='1';
+  var btn=document.getElementById('psm-launcher'),
+      panel=document.getElementById('psm-panel'),
+      ov=document.getElementById('psm-overlay');
+  function here(){var p=location.pathname.split('/').pop();return p?decodeURIComponent(p):'index.html';}
+  var cur=here();
+  root.querySelectorAll('#psm-panel a').forEach(function(a){
+    if(a.getAttribute('data-file')===cur){a.classList.add('psm-active');}
+  });
+  function open(){root.classList.add('open');panel.hidden=false;ov.hidden=false;btn.setAttribute('aria-expanded','true');}
+  function close(){root.classList.remove('open');btn.setAttribute('aria-expanded','false');
+    setTimeout(function(){if(!root.classList.contains('open')){panel.hidden=true;ov.hidden=true;}},200);}
+  btn.addEventListener('click',function(e){e.stopPropagation();root.classList.contains('open')?close():open();});
+  ov.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&root.classList.contains('open'))close();});
+})();
+</script>
+<!-- PSM-NAV-END -->
+
 <button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
 <button id="gpForwardBtn" class="gp-back-btn gp-forward-btn" type="button" title="Forward to next page" aria-label="Forward to next page">→</button>
 
@@ -564,18 +663,18 @@ html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
       </div>
       <div class="hero-divider"></div>
       <div class="hero-stat">
-        <span class="hero-stat-num">209</span>
+        <span class="hero-stat-num">300+</span>
         <span class="hero-stat-label">Flashcards</span>
       </div>
       <div class="hero-divider"></div>
       <div class="hero-stat">
-        <span class="hero-stat-num">1200+</span>
+        <span class="hero-stat-num">1500+</span>
         <span class="hero-stat-label">Quiz Questions</span>
       </div>
       <div class="hero-divider"></div>
       <div class="hero-stat">
-        <span class="hero-stat-num">76</span>
-        <span class="hero-stat-label">Chapters</span>
+        <span class="hero-stat-num">93</span>
+        <span class="hero-stat-label">Modules</span>
       </div>
     </div>
   </div>
@@ -596,27 +695,31 @@ html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
     <a class="card" href="General_Pharmacology_Learning-System.html">
       <div class="card-accent"></div>
       <div class="card-body">
-        <p class="card-chap">Chapters 1 – 9</p>
+        <p class="card-chap">Chapters 1 – 9 + Allied Sciences</p>
         <h2 class="card-title">General Pharmacology</h2>
         <p class="card-desc">
-          Pharmacokinetics, pharmacodynamics, drug metabolism, receptor theory,
-          and the principles underlying all clinical drug use.
+          Pharmacokinetics, pharmacodynamics, drug metabolism and toxicology, plus the MD
+          allied sciences: molecular biology, phytochemistry, drug regulations &amp; pharmacoeconomics, and research.
         </p>
         <div class="card-tags">
           <span class="tag">PK / PD</span>
-          <span class="tag">CYP Enzymes</span>
-          <span class="tag">Receptors</span>
-          <span class="tag">Drug Interactions</span>
+          <span class="tag">Molecular Bio</span>
+          <span class="tag">Herbal</span>
+          <span class="tag">Regulations</span>
         </div>
       </div>
       <div class="card-footer">
         <div class="card-meta">
           <div class="meta-item">
-            <span class="meta-num">20</span>
+            <span class="meta-num">13</span>
+            <span class="meta-label">Modules</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-num">40</span>
             <span class="meta-label">Flashcards</span>
           </div>
           <div class="meta-item">
-            <span class="meta-num">200</span>
+            <span class="meta-num">244</span>
             <span class="meta-label">Quiz Qs</span>
           </div>
         </div>
@@ -877,28 +980,32 @@ html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
     <a class="card" href="Special-Systems_Pharmacology_Learning-System.html">
       <div class="card-accent"></div>
       <div class="card-body">
-        <p class="card-chap">Chapters 74 – 76</p>
+        <p class="card-chap">Chapters 74 – 80 + MD Miscellaneous</p>
         <h2 class="card-title">Special Systems Pharmacology</h2>
         <p class="card-desc">
-          Ocular pharmacology, dermatological agents, toxicology,
-          antidotes, and environmental drug exposures.
+          Ocular, dermatological and environmental toxicology, plus vitamins/obesity,
+          pharmacotherapy in special populations, clinical poisoning &amp; antidotes, and landmark discoveries.
         </p>
         <div class="card-tags">
           <span class="tag">Ocular</span>
-          <span class="tag">Dermatology</span>
-          <span class="tag">Toxicology</span>
+          <span class="tag">Special Pops</span>
+          <span class="tag">Poisoning</span>
           <span class="tag">Antidotes</span>
         </div>
       </div>
       <div class="card-footer">
         <div class="card-meta">
           <div class="meta-item">
-            <span class="meta-num">20</span>
+            <span class="meta-num">7</span>
+            <span class="meta-label">Modules</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-num">40</span>
             <span class="meta-label">Flashcards</span>
           </div>
           <div class="meta-item">
-            <span class="meta-num">3</span>
-            <span class="meta-label">Quiz Sets</span>
+            <span class="meta-num">92</span>
+            <span class="meta-label">Quiz Qs</span>
           </div>
         </div>
         <span class="card-cta">Open <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
@@ -911,27 +1018,31 @@ html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
     <a class="card" href="Experimental-Pharmacology_Learning-System.html">
       <div class="card-accent"></div>
       <div class="card-body">
-        <p class="card-chap">Practical Manual · 11 Modules</p>
+        <p class="card-chap">Practical Manual · 13 Modules</p>
         <h2 class="card-title">Experimental &amp; Clinical Pharmacology</h2>
         <p class="card-desc">
           Laboratory animals &amp; ethics, bioassay, isolated-tissue and in-vivo
-          models, toxicology, biostatistics and clinical pharmacology.
+          models, toxicology, biostatistics, clinical pharmacology, flow cytometry/RT-PCR and the practical-exam bridge.
         </p>
         <div class="card-tags">
           <span class="tag">Bioassay</span>
           <span class="tag">Animal Models</span>
-          <span class="tag">Toxicology</span>
-          <span class="tag">Biostatistics</span>
+          <span class="tag">Flow Cytometry</span>
+          <span class="tag">Exam Bridge</span>
         </div>
       </div>
       <div class="card-footer">
         <div class="card-meta">
           <div class="meta-item">
-            <span class="meta-num">28</span>
+            <span class="meta-num">13</span>
+            <span class="meta-label">Modules</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-num">38</span>
             <span class="meta-label">Flashcards</span>
           </div>
           <div class="meta-item">
-            <span class="meta-num">300</span>
+            <span class="meta-num">327</span>
             <span class="meta-label">Quiz Qs</span>
           </div>
         </div>
