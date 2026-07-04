@@ -103,6 +103,14 @@
     + '.psm-grp a:hover{background:#F0E9DD;}'
     + '.psm-grp a.psm-active{background:#1C1917;color:#FBF7F0;font-weight:600;}'
     + '@media (max-width:560px){.psm-grid{grid-template-columns:1fr;}#psm-launcher .psm-lbl{display:none;}}'
+    /* ---- responsive fixes applied to page content on every page ---- */
+    + '.psm-tblscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;margin:1rem 0;}'
+    + '.tbl-scroll,.tbl-wrap,.tbl{overflow-x:auto !important;-webkit-overflow-scrolling:touch;max-width:100%;}'
+    + '.psm-tblscroll>table,.tbl-scroll>table,.tbl-wrap>table,.tbl>table{min-width:100%;width:auto;margin:0;}'
+    + '.diagram-wrap{overflow-x:auto !important;-webkit-overflow-scrolling:touch;max-width:100%;}'
+    + '.diagram-wrap svg{max-width:100%;height:auto;}'
+    + 'svg{max-width:100%;}img{max-width:100%;height:auto;}'
+    + 'html,body{max-width:100%;overflow-x:hidden;}'
     + '@media print{#psm-root{display:none!important;}}';
 
   /* ----------------------------------------------------------------------
@@ -151,6 +159,26 @@
     document.body.appendChild(root);
     wireMenu();
     initSync();
+    makeResponsive();
+  }
+
+  /* Wrap any table that isn't already inside a horizontal-scroll container
+     (fixes the Notes pages) so wide tables scroll instead of being clipped. */
+  function makeResponsive() {
+    try {
+      var wrapped = /(^|\s)(tbl-scroll|tbl-wrap|tbl|psm-tblscroll)(\s|$)/;
+      var tables = document.querySelectorAll("table");
+      for (var i = 0; i < tables.length; i++) {
+        var t = tables[i], p = t.parentNode;
+        if (!p || p.nodeType !== 1) continue;
+        if (wrapped.test(p.className || "")) continue;           // already scrollable
+        if (t.closest && t.closest("#psm-root")) continue;       // never touch our own UI
+        var w = document.createElement("div");
+        w.className = "psm-tblscroll";
+        p.insertBefore(w, t);
+        w.appendChild(t);
+      }
+    } catch (e) {}
   }
   if (document.body) mount();
   else document.addEventListener("DOMContentLoaded", mount);
