@@ -234,6 +234,15 @@
       + ".gmf-dash h3{margin:18px 0 8px;font-size:.92rem;color:#1C1917;display:flex;align-items:center;justify-content:space-between}"
       + "[data-theme='dark'] .gmf-dash h3{color:#F5F1ED}"
       + ".gmf-badge-count{font-weight:600;color:#78716C;font-size:.78rem}"
+      + ".gmf-xp-note{color:#78716C;font-size:.78rem}"
+      + "[data-theme='dark'] .gmf-dash-title{color:#F5F1ED}"
+      + "[data-theme='dark'] .gmf-dash-sub{color:#B7AFA6}"
+      + "[data-theme='dark'] .gmf-dash-streak{color:#B7AFA6}"
+      + "[data-theme='dark'] .gmf-subj-name{color:#E7DDD0}"
+      + "[data-theme='dark'] .gmf-subj.done .gmf-subj-name{color:#5cbfa3}"
+      + "[data-theme='dark'] .gmf-badge-count{color:#B7AFA6}"
+      + "[data-theme='dark'] .gmf-xp-note{color:#B7AFA6}"
+      + "[data-theme='dark'] .gmf-dash-card .gmf-subj .gmf-bar-track{background:rgba(255,255,255,.14)}"
       + ".gmf-chal-btn{display:inline-flex;align-items:center;gap:6px}"
       + ".gmf-dock{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:99998;display:none;"
       + "max-width:min(92vw,520px);flex-wrap:wrap;justify-content:center;"
@@ -382,7 +391,7 @@
       '<div class="gmf-dash-streak"><div>Current streak<b>' + s.streakCurrent + '</b></div><div>Best streak<b>' + s.streakLongest + '</b></div></div>' +
       '</div>' +
       '<div class="gmf-xpwrap"><div class="gmf-bar-track"><div class="gmf-bar-fill" style="width:' + pct + '%"></div></div>' +
-      '<div style="font-size:.78rem;color:#78716C">' + s.prog.into + ' / ' + s.prog.span + ' XP to Level ' + (s.level + 1) + '</div></div>' +
+      '<div class="gmf-xp-note">' + s.prog.into + ' / ' + s.prog.span + ' XP to Level ' + (s.level + 1) + '</div></div>' +
       '<h3>Study guide progress</h3>' +
       '<div class="gmf-subjects">' + subjHtml + '</div>' +
       '<h3>Badges <span class="gmf-badge-count">' + earned.length + ' / ' + BADGES.length + ' unlocked</span></h3>' +
