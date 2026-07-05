@@ -3,6 +3,7 @@
    • Injects a floating "Sections" menu (bottom-left corner) on every page
    • Provides cross-device progress sync via Supabase (magic-link auth)
    Everything is self-contained; pages just load: <script src="app-shell.js" defer></script>
+   Build: mobile-responsive tables + diagrams, dark-mode dashboard fix.
    ========================================================================== */
 (function () {
   "use strict";
