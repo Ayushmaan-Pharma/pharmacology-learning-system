@@ -188,8 +188,27 @@
       .replace(/\s*brightness\([^)]*\)/g, "")
       .trim() || "none";
   }
+  /* Touch/low-power devices (tablets, phones): a weak GPU can't cheaply
+     composite hundreds of blurred layers even at 8px. On these we drop the
+     blur entirely and make pinned bars opaque so content doesn't bleed
+     through. Desktops keep the frosted look (capped at 8px). */
+  var LOWPOWER = null;
+  function isLowPower() {
+    if (LOWPOWER !== null) return LOWPOWER;
+    var v = false;
+    try { if (window.matchMedia && matchMedia("(hover: none) and (pointer: coarse)").matches) v = true; } catch (e) {}
+    if (!v && navigator.deviceMemory && navigator.deviceMemory <= 4) v = true;
+    LOWPOWER = v;
+    return v;
+  }
+  function themeSolid() {
+    return document.documentElement.getAttribute("data-theme") === "dark"
+      ? "rgba(26,24,22,.97)" : "rgba(251,247,240,.97)";
+  }
+  var STICKY_TUNED = [], THEME_OBS = null;
   function tuneBackdropFilters() {
     try {
+      var low = isLowPower();
       var all = document.querySelectorAll("body *");
       for (var i = 0; i < all.length; i++) {
         var el = all[i];
@@ -198,11 +217,29 @@
         var cs = window.getComputedStyle(el);
         var bf = cs.backdropFilter || cs.webkitBackdropFilter || "none";
         if (!bf || bf === "none") continue;
-        if (!/blur|saturate|brightness/.test(bf)) { el.__psmBlurTuned = 1; continue; }
-        var capped = capFilter(bf);
-        el.style.setProperty("backdrop-filter", capped, "important");
-        el.style.setProperty("-webkit-backdrop-filter", capped, "important");
         el.__psmBlurTuned = 1;
+        if (!/blur|saturate|brightness/.test(bf)) continue;
+        if (low) {
+          el.style.setProperty("backdrop-filter", "none", "important");
+          el.style.setProperty("-webkit-backdrop-filter", "none", "important");
+          var pos = cs.position;
+          if (pos === "fixed" || pos === "sticky") {
+            el.style.setProperty("background", themeSolid(), "important");
+            STICKY_TUNED.push(el);
+          }
+        } else {
+          var capped = capFilter(bf);
+          el.style.setProperty("backdrop-filter", capped, "important");
+          el.style.setProperty("-webkit-backdrop-filter", capped, "important");
+        }
+      }
+      // Keep pinned-bar backgrounds correct when the user toggles dark mode.
+      if (low && STICKY_TUNED.length && !THEME_OBS) {
+        THEME_OBS = new MutationObserver(function () {
+          var bg = themeSolid();
+          for (var k = 0; k < STICKY_TUNED.length; k++) STICKY_TUNED[k].style.setProperty("background", bg, "important");
+        });
+        try { THEME_OBS.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] }); } catch (e) {}
       }
     } catch (e) {}
   }
