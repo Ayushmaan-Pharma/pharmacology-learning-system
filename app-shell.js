@@ -112,6 +112,9 @@
     + '.diagram-wrap svg{max-width:100%;height:auto;}'
     + 'svg{max-width:100%;}img{max-width:100%;height:auto;}'
     + 'html,body{max-width:100%;overflow-x:hidden;}'
+    /* Skip painting large off-screen content blocks (big perf win on long pages).
+       Double declaration: browsers without "auto <len>" support keep the first. */
+    + '.module,.q,.sec{content-visibility:auto;contain-intrinsic-size:0 420px;contain-intrinsic-size:auto 420px;}'
     + '@media print{#psm-root{display:none!important;}}';
 
   /* ----------------------------------------------------------------------
