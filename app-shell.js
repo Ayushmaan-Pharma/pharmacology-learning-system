@@ -69,14 +69,14 @@
     + '#psm-launcher{position:fixed;bottom:18px;left:18px;z-index:2147482000;'
     +   'display:inline-flex;align-items:center;gap:.4em;padding:9px 15px;border-radius:999px;cursor:pointer;'
     +   'background:rgba(28,25,23,.94);color:#FBF7F0;border:1px solid rgba(212,168,71,.55);'
-    +   'font-size:.82rem;font-weight:500;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);'
+    +   'font-size:.82rem;font-weight:500;'
     +   'box-shadow:0 6px 20px rgba(0,0,0,.22);transition:transform .15s ease,box-shadow .15s ease,background .15s ease;}'
     + '#psm-launcher:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.28);background:rgba(28,25,23,1);}'
     + '#psm-launcher .psm-ico{color:#D4A847;font-size:.95rem;line-height:1;}'
     + '#psm-launcher .psm-dot{width:7px;height:7px;border-radius:50%;background:#7BAE7F;margin-left:2px;display:none;}'
     + '#psm-root.synced #psm-launcher .psm-dot{display:inline-block;}'
     + '#psm-overlay{position:fixed;inset:0;z-index:2147482001;background:rgba(10,10,12,.28);'
-    +   '-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}'
+    +   '}'
     + '#psm-panel{position:fixed;bottom:64px;left:18px;z-index:2147482002;'
     +   'width:min(560px,92vw);max-height:min(76vh,640px);overflow-y:auto;opacity:0;pointer-events:none;'
     +   'background:#FBF7F0;color:#1C1917;border:1px solid #E7DDD0;border-radius:16px;'
@@ -164,80 +164,52 @@
     wireMenu();
     initSync();
     makeResponsive();
-    // Re-run after other scripts/vars resolve (gamify HUD, dynamic content).
-    if (document.readyState === "complete") tuneBackdropFilters();
-    else window.addEventListener("load", tuneBackdropFilters);
-    setTimeout(tuneBackdropFilters, 1500);
+    // Frosted blur was removed at the CSS source (big perf win, esp. tablets).
+    // Keep pinned/sticky bars opaque so scrolling content doesn't show through.
+    if (document.readyState === "complete") makeStickyBarsOpaque();
+    else window.addEventListener("load", makeStickyBarsOpaque);
+    setTimeout(makeStickyBarsOpaque, 1200);
   }
 
   /* ----------------------------------------------------------------------
-     Performance: heavy backdrop-filter blur (glassmorphism) is the main
-     cause of choppy scrolling — a pinned/blurred bar re-blurs everything
-     behind it every frame, and cost scales with the SQUARE of the radius.
-     The blur radii here come from CSS variables, so we read each element's
-     RESOLVED backdrop-filter and cap blur at 8px + strip saturate/brightness
-     via an inline override. Look is preserved; repaint cost drops ~80-85%.
-     Runs at most twice; each element is tuned once (data flag).
+     Performance: the frosted-glass "backdrop-filter: blur()" effect was the
+     main cause of choppy scrolling (a pinned bar re-blurs everything behind
+     it every frame). It has been removed at the CSS source on every page.
+     The only side effect: a translucent pinned bar would now show scrolling
+     content through it, so here we detect position:sticky/fixed elements with
+     a see-through background and give them a solid, theme-matched background.
      ---------------------------------------------------------------------- */
-  function capFilter(bf) {
-    return bf
-      .replace(/blur\(\s*([\d.]+)px\s*\)/g, function (m, rad) {
-        return "blur(" + Math.min(parseFloat(rad), 8) + "px)";
-      })
-      .replace(/\s*saturate\([^)]*\)/g, "")
-      .replace(/\s*brightness\([^)]*\)/g, "")
-      .trim() || "none";
-  }
-  /* Touch/low-power devices (tablets, phones): a weak GPU can't cheaply
-     composite hundreds of blurred layers even at 8px. On these we drop the
-     blur entirely and make pinned bars opaque so content doesn't bleed
-     through. Desktops keep the frosted look (capped at 8px). */
-  var LOWPOWER = null;
-  function isLowPower() {
-    if (LOWPOWER !== null) return LOWPOWER;
-    var v = false;
-    try { if (window.matchMedia && matchMedia("(hover: none) and (pointer: coarse)").matches) v = true; } catch (e) {}
-    if (!v && navigator.deviceMemory && navigator.deviceMemory <= 4) v = true;
-    LOWPOWER = v;
-    return v;
-  }
   function themeSolid() {
-    return document.documentElement.getAttribute("data-theme") === "dark"
-      ? "rgba(26,24,22,.97)" : "rgba(251,247,240,.97)";
+    return document.documentElement.getAttribute("data-theme") === "dark" ? "#1c1a18" : "#FBF7F0";
   }
-  var STICKY_TUNED = [], THEME_OBS = null;
-  function tuneBackdropFilters() {
+  function bgAlpha(c) {
+    if (!c || c === "transparent") return 0;
+    var m = c.match(/rgba?\(([^)]+)\)/);
+    if (!m) return 1;
+    var p = m[1].split(",");
+    return p.length >= 4 ? parseFloat(p[3]) : 1;
+  }
+  var STICKY_BARS = [], THEME_OBS = null;
+  function makeStickyBarsOpaque() {
     try {
-      var low = isLowPower();
       var all = document.querySelectorAll("body *");
       for (var i = 0; i < all.length; i++) {
         var el = all[i];
-        if (el.__psmBlurTuned) continue;
+        if (el.__psmBarDone) continue;
         if (el.id === "psm-root" || (el.closest && el.closest("#psm-root"))) continue;
         var cs = window.getComputedStyle(el);
-        var bf = cs.backdropFilter || cs.webkitBackdropFilter || "none";
-        if (!bf || bf === "none") continue;
-        el.__psmBlurTuned = 1;
-        if (!/blur|saturate|brightness/.test(bf)) continue;
-        if (low) {
-          el.style.setProperty("backdrop-filter", "none", "important");
-          el.style.setProperty("-webkit-backdrop-filter", "none", "important");
-          var pos = cs.position;
-          if (pos === "fixed" || pos === "sticky") {
-            el.style.setProperty("background", themeSolid(), "important");
-            STICKY_TUNED.push(el);
-          }
-        } else {
-          var capped = capFilter(bf);
-          el.style.setProperty("backdrop-filter", capped, "important");
-          el.style.setProperty("-webkit-backdrop-filter", capped, "important");
+        if (cs.position !== "fixed" && cs.position !== "sticky") continue;
+        el.__psmBarDone = 1;
+        if (bgAlpha(cs.backgroundColor) < 0.9) {
+          el.style.setProperty("background", themeSolid(), "important");
+          STICKY_BARS.push(el);
         }
       }
-      // Keep pinned-bar backgrounds correct when the user toggles dark mode.
-      if (low && STICKY_TUNED.length && !THEME_OBS) {
+      // Re-apply the correct solid when the user toggles dark mode.
+      if (STICKY_BARS.length && !THEME_OBS) {
         THEME_OBS = new MutationObserver(function () {
           var bg = themeSolid();
-          for (var k = 0; k < STICKY_TUNED.length; k++) STICKY_TUNED[k].style.setProperty("background", bg, "important");
+          for (var k = 0; k < STICKY_BARS.length; k++) STICKY_BARS[k].style.setProperty("background", bg, "important");
         });
         try { THEME_OBS.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] }); } catch (e) {}
       }
