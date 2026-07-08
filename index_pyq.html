@@ -90,6 +90,7 @@ a.card:hover{ box-shadow:0 14px 34px -8px color-mix(in srgb, var(--accent) 35%, 
   width:42px; height:42px; border-radius:50%;
   border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
   font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
   box-shadow:0 4px 16px rgba(0,0,0,.14);
   display:flex; align-items:center; justify-content:center;
   transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
@@ -108,8 +109,11 @@ html[data-theme="dark"] .gp-back-btn{
 body{ background: color-mix(in srgb, var(--bg) 88%, transparent) !important; }
 a.card{
   background: color-mix(in srgb, var(--panel) 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
 }
-@supports not ( }
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--bg) !important; }
   a.card{ background: var(--panel) !important; }
 }
 </style>

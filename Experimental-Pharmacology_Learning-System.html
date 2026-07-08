@@ -182,6 +182,8 @@
     top: 0;
     z-index: 100;
     background: rgba(245,244,240,.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 2px solid var(--accent);
     padding: .6rem 2rem;
     display: flex;
@@ -878,6 +880,8 @@ html{scroll-behavior:smooth}
 /* ---- stronger glass on the already-sticky nav ---- */
 .sticky-nav, nav.toc{
   background:rgba(245,244,240,.62) !important;
+  backdrop-filter:blur(20px) saturate(190%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(190%) !important;
   box-shadow:0 4px 24px rgba(16,38,52,.08) !important;
 }
 nav.toc a{transition:color .2s, transform .2s}
@@ -892,6 +896,7 @@ header.hero{animation:gpHeroIn .8s cubic-bezier(.4,0,.2,1) both}
 .gp-stat-row{display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; position:relative}
 .gp-stat-pill{font-size:.78rem; font-weight:650; color:#fff; background:rgba(255,255,255,.14);
   border:1px solid rgba(255,255,255,.32); padding:6px 14px; border-radius:999px;
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
   display:flex; align-items:center; gap:6px}
 .gp-stat-pill b{color:#fff; font-weight:800}
 
@@ -973,6 +978,7 @@ div.q.open > .qa{ opacity:1; }
   width:42px; height:42px; border-radius:50%;
   border:1px solid rgba(0,0,0,.10); background:rgba(255,255,255,.78); color:#1c1917;
   font-size:18px; line-height:1; cursor:pointer;
+  -webkit-backdrop-filter:blur(10px) saturate(180%); backdrop-filter:blur(10px) saturate(180%);
   box-shadow:0 4px 16px rgba(0,0,0,.14);
   display:flex; align-items:center; justify-content:center;
   transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s ease, background .2s ease;
@@ -991,8 +997,11 @@ body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; 
 .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
 .fc-back, .mnemonic, figure.dia {
   background: color-mix(in srgb, white 60%, transparent) !important;
+  backdrop-filter: blur(18px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(180%) !important;
 }
-@supports not ( }
+@supports not (backdrop-filter: blur(1px)) {
+  body{ background: var(--cream) !important; }
   .module, section.module, .blurt-prompt, .primers li, .sched-day, .sched .day, .bridge,
   .diagram-wrap, details.qsec, details.quizset, details.gate, details.qa, .quiz-q, .qq,
   .fc-back, .mnemonic, figure.dia { background: white !important; }
@@ -1007,7 +1016,7 @@ body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; 
 .gp-toolbar{
   position:fixed; top:16px; left:16px; z-index:300;
   display:flex; align-items:center; gap:4px;
-  background:rgba(255,255,255,.72);
+  background:rgba(255,255,255,.72); backdrop-filter:blur(16px) saturate(180%); -webkit-backdrop-filter:blur(16px) saturate(180%);
   border:1px solid rgba(0,0,0,.10); border-radius:999px; padding:6px; box-shadow:0 6px 22px rgba(0,0,0,.16);
 }
 .gp-tool-btn{
@@ -1029,11 +1038,12 @@ body{ background: color-mix(in srgb, var(--cream) 88%, transparent) !important; 
 .gp-drawer-overlay{
   position:fixed; inset:0; z-index:298; background:rgba(10,12,16,.32);
   opacity:0; pointer-events:none; transition:opacity .3s ease;
+  -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
 }
 .gp-drawer-overlay.show{ opacity:1; pointer-events:auto; }
 .gp-drawer{
   position:fixed; top:0; left:0; height:100%; width:min(300px, 84vw); z-index:299;
-  background:rgba(245,244,240,.90);
+  background:rgba(245,244,240,.90); backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
   border-right:1px solid rgba(0,0,0,.08); box-shadow:8px 0 32px rgba(0,0,0,.18);
   transform:translateX(-104%); transition:transform .32s cubic-bezier(.4,0,.2,1);
   display:flex; flex-direction:column; padding:18px 0;

@@ -69,14 +69,14 @@
     + '#psm-launcher{position:fixed;bottom:18px;left:18px;z-index:2147482000;'
     +   'display:inline-flex;align-items:center;gap:.4em;padding:9px 15px;border-radius:999px;cursor:pointer;'
     +   'background:rgba(28,25,23,.94);color:#FBF7F0;border:1px solid rgba(212,168,71,.55);'
-    +   'font-size:.82rem;font-weight:500;'
+    +   'font-size:.82rem;font-weight:500;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);'
     +   'box-shadow:0 6px 20px rgba(0,0,0,.22);transition:transform .15s ease,box-shadow .15s ease,background .15s ease;}'
     + '#psm-launcher:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.28);background:rgba(28,25,23,1);}'
     + '#psm-launcher .psm-ico{color:#D4A847;font-size:.95rem;line-height:1;}'
     + '#psm-launcher .psm-dot{width:7px;height:7px;border-radius:50%;background:#7BAE7F;margin-left:2px;display:none;}'
     + '#psm-root.synced #psm-launcher .psm-dot{display:inline-block;}'
     + '#psm-overlay{position:fixed;inset:0;z-index:2147482001;background:rgba(10,10,12,.28);'
-    +   '}'
+    +   '-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);}'
     + '#psm-panel{position:fixed;bottom:64px;left:18px;z-index:2147482002;'
     +   'width:min(560px,92vw);max-height:min(76vh,640px);overflow-y:auto;opacity:0;pointer-events:none;'
     +   'background:#FBF7F0;color:#1C1917;border:1px solid #E7DDD0;border-radius:16px;'
@@ -112,9 +112,6 @@
     + '.diagram-wrap svg{max-width:100%;height:auto;}'
     + 'svg{max-width:100%;}img{max-width:100%;height:auto;}'
     + 'html,body{max-width:100%;overflow-x:hidden;}'
-    /* Skip painting large off-screen content blocks (big perf win on long pages).
-       Double declaration: browsers without "auto <len>" support keep the first. */
-    + '.module,.q,.sec{content-visibility:auto;contain-intrinsic-size:0 420px;contain-intrinsic-size:auto 420px;}'
     + '@media print{#psm-root{display:none!important;}}';
 
   /* ----------------------------------------------------------------------
@@ -164,56 +161,6 @@
     wireMenu();
     initSync();
     makeResponsive();
-    // Frosted blur was removed at the CSS source (big perf win, esp. tablets).
-    // Keep pinned/sticky bars opaque so scrolling content doesn't show through.
-    if (document.readyState === "complete") makeStickyBarsOpaque();
-    else window.addEventListener("load", makeStickyBarsOpaque);
-    setTimeout(makeStickyBarsOpaque, 1200);
-  }
-
-  /* ----------------------------------------------------------------------
-     Performance: the frosted-glass "backdrop-filter: blur()" effect was the
-     main cause of choppy scrolling (a pinned bar re-blurs everything behind
-     it every frame). It has been removed at the CSS source on every page.
-     The only side effect: a translucent pinned bar would now show scrolling
-     content through it, so here we detect position:sticky/fixed elements with
-     a see-through background and give them a solid, theme-matched background.
-     ---------------------------------------------------------------------- */
-  function themeSolid() {
-    return document.documentElement.getAttribute("data-theme") === "dark" ? "#1c1a18" : "#FBF7F0";
-  }
-  function bgAlpha(c) {
-    if (!c || c === "transparent") return 0;
-    var m = c.match(/rgba?\(([^)]+)\)/);
-    if (!m) return 1;
-    var p = m[1].split(",");
-    return p.length >= 4 ? parseFloat(p[3]) : 1;
-  }
-  var STICKY_BARS = [], THEME_OBS = null;
-  function makeStickyBarsOpaque() {
-    try {
-      var all = document.querySelectorAll("body *");
-      for (var i = 0; i < all.length; i++) {
-        var el = all[i];
-        if (el.__psmBarDone) continue;
-        if (el.id === "psm-root" || (el.closest && el.closest("#psm-root"))) continue;
-        var cs = window.getComputedStyle(el);
-        if (cs.position !== "fixed" && cs.position !== "sticky") continue;
-        el.__psmBarDone = 1;
-        if (bgAlpha(cs.backgroundColor) < 0.9) {
-          el.style.setProperty("background", themeSolid(), "important");
-          STICKY_BARS.push(el);
-        }
-      }
-      // Re-apply the correct solid when the user toggles dark mode.
-      if (STICKY_BARS.length && !THEME_OBS) {
-        THEME_OBS = new MutationObserver(function () {
-          var bg = themeSolid();
-          for (var k = 0; k < STICKY_BARS.length; k++) STICKY_BARS[k].style.setProperty("background", bg, "important");
-        });
-        try { THEME_OBS.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] }); } catch (e) {}
-      }
-    } catch (e) {}
   }
 
   /* Wrap any table that isn't already inside a horizontal-scroll container
