@@ -336,6 +336,14 @@
     .p-review:hover .portal-cta  { background: #be185d; color: #fff; }
     html[data-theme="dark"] .p-review .tag { background:#3a1226; color:#f9a8d4; }
 
+    /* ── THEME: Recent Advances — Sky Blue ───────────────────── */
+    .p-advances .portal-accent   { background: linear-gradient(90deg, #1D4ED8, #3B82F6); }
+    .p-advances .tag             { background: #DBEAFE; color: #1E3A8A; }
+    .p-advances .meta-num        { color: #1D4ED8; }
+    .p-advances .portal-cta      { background: #DBEAFE; color: #1E3A8A; }
+    .p-advances:hover .portal-cta { background: #1D4ED8; color: #fff; }
+    html[data-theme="dark"] .p-advances .tag { background:#12233f; color:#93c5fd; }
+
     /* ── FOOTER ───────────────────────────────────────────────── */
     .site-footer {
       border-top: 1px solid var(--border);
@@ -500,11 +508,87 @@ html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
   html[data-theme="dark"] body{ background:#15171a !important; }
   html[data-theme="dark"] .portal, html[data-theme="dark"] .card{ background:#1e2125 !important; }
 }
+
+/* =========================================================================
+   HUB SEARCH — search box + live results dropdown to jump straight to any
+   topic/section across all guides. Data lives in search-index.js.
+   ========================================================================= */
+.hub-search{ max-width:720px; margin:-1.6rem auto 2.4rem; padding:0 2rem; position:relative; z-index:30; }
+.hub-search-box{
+  display:flex; align-items:center; gap:.6rem;
+  background:var(--white); border:1px solid var(--border); border-radius:14px;
+  box-shadow:var(--shadow-md); padding:.15rem .9rem;
+}
+.hub-search-box:focus-within{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(212,168,71,.22), var(--shadow-md); }
+.hub-search-box svg{ width:18px; height:18px; color:var(--muted); flex:none; }
+#hubSearchInput{
+  flex:1; border:none; outline:none; background:transparent; color:var(--ink);
+  font-family:'Inter',sans-serif; font-size:1rem; padding:.85rem .2rem;
+}
+#hubSearchInput::placeholder{ color:var(--muted); }
+.hub-search-hint{ font-family:'JetBrains Mono',monospace; font-size:.62rem; color:var(--muted);
+  border:1px solid var(--border); border-radius:6px; padding:.12rem .4rem; flex:none; }
+.hub-search-clear{ border:none; background:transparent; color:var(--muted); font-size:1.1rem;
+  cursor:pointer; display:none; line-height:1; padding:.2rem; }
+.hub-search-box.has-text .hub-search-clear{ display:block; }
+
+.hub-results{
+  position:absolute; left:2rem; right:2rem; top:calc(100% + .4rem);
+  background:var(--white); border:1px solid var(--border); border-radius:12px;
+  box-shadow:var(--shadow-lg); max-height:60vh; overflow-y:auto; padding:.35rem; display:none;
+}
+.hub-results.show{ display:block; }
+.hub-result{
+  display:flex; flex-direction:column; gap:.1rem; text-decoration:none; color:inherit;
+  padding:.55rem .7rem; border-radius:8px; cursor:pointer;
+}
+.hub-result .r-title{ font-size:.92rem; color:var(--ink); font-weight:500; }
+.hub-result .r-title mark{ background:rgba(212,168,71,.35); color:inherit; border-radius:3px; padding:0 .1em; }
+.hub-result .r-sub{ font-family:'JetBrains Mono',monospace; font-size:.66rem; color:var(--muted);
+  text-transform:uppercase; letter-spacing:.05em; }
+.hub-result:hover, .hub-result.active{ background:var(--cream); }
+.hub-result:hover .r-title, .hub-result.active .r-title{ color:#92400E; }
+.hub-noresult{ padding:.9rem .8rem; color:var(--muted); font-size:.85rem; font-style:italic; text-align:center; }
+.hub-results-foot{ padding:.45rem .8rem; border-top:1px solid var(--border); color:var(--muted);
+  font-size:.68rem; font-family:'JetBrains Mono',monospace; }
+
+/* dark mode */
+html[data-theme="dark"] .hub-search-box{ background:#1e2125; border-color:#33373d; }
+html[data-theme="dark"] #hubSearchInput{ color:#e7e9ec; }
+html[data-theme="dark"] .hub-search-hint{ border-color:#33373d; }
+html[data-theme="dark"] .hub-results{ background:#1e2125; border-color:#33373d; }
+html[data-theme="dark"] .hub-result .r-title{ color:#e7e9ec; }
+html[data-theme="dark"] .hub-result:hover, html[data-theme="dark"] .hub-result.active{ background:#15171a; }
+html[data-theme="dark"] .hub-result:hover .r-title, html[data-theme="dark"] .hub-result.active .r-title{ color:#f6c862; }
+html[data-theme="dark"] .hub-results-foot{ border-color:#33373d; }
+
+/* quick-jump chips under the search box */
+.hub-quick{ display:flex; flex-wrap:wrap; align-items:center; gap:.45rem; margin-top:.85rem; padding:0 .1rem; }
+.hub-quick-label{ font-family:'JetBrains Mono',monospace; font-size:.66rem; text-transform:uppercase;
+  letter-spacing:.08em; color:var(--muted); margin-right:.15rem; }
+.hub-quick-chip{ font-size:.78rem; text-decoration:none; color:var(--ink-soft);
+  background:var(--white); border:1px solid var(--border); border-radius:99px; padding:.32rem .7rem;
+  transition:background .15s, color .15s, border-color .15s, transform .15s; }
+.hub-quick-chip:hover{ transform:translateY(-1px); border-color:var(--gold); color:#92400E; background:#FEF9EF; }
+.hub-quick-chip.feature{ background:#DBEAFE; border-color:#93C5FD; color:#1E3A8A; font-weight:500; }
+.hub-quick-chip.feature:hover{ background:#1D4ED8; border-color:#1D4ED8; color:#fff; }
+html[data-theme="dark"] .hub-quick-chip{ background:#1e2125; border-color:#33373d; color:#c4cad0; }
+html[data-theme="dark"] .hub-quick-chip:hover{ background:#2a2620; color:#f6c862; border-color:#8a6a2f; }
+html[data-theme="dark"] .hub-quick-chip.feature{ background:#12233f; border-color:#1d4ed8; color:#93c5fd; }
+html[data-theme="dark"] .hub-quick-chip.feature:hover{ background:#1d4ed8; color:#fff; }
+
+@media (max-width:640px){
+  .hub-search{ padding:0 1.25rem; margin-top:-1rem; }
+  .hub-results{ left:1.25rem; right:1.25rem; }
+}
 </style>
   <script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+  <link rel="stylesheet" href="liquid-glass.css">
 </head>
 <body>
 <script src="app-shell.js" defer></script>
+<!-- Search index (auto-generated by data/build_search_index.py) -->
+<script src="search-index.js"></script>
 
 <button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">←</button>
 <button id="gpForwardBtn" class="gp-back-btn gp-forward-btn" type="button" title="Forward to next page" aria-label="Forward to next page">→</button>
@@ -547,6 +631,34 @@ html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
     </div>
   </div>
 </header>
+
+<!-- ══ HUB SEARCH ════════════════════════════════════════════════════════
+     Type a drug, topic, or system → live results → jump to that section.
+     Index data is generated by data/build_search_index.py → search-index.js
+     ═════════════════════════════════════════════════════════════════════ -->
+<div class="hub-search" role="search">
+  <label for="hubSearchInput" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Search topics</label>
+  <div class="hub-search-box" id="hubSearchBox">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+    <input id="hubSearchInput" type="search" autocomplete="off" spellcheck="false"
+           placeholder="Search any topic — e.g. asthma, warfarin, GLP-1, chemotherapy…"
+           role="combobox" aria-expanded="false" aria-controls="hubResults" aria-autocomplete="list">
+    <button type="button" class="hub-search-clear" id="hubSearchClear" title="Clear" aria-label="Clear search">&times;</button>
+    <span class="hub-search-hint" aria-hidden="true">/</span>
+  </div>
+  <div class="hub-results" id="hubResults" role="listbox" aria-label="Search results"></div>
+
+  <!-- Quick-jump chips: surface high-yield topics that live inside guides -->
+  <div class="hub-quick" aria-label="Popular topics">
+    <span class="hub-quick-label">Jump to:</span>
+    <a class="hub-quick-chip" href="Inflammation-Immunity-Hematopoiesis_Learning-System.html#m44">Asthma &amp; Respiratory</a>
+    <a class="hub-quick-chip" href="Cardiovascular-Renal_Pharmacology_Learning-System.html#m36">Anticoagulants</a>
+    <a class="hub-quick-chip" href="Endocrine-Pharmacology_Learning-System.html#m51">Diabetes &amp; Insulin</a>
+    <a class="hub-quick-chip" href="Neuropharmacology-ANS_Learning-System.html#m14">Adrenergic Drugs</a>
+    <a class="hub-quick-chip" href="Infectious-Disease-Chemotherapy_Learning-System.html#m56">Antimicrobials</a>
+    <a class="hub-quick-chip" href="Recent-Advances_Pharmacology.html">Recent Advances</a>
+  </div>
+</div>
 
 <!-- ══ STUDY LIBRARIES ═══════════════════════════════════════════════════ -->
 <div class="section-header">
@@ -708,6 +820,44 @@ html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
     </div>
   </a>
 
+  <!-- 5 · Recent Advances -->
+  <a class="portal p-advances" href="Recent-Advances_Pharmacology.html">
+    <div class="portal-accent"></div>
+    <div class="portal-body">
+      <div class="portal-icon">🧬</div>
+      <p class="portal-type">Cutting Edge</p>
+      <h2 class="portal-title">Recent Advances</h2>
+      <p class="portal-desc">
+        The newest drugs, mechanisms, and shifts in pharmacology — suzetrigine,
+        the GLP-1 revolution, new-class antibiotics and more. Organised by theme
+        with high-yield NEET PG points, quizzes, and cross-links to the guides.
+      </p>
+      <div class="portal-tags">
+        <span class="tag">2025–26</span>
+        <span class="tag">First-in-Class</span>
+        <span class="tag">Search & Filter</span>
+        <span class="tag">Exam-Ready</span>
+      </div>
+    </div>
+    <div class="portal-footer">
+      <div class="portal-meta">
+        <div class="meta-item">
+          <span class="meta-num">6</span>
+          <span class="meta-label">Themes</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-num">12+</span>
+          <span class="meta-label">Advances</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-num">Live</span>
+          <span class="meta-label">Updated</span>
+        </div>
+      </div>
+      <span class="portal-cta">Explore <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
+    </div>
+  </a>
+
 </main>
 
 <!-- ══ FOOTER ═════════════════════════════════════════════════════════════ -->
@@ -807,6 +957,147 @@ html[data-theme="dark"] .portal-footer, html[data-theme="dark"] .card-footer{
   if(!f) return;
   f.addEventListener('click', function(){
     window.history.forward();
+  });
+})();
+</script>
+
+<!-- ══ HUB SEARCH LOGIC ═══════════════════════════════════════════════════
+     Filters window.PHARM_SEARCH_INDEX as you type. Keyboard: "/" focuses,
+     ↑/↓ move, Enter opens, Esc closes. Clicking a result navigates to the
+     page#anchor so you land directly on that topic/section.
+     ═════════════════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+  var INDEX = window.PHARM_SEARCH_INDEX || [];
+  var box     = document.getElementById('hubSearchBox');
+  var input   = document.getElementById('hubSearchInput');
+  var results = document.getElementById('hubResults');
+  var clearBtn= document.getElementById('hubSearchClear');
+  if(!input || !results) return;
+
+  var active = -1;      // index of keyboard-highlighted result
+  var current = [];     // currently shown result objects
+
+  function esc(s){ return s.replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  // Highlight the matched query inside the title
+  function mark(title, q){
+    var t = esc(title); if(!q) return t;
+    var i = title.toLowerCase().indexOf(q);
+    if(i < 0) return t;
+    return esc(title.slice(0,i)) + '<mark>' + esc(title.slice(i, i+q.length)) + '</mark>' + esc(title.slice(i+q.length));
+  }
+
+  // Score a single entry against the whole query string (substring tiers).
+  // Keyword matches are weighted by *how early* the term appears in the module's
+  // keyword list — a drug named right under the heading (its real topic) beats a
+  // module that only mentions it in passing further down.
+  function scoreEntry(e, q){
+    var title = (e.t||'').toLowerCase();
+    var sub   = (e.s||'').toLowerCase();
+    var kw    = (e.k||'').toLowerCase();
+    if(title.indexOf(q) === 0) return 100;
+    if(title.indexOf(q) > -1)  return 72;
+    var ki = kw.indexOf(q);
+    if(ki > -1){
+      var wordStart = (ki === 0 || kw.charAt(ki-1) === ' ');
+      // position bonus: earlier in the blob → closer to the heading → +0..18
+      var frac = kw.length ? (ki / kw.length) : 1;
+      var bonus = Math.round(18 * (1 - frac));
+      return (wordStart ? 40 : 30) + bonus;
+    }
+    if(sub.indexOf(q) > -1) return 18;
+    return 0;
+  }
+
+  // Score: title-start > title-contains > keyword/subtitle-contains.
+  // Multi-word queries ("beta blocker") fall back to requiring every word to
+  // appear somewhere in the entry (title + subtitle + keywords).
+  function search(q){
+    q = q.trim().toLowerCase().replace(/\s+/g,' ');
+    if(!q) return [];
+    var words = q.split(' ');
+    var scored = [];
+    for(var i=0;i<INDEX.length;i++){
+      var e = INDEX[i];
+      var score = scoreEntry(e, q);
+      if(!score && words.length > 1){
+        var hay = ((e.t||'')+' '+(e.s||'')+' '+(e.k||'')).toLowerCase();
+        var all = true;
+        for(var w=0; w<words.length; w++){ if(hay.indexOf(words[w]) === -1){ all = false; break; } }
+        if(all) score = 30;   // every word present, order-independent
+      }
+      if(score){ scored.push([score, e]); }
+    }
+    scored.sort(function(a,b){ return b[0]-a[0] || a[1].t.length-b[1].t.length; });
+    return scored.slice(0, 12).map(function(x){ return x[1]; });
+  }
+
+  function render(q){
+    current = search(q);
+    active = -1;
+    if(!q.trim()){ close(); return; }
+    var html = '';
+    if(current.length === 0){
+      html = '<div class="hub-noresult">No topic matches “' + esc(q) + '”. Try a drug or system name.</div>';
+    } else {
+      current.forEach(function(e, idx){
+        html += '<a class="hub-result" role="option" id="hubRes'+idx+'" href="'+esc(e.u)+'">'
+             +    '<span class="r-title">'+mark(e.t, q.trim().toLowerCase())+'</span>'
+             +    '<span class="r-sub">'+esc(e.s||'')+'</span>'
+             +  '</a>';
+      });
+      html += '<div class="hub-results-foot">'+current.length+' result'+(current.length>1?'s':'')+' · ↑ ↓ to move · Enter to open</div>';
+    }
+    results.innerHTML = html;
+    open();
+  }
+
+  function open(){ results.classList.add('show'); input.setAttribute('aria-expanded','true'); }
+  function close(){ results.classList.remove('show'); input.setAttribute('aria-expanded','false'); active=-1; }
+
+  function setActive(n){
+    var items = results.querySelectorAll('.hub-result');
+    if(!items.length) return;
+    if(n < 0) n = items.length - 1;
+    if(n >= items.length) n = 0;
+    items.forEach(function(el){ el.classList.remove('active'); });
+    items[n].classList.add('active');
+    items[n].scrollIntoView({block:'nearest'});
+    input.setAttribute('aria-activedescendant', 'hubRes'+n);
+    active = n;
+  }
+
+  input.addEventListener('input', function(){
+    box.classList.toggle('has-text', !!input.value);
+    render(input.value);
+  });
+
+  input.addEventListener('keydown', function(ev){
+    var items = results.querySelectorAll('.hub-result');
+    if(ev.key === 'ArrowDown'){ ev.preventDefault(); if(!results.classList.contains('show')) render(input.value); setActive(active+1); }
+    else if(ev.key === 'ArrowUp'){ ev.preventDefault(); setActive(active-1); }
+    else if(ev.key === 'Enter'){
+      if(active > -1 && items[active]){ window.location.href = items[active].getAttribute('href'); }
+      else if(items.length){ window.location.href = items[0].getAttribute('href'); }
+    }
+    else if(ev.key === 'Escape'){ input.value=''; box.classList.remove('has-text'); close(); input.blur(); }
+  });
+
+  clearBtn.addEventListener('click', function(){ input.value=''; box.classList.remove('has-text'); close(); input.focus(); });
+
+  // Click outside closes the dropdown
+  document.addEventListener('click', function(ev){
+    if(!document.querySelector('.hub-search').contains(ev.target)) close();
+  });
+  input.addEventListener('focus', function(){ if(input.value.trim()) render(input.value); });
+
+  // Global "/" shortcut to focus the search (ignore when already typing)
+  document.addEventListener('keydown', function(ev){
+    if(ev.key === '/' && document.activeElement !== input &&
+       !/^(INPUT|TEXTAREA|SELECT)$/.test((document.activeElement||{}).tagName||'')){
+      ev.preventDefault(); input.focus();
+    }
   });
 })();
 </script>

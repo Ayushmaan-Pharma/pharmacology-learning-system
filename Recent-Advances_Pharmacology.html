@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recent Advances in Pharmacology · Study Hub</title>
+<meta name="description" content="The newest first-in-class drugs, mechanisms, and shifts in pharmacology (2025–26) organised by theme with high-yield NEET PG points, quizzes, and cross-links.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Apply saved theme before paint to avoid a flash (shared site-wide key) -->
+<script>try{if(localStorage.getItem('pharm-theme')==='dark')document.documentElement.setAttribute('data-theme','dark');}catch(e){}</script>
+
+<style>
+  /* =====================================================================
+     Recent Advances in Pharmacology — reuses the Study Hub design tokens
+     (cream / ink / gold) so it sits seamlessly alongside the other guides.
+     Accent hue for THIS page = Sky Blue (matches the p-advances hub card).
+     ===================================================================== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream:     #FBF7F0;
+    --ink:       #1C1917;
+    --ink-soft:  #44403C;
+    --muted:     #78716C;
+    --border:    #E7DDD0;
+    --white:     #FFFFFF;
+    --gold:      #D4A847;
+    /* page accent */
+    --accent:      #1D4ED8;
+    --accent-light:#3B82F6;
+    --accent-pale: #DBEAFE;
+    --accent-ink:  #1E3A8A;
+    /* callout hues */
+    --pearl-bg:  #ECFDF5; --pearl-bd: #10B981; --pearl-ink: #065F46;
+    --tip-bg:    #FEF3C7; --tip-bd:   #D4A017; --tip-ink:   #92400E;
+    --mech-bg:   #EFF6FF; --mech-bd:  #3B82F6; --mech-ink:  #1E3A8A;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.05);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,.10), 0 4px 12px rgba(0,0,0,.06);
+    --radius:    14px;
+    --fs-xs: .72rem; --fs-sm: .875rem; --fs-md: 1.05rem; --fs-lg: 1.25rem;
+    --fs-xl: 1.6rem; --fs-2xl: 2.2rem; --fs-3xl: 3rem;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.65;
+    min-height: 100vh;
+    transition: background .25s ease, color .25s ease;
+  }
+
+  /* ── HERO ─────────────────────────────────────────────────── */
+  .hero {
+    background: var(--ink);
+    color: var(--white);
+    padding: 3rem 2rem 3.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 20% 40%, rgba(59,130,246,.22) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 70% at 82% 30%, rgba(29,78,216,.18) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 60% 85%, rgba(212,168,71,.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; max-width: 860px; margin: 0 auto; }
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 1.1rem;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2rem, 5vw, var(--fs-3xl));
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    margin-bottom: .9rem;
+  }
+  .hero h1 em { font-style: italic; font-weight: 300; color: rgba(255,255,255,.75); }
+  .hero-sub {
+    font-size: var(--fs-md);
+    color: rgba(255,255,255,.6);
+    max-width: 620px;
+    margin: 0 auto 1.6rem;
+  }
+  .updated-pill {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-xs);
+    background: rgba(255,255,255,.10);
+    border: 1px solid rgba(255,255,255,.22);
+    color: rgba(255,255,255,.85);
+    padding: .4rem .85rem; border-radius: 99px;
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  }
+  .updated-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: #34D399; box-shadow: 0 0 8px #34D399; }
+
+  /* ── LAYOUT: sidebar TOC + main ───────────────────────────── */
+  .wrap {
+    max-width: 1180px; margin: 0 auto; padding: 2rem;
+    display: grid; grid-template-columns: 210px 1fr; gap: 2.2rem; align-items: start;
+  }
+  .toc {
+    position: sticky; top: 1.2rem;
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow-sm);
+    padding: 1.1rem 1rem;
+  }
+  .toc h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .1em;
+    color: var(--muted); margin-bottom: .7rem;
+  }
+  .toc a {
+    display: block; text-decoration: none; color: var(--ink-soft);
+    font-size: var(--fs-sm); padding: .38rem .5rem; border-radius: 8px;
+    border-left: 2px solid transparent; transition: background .15s, color .15s, border-color .15s;
+  }
+  .toc a:hover, .toc a.active { background: var(--accent-pale); color: var(--accent-ink); border-left-color: var(--accent); }
+  .toc .toc-extra { margin-top: .8rem; padding-top: .8rem; border-top: 1px solid var(--border); }
+
+  main { min-width: 0; }
+
+  /* ── SEARCH & FILTER ──────────────────────────────────────── */
+  .controls {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow-sm);
+    padding: 1.1rem 1.2rem; margin-bottom: 1.6rem;
+  }
+  .search-row { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; }
+  #searchBox {
+    flex: 1; min-width: 200px;
+    font-family: 'Inter', sans-serif; font-size: var(--fs-sm);
+    padding: .65rem .9rem; border: 1px solid var(--border); border-radius: 10px;
+    background: var(--cream); color: var(--ink);
+  }
+  #searchBox:focus { outline: 2px solid var(--accent-light); outline-offset: 1px; }
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .85rem; }
+  .chip {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--fs-xs);
+    padding: .35rem .7rem; border-radius: 99px; cursor: pointer;
+    background: var(--cream); color: var(--ink-soft);
+    border: 1px solid var(--border); transition: background .15s, color .15s, border-color .15s;
+  }
+  .chip:hover { border-color: var(--accent-light); }
+  .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .no-results {
+    display: none; text-align: center; color: var(--muted);
+    font-size: var(--fs-sm); padding: 2rem; font-style: italic;
+  }
+
+  /* ── SUMMARY TABLE ────────────────────────────────────────── */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow-sm); margin-bottom: 2.4rem; }
+  table.summary { width: 100%; border-collapse: collapse; background: var(--white); font-size: var(--fs-sm); min-width: 560px; }
+  table.summary thead th {
+    background: var(--ink); color: #fff; text-align: left;
+    font-family: 'JetBrains Mono', monospace; font-size: var(--fs-xs);
+    text-transform: uppercase; letter-spacing: .06em; padding: .8rem 1rem; font-weight: 500;
+  }
+  table.summary td { padding: .7rem 1rem; border-top: 1px solid var(--border); vertical-align: top; }
+  table.summary tbody tr:hover td { background: var(--accent-pale); }
+  table.summary a { color: var(--accent); font-weight: 500; text-decoration: none; }
+  table.summary a:hover { text-decoration: underline; }
+  .weight { font-family: 'JetBrains Mono', monospace; font-size: var(--fs-xs); padding: .18rem .5rem; border-radius: 6px; white-space: nowrap; }
+  .weight.high { background: #FEE2E2; color: #991B1B; }
+  .weight.med  { background: #FEF3C7; color: #92400E; }
+  .weight.low  { background: #E0E7FF; color: #3730A3; }
+
+  /* ── SECTION HEADERS ──────────────────────────────────────── */
+  .theme-section { margin-bottom: 2.8rem; scroll-margin-top: 1.2rem; }
+  .theme-head { display: flex; align-items: center; gap: .7rem; margin-bottom: 1.2rem; padding-bottom: .6rem; border-bottom: 2px solid var(--border); }
+  .theme-head .emoji { font-size: 1.5rem; line-height: 1; }
+  .theme-head h2 { font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-xl); font-weight: 600; letter-spacing: -.01em; }
+
+  /* ── ADVANCE CARD ─────────────────────────────────────────── */
+  .advance {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius); box-shadow: var(--shadow-sm);
+    padding: 1.4rem 1.5rem; margin-bottom: 1.4rem;
+    border-left: 4px solid var(--accent);
+  }
+  .advance-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem .8rem; margin-bottom: .3rem; }
+  .advance h3 { font-family: 'Fraunces', Georgia, serif; font-size: var(--fs-lg); font-weight: 600; }
+  .badge {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--fs-xs);
+    padding: .2rem .55rem; border-radius: 99px; background: var(--accent-pale); color: var(--accent-ink); font-weight: 500;
+  }
+  .badge.status { background: #DCFCE7; color: #166534; }
+  .badge.status.pipeline { background: #FEF3C7; color: #92400E; }
+  .drug-class { font-size: var(--fs-sm); color: var(--muted); font-style: italic; margin-bottom: .9rem; }
+  .advance h4 {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--fs-xs);
+    text-transform: uppercase; letter-spacing: .07em; color: var(--accent);
+    margin: 1rem 0 .35rem;
+  }
+  .advance p { font-size: var(--fs-sm); color: var(--ink-soft); }
+  .advance ul { font-size: var(--fs-sm); color: var(--ink-soft); padding-left: 1.15rem; margin-top: .2rem; }
+  .advance ul li { margin-bottom: .28rem; }
+
+  /* ── CALLOUT BOXES ────────────────────────────────────────── */
+  .callout {
+    border-radius: 10px; padding: .8rem 1rem; margin: 1rem 0 .3rem;
+    font-size: var(--fs-sm); border-left: 4px solid;
+  }
+  .callout .co-label {
+    font-family: 'JetBrains Mono', monospace; font-size: var(--fs-xs);
+    text-transform: uppercase; letter-spacing: .07em; font-weight: 600;
+    display: block; margin-bottom: .3rem;
+  }
+  .callout.pearl { background: var(--pearl-bg); border-color: var(--pearl-bd); }
+  .callout.pearl .co-label, .callout.pearl strong { color: var(--pearl-ink); }
+  .callout.tip { background: var(--tip-bg); border-color: var(--tip-bd); }
+  .callout.tip .co-label, .callout.tip strong { color: var(--tip-ink); }
+  .callout.mech { background: var(--mech-bg); border-color: var(--mech-bd); }
+  .callout.mech .co-label { color: var(--mech-ink); }
+
+  /* mechanism visual (inline SVG) */
+  .mech svg { width: 100%; height: auto; max-width: 520px; display: block; margin: .4rem auto 0; }
+  .mech text { font-family: 'JetBrains Mono', monospace; }
+
+  /* cross-links */
+  .xlinks { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+  .xlinks .xl-label { font-family: 'JetBrains Mono', monospace; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+  .xlinks a {
+    font-size: var(--fs-xs); text-decoration: none; color: var(--accent-ink);
+    background: var(--accent-pale); padding: .25rem .6rem; border-radius: 99px;
+    transition: background .15s, color .15s;
+  }
+  .xlinks a:hover { background: var(--accent); color: #fff; }
+  .ref { margin-top: .8rem; font-size: var(--fs-xs); color: var(--muted); }
+  .ref a { color: var(--accent); }
+
+  /* ── QUIZ ACCORDION ───────────────────────────────────────── */
+  details.quiz {
+    background: var(--white); border: 1px solid var(--border);
+    border-left: 4px solid var(--gold); border-radius: 10px;
+    padding: .3rem .1rem; margin: .7rem 0; box-shadow: var(--shadow-sm);
+  }
+  details.quiz summary {
+    cursor: pointer; list-style: none; padding: .75rem 1rem;
+    font-size: var(--fs-sm); font-weight: 500; color: var(--ink);
+    display: flex; gap: .6rem; align-items: flex-start;
+  }
+  details.quiz summary::-webkit-details-marker { display: none; }
+  details.quiz summary::before { content: 'Q'; font-family: 'JetBrains Mono', monospace; font-size: var(--fs-xs); background: var(--gold); color: #fff; border-radius: 6px; padding: .1rem .4rem; margin-top: .1rem; }
+  details.quiz[open] summary { border-bottom: 1px dashed var(--border); }
+  .quiz-ans { padding: .8rem 1rem .9rem 2.4rem; font-size: var(--fs-sm); color: var(--ink-soft); }
+  .quiz-ans strong { color: var(--pearl-ink); }
+
+  .quiz-block-head { font-family: 'JetBrains Mono', monospace; font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 1.2rem 0 .3rem; }
+
+  /* ── SUGGEST / FUTURE PLACEHOLDER ─────────────────────────── */
+  .suggest-box, .placeholder {
+    border: 1px dashed var(--accent-light); background: var(--mech-bg);
+    border-radius: var(--radius); padding: 1.1rem 1.3rem; margin: 1.4rem 0;
+    font-size: var(--fs-sm); color: var(--ink-soft);
+  }
+  .suggest-box strong, .placeholder strong { color: var(--accent-ink); }
+  .placeholder { border-color: var(--border); background: var(--cream); text-align: center; color: var(--muted); font-style: italic; }
+
+  /* ── FOOTER ───────────────────────────────────────────────── */
+  footer.site-footer {
+    border-top: 1px solid var(--border);
+    padding: 2.4rem 2rem; text-align: center; max-width: 1180px; margin: 0 auto;
+  }
+  footer.site-footer p { font-size: var(--fs-xs); color: var(--muted); line-height: 1.8; }
+  footer.site-footer a { color: var(--accent); text-decoration: none; }
+  .home-btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-size: var(--fs-sm); font-weight: 500; text-decoration: none;
+    color: #fff; background: var(--accent); padding: .55rem 1.1rem; border-radius: 10px;
+    margin-bottom: 1.4rem; transition: background .15s, transform .15s;
+  }
+  .home-btn:hover { background: var(--accent-ink); transform: translateY(-2px); }
+
+  /* ── FIXED CHROME (shared with rest of site) ──────────────── */
+  #hub-theme {
+    position: fixed; top: 16px; right: 16px; z-index: 100;
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.10); color: #fff;
+    font-size: 18px; cursor: pointer; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center; transition: transform .15s ease;
+  }
+  #hub-theme:hover { transform: translateY(-2px); }
+  html[data-theme="dark"] #hub-theme { background: #1e2125; border-color: #33373d; }
+
+  .gp-back-btn {
+    position: fixed; top: 16px; left: 16px; z-index: 101;
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid rgba(0,0,0,.10); background: rgba(255,255,255,.78); color: #1c1917;
+    font-size: 18px; line-height: 1; cursor: pointer;
+    -webkit-backdrop-filter: blur(10px) saturate(180%); backdrop-filter: blur(10px) saturate(180%);
+    box-shadow: 0 4px 16px rgba(0,0,0,.14);
+    display: flex; align-items: center; justify-content: center; transition: transform .2s, box-shadow .2s;
+  }
+  .gp-back-btn:hover { transform: translateY(-2px) scale(1.05); }
+  .gp-forward-btn { left: 64px; }
+  html[data-theme="dark"] .gp-back-btn { background: rgba(30,33,37,.78); color: #e7e9ec; border-color: rgba(255,255,255,.14); }
+
+  .gp-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; z-index: 200;
+    background: linear-gradient(90deg, var(--accent-light), var(--accent), var(--accent-light));
+    box-shadow: 0 0 10px rgba(59,130,246,.5); transition: width .12s linear; }
+  .gp-to-top { position: fixed; bottom: 26px; right: 26px; z-index: 90; width: 46px; height: 46px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--ink), #3a3531); color: #fff; border: none; font-size: 1.2rem; cursor: pointer;
+    box-shadow: 0 10px 26px rgba(16,38,52,.35); opacity: 0; transform: translateY(16px) scale(.85); pointer-events: none;
+    transition: opacity .3s ease, transform .3s cubic-bezier(.34,1.56,.64,1); }
+  .gp-to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .wrap { grid-template-columns: 1fr; }
+    .toc { position: static; order: -1; }
+    .toc a { display: inline-block; }
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 2.5rem 1.25rem 3rem; }
+    .wrap { padding: 1.25rem; gap: 1.4rem; }
+    .advance { padding: 1.15rem 1.15rem; }
+    .gp-back-btn { width: 38px; height: 38px; top: 10px; left: 10px; font-size: 16px; }
+    .gp-forward-btn { left: 54px; }
+  }
+
+  /* =========================================================================
+     DARK MODE — mirrors the tokens used across the rest of the site
+     ========================================================================= */
+  html[data-theme="dark"] body { background: #15171a; color: #cdd1d6; }
+  html[data-theme="dark"] .toc,
+  html[data-theme="dark"] .controls,
+  html[data-theme="dark"] .advance,
+  html[data-theme="dark"] table.summary,
+  html[data-theme="dark"] details.quiz { background: #1e2125; border-color: #33373d; }
+  html[data-theme="dark"] .toc h3, html[data-theme="dark"] .quiz-block-head { color: #99a2ab; }
+  html[data-theme="dark"] .toc a { color: #c4cad0; }
+  html[data-theme="dark"] .toc a:hover, html[data-theme="dark"] .toc a.active { background: #12233f; color: #93c5fd; }
+  html[data-theme="dark"] h1, html[data-theme="dark"] h2, html[data-theme="dark"] h3, html[data-theme="dark"] h4 { color: #eef0f2; }
+  html[data-theme="dark"] .advance h4 { color: #93c5fd; }
+  html[data-theme="dark"] .advance p, html[data-theme="dark"] .advance ul, html[data-theme="dark"] .quiz-ans { color: #c4cad0; }
+  html[data-theme="dark"] .drug-class, html[data-theme="dark"] table.summary td { color: #a7adb4; }
+  html[data-theme="dark"] #searchBox { background: #15171a; color: #e7e9ec; border-color: #33373d; }
+  html[data-theme="dark"] .chip { background: #15171a; color: #c4cad0; border-color: #33373d; }
+  html[data-theme="dark"] .chip.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  html[data-theme="dark"] table.summary td { border-color: #33373d; }
+  html[data-theme="dark"] table.summary tbody tr:hover td { background: #12233f; }
+  html[data-theme="dark"] .theme-head { border-color: #33373d; }
+  html[data-theme="dark"] details.quiz summary { color: #e7e9ec; }
+  html[data-theme="dark"] .badge { background: #12233f; color: #93c5fd; }
+  html[data-theme="dark"] .xlinks a { background: #12233f; color: #93c5fd; }
+  html[data-theme="dark"] .placeholder { background: #1a1c1f; border-color: #33373d; }
+  /* callouts keep their tint but soften text for dark bg */
+  html[data-theme="dark"] .callout.pearl { background: rgba(16,185,129,.12); }
+  html[data-theme="dark"] .callout.tip   { background: rgba(212,160,23,.12); }
+  html[data-theme="dark"] .callout.mech  { background: rgba(59,130,246,.12); }
+  html[data-theme="dark"] .callout p, html[data-theme="dark"] .callout li { color: #cdd1d6; }
+  html[data-theme="dark"] footer.site-footer { border-color: #33373d; }
+  html[data-theme="dark"] .mech svg text { fill: #cdd1d6; }
+
+  @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+  <link rel="stylesheet" href="liquid-glass.css">
+</head>
+<body>
+
+<!-- ── Shared site chrome (back/forward/theme/progress/to-top) ──────────── -->
+<button id="gpBackBtn" class="gp-back-btn" type="button" title="Back to previous page" aria-label="Back to previous page">&#8592;</button>
+<button id="gpForwardBtn" class="gp-back-btn gp-forward-btn" type="button" title="Forward to next page" aria-label="Forward to next page">&#8594;</button>
+<button id="hub-theme" type="button" title="Toggle dark mode" aria-label="Toggle dark mode">&#127769;</button>
+<div class="gp-progress" id="gpProgressBar"></div>
+<button id="gpToTop" class="gp-to-top" title="Back to top" aria-label="Back to top">&#8593;</button>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-label">Cutting-Edge Pharmacology · 2025–26</p>
+    <h1>Recent Advances in <em>Pharmacology</em></h1>
+    <p class="hero-sub">
+      The newest first-in-class drugs, mechanisms, and paradigm shifts — distilled
+      into high-yield, NEET&nbsp;PG-ready cards with quizzes and cross-links to your guides.
+    </p>
+    <span class="updated-pill"><span class="dot" aria-hidden="true"></span> Last Updated: 9 July 2026</span>
+  </div>
+</header>
+
+<!-- ══ BODY ══════════════════════════════════════════════════════════════ -->
+<div class="wrap">
+
+  <!-- ── SIDEBAR TOC ──────────────────────────────────────────────────── -->
+  <nav class="toc" aria-label="Section navigation">
+    <h3>On this page</h3>
+    <a href="#summary">Summary table</a>
+    <a href="#pain">Pain Management</a>
+    <a href="#metabolic">Metabolic / Endocrine</a>
+    <a href="#antimicrobial">Antimicrobials &amp; ID</a>
+    <a href="#oncology">Oncology &amp; Targeted</a>
+    <a href="#neuro">Neurology &amp; Psychiatry</a>
+    <a href="#trends">Cross-cutting Trends</a>
+    <div class="toc-extra">
+      <a href="#suggest">Suggest an advance</a>
+      <a href="index.html">&#8592; Back to Study Hub</a>
+    </div>
+  </nav>
+
+  <!-- ── MAIN ─────────────────────────────────────────────────────────── -->
+  <main>
+    <a class="home-btn" href="index.html">&#8592; Study Hub</a>
+
+    <!-- Encouragement / freshness note -->
+    <div class="suggest-box" id="suggest-note">
+      <strong>This page grows with the field.</strong> Spotted a new approval, trial readout,
+      or mechanism worth adding? Note it down and send it in — see
+      <a href="#suggest">Suggest an advance</a> at the bottom. Entries are dated so you always
+      know how current a fact is.
+    </div>
+
+    <!-- ── SEARCH & FILTER ───────────────────────────────────────────── -->
+    <section class="controls" aria-label="Search and filter">
+      <div class="search-row">
+        <input id="searchBox" type="search" placeholder="Search by drug, class, mechanism, or keyword…"
+               aria-label="Search advances" autocomplete="off">
+      </div>
+      <div class="chips" id="filterChips" role="group" aria-label="Filter by theme">
+        <button class="chip active" data-theme="all">All</button>
+        <button class="chip" data-theme="pain">Pain</button>
+        <button class="chip" data-theme="metabolic">Metabolic</button>
+        <button class="chip" data-theme="antimicrobial">Antimicrobial</button>
+        <button class="chip" data-theme="oncology">Oncology</button>
+        <button class="chip" data-theme="neuro">Neuro/Psych</button>
+        <button class="chip" data-theme="trends">Trends</button>
+      </div>
+    </section>
+
+    <!-- ══ SUMMARY TABLE ═══════════════════════════════════════════════ -->
+    <section id="summary" class="theme-section">
+      <div class="theme-head"><span class="emoji" aria-hidden="true">&#128203;</span><h2>At a Glance</h2></div>
+      <div class="table-wrap">
+        <table class="summary">
+          <thead>
+            <tr><th scope="col">Drug / Advance</th><th scope="col">Theme</th><th scope="col">Key Benefit</th><th scope="col">Exam Weight</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="#suzetrigine">Suzetrigine (Journavx)</a></td><td>Pain</td><td>First non-opioid NaV1.8 blocker in 25 yrs</td><td><span class="weight high">High</span></td></tr>
+            <tr><td><a href="#tirzepatide">Tirzepatide (Mounjaro/Zepbound)</a></td><td>Metabolic</td><td>Dual GIP/GLP-1 — superior weight loss &amp; HbA1c</td><td><span class="weight high">High</span></td></tr>
+            <tr><td><a href="#orforglipron">Orforglipron</a></td><td>Metabolic</td><td>First oral non-peptide GLP-1 agonist</td><td><span class="weight med">Medium</span></td></tr>
+            <tr><td><a href="#retatrutide">Retatrutide</a></td><td>Metabolic</td><td>Triple GLP-1/GIP/glucagon agonist</td><td><span class="weight med">Medium</span></td></tr>
+            <tr><td><a href="#gepotidacin">Gepotidacin (Blujepa)</a></td><td>Antimicrobial</td><td>New-class oral antibiotic for uUTI</td><td><span class="weight high">High</span></td></tr>
+            <tr><td><a href="#zoliflodacin">Zoliflodacin</a></td><td>Antimicrobial</td><td>Single-dose oral for resistant gonorrhoea</td><td><span class="weight med">Medium</span></td></tr>
+            <tr><td><a href="#revumenib">Revumenib (Revuforj)</a></td><td>Oncology</td><td>First-in-class menin inhibitor (acute leukaemia)</td><td><span class="weight med">Medium</span></td></tr>
+            <tr><td><a href="#adc-rlt">ADCs &amp; radioligand therapy</a></td><td>Oncology</td><td>Precision cytotoxic delivery</td><td><span class="weight high">High</span></td></tr>
+            <tr><td><a href="#cobenfy">Xanomeline–trospium (Cobenfy)</a></td><td>Neuro/Psych</td><td>First non-D2 antipsychotic mechanism</td><td><span class="weight high">High</span></td></tr>
+            <tr><td><a href="#lecanemab">Lecanemab / Donanemab</a></td><td>Neuro/Psych</td><td>Anti-amyloid mAbs slow Alzheimer's</td><td><span class="weight high">High</span></td></tr>
+            <tr><td><a href="#trends">AI, pharmacogenomics, AMR</a></td><td>Trends</td><td>How drugs are found, targeted &amp; regulated</td><td><span class="weight low">Concept</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══ THEME 1 · PAIN ══════════════════════════════════════════════ -->
+    <section id="pain" class="theme-section" data-theme="pain">
+      <div class="theme-head"><span class="emoji" aria-hidden="true">&#129504;</span><h2>Pain Management</h2></div>
+
+      <!-- Suzetrigine -->
+      <article class="advance" id="suzetrigine" data-theme="pain"
+        data-keywords="suzetrigine journavx nav1.8 sodium channel non-opioid analgesic vertex acute pain nociceptor">
+        <div class="advance-top">
+          <h3>Suzetrigine</h3>
+          <span class="badge">Journavx&reg;</span>
+          <span class="badge status">FDA approved · Jan 2025</span>
+        </div>
+        <p class="drug-class">Class: Selective peripheral NaV1.8 voltage-gated sodium-channel blocker (non-opioid analgesic)</p>
+
+        <h4>Mechanism of Action</h4>
+        <p>Selectively blocks the <strong>NaV1.8</strong> voltage-gated sodium channel expressed almost exclusively on
+          peripheral nociceptive (pain-sensing) neurons. By stabilising the channel in a non-conducting state it stops
+          the propagation of pain action potentials <em>before</em> they reach the CNS. It does not cross the blood–brain
+          barrier — so no euphoria, dependence, sedation, or respiratory depression.</p>
+
+        <div class="callout mech">
+          <span class="co-label">Mechanism Visual</span>
+          <svg viewBox="0 0 500 130" role="img" aria-label="Diagram: suzetrigine blocks NaV1.8 sodium channels on a peripheral nociceptor, stopping the pain signal before it reaches the spinal cord and brain.">
+            <line x1="30" y1="65" x2="300" y2="65" stroke="#3B82F6" stroke-width="3"/>
+            <circle cx="30" cy="65" r="10" fill="#F87171"/>
+            <text x="20" y="95" font-size="11">Nociceptor</text>
+            <rect x="150" y="52" width="26" height="26" rx="4" fill="#1D4ED8"/>
+            <text x="140" y="45" font-size="10">NaV1.8</text>
+            <text x="150" y="122" font-size="11" fill="#DC2626">Suzetrigine blocks &#10007;</text>
+            <line x1="163" y1="78" x2="163" y2="100" stroke="#DC2626" stroke-width="2"/>
+            <text x="330" y="60" font-size="11">Spinal cord</text>
+            <text x="330" y="78" font-size="11">&#8594; Brain</text>
+            <line x1="300" y1="65" x2="320" y2="65" stroke="#9CA3AF" stroke-width="3" stroke-dasharray="4 3"/>
+            <text x="360" y="122" font-size="10" fill="#16A34A">No CNS entry</text>
+          </svg>
+        </div>
+
+        <h4>Why It Matters</h4>
+        <p>The first genuinely new oral analgesic <em>mechanism</em> in ~25 years and the first non-opioid approved
+          specifically for moderate-to-severe <strong>acute</strong> pain. Offers opioid-level targeting of pain without
+          addiction potential — a direct answer to the opioid-crisis unmet need.</p>
+
+        <h4>Exam Relevance / High-Yield</h4>
+        <ul>
+          <li><strong>Target:</strong> NaV1.8 (contrast with local anaesthetics = non-selective NaV block; carbamazepine/phenytoin = NaV in CNS).</li>
+          <li><strong>Selectivity:</strong> &gt;30,000-fold over other Na<sub>V</sub> subtypes → peripheral action, spares CNS/cardiac channels.</li>
+          <li><strong>Not a controlled substance</strong> — no tolerance/dependence; key MCQ distractor vs opioids.</li>
+          <li>Metabolised by <strong>CYP3A4</strong> → caution with strong 3A4 inhibitors/inducers.</li>
+        </ul>
+
+        <div class="callout pearl">
+          <span class="co-label">Clinical Pearl</span>
+          <p>Think of suzetrigine as a <strong>"peripheral, oral local-anaesthetic-like" analgesic</strong> that is subtype-selective — it silences the nociceptor's own sodium channel rather than dampening the whole nervous system.</p>
+        </div>
+        <div class="callout tip">
+          <span class="co-label">NEET PG Tip</span>
+          <p><strong>Mnemonic — "1.8 = Ate the pain, not the brain."</strong> NaV<strong>1.8</strong> is peripheral-nociceptor specific; no BBB crossing = no opioid-type CNS effects.</p>
+        </div>
+
+        <div class="xlinks">
+          <span class="xl-label">Cross-links:</span>
+          <a href="Special-Systems_Pharmacology_Learning-System.html">Special Systems (Pain)</a>
+          <a href="General_Pharmacology_Learning-System.html">General Pharmacology</a>
+        </div>
+        <p class="ref">Reference: <a href="https://news.vrtx.com/news-releases/news-release-details/vertex-announces-fda-approval-journavxtm-suzetrigine-first-class" target="_blank" rel="noopener">Vertex — FDA approval of JOURNAVX (suzetrigine)</a></p>
+      </article>
+
+      <!-- Quiz block -->
+      <p class="quiz-block-head">Quick recall — Pain</p>
+      <details class="quiz"><summary>Which ion channel does suzetrigine selectively inhibit, and why does that avoid CNS side effects?</summary>
+        <div class="quiz-ans"><strong>NaV1.8</strong>, a voltage-gated sodium channel expressed on peripheral nociceptors. Suzetrigine does not cross the blood–brain barrier, so it produces analgesia without sedation, euphoria, dependence, or respiratory depression.</div></details>
+      <details class="quiz"><summary>Suzetrigine is the first non-opioid analgesic of a new mechanistic class in approximately how many years?</summary>
+        <div class="quiz-ans">About <strong>25 years</strong> — it is the first novel-mechanism oral analgesic class for acute pain in over two decades.</div></details>
+      <details class="quiz"><summary>Name one clinically important drug-interaction consideration with suzetrigine.</summary>
+        <div class="quiz-ans">It is a <strong>CYP3A4</strong> substrate — strong 3A4 inhibitors raise its levels and strong inducers lower efficacy.</div></details>
+    </section>
+
+    <!-- ══ THEME 2 · METABOLIC / ENDOCRINE ═════════════════════════════ -->
+    <section id="metabolic" class="theme-section" data-theme="metabolic">
+      <div class="theme-head"><span class="emoji" aria-hidden="true">&#129483;</span><h2>Metabolic / Endocrine</h2></div>
+
+      <!-- Tirzepatide -->
+      <article class="advance" id="tirzepatide" data-theme="metabolic"
+        data-keywords="tirzepatide mounjaro zepbound gip glp-1 dual agonist incretin diabetes obesity weight loss">
+        <div class="advance-top">
+          <h3>Tirzepatide</h3>
+          <span class="badge">Mounjaro&reg; / Zepbound&reg;</span>
+          <span class="badge status">Approved (T2DM 2022 · obesity 2023)</span>
+        </div>
+        <p class="drug-class">Class: Dual GIP + GLP-1 receptor agonist ("twincretin")</p>
+        <h4>Mechanism of Action</h4>
+        <p>A single peptide that activates <strong>both</strong> the GIP and GLP-1 incretin receptors → enhanced
+          glucose-dependent insulin secretion, suppressed glucagon, delayed gastric emptying, and central appetite
+          suppression. The added GIP agonism is thought to amplify weight loss and insulin sensitivity beyond GLP-1 alone.</p>
+        <h4>Why It Matters</h4>
+        <p>Produces the greatest weight loss and HbA1c reduction of any injectable to date, redefining expectations for
+          both T2DM and obesity pharmacotherapy.</p>
+        <h4>Exam Relevance / High-Yield</h4>
+        <ul>
+          <li><strong>"Twincretin"</strong> — dual GIP/GLP-1 vs semaglutide (GLP-1 only) and retatrutide (triple).</li>
+          <li>Weekly SC injection; GI side effects (nausea, vomiting, diarrhoea) are dose-limiting.</li>
+          <li>Shared class warnings: <strong>medullary thyroid carcinoma / MEN-2</strong> contraindication, pancreatitis, gallbladder disease.</li>
+        </ul>
+        <div class="callout tip"><span class="co-label">NEET PG Tip</span>
+          <p><strong>Count the receptors:</strong> Semaglutide = 1 (GLP-1) · Tirzepatide = 2 (GIP+GLP-1) · Retatrutide = 3 (+glucagon).</p></div>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Endocrine-Pharmacology_Learning-System.html">Endocrine Pharmacology</a></div>
+        <p class="ref">Reference: <a href="https://www.nature.com/articles/s41591-025-04124-5" target="_blank" rel="noopener">Nature Medicine — The expanding landscape of GLP-1 medicines</a></p>
+      </article>
+
+      <!-- Orforglipron -->
+      <article class="advance" id="orforglipron" data-theme="metabolic"
+        data-keywords="orforglipron oral glp-1 non-peptide small molecule obesity diabetes lilly">
+        <div class="advance-top">
+          <h3>Orforglipron</h3>
+          <span class="badge status pipeline">Late-stage / filing 2025–26</span>
+        </div>
+        <p class="drug-class">Class: Oral non-peptide (small-molecule) GLP-1 receptor agonist</p>
+        <h4>Mechanism of Action</h4>
+        <p>A small molecule that activates the GLP-1 receptor — unlike peptide GLP-1 drugs it is orally bioavailable,
+          needs <strong>no dietary restriction</strong> and <strong>no refrigeration</strong>.</p>
+        <h4>Why It Matters</h4>
+        <p>Could bring GLP-1 efficacy in a cheap, scalable daily pill — a major access/adherence advance over injectables
+          and over peptide oral semaglutide (which needs strict fasting dosing).</p>
+        <h4>Exam Relevance / High-Yield</h4>
+        <ul>
+          <li>Contrast with <strong>oral semaglutide</strong> (a peptide + SNAC absorption enhancer, strict empty-stomach dosing).</li>
+          <li>"Non-peptide" = not degraded like a peptide → simpler pharmacokinetics, no cold chain.</li>
+        </ul>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Endocrine-Pharmacology_Learning-System.html">Endocrine Pharmacology</a></div>
+        <p class="ref">Reference: <a href="https://www.iqvia.com/locations/emea/blogs/2026/01/outlook-for-obesity-in-2026" target="_blank" rel="noopener">IQVIA — Outlook for Obesity in 2026</a></p>
+      </article>
+
+      <!-- Retatrutide -->
+      <article class="advance" id="retatrutide" data-theme="metabolic"
+        data-keywords="retatrutide triple agonist glp-1 gip glucagon obesity energy expenditure">
+        <div class="advance-top">
+          <h3>Retatrutide</h3>
+          <span class="badge status pipeline">Phase 3 (investigational)</span>
+        </div>
+        <p class="drug-class">Class: Triple GLP-1 + GIP + glucagon receptor agonist</p>
+        <h4>Mechanism of Action</h4>
+        <p>Adds <strong>glucagon-receptor</strong> agonism to the incretin effect. Glucagon agonism raises energy
+          expenditure and promotes hepatic fat oxidation, complementing appetite suppression for even greater weight loss.</p>
+        <h4>Why It Matters</h4>
+        <p>Trial weight-loss magnitudes approach those of bariatric surgery, and the glucagon arm is being explored for
+          MASLD/NAFLD (fatty liver).</p>
+        <div class="callout pearl"><span class="co-label">Clinical Pearl</span>
+          <p>Glucagon agonism seems paradoxical in diabetes, but the strong incretin (insulinotropic) component offsets it while the added energy expenditure drives fat loss.</p></div>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Endocrine-Pharmacology_Learning-System.html">Endocrine Pharmacology</a></div>
+        <p class="ref">Reference: <a href="https://www.nature.com/articles/s41591-025-04124-5" target="_blank" rel="noopener">Nature Medicine — GLP-1 medicines landscape</a></p>
+      </article>
+
+      <p class="quiz-block-head">Quick recall — Metabolic</p>
+      <details class="quiz"><summary>What distinguishes tirzepatide from semaglutide mechanistically?</summary>
+        <div class="quiz-ans">Tirzepatide is a <strong>dual GIP + GLP-1</strong> receptor agonist ("twincretin"); semaglutide is a <strong>GLP-1-only</strong> agonist.</div></details>
+      <details class="quiz"><summary>Which three receptors does retatrutide target?</summary>
+        <div class="quiz-ans"><strong>GLP-1, GIP, and glucagon</strong> receptors — a "triple agonist."</div></details>
+      <details class="quiz"><summary>Why is orforglipron a notable formulation advance over injectable GLP-1s?</summary>
+        <div class="quiz-ans">It is an <strong>oral, non-peptide small molecule</strong> — no injection, no refrigeration, and no strict fasting requirement.</div></details>
+    </section>
+
+    <!-- ══ THEME 3 · ANTIMICROBIALS & ID ═══════════════════════════════ -->
+    <section id="antimicrobial" class="theme-section" data-theme="antimicrobial">
+      <div class="theme-head"><span class="emoji" aria-hidden="true">&#129440;</span><h2>Antimicrobials &amp; Infectious Diseases</h2></div>
+
+      <!-- Gepotidacin -->
+      <article class="advance" id="gepotidacin" data-theme="antimicrobial"
+        data-keywords="gepotidacin blujepa triazaacenaphthylene topoisomerase gyrase uti gonorrhoea first in class antibiotic resistance">
+        <div class="advance-top">
+          <h3>Gepotidacin</h3>
+          <span class="badge">Blujepa&reg;</span>
+          <span class="badge status">FDA approved · 2025</span>
+        </div>
+        <p class="drug-class">Class: First-in-class triazaacenaphthylene bacterial topoisomerase inhibitor</p>
+        <h4>Mechanism of Action</h4>
+        <p>Inhibits bacterial DNA replication by a <strong>novel dual-target mechanism</strong> — it blocks both
+          topoisomerase II (DNA gyrase, GyrA) and topoisomerase IV (ParC) at a site distinct from fluoroquinolones.
+          The dual binding raises the barrier to resistance.</p>
+        <h4>Why It Matters</h4>
+        <p>First new oral antibiotic <em>class</em> for uncomplicated UTI in decades; retains activity against many
+          fluoroquinolone- and multidrug-resistant strains, including <em>N. gonorrhoeae</em>.</p>
+        <h4>Exam Relevance / High-Yield</h4>
+        <ul>
+          <li>Same enzymes as fluoroquinolones but <strong>different binding site</strong> → little cross-resistance (key MCQ point).</li>
+          <li>Indication: uncomplicated UTI (E. coli, S. saprophyticus); also studied for gonorrhoea.</li>
+        </ul>
+        <div class="callout tip"><span class="co-label">NEET PG Tip</span>
+          <p>Both gepotidacin and fluoroquinolones hit gyrase/topo IV — but the <strong>novel site</strong> is why resistant organisms stay susceptible. Compare with zoliflodacin below.</p></div>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Infectious-Disease-Chemotherapy_Learning-System.html">Infectious Disease Chemotherapy</a></div>
+        <p class="ref">Reference: <a href="https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025" target="_blank" rel="noopener">FDA — Novel Drug Approvals 2025</a></p>
+      </article>
+
+      <!-- Zoliflodacin -->
+      <article class="advance" id="zoliflodacin" data-theme="antimicrobial"
+        data-keywords="zoliflodacin spiropyrimidinetrione topoisomerase gonorrhoea single dose oral first in class">
+        <div class="advance-top">
+          <h3>Zoliflodacin</h3>
+          <span class="badge status pipeline">Filed / Phase 3 complete</span>
+        </div>
+        <p class="drug-class">Class: First-in-class spiropyrimidinetrione (bacterial type II topoisomerase inhibitor)</p>
+        <h4>Mechanism of Action</h4>
+        <p>Traps the bacterial type II topoisomerase, blocking DNA re-ligation — again a <strong>novel binding site</strong>
+          distinct from fluoroquinolones, so no cross-resistance.</p>
+        <h4>Why It Matters</h4>
+        <p>A <strong>single oral dose</strong> cure for uncomplicated gonorrhoea, including multidrug-resistant
+          <em>N. gonorrhoeae</em> — a WHO priority pathogen where treatment options are running out.</p>
+        <div class="callout pearl"><span class="co-label">Clinical Pearl</span>
+          <p>Both new antibiotics here target type II topoisomerases at novel sites — the field's answer to eroding fluoroquinolone and cephalosporin efficacy in gonorrhoea.</p></div>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Infectious-Disease-Chemotherapy_Learning-System.html">Infectious Disease Chemotherapy</a></div>
+        <p class="ref">Reference: <a href="https://link.springer.com/article/10.1007/s00210-026-05193-0" target="_blank" rel="noopener">A year in pharmacology: FDA new drugs 2025 (Springer)</a></p>
+      </article>
+
+      <p class="quiz-block-head">Quick recall — Antimicrobials</p>
+      <details class="quiz"><summary>Why do gepotidacin and zoliflodacin retain activity against fluoroquinolone-resistant organisms?</summary>
+        <div class="quiz-ans">They inhibit the same type II topoisomerase enzymes but bind at a <strong>novel site</strong> distinct from fluoroquinolones, so existing quinolone-resistance mutations do not confer cross-resistance.</div></details>
+      <details class="quiz"><summary>What is the flagship indication for gepotidacin (Blujepa)?</summary>
+        <div class="quiz-ans"><strong>Uncomplicated urinary tract infection</strong> (uUTI); it is also being developed for gonorrhoea.</div></details>
+      <details class="quiz"><summary>Zoliflodacin offers what practical dosing advantage for gonorrhoea?</summary>
+        <div class="quiz-ans">A <strong>single oral dose</strong> cure, effective against multidrug-resistant N. gonorrhoeae.</div></details>
+    </section>
+
+    <!-- ══ THEME 4 · ONCOLOGY & TARGETED ═══════════════════════════════ -->
+    <section id="oncology" class="theme-section" data-theme="oncology">
+      <div class="theme-head"><span class="emoji" aria-hidden="true">&#127993;</span><h2>Oncology &amp; Targeted Therapies</h2></div>
+
+      <!-- Revumenib -->
+      <article class="advance" id="revumenib" data-theme="oncology"
+        data-keywords="revumenib revuforj menin inhibitor kmt2a mll npm1 acute leukaemia targeted first in class">
+        <div class="advance-top">
+          <h3>Revumenib</h3>
+          <span class="badge">Revuforj&reg;</span>
+          <span class="badge status">FDA approved · 2024–25</span>
+        </div>
+        <p class="drug-class">Class: First-in-class oral menin inhibitor</p>
+        <h4>Mechanism of Action</h4>
+        <p>Disrupts the <strong>menin–KMT2A (MLL)</strong> protein–protein interaction that drives aberrant leukaemic gene
+          transcription, forcing malignant blasts to differentiate. Approved for relapsed/refractory acute leukaemia with
+          <em>KMT2A</em> rearrangement.</p>
+        <h4>Why It Matters</h4>
+        <p>A precision epigenetic target for a genetically defined, hard-to-treat leukaemia — exemplifies the shift from
+          cytotoxics to molecularly targeted therapy.</p>
+        <div class="callout tip"><span class="co-label">NEET PG Tip</span>
+          <p>Keyword pairing: <strong>menin inhibitor &#8594; KMT2A/MLL-rearranged (and NPM1-mutated) acute leukaemia</strong>. Mechanism = induces differentiation.</p></div>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Neoplastic-Disease-Pharmacology_Learning-System.html">Neoplastic Disease Pharmacology</a></div>
+        <p class="ref">Reference: <a href="https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025" target="_blank" rel="noopener">FDA — Novel Drug Approvals</a></p>
+      </article>
+
+      <!-- ADCs & radioligand therapy (concept card) -->
+      <article class="advance" id="adc-rlt" data-theme="oncology"
+        data-keywords="antibody drug conjugate adc radioligand radiopharmaceutical lutetium psma car-t bispecific targeted delivery payload">
+        <div class="advance-top">
+          <h3>ADCs &amp; Radioligand Therapy</h3>
+          <span class="badge status">Rapidly expanding class</span>
+        </div>
+        <p class="drug-class">Class: Targeted cytotoxic-delivery platforms (antibody–drug conjugates &amp; radioligands)</p>
+        <h4>Mechanism of Action</h4>
+        <p><strong>ADCs</strong> = a monoclonal antibody (targeting a tumour antigen, e.g. HER2, TROP2) linked to a potent
+          cytotoxic "payload" — the antibody delivers the toxin selectively to cancer cells, sparing normal tissue.
+          <strong>Radioligand therapy</strong> couples a tumour-targeting ligand (e.g. PSMA) to a radioisotope
+          (e.g. lutetium-177) that irradiates the cell from within.</p>
+        <div class="callout mech"><span class="co-label">Mechanism Visual</span>
+          <svg viewBox="0 0 500 120" role="img" aria-label="Diagram: an antibody-drug conjugate consists of a targeting antibody, a linker, and a cytotoxic payload that is delivered selectively to a tumour cell.">
+            <path d="M40 40 L60 20 M40 40 L60 60 M40 40 L110 40" stroke="#1D4ED8" stroke-width="4" fill="none"/>
+            <text x="20" y="90" font-size="11">Antibody (target)</text>
+            <rect x="110" y="34" width="40" height="12" fill="#9CA3AF"/>
+            <text x="112" y="70" font-size="10">Linker</text>
+            <circle cx="175" cy="40" r="12" fill="#DC2626"/>
+            <text x="160" y="90" font-size="11">Cytotoxic payload</text>
+            <text x="250" y="35" font-size="11">&#8594; binds tumour antigen</text>
+            <text x="250" y="55" font-size="11">&#8594; internalised</text>
+            <text x="250" y="75" font-size="11">&#8594; payload kills cell</text>
+          </svg>
+        </div>
+        <h4>Why It Matters</h4>
+        <p>Widen the therapeutic window — more tumour kill with less systemic toxicity. Along with CAR-T and bispecific
+          antibodies, they are the fastest-growing segment of oncology approvals.</p>
+        <h4>Exam Relevance / High-Yield</h4>
+        <ul>
+          <li>ADC parts: <strong>antibody + linker + payload</strong> (know all three).</li>
+          <li>Classic examples: trastuzumab emtansine/deruxtecan (HER2), sacituzumab govitecan (TROP2).</li>
+          <li>Radioligand: <strong>Lu-177 PSMA</strong> (prostate), Lu-177 DOTATATE (NET).</li>
+          <li>CAR-T = autologous T-cells engineered with a chimeric antigen receptor (e.g. anti-CD19).</li>
+        </ul>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Neoplastic-Disease-Pharmacology_Learning-System.html">Neoplastic Disease Pharmacology</a>
+          <a href="Inflammation-Immunity-Hematopoiesis_Learning-System.html">Immunity &amp; Haematopoiesis</a></div>
+        <p class="ref">Reference: <a href="https://www.hcplive.com/view/fda-news-recap-novel-drug-approvals-in-first-half-of-2026" target="_blank" rel="noopener">HCPLive — Novel drug approvals, 2026</a></p>
+      </article>
+
+      <p class="quiz-block-head">Quick recall — Oncology</p>
+      <details class="quiz"><summary>Name the three structural components of an antibody–drug conjugate.</summary>
+        <div class="quiz-ans">A <strong>monoclonal antibody</strong> (targeting), a <strong>linker</strong>, and a <strong>cytotoxic payload</strong>.</div></details>
+      <details class="quiz"><summary>Revumenib targets which protein–protein interaction, and in which leukaemia subtype?</summary>
+        <div class="quiz-ans">The <strong>menin–KMT2A (MLL)</strong> interaction, in KMT2A-rearranged (and NPM1-mutated) acute leukaemia; it induces blast differentiation.</div></details>
+      <details class="quiz"><summary>Which radioisotope-ligand pairing is used for metastatic prostate cancer?</summary>
+        <div class="quiz-ans"><strong>Lutetium-177 linked to a PSMA ligand</strong> (Lu-177 PSMA radioligand therapy).</div></details>
+    </section>
+
+    <!-- ══ THEME 5 · NEUROLOGY & PSYCHIATRY ════════════════════════════ -->
+    <section id="neuro" class="theme-section" data-theme="neuro">
+      <div class="theme-head"><span class="emoji" aria-hidden="true">&#129504;</span><h2>Neurology &amp; Psychiatry</h2></div>
+
+      <!-- Cobenfy -->
+      <article class="advance" id="cobenfy" data-theme="neuro"
+        data-keywords="xanomeline trospium cobenfy muscarinic m1 m4 agonist schizophrenia antipsychotic non-dopamine karuna">
+        <div class="advance-top">
+          <h3>Xanomeline–Trospium</h3>
+          <span class="badge">Cobenfy&reg;</span>
+          <span class="badge status">FDA approved · Sep 2024</span>
+        </div>
+        <p class="drug-class">Class: M1/M4 muscarinic receptor agonist (xanomeline) + peripheral muscarinic antagonist (trospium)</p>
+        <h4>Mechanism of Action</h4>
+        <p>Xanomeline preferentially activates central <strong>M1/M4 muscarinic</strong> receptors, modulating dopamine
+          indirectly — the first antipsychotic that works <strong>without directly blocking D2 receptors</strong>.
+          Trospium is a peripherally restricted muscarinic <em>antagonist</em> added purely to limit xanomeline's
+          peripheral cholinergic side effects (nausea, sweating, GI).</p>
+        <h4>Why It Matters</h4>
+        <p>First novel antipsychotic mechanism in decades. Because it spares D2 blockade, it avoids classic
+          <strong>extrapyramidal symptoms, hyperprolactinaemia, and tardive dyskinesia</strong>.</p>
+        <h4>Exam Relevance / High-Yield</h4>
+        <ul>
+          <li><strong>Non-dopaminergic antipsychotic</strong> — the single highest-yield contrast vs all typical/atypical agents.</li>
+          <li>Trospium's job = block <em>peripheral</em> muscarinic effects (it does not cross the BBB).</li>
+          <li>No EPS, no prolactin elevation, no significant weight-gain/metabolic D2-type profile.</li>
+        </ul>
+        <div class="callout tip"><span class="co-label">NEET PG Tip</span>
+          <p><strong>"Muscarinic, not dopaminergic."</strong> Xanomeline = M1/M4 agonist for schizophrenia; trospium = peripheral M-blocker bodyguard. No D2 block &#8594; no EPS/prolactin.</p></div>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Neuropharmacology-ANS_Learning-System.html">Neuropharmacology &amp; ANS</a>
+          <a href="Special-Systems_Pharmacology_Learning-System.html">Special Systems (CNS)</a></div>
+        <p class="ref">Reference: <a href="https://www.fda.gov/drugs/novel-drug-approvals-fda/novel-drug-approvals-2025" target="_blank" rel="noopener">FDA — Novel Drug Approvals</a></p>
+      </article>
+
+      <!-- Lecanemab / Donanemab -->
+      <article class="advance" id="lecanemab" data-theme="neuro"
+        data-keywords="lecanemab leqembi donanemab kisunla anti-amyloid monoclonal antibody alzheimer amyloid beta aria">
+        <div class="advance-top">
+          <h3>Lecanemab &amp; Donanemab</h3>
+          <span class="badge">Leqembi&reg; / Kisunla&reg;</span>
+          <span class="badge status">Approved (2023 &amp; 2024)</span>
+        </div>
+        <p class="drug-class">Class: Anti-amyloid-&beta; monoclonal antibodies (disease-modifying, early Alzheimer's)</p>
+        <h4>Mechanism of Action</h4>
+        <p>Monoclonal antibodies that bind and clear <strong>amyloid-&beta;</strong> — lecanemab targets soluble
+          protofibrils; donanemab targets deposited plaque (pyroglutamate Aβ). Clearing amyloid modestly slows cognitive
+          decline in <em>early</em> disease.</p>
+        <h4>Why It Matters</h4>
+        <p>First therapies to <strong>modify the disease course</strong> of Alzheimer's rather than just treat symptoms
+          (contrast with cholinesterase inhibitors and memantine).</p>
+        <h4>Exam Relevance / High-Yield</h4>
+        <ul>
+          <li>Key adverse effect: <strong>ARIA</strong> (Amyloid-Related Imaging Abnormalities — oedema/microhaemorrhage); higher risk in <strong>ApoE ε4</strong> homozygotes → MRI monitoring.</li>
+          <li>Disease-<em>modifying</em> vs symptomatic (donepezil/rivastigmine/galantamine, memantine).</li>
+          <li>Note negative result: semaglutide did <strong>not</strong> slow Alzheimer's in the EVOKE trial.</li>
+        </ul>
+        <div class="callout pearl"><span class="co-label">Clinical Pearl</span>
+          <p>Any anti-amyloid mAb in an ApoE ε4 carrier = watch for <strong>ARIA</strong> on surveillance MRI; it is the defining class toxicity.</p></div>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Special-Systems_Pharmacology_Learning-System.html">Special Systems (CNS)</a>
+          <a href="Neuropharmacology-ANS_Learning-System.html">Neuropharmacology</a></div>
+        <p class="ref">Reference: <a href="https://www.brightfocus.org/news/breaking-news-dispatch-new-findings-on-glp-1-drugs-and-alzheimers-novel-treatments-in-development-and-more/" target="_blank" rel="noopener">BrightFocus — Alzheimer's treatment updates</a></p>
+      </article>
+
+      <p class="quiz-block-head">Quick recall — Neuro/Psych</p>
+      <details class="quiz"><summary>Why does Cobenfy (xanomeline–trospium) avoid extrapyramidal symptoms?</summary>
+        <div class="quiz-ans">Xanomeline is an <strong>M1/M4 muscarinic agonist</strong> and does <strong>not</strong> directly block D2 receptors, so it avoids EPS, hyperprolactinaemia, and tardive dyskinesia.</div></details>
+      <details class="quiz"><summary>What is the role of trospium in the combination?</summary>
+        <div class="quiz-ans">A <strong>peripherally restricted muscarinic antagonist</strong> that blunts xanomeline's peripheral cholinergic side effects without entering the CNS.</div></details>
+      <details class="quiz"><summary>What is the hallmark adverse effect of anti-amyloid monoclonal antibodies?</summary>
+        <div class="quiz-ans"><strong>ARIA</strong> (Amyloid-Related Imaging Abnormalities — oedema and microhaemorrhage), especially in ApoE ε4 carriers.</div></details>
+    </section>
+
+    <!-- ══ THEME 6 · CROSS-CUTTING TRENDS ══════════════════════════════ -->
+    <section id="trends" class="theme-section" data-theme="trends">
+      <div class="theme-head"><span class="emoji" aria-hidden="true">&#128302;</span><h2>Cross-cutting Trends</h2></div>
+
+      <article class="advance" data-theme="trends"
+        data-keywords="artificial intelligence ai drug discovery machine learning toxicity prediction in silico">
+        <div class="advance-top"><h3>AI in Drug Discovery</h3><span class="badge status">Trend</span></div>
+        <p>Machine-learning models now accelerate target identification, molecule design, and <strong>in-silico toxicity
+          prediction</strong>, shortening early discovery timelines and reducing failed candidates before human trials.</p>
+        <div class="callout tip"><span class="co-label">NEET PG Tip</span>
+          <p>Understand the <em>concept</em>: AI shifts effort "left" into discovery/preclinical — it doesn't replace clinical trials for safety/efficacy.</p></div>
+      </article>
+
+      <article class="advance" data-theme="trends"
+        data-keywords="personalized precision medicine pharmacogenomics cyp2c19 tpmt genotype tailored therapy">
+        <div class="advance-top"><h3>Personalised / Precision Medicine</h3><span class="badge status">Trend</span></div>
+        <p>Pharmacogenomics tailors drug and dose to the patient's genotype. High-yield examples:
+          <strong>CYP2C19</strong> (clopidogrel), <strong>TPMT/NUDT15</strong> (thiopurines),
+          <strong>HLA-B*15:02</strong> (carbamazepine SJS), <strong>DPYD</strong> (5-FU/capecitabine).</p>
+        <div class="callout pearl"><span class="co-label">Clinical Pearl</span>
+          <p>These genotype–drug pairs are perennial MCQ favourites — memorise the enzyme/allele and the drug it flags.</p></div>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="General_Pharmacology_Learning-System.html">General Pharmacology</a></div>
+      </article>
+
+      <article class="advance" data-theme="trends"
+        data-keywords="antimicrobial resistance amr stewardship carbapenem esbl mdr who priority pathogen">
+        <div class="advance-top"><h3>Resistance Patterns (AMR)</h3><span class="badge status">Trend</span></div>
+        <p>Rising multidrug resistance (ESBL, carbapenem-resistant Enterobacterales, MDR gonorrhoea) is driving new-class
+          antibiotics (see gepotidacin, zoliflodacin) and <strong>antimicrobial stewardship</strong> as core practice.</p>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span>
+          <a href="Infectious-Disease-Chemotherapy_Learning-System.html">Infectious Disease Chemotherapy</a></div>
+      </article>
+
+      <article class="advance" data-theme="trends"
+        data-keywords="regulatory accelerated approval fast track breakthrough biosimilar gene therapy mrna radiopharmaceutical">
+        <div class="advance-top"><h3>Regulatory &amp; Modality Shifts</h3><span class="badge status">Trend</span></div>
+        <p>More than half of new approvals now use expedited pathways (fast-track/breakthrough/accelerated).
+          <strong>Biologics, mRNA, gene &amp; cell therapies, and radiopharmaceuticals</strong> make up a growing share,
+          while biosimilars expand access as originator biologics lose exclusivity.</p>
+        <div class="callout tip"><span class="co-label">NEET PG Tip</span>
+          <p>Know the modality ladder: small molecule &#8594; biologic/mAb &#8594; ADC &#8594; cell/gene therapy &#8594; radioligand — increasing target precision.</p></div>
+      </article>
+
+      <p class="quiz-block-head">Quick recall — Trends</p>
+      <details class="quiz"><summary>Which gene predicts carbamazepine-induced Stevens–Johnson syndrome (esp. in Asian populations)?</summary>
+        <div class="quiz-ans"><strong>HLA-B*15:02</strong> — test before starting carbamazepine in at-risk populations.</div></details>
+      <details class="quiz"><summary>Give one high-yield pharmacogenomic pair for thiopurine dosing.</summary>
+        <div class="quiz-ans"><strong>TPMT</strong> (and <strong>NUDT15</strong>) — deficiency → severe myelosuppression with azathioprine/6-MP.</div></details>
+      <details class="quiz"><summary>What is the main clinical driver behind new-class antibiotics like gepotidacin?</summary>
+        <div class="quiz-ans"><strong>Antimicrobial resistance (AMR)</strong> — eroding efficacy of fluoroquinolones/cephalosporins demands novel mechanisms.</div></details>
+    </section>
+
+    <!-- ══ SUGGEST / FUTURE EXPANSION ══════════════════════════════════ -->
+    <section id="suggest" class="theme-section">
+      <div class="theme-head"><span class="emoji" aria-hidden="true">&#9993;</span><h2>Suggest an Advance</h2></div>
+      <div class="suggest-box">
+        <strong>Keep this page alive.</strong> Found a fresh approval, a landmark trial, or a mechanism your professors
+        keep mentioning? Add it to your running list and share it — good candidates: a new drug name + class, its
+        mechanism in one line, why it matters, and a reference. It'll slot straight into the theme sections above.
+      </div>
+
+      <!-- =================================================================
+           FUTURE-ENTRY TEMPLATE — copy this block to add a new advance.
+           1. Put it inside the correct theme <section>.
+           2. Set a unique id, the data-theme, and data-keywords (for search).
+           3. Add a matching row to the summary table at the top.
+           ================================================================= -->
+      <div class="placeholder">
+        &#43; More advances coming. To add one, copy the commented
+        &ldquo;FUTURE-ENTRY TEMPLATE&rdquo; block in this page's source into the relevant
+        theme section and fill in the fields.
+      </div>
+      <!--
+      <article class="advance" id="UNIQUE-ID" data-theme="THEME"
+        data-keywords="lowercase search terms here">
+        <div class="advance-top">
+          <h3>Drug / Advance name</h3>
+          <span class="badge">Brand&reg;</span>
+          <span class="badge status">Status · Year</span>
+        </div>
+        <p class="drug-class">Class: …</p>
+        <h4>Mechanism of Action</h4><p>…</p>
+        <h4>Why It Matters</h4><p>…</p>
+        <h4>Exam Relevance / High-Yield</h4><ul><li>…</li></ul>
+        <div class="callout pearl"><span class="co-label">Clinical Pearl</span><p>…</p></div>
+        <div class="xlinks"><span class="xl-label">Cross-links:</span><a href="GUIDE.html">Guide</a></div>
+        <p class="ref">Reference: <a href="URL" target="_blank" rel="noopener">Source</a></p>
+      </article>
+      -->
+    </section>
+
+    <!-- No-results message for search -->
+    <p class="no-results" id="noResults">No advances match your search. Try a different drug, class, or keyword.</p>
+
+  </main>
+</div>
+
+<!-- ══ FOOTER ════════════════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <a class="home-btn" href="index.html">&#8592; Back to Study Hub</a>
+  <p>
+    Recent Advances in Pharmacology · compiled from FDA approvals and current literature (2025–26).<br>
+    Educational use for MBBS / NEET&nbsp;PG revision · always confirm against primary sources &amp; local guidelines.<br>
+    Keep all files in the same folder for cross-links to work.
+  </p>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     SCRIPTS — theme toggle, back/forward, scroll progress, to-top,
+     search + theme filtering, active-TOC highlighting. Vanilla JS, no deps.
+     ══════════════════════════════════════════════════════════════════════ -->
+<script>
+/* ---- Dark-mode toggle (shared 'pharm-theme' key across the whole site) ---- */
+(function(){
+  var root = document.documentElement, btn = document.getElementById('hub-theme');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function upd(){ if(btn) btn.innerHTML = isDark() ? '☀️' : '🌙'; }
+  function set(m){ if(m==='dark') root.setAttribute('data-theme','dark'); else root.removeAttribute('data-theme'); try{ localStorage.setItem('pharm-theme', m); }catch(e){} upd(); }
+  upd();
+  if(btn) btn.addEventListener('click', function(){ set(isDark() ? 'light' : 'dark'); });
+})();
+
+/* ---- Back / Forward buttons (mirror the rest of the site) ---- */
+(function(){
+  var b = document.getElementById('gpBackBtn');
+  if(b) b.addEventListener('click', function(){
+    if(window.history.length > 1){ window.history.back(); return; }
+    window.location.href = 'index.html';
+  });
+  var f = document.getElementById('gpForwardBtn');
+  if(f) f.addEventListener('click', function(){ window.history.forward(); });
+})();
+
+/* ---- Scroll progress bar + back-to-top ---- */
+(function(){
+  var bar = document.getElementById('gpProgressBar');
+  var top = document.getElementById('gpToTop');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    if(bar) bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    if(top){ if(window.scrollY > 480) top.classList.add('show'); else top.classList.remove('show'); }
+  }
+  document.addEventListener('scroll', function(){ requestAnimationFrame(onScroll); }, {passive:true});
+  onScroll();
+  if(top) top.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+})();
+
+/* ---- SEARCH + THEME FILTER ----
+   Filters the .advance cards by (a) active theme chip and (b) search text
+   (matched against visible text + data-keywords). Hides theme sections that
+   end up empty, and toggles the "no results" message. ---- */
+(function(){
+  var search = document.getElementById('searchBox');
+  var chips  = Array.prototype.slice.call(document.querySelectorAll('#filterChips .chip'));
+  var cards  = Array.prototype.slice.call(document.querySelectorAll('.advance[data-theme]'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.theme-section[data-theme]'));
+  var noResults = document.getElementById('noResults');
+  var activeTheme = 'all';
+
+  function matches(card, q){
+    if(activeTheme !== 'all' && card.getAttribute('data-theme') !== activeTheme) return false;
+    if(!q) return true;
+    var hay = (card.textContent + ' ' + (card.getAttribute('data-keywords') || '')).toLowerCase();
+    return hay.indexOf(q) !== -1;
+  }
+  function apply(){
+    var q = (search.value || '').trim().toLowerCase();
+    var anyVisible = false;
+    cards.forEach(function(card){
+      var show = matches(card, q);
+      card.style.display = show ? '' : 'none';
+      if(show) anyVisible = true;
+    });
+    // Hide a whole theme section if it has no visible cards (only when filtering)
+    sections.forEach(function(sec){
+      var visible = sec.querySelectorAll('.advance[data-theme]');
+      var shown = Array.prototype.filter.call(visible, function(c){ return c.style.display !== 'none'; });
+      var filtering = q || activeTheme !== 'all';
+      sec.style.display = (filtering && shown.length === 0) ? 'none' : '';
+    });
+    noResults.style.display = anyVisible ? 'none' : 'block';
+  }
+  if(search) search.addEventListener('input', apply);
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chips.forEach(function(c){ c.classList.remove('active'); c.setAttribute('aria-pressed','false'); });
+      chip.classList.add('active'); chip.setAttribute('aria-pressed','true');
+      activeTheme = chip.getAttribute('data-theme');
+      apply();
+    });
+  });
+})();
+
+/* ---- Active-section highlight in the sidebar TOC ---- */
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.toc a[href^="#"]'));
+  var map = {};
+  links.forEach(function(a){ var id = a.getAttribute('href').slice(1); var el = document.getElementById(id); if(el) map[id] = a; });
+  if(!('IntersectionObserver' in window)) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        links.forEach(function(a){ a.classList.remove('active'); });
+        if(map[en.target.id]) map[en.target.id].classList.add('active');
+      }
+    });
+  }, {rootMargin:'-20% 0px -70% 0px'});
+  Object.keys(map).forEach(function(id){ obs.observe(document.getElementById(id)); });
+})();
+</script>
+
+</body>
+</html>

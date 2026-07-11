@@ -1,0 +1,322 @@
+/* ============================================================
+   liquid-glass.css  ·  Apple-style "liquid glass" refinement layer
+   ------------------------------------------------------------
+   Loaded LAST in every page's <head> so it gently upgrades the
+   existing look without touching any content or markup.
+
+   Design goals:
+     • Frosted "liquid glass" for the chrome (toolbars, drawers,
+       nav, floating buttons, popovers) across every naming scheme.
+     • Elegant, crisp academic cards (no heavy blur → stays fast
+       and readable on tablets & phones).
+     • One shared ambient wash so glass has something to refract.
+     • Zero overlaps: safe z-index ladder, constrained sizes,
+       scrollable popovers, responsive corners.
+     • Full dark-mode + print + reduced-motion support.
+   ============================================================ */
+
+/* ---------- 1. Glass design tokens ---------- */
+:root{
+  --lg-blur:        18px;
+  --lg-blur-strong: 26px;
+  --lg-sat:         170%;
+
+  --lg-bg:          rgba(255,255,255,.55);
+  --lg-bg-strong:   rgba(255,255,255,.72);
+  --lg-bg-solid:    rgba(255,255,255,.90);
+
+  --lg-border:      rgba(255,255,255,.60);
+  --lg-hairline:    rgba(17,24,39,.08);
+
+  --lg-highlight:   inset 0 1px 0 rgba(255,255,255,.65);
+  --lg-shadow:      0 8px 30px rgba(17,24,39,.12), 0 2px 8px rgba(17,24,39,.06);
+  --lg-shadow-lg:   0 20px 55px rgba(17,24,39,.16), 0 6px 18px rgba(17,24,39,.08);
+
+  --lg-radius:      18px;
+  --lg-radius-sm:   13px;
+  --lg-ease:        cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --lg-bg:          rgba(30,33,38,.55);
+  --lg-bg-strong:   rgba(30,33,38,.74);
+  --lg-bg-solid:    rgba(24,26,30,.92);
+
+  --lg-border:      rgba(255,255,255,.10);
+  --lg-hairline:    rgba(255,255,255,.08);
+
+  --lg-highlight:   inset 0 1px 0 rgba(255,255,255,.08);
+  --lg-shadow:      0 8px 30px rgba(0,0,0,.50), 0 2px 8px rgba(0,0,0,.35);
+  --lg-shadow-lg:   0 20px 55px rgba(0,0,0,.55), 0 6px 18px rgba(0,0,0,.40);
+}
+
+/* ---------- 2. Ambient wash (one cheap fixed gradient) ----------
+   Sits behind every existing background/ambient layer (z:-3) so
+   the frosted chrome refracts a soft colour field instead of flat
+   paint. Pure CSS gradients → no images, no JS, tablet-friendly. */
+body::before{
+  content:"";
+  position:fixed;
+  inset:-10% -10% -10% -10%;
+  z-index:-3;
+  pointer-events:none;
+  background:
+    radial-gradient(38% 42% at 15% 8%,  rgba(96,165,250,.14), transparent 70%),
+    radial-gradient(34% 40% at 88% 12%, rgba(212,168,71,.14),  transparent 70%),
+    radial-gradient(46% 46% at 80% 92%, rgba(45,111,94,.12),   transparent 72%),
+    radial-gradient(40% 40% at 10% 88%, rgba(180,90,120,.10),  transparent 72%);
+  filter:saturate(115%);
+}
+html[data-theme="dark"] body::before{ opacity:.5; }
+@media print{ body::before{ display:none; } }
+
+/* ---------- 3. Shared glass surface helpers ----------
+   Applied to every chrome / floating element regardless of which
+   page family named it. Uses variables so light & dark both work. */
+.gp-toolbar,
+.gp-drawer,
+#li-bar,
+#li-hint,
+nav.toc,
+.topbar,
+.sidebar{
+  -webkit-backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-sat));
+  backdrop-filter:blur(var(--lg-blur)) saturate(var(--lg-sat));
+}
+
+/* --- top pill toolbar (Learning-System) --- */
+.gp-toolbar{
+  background:var(--lg-bg-strong) !important;
+  border:1px solid var(--lg-border) !important;
+  box-shadow:var(--lg-shadow), var(--lg-highlight) !important;
+  border-radius:999px !important;
+}
+
+/* --- shared interactive top bar --- */
+#li-bar{
+  background:var(--lg-bg-strong) !important;
+  border-bottom:1px solid var(--lg-hairline) !important;
+  box-shadow:0 4px 20px rgba(17,24,39,.08), var(--lg-highlight) !important;
+}
+html[data-theme="dark"] #li-bar{ background:var(--lg-bg-strong) !important; }
+
+.li-btn{
+  border:1px solid var(--lg-hairline) !important;
+  border-radius:10px !important;
+  transition:background .16s var(--lg-ease), border-color .16s var(--lg-ease), transform .1s ease !important;
+}
+.li-search.open{
+  background:var(--lg-bg) !important;
+  border:1px solid var(--lg-border) !important;
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter:blur(10px);
+}
+
+/* --- side drawer (chapter list) --- */
+.gp-drawer{
+  background:var(--lg-bg-strong) !important;
+  border-right:1px solid var(--lg-border) !important;
+  box-shadow:var(--lg-shadow-lg), var(--lg-highlight) !important;
+  -webkit-backdrop-filter:blur(var(--lg-blur-strong)) saturate(var(--lg-sat));
+  backdrop-filter:blur(var(--lg-blur-strong)) saturate(var(--lg-sat));
+}
+
+/* --- in-page chapter nav (Notes + Learning) --- */
+nav.toc{
+  background:var(--lg-bg-strong) !important;
+  border:1px solid var(--lg-hairline) !important;
+  border-radius:var(--lg-radius-sm);
+  box-shadow:var(--lg-shadow), var(--lg-highlight);
+}
+
+/* --- keyboard-shortcut popover --- */
+#li-hint{
+  background:var(--lg-bg-solid) !important;
+  border:1px solid var(--lg-border) !important;
+  border-radius:16px !important;
+  box-shadow:var(--lg-shadow-lg), var(--lg-highlight) !important;
+  -webkit-backdrop-filter:blur(var(--lg-blur-strong)) saturate(var(--lg-sat));
+  backdrop-filter:blur(var(--lg-blur-strong)) saturate(var(--lg-sat));
+  max-height:min(70vh, 460px);
+  overflow:auto;
+}
+
+/* --- question bank chrome --- */
+.topbar{
+  background:var(--lg-bg-strong) !important;
+  border-bottom:1px solid var(--lg-hairline) !important;
+  box-shadow:0 4px 20px rgba(17,24,39,.06), var(--lg-highlight);
+}
+.sidebar{
+  background:var(--lg-bg-strong) !important;
+  border-right:1px solid var(--lg-hairline) !important;
+  box-shadow:var(--lg-shadow);
+}
+
+/* ---------- 4. Floating circular / pill buttons ---------- */
+.gp-to-top,
+.to-top,
+#qb-theme,
+.gp-back-btn,
+.gp-forward-btn,
+.gp-reveal{
+  box-shadow:var(--lg-shadow-lg), var(--lg-highlight) !important;
+  border:1px solid var(--lg-border) !important;
+  -webkit-backdrop-filter:blur(12px) saturate(160%);
+  backdrop-filter:blur(12px) saturate(160%);
+}
+/* theme / secondary floaters read as clear glass rather than solid */
+#qb-theme{
+  background:var(--lg-bg-strong) !important;
+}
+
+/* ---------- 5. Progress bars: add a soft luminous edge ---------- */
+.gp-progress,
+.progress-bar,
+#li-progress{
+  box-shadow:0 0 14px rgba(45,111,94,.45), 0 1px 3px rgba(0,0,0,.15) !important;
+}
+
+/* ---------- 6. Content cards: crisp, elegant, NO blur ----------
+   Kept blur-free on purpose: content sits on light paper, so glass
+   here would hurt legibility and cost GPU. Instead → rounded
+   corners, hairline stroke, layered soft shadow, faint top sheen. */
+.module,
+section.module,
+.card,
+details.flashcard{
+  border-radius:var(--lg-radius) !important;
+  border:1px solid var(--lg-hairline) !important;
+  box-shadow:var(--lg-shadow), inset 0 1px 0 rgba(255,255,255,.55) !important;
+}
+html[data-theme="dark"] .module,
+html[data-theme="dark"] section.module,
+html[data-theme="dark"] .card,
+html[data-theme="dark"] details.flashcard{
+  box-shadow:var(--lg-shadow), inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+
+/* soften the many inset knowledge blocks a touch (radius only, cheap) */
+.cog,
+.primers,
+.bridge,
+.analogy,
+blockquote.warn,
+.fc-back,
+.sched-day{
+  border-radius:var(--lg-radius-sm) !important;
+}
+
+/* ---------- 7. Hero: subtle glass sheen on the dark banner ---------- */
+.hero::after,
+header.hero::after{
+  content:"";
+  position:absolute;
+  left:0; right:0; top:0;
+  height:40%;
+  background:linear-gradient(180deg, rgba(255,255,255,.10), transparent);
+  pointer-events:none;
+}
+
+/* ---------- 8. Z-index ladder (prevents any overlap fight) ----------
+   progress(200) < to-top(90)… we normalise so drawer < toolbar <
+   popover, and nothing hides the top bar. */
+.gp-progress, .progress-bar, #li-progress{ z-index:9000 !important; }
+.gp-drawer{ z-index:9200 !important; }
+.gp-toolbar{ z-index:9300 !important; }
+#li-bar{ z-index:9300 !important; }
+#li-hint{ z-index:9400 !important; }
+.gp-to-top, .to-top, #qb-theme,
+.gp-back-btn, .gp-forward-btn, .gp-reveal{ z-index:8800 !important; }
+
+/* ---------- 9. Smooth, premium motion ---------- */
+.gp-toolbar, .gp-drawer, .li-btn, .gp-to-top, .to-top, #qb-theme,
+.module, .card, nav.toc a{
+  transition-timing-function:var(--lg-ease);
+}
+
+/* ---------- 10. Responsive: keep it phone & tablet friendly ---------- */
+
+/* Tablet: trim blur cost slightly */
+@media (max-width:1024px){
+  :root{ --lg-blur:15px; --lg-blur-strong:20px; }
+}
+
+/* Phone: lighter glass, safe corners, no overlap */
+@media (max-width:640px){
+  :root{ --lg-blur:11px; --lg-blur-strong:14px; --lg-sat:150%; }
+
+  /* pull floating pill toolbar to a safe inset */
+  .gp-toolbar{ top:10px !important; left:10px !important; right:10px; max-width:calc(100vw - 20px); }
+
+  /* shrink corner floaters so they never collide */
+  .gp-to-top, .to-top, #qb-theme{
+    width:42px !important; height:42px !important;
+    bottom:16px !important; right:16px !important;
+  }
+
+  /* popover fits the viewport instead of spilling off-screen */
+  #li-hint{
+    left:10px !important; right:10px !important;
+    max-width:none !important; width:auto !important;
+  }
+
+  /* in-page nav wraps instead of overflowing */
+  nav.toc{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+}
+
+/* Very small: ensure body content clears any sticky top bar */
+@media (max-width:400px){
+  .li-search input{ width:96px !important; }
+}
+
+/* ---------- 11. Accessibility & print ---------- */
+@media (prefers-reduced-motion:reduce){
+  *{ transition-duration:.001ms !important; }
+}
+@media print{
+  .gp-toolbar, .gp-drawer, #li-bar, #li-hint, nav.toc,
+  .gp-to-top, .to-top, #qb-theme, .gp-progress, .progress-bar, #li-progress,
+  .gmf-hud, .gmf-popover, .gmf-toast-stack, #psm-root{
+    display:none !important;
+  }
+  .module, .card{ box-shadow:none !important; border:1px solid #ddd !important; }
+}
+
+/* ============================================================
+   12. XP HUD ↔ "Sections" launcher — stop the overlap
+   ------------------------------------------------------------
+   The gamification XP pill (.gmf-hud) and the app-shell "Sections"
+   menu launcher (#psm-launcher) both live at bottom-left, so the
+   XP pill was hidden underneath the Sections button. Lift the XP
+   pill (and its popover / toasts) to sit cleanly ABOVE the
+   launcher. Also give the launcher the same liquid-glass polish.
+   ============================================================ */
+.gmf-hud{
+  bottom:64px !important;
+  left:16px !important;
+  background:var(--lg-bg-strong) !important;
+  border:1px solid var(--lg-border) !important;
+  box-shadow:var(--lg-shadow), var(--lg-highlight) !important;
+}
+.gmf-popover{ bottom:110px !important; left:16px !important; }
+.gmf-toast-stack{ bottom:112px !important; }
+
+/* keep the XP pill above the launcher's z-layer so nothing clips it
+   while still staying below the launcher's open menu panel */
+.gmf-hud, .gmf-popover{ z-index:2147481999 !important; }
+
+/* app-shell "Sections" launcher → matching glass pill */
+#psm-launcher{
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  backdrop-filter:blur(14px) saturate(160%);
+  box-shadow:var(--lg-shadow-lg), inset 0 1px 0 rgba(255,255,255,.12) !important;
+}
+
+/* Phone: the launcher shrinks (label hidden) but stays bottom-left,
+   so keep the XP pill lifted clear of it */
+@media (max-width:640px){
+  .gmf-hud{ bottom:60px !important; left:12px !important; }
+  .gmf-popover{ bottom:104px !important; left:12px !important; }
+  .gmf-toast-stack{ bottom:106px !important; }
+}
